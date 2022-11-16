@@ -1,0 +1,30 @@
+*, *::after, *::before {
+  box-sizing: border-box;
+}
+
+:root {
+  --surface-color: whitesmoke;
+  --text-color: #222;
+  
+  @media (prefers-color-scheme: dark) {
+    --surface-color: #191720;   
+    --text-color:  whitesmoke;
+  }
+}
+
+body {
+  font-family: 'Mona Sans', system-ui, sans-serif;
+  color: var(--text-color);
+
+  background-color: var(--surface-color);
+}
+
+#__nuxt {
+  min-height: 100vh;
+}
+
+@for $i from 1 to 7 {
+  h#{$i} {
+    font-weight: 500;
+  }
+}

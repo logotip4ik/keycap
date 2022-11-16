@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+  roach-1:
+    # hostname: roach-1
+    image: cockroachdb/cockroach:latest
+    volumes:
+      - ./data/roach-1:/cockroach/cockroach-data
+    command: start --insecure --join=roach-1,roach-2,roach-3
+    ports:
+      - "26257:26257"
+      - "8080:8080"
+    networks:
+      - roachnet
+
+  roach-2:
+    # hostname: roach-2
+    image: cockroachdb/cockroach:latest
+    volumes:
+      - ./data/roach-2:/cockroach/cockroach-data
+    command: start --insecure --join=roach-1,roach-2,roach-3
+    networks:
+      - roachnet
+
+  roach-3:
+    # hostname: roach-3
+    image: cockroachdb/cockroach:latest
+    volumes:
+      - ./data/roach-3:/cockroach/cockroach-data
+    command: start --insecure --join=roach-1,roach-2,roach-3
+    networks:
+      - roachnet
+
+networks:
+  roachnet:
+    driver: bridge

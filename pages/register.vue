@@ -1,0 +1,257 @@
+<script setup lang="ts">
+definePageMeta({
+  middleware: ['redirect-dashboard'],
+});
+
+const router = useRouter();
+const user = useUser();
+
+const data = reactive({ username: '', email: '', password: '' });
+const isLoading = ref(false);
+
+async function register() {
+  isLoading.value = true;
+
+  $fetch('/api/user/register', { method: 'POST', body: data })
+    .then((newUser) => {
+      user.value = newUser;
+
+      if (!user.value) return;
+
+      router.push(`/@${user.value.username}`);
+    })
+    .catch((e) => console.error(e))
+    .finally(() => isLoading.value = true);
+}
+</script>
+
+<template>
+  <main class="register-page">
+    <form class="register-page__form" @submit.prevent="register">
+      <p class="register-page__form__title">
+        We are gonna create an account for you
+      </p>
+
+      <div class="register-page__form__item">
+        <input
+          id="register:username"
+          v-model="data.username"
+          type="text"
+          name="username"
+          class="register-page__form__item__input"
+          placeholder="username, no spaces allowed"
+        >
+
+        <small class="register-page__form__item__note">
+          &nbsp; * this will be used as path to your notes
+        </small>
+      </div>
+
+      <div class="register-page__form__item">
+        <input
+          id="register:email"
+          v-model="data.email"
+          type="email"
+          name="email"
+          class="register-page__form__item__input"
+          placeholder="email"
+        >
+      </div>
+
+      <div class="register-page__form__item">
+        <input
+          id="register:password"
+          v-model="data.password"
+          type="password"
+          name="password"
+          class="register-page__form__item__input"
+          placeholder="password"
+        >
+      </div>
+
+      <div class="register-page__form__item register-page__form__item--actions">
+        <button
+          type="submit"
+          class="register-page__form__item__submit-button"
+          :disabled="isLoading"
+          :class="{ 'register-page__form__item__submit-button--loading': isLoading }"
+        >
+          register
+        </button>
+      </div>
+    </form>
+  </main>
+</template>
+
+<style lang="scss">
+.register-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 100vh;
+
+  padding: 2rem 1rem;
+
+  &__form {
+    width: 95%;
+    max-width: 450px;
+
+    padding: clamp(1rem, 2vw, 2rem);
+
+    border-radius: 0.25rem;
+
+    &:focus-within {
+      .register-page__form__item__label {
+        opacity: 1;
+
+        transition: opacity .1s;
+      }
+    }
+
+    & > * + * {
+      margin-top: 2rem;
+    }
+
+    &__title {
+      font-size: 2rem;
+      font-weight: 500;
+      font-stretch: 100%;
+      text-align: left;
+
+      padding-top: 1rem;
+      margin: 0 0 2.5rem 0;
+    }
+
+    &__item {
+      position: relative;
+
+      width: 100%;
+
+      &--actions {
+        text-align: center;
+
+        margin-top: 3rem;
+      }
+
+      &__label {
+        display: block;
+
+        font-size: 0.95rem;
+        font-weight: 500;
+
+        opacity: 0.75;
+
+        margin-bottom: 0.25rem;
+
+        transition: opacity 0.3s;
+      }
+
+      &__note {
+        display: inline-block;
+
+        position: absolute;
+        top: calc(100% + 0.25rem);
+        left: 0;
+        width: 100%;
+
+        max-width: 33ch;
+
+        opacity: 0.85;
+      }
+
+      &__input {
+        font: inherit;
+        font-size: 1rem;
+        line-height: 1.75;
+        color: currentColor;
+
+        width: 100%;
+
+        padding: 0.75rem 0.75rem;
+
+        appearance: none;
+        border-radius: 0.5rem;
+        border: 1px solid rgba($color: grey, $alpha: 0.5);
+        background-color: transparent;
+
+        transition: border-color 0.3s;
+
+        &:is(:focus-visible, :hover) {
+          outline: none;
+
+          border-color: grey;
+
+          transition: border-color 0.1s;
+        }
+      }
+
+      &__submit-button {
+        position: relative;
+        z-index: 1;
+
+        font: inherit;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--surface-color);
+
+        width: 90%;
+        max-width: 330px;
+
+        padding: 1rem 2rem;
+
+        border: none;
+        border-radius: 0.5rem;
+        outline: 1px solid transparent;
+        outline-offset: -1px;
+        background-color: var(--text-color);
+
+        cursor: pointer;
+        transition: outline .3s, outline-offset .3s, color .3s, opacity .3s;
+
+        &::after {
+          content: 'loading...';
+
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          z-index: 2;
+
+          color: transparent;
+
+          transition: color 0.3s;
+          transform: translate(-50%, -50%);
+        }
+
+        &--loading {
+          color: transparent;
+
+          &::after {
+            color: var(--surface-color);
+          }
+        }
+
+        &:disabled {
+          opacity: 0.8;
+          cursor: default;
+
+          &:is(:hover, :focus-visible) {
+            outline: none;
+          }
+        }
+
+        &:focus {
+          outline-style: solid;
+        }
+
+        &:is(:hover, :focus-visible) {
+          outline-color: var(--text-color);
+          outline-offset: 0.3rem;
+
+          transition: outline-color 0.1s, outline-offset 0s;
+        }
+      }
+    }
+  }
+}
+</style>

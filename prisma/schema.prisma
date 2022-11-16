@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "cockroachdb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id BigInt @id @default(autoincrement())
+
+  username String @unique @db.String(50)
+  email    String @unique @db.String(75)
+  password String
+
+  notes   Note[]
+  folders Folder[]
+  // folder   Folder @relation(fields: [folderId], references: [id])
+  // folderId BigInt @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([username, email])
+}
+
+model Note {
+  id BigInt @id @default(autoincrement())
+
+  name   String  @db.String(150)
+  content String?
+
+  owner   User @relation(fields: [ownerId], references: [id])
+  ownerId BigInt
+
+  parent   Folder @relation(fields: [parentId], references: [id])
+  parentId BigInt
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Folder {
+  id BigInt @id @default(autoincrement())
+
+  name String  @db.String(50)
+  path String  @db.String(100) @unique
+  root Boolean @default(false)
+
+  notes      Note[]
+  subfolders Folder[] @relation(name: "subfolders")
+
+  parent   Folder? @relation(name: "subfolders", fields: [parentId], references: [id])
+  parentId BigInt?
+
+  owner   User   @relation(fields: [ownerId], references: [id])
+  ownerId BigInt
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([name, path, ownerId, parentId])
+}
