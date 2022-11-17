@@ -29,12 +29,12 @@ export function setAuthCookies(event: H3Event, user: object) {
   const accessToken = generateAccessToken(user);
   const accessTokenName = getAccessTokenName();
 
-  const oneHourInMilliseconds = 60 * 60 * 1000;
+  const oneHour = 60 * 60;
 
   setCookie(event, accessTokenName, accessToken, {
     path: '/',
     sameSite: 'lax',
-    maxAge: oneHourInMilliseconds,
+    maxAge: oneHour,
   });
 }
 
