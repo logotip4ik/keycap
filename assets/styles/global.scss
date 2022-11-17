@@ -3,12 +3,20 @@
 }
 
 :root {
-  --surface-color: whitesmoke;
-  --text-color: #222;
+  --hsl-primary-color: 253;
+  
+  --surface-color-hsl: var(--hsl-primary-color), 16%, 95%;
+  --text-color-hsl: var(--hsl-primary-color), 5%, 13%;
+
+  --surface-color: hsl(var(--hsl-primary-color), 16%, 95%);
+  --text-color: hsl(var(--hsl-primary-color), 5%, 13%);
   
   @media (prefers-color-scheme: dark) {
-    --surface-color: #191720;   
-    --text-color:  whitesmoke;
+    --surface-color-hsl: var(--hsl-primary-color), 16%, 11%;
+    --text-color-hsl:  var(--hsl-primary-color), 5%, 96%;
+    
+    --surface-color: hsl(var(--hsl-primary-color), 16%, 11%);
+    --text-color:  hsl(var(--hsl-primary-color), 5%, 96%);
   }
 }
 
