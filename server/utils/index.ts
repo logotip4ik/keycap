@@ -5,6 +5,10 @@ export function generateFolderPath(username: string, path: string): string {
   return withoutTrailingSlash(`${withLeadingSlash(username)}${withLeadingSlash(path)}`);
 }
 
+export function generateNotePath(username: string, path: string): string {
+  return `${generateFolderPath(username, path)}.note`;
+}
+
 export function toBigInt(string: string): bigint {
   if (string.at(-1) === 'n') return BigInt(string.substring(0, string.length - 1));
 
