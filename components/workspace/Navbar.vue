@@ -26,8 +26,6 @@ const headingText = computed(() => {
 
   padding: 0.5rem 1.5rem;
 
-  border-bottom: 1px solid var(--text-color);
-
   &__heading {
     font-size: 1.1rem;
   }
