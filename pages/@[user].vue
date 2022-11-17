@@ -51,6 +51,9 @@ watch(contents, (newContents) => {
   &__contents {
     grid-area: 2 / 1;
 
+    display: grid;
+    grid-template-rows: 1fr auto;
+
     height: 100%;
     width: 20vw;
 
@@ -63,9 +66,9 @@ watch(contents, (newContents) => {
     border-right: 1px solid hsla(var(--text-color-hsl), 0.25);
 
     ul {
-      padding: 0 0.25rem;
-
-      margin-left: 0.25rem;
+      padding: 0;
+      margin: 0;
+      margin-left: 0.5rem;
     }
   }
 
