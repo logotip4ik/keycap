@@ -47,22 +47,4 @@ export default defineEventHandler(async (event) => {
   }
 
   return { };
-
-  // const user = await getUserFromCookies(event);
-
-  // if (!user) return sendError(event, createError({ status: 401 }));
-
-  // const method = getMethod(event);
-  // const prisma = getPrisma();
-
-  // if (method === 'GET') {
-  //   // const folderPath
-
-  //   const folderContents: Folder = await prisma.folder.findUnique({
-  //     where: {  },
-  //     include: { notes: true },
-  //   });
-  // }
-
-  // return '';
 });
