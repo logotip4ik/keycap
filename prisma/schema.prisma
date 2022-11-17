@@ -31,10 +31,11 @@ model User {
 model Note {
   id BigInt @id @default(autoincrement())
 
-  name   String  @db.String(150)
+  name    String  @db.String(150)
   content String?
+  path    String  @unique
 
-  owner   User @relation(fields: [ownerId], references: [id])
+  owner   User   @relation(fields: [ownerId], references: [id])
   ownerId BigInt
 
   parent   Folder @relation(fields: [parentId], references: [id])
@@ -48,7 +49,7 @@ model Folder {
   id BigInt @id @default(autoincrement())
 
   name String  @db.String(50)
-  path String  @db.String(100) @unique
+  path String  @unique @db.String(100)
   root Boolean @default(false)
 
   notes      Note[]
