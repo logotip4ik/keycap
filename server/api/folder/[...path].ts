@@ -1,5 +1,4 @@
 import { createError, getRouterParams, isMethod, sendError } from 'h3';
-// import type { Folder } from '@prisma/client';
 
 import { getUserFromEvent } from '~/server/utils/auth';
 import { generateFolderPath } from '~/server/utils';
@@ -31,7 +30,7 @@ export default defineEventHandler(async (event) => {
         createdAt: true,
 
         notes: {
-          select: { id: true, name: true, updatedAt: true, createdAt: true },
+          select: { id: true, name: true, path: true, updatedAt: true, createdAt: true },
           orderBy: { updatedAt: 'desc' },
         },
 
