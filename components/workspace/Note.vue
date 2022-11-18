@@ -41,7 +41,7 @@ async function createNewNote() {
     },
   });
 
-  notesCache.set(newlyCreatedNote.id, newlyCreatedNote);
+  notesCache.set(newlyCreatedNote.id.toString(), newlyCreatedNote);
   updateNoteInFolder(props.note, { ...newlyCreatedNote, content: '', creating: false });
 
   showNote(newlyCreatedNote as NoteMinimal);
