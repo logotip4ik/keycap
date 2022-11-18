@@ -6,7 +6,7 @@ export function generateFolderPath(username: string, path: string): string {
 }
 
 export function generateNotePath(username: string, path: string): string {
-  return `${generateFolderPath(username, path)}.note`;
+  return generateFolderPath(username, path);
 }
 
 export function toBigInt(string: string): bigint {
