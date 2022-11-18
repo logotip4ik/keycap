@@ -74,6 +74,8 @@ watch(contents, (newContents) => {
 
   &__note {
     grid-area: 2 / 2;
+
+    overflow: hidden;
   }
 }
 </style>
