@@ -4,6 +4,8 @@
 
 :root {
   --hsl-primary-color: 253;
+
+  --loading-indicator-color: hsl(var(--hsl-primary-color), 65%, 75%);
   
   --surface-color-hsl: var(--hsl-primary-color), 16%, 95%;
   --text-color-hsl: var(--hsl-primary-color), 5%, 13%;
@@ -12,6 +14,8 @@
   --text-color: hsl(var(--hsl-primary-color), 5%, 13%);
   
   @media (prefers-color-scheme: dark) {
+  --loading-indicator-color: hsl(var(--hsl-primary-color), 65%, 25%);
+    
     --surface-color-hsl: var(--hsl-primary-color), 16%, 11%;
     --text-color-hsl:  var(--hsl-primary-color), 5%, 96%;
     
