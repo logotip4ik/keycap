@@ -25,7 +25,7 @@ export function stringifyUserObject(user: User | object): string {
   );
 }
 
-export function setAuthCookies(event: H3Event, user: object) {
+export function setAuthCookies(event: H3Event, user: Pick<User, 'id' | 'username' | 'email'>) {
   const accessToken = generateAccessToken(user);
   const accessTokenName = getAccessTokenName();
 
