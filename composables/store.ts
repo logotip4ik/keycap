@@ -1,3 +1,4 @@
+import LRU from 'lru-cache';
 import type { Folder, Note } from '@prisma/client';
 
 export type NoteMinimal = Pick<Note, 'id' | 'name'> & {
@@ -22,7 +23,7 @@ export type Updatable<T> = {
 
 export const useRootFolderContents = () => useState<FolderWithContents | null>(() => null);
 
-const notesCache = new Map();
+const notesCache = new LRU<string, Note>({ max: 50 });
 export const useNotesCache = () => notesCache;
 
 // TODO: support deletion from nested folders
