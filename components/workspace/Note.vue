@@ -8,14 +8,16 @@ interface Props { note: NoteMinimal; parent: FolderWithContents }
 const props = defineProps<Props>();
 
 const router = useRouter();
-const { params } = useRoute();
+const route = useRoute();
 const notesCache = useNotesCache();
 
 const newNoteName = ref('');
 
+const isNoteActive = computed(() => decodeURIComponent(route.params.note as string) === props.note.name);
+
 function showNote(note: NoteMinimal) {
   const encodedName = encodeURIComponent(note.name);
-  router.push({ name: '@user-folders-note', params: { ...params, note: encodedName } });
+  router.push({ name: '@user-folders-note', params: { ...route.params, note: encodedName } });
 }
 
 function cancelActions() {
@@ -28,7 +30,7 @@ function cancelActions() {
 }
 
 async function createNewNote() {
-  const folderPath = (Array.isArray(params.folders) ? params.folders.join('/') : params.folders) || '/';
+  const folderPath = (Array.isArray(route.params.folders) ? route.params.folders.join('/') : route.params.folders) || '/';
 
   const newlyCreatedNote = await $fetch<Note>('/api/note', {
     method: 'POST',
@@ -54,7 +56,7 @@ function handleEnter(e: KeyboardEvent) {
 </script>
 
 <template>
-  <div class="note" v-bind="{ 'data-creating': note.creating, 'data-editing': note.editing }">
+  <div class="note" :class="{ 'note--active': isNoteActive }" v-bind="{ 'data-creating': note.creating, 'data-editing': note.editing }">
     <input
       v-if="note.creating || note.editing"
       v-model="newNoteName"
@@ -75,9 +77,13 @@ function handleEnter(e: KeyboardEvent) {
   z-index: 1;
   isolation: isolate;
 
+  color: hsla(var(--text-color-hsl), 0.7);
+
   width: 100%;
 
   border-left: 1px solid hsla(var(--text-color-hsl), 0.15);
+
+  transition: border-color .3s;
 
   &[data-creating="true"] {
     padding: 0.3rem 0.35rem;
@@ -108,7 +114,7 @@ function handleEnter(e: KeyboardEvent) {
     display: block;
 
     text-align: left;
-    color: hsla(var(--text-color-hsl), 0.7);
+    color: currentColor;
 
     height: 100%;
     width: 100%;
@@ -131,6 +137,12 @@ function handleEnter(e: KeyboardEvent) {
 
       transition: background-color .1s, color .1s;
     }
+  }
+
+  &--active {
+    color: var(--text-color);
+
+    border-color: var(--text-color);
   }
 }
 </style>
