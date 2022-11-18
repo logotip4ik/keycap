@@ -71,8 +71,8 @@ onBeforeRouteUpdate(() => {
 
     ul, ol {
       margin: 0;
-      padding: 0.5rem 0;
-      padding-left: 1.5rem;
+      padding: 0.4rem 0;
+      padding-left: 1rem;
 
       &[data-type="taskList"] {
         list-style: none;
