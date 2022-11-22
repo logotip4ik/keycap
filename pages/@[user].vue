@@ -28,9 +28,11 @@ watch(contents, (newContents) => {
       <WorkspaceContents />
     </aside>
 
-    <main class="workspace__note">
-      <NuxtPage />
-    </main>
+    <Transition name="note-change" mode="out-in">
+      <main :key="$route.fullPath" class="workspace__note">
+        <NuxtPage />
+      </main>
+    </Transition>
   </div>
 </template>
 
@@ -75,7 +77,17 @@ watch(contents, (newContents) => {
   &__note {
     grid-area: 2 / 2;
 
-    overflow: hidden;
+    overflow-y: auto;
   }
+}
+
+.note-change-enter-active,
+.note-change-leave-active {
+  transition: opacity 0.1s ease;
+}
+
+.note-change-enter-from,
+.note-change-leave-to {
+  opacity: 0;
 }
 </style>

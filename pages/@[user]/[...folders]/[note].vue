@@ -13,7 +13,7 @@ const { data: fetchNote, pending } = useLazyFetch<Note>(() => `/api/note${getUni
   server: false,
 });
 
-const throttledUpdate = useThrottleFn(updateNote, 500);
+const throttledUpdate = useThrottleFn(updateNote, 1000);
 function updateNote(content: string) {
   if (!note.value) return;
 
@@ -52,12 +52,16 @@ watch(fetchNote, (value) => {
 </script>?.content
 
 <template>
-  <div v-if="pending && !note">
-    loading placeholder
-  </div>
-  <ClientOnly v-else-if="note">
-    <WorkspaceNoteEditor class="workspace__note-editor" :content="note.content || ''" @update="throttledUpdate" />
-  </ClientOnly>
+  <Transition name="note-loading" mode="out-in">
+    <div v-if="pending && !note">
+      loading placeholder
+    </div>
+    <div v-else-if="note">
+      <ClientOnly class="workspace__note-editor__wrapper">
+        <WorkspaceNoteEditor class="workspace__note-editor" :content="note.content || ''" @update="throttledUpdate" />
+      </ClientOnly>
+    </div>
+  </Transition>
 </template>
 
 <style lang="scss">
@@ -65,7 +69,19 @@ watch(fetchNote, (value) => {
   &__note-editor {
     height: 100%;
 
-    overflow-y: auto;
+    &__wrapper {
+      height: 100%;
+    }
   }
+}
+
+.note-loading-enter-active,
+.note-loading-leave-active {
+  transition: opacity 0.1s ease;
+}
+
+.note-loading-enter-from,
+.note-loading-leave-to {
+  opacity: 0;
 }
 </style>
