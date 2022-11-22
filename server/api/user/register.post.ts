@@ -6,13 +6,7 @@ import getPrisma from '~/prisma';
 import { setAuthCookies } from '~/server/utils/auth';
 
 export default defineEventHandler(async (event) => {
-  const body = await readBody<{ username?: string; email?: string; password?: string }>(event);
-
-  if (!body) {
-    const error = createError({ status: 400, statusMessage: 'not enough data' });
-
-    return sendError(event, error);
-  }
+  const body = await readBody<{ username?: string; email?: string; password?: string }>(event) || {};
 
   if (!body.email || !body.username || !body.password) {
     const error = createError({ status: 400, statusMessage: 'not enough data' });
@@ -50,7 +44,7 @@ export default defineEventHandler(async (event) => {
     return sendError(event, error);
   }
 
-  setAuthCookies(event, user);
+  await setAuthCookies(event, user);
 
   return user;
 });

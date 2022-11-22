@@ -10,5 +10,5 @@ export default defineNuxtPlugin(async () => {
 
   user.value = userFromCookies;
 
-  setAuthCookies(event, user.value);
+  await setAuthCookies(event, user.value);
 });
