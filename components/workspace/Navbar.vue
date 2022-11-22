@@ -22,9 +22,12 @@ const headingText = computed(() => {
   justify-content: flex-between;
   align-items: center;
 
-  width: 100%;
+  width: 20vw;
 
-  padding: 0.5rem 1.5rem;
+  max-width: 250px;
+  min-width: 125px;
+
+  padding: 0.25rem 1rem;
 
   &__heading {
     font-size: 1.1rem;

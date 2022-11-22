@@ -45,8 +45,9 @@ watch(contents, (newContents) => {
   height: calc(var(--1vh, 1vh) * 100);
 
   &__navbar {
-    grid-column: 1 / end;
+    grid-column: 1 / 1;
 
+    border-right: 1px solid hsla(var(--text-color-hsl), 0.25);
     border-bottom: 1px solid hsla(var(--text-color-hsl), 0.25);
   }
 
@@ -75,7 +76,8 @@ watch(contents, (newContents) => {
   }
 
   &__note {
-    grid-area: 2 / 2;
+    grid-row: 1 / end;
+    grid-column: 2;
 
     overflow-y: auto;
   }
