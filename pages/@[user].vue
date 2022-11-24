@@ -54,8 +54,9 @@ watch(contents, (newContents) => {
   &__contents {
     grid-area: 2 / 1;
 
-    display: grid;
-    grid-template-rows: 1fr auto;
+    position: relative;
+    z-index: 1;
+    isolation: isolate;
 
     height: 100%;
     width: 20vw;
@@ -71,7 +72,7 @@ watch(contents, (newContents) => {
     ul {
       padding: 0;
       margin: 0;
-      margin-left: 0.5rem;
+      // margin-left: 0.5rem;
     }
   }
 
@@ -79,7 +80,7 @@ watch(contents, (newContents) => {
     grid-row: 1 / end;
     grid-column: 2;
 
-    overflow-y: auto;
+    // overflow-y: scroll;
   }
 }
 

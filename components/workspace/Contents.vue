@@ -22,32 +22,38 @@ function preCreateNote() {
   </template>
 
   <button class="workspace__create-button" @click="preCreateNote">
-    <svg viewBox="0 0 24 24">
-      <path fill="currentColor" d="M11 19v-6H5v-2h6V5h2v6h6v2h-6v6Z" />
-    </svg>
+    <Icon name="ic:outline-add" />
   </button>
 </template>
 
 <style lang="scss">
 .workspace {
   &__create-button {
-    height: 100%;
-    width: 100%;
+    --button-size-basis: 25vw;
+    --button-size-max: 4rem;
 
-    max-height: 4rem;
+    position: absolute;
+    bottom: calc(var(--button-size-max) / 3);
+    left: calc(var(--button-size-max) / 3);
+    z-index: 1;
+
+    height: var(--button-size-basis);
+    width: var(--button-size-basis);
+
+    max-width: var(--button-size-max);
+    max-height: var(--button-size-max);
 
     appearance: none;
 
     border: none;
-    border-top: 1px solid hsla(var(--text-color-hsl), .25);
-    border-radius: 0;
-    background: transparent;
+    border-radius: 50%;
+    background: hsla(var(--text-color-hsl), .7);
 
     cursor: pointer;
     transition: background-color .3s;
 
     svg {
-      color: hsla(var(--text-color-hsl), .75);
+      color: hsla(var(--surface-color-hsl), 0.75);
 
       height: 50%;
       width: auto;
@@ -56,10 +62,10 @@ function preCreateNote() {
     }
 
     &:is(:hover, :focus-visible) {
-      background-color: hsla(var(--text-color-hsl), .05);
+      background-color: hsla(var(--text-color-hsl), 1);
 
       svg {
-        color: hsla(var(--text-color-hsl), 1);
+        color: hsla(var(--surface-color-hsl), 1);
       }
     }
   }

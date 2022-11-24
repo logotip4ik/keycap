@@ -81,7 +81,7 @@ function handleEnter(e: KeyboardEvent) {
 
   width: 100%;
 
-  border-left: 1px solid hsla(var(--text-color-hsl), 0.15);
+  border-left: 0.2rem solid hsla(var(--text-color-hsl), 0);
 
   transition: border-color .3s;
 
@@ -129,8 +129,12 @@ function handleEnter(e: KeyboardEvent) {
     cursor: pointer;
 
     transition: background-color .3s, color .3s;
+  }
 
-    &:is(:hover, :focus-visible) {
+  &:is(:hover, :focus-visible) {
+    border-color: hsla(var(--text-color-hsl), 0.05);
+
+    .note__name {
       color: hsla(var(--text-color-hsl), 1);
 
       background-color: hsla(var(--text-color-hsl), 0.05);
@@ -142,7 +146,7 @@ function handleEnter(e: KeyboardEvent) {
   &--active {
     color: var(--text-color);
 
-    border-color: var(--text-color);
+    border-color: var(--text-color) !important;
   }
 }
 </style>
