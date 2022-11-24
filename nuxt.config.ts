@@ -6,7 +6,7 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ['@vueuse/nuxt'],
+  modules: ['@vueuse/nuxt', 'nuxt-icon'],
 
   css: [
     'normalize.css',
