@@ -507,6 +507,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@iconify/types@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@iconify/types@npm:2.0.0"
+  checksum: 029f58542c160e9d4a746869cf2e475b603424d3adf3994c5cc8d0406c47e6e04a3b898b2707840c1c5b9bd5563a1660a34b110d89fce43923baca5222f4e597
+  languageName: node
+  linkType: hard
+
+"@iconify/vue@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "@iconify/vue@npm:4.0.0"
+  dependencies:
+    "@iconify/types": ^2.0.0
+  peerDependencies:
+    vue: ">=3"
+  checksum: 2ebfa434edb503c0c3c03bf8308dbe8c4c3bae2ddfdb22868076aae319c0d81d89b92f8cd2a8f591f0a5e82307d53825f4196df13ffbb0c017c038a49ede6a6a
+  languageName: node
+  linkType: hard
+
 "@ioredis/commands@npm:^1.1.1":
   version: 1.2.0
   resolution: "@ioredis/commands@npm:1.2.0"
@@ -658,7 +676,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxt/kit@npm:3.0.0, @nuxt/kit@npm:^3.0.0-rc.13":
+"@nuxt/kit@npm:3.0.0, @nuxt/kit@npm:^3.0.0-rc.10, @nuxt/kit@npm:^3.0.0-rc.13":
   version: 3.0.0
   resolution: "@nuxt/kit@npm:3.0.0"
   dependencies:
@@ -6395,6 +6413,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"nuxt-icon@npm:^0.1.7":
+  version: 0.1.7
+  resolution: "nuxt-icon@npm:0.1.7"
+  dependencies:
+    "@iconify/vue": ^4.0.0
+    "@nuxt/kit": ^3.0.0-rc.10
+  checksum: 0b814e8c824f18c23caa3e1e716a4c821ea8ae7463b9dd642f9ee3a956e96d6bc2c737ee74fb269c8196da0e5fe6431b6ac966d18836bbb5c7b468bcee673292
+  languageName: node
+  linkType: hard
+
 "nuxt@npm:3.0.0":
   version: 3.0.0
   resolution: "nuxt@npm:3.0.0"
@@ -7712,6 +7740,7 @@ __metadata:
     lru-cache: ^7.14.1
     normalize.css: ^8.0.1
     nuxt: 3.0.0
+    nuxt-icon: ^0.1.7
     prisma: ^4.6.1
     sass: ^1.56.1
     typescript: ^4.9.3
