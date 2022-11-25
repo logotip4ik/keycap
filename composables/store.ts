@@ -1,4 +1,5 @@
 import LRU from 'lru-cache';
+
 import type { Folder, Note } from '@prisma/client';
 
 export type NoteMinimal = Pick<Note, 'id' | 'name'> & {
@@ -11,6 +12,8 @@ export type NoteMinimal = Pick<Note, 'id' | 'name'> & {
 };
 
 export interface FolderWithContents extends Folder {
+  editing?: boolean
+  creating?: boolean
   notes: NoteMinimal[]
   subfolders: FolderWithContents[]
 }
@@ -22,32 +25,46 @@ export type Updatable<T> = {
 };
 
 export const useRootFolderContents = () => useState<FolderWithContents | null>(() => null);
+export const useCurrentFolder = () => useState<FolderWithContents | null>('folder:current', () => null);
 
-const notesCache = new LRU<string, Note>({ max: 50 });
+const notesCache = new LRU<string, Note>({ max: 20 });
 export const useNotesCache = () => notesCache;
 
-// TODO: support deletion from nested folders
-export function deleteNoteFromFolder(noteToDelete: NoteMinimal) {
-  const rootFolder = useRootFolderContents();
+const foldersCache = new LRU<string, FolderWithContents>({ max: 20 });
+export const useFoldersCache = () => foldersCache;
 
-  if (!rootFolder.value) return;
+export function deleteNoteFromFolder(noteToDelete: NoteMinimal, parent: FolderWithContents) {
+  const noteIdxToDelete = parent.notes.findIndex((note) => note.id === noteToDelete.id);
 
-  const noteIdxToDelete = rootFolder.value.notes.findIndex((note) => note.id === noteToDelete.id);
-
-  if (noteIdxToDelete === -1) return;
-
-  rootFolder.value.notes.splice(noteIdxToDelete, 1);
+  parent.notes.splice(noteIdxToDelete, 1);
 }
 
-export function updateNoteInFolder(noteToUpdate: NoteMinimal, fieldsToUpdate: Updatable<NoteMinimal>) {
-  const rootFolder = useRootFolderContents();
+export function deleteSubfolderFromFolder(subfolderToDelete: FolderWithContents, parent: FolderWithContents) {
+  const folderIdxToDelete = parent.subfolders.findIndex((folder) => folder.id === subfolderToDelete.id);
 
-  if (!rootFolder.value) return;
+  parent.subfolders.splice(folderIdxToDelete, 1);
+}
 
-  const noteIdxToUpdate = rootFolder.value.notes.findIndex((note) => note.id === noteToUpdate.id);
+export function updateNoteInFolder(noteToUpdate: NoteMinimal, fieldsToUpdate: Updatable<NoteMinimal>, parent: FolderWithContents) {
+  const noteIdxToUpdate = parent.notes.findIndex((note) => note.id === noteToUpdate.id);
 
-  rootFolder.value.notes[noteIdxToUpdate] = {
-    ...rootFolder.value.notes[noteIdxToUpdate],
+  parent.notes[noteIdxToUpdate] = {
+    ...noteToUpdate,
+    ...fieldsToUpdate,
+  };
+}
+
+export function updateSubfolderInFolder(
+  folderToUpdate: FolderWithContents,
+  fieldsToUpdate: Updatable<FolderWithContents>,
+  parentFolder: FolderWithContents) {
+  const folderIdxToUpdate = parentFolder.subfolders.findIndex((folder) => folder.id === folderToUpdate.id);
+
+  if (fieldsToUpdate.creating === false && folderIdxToUpdate === -1)
+    parentFolder.subfolders.push({ ...folderToUpdate, ...fieldsToUpdate });
+
+  parentFolder.subfolders[folderIdxToUpdate] = {
+    ...folderToUpdate,
     ...fieldsToUpdate,
   };
 }
