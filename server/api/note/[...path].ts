@@ -4,7 +4,7 @@ import type { Note } from '@prisma/client';
 
 import getPrisma from '~/prisma';
 import { getUserFromEvent } from '~/server/utils/auth';
-import { generateNotePath } from '~/server/utils';
+import { generateNotePath, toBigInt } from '~/server/utils';
 
 export default defineEventHandler(async (event) => {
   const user = await getUserFromEvent(event);
@@ -15,13 +15,46 @@ export default defineEventHandler(async (event) => {
 
   const prisma = getPrisma();
 
-  if (isMethod(event, 'GET')) {
-    const note = await prisma.note.findFirst({
-      where: { path: generateNotePath(user.username, notePath), ownerId: user.id },
-      select: { id: true, name: true, content: true, path: true, updatedAt: true, createdAt: true },
-    });
+  if (isMethod(event, 'POST')) {
+    interface BodyNote { content?: string; parentId: string }
+    const body = await readBody<BodyNote>(event) || {};
 
-    return note || {};
+    const path = getRouterParam(event, 'path');
+
+    if (!body.parentId || !path)
+      return sendError(event, createError({ status: 400, message: 'not enough data' }));
+
+    try {
+      const note = await prisma.note.create({
+        data: {
+          name: decodeURIComponent(path.split('/').at(-1)), // last route param always should be note name
+          content: body.content || '',
+          path: generateNotePath(user.username, path),
+          owner: { connect: { id: user.id } },
+          parent: { connect: { id: toBigInt(body.parentId) } },
+        },
+        select: { id: true, name: true, content: true, path: true, updatedAt: true, createdAt: true },
+      });
+
+      return note;
+    }
+    catch (error) {
+      return sendError(event, createError({ status: 500 }));
+    }
+  }
+
+  if (isMethod(event, 'GET')) {
+    try {
+      const note = await prisma.note.findFirst({
+        where: { path: generateNotePath(user.username, notePath), ownerId: user.id },
+        select: { id: true, name: true, content: true, path: true, updatedAt: true, createdAt: true },
+      });
+
+      return note || {};
+    }
+    catch (error) {
+      return sendError(event, createError({ status: 500 }));
+    }
   }
 
   if (isMethod(event, 'PUT')) {
@@ -46,12 +79,29 @@ export default defineEventHandler(async (event) => {
       });
     }
     catch {
-      if (query.getNote === 'true') return {};
-      return { stats: 'error' };
+      return sendError(event, createError({ status: 500 }));
     }
 
     if (query.getNote === 'true') return updatedNote || {};
     return { status: 'ok' };
+  }
+
+  if (isMethod(event, 'DELETE')) {
+    const path = getRouterParam(event, 'path');
+
+    if (!path) return sendError(event, createError({ status: 400 }));
+
+    if (!path)
+      return sendError(event, createError({ status: 400, message: 'not enough data' }));
+
+    try {
+      await prisma.note.delete({ where: { path: generateNotePath(user.username, path) } });
+
+      return { status: 'ok' };
+    }
+    catch (error) {
+      return sendError(event, createError({ status: 500 }));
+    }
   }
 
   return {};
