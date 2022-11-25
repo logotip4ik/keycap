@@ -1,22 +1,6 @@
 <script setup lang="ts">
-import type { FolderWithContents } from '~~/composables/store';
-
 definePageMeta({
   middleware: ['auth'],
-});
-
-const rootFolderContents = useRootFolderContents();
-const currentFolder = ref<{ name: string; path: string; notes?: [] }>({ name: '', path: '/' });
-
-const { data: contents } = useLazyFetch<FolderWithContents>(
-  () => `/api/folder${currentFolder.value.path}`,
-  { server: false },
-);
-
-watch(contents, (newContents) => {
-  if (!newContents) return;
-
-  rootFolderContents.value = newContents;
 });
 </script>
 
@@ -72,7 +56,6 @@ watch(contents, (newContents) => {
     ul {
       padding: 0;
       margin: 0;
-      // margin-left: 0.5rem;
     }
   }
 
@@ -80,7 +63,11 @@ watch(contents, (newContents) => {
     grid-row: 1 / end;
     grid-column: 2;
 
-    // overflow-y: scroll;
+    overflow-y: auto;
+
+    & > div {
+      height: 100%;
+    }
   }
 }
 

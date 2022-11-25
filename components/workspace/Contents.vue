@@ -1,27 +1,95 @@
 <script setup lang="ts">
-const folder = useRootFolderContents();
+import { withLeadingSlash } from 'ufo';
 
-function preCreateNote() {
-  if (!folder.value) return;
+import type { FolderOrNote, FolderWithContents } from '~/composables/store';
+
+import { blankNoteName } from '~/assets/constants';
+
+const router = useRouter();
+const route = useRoute();
+const user = useUser();
+const currentFolder = useCurrentFolder();
+const foldersCache = useFoldersCache();
+
+const folderApiPath = computed(() => Array.isArray(route.params.folders) ? route.params.folders.join('/') : '');
+
+const { data: folder, pending } = useLazyAsyncData<FolderWithContents>(
+  async () => $fetch(`/api/folder/${getApiFolderPath()}`),
+  { server: false, watch: [() => route.params.folders] },
+);
+
+const mergedContents = computed(() => {
+  if (!currentFolder.value) return [];
+
+  return [...currentFolder.value.notes, ...currentFolder.value.subfolders] as FolderOrNote[];
+});
+
+function getApiFolderPath() {
+  return Array.isArray(route.params.folders) ? route.params.folders.join('/') : '';
+}
+
+function goUpFolder() {
+  const currentFolderPath = currentFolder.value!.path;
+  const prevFolderPath = currentFolderPath.split('/').slice(2, -1);
+
+  router.push({ name: '@user-folders-note', params: { folders: prevFolderPath, note: blankNoteName } });
+}
+
+function preCreateNoteOrFolder() {
+  if (!currentFolder.value || !user.value) return;
 
   const id = BigInt(Math.floor(Math.random() * 1000));
-  folder.value.notes.push({ id, name: `test folder ${id}`, creating: true });
+  currentFolder.value.notes.unshift({ id, name: '', creating: true });
 
   nextTick(() => {
-    (document.querySelector('.note[data-creating="true"] > input') as HTMLInputElement | null)?.focus();
+    (document.querySelector('.item[data-creating="true"] > input') as HTMLInputElement | null)?.focus();
   });
 }
+
+// setting initial folder
+watch(folderApiPath, (path) => {
+  const folderPath = withLeadingSlash(route.params.user as string) + withLeadingSlash(path);
+  const newCurrentFolder = foldersCache.get(folderPath);
+
+  if (newCurrentFolder) currentFolder.value = newCurrentFolder;
+}, { immediate: true });
+
+// updating if server sent different
+watch(folder, (fetchedFolder) => {
+  if (!fetchedFolder) return;
+
+  fetchedFolder.notes = fetchedFolder.notes || [];
+  fetchedFolder.subfolders = fetchedFolder.subfolders || [];
+
+  foldersCache.set(fetchedFolder.path, fetchedFolder);
+
+  currentFolder.value = fetchedFolder;
+});
 </script>
 
 <template>
-  <template v-if="folder">
-    <WorkspaceFolder :folder="folder" />
+  <template v-if="!currentFolder && pending">
+    <div>
+      Loading folder contents...
+    </div>
   </template>
-  <template v-else>
-    <div />
+  <template v-else-if="currentFolder">
+    <ul>
+      <li v-if="!currentFolder.root" class="item">
+        <button class="item__name" @click="goUpFolder">
+          cd ..
+        </button>
+      </li>
+
+      <template v-for="item in mergedContents" :key="item.id.toString()">
+        <li>
+          <WorkspaceContentsItem :item="item" :parent="currentFolder" />
+        </li>
+      </template>
+    </ul>
   </template>
 
-  <button class="workspace__create-button" @click="preCreateNote">
+  <button class="workspace__create-button" @click="preCreateNoteOrFolder">
     <Icon name="ic:outline-add" />
   </button>
 </template>
@@ -29,7 +97,7 @@ function preCreateNote() {
 <style lang="scss">
 .workspace {
   &__create-button {
-    --button-size-basis: 25vw;
+    --button-size-basis: 10vw;
     --button-size-max: 4rem;
 
     position: absolute;
@@ -48,6 +116,7 @@ function preCreateNote() {
     border: none;
     border-radius: 50%;
     background: hsla(var(--text-color-hsl), .7);
+    box-shadow: 0 0 1rem hsla(var(--text-color-hsl), .1);
 
     cursor: pointer;
     transition: background-color .3s;

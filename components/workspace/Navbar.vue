@@ -31,6 +31,10 @@ const headingText = computed(() => {
 
   &__heading {
     font-size: 1.1rem;
+
+    text-overflow: ellipsis;
+
+    overflow: hidden;
   }
 }
 </style>

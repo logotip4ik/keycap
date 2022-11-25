@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import type { Note } from '@prisma/client';
 import { withLeadingSlash } from 'ufo';
+
+import type { Note } from '@prisma/client';
 import type { Updatable } from '~/composables/store';
+
+import { blankNoteName } from '~/assets/constants';
 
 const route = useRoute();
 const isOnline = useOnline();
@@ -53,9 +56,12 @@ watch(fetchNote, (value) => {
 
 <template>
   <Transition name="note-loading" mode="out-in">
-    <div v-if="pending && !note">
+    <div v-if="$route.params.note === blankNoteName" />
+
+    <div v-else-if="pending && !note">
       loading placeholder
     </div>
+
     <div v-else-if="note">
       <ClientOnly class="workspace__note-editor__wrapper">
         <WorkspaceNoteEditor class="workspace__note-editor" :content="note.content || ''" @update="throttledUpdate" />
