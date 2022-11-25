@@ -35,10 +35,10 @@ model Note {
   content String?
   path    String  @unique
 
-  owner   User   @relation(fields: [ownerId], references: [id])
+  owner   User   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   ownerId BigInt
 
-  parent   Folder @relation(fields: [parentId], references: [id])
+  parent   Folder @relation(fields: [parentId], references: [id], onDelete: Cascade)
   parentId BigInt
 
   createdAt DateTime @default(now())
@@ -55,10 +55,10 @@ model Folder {
   notes      Note[]
   subfolders Folder[] @relation(name: "subfolders")
 
-  parent   Folder? @relation(name: "subfolders", fields: [parentId], references: [id])
+  parent   Folder? @relation(name: "subfolders", fields: [parentId], references: [id], onDelete: Cascade)
   parentId BigInt?
 
-  owner   User   @relation(fields: [ownerId], references: [id])
+  owner   User   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   ownerId BigInt
 
   createdAt DateTime @default(now())
