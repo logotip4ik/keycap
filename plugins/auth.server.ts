@@ -1,4 +1,4 @@
-import { getUserFromEvent, setAuthCookies } from '~/server/utils/auth';
+import { getUserFromEvent } from '~/server/utils/auth';
 
 export default defineNuxtPlugin(async () => {
   const event = useRequestEvent();
@@ -9,6 +9,4 @@ export default defineNuxtPlugin(async () => {
   if (!userFromCookies) return;
 
   user.value = userFromCookies;
-
-  await setAuthCookies(event, user.value);
 });
