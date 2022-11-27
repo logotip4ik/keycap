@@ -74,8 +74,8 @@ watch(folder, (fetchedFolder) => {
     </div>
   </template>
   <template v-else-if="currentFolder">
-    <ul>
-      <li v-if="!currentFolder.root" class="item">
+    <TransitionGroup tag="ul" name="list">
+      <li v-if="!currentFolder.root" key="cd.." class="item">
         <button class="item__name" @click="goUpFolder">
           cd ..
         </button>
@@ -86,7 +86,7 @@ watch(folder, (fetchedFolder) => {
           <WorkspaceContentsItem :item="item" :parent="currentFolder" />
         </li>
       </template>
-    </ul>
+    </TransitionGroup>
   </template>
 
   <button class="workspace__create-button" @click="preCreateNoteOrFolder">
@@ -138,5 +138,25 @@ watch(folder, (fetchedFolder) => {
       }
     }
   }
+}
+
+$list-transition-duration: 0.3s;
+
+.list-enter-active,
+.list-leave-active {
+  transition: all $list-transition-duration * 2 ease;
+}
+
+.list-move {
+  transition-duration: $list-transition-duration;
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+}
+
+.list-leave-active {
+  display: none;
 }
 </style>

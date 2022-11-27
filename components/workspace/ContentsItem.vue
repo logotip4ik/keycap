@@ -27,10 +27,16 @@ function generateItemRouteParams(item: FolderOrNote) {
 
   if (encodedName === encodeURIComponent(rootFolderName)) encodedName = '';
 
-  if (isFolder)
-    return { name: '@user-folders-note', params: { folders: [...(route.params.folders || []), encodedName], note: blankNoteName } };
-  else
+  if (isFolder) {
+    const folders = [...(route.params.folders || [])];
+
+    if (encodedName) folders.push(encodedName);
+
+    return { name: '@user-folders-note', params: { folders, note: blankNoteName } };
+  }
+  else {
     return { name: '@user-folders-note', params: { ...route.params, note: encodedName } };
+  }
 }
 
 function showItem(item: FolderOrNote) {
@@ -84,7 +90,7 @@ async function createFolder(folderPath: string) {
 async function removeFolder() {
   const parentPath = (Array.isArray(route.params.folders) ? route.params.folders.join('/') : route.params.folders) || '/';
   const folderName = encodeURIComponent(decodeURIComponent(props.item.name));
-  const folderPath = withTrailingSlash(parentPath) + folderName;
+  const folderPath = withLeadingSlash(withTrailingSlash(parentPath) + folderName);
 
   const response = await $fetch<{ status: 'ok' }>(`/api/folder${folderPath}`, { method: 'DELETE' });
 
