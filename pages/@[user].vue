@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { blankNoteName } from '~/assets/constants';
+
 definePageMeta({
   middleware: ['auth'],
 });
@@ -13,7 +15,7 @@ definePageMeta({
     </aside>
 
     <Transition name="note-change" mode="out-in">
-      <main :key="$route.fullPath" class="workspace__note">
+      <main v-if="$route.params.note !== blankNoteName" :key="$route.fullPath" class="workspace__note">
         <NuxtPage />
       </main>
     </Transition>

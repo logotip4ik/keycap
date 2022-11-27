@@ -56,9 +56,7 @@ watch(fetchNote, (value) => {
 
 <template>
   <Transition name="note-loading" mode="out-in">
-    <div v-if="$route.params.note === blankNoteName" />
-
-    <div v-else-if="pending && !note">
+    <div v-if="pending && !note">
       loading placeholder
     </div>
 
