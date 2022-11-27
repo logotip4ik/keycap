@@ -14,7 +14,7 @@ const emit = defineEmits<Emits>();
 const update = (content: string) => emit('update', content);
 
 const editor = useEditor({
-  autofocus: 'start',
+  autofocus: window.innerWidth > 740 && 'start', // disable auto focus on small screens
   content: props.content,
   extensions: [
     StarterKir,
