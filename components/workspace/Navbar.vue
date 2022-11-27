@@ -1,15 +1,56 @@
 <script setup lang="ts">
+import { blankNoteName } from '~/assets/constants';
+
+const router = useRouter();
+const route = useRoute();
 const user = useUser();
 
+const isShowingBackButton = ref(false);
 const headingText = computed(() => {
   if (!user.value) return '';
 
+  if (route.params.note && route.params.note !== blankNoteName)
+    return decodeURIComponent(route.params.note as string);
+
+  if (route.params.folders && route.params.folders.length !== 0) {
+    const lastFolder = Array.isArray(route.params.folders) ? route.params.folders.at(-1) : route.params.folders;
+    return decodeURIComponent(lastFolder!);
+  }
+
   return `${user.value.username}'s workspace`;
 });
+
+function showFolderContents() {
+  router.push({ ...route, params: { ...route.params, note: blankNoteName } });
+}
+
+watch(() => route.path, (path) => {
+  if (typeof window === 'undefined')
+    return;
+
+  if (!user.value)
+    return isShowingBackButton.value = false;
+
+  if (window.innerWidth > 740)
+    return isShowingBackButton.value = false;
+
+  if (!route.params.note || route.params.note === blankNoteName)
+    return isShowingBackButton.value = false;
+
+  isShowingBackButton.value = true;
+}, { immediate: true });
 </script>
 
 <template>
   <nav class="nav">
+    <ClientOnly>
+      <Transition name="nav-back-button">
+        <button v-if="isShowingBackButton" class="nav__back-button" @click="showFolderContents">
+          <Icon name="ic:baseline-arrow-back" class="nav__back-button__icon" />
+        </button>
+      </Transition>
+    </ClientOnly>
+
     <p class="nav__heading">
       {{ headingText }}
     </p>
@@ -27,6 +68,8 @@ const headingText = computed(() => {
   max-width: 250px;
   min-width: 125px;
 
+  min-height: 6rem;
+
   padding: 0.25rem 1rem;
 
   &__heading {
@@ -36,5 +79,56 @@ const headingText = computed(() => {
 
     overflow: hidden;
   }
+
+  &__back-button {
+    --button-size-basis: 2.5rem;
+
+    display: none;
+
+    color: hsla(var(--text-color-hsl), 0.85);
+
+    width: var(--button-size-basis);
+    height: var(--button-size-basis);
+
+    margin-right: 1rem;
+
+    appearance: none;
+    border: none;
+    border-radius: 0.2rem;
+    background-color: hsla(var(--text-color-hsl), 0.1);
+
+    cursor: pointer;
+    transition: color .3s, background-color .3s;
+
+    &__icon {
+      height: 70%;
+      width: auto;
+    }
+
+    @media screen and (max-width: 740px) {
+      display: block;
+    }
+  }
+
+  @media screen and (max-width: 740px) {
+    width: 100%;
+
+    max-width: unset;
+    min-height: unset;
+  }
+}
+
+.nav-back-button-enter-active,
+.nav-back-button-leave-active {
+  transition: opacity .3s, transform .3s, margin-right .3s;
+}
+
+.nav-back-button-leave-to,
+.nav-back-button-enter-from {
+  margin-right: calc(var(--button-size-basis) * -1);
+
+  opacity: 0;
+
+  transform: translateX(-0.5rem);
 }
 </style>

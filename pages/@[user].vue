@@ -4,13 +4,21 @@ import { blankNoteName } from '~/assets/constants';
 definePageMeta({
   middleware: ['auth'],
 });
+
+const route = useRoute();
+
+const isShowingContents = ref(false);
+
+watch(() => route.params.note, (noteName) => {
+  isShowingContents.value = !noteName || noteName === blankNoteName;
+}, { immediate: true });
 </script>
 
 <template>
   <div class="workspace">
     <WorkspaceNavbar class="workspace__navbar" />
 
-    <aside class="workspace__contents">
+    <aside class="workspace__contents" :class="{ 'workspace__contents--visible': isShowingContents }">
       <WorkspaceContents />
     </aside>
 
@@ -35,6 +43,12 @@ definePageMeta({
 
     border-right: 1px solid hsla(var(--text-color-hsl), 0.25);
     border-bottom: 1px solid hsla(var(--text-color-hsl), 0.25);
+
+    @media screen and (max-width: 740px) {
+      grid-area: 1 / 1;
+
+      border-right: none
+    }
   }
 
   &__contents {
@@ -58,6 +72,29 @@ definePageMeta({
     ul {
       padding: 0;
       margin: 0;
+
+      list-style-type: none;
+    }
+
+    @media screen and (max-width: 740px) {
+      display: none;
+
+      padding: 4.5rem 1rem 2rem;
+
+      &--visible {
+        display: block;
+
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 100%;
+
+        max-width: none;
+
+        border: none;
+      }
     }
   }
 
@@ -70,6 +107,15 @@ definePageMeta({
     & > div {
       height: 100%;
     }
+
+    @media screen and (max-width: 740px) {
+      grid-area: 2 / 1;
+    }
+  }
+
+  @media screen and (max-width: 740px) {
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 1fr;
   }
 }
 

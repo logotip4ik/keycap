@@ -157,7 +157,7 @@ function handleEnter(e: KeyboardEvent) {
     <template v-else>
       <NuxtLink class="item__name" :to="generateItemRouteParams(item)" @click="showItem(item)">
         <template v-if="isFolder">
-          <Icon name="ic:outline-folder" />
+          <Icon name="ic:outline-folder" class="item__name__folder-icon" />
         </template>
 
         {{ decodeURIComponent(item.name) }}
@@ -214,14 +214,17 @@ function handleEnter(e: KeyboardEvent) {
   }
 
   &__name {
-    display: block;
+    align-self: stretch;
+
+    display: flex;
+    align-items: center;
 
     text-align: left;
     text-decoration: none;
     color: currentColor;
 
-    height: 100%;
     width: 100%;
+    min-height: 100%;
 
     padding: 0.5rem 0.35rem;
 
@@ -231,12 +234,16 @@ function handleEnter(e: KeyboardEvent) {
     background: transparent;
 
     cursor: pointer;
+
+    &__folder-icon {
+      margin-right: 0.25rem;
+    }
   }
 
   &__delete {
     --button-size-basis: 3vw;
-    --button-size-max: 1.75rem;
-    --button-size-min: 1.5rem;
+    --button-size-max: 2rem;
+    --button-size-min: 1.9rem;
 
     color: hsla(var(--text-color-hsl), 0.1);
 
@@ -248,7 +255,7 @@ function handleEnter(e: KeyboardEvent) {
     max-height: var(--button-size-max);
     min-height: var(--button-size-min);
 
-    margin-block: -1rem;
+    margin-block: 0.25rem;
     margin-inline-end: 0.25rem;
 
     appearance: none;

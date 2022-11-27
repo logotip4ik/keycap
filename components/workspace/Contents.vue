@@ -99,7 +99,7 @@ watch(folder, (fetchedFolder) => {
   &__create-button {
     --button-size-basis: 10vw;
     --button-size-max: 4rem;
-    --button-size-min: 3rem;
+    --button-size-min: 3.9rem;
 
     position: absolute;
     bottom: calc(var(--button-size-max) / 3);
@@ -139,6 +139,11 @@ watch(folder, (fetchedFolder) => {
       svg {
         color: hsla(var(--surface-color-hsl), 1);
       }
+    }
+
+    @media screen and (max-width: 740px) {
+      right: calc(var(--button-size-max) / 3);
+      left: unset;
     }
   }
 }
