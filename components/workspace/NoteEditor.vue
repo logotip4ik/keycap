@@ -32,6 +32,13 @@ const editor = useEditor({
   }, 400),
 });
 
+// tiptap editor does not handle content change
+watch(() => props.content, (content) => {
+  const editorContent = editor.value?.getHTML();
+
+  if (editorContent !== content) editor.value?.commands.setContent(content);
+});
+
 // if user updated current note and switched to another note
 // before debounced function execution, try to save content
 onBeforeRouteUpdate(() => {

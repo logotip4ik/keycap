@@ -4,8 +4,6 @@ import { withLeadingSlash } from 'ufo';
 import type { Note } from '@prisma/client';
 import type { Updatable } from '~/composables/store';
 
-import { blankNoteName } from '~/assets/constants';
-
 const route = useRoute();
 const isOnline = useOnline();
 const notesCache = useNotesCache();
@@ -52,7 +50,7 @@ watch(fetchNote, (value) => {
   note.value = value;
   notesCache.set(value.path, value);
 });
-</script>?.content
+</script>
 
 <template>
   <Transition name="note-loading" mode="out-in">
