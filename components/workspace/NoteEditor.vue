@@ -87,13 +87,22 @@ onBeforeRouteUpdate(() => {
 
           > label {
             flex: 0 0 auto;
+
             margin-right: 0.5rem;
             user-select: none;
+
+            input {
+              cursor: pointer;
+            }
           }
 
           > div {
             flex: 1 1 auto;
           }
+        }
+
+        li + li {
+          margin-top: 0.175rem;
         }
       }
     }
@@ -127,12 +136,12 @@ onBeforeRouteUpdate(() => {
     @for $i from 1 to 7 {
       h#{$i} {
         margin: 0;
-        padding: 0.75rem 0;
-      }
-    }
+        padding: 1rem 0 0.5rem;
 
-    & > * + * {
-      margin-top: 0.5rem;
+        &:not(:first-child) {
+          padding-top: 2rem;
+        }
+      }
     }
 
     * {
