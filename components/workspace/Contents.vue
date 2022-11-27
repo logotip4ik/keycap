@@ -14,7 +14,7 @@ const foldersCache = useFoldersCache();
 const folderApiPath = computed(() => Array.isArray(route.params.folders) ? route.params.folders.join('/') : '');
 
 const { data: folder, pending } = useLazyAsyncData<FolderWithContents>(
-  async () => $fetch(`/api/folder/${getApiFolderPath()}`),
+  () => $fetch(`/api/folder/${getApiFolderPath()}`),
   { server: false, watch: [() => route.params.folders] },
 );
 
