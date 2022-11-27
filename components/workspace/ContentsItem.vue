@@ -236,6 +236,7 @@ function handleEnter(e: KeyboardEvent) {
   &__delete {
     --button-size-basis: 3vw;
     --button-size-max: 1.75rem;
+    --button-size-min: 1.5rem;
 
     color: hsla(var(--text-color-hsl), 0.1);
 
@@ -243,7 +244,9 @@ function handleEnter(e: KeyboardEvent) {
     height: var(--button-size-basis);
 
     max-width: var(--button-size-max);
+    min-width: var(--button-size-min);
     max-height: var(--button-size-max);
+    min-height: var(--button-size-min);
 
     margin-block: -1rem;
     margin-inline-end: 0.25rem;

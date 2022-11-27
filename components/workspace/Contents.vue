@@ -99,6 +99,7 @@ watch(folder, (fetchedFolder) => {
   &__create-button {
     --button-size-basis: 10vw;
     --button-size-max: 4rem;
+    --button-size-min: 3rem;
 
     position: absolute;
     bottom: calc(var(--button-size-max) / 3);
@@ -109,7 +110,9 @@ watch(folder, (fetchedFolder) => {
     width: var(--button-size-basis);
 
     max-width: var(--button-size-max);
+    min-width: var(--button-size-min);
     max-height: var(--button-size-max);
+    min-height: var(--button-size-min);
 
     appearance: none;
 
