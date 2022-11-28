@@ -12,6 +12,7 @@ const note = ref<Note | null | undefined>(notesCache.get(`/${route.params.user}$
 
 const { data: fetchNote, pending } = useLazyFetch<Note>(() => `/api/note${getUniqueNoteKey()}`, {
   server: false,
+  retry: 2,
 });
 
 const throttledUpdate = useThrottleFn(updateNote, 1000);
