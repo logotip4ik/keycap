@@ -16,6 +16,9 @@ interface Emits { (event: 'update', content: string): void }
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
+const { width } = useWindowSize();
+const isPhoneScreen = computed(() => width.value < 740);
+
 const update = (content: string) => emit('update', content);
 
 const editor = useEditor({
@@ -49,6 +52,7 @@ watch(() => props.content, (content) => {
 // before debounced function execution, try to save content
 onBeforeRouteUpdate(() => {
   const noteContent = editor.value?.isEmpty ? '' : editor.value?.getHTML();
+
   update(noteContent || '');
 });
 </script>
@@ -59,7 +63,12 @@ onBeforeRouteUpdate(() => {
     <BubbleMenu
       v-if="editor"
       :editor="editor"
-      :tippy-options="{ duration: [10, 150], offset: [0, 5], animation: 'shift-away', arrow: false }"
+      :tippy-options="{
+        duration: [10, 150],
+        animation: 'shift-away',
+        arrow: false,
+        placement: isPhoneScreen ? 'bottom' : 'top',
+      }"
       class="note-editor__bubble-menu"
     >
       <button
@@ -98,7 +107,7 @@ onBeforeRouteUpdate(() => {
 
   &__bubble-menu {
     &__button {
-      --size-basis: 1.75rem;
+      --size-basis: 2rem;
 
       & + & {
         margin-left: 0.5rem;
@@ -135,6 +144,10 @@ onBeforeRouteUpdate(() => {
 
           background-color: hsla(var(--text-color-hsl), 0.85);
         }
+      }
+
+      @media screen and (max-width: 740px) {
+        --size-basis: 2.5rem;
       }
     }
   }
@@ -239,6 +252,10 @@ onBeforeRouteUpdate(() => {
 
     * {
       transition: all .3s;
+    }
+
+    @media screen and (max-width: 740px) {
+      padding-bottom: 35vh
     }
   }
 }
