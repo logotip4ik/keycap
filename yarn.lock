@@ -1061,6 +1061,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tiptap/extension-bubble-menu@npm:^2.0.0-beta.204":
+  version: 2.0.0-beta.204
+  resolution: "@tiptap/extension-bubble-menu@npm:2.0.0-beta.204"
+  dependencies:
+    prosemirror-state: ^1.4.1
+    prosemirror-view: ^1.28.2
+    tippy.js: ^6.3.7
+  peerDependencies:
+    "@tiptap/core": ^2.0.0-beta.193
+  checksum: 85fe245ee52cd3a281a519f02896f009f151038bab2dec247d1ba0ec4e53b4e706a496ae413311261c58f7a4ada8e4f913ceb89c836ac53d145e46fd8ba8cfaa
+  languageName: node
+  linkType: hard
+
 "@tiptap/extension-bullet-list@npm:^2.0.0-beta.202":
   version: 2.0.0-beta.202
   resolution: "@tiptap/extension-bullet-list@npm:2.0.0-beta.202"
@@ -7726,6 +7739,7 @@ __metadata:
   dependencies:
     "@antfu/eslint-config": ^0.31.0
     "@prisma/client": ^4.6.1
+    "@tiptap/extension-bubble-menu": ^2.0.0-beta.204
     "@tiptap/extension-link": ^2.0.0-beta.202
     "@tiptap/extension-placeholder": ^2.0.0-beta.202
     "@tiptap/extension-task-item": ^2.0.0-beta.202
