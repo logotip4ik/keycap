@@ -56,7 +56,7 @@ watch(fetchNote, (value) => {
 <template>
   <Transition name="note-loading" mode="out-in">
     <div v-if="pending && !note">
-      loading placeholder
+      <PlaceholderNoteEditor />
     </div>
 
     <div v-else-if="note">
@@ -80,7 +80,7 @@ watch(fetchNote, (value) => {
 
 .note-loading-enter-active,
 .note-loading-leave-active {
-  transition: opacity 0.1s ease;
+  transition: opacity 0.175s;
 }
 
 .note-loading-enter-from,
