@@ -92,6 +92,13 @@ onBeforeRouteUpdate(() => {
       >
         <Icon name="ic:baseline-format-strikethrough" />
       </button>
+      <button
+        class="note-editor__bubble-menu__button"
+        :class="{ 'note-editor__bubble-menu__button--active': editor.isActive('strike') }"
+        @click="editor!.chain().focus().toggleCode().run()"
+      >
+        <Icon name="ic:baseline-code" />
+      </button>
     </BubbleMenu>
     <EditorContent class="note-editor" :editor="editor" />
   </div>
