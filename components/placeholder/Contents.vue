@@ -18,8 +18,8 @@
   list-style-type: none;
 
   &__item {
-    --normal-stripe-color: hsla(var(--text-color-hsl), 0.5);
-    --light-stripe-color: hsla(var(--text-color-hsl), 0.75);
+    --normal-stripe-color: hsla(var(--text-color-hsl), 0.25);
+    --light-stripe-color: hsla(var(--text-color-hsl), 0.5);
     --light-stripe-position: 50%;
     --light-stripe-padding: 4%;
 
