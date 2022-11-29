@@ -6,8 +6,23 @@ definePageMeta({
 });
 
 const route = useRoute();
+const user = useUser();
 
 const isShowingContents = ref(false);
+const currentRouteName = computed(() => {
+  const folders = route.params.folders;
+  const currentFolder = Array.isArray(folders) ? folders.at(-1) : folders as string;
+
+  if (currentFolder && (!route.params.folders || route.params.note === blankNoteName))
+    return decodeURIComponent(currentFolder);
+
+  return decodeURIComponent(route.params.note as string);
+});
+
+useHead({
+  title: () => currentRouteName.value,
+  titleTemplate: (name) => name ? `${name} | ${user.value?.username}` : user.value?.username || '',
+});
 
 watch(() => route.params.note, (noteName) => {
   isShowingContents.value = !noteName || noteName === blankNoteName;
