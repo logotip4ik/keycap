@@ -164,7 +164,7 @@ onBeforeRouteUpdate(() => {
 
     min-height: 100%;
 
-    padding: 0.75rem .75rem 0;
+    padding: 0.75rem;
 
     outline: none;
 
