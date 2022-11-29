@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { withLeadingSlash } from 'ufo';
+import { withLeadingSlash, withoutTrailingSlash } from 'ufo';
 
 import type { FolderOrNote, FolderWithContents } from '~/composables/store';
 
@@ -11,10 +11,19 @@ const user = useUser();
 const currentFolder = useCurrentFolder();
 const foldersCache = useFoldersCache();
 
-const folderApiPath = computed(() => Array.isArray(route.params.folders) ? route.params.folders.join('/') : '');
-
 const { data: folder, pending } = useLazyAsyncData<FolderWithContents>(
-  () => $fetch(`/api/folder/${getApiFolderPath()}`),
+  () => {
+    const folders = route.params.folders;
+    const path = Array.isArray(folders) ? folders.at(-1) : folders as string;
+
+    const folderPath = withLeadingSlash(route.params.user as string) + withLeadingSlash(path);
+    const newCurrentFolder = foldersCache.get(withoutTrailingSlash(folderPath));
+
+    if (newCurrentFolder) currentFolder.value = newCurrentFolder;
+    else currentFolder.value = null;
+
+    return $fetch(`/api/folder/${getApiFolderPath()}`);
+  },
   { server: false, watch: [() => route.params.folders] },
 );
 
@@ -46,14 +55,6 @@ function preCreateNoteOrFolder() {
   });
 }
 
-// setting initial folder
-watch(folderApiPath, (path) => {
-  const folderPath = withLeadingSlash(route.params.user as string) + withLeadingSlash(path);
-  const newCurrentFolder = foldersCache.get(folderPath);
-
-  if (newCurrentFolder) currentFolder.value = newCurrentFolder;
-}, { immediate: true });
-
 // updating if server sent different
 watch(folder, (fetchedFolder) => {
   if (!fetchedFolder) return;
@@ -68,26 +69,25 @@ watch(folder, (fetchedFolder) => {
 </script>
 
 <template>
-  <template v-if="!currentFolder && pending">
-    <div>
-      Loading folder contents...
-    </div>
-  </template>
-  <template v-else-if="currentFolder">
-    <TransitionGroup tag="ul" name="list">
-      <li v-if="!currentFolder.root" key="cd.." class="item">
-        <button class="item__name" @click="goUpFolder">
-          cd ..
-        </button>
-      </li>
+  <Transition name="fade">
+    <template v-if="!currentFolder && pending">
+      <PlaceholderContents />
+    </template>
 
-      <template v-for="item in mergedContents" :key="item.id.toString()">
-        <li>
+    <template v-else-if="currentFolder">
+      <TransitionGroup tag="ul" name="list">
+        <li v-if="!currentFolder.root" key="cd.." class="item">
+          <button class="item__name" @click="goUpFolder">
+            cd ..
+          </button>
+        </li>
+
+        <li v-for="item in mergedContents" :key="item.id.toString()">
           <WorkspaceContentsItem :item="item" :parent="currentFolder" />
         </li>
-      </template>
-    </TransitionGroup>
-  </template>
+      </TransitionGroup>
+    </template>
+  </Transition>
 
   <button class="workspace__create-button" @click="preCreateNoteOrFolder">
     <Icon name="ic:outline-add" />
@@ -149,6 +149,21 @@ watch(folder, (fetchedFolder) => {
 }
 
 $list-transition-duration: 0.3s;
+$fade-transition-duration: 0.3s;
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity $fade-transition-duration * 2;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fade-leave-active {
+  display: none;
+}
 
 .list-enter-active,
 .list-leave-active {
