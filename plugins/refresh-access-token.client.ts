@@ -6,7 +6,7 @@ export default defineNuxtPlugin(async () => {
   const user = useUser();
 
   const refreshToken = () => {
-    const fetcher = () => $fetch('/api/user/refresh', { method: 'POST' });
+    const fetcher = () => $fetch('/api/user/refresh', { method: 'POST', retry: 2 });
 
     let act = (cb: () => any) => cb();
 
