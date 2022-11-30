@@ -16,7 +16,10 @@ const currentRouteName = computed(() => {
   if (currentFolder && (!route.params.folders || route.params.note === blankNoteName))
     return decodeURIComponent(currentFolder);
 
-  return decodeURIComponent(route.params.note as string);
+  if (route.params.note)
+    return decodeURIComponent(route.params.note as string);
+
+  return null;
 });
 
 useHead({
