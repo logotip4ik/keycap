@@ -64,10 +64,18 @@ export default defineEventHandler(async (event) => {
     const fieldsToUpdate = await readBody<UpdatableFields>(event);
     const query = getQuery(event);
 
-    const data: UpdatableFields = {};
+    const data: UpdatableFields & { path?: string } = {};
 
     for (const field of whitelistedFieldUpdates)
       if (fieldsToUpdate[field]) data[field] = fieldsToUpdate[field];
+
+    // if user updates note name we also need to update its path
+    if (data.name) {
+      // replacing last string after `/` with new note name
+      const newNotePath = notePath.split('/').slice(1, -1).concat([encodeURIComponent(data.name)]).join('/');
+
+      data.path = generateNotePath(user.username, newNotePath);
+    }
 
     let updatedNote: Omit<Note, 'ownerId' | 'parentId'>;
 
