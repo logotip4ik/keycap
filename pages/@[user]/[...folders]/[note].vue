@@ -29,9 +29,9 @@ function updateNote(content: string) {
 
   if (isOnline.value) notesCache.set(note.value.path, { ...note.value, ...newNote });
 
-  $fetch(updatePath, { method: 'PUT', body: newNote })
+  $fetch<QuickResponse>(updatePath, { method: 'PUT', body: newNote })
     .then((response) => {
-      if ((response as QuickResponse).status === 'error' || !note.value) return;
+      if (response.status === 'error' || !note.value) return;
 
       notesCache.set(note.value.path, { ...note.value, ...newNote });
     });
