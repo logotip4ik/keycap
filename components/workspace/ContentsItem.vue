@@ -2,7 +2,7 @@
 import { withLeadingSlash, withTrailingSlash } from 'ufo';
 
 import type { Note } from '@prisma/client';
-import type { FolderOrNote, FolderWithContents } from '~/composables/store';
+import type { FolderOrNote, FolderWithContents, Updatable } from '~/composables/store';
 
 import { blankNoteName } from '~/assets/constants';
 
@@ -15,6 +15,7 @@ const user = useUser();
 const notesCache = useNotesCache();
 const foldersCache = useFoldersCache();
 
+// TODO: add loading state
 const newItemName = ref(props.item.name);
 
 const isFolder = computed(() => 'root' in props.item);
@@ -117,6 +118,38 @@ async function removeNote() {
   notesCache.delete(props.item.path);
 }
 
+async function updateNote() {
+  interface QuickResponse { status: 'ok' | 'error' }
+
+  const newNote: Updatable<Note> = { name: newItemName.value.trim() };
+
+  if (!newNote.name)
+    return updateNoteInFolder(props.item, { editing: false }, props.parent);
+
+  const parentPath = (Array.isArray(route.params.folders) ? route.params.folders.join('/') : route.params.folders) || '/';
+  const noteName = encodeURIComponent(decodeURIComponent(props.item.name));
+  const notePath = withTrailingSlash(parentPath) + noteName;
+
+  const response = await $fetch<QuickResponse>(`/api/note${notePath}`, { method: 'PUT', body: newNote });
+
+  if (response.status === 'error')
+    return updateNoteInFolder(props.item, { editing: false }, props.parent);
+
+  const newNotePath = withLeadingSlash(
+    props.item.path.split('/').slice(0, -1).concat([encodeURIComponent(newNote.name)]).join('/'),
+  );
+
+  // @ts-expect-error undefined and null here are the same things
+  notesCache.set(props.item.path, { ...props.item, name: newItemName.value.trim(), path: newNotePath });
+  updateNoteInFolder(props.item, { editing: false, name: newItemName.value.trim(), path: newNotePath }, props.parent);
+
+  router.replace(generateItemRouteParams({ ...props.item, name: newItemName.value.trim(), path: newNotePath }));
+}
+
+async function updateFolder() {
+
+}
+
 async function handleCreate() {
   const creatingPath = (Array.isArray(route.params.folders) ? route.params.folders.join('/') : route.params.folders) || '/';
   const isCreatingFolder = newItemName.value.at(-1) === '/';
@@ -132,11 +165,31 @@ async function handleRemove() {
     return removeNote();
 }
 
+async function handleUpdate() {
+  if (isFolder.value) updateFolder();
+  else updateNote();
+}
+
 function handleEnter(e: KeyboardEvent) {
   if (props.item.creating) {
     e.preventDefault();
     handleCreate();
   }
+
+  if (props.item.editing)
+    handleUpdate();
+}
+
+function handleContextmenu() {
+  if (isFolder.value)
+    updateSubfolderInFolder(props.item, { editing: true }, props.parent);
+
+  else
+    updateNoteInFolder(props.item, { editing: true }, props.parent);
+
+  nextTick(() => {
+    (document.querySelector('.item[data-editing="true"] > input') as HTMLInputElement | null)?.focus();
+  });
 }
 </script>
 
@@ -155,13 +208,21 @@ function handleEnter(e: KeyboardEvent) {
     >
 
     <template v-else>
-      <NuxtLink class="item__name" :to="generateItemRouteParams(item)" @click="showItem(item)">
+      <NuxtLink
+        class="item__name"
+        :to="generateItemRouteParams(item)"
+        @contextmenu.prevent="handleContextmenu"
+      >
         <template v-if="isFolder">
           <Icon name="ic:outline-folder" class="item__name__folder-icon" />
         </template>
 
         {{ decodeURIComponent(item.name) }}
       </NuxtLink>
+
+      <button class="item__edit" @click="handleContextmenu">
+        <Icon name="ic:baseline-more-vert" class="item__delete__icon" />
+      </button>
 
       <button class="item__delete" @click="handleRemove">
         <Icon name="ic:baseline-delete-outline" class="item__delete__icon" />
@@ -188,8 +249,9 @@ function handleEnter(e: KeyboardEvent) {
 
   transition: border-color .3s, background-color .3s, color .3s;
 
-  &[data-creating="true"] {
-    padding: 0.3rem 0.35rem;
+  &[data-creating="true"],
+  &[data-editing="true"] {
+    padding: 0.3rem 0.1rem;
   }
 
   &__input {
@@ -240,7 +302,8 @@ function handleEnter(e: KeyboardEvent) {
     }
   }
 
-  &__delete {
+  &__delete,
+  &__edit {
     --button-size-basis: 3vw;
     --button-size-max: 2rem;
     --button-size-min: 1.9rem;
@@ -277,6 +340,18 @@ function handleEnter(e: KeyboardEvent) {
       background-color: hsla(var(--text-color-hsl), 0.1);
 
       transition: color .1s, background-color .1s;
+    }
+  }
+
+  &__edit {
+    display: none;
+
+    &:is(:hover, :focus-visible) {
+      color: var(--text-color);
+    }
+
+    @media screen and (max-width: 740px) {
+      display: block;
     }
   }
 
