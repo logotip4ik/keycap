@@ -94,7 +94,7 @@ onBeforeRouteUpdate(() => {
       </button>
       <button
         class="note-editor__bubble-menu__button"
-        :class="{ 'note-editor__bubble-menu__button--active': editor.isActive('strike') }"
+        :class="{ 'note-editor__bubble-menu__button--active': editor.isActive('code') }"
         @click="editor!.chain().focus().toggleCode().run()"
       >
         <Icon name="ic:baseline-code" />
