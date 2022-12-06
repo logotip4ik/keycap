@@ -13,9 +13,6 @@ interface Emits { (event: 'update', content: string): void }
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
-const { width } = useWindowSize();
-const isPhoneScreen = computed(() => width.value < 740);
-
 const update = (content: string) => emit('update', content);
 
 const editor = useEditor({
