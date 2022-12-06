@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import 'tippy.js/dist/tippy.css';
-import 'tippy.js/animations/shift-away.css';
-
-import { BubbleMenu, EditorContent, useEditor } from '@tiptap/vue-3';
+import { EditorContent, useEditor } from '@tiptap/vue-3';
 
 import StarterKir from '@tiptap/starter-kit';
 import Link from '@tiptap/extension-link';
@@ -59,47 +56,8 @@ onBeforeRouteUpdate(() => {
 
 <template>
   <div class="note-editor__wrapper">
-    <!-- TODO: separate bubble menu into another file ? -->
-    <BubbleMenu
-      v-if="editor"
-      :editor="editor"
-      :tippy-options="{
-        duration: [10, 150],
-        animation: 'shift-away',
-        arrow: false,
-        placement: isPhoneScreen ? 'bottom' : 'top',
-      }"
-      class="note-editor__bubble-menu"
-    >
-      <button
-        class="note-editor__bubble-menu__button"
-        :class="{ 'note-editor__bubble-menu__button--active': editor.isActive('bold') }"
-        @click="editor!.chain().focus().toggleBold().run()"
-      >
-        <Icon name="ic:baseline-format-bold" />
-      </button>
-      <button
-        class="note-editor__bubble-menu__button"
-        :class="{ 'note-editor__bubble-menu__button--active': editor.isActive('italic') }"
-        @click="editor!.chain().focus().toggleItalic().run()"
-      >
-        <Icon name="ic:baseline-format-italic" />
-      </button>
-      <button
-        class="note-editor__bubble-menu__button"
-        :class="{ 'note-editor__bubble-menu__button--active': editor.isActive('strike') }"
-        @click="editor!.chain().focus().toggleStrike().run()"
-      >
-        <Icon name="ic:baseline-format-strikethrough" />
-      </button>
-      <button
-        class="note-editor__bubble-menu__button"
-        :class="{ 'note-editor__bubble-menu__button--active': editor.isActive('code') }"
-        @click="editor!.chain().focus().toggleCode().run()"
-      >
-        <Icon name="ic:baseline-code" />
-      </button>
-    </BubbleMenu>
+    <WorkspaceBubbleMenu v-if="editor" :editor="editor" />
+
     <EditorContent class="note-editor" :editor="editor" />
   </div>
 </template>
@@ -110,53 +68,6 @@ onBeforeRouteUpdate(() => {
 
   &__wrapper {
     height: 100%;
-  }
-
-  &__bubble-menu {
-    &__button {
-      --size-basis: 2rem;
-
-      & + & {
-        margin-left: 0.5rem;
-      }
-
-      font-size: 1rem;
-      color:hsla(var(--text-color-hsl), 0.5);
-
-      width: var(--size-basis);
-      height: var(--size-basis);
-
-      appearance: none;
-      background-color: transparent;
-      border: 1px solid hsla(var(--text-color-hsl), 0.5);
-      border-radius: .25rem;
-
-      cursor: pointer;
-      transition: color .3s, border .3s, background-color .3s;
-
-      &:is(:hover, :focus) {
-        color: hsla(var(--text-color-hsl), 1);
-
-        border: 1px solid hsla(var(--text-color-hsl), 0.75);
-      }
-
-      &--active {
-        color: hsla(var(--surface-color-hsl), 0.75);
-
-        border: 1px solid transparent;
-        background-color: hsla(var(--text-color-hsl), 0.55);
-
-        &:is(:hover, :focus) {
-          color: hsla(var(--surface-color-hsl), 1);
-
-          background-color: hsla(var(--text-color-hsl), 0.85);
-        }
-      }
-
-      @media screen and (max-width: 740px) {
-        --size-basis: 2.5rem;
-      }
-    }
   }
 
   .ProseMirror {
