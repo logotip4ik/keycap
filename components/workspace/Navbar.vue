@@ -4,6 +4,7 @@ import { blankNoteName } from '~/assets/constants';
 const router = useRouter();
 const route = useRoute();
 const user = useUser();
+const currentNoteState = useCurrentNoteState();
 
 const isShowingBackButton = ref(false);
 const headingText = computed(() => {
@@ -18,6 +19,12 @@ const headingText = computed(() => {
   }
 
   return `${user.value.username}'s workspace`;
+});
+
+const headingAttrs = computed(() => {
+  if (!currentNoteState.value) return {};
+
+  return { [`note-${currentNoteState.value}`]: true };
 });
 
 function showFolderContents() {
@@ -39,6 +46,12 @@ watch(() => route.path, (path) => {
 
   isShowingBackButton.value = true;
 }, { immediate: true });
+
+watch(() => route.params.note, (noteName) => {
+  const isEmptyNoteName = !noteName || noteName === blankNoteName;
+
+  if (isEmptyNoteName) currentNoteState.value = '';
+});
 </script>
 
 <template>
@@ -51,7 +64,7 @@ watch(() => route.path, (path) => {
       </Transition>
     </ClientOnly>
 
-    <p class="nav__heading">
+    <p class="nav__heading" v-bind="headingAttrs">
       {{ headingText }}
     </p>
   </nav>
@@ -73,11 +86,47 @@ watch(() => route.path, (path) => {
   padding: 0.25rem 1rem;
 
   &__heading {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+
+    position: relative;
+    z-index: 1;
+
     font-size: 1.1rem;
 
-    text-overflow: ellipsis;
+    // NOTE: hide not needed text but show saved indicator
+    // overflow: hidden;
+    clip-path: inset(-50% 0 0 -20%);
 
-    overflow: hidden;
+    &::after {
+      --indicator-size: 0.5rem;
+
+      content: '';
+
+      position: absolute;
+      top: 0;
+      left: 0;
+
+      width: var(--indicator-size);
+      height: var(--indicator-size);
+
+      background-color: transparent;
+      border-radius: 50%;
+
+      transform: translate(-100%, -50%);
+
+      transition: background-color .2s ease;
+    }
+
+    &[note-fetching]::after,
+    &[note-updating]::after {
+      background-color: yellow;
+    }
+
+    &[note-saved]::after {
+      background-color: limegreen;
+    }
   }
 
   &__back-button {

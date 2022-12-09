@@ -26,6 +26,7 @@ export type Updatable<T> = {
 
 export const useRootFolderContents = () => useState<FolderWithContents | null>(() => null);
 export const useCurrentFolder = () => useState<FolderWithContents | null>('folder:current', () => null);
+export const useCurrentNoteState = () => useState<'' | 'updating' | 'fetching' | 'saved'>(() => '' as const);
 
 const notesCache = new LRU<string, Note>({ max: 20 });
 export const useNotesCache = () => notesCache;

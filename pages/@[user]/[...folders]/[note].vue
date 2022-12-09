@@ -7,12 +7,16 @@ import type { Updatable } from '~/composables/store';
 const route = useRoute();
 const isOnline = useOnline();
 const notesCache = useNotesCache();
+const currentNoteState = useCurrentNoteState();
 
 const note = ref<Note | null | undefined>(notesCache.get(`/${route.params.user}${getUniqueNoteKey()}`));
 
 const { data: fetchNote, pending } = useLazyFetch<Note>(() => `/api/note${getUniqueNoteKey()}`, {
   server: false,
   retry: 2,
+  onRequest: () => {
+    currentNoteState.value = 'fetching';
+  },
 });
 
 const throttledUpdate = useThrottleFn(updateNote, 1000);
@@ -29,11 +33,15 @@ function updateNote(content: string) {
 
   if (isOnline.value) notesCache.set(note.value.path, { ...note.value, ...newNote });
 
+  currentNoteState.value = 'updating';
+
   $fetch<QuickResponse>(updatePath, { method: 'PUT', body: newNote })
     .then((response) => {
       if (response.status === 'error' || !note.value) return;
 
       notesCache.set(note.value.path, { ...note.value, ...newNote });
+
+      currentNoteState.value = 'saved';
     });
 }
 
@@ -50,6 +58,7 @@ watch(fetchNote, (value) => {
 
   note.value = value;
   notesCache.set(value.path, value);
+  currentNoteState.value = 'saved';
 });
 </script>
 
