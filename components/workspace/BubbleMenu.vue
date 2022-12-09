@@ -3,6 +3,7 @@ import 'tippy.js/dist/tippy.css';
 import 'tippy.js/animations/shift-away.css';
 
 import { BubbleMenu } from '@tiptap/vue-3';
+import tinykeys from 'tinykeys';
 
 import type { Editor } from '@tiptap/vue-3';
 import type { Props as TippyProps } from 'tippy.js';
@@ -65,6 +66,24 @@ function saveEditingLink() {
 
   isEditingLink.value = false;
 }
+
+onMounted(() => {
+  const unregisterTinykeys = tinykeys(window, {
+    '$mod+k': (event) => {
+      const { from, to } = props.editor.state.selection;
+
+      if (props.editor.isFocused && to - from <= 0) return;
+
+      event.preventDefault();
+
+      isEditingLink.value = true;
+    },
+  });
+
+  onBeforeUnmount(() => {
+    unregisterTinykeys();
+  });
+});
 </script>
 
 <template>
