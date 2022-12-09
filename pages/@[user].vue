@@ -7,6 +7,7 @@ definePageMeta({
 
 const route = useRoute();
 const user = useUser();
+const currentNoteState = useCurrentNoteState();
 
 const isShowingContents = ref(false);
 const currentRouteName = computed(() => {
@@ -28,7 +29,9 @@ useHead({
 });
 
 watch(() => route.params.note, (noteName) => {
-  isShowingContents.value = !noteName || noteName === blankNoteName;
+  const isEmptyNoteName = !noteName || noteName === blankNoteName;
+
+  isShowingContents.value = isEmptyNoteName;
 }, { immediate: true });
 </script>
 
