@@ -114,6 +114,8 @@ onBeforeRouteUpdate(() => {
 
             input {
               cursor: pointer;
+
+              accent-color: #00c853;
             }
           }
 
