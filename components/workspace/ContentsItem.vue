@@ -2,7 +2,7 @@
 import { withLeadingSlash, withTrailingSlash } from 'ufo';
 
 import type { Note } from '@prisma/client';
-import type { FolderOrNote, FolderWithContents, Updatable } from '~/composables/store';
+import type { FolderOrNote, FolderWithContents, NoteMinimal, Updatable } from '~/composables/store';
 
 import { blankNoteName } from '~/assets/constants';
 
@@ -22,21 +22,15 @@ const isFolder = computed(() => 'root' in props.item);
 const isItemActive = computed(() => decodeURIComponent(route.params.note as string) === props.item.name);
 
 function generateItemRouteParams(item: FolderOrNote) {
-  const rootFolderName = `${user.value!.username}'s workspace`;
-  let encodedName = encodeURIComponent(item.name);
   const isFolder = 'root' in item;
-
-  if (encodedName === encodeURIComponent(rootFolderName)) encodedName = '';
 
   if (isFolder) {
     const folders = [...(route.params.folders || [])];
 
-    if (encodedName) folders.push(encodedName);
-
     return { name: '@user-folders-note', params: { folders, note: blankNoteName } };
   }
   else {
-    return { name: '@user-folders-note', params: { ...route.params, note: encodedName } };
+    return { name: '@user-folders-note', params: { ...route.params, note: (item as NoteMinimal).name } };
   }
 }
 
