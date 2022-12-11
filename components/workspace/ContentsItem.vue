@@ -25,7 +25,7 @@ function generateItemRouteParams(item: FolderOrNote) {
   const isFolder = 'root' in item;
 
   if (isFolder) {
-    const folders = [...(route.params.folders || [])];
+    const folders = [...(route.params.folders || []), item.name];
 
     return { name: '@user-folders-note', params: { folders, note: blankNoteName } };
   }
