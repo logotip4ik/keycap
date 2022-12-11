@@ -130,7 +130,7 @@ onBeforeRouteUpdate(() => {
             input {
               cursor: pointer;
 
-              accent-color: #00c853;
+              accent-color: var(--task-list-indicator-color);
             }
           }
 
