@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { EditorContent, useEditor } from '@tiptap/vue-3';
+import tinykeys from 'tinykeys';
 
 import StarterKir from '@tiptap/starter-kit';
 import Link from '@tiptap/extension-link';
@@ -40,6 +41,20 @@ watch(() => props.content, (content) => {
   const editorContent = editor.value?.getHTML();
 
   if (editorContent !== content) editor.value?.commands.setContent(content);
+});
+
+onMounted(() => {
+  tinykeys(window, {
+    '$mod+s': (event) => {
+      if (!editor.value?.isFocused) return;
+
+      event.preventDefault();
+
+      const noteContent = editor.value?.isEmpty ? '' : editor.value?.getHTML();
+
+      update(noteContent || '');
+    },
+  });
 });
 
 // if user updated current note and switched to another note
