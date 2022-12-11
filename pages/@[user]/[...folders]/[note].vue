@@ -42,7 +42,8 @@ function updateNote(content: string) {
       notesCache.set(note.value.path, { ...note.value, ...newNote });
 
       currentNoteState.value = 'saved';
-    });
+    })
+    .catch((error) => console.warn(error));
 }
 
 function getUniqueNoteKey() {
