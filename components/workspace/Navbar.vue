@@ -24,7 +24,7 @@ const headingText = computed(() => {
 const headingAttrs = computed(() => {
   if (!currentNoteState.value) return {};
 
-  return { [`note-${currentNoteState.value}`]: true };
+  return { [`note-${currentNoteState.value}`]: '' };
 });
 
 function showFolderContents() {
@@ -121,11 +121,15 @@ watch(() => route.params.note, (noteName) => {
 
     &[note-fetching]::after,
     &[note-updating]::after {
-      background-color: yellow;
+      background-color: goldenrod;
+
+      animation: hide-indicator 1s 3s ease forwards;
     }
 
     &[note-saved]::after {
       background-color: limegreen;
+
+      animation: hide-indicator 1s 3s ease forwards;
     }
   }
 
@@ -179,5 +183,15 @@ watch(() => route.params.note, (noteName) => {
   opacity: 0;
 
   transform: translateX(-0.5rem);
+}
+
+@keyframes hide-indicator {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
 }
 </style>
