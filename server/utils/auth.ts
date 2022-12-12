@@ -1,4 +1,5 @@
 import { deleteCookie, getCookie, setCookie } from 'h3';
+import bcrypt from 'bcrypt';
 import * as jose from 'jose';
 
 import type { H3Event } from 'h3';
@@ -71,4 +72,14 @@ export async function getUserFromEvent(event: H3Event): Promise<Pick<User, 'id' 
 
     return null;
   }
+}
+
+export async function hashPassword(pass: string): Promise<string> {
+  const hashedPass = await bcrypt.hash(pass, 10);
+
+  return hashedPass;
+}
+
+export async function verifyPassword(hashedPass: string, pass: string): Promise<boolean> {
+  return bcrypt.compare(pass, hashedPass);
 }

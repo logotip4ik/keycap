@@ -1,9 +1,8 @@
 import { createError, readBody } from 'h3';
-import * as argon2 from 'argon2';
 import type { User } from '@prisma/client';
 
 import getPrisma from '~/prisma';
-import { setAuthCookies } from '~/server/utils/auth';
+import { hashPassword, setAuthCookies } from '~/server/utils/auth';
 
 export default defineEventHandler(async (event) => {
   const body = await readBody<{ username?: string; email?: string; password?: string }>(event) || {};
@@ -25,7 +24,7 @@ export default defineEventHandler(async (event) => {
       data: {
         email: body.email,
         username: body.username,
-        password: await argon2.hash(body.password),
+        password: await hashPassword(body.password),
         folders: {
           create: {
             name: `${body.username}'s workspace`,

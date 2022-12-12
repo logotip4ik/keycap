@@ -1,9 +1,8 @@
 import { createError, readBody } from 'h3';
-import * as argon2 from 'argon2';
 import type { User } from '@prisma/client';
 
 import getPrisma from '~/prisma';
-import { setAuthCookies } from '~/server/utils/auth';
+import { setAuthCookies, verifyPassword } from '~/server/utils/auth';
 
 export default defineEventHandler(async (event) => {
   const body = await readBody<{ email?: string; password?: string }>(event) || {};
@@ -28,7 +27,7 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    if (!(await argon2.verify(user.password, body.password))) {
+    if (!(await verifyPassword(user.password, body.password))) {
       const error = createError({ status: 400, statusMessage: 'email or password is incorrect' });
 
       return sendError(event, error);
