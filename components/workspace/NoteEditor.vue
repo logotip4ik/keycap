@@ -164,6 +164,7 @@ onBeforeRouteUpdate(() => {
 
     em {
       font-variation-settings: "ital" 10;
+      font-synthesis: none;
     }
 
     a {
