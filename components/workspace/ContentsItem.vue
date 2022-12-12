@@ -211,7 +211,7 @@ function handleContextmenu() {
           <Icon name="ic:outline-folder" class="item__name__folder-icon" />
         </template>
 
-        {{ decodeURIComponent(item.name) }}
+        <span class="item__name__text">{{ decodeURIComponent(item.name) }}</span>
       </NuxtLink>
 
       <button class="item__edit" @click="handleContextmenu">
@@ -290,9 +290,17 @@ function handleContextmenu() {
     background: transparent;
 
     cursor: pointer;
+    overflow: hidden;
 
     &__folder-icon {
       margin-right: 0.25rem;
+    }
+
+    &__text {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+
+      overflow: hidden;
     }
   }
 
