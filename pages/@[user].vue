@@ -47,6 +47,8 @@ watch(() => route.params.note, (noteName) => {
       <main v-if="$route.params.note !== blankNoteName" :key="$route.fullPath" class="workspace__note">
         <NuxtPage />
       </main>
+
+      <PlaceholderBlankNote v-else key="blank-note" class="workspace__note" />
     </Transition>
   </div>
 </template>
