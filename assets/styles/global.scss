@@ -44,3 +44,14 @@ body {
     font-weight: 500;
   }
 }
+
+kbd {
+	font-size: 0.9em;
+
+	padding: 0.25rem 0.5rem;
+
+	background: hsla(var(--text-color-hsl), 0.075);
+	border: 1px solid hsla(var(--text-color-hsl), 0.125);
+  border-bottom: 3px solid hsla(var(--text-color-hsl), 0.125);
+	border-radius: 0.25rem;
+}
