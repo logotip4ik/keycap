@@ -18,6 +18,7 @@ const isPhoneScreen = computed(() => width.value < 740);
 
 const tippyOptions: Partial<TippyProps> = {
   duration: [50, 150],
+  theme: 'adaptive',
   animation: 'shift-away',
   arrow: false,
   placement: isPhoneScreen.value ? 'bottom' : 'top',
@@ -232,6 +233,16 @@ onMounted(() => {
     @media screen and (max-width: 740px) {
       --size-basis: 2.5rem;
     }
+  }
+}
+
+.tippy-box[data-theme~='adaptive'] {
+  background-color: hsla(var(--surface-color-hsl), 0.95);
+
+  @supports (backdrop-filter: blur(1px)) {
+    background-color: hsla(var(--surface-color-hsl), 0.65);
+
+    backdrop-filter: blur(0.4rem);
   }
 }
 
