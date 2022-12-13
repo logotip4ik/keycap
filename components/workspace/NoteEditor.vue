@@ -87,7 +87,7 @@ onBeforeRouteUpdate(() => {
 
     min-height: 100%;
 
-    padding: 0.75rem;
+    padding: 10vh 0.75rem 1rem;
 
     outline: none;
 
@@ -188,6 +188,7 @@ onBeforeRouteUpdate(() => {
     }
 
     @media screen and (max-width: 740px) {
+      padding-top: 1rem;
       padding-bottom: 35vh
     }
   }
