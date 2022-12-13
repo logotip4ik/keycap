@@ -69,8 +69,8 @@ watch(fetchNote, (value) => {
       <PlaceholderNoteEditor />
     </div>
 
-    <div v-else-if="note">
-      <ClientOnly class="workspace__note-editor__wrapper">
+    <div v-else-if="note" class="workspace__note-editor__wrapper">
+      <ClientOnly>
         <WorkspaceNoteEditor class="workspace__note-editor" :content="note.content || ''" @update="throttledUpdate" />
       </ClientOnly>
     </div>
@@ -83,7 +83,12 @@ watch(fetchNote, (value) => {
     height: 100%;
 
     &__wrapper {
+      width: 100%;
       height: 100%;
+
+      max-width: 1300px;
+
+      margin: 0 auto;
     }
   }
 }
