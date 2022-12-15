@@ -35,7 +35,7 @@ function enterAnimation(el: HTMLElement) {
 
   el.parentElement?.animate(
     [{ width: prevContainerWidth }, { width: `${currentWidth}px` }],
-    { duration: 400, easing: 'ease-out' },
+    { duration: 500, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' },
   );
 
   if (!isEditingLink.value) return;
@@ -238,6 +238,12 @@ onMounted(() => {
 
 .tippy-box[data-theme~='adaptive'] {
   background-color: hsla(var(--surface-color-hsl), 0.95);
+
+  box-shadow:
+    1px 1.7px 5.3px rgba(0, 0, 0, 0.032),
+    3.4px 5.6px 17.9px rgba(0, 0, 0, 0.048),
+    15px 25px 80px rgba(0, 0, 0, 0.08)
+  ;
 
   @supports (backdrop-filter: blur(1px)) {
     background-color: hsla(var(--surface-color-hsl), 0.65);
