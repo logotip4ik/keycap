@@ -50,7 +50,7 @@ function cancelActions() {
 }
 
 async function createNote(folderPath: string) {
-  const newNoteName = encodeURIComponent(newItemName.value);
+  const newNoteName = encodeURIComponent(newItemName.value.trim());
   const newNotePath = withTrailingSlash(folderPath) + encodeURIComponent(decodeURIComponent(newNoteName));
 
   const newlyCreatedNote = await $fetch<Note>(`/api/note${withLeadingSlash(newNotePath)}`, {
@@ -65,7 +65,7 @@ async function createNote(folderPath: string) {
 }
 
 async function createFolder(folderPath: string) {
-  const newFolderName = newItemName.value.substring(0, newItemName.value.length - 1);
+  const newFolderName = newItemName.value.trim().substring(0, newItemName.value.length - 1);
   const newFolderPath = withTrailingSlash(folderPath) + encodeURIComponent(decodeURIComponent(newFolderName));
 
   const newlyCreatedFolder = await $fetch<FolderWithContents>(`/api/folder${withLeadingSlash(newFolderPath)}`, {
