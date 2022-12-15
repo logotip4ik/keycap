@@ -7,7 +7,6 @@ definePageMeta({
 
 const route = useRoute();
 const user = useUser();
-const currentNoteState = useCurrentNoteState();
 
 const isShowingContents = ref(false);
 const currentRouteName = computed(() => {
@@ -44,7 +43,7 @@ watch(() => route.params.note, (noteName) => {
     </aside>
 
     <Transition name="note-change" mode="out-in">
-      <main v-if="$route.params.note !== blankNoteName" :key="$route.fullPath" class="workspace__note">
+      <main v-if="$route.params.note && $route.params.note !== blankNoteName" :key="$route.fullPath" class="workspace__note">
         <NuxtPage />
       </main>
 
