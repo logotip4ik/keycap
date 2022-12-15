@@ -33,7 +33,7 @@ const editor = useEditor({
 
   onUpdate: useDebounceFn(({ editor }) => {
     update(editor.isEmpty ? '' : editor.getHTML());
-  }, 400),
+  }, 350),
 });
 
 // tiptap editor does not handle content change
