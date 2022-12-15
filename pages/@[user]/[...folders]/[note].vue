@@ -13,13 +13,16 @@ const currentNoteState = useCurrentNoteState();
 
 const note = ref<Note | null | undefined>(notesCache.get(`/${route.params.user}${getUniqueNoteKey()}`));
 
-const { data: fetchNote, pending, error } = useLazyFetch<Note>(() => `/api/note${getUniqueNoteKey()}`, {
-  server: false,
-  retry: 2,
-  onRequest: () => {
-    currentNoteState.value = 'fetching';
-  },
-});
+const { data: fetchedNote, pending, error } = useLazyAsyncData<Note | null>(async () => {
+  currentNoteState.value = '';
+
+  if (!route.params.note || route.params.note === blankNoteName)
+    return null;
+
+  currentNoteState.value = 'fetching';
+
+  return $fetch<Note>(`/api/note${getUniqueNoteKey()}`, { retry: 2 });
+}, { server: false });
 
 const throttledUpdate = useThrottleFn(updateNote, 1000);
 function updateNote(content: string) {
@@ -53,7 +56,11 @@ function getUniqueNoteKey() {
     ? [route.params.folders, route.params.note]
     : [route.params.note];
 
-  return withLeadingSlash(paths.join('/'));
+  return withLeadingSlash(
+    paths
+      .map((string) => encodeURIComponent(string as string))
+      .join('/'),
+  );
 }
 
 watch(error, (error) => {
@@ -62,7 +69,7 @@ watch(error, (error) => {
   router.push({ ...route, params: { note: blankNoteName } });
 });
 
-watch(fetchNote, (value) => {
+watch(fetchedNote, (value) => {
   if (!value) return;
 
   note.value = value;
