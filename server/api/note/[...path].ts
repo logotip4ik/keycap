@@ -50,7 +50,10 @@ export default defineEventHandler(async (event) => {
         select: { id: true, name: true, content: true, path: true, updatedAt: true, createdAt: true },
       });
 
-      return note || {};
+      if (!note)
+        return sendError(event, createError({ status: 404 }));
+
+      return note;
     }
     catch (error) {
       return sendError(event, createError({ status: 500 }));
