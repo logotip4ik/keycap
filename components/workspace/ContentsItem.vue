@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { withLeadingSlash, withTrailingSlash } from 'ufo';
+import { withLeadingSlash, withTrailingSlash, withoutLeadingSlash } from 'ufo';
 
 import type { Note } from '@prisma/client';
 import type { FolderOrNote, FolderWithContents, NoteMinimal, Updatable } from '~/composables/store';
@@ -25,7 +25,8 @@ function generateItemRouteParams(item: FolderOrNote) {
   const isFolder = 'root' in item;
 
   if (isFolder) {
-    const folders = [...(route.params.folders || []), item.name];
+    // skipping username
+    const folders = withoutLeadingSlash(item.path).split('/').slice(1);
 
     return { name: '@user-folders-note', params: { folders, note: blankNoteName } };
   }
@@ -99,7 +100,7 @@ async function removeFolder() {
 async function removeNote() {
   const parentPath = (Array.isArray(route.params.folders) ? route.params.folders.join('/') : route.params.folders) || '/';
   const noteName = encodeURIComponent(decodeURIComponent(props.item.name));
-  const notePath = withTrailingSlash(parentPath) + noteName;
+  const notePath = withLeadingSlash(withTrailingSlash(parentPath) + noteName);
 
   const response = await $fetch<{ status: 'ok' }>(`/api/note${notePath}`, { method: 'DELETE' });
 
