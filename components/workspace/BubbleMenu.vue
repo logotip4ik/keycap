@@ -137,7 +137,7 @@ onMounted(() => {
           v-model="editingLink"
           type="url"
           class="note-editor__bubble-menu__input"
-          placeholder="https://example.com"
+          placeholder="hit enter to remove link"
         >
 
         <button class="note-editor__bubble-menu__button" type="submit">
