@@ -3,7 +3,9 @@ import { withLeadingSlash } from 'ufo';
 
 import type { Note } from '@prisma/client';
 import type { Updatable } from '~/composables/store';
+import { blankNoteName } from '~/assets/constants';
 
+const router = useRouter();
 const route = useRoute();
 const isOnline = useOnline();
 const notesCache = useNotesCache();
@@ -11,7 +13,7 @@ const currentNoteState = useCurrentNoteState();
 
 const note = ref<Note | null | undefined>(notesCache.get(`/${route.params.user}${getUniqueNoteKey()}`));
 
-const { data: fetchNote, pending } = useLazyFetch<Note>(() => `/api/note${getUniqueNoteKey()}`, {
+const { data: fetchNote, pending, error } = useLazyFetch<Note>(() => `/api/note${getUniqueNoteKey()}`, {
   server: false,
   retry: 2,
   onRequest: () => {
@@ -53,6 +55,12 @@ function getUniqueNoteKey() {
 
   return withLeadingSlash(paths.join('/'));
 }
+
+watch(error, (error) => {
+  if (!error) return;
+
+  router.push({ ...route, params: { note: blankNoteName } });
+});
 
 watch(fetchNote, (value) => {
   if (!value) return;
