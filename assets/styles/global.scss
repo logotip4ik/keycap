@@ -10,11 +10,11 @@
   --loading-indicator-color: hsl(var(--hsl-primary-color), 65%, 75%);
   --task-list-indicator-color: hsl(var(--hsl-primary-color), 70%, 70%);
   
-  --surface-color-hsl: var(--hsl-primary-color), 16%, 95%;
+  --surface-color-hsl: var(--hsl-primary-color), 7%, 95%;
   --text-color-hsl: var(--hsl-primary-color), 5%, 13%;
 
-  --surface-color: hsl(var(--hsl-primary-color), 16%, 95%);
-  --text-color: hsl(var(--hsl-primary-color), 5%, 13%);
+  --surface-color: hsl(var(--surface-color-hsl));
+  --text-color: hsl(var(--text-color-hsl));
   
   @media (prefers-color-scheme: dark) {
     --loading-indicator-color: hsl(var(--hsl-primary-color), 35%, 40%);
@@ -23,8 +23,8 @@
     --surface-color-hsl: var(--hsl-primary-color), 7%, 11%;
     --text-color-hsl:  var(--hsl-primary-color), 5%, 96%;
     
-    --surface-color: hsl(var(--hsl-primary-color), 7%, 11%);
-    --text-color:  hsl(var(--hsl-primary-color), 5%, 96%);
+    --surface-color: hsl(var(--surface-color-hsl));
+    --text-color:  hsl(var(--text-color-hsl));
   }
 }
 
