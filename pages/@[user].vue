@@ -42,12 +42,12 @@ watch(() => route.params.note, (noteName) => {
       <WorkspaceContents />
     </aside>
 
-    <Transition name="note-change" mode="out-in">
-      <main v-if="$route.params.note && $route.params.note !== blankNoteName" :key="$route.fullPath" class="workspace__note">
-        <NuxtPage />
-      </main>
+    <Transition name="note-change">
+      <PlaceholderBlankNote v-if="!route.params.note || $route.params.note === blankNoteName" key="blank-note" class="workspace__note" />
 
-      <PlaceholderBlankNote v-else key="blank-note" class="workspace__note" />
+      <main v-else class="workspace__note">
+        <NuxtPage :transition="{ name: 'note-change' }" />
+      </main>
     </Transition>
   </div>
 </template>
@@ -143,7 +143,11 @@ watch(() => route.params.note, (noteName) => {
 
 .note-change-enter-active,
 .note-change-leave-active {
-  transition: opacity 0.1s ease;
+  transition: opacity 0.2s * 2 ease;
+}
+
+.note-change-leave-active {
+  display: none;
 }
 
 .note-change-enter-from,
