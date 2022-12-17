@@ -66,6 +66,14 @@ watch(folder, (fetchedFolder) => {
 
   currentFolder.value = fetchedFolder;
 });
+
+useTinykeys({
+  '$mod+Shift+N': (event) => {
+    event.preventDefault();
+
+    preCreateNoteOrFolder();
+  },
+});
 </script>
 
 <template>

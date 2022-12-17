@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { EditorContent, useEditor } from '@tiptap/vue-3';
-import tinykeys from 'tinykeys';
 
 import StarterKir from '@tiptap/starter-kit';
 import Link from '@tiptap/extension-link';
@@ -54,19 +53,19 @@ watch(() => props.content, (content) => {
   if (editorContent !== content) editor.value?.commands.setContent(content);
 });
 
+useTinykeys({
+  '$mod+s': (event) => {
+    if (!editor.value?.isFocused) return;
+
+    event.preventDefault();
+
+    const noteContent = editor.value?.isEmpty ? '' : editor.value?.getHTML();
+
+    update(noteContent || '');
+  },
+});
+
 onMounted(() => {
-  tinykeys(window, {
-    '$mod+s': (event) => {
-      if (!editor.value?.isFocused) return;
-
-      event.preventDefault();
-
-      const noteContent = editor.value?.isEmpty ? '' : editor.value?.getHTML();
-
-      update(noteContent || '');
-    },
-  });
-
   window.addEventListener('visibilitychange', saveEditorContent, true);
   window.removeEventListener('visibilitychange', saveEditorContent);
 });
