@@ -293,6 +293,11 @@ function handleContextmenu() {
     cursor: pointer;
     overflow: hidden;
 
+    &:focus-visible {
+      outline: 2px solid var(--selection-bg-color);
+      box-shadow: 0 0 1rem 0 hsla(var(--text-color-hsl), 0.025);
+    }
+
     &__folder-icon {
       margin-right: 0.25rem;
     }
