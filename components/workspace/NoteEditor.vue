@@ -8,6 +8,7 @@ import Placeholder from '@tiptap/extension-placeholder';
 import TaskList from '@tiptap/extension-task-list';
 import TaskItem from '@tiptap/extension-task-item';
 import BubbleMenuPlugin from '@tiptap/extension-bubble-menu';
+import TextAlign from '@tiptap/extension-text-align';
 
 interface Props { content: string }
 interface Emits { (event: 'update', content: string): void }
@@ -25,6 +26,10 @@ const editor = useEditor({
     TaskList,
     TaskItem,
     BubbleMenuPlugin,
+    // TODO: shortcuts aren't working
+    TextAlign.configure({
+      alignments: ['left', 'center', 'right'],
+    }),
     Placeholder.configure({
       placeholder: ({ editor }) =>
         editor.isEmpty ? 'Start with heading...' : 'Write something...',
@@ -35,6 +40,12 @@ const editor = useEditor({
     update(editor.isEmpty ? '' : editor.getHTML());
   }, 350),
 });
+
+function saveEditorContent() {
+  const noteContent = editor.value?.isEmpty ? '' : editor.value?.getHTML();
+
+  update(noteContent || '');
+}
 
 // tiptap editor does not handle content change
 watch(() => props.content, (content) => {
@@ -55,14 +66,15 @@ onMounted(() => {
       update(noteContent || '');
     },
   });
+
+  window.addEventListener('visibilitychange', saveEditorContent, true);
+  window.removeEventListener('visibilitychange', saveEditorContent);
 });
 
 // if user updated current note and switched to another note
 // before debounced function execution, try to save content
 onBeforeRouteUpdate(() => {
-  const noteContent = editor.value?.isEmpty ? '' : editor.value?.getHTML();
-
-  update(noteContent || '');
+  saveEditorContent();
 });
 </script>
 
