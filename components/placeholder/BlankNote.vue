@@ -3,9 +3,7 @@
     <p class="blank-note__text">
       Create new note or folder by pressing
 
-      <kbd>
-        <Icon name="ic:outline-add" />
-      </kbd>
+      <kbd>Ctrl + Shift + N</kbd>
     </p>
   </div>
 </template>
@@ -28,6 +26,10 @@
     max-width: 20ch;
 
     kbd {
+      line-height: 1.75;
+
+      white-space: nowrap;
+
       svg {
         transform: translateY(-5%);
       }
