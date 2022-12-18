@@ -143,7 +143,7 @@ watch(() => route.params.note, (noteName) => {
 
 .note-change-enter-active,
 .note-change-leave-active {
-  transition: opacity 0.2s * 2 ease;
+  transition: opacity 0.25s * 2 ease;
 }
 
 .note-change-leave-active {

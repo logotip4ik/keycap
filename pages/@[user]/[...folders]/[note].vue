@@ -110,11 +110,11 @@ watch(fetchedNote, (value) => {
 
 .note-loading-enter-active,
 .note-loading-leave-active {
-  transition: opacity 0.2s * 2;
+  transition: opacity 0.25s * 2;
 }
 
 .skeleton.note-loading-enter-active {
-  transition-delay: 0.25s;
+  transition-delay: 0.275s;
 }
 
 .note-loading-leave-active {
