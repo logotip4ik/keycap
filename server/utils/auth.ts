@@ -33,12 +33,12 @@ export async function setAuthCookies(event: H3Event, user: Pick<User, 'id' | 'us
   const accessToken = await generateAccessToken(user);
   const accessTokenName = getAccessTokenName();
 
-  const oneHour = 60 * 60;
+  const twentyFourHours = 60 * 60 * 24;
 
   setCookie(event, accessTokenName, accessToken, {
     path: '/',
     sameSite: 'lax',
-    maxAge: oneHour,
+    maxAge: twentyFourHours,
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
   });
