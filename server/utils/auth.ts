@@ -13,7 +13,7 @@ async function generateAccessToken(object: object): Promise<string> {
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
     .setIssuer('keycap')
-    .setExpirationTime('1h')
+    .setExpirationTime('24h')
     .sign(secret);
 }
 
