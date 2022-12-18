@@ -8,19 +8,18 @@ export default defineNuxtPlugin(async () => {
   const refreshToken = () => {
     const fetcher = () => $fetch('/api/user/refresh', { method: 'POST', retry: 2 });
 
-    let act = (cb: () => any) => cb();
+    let actWith = (cb: () => any) => cb();
 
-    if (window.requestIdleCallback) act = window.requestIdleCallback;
+    if (window.requestIdleCallback) actWith = window.requestIdleCallback;
 
-    act(fetcher);
+    actWith(fetcher);
   };
 
   watch(user, (newUser) => {
     if (!newUser) return clearInterval(prevInterval);
 
-    // NOTE: access token cant be accessed from client side,
-    // so will refresh token immediately
-    refreshToken();
+    // initial refresh of token is in auth.server.ts plugin
+    // refreshToken();
 
     prevInterval = setInterval(refreshToken, REFRESH_AFTER * 1000);
   }, { immediate: true });
