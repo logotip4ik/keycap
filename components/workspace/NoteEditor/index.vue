@@ -8,6 +8,7 @@ import TaskList from '@tiptap/extension-task-list';
 import TaskItem from '@tiptap/extension-task-item';
 import BubbleMenuPlugin from '@tiptap/extension-bubble-menu';
 import TextAlign from '@tiptap/extension-text-align';
+import CodeBlock from '@tiptap/extension-code-block';
 
 interface Props { content: string }
 interface Emits { (event: 'update', content: string): void }
@@ -20,13 +21,14 @@ const editor = useEditor({
   autofocus: window.innerWidth > 740 && 'start', // disable auto focus on small screens
   content: props.content,
   extensions: [
-    StarterKir,
+    StarterKir.configure({ codeBlock: false }),
     Link,
     TaskList,
     TaskItem,
     BubbleMenuPlugin,
-    // TODO: shortcuts aren't working
+    CodeBlock,
     TextAlign.configure({
+      types: ['heading', 'paragraph'],
       alignments: ['left', 'center', 'right'],
     }),
     Placeholder.configure({
