@@ -66,7 +66,10 @@ useTinykeys({
 });
 
 onMounted(() => {
-  window.addEventListener('visibilitychange', saveEditorContent, true);
+  window.addEventListener('visibilitychange', saveEditorContent);
+});
+
+onBeforeUnmount(() => {
   window.removeEventListener('visibilitychange', saveEditorContent);
 });
 
