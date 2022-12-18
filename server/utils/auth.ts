@@ -24,7 +24,7 @@ function getAccessTokenName(): string {
 }
 
 function getJWTSecret(): Uint8Array {
-  const secret = process.env.NODE_ENV || '';
+  const secret = process.env.JWT_SECRET || '';
 
   return new TextEncoder().encode(secret);
 }
