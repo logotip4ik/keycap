@@ -960,31 +960,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@prisma/client@npm:^4.7.1":
-  version: 4.7.1
-  resolution: "@prisma/client@npm:4.7.1"
+"@prisma/client@npm:^4.8.0":
+  version: 4.8.0
+  resolution: "@prisma/client@npm:4.8.0"
   dependencies:
-    "@prisma/engines-version": 4.7.1-1.272861e07ab64f234d3ffc4094e32bd61775599c
+    "@prisma/engines-version": 4.8.0-61.d6e67a83f971b175a593ccc12e15c4a757f93ffe
   peerDependencies:
     prisma: "*"
   peerDependenciesMeta:
     prisma:
       optional: true
-  checksum: 01ce4c7382d80a1cca256e532a773d982ada9b7f64acd6bb590415634d04305413cee700048287dbf94f09ccf31e19db03a4a6501bfd0a01509f80498ee58121
+  checksum: c0256721bd4e07fb1fdf4d0857489379769af1eaac0aec79387e32092e63e1246a95fef634f6c07bf1bdddc7c11f3e073c78e5c92b9a708f559773a3f656f94a
   languageName: node
   linkType: hard
 
-"@prisma/engines-version@npm:4.7.1-1.272861e07ab64f234d3ffc4094e32bd61775599c":
-  version: 4.7.1-1.272861e07ab64f234d3ffc4094e32bd61775599c
-  resolution: "@prisma/engines-version@npm:4.7.1-1.272861e07ab64f234d3ffc4094e32bd61775599c"
-  checksum: 66221f1805ce700a4f9f0b6751a291d7114afff9d8b61fd03beb9bbe8b45b037fc67ee0425f45bbad57b7bf95cf649a490d5caaf75a4f3a7e17b3187ea8a6a15
+"@prisma/engines-version@npm:4.8.0-61.d6e67a83f971b175a593ccc12e15c4a757f93ffe":
+  version: 4.8.0-61.d6e67a83f971b175a593ccc12e15c4a757f93ffe
+  resolution: "@prisma/engines-version@npm:4.8.0-61.d6e67a83f971b175a593ccc12e15c4a757f93ffe"
+  checksum: 839c9ecaad0b3b64bf0a641c3cb4103237b8e0e1f23c5ba47fdabaab853590f765e5323fb664588f954be56cd6c1a19c1a01617cd826c48a5e9221f3e82b2a28
   languageName: node
   linkType: hard
 
-"@prisma/engines@npm:4.7.1":
-  version: 4.7.1
-  resolution: "@prisma/engines@npm:4.7.1"
-  checksum: 1660f1d5a6188a9cb9aa5186111910f37b1bc02f09be10336a41e0ec61a18a4193e0ff424077dafb1bf1392a435fc89cec47526a58784a7bdc6c8278adf147a4
+"@prisma/engines@npm:4.8.0":
+  version: 4.8.0
+  resolution: "@prisma/engines@npm:4.8.0"
+  checksum: 5c1198905d7bf850c02cd59f244055003fc2a03ce99e715a0a872f568fb024aa4b347804829c8630964ff41b64cf8fa3e08c8cd2a444ad29c215c4b1dd9701b0
   languageName: node
   linkType: hard
 
@@ -1873,15 +1873,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vueuse/core@npm:9.7.0, @vueuse/core@npm:^9.7.0":
-  version: 9.7.0
-  resolution: "@vueuse/core@npm:9.7.0"
+"@vueuse/core@npm:9.8.2, @vueuse/core@npm:^9.8.2":
+  version: 9.8.2
+  resolution: "@vueuse/core@npm:9.8.2"
   dependencies:
     "@types/web-bluetooth": ^0.0.16
-    "@vueuse/metadata": 9.7.0
-    "@vueuse/shared": 9.7.0
+    "@vueuse/metadata": 9.8.2
+    "@vueuse/shared": 9.8.2
     vue-demi: "*"
-  checksum: 20df2c1f46d5310eed3996f9147227bfba754cf0bb9f4ff97b2cb90f65f4bff2eb604422cce20ed68e3005ea043c156b3c546ca9fcae01fd7667e83c1bc668f5
+  checksum: 0817ed4910c195a31e1afe2da39e0bbd78f73b9470c2af1b11a446e007da576a466e4b9115831bfe431a221443d025d6125d5c45fb7e1b5e48ff3db1c8ccbf2f
   languageName: node
   linkType: hard
 
@@ -1899,34 +1899,34 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vueuse/metadata@npm:9.7.0":
-  version: 9.7.0
-  resolution: "@vueuse/metadata@npm:9.7.0"
-  checksum: c64ce884b16c629081cbe6baabe7e176230d5ccd8c5da632f9894178669497b380881ca8124384fbcfc09c3fb28382bd17e33116eb02aa3268f9e6eb10a87fbd
+"@vueuse/metadata@npm:9.8.2":
+  version: 9.8.2
+  resolution: "@vueuse/metadata@npm:9.8.2"
+  checksum: f9fe9eb20343af4591afd5a4e9d490927e7db88e6f52ce0e8c000a5baaf905872ff51d8ad8bfe904a5ea12abfdfe0e8ddd535beb27f59ca919e0cf04f53558e6
   languageName: node
   linkType: hard
 
-"@vueuse/nuxt@npm:^9.7.0":
-  version: 9.7.0
-  resolution: "@vueuse/nuxt@npm:9.7.0"
+"@vueuse/nuxt@npm:^9.8.2":
+  version: 9.8.2
+  resolution: "@vueuse/nuxt@npm:9.8.2"
   dependencies:
     "@nuxt/kit": ^3.0.0
-    "@vueuse/core": 9.7.0
-    "@vueuse/metadata": 9.7.0
+    "@vueuse/core": 9.8.2
+    "@vueuse/metadata": 9.8.2
     local-pkg: ^0.4.2
     vue-demi: "*"
   peerDependencies:
     nuxt: ^3.0.0
-  checksum: bce7c27c4568304e289eab0f683e771977304a7b17c9f58d3299c5b2a79026cc7fb093a768af49265fe92a29750d5d801b6e9d4d401d4d451f5468b484213dc7
+  checksum: 17c456a6d30a23752fcd26a25c5c405fe3e0bb7da193426571117edd1f9072b16dad1bbcd2d0f4153328caa2844fc17d819b7d897458c3cd1a317b5e15cf4b3a
   languageName: node
   linkType: hard
 
-"@vueuse/shared@npm:9.7.0":
-  version: 9.7.0
-  resolution: "@vueuse/shared@npm:9.7.0"
+"@vueuse/shared@npm:9.8.2":
+  version: 9.8.2
+  resolution: "@vueuse/shared@npm:9.8.2"
   dependencies:
     vue-demi: "*"
-  checksum: 4b7754e8dbe159d9b44717f5d5fbeb1137bf1676d35f266428e701600b624f802f7d93f6b54febbe4bbdbf67a0da73b83db82c1812c392458cf9445cdb0c9841
+  checksum: 1bfc6d20be49d588897e4e5cd93c164cd69ec6bee2ad16a6a298af47b585256688cb6e04224b377e550050124db688f64d132668e7cf19c9e9a44b4cd13d9ae1
   languageName: node
   linkType: hard
 
@@ -7152,15 +7152,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prisma@npm:^4.7.1":
-  version: 4.7.1
-  resolution: "prisma@npm:4.7.1"
+"prisma@npm:^4.8.0":
+  version: 4.8.0
+  resolution: "prisma@npm:4.8.0"
   dependencies:
-    "@prisma/engines": 4.7.1
+    "@prisma/engines": 4.8.0
   bin:
     prisma: build/index.js
     prisma2: build/index.js
-  checksum: eb7046a5928f33e484bb2a100f49b613a37bdd83d72aa7e87a4edb38a235b7c44bb9c89bc9116af60950554da06d6ef7c581dd0c637ba2798810485d04da29d4
+  checksum: 22ebaa32c51fb2938626d742d9ae68be5ad49a44dad2046bfe40439a64d06e8f84d4915f66100554d7840c3c5228c6b5c4216d9f5a698d5dd11a46ab528654cf
   languageName: node
   linkType: hard
 
@@ -7640,7 +7640,7 @@ __metadata:
   resolution: "root-workspace-0b6124@workspace:."
   dependencies:
     "@antfu/eslint-config": ^0.34.0
-    "@prisma/client": ^4.7.1
+    "@prisma/client": ^4.8.0
     "@tiptap/extension-bubble-menu": ^2.0.0-beta.209
     "@tiptap/extension-link": ^2.0.0-beta.209
     "@tiptap/extension-placeholder": ^2.0.0-beta.209
@@ -7650,8 +7650,8 @@ __metadata:
     "@tiptap/starter-kit": ^2.0.0-beta.209
     "@tiptap/vue-3": ^2.0.0-beta.209
     "@types/bcrypt": ^5.0.0
-    "@vueuse/core": ^9.7.0
-    "@vueuse/nuxt": ^9.7.0
+    "@vueuse/core": ^9.8.2
+    "@vueuse/nuxt": ^9.8.2
     bcrypt: ^5.1.0
     eslint: ^8.30.0
     jose: ^4.11.1
@@ -7659,14 +7659,14 @@ __metadata:
     normalize.css: ^8.0.1
     nuxt: 3.0.0
     nuxt-icon: ^0.1.8
-    prisma: ^4.7.1
+    prisma: ^4.8.0
     prosemirror-commands: ^1.5.0
     prosemirror-dropcursor: ^1.6.1
     prosemirror-gapcursor: ^1.3.1
     prosemirror-history: ^1.3.0
     prosemirror-keymap: ^1.2.0
     prosemirror-schema-list: ^1.2.2
-    sass: ^1.57.0
+    sass: ^1.57.1
     tinykeys: ^1.4.0
     typescript: ^4.9.4
     ufo: ^1.0.1
@@ -7746,16 +7746,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.57.0":
-  version: 1.57.0
-  resolution: "sass@npm:1.57.0"
+"sass@npm:^1.57.1":
+  version: 1.57.1
+  resolution: "sass@npm:1.57.1"
   dependencies:
     chokidar: ">=3.0.0 <4.0.0"
     immutable: ^4.0.0
     source-map-js: ">=0.6.2 <2.0.0"
   bin:
     sass: sass.js
-  checksum: fb6358b9541dc7a5bc23dbbae85223e99fbadc1f4ae911e7c32c6e22fd7b617e20a0e8cd1213f23c97c621b067bfb0b9ca45e65d6ce4ca5fea5949f41bd428ed
+  checksum: 734a08781bcbe0e8defb2d54864e7012014ed3e68ba5fcb766189b002929019fc37b2f83a18d4be0b5f69ad77317c92396ce6112447ab47a194ed600ae1afb27
   languageName: node
   linkType: hard
 
