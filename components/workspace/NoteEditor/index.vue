@@ -19,6 +19,7 @@ const update = (content: string) => emit('update', content);
 
 const editor = useEditor({
   autofocus: window.innerWidth > 740 && 'start', // disable auto focus on small screens
+  editable: window.innerWidth > 740, // defaults to not editable on phones, because links are not clickable
   content: props.content,
   extensions: [
     StarterKir.configure({ codeBlock: false }),
@@ -26,6 +27,7 @@ const editor = useEditor({
     TaskList,
     TaskItem,
     BubbleMenuPlugin,
+    // TODO: https://tiptap.dev/api/nodes/code-block-lowlight
     CodeBlock,
     TextAlign.configure({
       types: ['heading', 'paragraph'],
@@ -84,7 +86,9 @@ onBeforeRouteUpdate(() => {
 
 <template>
   <div class="note-editor__wrapper">
-    <WorkspaceBubbleMenu v-if="editor" :editor="editor" />
+    <template v-if="editor">
+      <WorkspaceBubbleMenu :editor="editor" />
+    </template>
 
     <EditorContent class="note-editor" :editor="editor" />
   </div>
