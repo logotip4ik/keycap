@@ -26,7 +26,7 @@ function generateItemRouteParams(item: FolderOrNote) {
 
   if (isFolder) {
     // skipping username
-    const folders = withoutLeadingSlash(item.path).split('/').slice(1);
+    const folders = withoutLeadingSlash(item.path).split('/').slice(1).map(decodeURIComponent);
 
     return { name: '@user-folders-note', params: { folders, note: blankNoteName } };
   }
