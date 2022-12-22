@@ -13,4 +13,8 @@ export default defineNuxtConfig({
     '~/assets/styles/global.scss',
     '~/assets/fonts/Mona-Sans/style.css',
   ],
+
+  nitro: {
+    preset: 'vercel',
+  },
 });
