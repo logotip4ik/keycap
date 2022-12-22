@@ -79,16 +79,19 @@ watch(fetchedNote, (value) => {
 </script>
 
 <template>
-  <Transition name="note-loading">
-    <template v-if="pending && !note">
-      <PlaceholderNoteEditor key="skeleton" />
+  <Transition name="note-loading" appear>
+    <template v-if="note">
+      <WorkspaceNoteEditor
+        key="content"
+        :content="note.content || ''"
+        class="workspace__note-editor"
+        @update="throttledUpdate"
+      />
     </template>
 
-    <div v-else-if="note" key="content" class="workspace__note-editor__wrapper">
-      <ClientOnly>
-        <WorkspaceNoteEditor class="workspace__note-editor" :content="note.content || ''" @update="throttledUpdate" />
-      </ClientOnly>
-    </div>
+    <template v-else>
+      <PlaceholderNoteEditor key="skeleton" />
+    </template>
   </Transition>
 </template>
 
@@ -109,12 +112,12 @@ watch(fetchedNote, (value) => {
 }
 
 .note-loading-enter-active,
-.note-loading-leave-active {
+.note-loading-appear-active {
   transition: opacity 0.25s * 2;
 }
 
-.skeleton.note-loading-enter-active {
-  transition-delay: 0.275s;
+.note-loading-enter-active.skeleton {
+  transition-delay: 0.25s;
 }
 
 .note-loading-leave-active {
