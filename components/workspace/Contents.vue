@@ -11,7 +11,9 @@ const user = useUser();
 const currentFolder = useCurrentFolder();
 const foldersCache = useFoldersCache();
 
-const { data: folder, pending } = useLazyAsyncData<FolderWithContents>(
+const folderIdentifier = computed(() => `${route.params.folders.length}-${route.params.folders.at(-1)}`);
+
+const { data: folder } = useLazyAsyncData<FolderWithContents>(
   () => {
     const folders = route.params.folders;
     const path = Array.isArray(folders) ? folders.at(-1) : folders as string;
@@ -24,7 +26,7 @@ const { data: folder, pending } = useLazyAsyncData<FolderWithContents>(
 
     return $fetch(`/api/folder/${getApiFolderPath()}`);
   },
-  { server: false, watch: [() => route.params.folders] },
+  { server: false, watch: [folderIdentifier] },
 );
 
 const mergedContents = computed(() => {
@@ -78,11 +80,7 @@ useTinykeys({
 
 <template>
   <Transition name="contents-loading">
-    <template v-if="!currentFolder && pending">
-      <PlaceholderContents />
-    </template>
-
-    <template v-else-if="currentFolder">
+    <template v-if="currentFolder">
       <TransitionGroup tag="ul" name="list">
         <li v-if="!currentFolder.root" key="cd.." class="item">
           <button class="item__name" @click="goUpFolder">
@@ -94,6 +92,10 @@ useTinykeys({
           <WorkspaceContentsItem :item="item" :parent="currentFolder" />
         </li>
       </TransitionGroup>
+    </template>
+
+    <template v-else>
+      <PlaceholderContents />
     </template>
   </Transition>
 
