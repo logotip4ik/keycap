@@ -89,6 +89,7 @@ useTinykeys({
     <Transition name="bubble-menu-fade" @before-leave="beforeLeaveAnimation" @enter="enterAnimation">
       <div v-if="!isEditingLink">
         <button
+          title="CTRL+B"
           class="note-editor__bubble-menu__button"
           :class="{ 'note-editor__bubble-menu__button--active': editor.isActive('bold') }"
           @click="editor!.chain().focus().toggleBold().run()"
@@ -96,6 +97,7 @@ useTinykeys({
           <Icon name="ic:baseline-format-bold" />
         </button>
         <button
+          title="CTRL+I"
           class="note-editor__bubble-menu__button"
           :class="{ 'note-editor__bubble-menu__button--active': editor.isActive('italic') }"
           @click="editor!.chain().focus().toggleItalic().run()"
@@ -103,6 +105,7 @@ useTinykeys({
           <Icon name="ic:baseline-format-italic" />
         </button>
         <button
+          title="CTRL+SHIFT+X"
           class="note-editor__bubble-menu__button"
           :class="{ 'note-editor__bubble-menu__button--active': editor.isActive('strike') }"
           @click="editor!.chain().focus().toggleStrike().run()"
@@ -110,6 +113,7 @@ useTinykeys({
           <Icon name="ic:baseline-format-strikethrough" />
         </button>
         <button
+          title="CTRL+E"
           class="note-editor__bubble-menu__button"
           :class="{ 'note-editor__bubble-menu__button--active': editor.isActive('code') }"
           @click="editor!.chain().focus().toggleCode().run()"
@@ -117,6 +121,7 @@ useTinykeys({
           <Icon name="ic:baseline-code" />
         </button>
         <button
+          title="CTRL+K"
           class="note-editor__bubble-menu__button"
           :class="{ 'note-editor__bubble-menu__button--active': editor.isActive('link') }"
           @click="(isEditingLink = !isEditingLink)"
