@@ -77,7 +77,7 @@ useTinykeys({
 </script>
 
 <template>
-  <Transition name="fade">
+  <Transition name="contents-loading">
     <template v-if="!currentFolder && pending">
       <PlaceholderContents />
     </template>
@@ -156,20 +156,24 @@ useTinykeys({
   }
 }
 
-$list-transition-duration: 0.3s;
-$fade-transition-duration: 0.3s;
+$list-transition-duration: 0.25s;
+$fade-transition-duration: 0.25s;
 
-.fade-enter-active,
-.fade-leave-active {
+.contents-loading-enter-active,
+.contents-loading-leave-active {
   transition: opacity $fade-transition-duration * 2;
 }
 
-.fade-enter-from,
-.fade-leave-to {
+.contents-loading-enter-active.skeleton {
+  transition-delay: $fade-transition-duration;
+}
+
+.contents-loading-enter-from,
+.contents-loading-leave-to {
   opacity: 0;
 }
 
-.fade-leave-active {
+.contents-loading-leave-active {
   display: none;
 }
 
