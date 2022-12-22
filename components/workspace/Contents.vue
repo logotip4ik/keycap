@@ -11,7 +11,11 @@ const user = useUser();
 const currentFolder = useCurrentFolder();
 const foldersCache = useFoldersCache();
 
-const folderIdentifier = computed(() => `${route.params.folders.length}-${route.params.folders.at(-1)}`);
+const folderIdentifier = computed(() => {
+  if (!route.params.folders) return '';
+
+  return `${route.params.folders.length}-${route.params.folders.at(-1)}`;
+});
 
 const { data: folder } = useLazyAsyncData<FolderWithContents>(
   () => {
