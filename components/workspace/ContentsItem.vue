@@ -206,6 +206,7 @@ function handleContextmenu() {
       <NuxtLink
         class="item__name"
         :to="generateItemRouteParams(item)"
+        :title="item.name"
         @contextmenu.prevent="handleContextmenu"
       >
         <template v-if="isFolder">
