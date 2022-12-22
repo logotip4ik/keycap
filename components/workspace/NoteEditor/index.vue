@@ -19,7 +19,6 @@ const update = (content: string) => emit('update', content);
 
 const editor = useEditor({
   autofocus: window.innerWidth > 740 && 'start', // disable auto focus on small screens
-  editable: window.innerWidth > 740, // defaults to not editable on phones, because links are not clickable
   content: props.content,
   extensions: [
     StarterKir.configure({ codeBlock: false }),
