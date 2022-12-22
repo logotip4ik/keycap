@@ -86,7 +86,7 @@ onBeforeRouteUpdate(() => {
 <template>
   <div class="note-editor__wrapper">
     <template v-if="editor">
-      <WorkspaceBubbleMenu :editor="editor" />
+      <WorkspaceNoteEditorBubbleMenu :editor="editor" />
     </template>
 
     <EditorContent class="note-editor" :editor="editor" />
