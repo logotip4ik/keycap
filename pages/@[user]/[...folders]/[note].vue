@@ -81,6 +81,7 @@ watch(fetchedNote, (value) => {
 <template>
   <Transition name="note-loading" appear>
     <template v-if="note">
+      <!-- NOTE: This component should be wrapped inside client only, if note is rendered on server -->
       <WorkspaceNoteEditor
         key="content"
         :content="note.content || ''"
@@ -98,16 +99,12 @@ watch(fetchedNote, (value) => {
 <style lang="scss">
 .workspace {
   &__note-editor {
+    width: 100%;
     height: 100%;
 
-    &__wrapper {
-      width: 100%;
-      height: 100%;
+    max-width: 1300px;
 
-      max-width: 1300px;
-
-      margin: 0 auto;
-    }
+    margin: 0 auto;
   }
 }
 
