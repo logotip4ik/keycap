@@ -1,42 +1,19 @@
-# Nuxt 3 Minimal Starter
+# Keycap
 
-Look at the [nuxt 3 documentation](https://v3.nuxtjs.org) to learn more.
+Simple note taking app with support for markdown. Organize your notes into folders.
 
-## Setup
+## Why ?
 
-Make sure to install the dependencies:
+After months of usage windows and android phone, i find that notes are syncing. Plus there wasn't support for markdown. But you can ask why to build something similar to notion and answer will be pretty simple. With this project i developed my skills and i hope it will load much faster that notion 🙃
 
-```bash
-# yarn
-yarn install
+## Stack
 
-# npm
-npm install
+- [Nuxt](https://nuxt.com/)
+- [Prisma](https://prisma.io/)
+- [Cockroach DB](https://www.cockroachlabs.com/product/)
 
-# pnpm
-pnpm install --shamefully-hoist
-```
+## Todo
 
-## Development Server
-
-Start the development server on http://localhost:3000
-
-```bash
-npm run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-npm run build
-```
-
-Locally preview production build:
-
-```bash
-npm run preview
-```
-
-Checkout the [deployment documentation](https://v3.nuxtjs.org/guide/deploy/presets) for more information.
+- [ ] create landing page
+- [ ] create project logo (some sort of 3d keycap with words KEY-CAP)
+- [ ] work without internet
