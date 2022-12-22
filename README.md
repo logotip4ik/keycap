@@ -14,6 +14,10 @@ After months of usage windows and android phone, i find that notes are syncing. 
 
 ## Todo
 
+- [ ] add support for renaming __folders__
+- [ ] oauth with google and github ?
+- [ ] show notes via sharable links
+- [ ] code highlighting
+- [ ] work without internet
 - [ ] create landing page
 - [ ] create project logo (some sort of 3d keycap with words KEY-CAP)
-- [ ] work without internet
