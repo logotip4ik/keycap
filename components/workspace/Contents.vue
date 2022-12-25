@@ -74,7 +74,7 @@ watch(folder, (fetchedFolder) => {
 });
 
 useTinykeys({
-  '$mod+Shift+N': (event) => {
+  '$mod+Shift+A': (event) => {
     event.preventDefault();
 
     preCreateNoteOrFolder();

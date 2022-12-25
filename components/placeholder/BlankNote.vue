@@ -3,7 +3,7 @@
     <p class="blank-note__text">
       Create new note or folder by pressing
 
-      <kbd>Ctrl + Shift + N</kbd>
+      <kbd>Ctrl + Shift + A</kbd>
     </p>
   </div>
 </template>
