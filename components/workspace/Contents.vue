@@ -57,7 +57,7 @@ function preCreateNoteOrFolder() {
   currentFolder.value.notes.unshift({ id, name: '', creating: true });
 
   nextTick(() => {
-    (document.querySelector('.item[data-creating="true"] > input') as HTMLInputElement | null)?.focus();
+    (document.querySelector('.item[data-creating="true"] > form > input') as HTMLInputElement | null)?.focus();
   });
 }
 

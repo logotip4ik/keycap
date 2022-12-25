@@ -165,7 +165,7 @@ async function handleUpdate() {
   else updateNote();
 }
 
-function handleEnter(e: KeyboardEvent) {
+function handleEnter(e: Event) {
   if (props.item.creating) {
     e.preventDefault();
     handleCreate();
@@ -194,13 +194,18 @@ function handleContextmenu() {
     :class="{ 'item--active': isItemActive }"
     v-bind="{ 'data-creating': item.creating, 'data-editing': item.editing }"
   >
-    <input
+    <form
       v-if="item.creating || item.editing"
-      v-model="newItemName"
-      class="item__input"
-      @blur="cancelActions"
-      @keypress.enter="handleEnter"
+      class="item__input__wrapper"
+      @submit.prevent="handleEnter"
     >
+      <input
+        v-model="newItemName"
+        class="item__input"
+        @blur="cancelActions"
+        @keypress.esc="cancelActions"
+      >
+    </form>
 
     <template v-else>
       <NuxtLink
@@ -264,6 +269,10 @@ function handleContextmenu() {
     background-color: transparent;
 
     appearance: none;
+
+    &__wrapper {
+      width: calc(100% - 0.5rem);
+    }
 
     &:is(:hover, :focus-visible) {
       outline: none;
