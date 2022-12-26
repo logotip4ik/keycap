@@ -24,7 +24,12 @@ const currentRouteName = computed(() => {
 
 useHead({
   title: () => currentRouteName.value,
-  titleTemplate: (name) => name ? `${name} | ${user.value?.username}` : user.value?.username || '',
+  titleTemplate: (name) => {
+    const username = user.value?.username;
+    const title = name ? `${name} - ${username}` : username || '';
+
+    return title ? `${title} - Keycap` : 'Keycap';
+  },
 });
 
 watch(() => route.params.note, (noteName) => {
