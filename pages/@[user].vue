@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { blankNoteName } from '~/assets/constants';
 
+import type WorkspaceSearch from '~/components/workspace/Search/index.vue';
+
 definePageMeta({
   middleware: ['auth'],
 });
@@ -8,7 +10,10 @@ definePageMeta({
 const route = useRoute();
 const user = useUser();
 
+const search = ref<InstanceType<typeof WorkspaceSearch> | null>(null);
+
 const isShowingContents = ref(false);
+const isShowingSearch = ref(false);
 const currentRouteName = computed(() => {
   const folders = route.params.folders;
   const currentFolder = Array.isArray(folders) ? folders.at(-1) : folders as string;
@@ -29,6 +34,14 @@ useHead({
     const title = name ? `${name} | ${username}` : username || '';
 
     return title ? `${title} - Keycap` : 'Keycap';
+  },
+});
+
+useTinykeys({
+  '$mod+k': (event) => {
+    event.preventDefault();
+
+    isShowingSearch.value = !isShowingSearch.value;
   },
 });
 
@@ -57,6 +70,18 @@ watch(() => route.params.note, (noteName) => {
       <main v-else class="workspace__note">
         <NuxtPage />
       </main>
+    </Transition>
+
+    <!-- TODO: wrap search into teleport[to="body"] when pull request merged https://github.com/vuejs/core/pull/6548 -->
+    <Transition
+      name="search-fade"
+      @after-enter="search?.input?.focus()"
+    >
+      <LazyWorkspaceSearch
+        v-if="isShowingSearch"
+        ref="search"
+        @close="isShowingSearch = false"
+      />
     </Transition>
   </div>
 </template>
@@ -161,5 +186,23 @@ watch(() => route.params.note, (noteName) => {
 .note-change-enter-from,
 .note-change-leave-to {
   opacity: 0;
+}
+
+.search-fade-leave-active,
+.search-fade-leave-active .search {
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.search-fade-enter-active {
+  display: none;
+}
+
+.search-fade-enter-from,
+.search-fade-leave-to {
+  opacity: 0;
+
+  .search {
+    transform: scale(0.95);
+  }
 }
 </style>
