@@ -2,7 +2,6 @@
 import { withoutLeadingSlash } from 'ufo';
 
 import type { Note } from '@prisma/client';
-import type { Updatable } from '~/composables/store';
 import { blankNoteName } from '~/assets/constants';
 
 const router = useRouter();
@@ -32,7 +31,7 @@ function updateNote(content: string) {
 
   interface QuickResponse { status: 'ok' | 'error' }
 
-  const newNote: Updatable<Note> = { content };
+  const newNote: Partial<Note> = { content };
 
   const updatePath = `/api/note${getUniqueNoteKey()}`;
 
