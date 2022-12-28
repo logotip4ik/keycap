@@ -11,7 +11,7 @@ import TextAlign from '@tiptap/extension-text-align';
 import CodeBlock from '@tiptap/extension-code-block';
 
 interface Props { content: string }
-interface Emits { (event: 'update', content: string): void }
+interface Emits { (event: 'update', content: string): void; (event: 'refresh'): void }
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
@@ -49,6 +49,12 @@ function saveEditorContent() {
   update(noteContent || '');
 }
 
+function refreshNoteOnVisibilityChange() {
+  if (document.visibilityState !== 'visible') return;
+
+  emit('refresh');
+}
+
 // tiptap editor does not handle content change
 watch(() => props.content, (content) => {
   const editorContent = editor.value?.getHTML();
@@ -66,6 +72,14 @@ useTinykeys({
 
     update(noteContent || '');
   },
+});
+
+onMounted(() => {
+  window.addEventListener('visibilitychange', refreshNoteOnVisibilityChange, { passive: true });
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('visibilitychange', refreshNoteOnVisibilityChange);
 });
 
 // if user updated current note and switched to another note

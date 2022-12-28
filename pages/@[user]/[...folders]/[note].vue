@@ -13,7 +13,7 @@ const currentNoteState = useCurrentNoteState();
 
 const note = ref<Note | null | undefined>(notesCache.get(`/${route.params.user}/${getUniqueNoteKey()}`));
 
-const { data: fetchedNote, error } = useLazyAsyncData<Note | null>(async () => {
+const { data: fetchedNote, error, refresh } = useLazyAsyncData<Note | null>(async () => {
   currentNoteState.value = '';
 
   if (!route.params.note || route.params.note === blankNoteName)
@@ -84,8 +84,9 @@ watch(fetchedNote, (value) => {
       <!-- NOTE: This component should be wrapped inside client only, if note is rendered on server -->
       <WorkspaceNoteEditor
         key="content"
-        :content="note.content || ''"
         class="workspace__note-editor"
+        :content="note.content || ''"
+        @refresh="refresh"
         @update="throttledUpdate"
       />
     </template>
