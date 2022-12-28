@@ -13,7 +13,7 @@ const currentNoteState = useCurrentNoteState();
 
 const note = ref<Note | null | undefined>(notesCache.get(`/${route.params.user}/${getUniqueNoteKey()}`));
 
-const { data: fetchedNote, pending, error } = useLazyAsyncData<Note | null>(async () => {
+const { data: fetchedNote, error } = useLazyAsyncData<Note | null>(async () => {
   currentNoteState.value = '';
 
   if (!route.params.note || route.params.note === blankNoteName)
