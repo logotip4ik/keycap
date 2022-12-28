@@ -20,10 +20,6 @@ export interface FolderWithContents extends Folder {
 
 export type FolderOrNote = FolderWithContents & NoteMinimal;
 
-export type Updatable<T> = {
-  -readonly [Property in keyof T]?: T[Property]
-};
-
 export const useRootFolderContents = () => useState<FolderWithContents | null>(() => null);
 export const useCurrentFolder = () => useState<FolderWithContents | null>('folder:current', () => null);
 export const useCurrentNoteState = () => useState<'' | 'updating' | 'fetching' | 'saved'>(() => '' as const);
@@ -50,7 +46,7 @@ export function deleteSubfolderFromFolder(subfolderToDelete: FolderWithContents,
   parent.subfolders.splice(folderIdxToDelete, 1);
 }
 
-export function updateNoteInFolder(noteToUpdate: NoteMinimal, fieldsToUpdate: Updatable<NoteMinimal>, parent: FolderWithContents) {
+export function updateNoteInFolder(noteToUpdate: NoteMinimal, fieldsToUpdate: Partial<NoteMinimal>, parent: FolderWithContents) {
   const noteIdxToUpdate = parent.notes.findIndex((note) => note.id === noteToUpdate.id);
 
   if (noteIdxToUpdate === -1) return;
@@ -63,7 +59,7 @@ export function updateNoteInFolder(noteToUpdate: NoteMinimal, fieldsToUpdate: Up
 
 export function updateSubfolderInFolder(
   folderToUpdate: FolderWithContents,
-  fieldsToUpdate: Updatable<FolderWithContents>,
+  fieldsToUpdate: Partial<FolderWithContents>,
   parentFolder: FolderWithContents) {
   const folderIdxToUpdate = parentFolder.subfolders.findIndex((folder) => folder.id === folderToUpdate.id);
 
