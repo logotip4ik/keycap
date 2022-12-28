@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { withLeadingSlash } from 'ufo';
+import { withoutLeadingSlash } from 'ufo';
 
 import type { Note } from '@prisma/client';
 import type { Updatable } from '~/composables/store';
@@ -11,7 +11,7 @@ const isOnline = useOnline();
 const notesCache = useNotesCache();
 const currentNoteState = useCurrentNoteState();
 
-const note = ref<Note | null | undefined>(notesCache.get(`/${route.params.user}${getUniqueNoteKey()}`));
+const note = ref<Note | null | undefined>(notesCache.get(`/${route.params.user}/${getUniqueNoteKey()}`));
 
 const { data: fetchedNote, pending, error } = useLazyAsyncData<Note | null>(async () => {
   currentNoteState.value = '';
@@ -21,7 +21,7 @@ const { data: fetchedNote, pending, error } = useLazyAsyncData<Note | null>(asyn
 
   currentNoteState.value = 'fetching';
 
-  return $fetch<Note>(`/api/note${getUniqueNoteKey()}`, { retry: 2 });
+  return $fetch<Note>(`/api/note/${getUniqueNoteKey()}`, { retry: 2 });
 }, { server: false });
 
 const throttledUpdate = useThrottleFn(updateNote, 1000);
@@ -56,7 +56,7 @@ function getUniqueNoteKey() {
     ? [route.params.folders, route.params.note]
     : [route.params.note];
 
-  return withLeadingSlash(
+  return withoutLeadingSlash(
     paths
       .map((string) => encodeURIComponent(string as string))
       .join('/'),
