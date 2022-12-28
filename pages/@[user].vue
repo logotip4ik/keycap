@@ -26,7 +26,7 @@ useHead({
   title: () => currentRouteName.value,
   titleTemplate: (name) => {
     const username = user.value?.username;
-    const title = name ? `${name} - ${username}` : username || '';
+    const title = name ? `${name} | ${username}` : username || '';
 
     return title ? `${title} - Keycap` : 'Keycap';
   },
