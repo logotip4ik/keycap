@@ -14,6 +14,7 @@ After months of usage windows and android phone, i find that notes are syncing. 
 
 ## Todo
 
+- [ ] custom `ctrl+k` search
 - [ ] add support for renaming __folders__
 - [ ] oauth with google and github ?
 - [ ] show notes via sharable links
