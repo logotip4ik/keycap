@@ -17,7 +17,7 @@ const inputEl = ref<HTMLElement | null>(null);
 const searchEl = ref<HTMLElement | null>(null);
 
 const searchInput = ref('');
-const debouncedSearchInput = useDebounce(searchInput, 200);
+const debouncedSearchInput = useDebounce(searchInput, 150);
 
 let fzf: AsyncFzf<FolderOrNote[]>;
 
@@ -133,12 +133,12 @@ watch(results, async (results) => {
 
     const guessedBaseHeight = 78;
 
-    const animation = searchEl.value.animate([
+    searchEl.value.animate([
       { height: `${prevHeight || guessedBaseHeight}px` },
       { height: `${wantedHeight}px` },
     ], { duration: 250, easing: 'cubic-bezier(0.33, 1, 0.68, 1)' });
 
-    animation.addEventListener('finish', () => prevHeight = wantedHeight);
+    prevHeight = wantedHeight;
   });
 }, { immediate: true });
 
@@ -175,27 +175,31 @@ useTinykeys({ Escape: handleCancel });
         >
       </form>
 
-      <div v-if="results.length === 0 && debouncedSearchInput.length !== 0" class="search__no-results">
-        <p>Nothing found...</p>
-      </div>
+      <Transition name="list">
+        <div v-if="results.length === 0 && debouncedSearchInput.length !== 0" class="search__no-results">
+          <p class="search__no-results__text">
+            Nothing found...
+          </p>
+        </div>
 
-      <TransitionGroup
-        v-else-if="results.length !== 0"
-        tag="ul"
-        name="list"
-        class="search__results"
-      >
-        <template v-for="(item, idx) in results" :key="item.path">
-          <li class="search__results__item">
-            <WorkspaceSearchItem
-              :item="item"
-              :selected="selectedResult === idx"
-              @click="handleCancel"
-              @focus="selectedResult = idx"
-            />
-          </li>
-        </template>
-      </TransitionGroup>
+        <TransitionGroup
+          v-else-if="results.length !== 0"
+          tag="ul"
+          name="list"
+          class="search__results"
+        >
+          <template v-for="(item, idx) in results" :key="item.path">
+            <li class="search__results__item">
+              <WorkspaceSearchItem
+                :item="item"
+                :selected="selectedResult === idx"
+                @click="handleCancel"
+                @focus="selectedResult = idx"
+              />
+            </li>
+          </template>
+        </TransitionGroup>
+      </Transition>
     </div>
   </div>
 </template>
@@ -270,6 +274,18 @@ useTinykeys({ Escape: handleCancel });
 
     &__item {
       margin-bottom: var(--items-spacing);
+    }
+  }
+
+  &__no-results {
+    text-align: center;
+
+    padding: 1.25rem 1.25rem 0.5rem;
+
+    &__text {
+      font-size: 1.5rem;
+
+      opacity: 0.75;
     }
   }
 }
