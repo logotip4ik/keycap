@@ -13,13 +13,15 @@ const results = ref<FolderOrNote[]>([]);
 const isLoadingResults = ref(false);
 const selectedResult = ref(0);
 
-const input = ref<HTMLElement | null>(null);
+const inputEl = ref<HTMLElement | null>(null);
+const searchEl = ref<HTMLElement | null>(null);
+
 const searchInput = ref('');
 const debouncedSearchInput = useDebounce(searchInput, 200);
 
 let fzf: AsyncFzf<FolderOrNote[]>;
 
-defineExpose({ input });
+defineExpose({ input: inputEl });
 
 function searchItemWithName(name: string) {
   isLoadingResults.value = true;
@@ -117,11 +119,28 @@ function changeSelectedResult(difference: number) {
 
 watch(debouncedSearchInput, handleSearchInput);
 
-onMounted(() => {
-  input.value?.focus();
-});
+let prevHeight = 0;
+watch(results, async (results) => {
+  if (!prevHeight)
+    return setTimeout(() => prevHeight = searchEl.value?.offsetHeight || 0, 25);
 
-onBeforeMount(() => {
+  requestAnimationFrame(() => { // guaranties that element has its finished height
+    if (!searchEl.value) return;
+
+    const wantedHeight = searchEl.value.scrollHeight;
+
+    const guessedBaseHeight = 78;
+
+    const animation = searchEl.value.animate([
+      { height: `${prevHeight || guessedBaseHeight}px` },
+      { height: `${wantedHeight}px` },
+    ], { duration: 250, easing: 'cubic-bezier(0.33, 1, 0.68, 1)' });
+
+    animation.addEventListener('finish', () => prevHeight = wantedHeight);
+  });
+}, { immediate: true });
+
+onMounted(() => {
   defineFuzzySearch();
 });
 
@@ -130,11 +149,11 @@ useTinykeys({ Escape: handleCancel });
 
 <template>
   <div class="search-wrapper" @click.self="handleCancel">
-    <div class="search">
+    <div ref="searchEl" class="search">
       <form class="search__form" @submit.prevent="openResult">
         <input
           id="workspace-search-input"
-          ref="input"
+          ref="inputEl"
           v-model="searchInput"
           type="search"
           required
@@ -194,6 +213,8 @@ useTinykeys({ Escape: handleCancel });
       1.3px 2.7px 5.3px rgba(0, 0, 0, 0.02),
       4.5px 8.9px 17.9px rgba(0, 0, 0, 0.03),
       20px 40px 80px rgba(0, 0, 0, 0.05);
+
+  overflow: hidden;
 
   &-wrapper {
     position: fixed;
