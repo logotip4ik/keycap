@@ -1,17 +1,14 @@
 <script setup lang="ts">
-import { withLeadingSlash, withTrailingSlash, withoutLeadingSlash } from 'ufo';
+import { withLeadingSlash, withTrailingSlash } from 'ufo';
 
 import type { Note } from '@prisma/client';
-import type { FolderOrNote, FolderWithContents, NoteMinimal } from '~/composables/store';
-
-import { blankNoteName } from '~/assets/constants';
+import type { FolderOrNote, FolderWithContents } from '~/composables/store';
 
 interface Props { item: FolderOrNote; parent: FolderWithContents }
 const props = defineProps<Props>();
 
 const router = useRouter();
 const route = useRoute();
-const user = useUser();
 const notesCache = useNotesCache();
 const foldersCache = useFoldersCache();
 
@@ -20,20 +17,6 @@ const newItemName = ref(props.item.name);
 
 const isFolder = computed(() => 'root' in props.item);
 const isItemActive = computed(() => decodeURIComponent(route.params.note as string) === props.item.name);
-
-function generateItemRouteParams(item: FolderOrNote) {
-  const isFolder = 'root' in item;
-
-  if (isFolder) {
-    // skipping username
-    const folders = withoutLeadingSlash(item.path).split('/').slice(1).map(decodeURIComponent);
-
-    return { name: '@user-folders-note', params: { folders, note: blankNoteName } };
-  }
-  else {
-    return { name: '@user-folders-note', params: { ...route.params, note: (item as NoteMinimal).name } };
-  }
-}
 
 function showItem(item: FolderOrNote) {
   const itemRouteParams = generateItemRouteParams(item);
