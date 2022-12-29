@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { FolderOrNote } from '~/composables/store';
 
-interface Props { item: FolderOrNote }
+interface Props { item: FolderOrNote; selected: boolean }
 const props = defineProps<Props>();
 
 const itemPath = computed(() =>
@@ -10,9 +10,10 @@ const itemPath = computed(() =>
 </script>
 
 <template>
-  <NuxtLink :href="generateItemRouteParams(item)" class="search-item">
+  <NuxtLink :href="generateItemRouteParams(item)" class="search-item" :data-selected="selected">
     <span v-if="itemPath !== ''" class="search-item__path">{{ itemPath }}/</span>
     <span class="search-item__name">{{ item.name }}</span>
+    <Icon name="ic:round-keyboard-return" class="search-item__enter-icon" />
   </NuxtLink>
 </template>
 
@@ -35,7 +36,9 @@ const itemPath = computed(() =>
 
   overflow: hidden;
 
-  transition: background-color .3s;
+  background-color: hsla(var(--text-color-hsl), 0.01);
+
+  transition: background-color .4s;
 
   &__name {
     text-overflow: ellipsis;
@@ -47,11 +50,28 @@ const itemPath = computed(() =>
     opacity: 0.25;
   }
 
-  &:is(:hover, :focus-visible) {
-    background-color: hsla(var(--text-color-hsl), 0.05);
+  &__enter-icon {
+    font-size: 2rem;
+
+    margin-left: auto;
+    padding-left: 0.25rem;
+
+    opacity: 0;
+
+    transition: opacity .4s;
+  }
+
+  &:is(:hover, :focus-visible, [data-selected="true"]) {
+    background-color: hsla(var(--hsl-primary-color), 35%, 50% ,0.1);
     outline: none;
 
     transition: background-color .1s;
+
+    .search-item__enter-icon {
+      opacity: 1;
+
+      transition: opacity .1s;
+    }
   }
 }
 </style>

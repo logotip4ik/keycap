@@ -7,14 +7,16 @@ import type { FolderOrNote, FolderWithContents } from '~/composables/store';
 interface Emits { (e: 'close'): void }
 const emit = defineEmits<Emits>();
 
-const user = useUser();
 const foldersCache = useFoldersCache();
 
 const results = ref<FolderOrNote[]>([]);
 const isLoadingResults = ref(false);
+const selectedResult = ref(0);
+
 const input = ref<HTMLElement | null>(null);
 const searchInput = ref('');
 const debouncedSearchInput = useDebounce(searchInput, 200);
+
 let fzf: AsyncFzf<FolderOrNote[]>;
 
 defineExpose({ input });
@@ -30,10 +32,11 @@ function searchItemWithName(name: string) {
     });
 }
 
-function handleCancel(event: Event) {
+function handleCancel(_event?: Event) {
   emit('close');
 
   searchInput.value = '';
+  selectedResult.value = 0;
 }
 
 function defineFuzzySearch() {
@@ -81,6 +84,7 @@ function defineFuzzySearch() {
 
 function handleSearchInput(value: string) {
   value = value.trim();
+  selectedResult.value = 0;
 
   if (value.length < 2)
     return results.value = [];
@@ -93,6 +97,22 @@ function handleSearchInput(value: string) {
   else {
     searchItemWithName(value);
   }
+}
+
+function openResult() {
+  const resultToOpen = results.value[selectedResult.value];
+
+  if (!resultToOpen) return;
+
+  navigateTo(generateItemRouteParams(resultToOpen));
+
+  handleCancel();
+}
+
+function changeSelectedResult(difference: number) {
+  const newSelectedResult = (selectedResult.value + difference) % results.value.length;
+
+  selectedResult.value = newSelectedResult < 0 ? results.value.length - 1 : newSelectedResult;
 }
 
 watch(debouncedSearchInput, handleSearchInput);
@@ -111,7 +131,7 @@ useTinykeys({ Escape: handleCancel });
 <template>
   <div class="search-wrapper" @click.self="handleCancel">
     <div class="search">
-      <form class="search__form" @submit.prevent="handleSearchInput(searchInput)">
+      <form class="search__form" @submit.prevent="openResult">
         <input
           id="workspace-search-input"
           ref="input"
@@ -129,6 +149,8 @@ useTinykeys({ Escape: handleCancel });
           autofocus="true"
           placeholder="Search or enter / for commands"
           maxlength="64"
+          @keydown.up.prevent="changeSelectedResult(-1)"
+          @keydown.down.prevent="changeSelectedResult(+1)"
         >
       </form>
 
@@ -142,9 +164,14 @@ useTinykeys({ Escape: handleCancel });
         name="list"
         class="search__results"
       >
-        <template v-for="item in results" :key="item.path">
+        <template v-for="(item, idx) in results" :key="item.path">
           <li class="search__results__item">
-            <WorkspaceSearchItem :item="item" @click="handleCancel" />
+            <WorkspaceSearchItem
+              :item="item"
+              :selected="selectedResult === idx"
+              @click="handleCancel"
+              @focus="selectedResult = idx"
+            />
           </li>
         </template>
       </TransitionGroup>
@@ -209,7 +236,7 @@ useTinykeys({ Escape: handleCancel });
   }
 
   &__results {
-    --items-spacing: 0.25rem;
+    --items-spacing: 0.33rem;
 
     margin: 0.5rem 0 calc(var(--items-spacing) * -1);
     padding: 0 0;
