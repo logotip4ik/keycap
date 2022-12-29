@@ -1,9 +1,5 @@
 <script setup lang="ts">
-import { withLeadingSlash } from 'ufo';
-
 import type { FolderOrNote } from '~/composables/store';
-
-import { blankNoteName } from '~/assets/constants';
 
 interface Props { item: FolderOrNote }
 const props = defineProps<Props>();
@@ -11,18 +7,10 @@ const props = defineProps<Props>();
 const itemPath = computed(() =>
   // removing account name and the last one string from path
   decodeURIComponent(props.item.path.replace(/\/\w+/i, '').replace(/\/[\w\%]+$/i, '')));
-
-function generatePathFromItem(item: FolderOrNote) {
-  const isFolder = 'root' in item;
-
-  const path = item.path.replace('/', '/@');
-
-  return isFolder ? path + withLeadingSlash(blankNoteName) : path;
-}
 </script>
 
 <template>
-  <NuxtLink :href="generatePathFromItem(item)" class="search-item">
+  <NuxtLink :href="generateItemRouteParams(item)" class="search-item">
     <span v-if="itemPath !== ''" class="search-item__path">{{ itemPath }}/</span>
     <span class="search-item__name">{{ item.name }}</span>
   </NuxtLink>
