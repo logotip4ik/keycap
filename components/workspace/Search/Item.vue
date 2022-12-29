@@ -36,11 +36,10 @@ function generatePathFromItem(item: FolderOrNote) {
 
   position: relative;
 
-    font-size: 1.25rem;
-      color: currentColor;
-  text-overflow: ellipsis;
+  font-size: 1.25rem;
+  color: currentColor;
   text-decoration: none;
-    white-space: nowrap;
+
   width: 100%;
 
   padding: 1rem 1.25rem;
@@ -49,6 +48,12 @@ function generatePathFromItem(item: FolderOrNote) {
   overflow: hidden;
 
   transition: background-color .3s;
+
+  &__name {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
 
   &__path {
     opacity: 0.25;
