@@ -1,11 +1,34 @@
 <script setup lang="ts">
+import { AsyncFzf as FuzzySearch } from 'fzf';
+
+import type { AsyncFzf } from 'fzf';
+import type { FolderOrNote, FolderWithContents } from '~/composables/store';
+
 interface Emits { (e: 'close'): void }
 const emit = defineEmits<Emits>();
 
+const user = useUser();
+const foldersCache = useFoldersCache();
+
+const results = ref<FolderOrNote[]>([]);
+const isLoadingResults = ref(false);
 const input = ref<HTMLElement | null>(null);
 const searchInput = ref('');
+const debouncedSearchInput = useDebounce(searchInput, 200);
+let fzf: AsyncFzf<FolderOrNote[]>;
 
 defineExpose({ input });
+
+function searchItemWithName(name: string) {
+  isLoadingResults.value = true;
+
+  fzf.find(name)
+    .then((entries) => {
+      results.value = entries.map((entry) => entry.item);
+    }).finally(() => {
+      isLoadingResults.value = false;
+    });
+}
 
 function handleCancel(event: Event) {
   emit('close');
@@ -13,8 +36,73 @@ function handleCancel(event: Event) {
   searchInput.value = '';
 }
 
+function defineFuzzySearch() {
+  return new Promise<void>((resolve) => {
+    let theMostUpperFolder: FolderWithContents | undefined;
+
+    for (const folder of foldersCache.values()) {
+      if (!theMostUpperFolder) {
+        theMostUpperFolder = folder;
+        continue;
+      }
+
+      if (theMostUpperFolder && folder.path.length < theMostUpperFolder.path.length)
+        theMostUpperFolder = folder;
+    }
+
+    const items = [theMostUpperFolder] as FolderOrNote[];
+
+    const findAllItems = (item: FolderWithContents | undefined) => {
+      if (!item) return;
+
+      if (item.notes && item.notes.length !== 0)
+        items.push(...item.notes as FolderOrNote[]);
+
+      if (item.subfolders && item.subfolders.length !== 0) {
+        items.push(...item.subfolders as FolderOrNote[]);
+
+        for (const folder of item.subfolders)
+          findAllItems(foldersCache.get(folder.path));
+      }
+    };
+
+    findAllItems(theMostUpperFolder!);
+
+    fzf = new FuzzySearch(items, {
+      fuzzy: 'v2',
+      limit: 5,
+      normalize: true,
+      selector: (item) => item.name,
+    });
+
+    resolve();
+  });
+}
+
+function handleSearchInput(value: string) {
+  value = value.trim();
+
+  if (value.length < 2)
+    return results.value = [];
+
+  const isCommand = value.startsWith('/');
+
+  if (isCommand) {
+    // TODO: add commands
+  }
+  else {
+    searchItemWithName(value);
+  }
+}
+
+watch(debouncedSearchInput, handleSearchInput);
+
 onMounted(() => {
   input.value?.focus();
+});
+
+onBeforeMount(() => {
+  defineFuzzySearch();
 });
 
 useTinykeys({ Escape: handleCancel });
@@ -23,10 +111,11 @@ useTinykeys({ Escape: handleCancel });
 <template>
   <div class="search-wrapper" @click.self="handleCancel">
     <div class="search">
-      <form class="search__form" @submit.prevent>
+      <form class="search__form" @submit.prevent="handleSearchInput(searchInput)">
         <input
           id="workspace-search-input"
           ref="input"
+          v-model="searchInput"
           type="search"
           required
           name="workspace-search"
@@ -42,6 +131,23 @@ useTinykeys({ Escape: handleCancel });
           maxlength="64"
         >
       </form>
+
+      <div v-if="results.length === 0 && debouncedSearchInput.length !== 0" class="search__no-results">
+        <p>Nothing found...</p>
+      </div>
+
+      <TransitionGroup
+        v-else-if="results.length !== 0"
+        tag="ul"
+        name="list"
+        class="search__results"
+      >
+        <template v-for="item in results" :key="item.path">
+          <li class="search__results__item">
+            <WorkspaceSearchItem :item="item" @click="handleCancel" />
+          </li>
+        </template>
+      </TransitionGroup>
     </div>
   </div>
 </template>
@@ -81,7 +187,6 @@ useTinykeys({ Escape: handleCancel });
   }
 
   &__form {
-
     &__input {
       font: inherit;
       font-size: 1.75rem;
@@ -100,6 +205,21 @@ useTinykeys({ Escape: handleCancel });
         outline: none;
         border-color: var(--task-list-indicator-color);
       }
+    }
+  }
+
+  &__results {
+    --items-spacing: 0.25rem;
+
+    margin: 0.5rem 0 calc(var(--items-spacing) * -1);
+    padding: 0 0;
+
+    list-style-type: none;
+
+    overflow: hidden;
+
+    &__item {
+      margin-bottom: var(--items-spacing);
     }
   }
 }
