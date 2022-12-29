@@ -72,7 +72,7 @@ watch(fetchedNote, (value) => {
   if (!value) return;
 
   note.value = value;
-  notesCache.set(value.path, value);
+  notesCache.set(value.path, toRaw(value));
   currentNoteState.value = 'saved';
 });
 </script>

@@ -17,7 +17,7 @@ const folderIdentifier = computed(() => {
   return `${route.params.folders.length}-${route.params.folders.at(-1)}`;
 });
 
-const { data: folder } = useLazyAsyncData<FolderWithContents>(
+const { data: fetchedFolder } = useLazyAsyncData<FolderWithContents>(
   () => {
     const folders = route.params.folders;
     const path = Array.isArray(folders) ? folders.at(-1) : folders as string;
@@ -62,15 +62,15 @@ function preCreateNoteOrFolder() {
 }
 
 // updating if server sent different
-watch(folder, (fetchedFolder) => {
-  if (!fetchedFolder) return;
+watch(fetchedFolder, (value) => {
+  if (!value) return;
 
-  fetchedFolder.notes = fetchedFolder.notes || [];
-  fetchedFolder.subfolders = fetchedFolder.subfolders || [];
+  value.notes = value.notes || [];
+  value.subfolders = value.subfolders || [];
 
-  foldersCache.set(fetchedFolder.path, fetchedFolder);
+  foldersCache.set(value.path, toRaw(value));
 
-  currentFolder.value = fetchedFolder;
+  currentFolder.value = value;
 });
 
 useTinykeys({
