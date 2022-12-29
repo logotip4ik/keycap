@@ -1,21 +1,23 @@
 import { withoutLeadingSlash } from 'ufo';
 
-import { blankNoteName } from '~/assets/constants';
-
+import type { RouteLocationNamedRaw } from 'vue-router';
 import type { FolderOrNote, NoteMinimal } from '~/composables/store';
 
-export function generateItemRouteParams(item: FolderOrNote) {
-  const route = useRoute();
+import { blankNoteName } from '~/assets/constants';
 
+export function generateItemRouteParams(item: FolderOrNote): RouteLocationNamedRaw {
   const isFolder = 'root' in item;
 
-  if (isFolder) {
-    // skipping username
-    const folders = withoutLeadingSlash(item.path).split('/').slice(1).map(decodeURIComponent);
+  const routeName = isFolder ? blankNoteName : (item as NoteMinimal).name;
+  const routeFolders = withoutLeadingSlash(item.path)
+    .split('/')
+    .slice(1)
+    // removing last item in array if item is note
+    .filter((_, i, array) => isFolder ? true : i !== array.length - 1)
+    .map(decodeURIComponent);
 
-    return { name: '@user-folders-note', params: { folders, note: blankNoteName } };
-  }
-  else {
-    return { name: '@user-folders-note', params: { ...route.params, note: (item as NoteMinimal).name } };
-  }
+  return {
+    name: '@user-folders-note',
+    params: { folders: routeFolders, note: routeName },
+  };
 }
