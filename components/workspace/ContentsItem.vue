@@ -2,7 +2,7 @@
 import { withLeadingSlash, withTrailingSlash, withoutLeadingSlash } from 'ufo';
 
 import type { Note } from '@prisma/client';
-import type { FolderOrNote, FolderWithContents, NoteMinimal, Updatable } from '~/composables/store';
+import type { FolderOrNote, FolderWithContents, NoteMinimal } from '~/composables/store';
 
 import { blankNoteName } from '~/assets/constants';
 
@@ -116,7 +116,7 @@ async function removeNote() {
 async function updateNote() {
   interface QuickResponse { status: 'ok' | 'error' }
 
-  const newNote: Updatable<Note> = { name: newItemName.value.trim() };
+  const newNote: Partial<Note> = { name: newItemName.value.trim() };
 
   if (!newNote.name)
     return updateNoteInFolder(props.item, { editing: false }, props.parent);
