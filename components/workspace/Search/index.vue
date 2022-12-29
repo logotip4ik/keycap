@@ -129,6 +129,8 @@ watch(results, async (results) => {
 
     const wantedHeight = searchEl.value.scrollHeight;
 
+    if (prevHeight === wantedHeight) return;
+
     const guessedBaseHeight = 78;
 
     const animation = searchEl.value.animate([
