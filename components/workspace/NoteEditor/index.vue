@@ -109,6 +109,7 @@ onBeforeRouteUpdate(() => {
 
   .ProseMirror {
     font-size: 105%;
+    line-height: 1.35;
 
     min-height: 100%;
 
