@@ -33,7 +33,7 @@ function updateNote(content: string) {
 
   const newNote: Partial<Note> = { content };
 
-  const updatePath = `/api/note${getUniqueNoteKey()}`;
+  const updatePath = `/api/note/${getUniqueNoteKey()}`;
 
   if (isOnline.value) notesCache.set(note.value.path, { ...note.value, ...newNote });
 
