@@ -8,8 +8,11 @@ import { blankNoteName } from '~/assets/constants';
 const router = useRouter();
 const route = useRoute();
 const user = useUser();
-const currentFolder = useCurrentFolder();
 const foldersCache = useFoldersCache();
+
+const folder = ref<FolderWithContents | null | undefined>(
+  foldersCache.get(withoutTrailingSlash(`/${route.params.user}/${getApiFolderPath()}`)),
+);
 
 const folderIdentifier = computed(() => {
   if (!route.params.folders) return '';
@@ -25,8 +28,8 @@ const { data: fetchedFolder } = useLazyAsyncData<FolderWithContents>(
     const folderPath = withLeadingSlash(route.params.user as string) + withLeadingSlash(path);
     const newCurrentFolder = foldersCache.get(withoutTrailingSlash(folderPath));
 
-    if (newCurrentFolder) currentFolder.value = newCurrentFolder;
-    else currentFolder.value = null;
+    if (newCurrentFolder) folder.value = newCurrentFolder;
+    else folder.value = null;
 
     return $fetch(`/api/folder/${getApiFolderPath()}`);
   },
@@ -34,9 +37,9 @@ const { data: fetchedFolder } = useLazyAsyncData<FolderWithContents>(
 );
 
 const mergedContents = computed(() => {
-  if (!currentFolder.value) return [];
+  if (!folder.value) return [];
 
-  return [...currentFolder.value.notes, ...currentFolder.value.subfolders] as FolderOrNote[];
+  return [...folder.value.notes, ...folder.value.subfolders] as FolderOrNote[];
 });
 
 function getApiFolderPath() {
@@ -44,17 +47,17 @@ function getApiFolderPath() {
 }
 
 function goUpFolder() {
-  const currentFolderPath = currentFolder.value!.path;
+  const currentFolderPath = folder.value!.path;
   const prevFolderPath = currentFolderPath.split('/').slice(2, -1);
 
   router.push({ name: '@user-folders-note', params: { folders: prevFolderPath, note: blankNoteName } });
 }
 
 function preCreateNoteOrFolder() {
-  if (!currentFolder.value || !user.value) return;
+  if (!folder.value || !user.value) return;
 
   const id = BigInt(Math.floor(Math.random() * 1000));
-  currentFolder.value.notes.unshift({ id, name: '', creating: true });
+  folder.value.notes.unshift({ id, name: '', creating: true });
 
   nextTick(() => {
     (document.querySelector('.item[data-creating="true"] > form > input') as HTMLInputElement | null)?.focus();
@@ -70,7 +73,7 @@ watch(fetchedFolder, (value) => {
 
   foldersCache.set(value.path, toRaw(value));
 
-  currentFolder.value = value;
+  folder.value = value;
 });
 
 useTinykeys({
@@ -84,16 +87,16 @@ useTinykeys({
 
 <template>
   <Transition name="contents-loading">
-    <template v-if="currentFolder">
+    <template v-if="folder">
       <TransitionGroup tag="ul" name="list">
-        <li v-if="!currentFolder.root" key="cd.." class="item">
+        <li v-if="!folder.root" key="cd.." class="item">
           <button class="item__name" @click="goUpFolder">
             cd ..
           </button>
         </li>
 
         <li v-for="item in mergedContents" :key="item.id.toString()">
-          <WorkspaceContentsItem :item="item" :parent="currentFolder" />
+          <WorkspaceContentsItem :item="item" :parent="folder" />
         </li>
       </TransitionGroup>
     </template>
