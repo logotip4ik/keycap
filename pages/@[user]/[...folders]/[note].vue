@@ -10,7 +10,9 @@ const isOnline = useOnline();
 const notesCache = useNotesCache();
 const currentNoteState = useCurrentNoteState();
 
-const note = ref<Note | null | undefined>(notesCache.get(`/${route.params.user}/${getUniqueNoteKey()}`));
+const note = ref<Note | null | undefined>(
+  notesCache.get(`/${route.params.user}/${getApiNotePath()}`),
+);
 
 const { data: fetchedNote, error, refresh } = useLazyAsyncData<Note | null>(async () => {
   currentNoteState.value = '';
@@ -20,7 +22,7 @@ const { data: fetchedNote, error, refresh } = useLazyAsyncData<Note | null>(asyn
 
   currentNoteState.value = 'fetching';
 
-  return $fetch<Note>(`/api/note/${getUniqueNoteKey()}`, { retry: 2 });
+  return $fetch<Note>(`/api/note/${getApiNotePath()}`, { retry: 2 });
 }, { server: false });
 
 const throttledUpdate = useThrottleFn(updateNote, 1000);
@@ -33,7 +35,7 @@ function updateNote(content: string) {
 
   const newNote: Partial<Note> = { content };
 
-  const updatePath = `/api/note/${getUniqueNoteKey()}`;
+  const updatePath = `/api/note/${getApiNotePath()}`;
 
   if (isOnline.value) notesCache.set(note.value.path, { ...note.value, ...newNote });
 
@@ -50,7 +52,7 @@ function updateNote(content: string) {
     .catch((error) => console.warn(error));
 }
 
-function getUniqueNoteKey() {
+function getApiNotePath() {
   const paths = Array.isArray(route.params.folders)
     ? [route.params.folders, route.params.note]
     : [route.params.note];
