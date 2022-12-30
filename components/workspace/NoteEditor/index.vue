@@ -157,6 +157,8 @@ onBeforeRouteUpdate(() => {
               cursor: pointer;
 
               accent-color: var(--task-list-indicator-color);
+
+              transform: scale(1.125)
             }
           }
 
