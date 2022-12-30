@@ -50,6 +50,15 @@ watch(() => route.params.note, (noteName) => {
 
   isShowingContents.value = isEmptyNoteName;
 }, { immediate: true });
+
+onMounted(() => {
+  const preloadSearch = () => preloadComponents('WorkspaceSearch');
+
+  if ('requestIdleCallback' in window)
+    window.requestIdleCallback(preloadSearch);
+  else
+    setTimeout(preloadSearch, 500);
+});
 </script>
 
 <template>
