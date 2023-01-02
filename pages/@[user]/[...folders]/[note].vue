@@ -29,8 +29,6 @@ const throttledUpdate = useThrottleFn(updateNote, 1000);
 function updateNote(content: string) {
   if (!note.value) return;
 
-  if (note.value.content === content) return;
-
   interface QuickResponse { status: 'ok' | 'error' }
 
   const newNote: Partial<Note> = { content };
