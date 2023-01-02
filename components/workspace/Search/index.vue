@@ -12,6 +12,7 @@ const foldersCache = useFoldersCache();
 const results = ref<FolderOrNote[]>([]);
 const isLoadingResults = ref(false);
 const selectedResult = ref(0);
+const typeaheadResult = computed<FolderOrNote | null>(() => results.value[selectedResult.value] || null);
 
 const inputEl = ref<HTMLElement | null>(null);
 const searchEl = ref<HTMLElement | null>(null);
@@ -173,6 +174,18 @@ useTinykeys({ Escape: handleCancel });
           @keydown.up.prevent="changeSelectedResult(-1)"
           @keydown.down.prevent="changeSelectedResult(+1)"
         >
+
+        <p v-show="typeaheadResult" class="search__form__typeahead">
+          <span class="search__form__typeahead__input-clone">{{ searchInput }}</span>
+          <span class="search__form__typeahead__result"> -
+            <template v-if="typeaheadResult?.name !== searchInput">
+              {{ typeaheadResult?.name }}
+            </template>
+            <template v-else>
+              open
+            </template>
+          </span>
+        </p>
       </form>
 
       <Transition name="list">
@@ -241,23 +254,75 @@ useTinykeys({ Escape: handleCancel });
   }
 
   &__form {
+    --search-font-size: 1.75rem;
+
+    position: relative;
+    isolation: isolate;
+    z-index: 1;
+
+    margin: 0;
+    padding: 0.75rem 1.25rem;
+
+    border-radius: 0.25rem;
+    border: 1px solid var(--loading-indicator-color);
+
+    &:is(:hover, :focus-within) {
+      outline: none;
+      border-color: var(--task-list-indicator-color);
+    }
+
     &__input {
+      display: block;
+
       font: inherit;
-      font-size: 1.75rem;
+      font-size: var(--search-font-size);
       color: currentColor;
+      line-height: 1.5;
 
       width: 100%;
 
-      padding: 0.75rem 1.25rem;
+      margin: 0;
+      padding: 0;
 
-      border: 1px solid var(--loading-indicator-color);
-      border-radius: 0.25rem;
+      border: 0;
+      box-shadow: none;
       appearance: none;
+      outline: none;
       background-color: transparent;
 
-      &:is(:hover, :focus-visible) {
-        outline: none;
-        border-color: var(--task-list-indicator-color);
+      // vue isn't as fast as browser, so hiding typeahead if input is empty
+      &:placeholder-shown + .search__form__typeahead {
+        opacity: 0;
+      }
+    }
+
+    &__typeahead {
+      display: block;
+
+      position: absolute;
+      top: 0;
+      left: 0;
+
+      width: 100%;
+      height: 100%;
+
+      font: inherit;
+      font-size: var(--search-font-size);
+      color: currentColor;
+      line-height: 1.5;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      color: hsl(var(--hsl-primary-color), 50%, 25%);
+
+      padding: inherit;
+      margin: 0;
+
+      opacity: 0.5;
+      pointer-events: none;
+      overflow: hidden;
+
+      &__input-clone {
+        opacity: 0;
       }
     }
   }
