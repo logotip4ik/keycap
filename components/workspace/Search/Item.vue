@@ -4,9 +4,15 @@ import type { FolderOrNote } from '~/composables/store';
 interface Props { item: FolderOrNote; selected: boolean }
 const props = defineProps<Props>();
 
-const itemPath = computed(() =>
-  // removing account name and the last one string from path
-  decodeURIComponent(props.item.path.replace(/\/\w+/i, '').replace(/\/[\w\%]+$/i, '')));
+const itemPath = computed(() => {
+  const path = props.item.path
+    // removing account name
+    .replace(/\/\w+\//i, '')
+    // the last one string from path
+    .replace(/\/?[\w\%]+$/i, '');
+
+  return decodeURIComponent(path);
+});
 </script>
 
 <template>
