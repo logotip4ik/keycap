@@ -14,16 +14,20 @@ const note = ref<Note | null | undefined>(
   notesCache.get(`/${route.params.user}/${getApiNotePath()}`),
 );
 
-const { data: fetchedNote, error, refresh } = useLazyAsyncData<Note | null>(async () => {
-  currentNoteState.value = '';
+const { data: fetchedNote, error, refresh } = useLazyAsyncData<Note | null>(
+  'note',
+  async () => {
+    currentNoteState.value = '';
 
-  if (!route.params.note || route.params.note === blankNoteName)
-    return null;
+    if (!route.params.note || route.params.note === blankNoteName)
+      return null;
 
-  currentNoteState.value = 'fetching';
+    currentNoteState.value = 'fetching';
 
-  return $fetch<Note>(`/api/note/${getApiNotePath()}`, { retry: 2 });
-}, { server: false });
+    return $fetch<Note>(`/api/note/${getApiNotePath()}`, { retry: 2 });
+  },
+  { server: false },
+);
 
 const throttledUpdate = useThrottleFn(updateNote, 1000);
 function updateNote(content: string) {

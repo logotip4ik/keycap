@@ -21,6 +21,7 @@ const folderIdentifier = computed(() => {
 });
 
 const { data: fetchedFolder } = useLazyAsyncData<FolderWithContents>(
+  'folder',
   () => {
     const folders = route.params.folders;
     const path = Array.isArray(folders) ? folders.at(-1) : folders as string;
