@@ -10,7 +10,7 @@ const isOnline = useOnline();
 const notesCache = useNotesCache();
 const currentNoteState = useCurrentNoteState();
 
-const note = ref<Note | null | undefined>(
+const note = shallowRef<Note | null | undefined>(
   notesCache.get(`/${route.params.user}/${getApiNotePath()}`),
 );
 
