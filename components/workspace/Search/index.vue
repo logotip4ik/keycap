@@ -2,17 +2,26 @@
 import { AsyncFzf as FuzzySearch } from 'fzf';
 
 import type { AsyncFzf } from 'fzf';
-import type { FolderOrNote, FolderWithContents } from '~/composables/store';
+import type { CommandItem, FolderOrNote, FolderWithContents } from '~/composables/store';
 
 interface Emits { (e: 'close'): void }
 const emit = defineEmits<Emits>();
 
+// NOTE: command could be only one word,
+// or use '-' as space replace
+const commands: CommandItem[] = [
+  { name: 'refresh', action: () => refreshNuxtData('note') },
+  { name: 'refresh-folder', action: () => refreshNuxtData('folder') },
+  // TODO: offload `preCreateItem` to helper ?
+  { name: 'new', action: () => null },
+];
+
 const foldersCache = useFoldersCache();
 
-const results = ref<FolderOrNote[]>([]);
+const results = ref<FolderOrNote[] | CommandItem[]>([]);
 const isLoadingResults = ref(false);
 const selectedResult = ref(0);
-const typeaheadResult = computed<FolderOrNote | null>(() => results.value[selectedResult.value] || null);
+const typeaheadResult = computed<FolderOrNote | CommandItem | null>(() => results.value[selectedResult.value] || null);
 
 const inputEl = ref<HTMLElement | null>(null);
 const searchEl = ref<HTMLElement | null>(null);
@@ -20,17 +29,31 @@ const searchEl = ref<HTMLElement | null>(null);
 const searchInput = ref('');
 const debouncedSearchInput = useDebounce(searchInput, 150);
 
-let fzf: AsyncFzf<FolderOrNote[]>;
+let itemsFzf: AsyncFzf<FolderOrNote[]>;
+let commandsFzf: AsyncFzf<CommandItem[]>;
 
 defineExpose({ input: inputEl });
+
+function searchCommandWithName(name: string) {
+  isLoadingResults.value = true;
+
+  commandsFzf.find(name)
+    .then((entries) => {
+      results.value = entries.map((entry) => entry.item);
+    })
+    .finally(() => {
+      isLoadingResults.value = false;
+    });
+}
 
 function searchItemWithName(name: string) {
   isLoadingResults.value = true;
 
-  fzf.find(name)
+  itemsFzf.find(name)
     .then((entries) => {
       results.value = entries.map((entry) => entry.item);
-    }).finally(() => {
+    })
+    .finally(() => {
       isLoadingResults.value = false;
     });
 }
@@ -74,7 +97,14 @@ function defineFuzzySearch() {
 
     findAllItems(theMostUpperFolder!);
 
-    fzf = new FuzzySearch(items, {
+    itemsFzf = new FuzzySearch(items, {
+      fuzzy: 'v2',
+      limit: 5,
+      normalize: true,
+      selector: (item) => item.name,
+    });
+
+    commandsFzf = new FuzzySearch(commands, {
       fuzzy: 'v2',
       limit: 5,
       normalize: true,
@@ -95,19 +125,32 @@ function handleSearchInput(value: string) {
   const isCommand = value.startsWith('/');
 
   if (isCommand) {
-    // TODO: add commands
+    const args = value.slice(1).split(' ');
+
+    const commandName = args[0];
+
+    searchCommandWithName(commandName);
   }
   else {
     searchItemWithName(value);
   }
 }
 
-function openResult() {
+async function openResult() {
   const resultToOpen = results.value[selectedResult.value];
 
   if (!resultToOpen) return;
 
-  navigateTo(generateItemRouteParams(resultToOpen));
+  const isCommand = typeof (resultToOpen as CommandItem).action === 'function';
+
+  if (isCommand) {
+    const args = searchInput.value.slice(1).split(' ').slice(1);
+
+    await (resultToOpen as CommandItem).action(args);
+  }
+  else {
+    await navigateTo(generateItemRouteParams(resultToOpen as FolderOrNote));
+  }
 
   handleCancel();
 }
@@ -117,6 +160,13 @@ function changeSelectedResult(difference: number) {
 
   selectedResult.value = newSelectedResult < 0 ? results.value.length - 1 : newSelectedResult;
 }
+
+const isResultsEmpty = computed(() => {
+  // slicing '/' for command
+  const inputValue = debouncedSearchInput.value.startsWith('/') ? debouncedSearchInput.value.slice(1) : debouncedSearchInput.value;
+
+  return results.value.length === 0 && inputValue.length !== 0;
+});
 
 watch(debouncedSearchInput, handleSearchInput);
 
@@ -189,7 +239,10 @@ useTinykeys({ Escape: handleCancel });
       </form>
 
       <Transition name="list">
-        <div v-if="results.length === 0 && debouncedSearchInput.length !== 0" class="search__no-results">
+        <div
+          v-if="isResultsEmpty"
+          class="search__no-results"
+        >
           <p class="search__no-results__text">
             Nothing found...
           </p>
@@ -201,7 +254,7 @@ useTinykeys({ Escape: handleCancel });
           name="list"
           class="search__results"
         >
-          <template v-for="(item, idx) in results" :key="item.path">
+          <template v-for="(item, idx) in results" :key="`${item.name}-${item.path}`">
             <li class="search__results__item">
               <WorkspaceSearchItem
                 :item="item"
@@ -323,6 +376,10 @@ useTinykeys({ Escape: handleCancel });
 
       &__input-clone {
         opacity: 0;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        color: hsl(var(--hsl-primary-color), 25%, 55%);
       }
     }
   }

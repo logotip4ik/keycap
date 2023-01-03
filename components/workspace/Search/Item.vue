@@ -1,22 +1,36 @@
 <script setup lang="ts">
-import type { FolderOrNote } from '~/composables/store';
+import type { CommandItem, FolderOrNote } from '~/composables/store';
 
-interface Props { item: FolderOrNote; selected: boolean }
+interface Props { item: FolderOrNote | CommandItem; selected: boolean }
 const props = defineProps<Props>();
 
-const itemPath = computed(() => {
-  const path = props.item.path
+const isCommand = typeof (props.item as CommandItem).action === 'function';
+
+const itemPath = (() => {
+  if (isCommand) return '';
+
+  const path = (props.item as FolderOrNote).path
     // removing account name
     .replace(/\/\w+\//i, '')
     // the last one string from path
     .replace(/\/?[\w\%]+$/i, '');
 
   return decodeURIComponent(path);
-});
+})();
+const itemHref = (() => {
+  if (isCommand) return '';
+
+  return generateItemRouteParams(props.item as FolderOrNote);
+})();
 </script>
 
 <template>
-  <NuxtLink :href="generateItemRouteParams(item)" class="search-item" :data-selected="selected">
+  <button v-if="isCommand" class="search-item" :data-selected="selected">
+    <span class="search-item__name">{{ item.name }}</span>
+    <Icon name="ic:round-keyboard-return" class="search-item__enter-icon" />
+  </button>
+
+  <NuxtLink v-else :href="itemHref" class="search-item" :data-selected="selected">
     <span v-if="itemPath !== ''" class="search-item__path">{{ itemPath }}/</span>
     <span class="search-item__name">{{ item.name }}</span>
     <Icon name="ic:round-keyboard-return" class="search-item__enter-icon" />
@@ -42,6 +56,8 @@ const itemPath = computed(() => {
 
   overflow: hidden;
 
+  border: 0;
+  outline: 0;
   background-color: hsla(var(--text-color-hsl), 0.01);
 
   transition: background-color .4s;

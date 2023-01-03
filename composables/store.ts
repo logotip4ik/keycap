@@ -20,6 +20,11 @@ export interface FolderWithContents extends Folder {
 
 export type FolderOrNote = FolderWithContents & NoteMinimal;
 
+export interface CommandItem {
+  name: string
+  action: (args: string[] | null) => any
+}
+
 export const useRootFolderContents = () => useState<FolderWithContents | null>(() => null);
 export const useCurrentNoteState = () => useState<'' | 'updating' | 'fetching' | 'saved'>(() => '' as const);
 
