@@ -186,7 +186,7 @@ function handleContextmenu() {
         v-model="newItemName"
         class="item__input"
         @blur="cancelActions"
-        @keypress.esc="cancelActions"
+        @keydown.esc="cancelActions"
       >
     </form>
 
