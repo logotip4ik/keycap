@@ -7,10 +7,9 @@ import { blankNoteName } from '~/assets/constants';
 
 const router = useRouter();
 const route = useRoute();
-const user = useUser();
 const foldersCache = useFoldersCache();
 
-const folder = ref<FolderWithContents | null | undefined>(
+const folder = shallowRef<FolderWithContents | null | undefined>(
   foldersCache.get(withoutTrailingSlash(`/${route.params.user}/${getApiFolderPath()}`)),
 );
 
@@ -54,17 +53,6 @@ function goUpFolder() {
   router.push({ name: '@user-folders-note', params: { folders: prevFolderPath, note: blankNoteName } });
 }
 
-function preCreateNoteOrFolder() {
-  if (!folder.value || !user.value) return;
-
-  const id = BigInt(Math.floor(Math.random() * 1000));
-  folder.value.notes.unshift({ id, name: '', creating: true });
-
-  nextTick(() => {
-    (document.querySelector('.item[data-creating="true"] > form > input') as HTMLInputElement | null)?.focus();
-  });
-}
-
 // updating if server sent different
 watch(fetchedFolder, (value) => {
   if (!value) return;
@@ -81,7 +69,7 @@ useTinykeys({
   '$mod+Shift+A': (event) => {
     event.preventDefault();
 
-    preCreateNoteOrFolder();
+    if (folder.value) preCreateItem(folder.value);
   },
 });
 </script>
@@ -107,7 +95,7 @@ useTinykeys({
     </template>
   </Transition>
 
-  <button class="workspace__create-button" @click="preCreateNoteOrFolder">
+  <button class="workspace__create-button" @click="folder && preCreateItem(folder)">
     <Icon name="ic:outline-add" />
   </button>
 </template>
