@@ -13,7 +13,14 @@ const commands: CommandItem[] = [
   { name: 'refresh', action: () => refreshNuxtData('note') },
   { name: 'refresh-folder', action: () => refreshNuxtData('folder') },
   // TODO: offload `preCreateItem` to helper ?
-  { name: 'new', action: () => null },
+  {
+    name: 'new',
+    action: () => {
+      const nuxtApp = useNuxtApp();
+
+      preCreateItem(nuxtApp.payload.data.folder);
+    },
+  },
 ];
 
 const foldersCache = useFoldersCache();
