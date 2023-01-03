@@ -1,6 +1,6 @@
 import { deleteCookie, getCookie, setCookie } from 'h3';
 import bcrypt from 'bcrypt';
-import * as jose from 'jose';
+import { SignJWT, jwtVerify } from 'jose';
 
 import type { H3Event } from 'h3';
 import type { User } from '@prisma/client';
@@ -8,11 +8,12 @@ import { toBigInt } from '.';
 
 async function generateAccessToken(object: object): Promise<string> {
   const secret = getJWTSecret();
+  const issuer = getJWTIssuer();
 
-  return await new jose.SignJWT({ ...object })
+  return await new SignJWT({ ...object })
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
-    .setIssuer('keycap')
+    .setIssuer(issuer)
     .setExpirationTime('24h')
     .sign(secret);
 }
@@ -27,6 +28,12 @@ function getJWTSecret(): Uint8Array {
   const secret = process.env.JWT_SECRET || '';
 
   return new TextEncoder().encode(secret);
+}
+
+function getJWTIssuer(): string {
+  const issuer = process.env.JWT_ISSUER || 'test:keycap';
+
+  return issuer;
 }
 
 export async function setAuthCookies(event: H3Event, user: Pick<User, 'id' | 'username' | 'email'>) {
@@ -57,9 +64,10 @@ export async function getUserFromEvent(event: H3Event): Promise<Pick<User, 'id' 
   if (!accessToken) return null;
 
   const secret = getJWTSecret();
+  const issuer = getJWTIssuer();
 
   try {
-    const { payload } = await jose.jwtVerify(accessToken, secret, { issuer: 'keycap' });
+    const { payload } = await jwtVerify(accessToken, secret, { issuer });
 
     return {
       id: toBigInt(payload.id as string),
