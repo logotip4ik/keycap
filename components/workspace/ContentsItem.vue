@@ -311,7 +311,7 @@ function handleContextmenu() {
     --button-size-max: 2rem;
     --button-size-min: 1.9rem;
 
-    color: hsla(var(--text-color-hsl), 0.1);
+    color: hsla(var(--text-color-hsl), 0.2);
 
     width: var(--button-size-basis);
     height: var(--button-size-basis);
@@ -344,6 +344,10 @@ function handleContextmenu() {
 
       transition: color .1s, background-color .1s;
     }
+
+    @media screen and (max-width: 740px) {
+      --button-size-min: 2.25rem;
+    }
   }
 
   &__edit {
@@ -372,6 +376,10 @@ function handleContextmenu() {
     color: var(--text-color);
 
     border-color: var(--text-color) !important;
+  }
+
+  @media screen and (max-width: 740px) {
+    font-size: 1.125rem;
   }
 }
 </style>
