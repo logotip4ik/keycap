@@ -58,7 +58,7 @@ watch(() => route.params.note, (noteName) => {
   <nav class="nav">
     <ClientOnly>
       <Transition name="nav-back-button">
-        <button v-if="isShowingBackButton" class="nav__back-button" @click="showFolderContents">
+        <button v-show="isShowingBackButton" class="nav__back-button" @click="showFolderContents">
           <Icon name="ic:baseline-arrow-back" class="nav__back-button__icon" />
         </button>
       </Transition>
@@ -96,7 +96,6 @@ watch(() => route.params.note, (noteName) => {
     font-size: 1.1rem;
 
     // NOTE: hide not needed text but show saved indicator
-    // overflow: hidden;
     clip-path: inset(-50% 0 0 -20%);
 
     &::after {
