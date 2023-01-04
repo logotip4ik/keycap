@@ -22,9 +22,17 @@ export function generateItemRouteParams(item: FolderOrNote): RouteLocationNamedR
   };
 }
 
-export function preCreateItem(folderToAppend: FolderWithContents) {
+export function preCreateItem(folderToAppend: FolderWithContents, initialValues?: NoteMinimal) {
   const id = BigInt(Math.floor(Math.random() * 1000));
-  folderToAppend.notes.unshift({ id, name: '', creating: true });
+
+  const noteValues = {
+    id,
+    name: '',
+    creating: true,
+    ...(initialValues || {}),
+  };
+
+  folderToAppend.notes.unshift(noteValues);
 
   nextTick(() => {
     (document.querySelector('.item[data-creating="true"] > form > input') as HTMLInputElement | null)?.focus();
