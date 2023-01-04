@@ -15,8 +15,8 @@ useHead({
 </script>
 
 <template>
-  <div>
+  <NuxtLayout>
     <NuxtLoadingIndicator color="var(--loading-indicator-color)" />
     <NuxtPage />
-  </div>
+  </NuxtLayout>
 </template>
