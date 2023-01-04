@@ -1,3 +1,5 @@
+import browserslistToEsbuild from 'browserslist-to-esbuild';
+
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
   runtimeConfig: {
@@ -16,5 +18,11 @@ export default defineNuxtConfig({
 
   nitro: {
     preset: 'vercel',
+  },
+
+  vite: {
+    build: {
+      target: browserslistToEsbuild(),
+    },
   },
 });

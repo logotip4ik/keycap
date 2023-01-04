@@ -2306,7 +2306,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"browserslist@npm:^4.0.0, browserslist@npm:^4.16.6, browserslist@npm:^4.21.3, browserslist@npm:^4.21.4":
+"browserslist-to-esbuild@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "browserslist-to-esbuild@npm:1.2.0"
+  dependencies:
+    browserslist: ^4.17.3
+  checksum: a6c1adc2ad8da0db23aa4f0b3c71e13561cbf61599e9acedc7890793d79aca250edb0f599095042e81587c88e87569bf3a1a68633026e81e4ac7548eb1c71b49
+  languageName: node
+  linkType: hard
+
+"browserslist@npm:^4.0.0, browserslist@npm:^4.16.6, browserslist@npm:^4.17.3, browserslist@npm:^4.21.3, browserslist@npm:^4.21.4":
   version: 4.21.4
   resolution: "browserslist@npm:4.21.4"
   dependencies:
@@ -7660,6 +7669,7 @@ __metadata:
     "@vueuse/core": ^9.10.0
     "@vueuse/nuxt": ^9.10.0
     bcrypt: ^5.1.0
+    browserslist-to-esbuild: ^1.2.0
     eslint: ^8.31.0
     fzf: ^0.5.1
     jose: ^4.11.2
