@@ -12,13 +12,12 @@ const emit = defineEmits<Emits>();
 const commands: CommandItem[] = [
   { name: 'refresh', action: () => refreshNuxtData('note') },
   { name: 'refresh-folder', action: () => refreshNuxtData('folder') },
-  // TODO: offload `preCreateItem` to helper ?
   {
     name: 'new',
-    action: () => {
+    action: (args) => {
       const nuxtApp = useNuxtApp();
 
-      preCreateItem(nuxtApp.payload.data.folder);
+      preCreateItem(nuxtApp.payload.data.folder, { name: args?.join(' ') || '' });
     },
   },
 ];
