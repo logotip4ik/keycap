@@ -22,7 +22,7 @@ export function generateItemRouteParams(item: FolderOrNote): RouteLocationNamedR
   };
 }
 
-export function preCreateItem(folderToAppend: FolderWithContents, initialValues?: NoteMinimal) {
+export function preCreateItem(folderToAppend: FolderWithContents, initialValues?: Partial<NoteMinimal>) {
   const id = BigInt(Math.floor(Math.random() * 1000));
 
   const noteValues = {
