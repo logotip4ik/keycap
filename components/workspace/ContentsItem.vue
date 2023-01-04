@@ -295,6 +295,8 @@ function handleContextmenu() {
 
     &__folder-icon {
       margin-right: 0.25rem;
+
+      opacity: 0.75;
     }
 
     &__text {
