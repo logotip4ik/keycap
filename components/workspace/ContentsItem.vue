@@ -2,12 +2,12 @@
 import { withLeadingSlash, withTrailingSlash } from 'ufo';
 
 import type { Note } from '@prisma/client';
+import type { NavigateToOptions } from 'nuxt/dist/app/composables/router';
 import type { FolderOrNote, FolderWithContents } from '~/composables/store';
 
 interface Props { item: FolderOrNote; parent: FolderWithContents }
 const props = defineProps<Props>();
 
-const router = useRouter();
 const route = useRoute();
 const notesCache = useNotesCache();
 const foldersCache = useFoldersCache();
@@ -18,10 +18,10 @@ const newItemName = ref(props.item.name);
 const isFolder = computed(() => 'root' in props.item);
 const isItemActive = computed(() => decodeURIComponent(route.params.note as string) === props.item.name);
 
-function showItem(item: FolderOrNote) {
+async function showItem(item: FolderOrNote, options: NavigateToOptions = {}) {
   const itemRouteParams = generateItemRouteParams(item);
 
-  router.push(itemRouteParams);
+  await navigateTo(itemRouteParams, options);
 }
 
 function cancelActions() {
@@ -64,6 +64,8 @@ async function createFolder(folderPath: string) {
 
   deleteNoteFromFolder(props.item, props.parent);
   updateSubfolderInFolder(props.item, { ...newlyCreatedFolder, creating: false }, props.parent);
+
+  showItem(newlyCreatedFolder);
 }
 
 async function removeFolder() {
@@ -121,7 +123,7 @@ async function updateNote() {
   notesCache.set(props.item.path, { ...props.item, name: newItemName.value.trim(), path: newNotePath });
   updateNoteInFolder(props.item, { editing: false, name: newItemName.value.trim(), path: newNotePath }, props.parent);
 
-  router.replace(generateItemRouteParams({ ...props.item, name: newItemName.value.trim(), path: newNotePath }));
+  showItem({ ...props.item, name: newItemName.value.trim(), path: newNotePath }, { replace: true });
 }
 
 async function updateFolder() {
