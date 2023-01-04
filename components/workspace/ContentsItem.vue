@@ -168,7 +168,7 @@ function handleContextmenu() {
     updateNoteInFolder(props.item, { editing: true }, props.parent);
 
   nextTick(() => {
-    (document.querySelector('.item[data-editing="true"] > input') as HTMLInputElement | null)?.focus();
+    (document.querySelector('.item[data-editing="true"] > form > input') as HTMLInputElement | null)?.focus();
   });
 }
 </script>
