@@ -1,9 +1,19 @@
 <template>
   <div class="blank-note">
     <p class="blank-note__text">
-      Create new note or folder by pressing
+      Create new note or folder
+
+      <br>
 
       <kbd>Ctrl + Shift + A</kbd>
+    </p>
+
+    <p class="blank-note__text">
+      Show search
+
+      <br>
+
+      <kbd>Ctrl + Shift + K</kbd>
     </p>
   </div>
 </template>
