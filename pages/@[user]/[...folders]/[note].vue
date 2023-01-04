@@ -43,13 +43,18 @@ function updateNote(content: string) {
 
   currentNoteState.value = 'updating';
 
+  const routeBeforeUpdate = window.location.pathname;
+
   $fetch<QuickResponse>(updatePath, { method: 'PUT', body: newNote })
     .then((response) => {
       if (response.status === 'error' || !note.value) return;
 
       notesCache.set(note.value.path, { ...note.value, ...newNote });
 
-      currentNoteState.value = 'saved';
+      // before route update, note will be saved and the indicator will be again reset to saved
+      // this checks if route is the same, so this wasn't last save and user is still on the same note
+      if (routeBeforeUpdate === window.location.pathname)
+        currentNoteState.value = 'saved';
     })
     .catch((error) => console.warn(error));
 }
