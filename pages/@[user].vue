@@ -38,7 +38,7 @@ useHead({
 });
 
 useTinykeys({
-  '$mod+k': (event) => {
+  '$mod+Shift+k': (event) => {
     event.preventDefault();
 
     isShowingSearch.value = !isShowingSearch.value;
