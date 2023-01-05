@@ -16,7 +16,7 @@ const numberOfParagraphs = 5;
 
 <style lang="scss">
 .skeleton {
-  padding: 0.75rem .75rem 0;
+  padding: 10vh 0.75rem 25vh;
 
   &__heading,
   &__text {
