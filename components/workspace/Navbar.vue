@@ -34,13 +34,13 @@ function showFolderContents() {
 }
 
 watch(() => route.path, (path) => {
-  const isServerSize = process.server;
+  const isServerSide = process.server;
 
   if (!user.value)
     return canShowBackButton.value = false;
 
-  if (isServerSize)
-    return canShowBackButton.value = viewport.isLessThan('tablet');
+  if (isServerSide)
+    return canShowBackButton.value = viewport.breakpoint.value === 'tablet';
 
   if (window.innerWidth > breakpoints.tablet)
     return canShowBackButton.value = false;
