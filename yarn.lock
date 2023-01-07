@@ -963,6 +963,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nuxtjs/device@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@nuxtjs/device@npm:3.0.0"
+  dependencies:
+    "@nuxt/kit": ^3.0.0-rc.13
+    defu: ^6.1.0
+  checksum: 90b40a32f82d5fd4c3cf66b864d5f776b1202132e44d578f268a4628f6b64929242ada983fadafea1b990895f5f405207bff7334fb4d00c0ba2d177f6bd43e92
+  languageName: node
+  linkType: hard
+
 "@popperjs/core@npm:^2.9.0":
   version: 2.11.6
   resolution: "@popperjs/core@npm:2.11.6"
@@ -3046,7 +3056,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"defu@npm:^6.0.0, defu@npm:^6.1.1":
+"defu@npm:^6.0.0, defu@npm:^6.1.0, defu@npm:^6.1.1":
   version: 6.1.1
   resolution: "defu@npm:6.1.1"
   checksum: 51d05b48297fca6c5a0ac73558f1c6182eca544c9ac7b290692ec7e165d8c5cd20d772c58b0777a8a1186fa25f49c19d28f095982a9e478d33857d46e5fa5e48
@@ -6421,17 +6431,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nuxt-viewport@npm:^2.0.3":
-  version: 2.0.3
-  resolution: "nuxt-viewport@npm:2.0.3"
-  dependencies:
-    "@nuxt/kit": ^3.0.0-rc.13
-    ua-parser-js: ^1.0.32
-    vue-demi: ^0.13.11
-  checksum: 7bc7895362e571691ebe7c59b47ad4a97c8a5b39453b64ab52dfb82d0daf8bc036bfe6d57bbe7686435812401539396836b95f5bc33f4586f36ed02208bc78d8
-  languageName: node
-  linkType: hard
-
 "nuxt@npm:3.0.0":
   version: 3.0.0
   resolution: "nuxt@npm:3.0.0"
@@ -7732,6 +7731,7 @@ __metadata:
   resolution: "root-workspace-0b6124@workspace:."
   dependencies:
     "@antfu/eslint-config": ^0.34.0
+    "@nuxtjs/device": ^3.0.0
     "@prisma/client": ^4.8.0
     "@tiptap/extension-bubble-menu": ^2.0.0-beta.209
     "@tiptap/extension-link": ^2.0.0-beta.209
@@ -7754,7 +7754,6 @@ __metadata:
     nuxt: 3.0.0
     nuxt-icon: ^0.1.8
     nuxt-security: ^0.10.0
-    nuxt-viewport: ^2.0.3
     prisma: ^4.8.0
     prosemirror-commands: ^1.5.0
     prosemirror-dropcursor: ^1.6.1
@@ -8567,13 +8566,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ua-parser-js@npm:^1.0.32":
-  version: 1.0.32
-  resolution: "ua-parser-js@npm:1.0.32"
-  checksum: 79a80efd9c21511fdafc042ab748e0e93c8cdb0e8925bf6d48ad7dbb08e808c60fcecd49e679670def44ef428c005aa1810810f6773e7d8135a7817338080813
-  languageName: node
-  linkType: hard
-
 "ufo@npm:^0.8.6":
   version: 0.8.6
   resolution: "ufo@npm:0.8.6"
@@ -8995,7 +8987,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue-demi@npm:*, vue-demi@npm:^0.13.11":
+"vue-demi@npm:*":
   version: 0.13.11
   resolution: "vue-demi@npm:0.13.11"
   peerDependencies:
