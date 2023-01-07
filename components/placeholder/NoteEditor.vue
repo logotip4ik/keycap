@@ -61,6 +61,10 @@ const numberOfParagraphs = 5;
       }
     }
   }
+
+  @media screen and (max-width: $breakpoint-tablet) {
+    padding-top: 1rem;
+  }
 }
 
 @keyframes background-wave {
