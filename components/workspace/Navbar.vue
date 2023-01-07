@@ -5,7 +5,7 @@ import breakpoints from '~/assets/constants/breakpoints';
 const router = useRouter();
 const route = useRoute();
 const user = useUser();
-const viewport = useViewport();
+const device = useDevice();
 const currentNoteState = useCurrentNoteState();
 
 const canShowBackButton = ref(false);
@@ -33,14 +33,14 @@ function showFolderContents() {
   router.push({ ...route, params: { ...route.params, note: blankNoteName } });
 }
 
-watch(() => route.path, (path) => {
+watch(() => route.path, () => {
   const isServerSide = process.server;
 
   if (!user.value)
     return canShowBackButton.value = false;
 
   if (isServerSide)
-    return canShowBackButton.value = viewport.breakpoint.value === 'tablet';
+    return canShowBackButton.value = device.isMobileOrTablet;
 
   if (window.innerWidth > breakpoints.tablet)
     return canShowBackButton.value = false;
