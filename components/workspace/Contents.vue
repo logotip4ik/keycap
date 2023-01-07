@@ -147,7 +147,7 @@ useTinykeys({
       }
     }
 
-    @media screen and (max-width: 740px) {
+    @media screen and (max-width: $breakpoint-tablet) {
       right: calc(var(--button-size-max) / 3);
       left: unset;
     }

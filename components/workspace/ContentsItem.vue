@@ -347,7 +347,7 @@ function handleContextmenu() {
       transition: color .1s, background-color .1s;
     }
 
-    @media screen and (max-width: 740px) {
+    @media screen and (max-width: $breakpoint-tablet) {
       --button-size-min: 2.25rem;
     }
   }
@@ -359,7 +359,7 @@ function handleContextmenu() {
       color: var(--text-color);
     }
 
-    @media screen and (max-width: 740px) {
+    @media screen and (max-width: $breakpoint-tablet) {
       display: block;
     }
   }
@@ -380,7 +380,7 @@ function handleContextmenu() {
     border-color: var(--text-color) !important;
   }
 
-  @media screen and (max-width: 740px) {
+  @media screen and (max-width: $breakpoint-tablet) {
     font-size: 1.125rem;
   }
 }

@@ -109,7 +109,7 @@ onMounted(() => {
     border-right: 1px solid hsla(var(--text-color-hsl), 0.25);
     border-bottom: 1px solid hsla(var(--text-color-hsl), 0.25);
 
-    @media screen and (max-width: 740px) {
+    @media screen and (max-width: $breakpoint-tablet) {
       grid-area: 1 / 1;
 
       border-right: none
@@ -141,7 +141,7 @@ onMounted(() => {
       list-style-type: none;
     }
 
-    @media screen and (max-width: 740px) {
+    @media screen and (max-width: $breakpoint-tablet) {
       display: none;
 
       padding: 4.5rem 1rem 2rem;
@@ -173,12 +173,12 @@ onMounted(() => {
       height: 100%;
     }
 
-    @media screen and (max-width: 740px) {
+    @media screen and (max-width: $breakpoint-tablet) {
       grid-area: 2 / 1;
     }
   }
 
-  @media screen and (max-width: 740px) {
+  @media screen and (max-width: $breakpoint-tablet) {
     grid-template-rows: auto 1fr;
     grid-template-columns: 1fr;
   }

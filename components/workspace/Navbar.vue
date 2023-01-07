@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { blankNoteName } from '~/assets/constants';
+import breakpoints from '~/assets/constants/breakpoints';
 
 const router = useRouter();
 const route = useRoute();
 const user = useUser();
+const viewport = useViewport();
 const currentNoteState = useCurrentNoteState();
 
-const isShowingBackButton = ref(false);
+const canShowBackButton = ref(false);
 const headingText = computed(() => {
   if (!user.value) return '';
 
@@ -32,19 +34,21 @@ function showFolderContents() {
 }
 
 watch(() => route.path, (path) => {
-  if (typeof window === 'undefined')
-    return;
+  const isServerSize = process.server;
 
   if (!user.value)
-    return isShowingBackButton.value = false;
+    return canShowBackButton.value = false;
 
-  if (window.innerWidth > 740)
-    return isShowingBackButton.value = false;
+  if (isServerSize)
+    return canShowBackButton.value = viewport.isLessThan('tablet');
+
+  if (window.innerWidth > breakpoints.tablet)
+    return canShowBackButton.value = false;
 
   if (!route.params.note || route.params.note === blankNoteName)
-    return isShowingBackButton.value = false;
+    return canShowBackButton.value = false;
 
-  isShowingBackButton.value = true;
+  canShowBackButton.value = true;
 }, { immediate: true });
 
 watch(() => route.params.note, (noteName) => {
@@ -56,13 +60,15 @@ watch(() => route.params.note, (noteName) => {
 
 <template>
   <nav class="nav">
-    <ClientOnly>
-      <Transition name="nav-back-button">
-        <button v-show="isShowingBackButton" class="nav__back-button" @click="showFolderContents">
-          <Icon name="ic:baseline-arrow-back" class="nav__back-button__icon" />
-        </button>
-      </Transition>
-    </ClientOnly>
+    <Transition name="nav-back-button">
+      <button
+        v-show="canShowBackButton && (route.params.note && route.params.note !== blankNoteName)"
+        class="nav__back-button"
+        @click="showFolderContents"
+      >
+        <Icon name="ic:baseline-arrow-back" class="nav__back-button__icon" />
+      </button>
+    </Transition>
 
     <p class="nav__heading" v-bind="headingAttrs">
       {{ headingText }}
@@ -153,12 +159,12 @@ watch(() => route.params.note, (noteName) => {
       width: auto;
     }
 
-    @media screen and (max-width: 740px) {
+    @media screen and (max-width: $breakpoint-tablet) {
       display: block;
     }
   }
 
-  @media screen and (max-width: 740px) {
+  @media screen and (max-width: $breakpoint-tablet) {
     width: 100%;
 
     max-width: unset;

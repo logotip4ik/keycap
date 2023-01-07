@@ -228,7 +228,7 @@ useTinykeys({
       }
     }
 
-    @media screen and (max-width: 740px) {
+    @media screen and (max-width: $breakpoint-tablet) {
       --size-basis: 2.5rem;
     }
   }

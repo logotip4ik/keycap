@@ -215,7 +215,7 @@ onBeforeRouteUpdate(() => {
       transition: all .3s;
     }
 
-    @media screen and (max-width: 740px) {
+    @media screen and (max-width: $breakpoint-tablet) {
       padding-top: 1rem;
       padding-bottom: 45vh
     }

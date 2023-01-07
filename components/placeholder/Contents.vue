@@ -45,7 +45,7 @@
       margin-top: 0.6rem;
     }
 
-    @media screen and (max-width: 740px) {
+    @media screen and (max-width: $breakpoint-tablet) {
       background-size: 100vw 100%;
     }
 

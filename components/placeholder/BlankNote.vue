@@ -46,7 +46,7 @@
     }
   }
 
-  @media screen and (max-width: 740px) {
+  @media screen and (max-width: $breakpoint-tablet) {
     display: none;
   }
 }
