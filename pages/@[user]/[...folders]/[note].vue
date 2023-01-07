@@ -117,6 +117,10 @@ watch(fetchedNote, (value) => {
     max-width: 1300px;
 
     margin: 0 auto;
+
+    @media screen and (max-width: $breakpoint-tablet) {
+      width: 100%;
+    }
   }
 }
 
