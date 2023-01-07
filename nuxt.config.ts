@@ -12,9 +12,9 @@ export default defineNuxtConfig({
 
   modules: [
     '@vueuse/nuxt',
+    '@nuxtjs/device',
     'nuxt-icon',
     'nuxt-security',
-    'nuxt-viewport',
   ],
 
   css: [
@@ -43,10 +43,8 @@ export default defineNuxtConfig({
     },
   },
 
-  viewport: {
-    breakpoints: {
-      ...breakpoints,
-    },
+  device: {
+    refreshOnResize: true,
   },
 
   security: {
