@@ -100,7 +100,10 @@ watch(fetchedNote, (value) => {
     </template>
 
     <template v-else>
-      <PlaceholderNoteEditor key="skeleton" />
+      <PlaceholderNoteEditor
+        key="skeleton"
+        class="workspace__note-editor"
+      />
     </template>
   </Transition>
 </template>
@@ -108,7 +111,7 @@ watch(fetchedNote, (value) => {
 <style lang="scss">
 .workspace {
   &__note-editor {
-    width: 100%;
+    width: 95%;
     height: 100%;
 
     max-width: 1300px;
