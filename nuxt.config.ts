@@ -1,5 +1,7 @@
 import browserslistToEsbuild from 'browserslist-to-esbuild';
 
+import breakpoints from './assets/constants/breakpoints';
+
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
   runtimeConfig: {
@@ -28,6 +30,22 @@ export default defineNuxtConfig({
   vite: {
     build: {
       target: browserslistToEsbuild(),
+    },
+
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: [
+            Object.entries(breakpoints).map(([key, value]) => `$breakpoint-${key}: ${value}px;`).join('\n'),
+          ].join('\n'),
+        },
+      },
+    },
+  },
+
+  viewport: {
+    breakpoints: {
+      ...breakpoints,
     },
   },
 
