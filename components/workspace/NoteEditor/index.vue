@@ -113,7 +113,7 @@ onBeforeRouteUpdate(() => {
 
     min-height: 100%;
 
-    padding: 10vh 0.75rem 25vh;
+    padding: 10vh 1.5rem 25vh;
 
     outline: none;
 
@@ -216,8 +216,7 @@ onBeforeRouteUpdate(() => {
     }
 
     @media screen and (max-width: $breakpoint-tablet) {
-      padding-top: 1rem;
-      padding-bottom: 45vh
+      padding: 1rem 1rem 45vh;
     }
   }
 }

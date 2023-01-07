@@ -16,7 +16,7 @@ const numberOfParagraphs = 5;
 
 <style lang="scss">
 .skeleton {
-  padding: 10vh 0.75rem 25vh;
+  padding: 10vh 1.5rem 25vh;
 
   &__heading,
   &__text {
@@ -63,7 +63,7 @@ const numberOfParagraphs = 5;
   }
 
   @media screen and (max-width: $breakpoint-tablet) {
-    padding-top: 1rem;
+    padding: 1rem 1rem 45vh;
   }
 }
 
