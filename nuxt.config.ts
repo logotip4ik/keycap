@@ -30,4 +30,9 @@ export default defineNuxtConfig({
       target: browserslistToEsbuild(),
     },
   },
+
+  security: {
+    // @see https://github.com/Baroshem/nuxt-security/issues/42#issuecomment-1311727911
+    hidePoweredBy: false,
+  },
 });
