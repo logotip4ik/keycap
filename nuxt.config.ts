@@ -4,6 +4,14 @@ import breakpoints from './assets/constants/breakpoints';
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
+  app: {
+    head: {
+      htmlAttrs: { translate: 'no' },
+      title: 'Keycap',
+      meta: [{ name: 'description', content: 'Better notes ❤. Synced between your devices' }],
+    },
+  },
+
   runtimeConfig: {
     public: {
       authCookiePrefix: 'auth',
