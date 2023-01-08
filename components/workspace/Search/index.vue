@@ -294,6 +294,11 @@ useTinykeys({ Escape: handleCancel });
 
   overflow: hidden;
 
+  @supports (backdrop-filter: blur(1px)) {
+    backdrop-filter: blur(5px);
+    background-color: hsla(var(--surface-color-hsl), 0.8);
+  }
+
   &-wrapper {
     position: fixed;
     top: 0;
