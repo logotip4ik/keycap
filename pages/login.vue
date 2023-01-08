@@ -3,21 +3,23 @@ definePageMeta({
   middleware: ['redirect-dashboard'],
 });
 
-const router = useRouter();
 const user = useUser();
 
 const data = reactive({ email: '', password: '' });
+const isLoading = ref(false);
 
 async function login() {
+  isLoading.value = true;
+
   $fetch('/api/user/login', { method: 'POST', body: data })
-    .then((newUser) => {
+    .then(async (newUser) => {
       user.value = newUser;
 
-      if (!user.value) return;
-
-      router.push(`/@${user.value.username}`);
+      if (user.value)
+        await navigateTo(`/@${user.value.username}`);
     })
-    .catch((e) => console.error(e));
+    .catch((e) => console.warn(e))
+    .finally(() => isLoading.value = true);
 }
 </script>
 
@@ -56,7 +58,11 @@ async function login() {
           <NuxtLink to="/register">Register</NuxtLink>
         </small>
 
-        <button type="submit" class="login-page__form__item__submit-button">
+        <button
+          type="submit"
+          class="login-page__form__item__submit-button"
+          :class="{ 'login-page__form__item__submit-button--loading': isLoading }"
+        >
           Sign in
         </button>
       </div>
@@ -171,6 +177,9 @@ async function login() {
       }
 
       &__submit-button {
+        position: relative;
+        z-index: 1;
+
         font: inherit;
         font-size: 0.9rem;
         font-weight: 600;
@@ -200,8 +209,70 @@ async function login() {
 
           transition: outline-color 0.1s, outline-offset 0s;
         }
+
+        &::after,
+        &::before {
+          content: '';
+
+          position: absolute;
+
+          opacity: 0;
+          transition: opacity .2s;
+        }
+
+        &::after {
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          z-index: 1;
+
+          border-radius: inherit;
+          background-color: hsla(var(--text-color-hsl), 0.95);
+
+          @supports (backdrop-filter: blur(1px)) {
+            backdrop-filter: blur(2px);
+            background-color: hsla(var(--text-color-hsl), 0.5);
+          }
+        }
+
+        &::before {
+          --size: 1.5rem;
+
+          top: calc(50% - var(--size) / 2);
+          left: calc(50% - var(--size) / 2);
+          z-index: 2;
+
+          width: var(--size);
+          height: var(--size);
+
+          border-radius: 50%;
+          border: 2px solid transparent;
+          border-left-color: var(--surface-color);
+
+          animation: spin 1s infinite linear;
+        }
+
+        &--loading {
+          &::after,
+          &::before {
+            opacity: 1;
+          }
+
+          outline-offset: -1px;
+          pointer-events: none;
+        }
       }
     }
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 </style>

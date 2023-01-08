@@ -3,7 +3,6 @@ definePageMeta({
   middleware: ['redirect-dashboard'],
 });
 
-const router = useRouter();
 const user = useUser();
 
 const data = reactive({ username: '', email: '', password: '' });
@@ -13,12 +12,11 @@ async function register() {
   isLoading.value = true;
 
   $fetch('/api/user/register', { method: 'POST', body: data })
-    .then((newUser) => {
+    .then(async (newUser) => {
       user.value = newUser;
 
-      if (!user.value) return;
-
-      router.push(`/@${user.value.username}`);
+      if (user.value)
+        await navigateTo(`/@${user.value.username}`);
     })
     .catch((e) => console.error(e))
     .finally(() => isLoading.value = true);
@@ -207,38 +205,7 @@ async function register() {
         background-color: var(--text-color);
 
         cursor: pointer;
-        transition: outline .3s, outline-offset .3s, color .3s, opacity .3s;
-
-        &::after {
-          content: 'loading...';
-
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          z-index: 2;
-
-          color: transparent;
-
-          transition: color 0.3s;
-          transform: translate(-50%, -50%);
-        }
-
-        &--loading {
-          color: transparent;
-
-          &::after {
-            color: var(--surface-color);
-          }
-        }
-
-        &:disabled {
-          opacity: 0.8;
-          cursor: default;
-
-          &:is(:hover, :focus-visible) {
-            outline: none;
-          }
-        }
+        transition: outline .3s, outline-offset .3s;
 
         &:focus {
           outline-style: solid;
@@ -249,6 +216,60 @@ async function register() {
           outline-offset: 0.3rem;
 
           transition: outline-color 0.1s, outline-offset 0s;
+        }
+
+        &::after,
+        &::before {
+          content: '';
+
+          position: absolute;
+
+          opacity: 0;
+          transition: opacity .2s;
+        }
+
+        &::after {
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          z-index: 1;
+
+          border-radius: inherit;
+          background-color: hsla(var(--text-color-hsl), 0.95);
+
+          @supports (backdrop-filter: blur(1px)) {
+            backdrop-filter: blur(2px);
+            background-color: hsla(var(--text-color-hsl), 0.5);
+          }
+        }
+
+        &::before {
+          --size: 1.5rem;
+
+          top: calc(50% - var(--size) / 2);
+          left: calc(50% - var(--size) / 2);
+          z-index: 2;
+
+          width: var(--size);
+          height: var(--size);
+
+          border-radius: 50%;
+          border: 2px solid transparent;
+          border-left-color: var(--surface-color);
+
+          animation: spin 1s infinite linear;
+        }
+
+        &--loading {
+
+          &::after,
+          &::before {
+            opacity: 1;
+          }
+
+          outline-offset: -1px;
+          pointer-events: none;
         }
       }
     }
