@@ -22,7 +22,7 @@ export default defineNuxtConfig({
     '/register': { static: true, headers: { 'Cache-Control': TWO_DAYS_CACHE } },
 
     '/api/**': { cache: false, headers: { 'Access-Control-Allow-Origin': process.env.SITE_ORIGIN || '*' } },
-    '/_nuxt/**': { headers: { 'Cache-Control': TWO_DAYS_CACHE, 'Cross-Origin-Embedder-Policy': 'require-corp' } },
+    '/_nuxt/**': { headers: { 'Cache-Control': TWO_DAYS_CACHE } },
   },
 
   runtimeConfig: {
@@ -35,7 +35,6 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@nuxtjs/device',
     'nuxt-icon',
-    'nuxt-security',
   ],
 
   css: [
@@ -64,11 +63,5 @@ export default defineNuxtConfig({
 
   device: {
     refreshOnResize: true,
-  },
-
-  security: {
-    // @see https://github.com/Baroshem/nuxt-security/issues/42#issuecomment-1311727911
-    hidePoweredBy: false,
-    enabled: process.env.NODE_ENV !== 'development',
   },
 });
