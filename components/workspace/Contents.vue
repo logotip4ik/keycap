@@ -13,6 +13,8 @@ const folder = shallowRef<FolderWithContents | null | undefined>(
 );
 
 const folderIdentifier = computed(() => {
+  if (!route.params.folders) return '';
+
   // this accounts for empty string as well as empty array
   if (route.params.folders.length === 0) return '';
 
