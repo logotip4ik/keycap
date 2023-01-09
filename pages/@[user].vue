@@ -3,12 +3,16 @@ import { blankNoteName } from '~/assets/constants';
 
 import type WorkspaceSearch from '~/components/workspace/Search/index.vue';
 
+// @ts-expect-error no types for worker
+import FWorker from '~/worker/fuzzy?worker';
+
 definePageMeta({
   middleware: ['auth'],
 });
 
 const route = useRoute();
 const user = useUser();
+const fuzzyWorker = useFuzzyWorker();
 
 const search = ref<InstanceType<typeof WorkspaceSearch> | null>(null);
 
@@ -26,6 +30,16 @@ const currentRouteName = computed(() => {
 
   return null;
 });
+
+function preloadSearch() {
+  preloadComponents('LazyWorkspaceSearch');
+}
+
+function defineFuzzyWorker() {
+  import('comlink').then(({ wrap }) => {
+    fuzzyWorker.value = wrap(new FWorker());
+  });
+}
 
 useHead({
   title: () => currentRouteName.value,
@@ -52,12 +66,15 @@ watch(() => route.params.note, (noteName) => {
 }, { immediate: true });
 
 onMounted(() => {
-  const preloadSearch = () => preloadComponents('WorkspaceSearch');
+  const act = () => {
+    preloadSearch();
+    defineFuzzyWorker();
+  };
 
   if ('requestIdleCallback' in window)
-    window.requestIdleCallback(preloadSearch);
+    window.requestIdleCallback(act);
   else
-    setTimeout(preloadSearch, 500);
+    setTimeout(act, 500);
 });
 </script>
 
