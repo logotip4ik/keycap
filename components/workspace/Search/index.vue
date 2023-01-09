@@ -1,33 +1,30 @@
 <script setup lang="ts">
-import { AsyncFzf as FuzzySearch } from 'fzf';
+import type { CommandItem, FolderOrNote, FuzzyItem } from '~/types/store';
 
-import type { AsyncFzf } from 'fzf';
-import type { CommandItem, FolderOrNote, FolderWithContents } from '~/types/store';
+import { SearchAction } from '~/types/common';
 
 interface Emits { (e: 'close'): void }
 const emit = defineEmits<Emits>();
 
-// NOTE: command could be only one word,
-// or use '-' as space replace
-const commands: CommandItem[] = [
-  { name: 'refresh', action: () => refreshNuxtData('note') },
-  { name: 'refresh-folder', action: () => refreshNuxtData('folder') },
-  {
-    name: 'new',
-    action: (args) => {
-      const nuxtApp = useNuxtApp();
+const commandActions: { [key in SearchAction]?: (args: string[]) => any } = {
+  [SearchAction.New]: (args) => {
+    const nuxtApp = useNuxtApp();
 
-      preCreateItem(nuxtApp.payload.data.folder, { name: args?.join(' ') || '' });
-    },
+    preCreateItem(nuxtApp.payload.data.folder, { name: args?.join(' ') || '' });
   },
-];
+  [SearchAction.Refresh]: () => {
+    refreshNuxtData('note');
+  },
+  [SearchAction.RefreshFolder]: () => {
+    refreshNuxtData('folder');
+  },
+};
 
-const foldersCache = useFoldersCache();
+const fuzzyWorker = useFuzzyWorker();
 
-const results = ref<FolderOrNote[] | CommandItem[]>([]);
-const isLoadingResults = ref(false);
+const results = ref<(FuzzyItem | CommandItem)[]>([]);
 const selectedResult = ref(0);
-const typeaheadResult = computed<FolderOrNote | CommandItem | null>(() => results.value[selectedResult.value] || null);
+const typeaheadResult = computed<FuzzyItem | CommandItem | null>(() => results.value[selectedResult.value] || null);
 
 const inputEl = ref<HTMLElement | null>(null);
 const searchEl = ref<HTMLElement | null>(null);
@@ -35,34 +32,7 @@ const searchEl = ref<HTMLElement | null>(null);
 const searchInput = ref('');
 const debouncedSearchInput = useDebounce(searchInput, 150);
 
-let itemsFzf: AsyncFzf<FolderOrNote[]>;
-let commandsFzf: AsyncFzf<CommandItem[]>;
-
 defineExpose({ input: inputEl });
-
-function searchCommandWithName(name: string) {
-  isLoadingResults.value = true;
-
-  commandsFzf.find(name)
-    .then((entries) => {
-      results.value = entries.map((entry) => entry.item);
-    })
-    .finally(() => {
-      isLoadingResults.value = false;
-    });
-}
-
-function searchItemWithName(name: string) {
-  isLoadingResults.value = true;
-
-  itemsFzf.find(name)
-    .then((entries) => {
-      results.value = entries.map((entry) => entry.item);
-    })
-    .finally(() => {
-      isLoadingResults.value = false;
-    });
-}
 
 function handleCancel(_event?: Event) {
   emit('close');
@@ -71,75 +41,17 @@ function handleCancel(_event?: Event) {
   selectedResult.value = 0;
 }
 
-function defineFuzzySearch() {
-  return new Promise<void>((resolve) => {
-    let theMostUpperFolder: FolderWithContents | undefined;
-
-    for (const folder of foldersCache.values()) {
-      if (!theMostUpperFolder) {
-        theMostUpperFolder = folder;
-        continue;
-      }
-
-      if (theMostUpperFolder && folder.path.length < theMostUpperFolder.path.length)
-        theMostUpperFolder = folder;
-    }
-
-    const items = [theMostUpperFolder] as FolderOrNote[];
-
-    const findAllItems = (item: FolderWithContents | undefined) => {
-      if (!item) return;
-
-      if (item.notes && item.notes.length !== 0)
-        items.push(...item.notes as FolderOrNote[]);
-
-      if (item.subfolders && item.subfolders.length !== 0) {
-        items.push(...item.subfolders as FolderOrNote[]);
-
-        for (const folder of item.subfolders)
-          findAllItems(foldersCache.get(folder.path));
-      }
-    };
-
-    findAllItems(theMostUpperFolder!);
-
-    itemsFzf = new FuzzySearch(items, {
-      fuzzy: 'v2',
-      limit: 5,
-      normalize: true,
-      selector: (item) => item.name,
-    });
-
-    commandsFzf = new FuzzySearch(commands, {
-      fuzzy: 'v2',
-      limit: 5,
-      normalize: true,
-      selector: (item) => item.name,
-    });
-
-    resolve();
-  });
-}
-
 function handleSearchInput(value: string) {
   value = value.trim();
   selectedResult.value = 0;
 
-  if (value.length < 2)
+  if (value.length < 2 || !fuzzyWorker.value)
     return results.value = [];
 
-  const isCommand = value.startsWith('/');
-
-  if (isCommand) {
-    const args = value.slice(1).split(' ');
-
-    const commandName = args[0];
-
-    searchCommandWithName(commandName);
-  }
-  else {
-    searchItemWithName(value);
-  }
+  fuzzyWorker.value.searchWithQuery(value)
+    .then((entries: (FuzzyItem | CommandItem)[]) => {
+      results.value = entries;
+    });
 }
 
 async function openResult() {
@@ -147,12 +59,14 @@ async function openResult() {
 
   if (!resultToOpen) return;
 
-  const isCommand = typeof (resultToOpen as CommandItem).action === 'function';
+  const isCommand = 'key' in resultToOpen;
 
   if (isCommand) {
     const args = searchInput.value.slice(1).split(' ').slice(1);
 
-    await (resultToOpen as CommandItem).action(args);
+    const action = commandActions[(resultToOpen as CommandItem).key];
+
+    if (action) await action(args);
   }
   else {
     await navigateTo(generateItemRouteParams(resultToOpen as FolderOrNote));
@@ -179,7 +93,7 @@ watch(debouncedSearchInput, handleSearchInput);
 let prevHeight = 0;
 watch(results, async (results) => {
   if (!prevHeight)
-    return setTimeout(() => prevHeight = searchEl.value?.offsetHeight || 0, 25);
+    return setTimeout(() => prevHeight = searchEl.value?.offsetHeight || 0, 50);
 
   requestAnimationFrame(() => { // guaranties that element has its finished height
     if (!searchEl.value) return;
@@ -198,10 +112,6 @@ watch(results, async (results) => {
     prevHeight = wantedHeight;
   });
 }, { immediate: true });
-
-onMounted(() => {
-  defineFuzzySearch();
-});
 
 useTinykeys({ Escape: handleCancel });
 </script>
@@ -353,6 +263,10 @@ useTinykeys({ Escape: handleCancel });
       appearance: none;
       outline: none;
       background-color: transparent;
+
+      &::-webkit-search-cancel-button {
+        display: none;
+      }
 
       // vue isn't as fast as browser, so hiding typeahead if input is empty
       &:placeholder-shown + .search__form__typeahead {

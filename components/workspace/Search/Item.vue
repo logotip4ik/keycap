@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import type { CommandItem, FolderOrNote } from '~/types/store';
+import type { CommandItem, FuzzyItem } from '~/types/store';
 
-interface Props { item: FolderOrNote | CommandItem; selected: boolean }
+interface Props { item: FuzzyItem | CommandItem; selected: boolean }
 const props = defineProps<Props>();
 
-const isCommand = typeof (props.item as CommandItem).action === 'function';
+const isCommand = 'key' in props.item;
 
 const itemPath = (() => {
   if (isCommand) return '';
 
-  const path = (props.item as FolderOrNote).path
+  const path = (props.item as FuzzyItem).path
     // removing account name
     .replace(/\/\w+\//i, '')
     // the last one string from path
@@ -20,7 +20,7 @@ const itemPath = (() => {
 const itemHref = (() => {
   if (isCommand) return '';
 
-  return generateItemRouteParams(props.item as FolderOrNote);
+  return generateItemRouteParams(props.item as FuzzyItem);
 })();
 </script>
 
