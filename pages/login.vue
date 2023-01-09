@@ -19,7 +19,7 @@ async function login() {
         await navigateTo(`/@${user.value.username}`);
     })
     .catch((e) => console.warn(e))
-    .finally(() => isLoading.value = true);
+    .finally(() => isLoading.value = false);
 }
 </script>
 
