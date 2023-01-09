@@ -2,7 +2,7 @@
 import { AsyncFzf as FuzzySearch } from 'fzf';
 
 import type { AsyncFzf } from 'fzf';
-import type { CommandItem, FolderOrNote, FolderWithContents } from '~/composables/store';
+import type { CommandItem, FolderOrNote, FolderWithContents } from '~/types/store';
 
 interface Emits { (e: 'close'): void }
 const emit = defineEmits<Emits>();

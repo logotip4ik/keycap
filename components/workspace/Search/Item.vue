@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { CommandItem, FolderOrNote } from '~/composables/store';
+import type { CommandItem, FolderOrNote } from '~/types/store';
 
 interface Props { item: FolderOrNote | CommandItem; selected: boolean }
 const props = defineProps<Props>();

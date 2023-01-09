@@ -1,29 +1,7 @@
 import LRU from 'lru-cache';
 
-import type { Folder, Note } from '@prisma/client';
-
-export type NoteMinimal = Pick<Note, 'id' | 'name'> & {
-  path?: string
-  content?: string
-  editing?: boolean
-  creating?: boolean
-  updatedAt?: Date
-  createdAt?: Date
-};
-
-export interface FolderWithContents extends Folder {
-  editing?: boolean
-  creating?: boolean
-  notes: NoteMinimal[]
-  subfolders: FolderWithContents[]
-}
-
-export type FolderOrNote = FolderWithContents & NoteMinimal;
-
-export interface CommandItem {
-  name: string
-  action: (args: string[] | null) => any
-}
+import type { Note } from '@prisma/client';
+import type { FolderWithContents, NoteMinimal } from '~/types/store';
 
 export const useRootFolderContents = () => useState<FolderWithContents | null>(() => null);
 export const useCurrentNoteState = () => useState<'' | 'updating' | 'fetching' | 'saved'>(() => '' as const);

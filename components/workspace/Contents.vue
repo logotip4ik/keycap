@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { withLeadingSlash, withoutTrailingSlash } from 'ufo';
 
-import type { FolderOrNote, FolderWithContents } from '~/composables/store';
+import type { FolderOrNote, FolderWithContents } from '~/types/store';
 
 import { blankNoteName } from '~/assets/constants';
 
