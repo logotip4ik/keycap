@@ -2,6 +2,9 @@ import browserslistToEsbuild from 'browserslist-to-esbuild';
 
 import breakpoints from './assets/constants/breakpoints';
 
+const TWO_DAYS_IN_SECONDS = 60 * 60 * 24 * 2;
+const TWO_DAYS_CACHE = `private, immutable, max-age=${TWO_DAYS_IN_SECONDS}`;
+
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
   app: {
@@ -10,6 +13,16 @@ export default defineNuxtConfig({
       title: 'Keycap',
       meta: [{ name: 'description', content: 'Better notes ❤. Synced between your devices' }],
     },
+  },
+
+  routeRules: {
+    '/': { prerender: true, headers: { 'Cache-Control': TWO_DAYS_CACHE } },
+    '/about': { prerender: true, headers: { 'Cache-Control': TWO_DAYS_CACHE } },
+    '/login': { prerender: true, headers: { 'Cache-Control': TWO_DAYS_CACHE } },
+    '/register': { prerender: true, headers: { 'Cache-Control': TWO_DAYS_CACHE } },
+
+    '/api/**': { cors: true, cache: false },
+    '/_nuxt/**': { headers: { 'Cache-Control': TWO_DAYS_CACHE } },
   },
 
   runtimeConfig: {
@@ -31,9 +44,7 @@ export default defineNuxtConfig({
     '~/assets/fonts/Mona-Sans/style.css',
   ],
 
-  nitro: {
-    preset: 'vercel',
-  },
+  sourcemap: process.env.NODE_ENV === 'development',
 
   vite: {
     build: {
