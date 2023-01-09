@@ -21,8 +21,8 @@ export default defineNuxtConfig({
     '/login': { static: true, headers: { 'Cache-Control': TWO_DAYS_CACHE } },
     '/register': { static: true, headers: { 'Cache-Control': TWO_DAYS_CACHE } },
 
-    '/api/**': { cors: true, cache: false },
-    '/_nuxt/**': { cors: true, headers: { 'Cache-Control': TWO_DAYS_CACHE } },
+    '/api/**': { cache: false, headers: { 'Access-Control-Allow-Origin': process.env.SITE_ORIGIN || '*' } },
+    '/_nuxt/**': { headers: { 'Cache-Control': TWO_DAYS_CACHE, 'Cross-Origin-Embedder-Policy': 'require-corp' } },
   },
 
   runtimeConfig: {
