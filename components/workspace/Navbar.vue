@@ -102,7 +102,7 @@ watch(() => route.params.note, (noteName) => {
     font-size: 1.1rem;
 
     // NOTE: hide not needed text but show saved indicator
-    clip-path: inset(-50% 0 0 -20%);
+    // clip-path: inset(-50% 0 0 -20%);
 
     &::after {
       --indicator-size: 0.5rem;
@@ -116,21 +116,24 @@ watch(() => route.params.note, (noteName) => {
       width: var(--indicator-size);
       height: var(--indicator-size);
 
-      background-color: transparent;
       border-radius: 50%;
+      background-color: transparent;
+      box-shadow: 0 0 1rem 0 transparent;;
 
       transform: translate(-100%, -50%);
 
-      transition: background-color .2s ease;
+      transition: background-color .5s ease, box-shadow .5s ease;
     }
 
     &[note-fetching]::after,
     &[note-updating]::after {
       background-color: goldenrod;
+      box-shadow: 0 0 1rem 0 rgba($color: goldenrod, $alpha: 0.75);
     }
 
     &[note-saved]::after {
       background-color: limegreen;
+      box-shadow: 0 0 1rem 0 rgba($color: limegreen, $alpha: 0.75);
     }
   }
 
