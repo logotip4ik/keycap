@@ -5,7 +5,6 @@ import type { FolderOrNote, FolderWithContents } from '~/types/store';
 
 import { blankNoteName } from '~/assets/constants';
 
-const router = useRouter();
 const route = useRoute();
 const foldersCache = useFoldersCache();
 
@@ -46,11 +45,11 @@ function getApiFolderPath() {
   return Array.isArray(route.params.folders) ? route.params.folders.join('/') : '';
 }
 
-function goUpFolder() {
+async function goUpFolder() {
   const currentFolderPath = folder.value!.path;
   const prevFolderPath = currentFolderPath.split('/').slice(2, -1);
 
-  router.push({ name: '@user-folders-note', params: { folders: prevFolderPath, note: blankNoteName } });
+  await navigateTo({ name: '@user-folders-note', params: { folders: prevFolderPath, note: blankNoteName } });
 }
 
 // updating if server sent different
