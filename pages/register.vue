@@ -18,7 +18,7 @@ async function register() {
       if (user.value)
         await navigateTo(`/@${user.value.username}`);
     })
-    .catch((e) => console.error(e))
+    .catch((e) => console.warn(e))
     .finally(() => isLoading.value = false);
 }
 </script>
