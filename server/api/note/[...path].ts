@@ -1,5 +1,3 @@
-import { createError, getRouterParam, isMethod, sendError } from 'h3';
-
 import type { Note } from '@prisma/client';
 
 import getPrisma from '~/prisma';
@@ -9,7 +7,7 @@ import { generateNotePath, toBigInt } from '~/server/utils';
 export default defineEventHandler(async (event) => {
   const user = await getUserFromEvent(event);
 
-  if (!user) return sendError(event, createError({ status: 401 }));
+  if (!user) return sendError(event, createError({ statusCode: 401 }));
 
   const notePath = getRouterParam(event, 'path') as string;
 
@@ -22,7 +20,7 @@ export default defineEventHandler(async (event) => {
     const path = getRouterParam(event, 'path');
 
     if (!body.parentId || !path)
-      return sendError(event, createError({ status: 400, message: 'not enough data' }));
+      return sendError(event, createError({ statusCode: 400, statusMessage: 'not enough data' }));
 
     try {
       const note = await prisma.note.create({
@@ -39,7 +37,7 @@ export default defineEventHandler(async (event) => {
       return note;
     }
     catch (error) {
-      return sendError(event, createError({ status: 500 }));
+      return sendError(event, createError({ statusCode: 500 }));
     }
   }
 
@@ -51,12 +49,12 @@ export default defineEventHandler(async (event) => {
       });
 
       if (!note)
-        return sendError(event, createError({ status: 404 }));
+        return sendError(event, createError({ statusCode: 404 }));
 
       return note;
     }
     catch (error) {
-      return sendError(event, createError({ status: 500 }));
+      return sendError(event, createError({ statusCode: 500 }));
     }
   }
 
@@ -90,7 +88,7 @@ export default defineEventHandler(async (event) => {
       });
     }
     catch {
-      return sendError(event, createError({ status: 500 }));
+      return sendError(event, createError({ statusCode: 500 }));
     }
 
     if (query.getNote === 'true') return updatedNote || {};
@@ -100,10 +98,10 @@ export default defineEventHandler(async (event) => {
   if (isMethod(event, 'DELETE')) {
     const path = getRouterParam(event, 'path');
 
-    if (!path) return sendError(event, createError({ status: 400 }));
+    if (!path) return sendError(event, createError({ statusCode: 400 }));
 
     if (!path)
-      return sendError(event, createError({ status: 400, message: 'not enough data' }));
+      return sendError(event, createError({ statusCode: 400, statusMessage: 'not enough data' }));
 
     try {
       await prisma.note.delete({ where: { path: generateNotePath(user.username, path) } });
@@ -111,7 +109,7 @@ export default defineEventHandler(async (event) => {
       return { status: 'ok' };
     }
     catch (error) {
-      return sendError(event, createError({ status: 500 }));
+      return sendError(event, createError({ statusCode: 500 }));
     }
   }
 

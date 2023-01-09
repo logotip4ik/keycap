@@ -1,4 +1,3 @@
-import { createError, readBody } from 'h3';
 import type { User } from '@prisma/client';
 
 import getPrisma from '~/prisma';
@@ -8,7 +7,7 @@ export default defineEventHandler(async (event) => {
   const body = await readBody<{ username?: string; email?: string; password?: string }>(event) || {};
 
   if (!body.email || !body.username || !body.password) {
-    const error = createError({ status: 400, statusMessage: 'not enough data' });
+    const error = createError({ statusCode: 400, statusMessage: 'not enough data' });
 
     return sendError(event, error);
   }
@@ -36,9 +35,9 @@ export default defineEventHandler(async (event) => {
 
       select: { id: true, email: true, username: true },
     });
-  // eslint-disable-next-line @typescript-eslint/brace-style
-  } catch {
-    const error = createError({ status: 400, statusMessage: 'user with this email or username might already exist' });
+  }
+  catch {
+    const error = createError({ statusCode: 400, statusMessage: 'user with this email or username might already exist' });
 
     return sendError(event, error);
   }

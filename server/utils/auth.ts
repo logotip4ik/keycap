@@ -1,6 +1,5 @@
-import { deleteCookie, getCookie, setCookie } from 'h3';
-import bcrypt from 'bcrypt';
 import { SignJWT, jwtVerify } from 'jose';
+import bcrypt from 'bcrypt';
 
 import type { H3Event } from 'h3';
 import type { User } from '@prisma/client';

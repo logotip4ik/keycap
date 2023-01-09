@@ -1,5 +1,3 @@
-import { send } from 'h3';
-
 import { getUserFromEvent, setAuthCookies } from '~/server/utils/auth';
 
 export default defineEventHandler(async (event) => {

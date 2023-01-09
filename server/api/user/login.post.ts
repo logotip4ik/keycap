@@ -1,4 +1,3 @@
-import { createError, readBody } from 'h3';
 import type { User } from '@prisma/client';
 
 import getPrisma from '~/prisma';
@@ -8,7 +7,7 @@ export default defineEventHandler(async (event) => {
   const body = await readBody<{ email?: string; password?: string }>(event) || {};
 
   if (!body.email || !body.password) {
-    const error = createError({ status: 400, statusMessage: 'not enough data' });
+    const error = createError({ statusCode: 400, statusMessage: 'not enough data' });
 
     return sendError(event, error);
   }
@@ -21,20 +20,20 @@ export default defineEventHandler(async (event) => {
   });
 
   if (!user) {
-    const error = createError({ status: 400, statusMessage: 'email or password is incorrect' });
+    const error = createError({ statusCode: 400, statusMessage: 'email or password is incorrect' });
 
     return sendError(event, error);
   }
 
   try {
     if (!(await verifyPassword(user.password, body.password))) {
-      const error = createError({ status: 400, statusMessage: 'email or password is incorrect' });
+      const error = createError({ statusCode: 400, statusMessage: 'email or password is incorrect' });
 
       return sendError(event, error);
     }
   }
   catch {
-    const error = createError({ status: 500 });
+    const error = createError({ statusCode: 500 });
 
     return sendError(event, error);
   }

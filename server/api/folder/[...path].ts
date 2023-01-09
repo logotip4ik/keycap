@@ -1,5 +1,3 @@
-import { createError, getRouterParam, isMethod, sendError } from 'h3';
-
 import { getUserFromEvent } from '~/server/utils/auth';
 import { generateFolderPath, toBigInt } from '~/server/utils';
 import getPrisma from '~/prisma';
@@ -7,7 +5,7 @@ import getPrisma from '~/prisma';
 export default defineEventHandler(async (event) => {
   const user = await getUserFromEvent(event);
 
-  if (!user) return sendError(event, createError({ status: 401 }));
+  if (!user) return sendError(event, createError({ statusCode: 401 }));
 
   const prisma = getPrisma();
 
@@ -38,7 +36,7 @@ export default defineEventHandler(async (event) => {
       },
     });
 
-    if (!folder) return sendError(event, createError({ status: 404 }));
+    if (!folder) return sendError(event, createError({ statusCode: 404 }));
 
     return folder;
   }
@@ -85,7 +83,7 @@ export default defineEventHandler(async (event) => {
       return { status: 'ok' };
     }
     catch (error) {
-      return sendError(event, createError({ status: 500 }));
+      return sendError(event, createError({ statusCode: 500 }));
     }
   }
 
