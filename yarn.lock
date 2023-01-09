@@ -2728,6 +2728,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"command-score@npm:^0.1.2":
+  version: 0.1.2
+  resolution: "command-score@npm:0.1.2"
+  checksum: b733fd552d7e569070da3d474b1ed5f54785fdf3dd61670002e0a00b2eff1a547c2b6d3af3683c012f4f39c6455f9e7ee5e9997a79c08048ec37ec2195d3df08
+  languageName: node
+  linkType: hard
+
 "commander@npm:^2.20.0, commander@npm:^2.20.3":
   version: 2.20.3
   resolution: "commander@npm:2.20.3"
@@ -4429,13 +4436,6 @@ __metadata:
   version: 1.2.3
   resolution: "functions-have-names@npm:1.2.3"
   checksum: c3f1f5ba20f4e962efb71344ce0a40722163e85bee2101ce25f88214e78182d2d2476aa85ef37950c579eb6cf6ee811c17b3101bb84004bb75655f3e33f3fdb5
-  languageName: node
-  linkType: hard
-
-"fzf@npm:^0.5.1":
-  version: 0.5.1
-  resolution: "fzf@npm:0.5.1"
-  checksum: 5c5f56ec9fdd83c7edba58425aa3fadd587aeb9d18b013b8a0f14c80f8eef6b068249786b2e3707be9306fe877f21107f9dce5b4aabb58ee7f488de32191e62a
   languageName: node
   linkType: hard
 
@@ -7754,8 +7754,8 @@ __metadata:
     bcrypt: ^5.1.0
     browserslist-to-esbuild: ^1.2.0
     comlink: ^4.3.1
+    command-score: ^0.1.2
     eslint: ^8.31.0
-    fzf: ^0.5.1
     jose: ^4.11.2
     lru-cache: ^7.14.1
     normalize.css: ^8.0.1
