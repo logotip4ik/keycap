@@ -18,8 +18,8 @@ export default defineNuxtConfig({
   routeRules: {
     '/': { prerender: true, headers: { 'Cache-Control': TWO_DAYS_CACHE } },
     '/about': { prerender: true, headers: { 'Cache-Control': TWO_DAYS_CACHE } },
-    '/login': { prerender: true, headers: { 'Cache-Control': TWO_DAYS_CACHE } },
-    '/register': { prerender: true, headers: { 'Cache-Control': TWO_DAYS_CACHE } },
+    '/login': { static: true, headers: { 'Cache-Control': TWO_DAYS_CACHE } },
+    '/register': { static: true, headers: { 'Cache-Control': TWO_DAYS_CACHE } },
 
     '/api/**': { cors: true, cache: false },
     '/_nuxt/**': { headers: { 'Cache-Control': TWO_DAYS_CACHE } },
