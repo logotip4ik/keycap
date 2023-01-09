@@ -22,7 +22,7 @@ export default defineNuxtConfig({
     '/register': { static: true, headers: { 'Cache-Control': TWO_DAYS_CACHE } },
 
     '/api/**': { cors: true, cache: false },
-    '/_nuxt/**': { headers: { 'Cache-Control': TWO_DAYS_CACHE } },
+    '/_nuxt/**': { cors: true, headers: { 'Cache-Control': TWO_DAYS_CACHE } },
   },
 
   runtimeConfig: {
