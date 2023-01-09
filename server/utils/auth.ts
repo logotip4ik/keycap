@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 
 import type { H3Event } from 'h3';
 import type { User } from '@prisma/client';
+
 import { toBigInt } from '.';
 
 async function generateAccessToken(object: object): Promise<string> {
