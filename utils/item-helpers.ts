@@ -1,7 +1,7 @@
 import { withoutLeadingSlash } from 'ufo';
 
 import type { RouteLocationNamedRaw } from 'vue-router';
-import type { FolderOrNote, FolderWithContents, NoteMinimal } from '~/composables/store';
+import type { FolderOrNote, FolderWithContents, NoteMinimal } from '~/types/store';
 
 import { blankNoteName } from '~/assets/constants';
 
