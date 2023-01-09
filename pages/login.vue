@@ -259,7 +259,7 @@ async function login() {
             opacity: 1;
           }
 
-          outline-offset: -1px;
+          outline-offset: -1px !important;
           pointer-events: none;
         }
       }
