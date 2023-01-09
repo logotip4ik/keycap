@@ -262,7 +262,6 @@ async function register() {
         }
 
         &--loading {
-
           &::after,
           &::before {
             opacity: 1;
