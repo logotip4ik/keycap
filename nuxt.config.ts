@@ -9,6 +9,8 @@ const TWO_DAYS_CACHE = `private, immutable, max-age=${TWO_DAYS_IN_SECONDS}`;
 export default defineNuxtConfig(() => {
   const isDev = process.env.NODE_ENV === 'development';
 
+  console.log({ isDev });
+
   return {
     app: {
       head: {
