@@ -38,6 +38,7 @@ async function login() {
           name="email"
           class="login-page__form__item__input"
           placeholder="email"
+          autocomplete="email"
         >
       </div>
 
@@ -49,6 +50,7 @@ async function login() {
           name="password"
           class="login-page__form__item__input"
           placeholder="password"
+          autocomplete="current-password"
         >
       </div>
 

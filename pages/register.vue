@@ -1,6 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
-  middleware: ['redirect-dashboard'],
+  // middleware: ['redirect-dashboard'],
 });
 
 const user = useUser();
@@ -38,6 +38,7 @@ async function register() {
           name="username"
           class="register-page__form__item__input"
           placeholder="username, no spaces allowed"
+          autocomplete="username"
         >
 
         <small class="register-page__form__item__note">
@@ -53,6 +54,7 @@ async function register() {
           name="email"
           class="register-page__form__item__input"
           placeholder="email"
+          autocomplete="email"
         >
       </div>
 
@@ -64,6 +66,7 @@ async function register() {
           name="password"
           class="register-page__form__item__input"
           placeholder="password"
+          autocomplete="current-password"
         >
       </div>
 
@@ -150,12 +153,12 @@ async function register() {
 
         position: absolute;
         top: calc(100% + 0.25rem);
-        left: 0;
+        left: 0.25rem;
         width: 100%;
 
         max-width: 33ch;
 
-        opacity: 0.85;
+        opacity: 0.6;
       }
 
       &__input {
