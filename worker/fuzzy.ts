@@ -69,6 +69,7 @@ expose({
   searchWithQuery: search,
   addItemToCache: addItem,
   addItemsToCache: addItems,
+  refreshItemsCache: populateItemsCache,
 });
 
 populateItemsCache();
