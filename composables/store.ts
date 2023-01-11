@@ -20,6 +20,8 @@ export function deleteNoteFromFolder(noteToDelete: NoteMinimal, parent: FolderWi
   if (noteIdxToDelete === -1) return;
 
   parent.notes.splice(noteIdxToDelete, 1);
+
+  if (fuzzyWorker.value) fuzzyWorker.value.refreshItemsCache();
 }
 
 export function deleteSubfolderFromFolder(subfolderToDelete: FolderWithContents, parent: FolderWithContents) {
@@ -28,6 +30,8 @@ export function deleteSubfolderFromFolder(subfolderToDelete: FolderWithContents,
   if (folderIdxToDelete === -1) return;
 
   parent.subfolders.splice(folderIdxToDelete, 1);
+
+  if (fuzzyWorker.value) fuzzyWorker.value.refreshItemsCache();
 }
 
 export function updateNoteInFolder(noteToUpdate: NoteMinimal, fieldsToUpdate: Partial<NoteMinimal>, parent: FolderWithContents) {
@@ -39,6 +43,8 @@ export function updateNoteInFolder(noteToUpdate: NoteMinimal, fieldsToUpdate: Pa
     ...noteToUpdate,
     ...fieldsToUpdate,
   };
+
+  if (fuzzyWorker.value) fuzzyWorker.value.refreshItemsCache();
 }
 
 export function updateSubfolderInFolder(
@@ -54,4 +60,6 @@ export function updateSubfolderInFolder(
     ...folderToUpdate,
     ...fieldsToUpdate,
   };
+
+  if (fuzzyWorker.value) fuzzyWorker.value.refreshItemsCache();
 }
