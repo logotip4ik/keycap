@@ -61,6 +61,8 @@ async function populateItemsCache() {
   const res = await fetch('/api/search/client');
   const items = await res.json() as FuzzyItem[];
 
+  itemsCache.clear();
+
   for (const item of items)
     itemsCache.set(item.path, item);
 }
