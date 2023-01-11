@@ -89,7 +89,7 @@ const isResultsEmpty = computed(() => {
 watch(debouncedSearchInput, handleSearchInput);
 
 let prevHeight = 0;
-watch(results, async (results) => {
+watch(debouncedSearchInput, async () => {
   if (!prevHeight)
     return setTimeout(() => prevHeight = searchEl.value?.offsetHeight || 0, 50);
 
@@ -98,12 +98,12 @@ watch(results, async (results) => {
 
     const wantedHeight = searchEl.value.scrollHeight;
 
-    if (prevHeight === wantedHeight) return;
-
-    const guessedBaseHeight = 78;
+    const maxDifference = 2;
+    // fixes issue with initial height being 2px bigger than wanted
+    if (Math.abs(prevHeight - wantedHeight) <= maxDifference) return;
 
     searchEl.value.animate([
-      { height: `${prevHeight || guessedBaseHeight}px` },
+      { height: `${prevHeight}px` },
       { height: `${wantedHeight}px` },
     ], { duration: 250, easing: 'cubic-bezier(0.33, 1, 0.68, 1)' });
 
