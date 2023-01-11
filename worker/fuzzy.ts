@@ -28,18 +28,8 @@ function addItems(items: FuzzyItem[]) {
 function search(query: string, maxLength = 4): (FuzzyItem | CommandItem)[] {
   const results = [];
 
-  if (!query.startsWith('/')) {
-    for (const [, item] of itemsCache) {
-      if (!item) continue;
-
-      const score = commandScore(item.name, query);
-
-      if (score > 0)
-        results.push({ score, item });
-    }
-  }
-  else {
-    query = query.slice(1);
+  if (query.startsWith('/')) {
+    query = query.slice(1).trim().split(' ')[0];
 
     for (const [key, name] of commandsCache) {
       if (!name) continue;
@@ -48,6 +38,16 @@ function search(query: string, maxLength = 4): (FuzzyItem | CommandItem)[] {
 
       if (score > 0)
         results.push({ score, item: { name, key } });
+    }
+  }
+  else {
+    for (const [, item] of itemsCache) {
+      if (!item) continue;
+
+      const score = commandScore(item.name, query);
+
+      if (score > 0)
+        results.push({ score, item });
     }
   }
 
