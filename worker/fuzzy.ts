@@ -2,8 +2,6 @@ import { expose } from 'comlink';
 // @ts-expect-error no types for command score :(
 import commandScore from 'command-score';
 
-import type { FuzzyItem, IFuzzyCommand } from '~/types/store';
-
 import { SearchAction } from '~/types/common';
 
 // will store only item name, path and root for folder
@@ -27,7 +25,7 @@ function addItems(items: FuzzyItem[]) {
     itemsCache.set(item.path, item);
 }
 
-function search(query: string, maxLength = 4): (FuzzyItem | IFuzzyCommand)[] {
+function search(query: string, maxLength = 4): (FuzzyItem | CommandItem)[] {
   const results = [];
 
   if (!query.startsWith('/')) {

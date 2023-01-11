@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { CommandItem, FuzzyItem } from '~/types/store';
-
 interface Props { item: FuzzyItem | CommandItem; selected: boolean }
 const props = defineProps<Props>();
 

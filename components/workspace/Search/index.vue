@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { CommandItem, FolderOrNote, FuzzyItem } from '~/types/store';
-
 import { SearchAction } from '~/types/common';
 
 interface Emits { (e: 'close'): void }

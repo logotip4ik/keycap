@@ -1,8 +1,6 @@
 import getPrisma from '~/prisma';
 import { getUserFromEvent } from '~/server/utils/auth';
 
-import type { FuzzyItem } from '~/types/store';
-
 export default defineEventHandler(async (event) => {
   const user = await getUserFromEvent(event);
 

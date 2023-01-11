@@ -1,7 +1,6 @@
 import LRU from 'lru-cache';
 
 import type { Note } from '@prisma/client';
-import type { FolderWithContents, IFuzzyWorker, NoteMinimal } from '~/types/store';
 
 export const useRootFolderContents = () => useState<FolderWithContents | null>(() => null);
 export const useCurrentNoteState = () => useState<'' | 'updating' | 'fetching' | 'saved'>(() => '' as const);

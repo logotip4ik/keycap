@@ -3,7 +3,6 @@ import { withLeadingSlash, withTrailingSlash } from 'ufo';
 
 import type { Note } from '@prisma/client';
 import type { NavigateToOptions } from 'nuxt/dist/app/composables/router';
-import type { FolderOrNote, FolderWithContents } from '~/types/store';
 
 interface Props { item: FolderOrNote; parent: FolderWithContents }
 const props = defineProps<Props>();
