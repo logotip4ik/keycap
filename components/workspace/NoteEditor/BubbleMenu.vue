@@ -16,6 +16,7 @@ const { width } = useWindowSize();
 const isPhoneScreen = computed(() => width.value < 740);
 
 const tippyOptions: Partial<TippyProps> = {
+  zIndex: 9,
   duration: [50, 150],
   theme: 'adaptive',
   animation: 'shift-away',
