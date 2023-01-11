@@ -88,7 +88,7 @@ export default defineEventHandler(async (event) => {
       });
     }
     catch {
-      return sendError(event, createError({ statusCode: 500 }));
+      return sendError(event, createError({ statusCode: 400 }));
     }
 
     if (query.getNote === 'true') return updatedNote || {};
