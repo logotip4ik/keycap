@@ -7,6 +7,7 @@ interface _IFuzzyWorker {
   searchWithQuery: (query: string, maxLength = 4) => FuzzyItem[]
   addItemToCache: (item: FuzzyItem) => void
   addItemsToCache: (items: FuzzyItem[]) => void
+  refreshItemsCache: () => Promise<void>
 }
 
 declare global {
