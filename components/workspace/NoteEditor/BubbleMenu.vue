@@ -69,14 +69,14 @@ function saveEditingLink() {
 }
 
 useTinykeys({
-  '$mod+k': (event) => {
+  '$mod+l': (event) => {
     const { from, to } = props.editor.state.selection;
 
     if (props.editor.isFocused && to - from <= 0) return;
 
     event.preventDefault();
 
-    isEditingLink.value = true;
+    isEditingLink.value = !isEditingLink.value;
   },
 });
 </script>
@@ -122,7 +122,7 @@ useTinykeys({
           <Icon name="ic:baseline-code" />
         </button>
         <button
-          title="CTRL+K"
+          title="CTRL+L"
           class="note-editor__bubble-menu__button"
           :class="{ 'note-editor__bubble-menu__button--active': editor.isActive('link') }"
           @click="(isEditingLink = !isEditingLink)"
