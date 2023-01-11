@@ -13,6 +13,7 @@ definePageMeta({
 const route = useRoute();
 const user = useUser();
 const fuzzyWorker = useFuzzyWorker();
+const { shortcuts } = useAppConfig();
 
 const search = ref<InstanceType<typeof WorkspaceSearch> | null>(null);
 
@@ -52,7 +53,7 @@ useHead({
 });
 
 useTinykeys({
-  '$mod+Shift+k': (event) => {
+  [shortcuts.search]: (event) => {
     event.preventDefault();
 
     isShowingSearch.value = !isShowingSearch.value;

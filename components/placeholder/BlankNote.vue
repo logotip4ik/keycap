@@ -1,3 +1,11 @@
+<script setup lang="ts">
+const { shortcuts } = useAppConfig();
+
+function normalizeShortcut(shortcut: string) {
+  return shortcut.replace(/\$mod/g, 'Ctrl')
+}
+</script>
+
 <template>
   <div class="blank-note">
     <p class="blank-note__text">
@@ -5,7 +13,7 @@
 
       <br>
 
-      <kbd>Ctrl + Shift + A</kbd>
+      <kbd>{{ normalizeShortcut(shortcuts.new) }}</kbd>
     </p>
 
     <p class="blank-note__text">
@@ -13,7 +21,7 @@
 
       <br>
 
-      <kbd>Ctrl + Shift + K</kbd>
+      <kbd>{{ normalizeShortcut(shortcuts.search) }}</kbd>
     </p>
   </div>
 </template>

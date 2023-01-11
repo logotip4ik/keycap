@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { withLeadingSlash, withoutTrailingSlash } from 'ufo';
 
-// import type { FolderOrNote, FolderWithContents } from '~/types/store';
-
 import { blankNoteName } from '~/assets/constants';
 
 const route = useRoute();
 const foldersCache = useFoldersCache();
+const { shortcuts } = useAppConfig();
 
 const folder = shallowRef<FolderWithContents | null | undefined>(
   foldersCache.get(withoutTrailingSlash(`/${route.params.user}/${getApiFolderPath()}`)),
@@ -68,7 +67,7 @@ watch(fetchedFolder, (value) => {
 });
 
 useTinykeys({
-  '$mod+Shift+A': (event) => {
+  [shortcuts.new]: (event) => {
     event.preventDefault();
 
     if (folder.value) preCreateItem(folder.value);
