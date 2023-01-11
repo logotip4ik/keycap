@@ -122,7 +122,7 @@ watch(() => route.params.note, (noteName) => {
 
       transform: translate(-100%, -50%);
 
-      transition:background-color 1s ease, box-shadow 1s ease;
+      transition:background-color 0.5s ease, box-shadow 0.5s ease;
     }
 
     &[note-fetching]::after,
