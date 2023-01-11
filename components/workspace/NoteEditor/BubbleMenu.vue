@@ -16,6 +16,8 @@ const { width } = useWindowSize();
 const isPhoneScreen = computed(() => width.value < 740);
 
 const tippyOptions: Partial<TippyProps> = {
+  // this element will never be displayed on server, so this should work
+  appendTo: document.body,
   zIndex: 9,
   duration: [50, 150],
   theme: 'adaptive',
