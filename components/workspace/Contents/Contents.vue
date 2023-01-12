@@ -92,7 +92,7 @@ useTinykeys({
     </template>
 
     <template v-else>
-      <PlaceholderContents />
+      <WorkspaceContentsSkeleton />
     </template>
   </Transition>
 

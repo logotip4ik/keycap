@@ -100,7 +100,7 @@ watch(fetchedNote, (value) => {
     </template>
 
     <template v-else>
-      <PlaceholderNoteEditor
+      <WorkspaceNoteEditorSkeleton
         key="skeleton"
         class="workspace__note-editor"
       />
