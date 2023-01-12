@@ -8,6 +8,7 @@ interface Props { item: FolderOrNote; parent: FolderWithContents }
 const props = defineProps<Props>();
 
 const route = useRoute();
+const isOnline = useOnline();
 const notesCache = useNotesCache();
 const foldersCache = useFoldersCache();
 
@@ -16,6 +17,11 @@ const newItemName = ref(props.item.name);
 
 const isFolder = computed(() => 'root' in props.item);
 const isItemActive = computed(() => decodeURIComponent(route.params.note as string) === props.item.name);
+const isItemDisabled = computed(() => {
+  const cache = isFolder.value ? foldersCache : notesCache;
+
+  return !isOnline.value && !cache.has(props.item.path);
+});
 
 async function showItem(item: FolderOrNote, options: NavigateToOptions = {}) {
   const itemRouteParams = generateItemRouteParams(item);
@@ -175,7 +181,7 @@ function handleContextmenu() {
 <template>
   <div
     class="item"
-    :class="{ 'item--active': isItemActive }"
+    :class="{ 'item--active': isItemActive, 'item--disabled': isItemDisabled }"
     v-bind="{ 'data-creating': item.creating, 'data-editing': item.editing }"
   >
     <form
@@ -378,6 +384,12 @@ function handleContextmenu() {
 
     border-color: var(--text-color) !important;
   }
+
+  &--disabled {
+    color: hsla(var(--text-color-hsl), 0.25);
+
+    pointer-events: none;
+  };
 
   @media screen and (max-width: $breakpoint-tablet) {
     font-size: 1.125rem;
