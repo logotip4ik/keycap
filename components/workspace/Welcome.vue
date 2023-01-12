@@ -1,6 +1,15 @@
 <script setup lang="ts">
 const { shortcuts } = useAppConfig();
+const route = useRoute();
 const user = useUser();
+
+const currentFolderPath = computed(() => {
+  const folders = Array.isArray(route.params.folders) ? route.params.folders : [];
+
+  const path = folders.map(decodeURIComponent).join('/');
+
+  return path ? `/${path}` : path;
+});
 
 function normalizeShortcut(shortcut: string) {
   return shortcut.replace(/\$mod/g, 'Ctrl');
@@ -10,12 +19,18 @@ function normalizeShortcut(shortcut: string) {
 <template>
   <div class="welcome">
     <Transition name="fade">
-      <p v-if="user" class="welcome__title">
-        Welcome, {{ user.username }}
-      </p>
+      <Transition v-if="!currentFolderPath" name="fade">
+        <p v-if="user" class="welcome__title">
+          Welcome, {{ user.username }}
+        </p>
 
-      <p v-else>
-        Welcome
+        <p v-else>
+          Welcome
+        </p>
+      </Transition>
+
+      <p v-else class="welcome__title">
+        Path: {{ currentFolderPath }}
       </p>
     </Transition>
 
@@ -59,8 +74,11 @@ function normalizeShortcut(shortcut: string) {
   width: 100%;
   height: 100%;
 
+  padding: 1.75rem;
+
   &__title {
     font-size: min(4.5vw, 2.75rem);
+    max-width: 33ch;
   }
 
   &__shortcuts {
