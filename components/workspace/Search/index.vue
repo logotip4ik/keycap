@@ -89,14 +89,14 @@ const isResultsEmpty = computed(() => {
 watch(debouncedSearchInput, handleSearchInput);
 
 let prevHeight = 0;
-watch(debouncedSearchInput, async () => {
+watch(results, async () => {
   if (!prevHeight)
     return setTimeout(() => prevHeight = searchEl.value?.offsetHeight || 0, 50);
 
   requestAnimationFrame(() => { // guaranties that element has its finished height
     if (!searchEl.value) return;
 
-    const wantedHeight = searchEl.value.scrollHeight;
+    const wantedHeight = searchEl.value.offsetHeight;
 
     const maxDifference = 2;
     // fixes issue with initial height being 2px bigger than wanted
