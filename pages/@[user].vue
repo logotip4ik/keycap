@@ -4,7 +4,7 @@ import { blankNoteName } from '~/assets/constants';
 import type WorkspaceSearch from '~/components/workspace/Search/index.vue';
 
 // @ts-expect-error no types for worker
-import FWorker from '~/worker/fuzzy?worker';
+import FWorker from '~/workers/fuzzy?worker';
 
 definePageMeta({
   middleware: ['auth'],
