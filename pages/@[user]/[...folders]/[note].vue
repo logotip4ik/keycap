@@ -4,7 +4,6 @@ import { withoutLeadingSlash } from 'ufo';
 import type { Note } from '@prisma/client';
 import { blankNoteName } from '~/assets/constants';
 
-const router = useRouter();
 const route = useRoute();
 const isOnline = useOnline();
 const notesCache = useNotesCache();
@@ -71,10 +70,9 @@ function getApiNotePath() {
   );
 }
 
-watch(error, (error) => {
-  if (!error) return;
-
-  router.push({ ...route, params: { note: blankNoteName } });
+watch(error, async (error) => {
+  if (error && !notesCache.has(`/${route.params.user}/${getApiNotePath()}`))
+    await navigateTo({ ...route, params: { note: blankNoteName } });
 });
 
 watch(fetchedNote, (value) => {
@@ -94,6 +92,7 @@ watch(fetchedNote, (value) => {
         key="content"
         class="workspace__note-editor"
         :content="note.content || ''"
+        :editable="!!(!error && note)"
         @refresh="refresh"
         @update="throttledUpdate"
       />
