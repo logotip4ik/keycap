@@ -23,12 +23,6 @@ const headingText = computed(() => {
   return `${user.value.username}'s workspace`;
 });
 
-const headingAttrs = computed(() => {
-  if (!currentNoteState.value) return {};
-
-  return { [`note-${currentNoteState.value}`]: '' };
-});
-
 function showFolderContents() {
   router.push({ ...route, params: { ...route.params, note: blankNoteName } });
 }
@@ -70,7 +64,7 @@ watch(() => route.params.note, (noteName) => {
       </button>
     </Transition>
 
-    <p class="nav__heading" v-bind="headingAttrs">
+    <p class="nav__heading" :data-note-state="currentNoteState">
       {{ headingText }}
     </p>
   </nav>
@@ -125,13 +119,17 @@ watch(() => route.params.note, (noteName) => {
       transition:background-color 0.5s ease, box-shadow 0.5s ease;
     }
 
-    &[note-fetching]::after,
-    &[note-updating]::after {
+    &[data-note-state=""]::after {
+      background-color: transparent;
+    }
+
+    &[data-note-state="fetching"]::after,
+    &[data-note-state="updating"]::after {
       background-color: goldenrod;
       box-shadow: 0 0 1rem 0 rgba($color: goldenrod, $alpha: 0.75);
     }
 
-    &[note-saved]::after {
+    &[data-note-state="saved"]::after {
       background-color: limegreen;
       box-shadow: 0 0 1rem 0 rgba($color: limegreen, $alpha: 0.75);
     }
