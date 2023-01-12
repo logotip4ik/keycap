@@ -91,7 +91,7 @@ onMounted(() => {
     </aside>
 
     <Transition name="note-change">
-      <PlaceholderBlankNote
+      <WorkspaceWelcome
         v-if="!route.params.note || $route.params.note === blankNoteName"
         key="blank-note"
         class="workspace__note"
@@ -190,7 +190,7 @@ onMounted(() => {
 
     overflow-y: auto;
 
-    & > div {
+    &:not(.welcome) > div {
       height: 100%;
     }
 

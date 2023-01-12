@@ -1,0 +1,97 @@
+<script setup lang="ts">
+const { shortcuts } = useAppConfig();
+const user = useUser();
+
+function normalizeShortcut(shortcut: string) {
+  return shortcut.replace(/\$mod/g, 'Ctrl');
+}
+</script>
+
+<template>
+  <div class="welcome">
+    <Transition name="fade">
+      <p v-if="user" class="welcome__title">
+        Welcome, {{ user.username }}
+      </p>
+
+      <p v-else>
+        Welcome
+      </p>
+    </Transition>
+
+    <div class="welcome__shortcuts">
+      <p class="welcome__shortcuts__item">
+        <span class="welcome__shortcuts__item__text">
+          Create new note or folder
+        </span>
+
+        <br>
+
+        <kbd class="welcome__shortcuts__item__shortcut">
+          {{ normalizeShortcut(shortcuts.new) }}
+        </kbd>
+      </p>
+
+      <p class="welcome__shortcuts__item">
+        <span class="welcome__shortcuts__item__text">
+          Show search
+        </span>
+
+        <br>
+
+        <kbd class="welcome__shortcuts__item__shortcut">
+          {{ normalizeShortcut(shortcuts.search) }}
+        </kbd>
+      </p>
+    </div>
+  </div>
+</template>
+
+<style lang="scss">
+.welcome {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+
+  width: 100%;
+  height: 100%;
+
+  &__title {
+    font-size: min(4.5vw, 2.75rem);
+  }
+
+  &__shortcuts {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+
+    &__item {
+      font-size: min(2.5vw, 1.75rem);
+      color: hsla(var(--text-color-hsl), 0.8);
+
+      &__text {
+        max-width: 20ch;
+      }
+
+      &__shortcut {
+        line-height: 1.75;
+
+        white-space: nowrap;
+
+        svg {
+          transform: translateY(-5%);
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: $breakpoint-tablet) {
+    display: none;
+  }
+}
+</style>
