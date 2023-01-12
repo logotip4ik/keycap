@@ -64,6 +64,7 @@ watch(() => route.params.note, (noteName) => {
       </button>
     </Transition>
 
+    <!-- TODO: tell somehow user that, red indicator means no internet connection -->
     <p class="nav__heading" :data-note-state="currentNoteState" :data-network-connection="isOnline">
       {{ headingText }}
     </p>
