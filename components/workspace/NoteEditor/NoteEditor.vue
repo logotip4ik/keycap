@@ -10,7 +10,7 @@ import BubbleMenuPlugin from '@tiptap/extension-bubble-menu';
 import TextAlign from '@tiptap/extension-text-align';
 import CodeBlock from '@tiptap/extension-code-block';
 
-interface Props { content: string }
+interface Props { content: string; editable: boolean }
 interface Emits { (event: 'update', content: string): void; (event: 'refresh'): void }
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
@@ -20,6 +20,7 @@ const update = (content: string) => emit('update', content);
 const editor = useEditor({
   autofocus: window.innerWidth > 740 && 'start', // disable auto focus on small screens
   content: props.content,
+  editable: props.editable,
   extensions: [
     StarterKir.configure({ codeBlock: false }),
     Link,
@@ -61,6 +62,13 @@ watch(() => props.content, (content) => {
 
   if (editorContent !== content) editor.value?.commands.setContent(content);
 });
+
+watch(() => props.editable, (editable) => {
+  if (!editor.value) return;
+
+  if (editor.value.options.editable !== editable)
+    editor.value?.setOptions({ editable });
+}, { immediate: true });
 
 useTinykeys({
   '$mod+s': (event) => {
