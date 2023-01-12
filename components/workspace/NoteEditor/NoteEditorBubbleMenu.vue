@@ -29,15 +29,15 @@ const tippyOptions: Partial<TippyProps> = {
 
 let prevContainerWidth = '';
 function beforeLeaveAnimation(el: HTMLElement) {
-  prevContainerWidth = `${el.parentElement?.clientWidth || 0}px`;
+  prevContainerWidth = `${el.parentElement?.offsetWidth || 0}px`;
 }
 
 function enterAnimation(el: HTMLElement) {
-  const currentWidth = el.parentElement?.clientWidth || 0;
+  const currentContainerWidth = `${el.parentElement?.offsetWidth || 0}px`;
 
   el.parentElement?.animate(
-    [{ width: prevContainerWidth }, { width: `${currentWidth}px` }],
-    { duration: 500, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' },
+    [{ width: prevContainerWidth }, { width: currentContainerWidth }],
+    { duration: 400, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' },
   );
 
   if (!isEditingLink.value) return;
@@ -215,7 +215,7 @@ useTinykeys({
 
       border: 1px solid hsla(var(--text-color-hsl), 0.75);
 
-    transition: color .1s, border .1s, background-color .1s;
+      transition: color .1s, border .1s, background-color .1s;
     }
 
     &--active {

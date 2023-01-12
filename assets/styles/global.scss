@@ -96,3 +96,16 @@ kbd {
     background-position: 0 50%;
   }
 }
+
+.fade-enter-active {
+  transition: opacity 0.3s * 2 ease;
+}
+
+.fade-leave-active {
+  display: none;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}

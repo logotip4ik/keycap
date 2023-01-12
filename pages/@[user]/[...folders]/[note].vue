@@ -87,7 +87,7 @@ watch(fetchedNote, (value) => {
 </script>
 
 <template>
-  <Transition name="note-loading" appear>
+  <Transition name="fade" appear>
     <template v-if="note">
       <!-- NOTE: This component should be wrapped inside client only, if note is rendered on server -->
       <WorkspaceNoteEditor
@@ -122,23 +122,9 @@ watch(fetchedNote, (value) => {
       width: 100%;
     }
   }
-}
 
-.note-loading-enter-active,
-.note-loading-appear-active {
-  transition: opacity 0.25s * 2;
-}
-
-.note-loading-enter-active.skeleton {
-  transition-delay: 0.25s;
-}
-
-.note-loading-leave-active {
-  display: none;
-}
-
-.note-loading-enter-from,
-.note-loading-leave-to {
-  opacity: 0;
+  .fade-enter-active.skeleton {
+    transition-delay: 0.25s;
+  }
 }
 </style>

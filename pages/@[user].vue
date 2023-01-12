@@ -90,7 +90,7 @@ onMounted(() => {
       <WorkspaceContents />
     </aside>
 
-    <Transition name="note-change">
+    <Transition name="fade">
       <WorkspaceWelcome
         v-if="!route.params.note || $route.params.note === blankNoteName"
         key="blank-note"
@@ -203,19 +203,6 @@ onMounted(() => {
     grid-template-rows: auto 1fr;
     grid-template-columns: 1fr;
   }
-}
-
-.note-change-enter-active {
-  transition: opacity 0.25s * 2 ease;
-}
-
-.note-change-leave-active {
-  display: none;
-}
-
-.note-change-enter-from,
-.note-change-leave-to {
-  opacity: 0;
 }
 
 .search-fade-leave-active,
