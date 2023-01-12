@@ -177,15 +177,6 @@ watch(() => route.params.note, (noteName) => {
   }
 }
 
-@keyframes blink {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
 .nav-back-button-enter-active,
 .nav-back-button-leave-active {
   transition: opacity .3s, transform .3s, margin-right .3s;
