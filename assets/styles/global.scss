@@ -1,4 +1,6 @@
-*, *::after, *::before {
+*,
+*::after,
+*::before {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -11,23 +13,23 @@
   --loading-indicator-color: hsl(var(--hsl-primary-color), 65%, 75%);
   --task-list-indicator-color: hsl(var(--hsl-primary-color), 70%, 70%);
   --selection-bg-color: hsl(var(--hsl-primary-color), 65%, 75%); // NOTE: maybe change color
-  
+
   --surface-color-hsl: var(--hsl-primary-color), 7%, 95%;
   --text-color-hsl: var(--hsl-primary-color), 5%, 13%;
 
   --surface-color: hsl(var(--surface-color-hsl));
   --text-color: hsl(var(--text-color-hsl));
-  
+
   @media (prefers-color-scheme: dark) {
     --loading-indicator-color: hsl(var(--hsl-primary-color), 35%, 40%);
     --task-list-indicator-color: hsl(var(--hsl-primary-color), 40%, 40%);
     --selection-bg-color: hsl(var(--hsl-primary-color), 35%, 40%);
-    
+
     --surface-color-hsl: var(--hsl-primary-color), 7%, 11%;
-    --text-color-hsl:  var(--hsl-primary-color), 5%, 96%;
-    
+    --text-color-hsl: var(--hsl-primary-color), 5%, 96%;
+
     --surface-color: hsl(var(--surface-color-hsl));
-    --text-color:  hsl(var(--text-color-hsl));
+    --text-color: hsl(var(--text-color-hsl));
   }
 }
 
@@ -63,12 +65,34 @@ a {
 }
 
 kbd {
-	font-size: 0.9em;
+  font-size: 0.9em;
 
-	padding: 0.25rem 0.5rem;
+  padding: 0.25rem 0.5rem;
 
-	background: hsla(var(--text-color-hsl), 0.075);
-	border: 1px solid hsla(var(--text-color-hsl), 0.125);
+  background: hsla(var(--text-color-hsl), 0.075);
+  border: 1px solid hsla(var(--text-color-hsl), 0.125);
   border-bottom: 3px solid hsla(var(--text-color-hsl), 0.125);
-	border-radius: 0.25rem;
+  border-radius: 0.25rem;
+}
+
+// @see https: //github.com/elk-zone/elk/blob/main/styles/global.css
+.skeleton-loading-bg {
+  background: linear-gradient(to right,
+      hsla(var(--text-color-hsl), 0.2) 25%,
+      hsla(var(--text-color-hsl), 0.24) 37%,
+      hsla(var(--text-color-hsl), 0.2) 63%);
+
+  background-size: 400% 100%;
+
+  animation: skeleton-loading 1.4s ease infinite;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 100% 50%;
+  }
+
+  to {
+    background-position: 0 50%;
+  }
 }
