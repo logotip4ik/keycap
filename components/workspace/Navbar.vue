@@ -2,11 +2,11 @@
 import { blankNoteName } from '~/assets/constants';
 import breakpoints from '~/assets/constants/breakpoints';
 
-const router = useRouter();
 const route = useRoute();
 const user = useUser();
 const device = useDevice();
 const currentNoteState = useCurrentNoteState();
+const isOnline = useOnline();
 
 const canShowBackButton = ref(false);
 const headingText = computed(() => {
@@ -23,8 +23,8 @@ const headingText = computed(() => {
   return `${user.value.username}'s workspace`;
 });
 
-function showFolderContents() {
-  router.push({ ...route, params: { ...route.params, note: blankNoteName } });
+async function showFolderContents() {
+  await navigateTo({ ...route, params: { ...route.params, note: blankNoteName } });
 }
 
 watch(() => route.path, () => {
@@ -64,7 +64,7 @@ watch(() => route.params.note, (noteName) => {
       </button>
     </Transition>
 
-    <p class="nav__heading" :data-note-state="currentNoteState">
+    <p class="nav__heading" :data-note-state="currentNoteState" :data-network-connection="isOnline">
       {{ headingText }}
     </p>
   </nav>
@@ -86,6 +86,9 @@ watch(() => route.params.note, (noteName) => {
   padding: 0.25rem 1rem;
 
   &__heading {
+    --indicator-size: 0.5rem;
+    --indicator-color: transparent;
+
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -98,9 +101,8 @@ watch(() => route.params.note, (noteName) => {
     // NOTE: hide not needed text but show saved indicator
     clip-path: inset(-100% 0 0 -100%);
 
-    &::after {
-      --indicator-size: 0.5rem;
-
+    &::after,
+    &::before {
       content: '';
 
       position: absolute;
@@ -111,27 +113,29 @@ watch(() => route.params.note, (noteName) => {
       height: var(--indicator-size);
 
       border-radius: 50%;
-      background-color: transparent;
-      box-shadow: 0 0 1rem 0 transparent;
+      background-color: var(--indicator-color);
 
       transform: translate(-100%, -50%);
 
-      transition:background-color 0.5s ease, box-shadow 0.5s ease;
+      transition: background-color 0.4s ease, filter 0.4s ease;
     }
 
-    &[data-note-state=""]::after {
-      background-color: transparent;
+    &::before {
+      opacity: 0.75;
+      filter: blur(5px);
     }
 
-    &[data-note-state="fetching"]::after,
-    &[data-note-state="updating"]::after {
-      background-color: goldenrod;
-      box-shadow: 0 0 1rem 0 rgba($color: goldenrod, $alpha: 0.75);
+    &[data-note-state="fetching"],
+    &[data-note-state="updating"] {
+      --indicator-color: goldenrod;
     }
 
-    &[data-note-state="saved"]::after {
-      background-color: limegreen;
-      box-shadow: 0 0 1rem 0 rgba($color: limegreen, $alpha: 0.75);
+    &[data-note-state="saved"] {
+      --indicator-color: limegreen;
+    }
+
+    &[data-network-connection="false"] {
+      --indicator-color: orangered;
     }
   }
 
@@ -170,6 +174,15 @@ watch(() => route.params.note, (noteName) => {
 
     max-width: unset;
     min-height: unset;
+  }
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
 
