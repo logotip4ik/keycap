@@ -92,7 +92,7 @@ watch(fetchedNote, (value) => {
         key="content"
         class="workspace__note-editor"
         :content="note.content || ''"
-        :editable="!!(!error && note)"
+        :editable="!!(isOnline && note)"
         @refresh="refresh"
         @update="throttledUpdate"
       />
