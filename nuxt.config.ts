@@ -28,7 +28,7 @@ export default defineNuxtConfig({
     },
     '/about': { static: true },
 
-    '/api/**': { headers: { 'Cache-Control': 'max-age=0' } },
+    '/api/**': { headers: { 'Cache-Control': 'no-cache' } },
   },
 
   runtimeConfig: {
