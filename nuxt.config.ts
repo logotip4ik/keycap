@@ -16,13 +16,19 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    '/': { prerender: true, headers: { 'Cache-Control': TWO_DAYS_CACHE } },
-    '/about': { prerender: true, headers: { 'Cache-Control': TWO_DAYS_CACHE } },
-    '/login': { headers: { 'Cache-Control': TWO_DAYS_CACHE } },
-    '/register': { headers: { 'Cache-Control': TWO_DAYS_CACHE } },
+    '/**': {
+      headers: {
+        'Cache-Control': TWO_DAYS_CACHE,
+        'Access-Control-Allow-Origin': process.env.VERCEL_URL || process.env.SITE_ORIGIN || '*',
+        'X-Frame-Options': 'DENY',
+        'X-Content-Type-Options': 'nosniff',
+        'X-XSS-Protection': '1; mode=block',
+        'Content-Security-Policy': 'default-src \'self\'; img-src: \'*\'; connect-src: \'*\'; media-src \'*\'; script-src: \'unsafe-inline\'; script-src-elem \'unsafe-inline\'; upgrade-insecure-requests;',
+      },
+    },
+    '/about': { static: true },
 
-    '/api/**': { cache: false, headers: { 'Access-Control-Allow-Origin': process.env.SITE_ORIGIN || '*' } },
-    '/_nuxt/**': { headers: { 'Cache-Control': TWO_DAYS_CACHE } },
+    '/api/**': { headers: { 'Cache-Control': 'max-age=0' } },
   },
 
   runtimeConfig: {
