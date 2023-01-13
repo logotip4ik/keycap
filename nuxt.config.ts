@@ -20,6 +20,7 @@ export default defineNuxtConfig({
       headers: {
         'Cache-Control': TWO_DAYS_CACHE,
         'Access-Control-Allow-Origin': process.env.SITE_ORIGIN || '*',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS, PUT, POST, DELETE',
         'X-Frame-Options': 'DENY',
         'X-Content-Type-Options': 'nosniff',
         'X-XSS-Protection': '1; mode=block',
