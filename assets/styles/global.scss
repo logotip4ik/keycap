@@ -37,6 +37,10 @@
   background-color: var(--selection-bg-color)
 }
 
+html {
+  text-size-adjust: none;
+}
+
 body {
   font-family: 'Mona Sans', system-ui, sans-serif;
   color: var(--text-color);
@@ -44,6 +48,7 @@ body {
   background-color: var(--surface-color);
 
   color-scheme: light dark;
+  overscroll-behavior: none;
 }
 
 #__nuxt {
