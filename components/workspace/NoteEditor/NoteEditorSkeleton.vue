@@ -1,20 +1,18 @@
-<script setup>
-const numberOfParagraphs = 5;
-</script>
-
 <template>
   <div class="skeleton">
-    <h2 class="skeleton__heading skeleton-loading-bg">
-      &nbsp;
-    </h2>
+    <h2 class="skeleton__heading skeleton-loading-bg" />
 
-    <p v-for="n in numberOfParagraphs" :key="n" class="skeleton__text skeleton-loading-bg">
-      &nbsp;
-    </p>
+    <p class="skeleton__text skeleton-loading-bg" />
+    <p class="skeleton__text skeleton-loading-bg" />
+    <p class="skeleton__text skeleton-loading-bg" />
+    <p class="skeleton__text skeleton-loading-bg" />
+    <p class="skeleton__text skeleton-loading-bg" />
   </div>
 </template>
 
 <style lang="scss">
+@use "sass:math";
+
 .skeleton {
   padding: 10vh 1.5rem 25vh;
 
@@ -26,7 +24,8 @@ const numberOfParagraphs = 5;
   }
 
   &__heading {
-    width: max(20%, #{random(90) + '%'});
+    width: (random(74) + 24)+#{'%'};
+    height: 2rem;
 
     margin-bottom: 2rem;
   }
@@ -34,13 +33,17 @@ const numberOfParagraphs = 5;
   &__text {
     $numberOfItems: 5;
 
+    height: 1.25rem;
+
     & + & {
       margin-top: 1rem;
     }
 
     @for $i from 1 to $numberOfItems + 1 {
       &:nth-of-type(#{$i}) {
-        width: max(20%, #{random(100) + '%'});
+        width: (random(74) + 24)+#{'%'};
+
+        opacity: math.div(1, $i);
       }
     }
   }
