@@ -152,7 +152,7 @@ useTinykeys({ Escape: handleCancel });
         </p>
       </form>
 
-      <Transition name="list">
+      <Transition name="fade">
         <div
           v-if="isResultsEmpty"
           class="search__no-results"
