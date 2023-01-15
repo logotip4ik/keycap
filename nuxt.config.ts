@@ -42,6 +42,7 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@nuxtjs/device',
     'nuxt-icon',
+    '@nuxtjs/fontaine',
   ],
 
   css: [
