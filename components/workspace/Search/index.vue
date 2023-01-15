@@ -89,27 +89,27 @@ const isResultsEmpty = computed(() => {
 watch(debouncedSearchInput, handleSearchInput);
 
 let prevHeight = 0;
-watch(results, async () => {
-  if (!prevHeight)
-    return setTimeout(() => prevHeight = searchEl.value?.offsetHeight || 0, 50);
+useResizeObserver(searchEl, (entries) => {
+  const entry = entries[0];
+  const borderBoxSize = entry.borderBoxSize![0];
 
-  requestAnimationFrame(() => { // guaranties that element has its finished height
-    if (!searchEl.value) return;
+  const currentHeight = borderBoxSize.blockSize;
 
-    const wantedHeight = searchEl.value.offsetHeight;
+  const animations = entry.target.getAnimations();
+  const animationIsRunning = animations.some((animation) => animation.playState === 'running');
 
-    const maxDifference = 2;
-    // fixes issue with initial height being 2px bigger than wanted
-    if (Math.abs(prevHeight - wantedHeight) <= maxDifference) return;
+  if (prevHeight && currentHeight && !animationIsRunning) {
+    entry.target.animate(
+      [
+        { height: `${prevHeight}px` },
+        { height: `${currentHeight}px` },
+      ],
+      { duration: 250, easing: 'cubic-bezier(0.33, 1, 0.68, 1)' },
+    );
+  }
 
-    searchEl.value.animate([
-      { height: `${prevHeight}px` },
-      { height: `${wantedHeight}px` },
-    ], { duration: 250, easing: 'cubic-bezier(0.33, 1, 0.68, 1)' });
-
-    prevHeight = wantedHeight;
-  });
-}, { immediate: true });
+  prevHeight = currentHeight;
+});
 
 useTinykeys({ Escape: handleCancel });
 </script>
