@@ -31,7 +31,7 @@ export default defineNuxtConfig({
         ...(process.env.NODE_ENV === 'production' ? defaultHeaders : {}),
       },
     },
-    '/about': { static: true },
+    '/about': { prerender: true },
 
     '/api/**': { headers: { 'Cache-Control': 'no-cache' } },
   },
