@@ -1,12 +1,12 @@
 <template>
-  <ul class="skeleton">
-    <li class="skeleton__item skeleton-loading-bg" />
-    <li class="skeleton__item skeleton-loading-bg" />
-    <li class="skeleton__item skeleton-loading-bg" />
-    <li class="skeleton__item skeleton-loading-bg" />
-    <li class="skeleton__item skeleton-loading-bg" />
-    <li class="skeleton__item skeleton-loading-bg" />
-  </ul>
+  <div class="skeleton">
+    <p class="skeleton__item skeleton-loading-bg" />
+    <p class="skeleton__item skeleton-loading-bg" />
+    <p class="skeleton__item skeleton-loading-bg" />
+    <p class="skeleton__item skeleton-loading-bg" />
+    <p class="skeleton__item skeleton-loading-bg" />
+    <p class="skeleton__item skeleton-loading-bg" />
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -18,12 +18,12 @@
   margin: 0;
   padding: 0.5rem 0.5rem;
 
-  list-style-type: none;
-
   &__item {
     $numberOfItems: 6;
 
     height: 1.75rem;
+
+    margin: 0;
 
     border-radius: 0.15rem;
 
