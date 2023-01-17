@@ -4,7 +4,7 @@ import type { RouteLocationNamedRaw } from 'vue-router';
 
 import { blankNoteName } from '~/assets/constants';
 
-export function generateItemRouteParams(item: Partial<FolderOrNote> & FuzzyItem): RouteLocationNamedRaw {
+export function generateItemRouteParams(item: Partial<FolderOrNote> & { path: string }): RouteLocationNamedRaw {
   const isFolder = 'root' in item;
 
   const routeName = isFolder ? blankNoteName : (item as NoteMinimal).name;
