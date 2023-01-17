@@ -276,6 +276,7 @@ function handleContextmenu() {
     display: flex;
     align-items: center;
 
+    font: inherit;
     text-align: left;
     text-decoration: none;
     color: currentColor;
