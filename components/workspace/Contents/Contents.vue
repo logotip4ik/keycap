@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { withLeadingSlash, withoutTrailingSlash } from 'ufo';
 
-import { blankNoteName } from '~/assets/constants';
-
 const route = useRoute();
+const isOnline = useOnline();
 const foldersCache = useFoldersCache();
 const { shortcuts } = useAppConfig();
 
@@ -49,9 +48,10 @@ function getApiFolderPath() {
 
 async function goUpFolder() {
   const currentFolderPath = folder.value!.path;
-  const prevFolderPath = currentFolderPath.split('/').slice(2, -1);
+  const prevFolderPath = withLeadingSlash(currentFolderPath.split('/').slice(1, -1).join('/'));
 
-  await navigateTo({ name: '@user-folders-note', params: { folders: prevFolderPath, note: blankNoteName } });
+  if (isOnline || foldersCache.has(prevFolderPath))
+    await navigateTo(generateItemRouteParams({ ...folder.value!, path: prevFolderPath }));
 }
 
 // updating if server sent different
