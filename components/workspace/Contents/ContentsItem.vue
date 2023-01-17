@@ -374,16 +374,23 @@ function handleContextmenu() {
     color: hsla(var(--text-color-hsl), 1);
 
     border-color: hsla(var(--text-color-hsl), 0.05);
-
     background-color: hsla(var(--text-color-hsl), 0.05);
 
     transition: background-color .1s, color .1s;
+
+    @media screen and (max-width: $breakpoint-tablet) {
+      border-color: transparent !important;
+    }
   }
 
   &--active {
     color: var(--text-color);
 
     border-color: var(--text-color) !important;
+
+    @media screen and (max-width: $breakpoint-tablet) {
+      border-color: transparent !important;
+    }
   }
 
   &--disabled {
