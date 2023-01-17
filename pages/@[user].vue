@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { blankNoteName } from '~/assets/constants';
-
-import type WorkspaceSearch from '~/components/workspace/Search/index.vue';
+import breakpoints from '~/assets/constants/breakpoints';
 
 // @ts-expect-error no types for worker
 import FWorker from '~/workers/fuzzy?worker';
+
+import type WorkspaceSearch from '~/components/workspace/Search/index.vue';
 
 definePageMeta({
   middleware: ['auth'],
@@ -12,13 +13,31 @@ definePageMeta({
 
 const route = useRoute();
 const user = useUser();
-const fuzzyWorker = useFuzzyWorker();
+const { width: windowWidth } = useWindowSize();
+const { isMobileOrTablet } = useDevice();
 const { shortcuts } = useAppConfig();
+
+const fuzzyWorker = useFuzzyWorker();
 
 const search = ref<InstanceType<typeof WorkspaceSearch> | null>(null);
 
-const isShowingContents = ref(false);
 const isShowingSearch = ref(false);
+const isShowingContents = computed(() => {
+  const noteName = route.params.note;
+
+  const isNoteNameEmpty = !noteName || noteName === blankNoteName;
+
+  if (process.server) {
+    if (isMobileOrTablet) return isNoteNameEmpty;
+
+    return true;
+  }
+
+  if (windowWidth.value < breakpoints.tablet)
+    return isNoteNameEmpty;
+
+  return true;
+});
 const currentRouteName = computed(() => {
   const folders = route.params.folders;
   const currentFolder = Array.isArray(folders) ? folders.at(-1) : folders as string;
@@ -63,12 +82,6 @@ useTinykeys({
   },
 });
 
-watch(() => route.params.note, (noteName) => {
-  const isEmptyNoteName = !noteName || noteName === blankNoteName;
-
-  isShowingContents.value = isEmptyNoteName;
-}, { immediate: true });
-
 onMounted(() => {
   const act = () => {
     preloadSearch();
@@ -86,9 +99,14 @@ onMounted(() => {
   <div class="workspace">
     <WorkspaceNavbar class="workspace__navbar" />
 
-    <aside class="workspace__contents" :class="{ 'workspace__contents--visible': isShowingContents }">
-      <WorkspaceContents />
-    </aside>
+    <Transition name="fade">
+      <aside
+        v-show="isShowingContents"
+        class="workspace__contents"
+      >
+        <WorkspaceContents />
+      </aside>
+    </Transition>
 
     <Transition name="fade">
       <WorkspaceWelcome
@@ -163,24 +181,27 @@ onMounted(() => {
     }
 
     @media screen and (max-width: $breakpoint-tablet) {
-      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+
+      width: 100%;
+      height: 100%;
+
+      max-width: 100%;
 
       padding: 4.5rem 1rem 2rem;
 
-      &--visible {
-        display: block;
+      // border: none;
+      // opacity: 0;
+      // pointer-events: none;
 
-        position: absolute;
-        top: 0;
-        left: 0;
+      // &--visible {
+      //   opacity: 1;
+      //   pointer-events: all;
 
-        width: 100%;
-        height: 100%;
-
-        max-width: none;
-
-        border: none;
-      }
+      //   transition: opacity 0.25s * 2;
+      // }
     }
   }
 
