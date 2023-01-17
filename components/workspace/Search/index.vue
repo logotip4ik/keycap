@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { withoutLeadingSlash } from 'ufo';
+
 import { SearchAction } from '~/types/common';
 
 interface Emits { (e: 'close'): void }
@@ -20,7 +22,8 @@ const commandActions: { [key in SearchAction]?: (args: string[]) => any } = {
 
 const fuzzyWorker = useFuzzyWorker();
 
-const results = ref<(FuzzyItem | CommandItem)[]>([]);
+const results = shallowRef<(FuzzyItem | CommandItem)[]>([]);
+const isLoadingResults = ref(false);
 const selectedResult = ref(0);
 const typeaheadResult = computed<FuzzyItem | CommandItem | null>(() => results.value[selectedResult.value] || null);
 
@@ -28,7 +31,7 @@ const inputEl = ref<HTMLElement | null>(null);
 const searchEl = ref<HTMLElement | null>(null);
 
 const searchInput = ref('');
-const debouncedSearchInput = useDebounce(searchInput, 150);
+const debouncedSearchInput = useDebounce(searchInput, 200);
 
 defineExpose({ input: inputEl });
 
@@ -46,9 +49,14 @@ function handleSearchInput(value: string) {
   if (value.length < 2 || !fuzzyWorker.value)
     return results.value = [];
 
+  isLoadingResults.value = true;
+
   fuzzyWorker.value.searchWithQuery(value)
     .then((entries: (FuzzyItem | CommandItem)[]) => {
       results.value = entries;
+    })
+    .finally(() => {
+      isLoadingResults.value = false;
     });
 }
 
@@ -80,10 +88,11 @@ function changeSelectedResult(difference: number) {
 }
 
 const isResultsEmpty = computed(() => {
-  // slicing '/' for command
-  const inputValue = debouncedSearchInput.value.startsWith('/') ? debouncedSearchInput.value.slice(1) : debouncedSearchInput.value;
+  if (!debouncedSearchInput.value) return false;
 
-  return results.value.length === 0 && inputValue.length !== 0;
+  const inputValue = withoutLeadingSlash(debouncedSearchInput.value);
+
+  return inputValue.length !== 0 && (results.value.length === 0 && !isLoadingResults.value);
 });
 
 watch(debouncedSearchInput, handleSearchInput);
