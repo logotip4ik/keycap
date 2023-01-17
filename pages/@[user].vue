@@ -3,7 +3,7 @@ import { blankNoteName } from '~/assets/constants';
 import breakpoints from '~/assets/constants/breakpoints';
 
 // @ts-expect-error no types for worker
-import FWorker from '~/workers/fuzzy?worker';
+import FuzzyWorker from '~/workers/fuzzy?worker';
 
 import type WorkspaceSearch from '~/components/workspace/Search/index.vue';
 
@@ -57,7 +57,7 @@ function preloadSearch() {
 
 function defineFuzzyWorker() {
   import('comlink').then(({ wrap }) => {
-    fuzzyWorker.value = wrap(new FWorker());
+    fuzzyWorker.value = wrap(new FuzzyWorker());
   });
 }
 
