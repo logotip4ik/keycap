@@ -1,6 +1,6 @@
 export default defineAppConfig({
   shortcuts: {
     new: '$mod+Shift+A',
-    search: '$mod+K'
-  }
-})
+    search: '$mod+K',
+  },
+});
