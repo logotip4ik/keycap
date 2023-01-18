@@ -1,6 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
-  // middleware: ['redirect-dashboard'],
+  middleware: ['redirect-dashboard'],
 });
 
 const user = useUser();
@@ -12,15 +12,12 @@ async function register() {
   isLoading.value = true;
 
   $fetch('/api/user/register', { method: 'POST', body: data })
-    .then(async (newUser) => {
-      user.value = newUser;
-
-      if (user.value)
-        await navigateTo(`/@${user.value.username}`);
-    })
+    .then((newUser) => user.value = newUser)
     .catch((e) => console.warn(e))
     .finally(() => isLoading.value = false);
 }
+
+watch(user, async (value) => value && await navigateTo(`/@${value.username}`));
 </script>
 
 <template>
