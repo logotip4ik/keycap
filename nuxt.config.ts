@@ -60,6 +60,10 @@ export default defineNuxtConfig({
 
   sourcemap: process.env.NODE_ENV === 'development',
 
+  build: {
+    transpile: ['ufo'],
+  },
+
   vite: {
     build: {
       target: browserslistToEsbuild(),
