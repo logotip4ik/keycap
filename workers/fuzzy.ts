@@ -63,8 +63,7 @@ async function populateItemsCache() {
 
   itemsCache.clear();
 
-  for (const item of items)
-    itemsCache.set(item.path, item);
+  addItems(items);
 }
 
 expose({
