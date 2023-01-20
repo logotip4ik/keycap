@@ -28,6 +28,7 @@ const { data: fetchedNote, error, refresh } = useLazyAsyncData<Note | null>(
   { server: false },
 );
 
+let abortController: AbortController | null;
 const throttledUpdate = useThrottleFn(updateNote, 1000);
 function updateNote(content: string) {
   if (!note.value) return;
@@ -38,13 +39,22 @@ function updateNote(content: string) {
 
   const updatePath = `/api/note/${getApiNotePath()}`;
 
-  if (isOnline.value) notesCache.set(note.value.path, { ...note.value, ...newNote });
+  if (isOnline.value)
+    notesCache.set(note.value.path, { ...note.value, ...newNote });
 
   currentNoteState.value = 'updating';
 
+  abortController?.abort();
+  abortController = new AbortController();
+
   const routeBeforeUpdate = window.location.pathname;
 
-  $fetch<QuickResponse>(updatePath, { method: 'PUT', body: newNote })
+  $fetch<QuickResponse>(updatePath, {
+    method: 'PUT',
+    body: newNote,
+    retry: 2,
+    signal: abortController.signal,
+  })
     .then((response) => {
       if (response.status === 'error' || !note.value) return;
 
@@ -54,6 +64,8 @@ function updateNote(content: string) {
       // this checks if route is the same, so this wasn't last save and user is still on the same note
       if (routeBeforeUpdate === window.location.pathname)
         currentNoteState.value = 'saved';
+      else
+        currentNoteState.value = '';
     })
     .catch((error) => console.warn(error));
 }
