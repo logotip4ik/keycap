@@ -33,8 +33,6 @@ const throttledUpdate = useThrottleFn(updateNote, 1000);
 function updateNote(content: string) {
   if (!note.value) return;
 
-  interface QuickResponse { status: 'ok' | 'error' }
-
   const newNote: Partial<Note> = { content };
 
   const updatePath = `/api/note/${getApiNotePath()}`;
@@ -56,9 +54,8 @@ function updateNote(content: string) {
     signal: abortController.signal,
   })
     .then((response) => {
-      if (response.status === 'error' || !note.value) return;
-
-      notesCache.set(note.value.path, { ...note.value, ...newNote });
+      if (note.value)
+        notesCache.set(note.value.path, { ...note.value, ...newNote });
 
       // before route update, note will be saved and the indicator will be again reset to saved
       // this checks if route is the same, so this wasn't last save and user is still on the same note

@@ -80,7 +80,7 @@ export default defineEventHandler(async (event) => {
     try {
       await prisma.folder.delete({ where: { path: folderPath } });
 
-      return { status: 'ok' };
+      return { ok: true };
     }
     catch (error) {
       return sendError(event, createError({ statusCode: 500 }));

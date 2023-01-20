@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
       const note = await prisma.note.create({
         data: {
           name: decodeURIComponent(path.split('/').at(-1)), // last route param always should be note name
-          content: body.content || '',
+          content: body.content ?? '',
           path: generateNotePath(user.username, path),
           owner: { connect: { id: user.id } },
           parent: { connect: { id: toBigInt(body.parentId) } },
@@ -91,8 +91,10 @@ export default defineEventHandler(async (event) => {
       return sendError(event, createError({ statusCode: 400 }));
     }
 
-    if (query.getNote === 'true') return updatedNote || {};
-    return { status: 'ok' };
+    if (query.getNote === 'true')
+      return updatedNote;
+
+    return { ok: true };
   }
 
   if (isMethod(event, 'DELETE')) {
@@ -106,7 +108,7 @@ export default defineEventHandler(async (event) => {
     try {
       await prisma.note.delete({ where: { path: generateNotePath(user.username, path) } });
 
-      return { status: 'ok' };
+      return { ok: true };
     }
     catch (error) {
       return sendError(event, createError({ statusCode: 500 }));

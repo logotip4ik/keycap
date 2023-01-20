@@ -78,9 +78,7 @@ async function removeFolder() {
   const folderName = encodeURIComponent(decodeURIComponent(props.item.name));
   const folderPath = withLeadingSlash(withTrailingSlash(parentPath) + folderName);
 
-  const response = await $fetch<{ status: 'ok' }>(`/api/folder${folderPath}`, { method: 'DELETE' });
-
-  if (response.status !== 'ok') return;
+  await $fetch<QuickResponse>(`/api/folder${folderPath}`, { method: 'DELETE' });
 
   deleteSubfolderFromFolder(props.item, props.parent);
 
@@ -92,9 +90,7 @@ async function removeNote() {
   const noteName = encodeURIComponent(decodeURIComponent(props.item.name));
   const notePath = withLeadingSlash(withTrailingSlash(parentPath) + noteName);
 
-  const response = await $fetch<{ status: 'ok' }>(`/api/note${notePath}`, { method: 'DELETE' });
-
-  if (response.status !== 'ok') return;
+  await $fetch<QuickResponse>(`/api/note${notePath}`, { method: 'DELETE' });
 
   showItem(props.parent);
 
@@ -104,8 +100,6 @@ async function removeNote() {
 }
 
 async function updateNote() {
-  interface QuickResponse { status: 'ok' | 'error' }
-
   const newNote: Partial<Note> = { name: newItemName.value.trim() };
 
   if (!newNote.name)
@@ -115,10 +109,11 @@ async function updateNote() {
   const noteName = encodeURIComponent(decodeURIComponent(props.item.name));
   const notePath = withTrailingSlash(parentPath) + noteName;
 
-  const response = await $fetch<QuickResponse>(`/api/note${notePath}`, { method: 'PUT', body: newNote });
+  const response = await $fetch<QuickResponse>(`/api/note${notePath}`, { method: 'PUT', body: newNote })
+    .catch(() => updateNoteInFolder(props.item, { editing: false }, props.parent));
 
-  if (response.status === 'error')
-    return updateNoteInFolder(props.item, { editing: false }, props.parent);
+  if (!response)
+    return;
 
   const newNotePath = withLeadingSlash(
     props.item.path.split('/').slice(0, -1).concat([encodeURIComponent(newNote.name)]).join('/'),

@@ -7,5 +7,5 @@ export default defineEventHandler(async (event) => {
 
   await setAuthCookies(event, user);
 
-  return { status: 'ok' };
+  return { ok: true };
 });
