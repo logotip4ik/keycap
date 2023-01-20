@@ -21,7 +21,10 @@ export default defineNuxtConfig({
     head: {
       htmlAttrs: { translate: 'no' },
       title: 'Keycap',
-      meta: [{ name: 'description', content: 'Better notes ❤. Synced between your devices' }],
+      meta: [
+        { name: 'description', content: 'Better notes ❤. Synced between your devices' },
+        { name: 'mobile-web-app-capable', content: 'yes' },
+      ],
     },
   },
 
