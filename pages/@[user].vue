@@ -16,6 +16,7 @@ const user = useUser();
 const { width: windowWidth } = useWindowSize();
 const { isMobileOrTablet } = useDevice();
 const { shortcuts } = useAppConfig();
+const createToast = useToast();
 
 const fuzzyWorker = useFuzzyWorker();
 
@@ -92,6 +93,9 @@ onMounted(() => {
     window.requestIdleCallback(act);
   else
     setTimeout(act, 500);
+
+  // @ts-expect-error only for dev
+  if (process.env.NODE_ENV === 'development') window.$createToast = createToast;
 });
 </script>
 
@@ -131,6 +135,10 @@ onMounted(() => {
         @close="isShowingSearch = false"
       />
     </Transition>
+
+    <Teleport to="body">
+      <WorkspaceToasts />
+    </Teleport>
   </div>
 </template>
 
