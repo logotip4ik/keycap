@@ -8,7 +8,10 @@ import type { Editor } from '@tiptap/vue-3';
 import type { Props as TippyProps } from 'tippy.js';
 
 interface Props { editor: Editor }
+interface Emits { (e: 'hide'): void }
+
 const props = defineProps<Props>();
+const emit = defineEmits<Emits>();
 
 const isEditingLink = ref(false);
 const editingLink = ref('');
@@ -53,15 +56,6 @@ function enterAnimation(el: HTMLElement) {
   });
 }
 
-function hideBubbleMenu() {
-  const { to } = props.editor.state.selection;
-
-  if (props.editor.can().focus(to + 1))
-    props.editor.commands.focus(to + 1, { scrollIntoView: false });
-  else
-    props.editor.commands.focus(to, { scrollIntoView: false });
-}
-
 function saveEditingLink() {
   const currentLinkUrl = props.editor.isActive('link')
     ? props.editor.getAttributes('link').href || ''
@@ -82,7 +76,7 @@ function saveEditingLink() {
   isEditingLink.value = false;
 
   if (currentLinkUrl !== editingLink.value)
-    hideBubbleMenu();
+    emit('hide');
 }
 
 useTinykeys({
@@ -185,7 +179,8 @@ useTinykeys({
     line-height: 0.5;
     color: var(--text-color);
 
-    width: 100%;
+    width: 100vw;
+    max-width: 27ch;
 
     padding: 0 0.5rem;
 

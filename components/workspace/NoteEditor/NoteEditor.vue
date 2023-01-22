@@ -56,6 +56,12 @@ function refreshNoteOnVisibilityChange() {
   emit('refresh');
 }
 
+function hideBubbleMenu() {
+  const { from } = editor.value!.state.selection;
+
+  editor.value!.commands.focus(from, { scrollIntoView: false });
+}
+
 // tiptap editor does not handle content change
 watch(() => props.content, (content) => {
   const editorContent = editor.value?.getHTML();
@@ -100,7 +106,7 @@ onBeforeRouteUpdate(() => {
 <template>
   <div class="note-editor__wrapper">
     <template v-if="editor">
-      <WorkspaceNoteEditorBubbleMenu :editor="editor" />
+      <WorkspaceNoteEditorBubbleMenu :editor="editor" @hide="hideBubbleMenu" />
     </template>
 
     <EditorContent class="note-editor" :editor="editor" />
