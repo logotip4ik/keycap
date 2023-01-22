@@ -53,14 +53,26 @@ function enterAnimation(el: HTMLElement) {
   });
 }
 
+function hideBubbleMenu() {
+  const { to } = props.editor.state.selection;
+
+  if (props.editor.can().focus(to + 1))
+    props.editor.commands.focus(to + 1, { scrollIntoView: false });
+  else
+    props.editor.commands.focus(to, { scrollIntoView: false });
+}
+
 function saveEditingLink() {
+  const currentLinkUrl = props.editor.isActive('link')
+    ? props.editor.getAttributes('link').href || ''
+    : '';
+
   if (editingLink.value !== '') {
     const mark = props.editor.schema.mark('link', { href: editingLink.value });
 
     const { from, to } = props.editor.state.selection;
     props.editor.view.dispatch(
-      props.editor.view.state.tr
-        .addMark(from, to, mark),
+      props.editor.view.state.tr.addMark(from, to, mark),
     );
   }
   else {
@@ -68,6 +80,9 @@ function saveEditingLink() {
   }
 
   isEditingLink.value = false;
+
+  if (currentLinkUrl !== editingLink.value)
+    hideBubbleMenu();
 }
 
 useTinykeys({
@@ -139,6 +154,8 @@ useTinykeys({
           type="url"
           class="note-editor__bubble-menu__input"
           placeholder="hit enter to remove link"
+          enterkeyhint="done"
+          @keydown.esc="isEditingLink = false"
         >
 
         <button class="note-editor__bubble-menu__button" type="submit">
