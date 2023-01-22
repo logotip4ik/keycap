@@ -114,3 +114,25 @@ kbd {
 .fade-leave-to {
   opacity: 0;
 }
+
+.fade-enter-active.skeleton {
+  transition-delay: 0.25s;
+}
+
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.3s * 2 ease;
+}
+
+.list-move {
+  transition-duration: 0.3s;
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+}
+
+.list-leave-active {
+  display: none;
+}
