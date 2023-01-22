@@ -191,17 +191,6 @@ onMounted(() => {
       max-width: 100%;
 
       padding: 4.5rem 1rem 2rem;
-
-      // border: none;
-      // opacity: 0;
-      // pointer-events: none;
-
-      // &--visible {
-      //   opacity: 1;
-      //   pointer-events: all;
-
-      //   transition: opacity 0.25s * 2;
-      // }
     }
   }
 
