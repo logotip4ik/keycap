@@ -187,6 +187,7 @@ function handleContextmenu() {
       <input
         v-model="newItemName"
         class="item__input"
+        enterkeyhint="done"
         @blur="cancelActions"
         @keydown.esc="cancelActions"
       >
