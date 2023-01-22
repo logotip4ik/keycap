@@ -2,8 +2,9 @@ import browserslistToEsbuild from 'browserslist-to-esbuild';
 
 import breakpoints from './assets/constants/breakpoints';
 
-const TWO_DAYS_IN_SECONDS = 60 * 60 * 24 * 2;
-const TWO_DAYS_CACHE = `private, immutable, max-age=${TWO_DAYS_IN_SECONDS}`;
+const WEEK_IN_SECONDS = 60 * 60 * 24 * 7;
+const MONTH_IN_SECONDS = 60 * 60 * 24 * 31;
+const TWO_DAYS_CACHE = `private, immutable, max-age=${WEEK_IN_SECONDS}, stale-while-revalidate=${MONTH_IN_SECONDS}`;
 
 const defaultHeaders = {
   'Cache-Control': TWO_DAYS_CACHE,
