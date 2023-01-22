@@ -1,4 +1,6 @@
 <script setup>
+import MonaSansUrl from '~/assets/fonts/Mona-Sans/Mona-Sans.woff2';
+
 useHead({
   link: [
     {
@@ -6,10 +8,10 @@ useHead({
       as: 'font',
       type: 'font/woff2',
       crossorigin: 'anonymous',
-      href: import('~/assets/fonts/Mona-Sans/Mona-Sans.woff2?url').then((value) => value.default),
+      href: MonaSansUrl,
     },
   ],
-}, { mode: 'server' });
+});
 </script>
 
 <template>
