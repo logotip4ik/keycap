@@ -4,13 +4,15 @@ import commandScore from 'command-score';
 
 import { SearchAction } from '~/types/common';
 
+import type { SearchActionValues } from '~/types/common';
+
 // will store only item name, path and root for folder
 // const itemsCache = new LRU<string, FuzzyItem>({ max: 100 });
 const itemsCache = new Map<string, FuzzyItem>();
 
 // NOTE: command could be only one word,
 // or use '-' as space replace
-const commandsCache = new Map<SearchAction, string>([
+const commandsCache = new Map<SearchActionValues, string>([
   [SearchAction.New, 'new'],
   [SearchAction.Refresh, 'refresh'],
   [SearchAction.RefreshFolder, 'refresh-folder'],

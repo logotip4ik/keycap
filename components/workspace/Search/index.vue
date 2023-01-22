@@ -3,10 +3,12 @@ import { withoutLeadingSlash } from 'ufo';
 
 import { SearchAction } from '~/types/common';
 
+import type { SearchActionValues } from '~/types/common';
+
 interface Emits { (e: 'close'): void }
 const emit = defineEmits<Emits>();
 
-const commandActions: { [key in SearchAction]?: (args: string[]) => any } = {
+const commandActions: Record<SearchActionValues, (args: string[]) => any> = {
   [SearchAction.New]: (args) => {
     const nuxtApp = useNuxtApp();
 

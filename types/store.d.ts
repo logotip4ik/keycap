@@ -1,7 +1,7 @@
 import type { Note, Folder } from '@prisma/client'
 import type { Remote } from 'comlink'
 
-import type { SearchAction } from '~/types/common'
+import type { SearchAction, SearchActionValues } from '~/types/common'
 
 interface _IFuzzyWorker {
   searchWithQuery: (query: string, maxLength = 4) => FuzzyItem[]
@@ -31,7 +31,7 @@ declare global {
 
   interface CommandItem {
     name: string
-    key: SearchAction
+    key: SearchActionValues
   }
 
   type FuzzyItem = Pick<FolderOrNote, 'name' | 'path' | 'root'>;
