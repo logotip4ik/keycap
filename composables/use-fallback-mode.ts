@@ -1,8 +1,8 @@
 const isOnline = useOnline();
 
-const fallbackMode = ref(isOnline);
+const fallbackMode = ref(!isOnline);
 
-watch(isOnline, (value) => fallbackMode.value = value);
+watch(isOnline, (value) => fallbackMode.value = !value);
 
 export default function useFallbackMode() {
   return fallbackMode;
