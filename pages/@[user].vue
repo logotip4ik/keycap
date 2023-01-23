@@ -16,7 +16,11 @@ const user = useUser();
 const { width: windowWidth } = useWindowSize();
 const { isMobileOrTablet } = useDevice();
 const { shortcuts } = useAppConfig();
+
 const createToast = useToast();
+const isFallbackMode = useFallbackMode();
+const foldersCache = useFoldersCache();
+const notesCache = useNotesCache();
 
 const fuzzyWorker = useFuzzyWorker();
 const offlineStorage = useOfflineStorage();
@@ -58,22 +62,37 @@ function preloadSearch() {
   preloadComponents('LazyWorkspaceSearch');
 }
 
-function defineFuzzyWorker() {
-  import('comlink').then(({ wrap }) => {
-    fuzzyWorker.value = wrap(new FuzzyWorker());
-  });
+async function defineFuzzyWorker() {
+  const wrap = await import('comlink').then(({ wrap }) => wrap);
+
+  fuzzyWorker.value = wrap(new FuzzyWorker());
 }
 
-function defineOfflineStorage() {
-  import('localforage').then((localForage) => {
-    localForage.default.config({
-      driver: localForage.INDEXEDDB,
-      name: 'keycap',
-      version: 1.0,
-    });
+async function defineOfflineStorage() {
+  const localForage = await import('localforage').then((localForage) => localForage.default);
 
-    offlineStorage.value = localForage;
+  localForage.config({
+    driver: localForage.INDEXEDDB,
+    name: 'keycap',
+    version: 1.0,
   });
+
+  offlineStorage.value = localForage;
+
+  watch(isFallbackMode, (value) => {
+    if (!value) return;
+
+    createToast('Fallback mode enabled. Populating cache from offline storage.');
+
+    localForage.iterate<FolderOrNote, any>((value) => {
+      const isFolder = 'root' in value;
+      const cache = isFolder ? foldersCache : notesCache;
+
+      if (!cache.has(value.path))
+        // @ts-expect-error idk how to setup this type
+        cache.set(value.path, value);
+    });
+  }, { immediate: true });
 }
 
 useHead({
