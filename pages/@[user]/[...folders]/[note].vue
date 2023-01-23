@@ -8,6 +8,7 @@ const route = useRoute();
 const isOnline = useOnline();
 const notesCache = useNotesCache();
 const currentNoteState = useCurrentNoteState();
+const createToast = useToast();
 
 const note = shallowRef<Note | null | undefined>(
   notesCache.get(`/${route.params.user}/${getApiNotePath()}`),
@@ -23,7 +24,7 @@ const { data: fetchedNote, error, refresh } = useLazyAsyncData<Note | null>(
 
     currentNoteState.value = 'fetching';
 
-    return $fetch<Note>(`/api/note/${getApiNotePath()}`, { retry: 2 });
+    return $fetch(`/api/note/${getApiNotePath()}`, { retry: 2 });
   },
   { server: false },
 );
@@ -82,6 +83,8 @@ function getApiNotePath() {
 watch(error, async (error) => {
   if (error && !notesCache.has(`/${route.params.user}/${getApiNotePath()}`))
     await navigateTo({ ...route, params: { note: blankNoteName } });
+
+  createToast('Error occurred while fetching note');
 });
 
 watch(fetchedNote, (value) => {

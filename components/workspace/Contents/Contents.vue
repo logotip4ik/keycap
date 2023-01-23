@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { withLeadingSlash, withoutTrailingSlash } from 'ufo';
 
+import type { ToastInstance } from '~/composables/toasts';
+
 const route = useRoute();
 const isOnline = useOnline();
 const foldersCache = useFoldersCache();
+const createToast = useToast();
 const { shortcuts } = useAppConfig();
 
 const folder = shallowRef<FolderWithContents | null | undefined>(
@@ -19,7 +22,7 @@ const folderIdentifier = computed(() => {
   return `${route.params.folders.length}-${route.params.folders.at(-1)}`;
 });
 
-const { data: fetchedFolder } = useLazyAsyncData<FolderWithContents>(
+const { data: fetchedFolder, error } = useLazyAsyncData<FolderWithContents>(
   'folder',
   () => {
     const folders = route.params.folders;
@@ -31,7 +34,17 @@ const { data: fetchedFolder } = useLazyAsyncData<FolderWithContents>(
     if (newCurrentFolder) folder.value = newCurrentFolder;
     else folder.value = null;
 
-    return $fetch(`/api/folder/${getApiFolderPath()}`);
+    let loadingToast: undefined | ToastInstance;
+
+    return $fetch(`/api/folder/${getApiFolderPath()}`, {
+      retry: 2,
+      onRequest: () => {
+        loadingToast = createToast('Seems like your internet is slow 🤔', { duration: 999999, delay: 2250, type: 'loading' });
+      },
+      onResponse: () => {
+        loadingToast?.remove();
+      },
+    });
   },
   { server: false, watch: [folderIdentifier] },
 );
@@ -53,6 +66,11 @@ async function goUpFolder() {
   if (isOnline || foldersCache.has(prevFolderPath))
     await navigateTo(generateItemRouteParams({ ...folder.value!, path: prevFolderPath }));
 }
+
+// TODO: fallback to previously saved content with help of localForage
+watch(error, (_error) => {
+  createToast('Error occurred while fetching folder contents');
+});
 
 // updating if server sent different
 watch(fetchedFolder, (value) => {
