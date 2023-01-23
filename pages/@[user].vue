@@ -19,6 +19,7 @@ const { shortcuts } = useAppConfig();
 const createToast = useToast();
 
 const fuzzyWorker = useFuzzyWorker();
+const offlineStorage = useOfflineStorage();
 
 const search = ref<InstanceType<typeof WorkspaceSearch> | null>(null);
 
@@ -39,6 +40,7 @@ const isShowingContents = computed(() => {
 
   return true;
 });
+
 const currentRouteName = computed(() => {
   const folders = route.params.folders;
   const currentFolder = Array.isArray(folders) ? folders.at(-1) : folders as string;
@@ -59,6 +61,18 @@ function preloadSearch() {
 function defineFuzzyWorker() {
   import('comlink').then(({ wrap }) => {
     fuzzyWorker.value = wrap(new FuzzyWorker());
+  });
+}
+
+function defineOfflineStorage() {
+  import('localforage').then((localForage) => {
+    localForage.default.config({
+      driver: localForage.INDEXEDDB,
+      name: 'keycap',
+      version: 1.0,
+    });
+
+    offlineStorage.value = localForage;
   });
 }
 
@@ -87,6 +101,7 @@ onMounted(() => {
   const act = () => {
     preloadSearch();
     defineFuzzyWorker();
+    defineOfflineStorage();
   };
 
   if ('requestIdleCallback' in window)
