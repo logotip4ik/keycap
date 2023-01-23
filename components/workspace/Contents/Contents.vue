@@ -68,9 +68,29 @@ async function goUpFolder() {
     await navigateTo(generateItemRouteParams({ ...folder.value!, path: prevFolderPath }));
 }
 
-// TODO: fallback to previously saved content with help of localForage
-watch(error, (_error) => {
-  createToast('Error occurred while fetching folder contents');
+watch(error, async (error) => {
+  // if there was previously error, reset the fallback mode to false
+  if (!error)
+    return isFallbackMode.value = false;
+
+  // This error name was logged when request is taking to long to respond
+  // emulates no network connection, so turning fallback mode on
+  if (error.name === 'FetchError')
+    isFallbackMode.value = true;
+
+  // But if folder was found in cache, then do nothing, just display it
+  if (folder.value)
+    return;
+
+  // last chance to show user folder, if iterator in @[user].vue page hasn't yet set the foldersCache
+  const folderPath = withoutTrailingSlash(`/${route.params.user}/${getApiFolderPath()}`);
+
+  const offlineFolder = await offlineStorage.value?.getItem(folderPath) as FolderWithContents;
+
+  if (!offlineFolder)
+    return createToast('No offline copy found');
+
+  folder.value = offlineFolder;
 });
 
 // updating if server sent different
@@ -84,6 +104,7 @@ watch(fetchedFolder, (value) => {
 
   folder.value = value;
 
+  isFallbackMode.value = false;
   offlineStorage?.value?.setItem(value.path, toRaw(value));
 });
 

@@ -82,10 +82,32 @@ function getApiNotePath() {
 }
 
 watch(error, async (error) => {
-  if (error && !notesCache.has(`/${route.params.user}/${getApiNotePath()}`))
+  // Resetting fallback mode to false is previous error is removed
+  if (!error)
+    return isFallbackMode.value = false;
+
+  // No network connection
+  if (error.name === 'FetchError')
+    isFallbackMode.value = true;
+
+  // But note was found in cache just display it
+  if (note.value)
+    return;
+
+  const notePath = `/${route.params.user}/${getApiNotePath()}`;
+
+  const offlineNote = await offlineStorage.value?.getItem(notePath) as Note;
+
+  // if offline storage hasn't got the note, navigate to root of in hope folder is in cache
+  if (!offlineNote) {
+    createToast('No offline copy found');
+
     await navigateTo({ ...route, params: { note: blankNoteName } });
 
-  createToast('Error occurred while fetching note');
+    return;
+  }
+
+  note.value = offlineNote;
 });
 
 watch(fetchedNote, (value) => {
@@ -95,6 +117,7 @@ watch(fetchedNote, (value) => {
   notesCache.set(value.path, toRaw(value));
   currentNoteState.value = 'saved';
 
+  isFallbackMode.value = false;
   offlineStorage?.value?.setItem(value.path, toRaw(value));
 });
 </script>
