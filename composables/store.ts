@@ -1,6 +1,7 @@
 import LRU from 'lru-cache';
 
 import type { Note } from '@prisma/client';
+import type * as localForage from 'localforage';
 
 export const useRootFolderContents = () => useState<FolderWithContents | null>(() => null);
 export const useCurrentNoteState = () => useState<'' | 'updating' | 'fetching' | 'saved'>(() => '' as const);
@@ -13,6 +14,9 @@ export const useFoldersCache = () => foldersCache;
 
 const fuzzyWorker = shallowRef<null | IFuzzyWorker>(null);
 export const useFuzzyWorker = () => fuzzyWorker;
+
+const offlineStorage = shallowRef<null | typeof localForage>(null);
+export const useOfflineStorage = () => offlineStorage;
 
 export function deleteNoteFromFolder(noteToDelete: NoteMinimal, parent: FolderWithContents) {
   const noteIdxToDelete = parent.notes.findIndex((note) => note.id === noteToDelete.id);
