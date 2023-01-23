@@ -167,6 +167,8 @@ function handleEnter(e: Event) {
 }
 
 function handleContextmenu() {
+  if (isFallbackMode.value) return;
+
   if (isFolder.value)
     updateSubfolderInFolder(props.item, { editing: true }, props.parent);
 
