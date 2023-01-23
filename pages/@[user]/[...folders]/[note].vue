@@ -39,8 +39,8 @@ function updateNote(content: string) {
 
   const updatePath = `/api/note/${getApiNotePath()}`;
 
-  if (isFallbackMode.value)
-    notesCache.set(note.value.path, { ...note.value, ...newNote });
+  // enables optimistic ui
+  notesCache.set(note.value.path, { ...note.value, ...newNote });
 
   currentNoteState.value = 'updating';
 
