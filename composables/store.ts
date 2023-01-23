@@ -6,10 +6,10 @@ import type * as localForage from 'localforage';
 export const useRootFolderContents = () => useState<FolderWithContents | null>(() => null);
 export const useCurrentNoteState = () => useState<'' | 'updating' | 'fetching' | 'saved'>(() => '' as const);
 
-const notesCache = new LRU<string, Note>({ max: 20 });
+const notesCache = new LRU<string, Note>({ max: 30 });
 export const useNotesCache = () => notesCache;
 
-const foldersCache = new LRU<string, FolderWithContents>({ max: 20 });
+const foldersCache = new LRU<string, FolderWithContents>({ max: 30 });
 export const useFoldersCache = () => foldersCache;
 
 const fuzzyWorker = shallowRef<null | IFuzzyWorker>(null);
