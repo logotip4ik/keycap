@@ -120,17 +120,18 @@ onMounted(() => {
       </main>
     </Transition>
 
-    <!-- TODO: wrap search into teleport[to="body"] when pull request merged https://github.com/vuejs/core/pull/6548 -->
-    <Transition
-      name="search-fade"
-      @after-enter="search?.input?.focus()"
-    >
-      <LazyWorkspaceSearch
-        v-if="isShowingSearch"
-        ref="search"
-        @close="isShowingSearch = false"
-      />
-    </Transition>
+    <Teleport to="body">
+      <Transition
+        name="search-fade"
+        @after-enter="search?.input?.focus()"
+      >
+        <LazyWorkspaceSearch
+          v-if="isShowingSearch"
+          ref="search"
+          @close="isShowingSearch = false"
+        />
+      </Transition>
+    </Teleport>
   </div>
 </template>
 
