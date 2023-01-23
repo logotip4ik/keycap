@@ -29,7 +29,7 @@ function createToast(options: Partial<Omit<ToastInstance, 'id' | 'delete'>>): To
     duration: options.duration ?? 2250,
     type: options.type ?? 'info',
     el: shallowRef(null),
-    delete: () => {
+    remove: () => {
       toasts.value = toasts.value.filter((toast) => toast.id !== toastId);
     },
   };
@@ -55,5 +55,5 @@ export interface ToastInstance {
   duration: number
   type: ToastType
   el: ShallowRef<HTMLOutputElement | null>
-  delete: () => void
+  remove: () => void
 }

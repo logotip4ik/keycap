@@ -9,7 +9,7 @@ let timeout: NodeJS.Timeout;
 onMounted(() => {
   const totalTime = props.animationDuration + props.toast.duration;
   // TODO: add animation duration to total show duration of notification item
-  timeout = setTimeout(() => props.toast.delete(), totalTime);
+  timeout = setTimeout(() => props.toast.remove(), totalTime);
 });
 
 onBeforeUnmount(() => clearTimeout(timeout));
