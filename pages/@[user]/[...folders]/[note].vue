@@ -130,7 +130,7 @@ watch(fetchedNote, (value) => {
         key="content"
         class="workspace__note-editor"
         :content="note.content || ''"
-        :editable="!!(isFallbackMode && note)"
+        :editable="!isFallbackMode && !!note"
         @refresh="refresh"
         @update="throttledUpdate"
       />
