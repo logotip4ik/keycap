@@ -5,8 +5,8 @@ const toasts = shallowRef<ToastInstance[]>([]);
 export const useToasts = () => toasts;
 
 export function useToast() {
-  return (message: string, options?: Partial<Omit<ToastInstance, 'id' | 'delete'>>) => {
-    const toast = createToast({ message, ...(options ?? {}) });
+  return (message: string, options?: Partial<Omit<ToastInstance, 'id' | 'message' | 'delete'>>) => {
+    const toast = createToast({ ...(options ?? {}), message });
 
     toasts.value = toasts.value.concat(toast);
 
