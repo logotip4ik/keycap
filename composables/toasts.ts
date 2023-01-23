@@ -20,7 +20,7 @@ function createToast(options: Partial<Omit<ToastInstance, 'id' | 'delete'>>): To
   if (options.message === '')
     throw new Error('no message was provided');
 
-  const toastId = Math.floor(Math.random() * 9999);
+  const toastId = Math.floor(Math.random() * 9999999);
 
   return {
     id: toastId,
