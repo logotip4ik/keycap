@@ -9,6 +9,7 @@ const isOnline = useOnline();
 const notesCache = useNotesCache();
 const currentNoteState = useCurrentNoteState();
 const createToast = useToast();
+const offlineStorage = useOfflineStorage();
 
 const note = shallowRef<Note | null | undefined>(
   notesCache.get(`/${route.params.user}/${getApiNotePath()}`),
@@ -93,6 +94,8 @@ watch(fetchedNote, (value) => {
   note.value = value;
   notesCache.set(value.path, toRaw(value));
   currentNoteState.value = 'saved';
+
+  offlineStorage?.value?.setItem(value.path, toRaw(value));
 });
 </script>
 

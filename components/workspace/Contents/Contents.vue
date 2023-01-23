@@ -7,6 +7,7 @@ const route = useRoute();
 const isOnline = useOnline();
 const foldersCache = useFoldersCache();
 const createToast = useToast();
+const offlineStorage = useOfflineStorage();
 const { shortcuts } = useAppConfig();
 
 const folder = shallowRef<FolderWithContents | null | undefined>(
@@ -82,6 +83,8 @@ watch(fetchedFolder, (value) => {
   foldersCache.set(value.path, toRaw(value));
 
   folder.value = value;
+
+  offlineStorage?.value?.setItem(value.path, toRaw(value));
 });
 
 useTinykeys({

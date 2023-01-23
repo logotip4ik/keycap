@@ -26,6 +26,7 @@ export function deleteNoteFromFolder(noteToDelete: NoteMinimal, parent: FolderWi
   parent.notes.splice(noteIdxToDelete, 1);
 
   if (fuzzyWorker.value) fuzzyWorker.value.refreshItemsCache();
+  if (offlineStorage.value) offlineStorage.value.removeItem(noteToDelete.path);
 }
 
 export function deleteSubfolderFromFolder(subfolderToDelete: FolderWithContents, parent: FolderWithContents) {
@@ -36,19 +37,29 @@ export function deleteSubfolderFromFolder(subfolderToDelete: FolderWithContents,
   parent.subfolders.splice(folderIdxToDelete, 1);
 
   if (fuzzyWorker.value) fuzzyWorker.value.refreshItemsCache();
+  if (offlineStorage.value) offlineStorage.value.removeItem(subfolderToDelete.path);
 }
 
-export function updateNoteInFolder(noteToUpdate: NoteMinimal, fieldsToUpdate: Partial<NoteMinimal>, parent: FolderWithContents) {
+export function updateNoteInFolder(
+  noteToUpdate: NoteMinimal,
+  fieldsToUpdate: Partial<NoteMinimal>,
+  parent: FolderWithContents) {
   const noteIdxToUpdate = parent.notes.findIndex((note) => note.id === noteToUpdate.id);
 
   if (noteIdxToUpdate === -1) return;
 
-  parent.notes[noteIdxToUpdate] = {
+  const updatedNote = {
     ...noteToUpdate,
     ...fieldsToUpdate,
   };
 
+  parent.notes[noteIdxToUpdate] = updatedNote;
+
   if (fuzzyWorker.value) fuzzyWorker.value.refreshItemsCache();
+  if (offlineStorage.value) {
+    offlineStorage.value.removeItem(noteToUpdate.path);
+    offlineStorage.value.setItem(updatedNote.path, updatedNote);
+  }
 }
 
 export function updateSubfolderInFolder(
@@ -60,10 +71,16 @@ export function updateSubfolderInFolder(
   if (fieldsToUpdate.creating === false && folderIdxToUpdate === -1)
     parentFolder.subfolders.push({ ...folderToUpdate, ...fieldsToUpdate });
 
-  parentFolder.subfolders[folderIdxToUpdate] = {
+  const updatedSubfolder = {
     ...folderToUpdate,
     ...fieldsToUpdate,
   };
 
+  parentFolder.subfolders[folderIdxToUpdate] = updatedSubfolder;
+
   if (fuzzyWorker.value) fuzzyWorker.value.refreshItemsCache();
+  if (offlineStorage.value) {
+    offlineStorage.value.removeItem(folderToUpdate.path);
+    offlineStorage.value.setItem(updatedSubfolder.path, updatedSubfolder);
+  }
 }
