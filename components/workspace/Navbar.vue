@@ -65,7 +65,7 @@ watch(() => route.params.note, (noteName) => {
     </Transition>
 
     <!-- TODO: tell somehow user that, red indicator means no internet connection -->
-    <p class="nav__heading" :data-note-state="currentNoteState" :data-network-connection="isFallbackMode">
+    <p class="nav__heading" :data-note-state="currentNoteState" :data-network-connection="!isFallbackMode">
       {{ headingText }}
     </p>
   </nav>
