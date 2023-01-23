@@ -57,6 +57,10 @@ onBeforeUnmount(() => clearTimeout(timeout));
     backdrop-filter: blur(6px);
   }
 
+  @media screen and (max-width: $breakpoint-tablet) {
+    max-width: 28ch;
+  }
+
   &__text {
     margin: 0;
     padding-top: 0.1rem;
@@ -82,7 +86,6 @@ onBeforeUnmount(() => clearTimeout(timeout));
       animation: spin 1s infinite linear;
     }
   }
-
 }
 
 @keyframes spin {

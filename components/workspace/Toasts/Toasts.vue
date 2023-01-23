@@ -37,21 +37,29 @@ function beforeLeaveHook(el: Element) {
 
 <style lang="scss">
 .notifications {
+  --screen-spacing-bottom: 3rem;
+  --screen-spacing-x: max(3vw, 1rem);
+
   display: grid;
   justify-items: flex-end;
   justify-content: flex-end;
   gap: max(1vh, 0.25rem);
 
   position: fixed;
-  bottom: 3rem;
-  right: max(3vw, 1rem);
+  bottom: var(--screen-spacing-bottom);
+  right: var(--screen-spacing-x);
   z-index: 1;
 
   pointer-events: none;
 
   @media screen and (max-width: $breakpoint-tablet) {
+    --screen-spacing-bottom: 1rem;
+
     justify-items: flex-start;
     justify-content: flex-start;
+
+    right: unset;
+    left: var(--screen-spacing-x);
   }
 }
 
@@ -80,5 +88,10 @@ function beforeLeaveHook(el: Element) {
   right: 0;
 
   width: var(--prev-width);
+
+  @media screen and (max-width: $breakpoint-tablet) {
+    right: unset;
+    left: 0;
+  }
 }
 </style>
