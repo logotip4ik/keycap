@@ -83,7 +83,7 @@ onBeforeUnmount(() => clearTimeout(timeout));
 
       border-radius: 50%;
       border: 2px solid transparent;
-      border-left-color: var(--text-color);
+      border-left-color: currentColor;
 
       animation: spin 1s infinite linear;
     }
