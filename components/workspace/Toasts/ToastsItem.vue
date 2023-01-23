@@ -68,6 +68,8 @@ onBeforeUnmount(() => clearTimeout(timeout));
 
   &__icon,
   &__spinner {
+    flex-shrink: 0;
+
     width: var(--icon-size);
     height: var(--icon-size);
 
