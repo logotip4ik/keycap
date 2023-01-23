@@ -42,10 +42,10 @@ export interface ToastInstance {
   // TODO: add support for html ?
   message: string
   /**
-   * @default 0
    * should be between 0 and 100
    * - 0 will float freely to top with other toast
    * - 100 will be fixed at the bottom
+   * @default 0
    */
   priority: number
   /**
