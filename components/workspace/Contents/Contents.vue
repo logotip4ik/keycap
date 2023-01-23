@@ -4,7 +4,7 @@ import { withLeadingSlash, withoutTrailingSlash } from 'ufo';
 import type { ToastInstance } from '~/composables/toasts';
 
 const route = useRoute();
-const isOnline = useOnline();
+const isFallbackMode = useFallbackMode();
 const foldersCache = useFoldersCache();
 const createToast = useToast();
 const offlineStorage = useOfflineStorage();
@@ -64,7 +64,7 @@ async function goUpFolder() {
   const currentFolderPath = folder.value!.path;
   const prevFolderPath = withLeadingSlash(currentFolderPath.split('/').slice(1, -1).join('/'));
 
-  if (isOnline || foldersCache.has(prevFolderPath))
+  if (isFallbackMode || foldersCache.has(prevFolderPath))
     await navigateTo(generateItemRouteParams({ ...folder.value!, path: prevFolderPath }));
 }
 

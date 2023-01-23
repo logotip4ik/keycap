@@ -5,7 +5,7 @@ import type { Note } from '@prisma/client';
 import { blankNoteName } from '~/assets/constants';
 
 const route = useRoute();
-const isOnline = useOnline();
+const isFallbackMode = useFallbackMode();
 const notesCache = useNotesCache();
 const currentNoteState = useCurrentNoteState();
 const createToast = useToast();
@@ -39,7 +39,7 @@ function updateNote(content: string) {
 
   const updatePath = `/api/note/${getApiNotePath()}`;
 
-  if (isOnline.value)
+  if (isFallbackMode.value)
     notesCache.set(note.value.path, { ...note.value, ...newNote });
 
   currentNoteState.value = 'updating';
@@ -107,7 +107,7 @@ watch(fetchedNote, (value) => {
         key="content"
         class="workspace__note-editor"
         :content="note.content || ''"
-        :editable="!!(isOnline && note)"
+        :editable="!!(isFallbackMode && note)"
         @refresh="refresh"
         @update="throttledUpdate"
       />

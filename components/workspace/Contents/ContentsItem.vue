@@ -8,7 +8,7 @@ interface Props { item: FolderOrNote; parent: FolderWithContents }
 const props = defineProps<Props>();
 
 const route = useRoute();
-const isOnline = useOnline();
+const isFallbackMode = useFallbackMode();
 const notesCache = useNotesCache();
 const foldersCache = useFoldersCache();
 
@@ -20,7 +20,7 @@ const isItemActive = computed(() => decodeURIComponent(route.params.note as stri
 const isItemDisabled = computed(() => {
   const cache = isFolder.value ? foldersCache : notesCache;
 
-  return !isOnline.value && !cache.has(props.item.path);
+  return !isFallbackMode.value && !cache.has(props.item.path);
 });
 
 async function showItem(item: FolderOrNote, options: NavigateToOptions = {}) {

@@ -6,7 +6,7 @@ const route = useRoute();
 const user = useUser();
 const device = useDevice();
 const currentNoteState = useCurrentNoteState();
-const isOnline = useOnline();
+const isFallbackMode = useFallbackMode();
 
 const canShowBackButton = ref(false);
 const headingText = computed(() => {
@@ -65,7 +65,7 @@ watch(() => route.params.note, (noteName) => {
     </Transition>
 
     <!-- TODO: tell somehow user that, red indicator means no internet connection -->
-    <p class="nav__heading" :data-note-state="currentNoteState" :data-network-connection="isOnline">
+    <p class="nav__heading" :data-note-state="currentNoteState" :data-network-connection="isFallbackMode">
       {{ headingText }}
     </p>
   </nav>
