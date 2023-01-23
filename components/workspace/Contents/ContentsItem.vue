@@ -11,17 +11,23 @@ const route = useRoute();
 const isFallbackMode = useFallbackMode();
 const notesCache = useNotesCache();
 const foldersCache = useFoldersCache();
+const offlineStorage = useOfflineStorage();
 
 // TODO: add loading state
 const newItemName = ref(props.item.name);
 
 const isFolder = computed(() => 'root' in props.item);
-const isItemActive = computed(() => decodeURIComponent(route.params.note as string) === props.item.name);
-const isItemDisabled = computed(() => {
+const isItemRouteActive = computed(() => decodeURIComponent(route.params.note as string) === props.item.name);
+const isItemDisabled = computedAsync(async () => {
+  const noInternet = isFallbackMode.value;
   const cache = isFolder.value ? foldersCache : notesCache;
 
-  return isFallbackMode.value && !cache.has(props.item.path);
-});
+  const offlineCopy = await offlineStorage.value?.getItem(props.item.path);
+
+  const itemCached = cache.has(props.item.path) || !!offlineCopy;
+
+  return noInternet && !itemCached;
+}, false);
 
 async function showItem(item: FolderOrNote, options: NavigateToOptions = {}) {
   const itemRouteParams = generateItemRouteParams(item);
@@ -176,7 +182,7 @@ function handleContextmenu() {
 <template>
   <div
     class="item"
-    :class="{ 'item--active': isItemActive, 'item--disabled': isItemDisabled }"
+    :class="{ 'item--active': isItemRouteActive, 'item--disabled': isItemDisabled }"
     v-bind="{ 'data-creating': item.creating, 'data-editing': item.editing }"
   >
     <form
@@ -222,7 +228,7 @@ function handleContextmenu() {
 .item {
   display: flex;
   justify-content: space-between;
-  align-items: center;;
+  align-items: center;
 
   position: relative;
   z-index: 1;
