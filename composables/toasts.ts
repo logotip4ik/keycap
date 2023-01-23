@@ -5,16 +5,26 @@ const toasts = shallowRef<ToastInstance[]>([]);
 export const useToasts = () => toasts;
 
 export function useToast() {
-  return (message: string, options?: Partial<Omit<ToastInstance, 'id' | 'message' | 'delete'>>) => {
-    const toast = createToast({ ...(options ?? {}), message });
+  return (message: string, options?: ToastUserOptions & { delay?: number }): ToastInstance => {
+    const timeout: { value: NodeJS.Timeout | null } = { value: null };
 
-    toasts.value = toasts.value.concat(toast);
+    const toast = createToast({ ...(options ?? {}), message, timeout });
+
+    const updateToasts = () => {
+      timeout.value = null;
+      toasts.value = toasts.value.concat(toast);
+    };
+
+    if (options?.delay)
+      timeout.value = setTimeout(updateToasts, options.delay);
+    else
+      updateToasts();
 
     return toast;
   };
 }
 
-function createToast(options: Partial<Omit<ToastInstance, 'id' | 'delete'>>): ToastInstance {
+function createToast(options: ToastUserOptions & { message?: string; timeout: { value: NodeJS.Timeout | null } }): ToastInstance {
   options.message = (options.message ?? '').trim();
 
   if (options.message === '')
@@ -30,12 +40,17 @@ function createToast(options: Partial<Omit<ToastInstance, 'id' | 'delete'>>): To
     type: options.type ?? 'info',
     el: shallowRef(null),
     remove: () => {
-      toasts.value = toasts.value.filter((toast) => toast.id !== toastId);
+      if (options.timeout && options.timeout.value)
+        clearTimeout(options.timeout.value);
+      else
+        toasts.value = toasts.value.filter((toast) => toast.id !== toastId);
     },
   };
 }
 
 type ToastType = 'info' | 'loading';
+
+export type ToastUserOptions = Partial<Omit<ToastInstance, 'id' | 'message' | 'remove' | 'el' | 'delete'>>;
 
 export interface ToastInstance {
   id: number
