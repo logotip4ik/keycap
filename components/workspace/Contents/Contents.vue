@@ -76,7 +76,7 @@ useTinykeys({
 </script>
 
 <template>
-  <Transition name="contents-loading">
+  <Transition name="fade">
     <template v-if="folder">
       <TransitionGroup tag="ul" name="list">
         <li v-if="!folder.root" key="cd.." class="item">
@@ -153,44 +153,5 @@ useTinykeys({
       left: unset;
     }
   }
-}
-
-$list-transition-duration: 0.25s;
-$fade-transition-duration: 0.25s;
-
-.contents-loading-enter-active,
-.contents-loading-leave-active {
-  transition: opacity $fade-transition-duration * 2;
-}
-
-.contents-loading-enter-active.skeleton {
-  transition-delay: $fade-transition-duration;
-}
-
-.contents-loading-enter-from,
-.contents-loading-leave-to {
-  opacity: 0;
-}
-
-.contents-loading-leave-active {
-  display: none;
-}
-
-.list-enter-active,
-.list-leave-active {
-  transition: all $list-transition-duration * 2 ease;
-}
-
-.list-move {
-  transition-duration: $list-transition-duration;
-}
-
-.list-enter-from,
-.list-leave-to {
-  opacity: 0;
-}
-
-.list-leave-active {
-  display: none;
 }
 </style>

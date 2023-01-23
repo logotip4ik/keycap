@@ -130,9 +130,5 @@ watch(fetchedNote, (value) => {
       width: 100%;
     }
   }
-
-  .fade-enter-active.skeleton {
-    transition-delay: 0.25s;
-  }
 }
 </style>
