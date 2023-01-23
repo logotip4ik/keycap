@@ -48,7 +48,7 @@ function beforeLeaveHook(el: Element) {
   position: fixed;
   bottom: var(--screen-spacing-bottom);
   right: var(--screen-spacing-x);
-  z-index: 1;
+  z-index: 2;
 
   pointer-events: none;
 
