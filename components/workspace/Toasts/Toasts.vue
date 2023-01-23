@@ -61,7 +61,7 @@ function beforeLeaveHook(el: Element) {
 }
 
 .toast-enter-active [data-icon] {
-  transition: opacity 0.5s ease 0.15s
+  transition: opacity 0.4s ease;
 }
 
 .toast-move {
