@@ -11,8 +11,7 @@ interface _IFuzzyWorker {
 }
 
 declare global {
-  type NoteMinimal = Pick<Note, 'id' | 'name'> & {
-    path?: string
+  type NoteMinimal = Pick<Note, 'id' | 'name' | 'path'> & {
     content?: string
     editing?: boolean
     creating?: boolean
