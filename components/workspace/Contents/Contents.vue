@@ -65,7 +65,7 @@ async function goUpFolder() {
   const currentFolderPath = folder.value!.path;
   const prevFolderPath = withLeadingSlash(currentFolderPath.split('/').slice(1, -1).join('/'));
 
-  if (!isFallbackMode || foldersCache.has(prevFolderPath))
+  if (!isFallbackMode.value || foldersCache.has(prevFolderPath))
     await navigateTo(generateItemRouteParams({ ...folder.value!, path: prevFolderPath }));
 }
 
