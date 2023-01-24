@@ -27,6 +27,7 @@ export function preCreateItem(folderToAppend: FolderWithContents, initialValues?
   const noteValues = {
     id,
     name: '',
+    path: '',
     creating: true,
     ...(initialValues || {}),
   };
