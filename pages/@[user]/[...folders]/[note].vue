@@ -63,8 +63,6 @@ function updateNote(content: string) {
       // this checks if route is the same, so this wasn't last save and user is still on the same note
       if (routeBeforeUpdate === window.location.pathname)
         currentNoteState.value = 'saved';
-      else
-        currentNoteState.value = '';
     })
     .catch((error) => console.warn(error));
 }
