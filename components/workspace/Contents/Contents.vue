@@ -40,7 +40,8 @@ const { data: fetchedFolder, error } = useLazyAsyncData<FolderWithContents>(
     return $fetch(`/api/folder/${getApiFolderPath()}`, {
       retry: 2,
       onRequest: () => {
-        loadingToast = createToast('Seems like your internet is slow 🤔', { duration: 999999, delay: 3000, type: 'loading' });
+        if (!loadingToast)
+          loadingToast = createToast('Seems like your internet is slow 🤔', { duration: 999999, delay: 3000, type: 'loading' });
       },
       onResponse: () => {
         loadingToast?.remove();
