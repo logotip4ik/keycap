@@ -52,8 +52,8 @@ onBeforeUnmount(() => clearTimeout(timeout));
   @supports (backdrop-filter: blur(1px)) {
     color: var(--text-color);
 
-    background-color: hsla(var(--text-color-hsl), 0.05);
-    border: 1px solid hsla(var(--text-color-hsl), 0.125);
+    background-color: hsla(var(--selection-bg-color-hsl), 0.1);
+    border: 1px solid hsla(var(--selection-bg-color-hsl), 0.25);
     backdrop-filter: blur(6px);
   }
 
