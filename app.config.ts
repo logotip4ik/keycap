@@ -3,4 +3,6 @@ export default defineAppConfig({
     new: '$mod+Shift+A',
     search: '$mod+K',
   },
+
+  iconsToPreload: ['ic:outline-info'],
 });

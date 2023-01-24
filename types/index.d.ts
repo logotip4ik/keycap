@@ -6,6 +6,8 @@ interface Shortcuts {
 declare module '@nuxt/schema' {
   interface AppConfigInput {
     shortcuts: Shortcuts
+
+    iconsToPreload?: string[]
   }
 }
 
