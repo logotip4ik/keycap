@@ -4,10 +4,10 @@ import breakpoints from './assets/constants/breakpoints';
 
 const WEEK_IN_SECONDS = 60 * 60 * 24 * 7;
 const MONTH_IN_SECONDS = 60 * 60 * 24 * 31;
-const TWO_DAYS_CACHE = `private, immutable, max-age=${WEEK_IN_SECONDS}, stale-while-revalidate=${MONTH_IN_SECONDS}`;
+const DEFAULT_CACHE = `private, immutable, max-age=${WEEK_IN_SECONDS}, stale-while-revalidate=${MONTH_IN_SECONDS}`;
 
 const defaultHeaders = {
-  'Cache-Control': TWO_DAYS_CACHE,
+  'Cache-Control': DEFAULT_CACHE,
   'Access-Control-Allow-Origin': process.env.SITE_ORIGIN || '*',
   'Access-Control-Allow-Methods': 'GET, OPTIONS, PUT, POST, DELETE',
   'X-Frame-Options': 'DENY',
