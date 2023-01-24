@@ -34,17 +34,15 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    '/**': {
-      headers: {
-        ...(process.env.NODE_ENV === 'production' ? defaultHeaders : {}),
-      },
+    '/_nuxt/**': {
+      headers: { ...(process.env.NODE_ENV === 'production' ? defaultHeaders : {}) },
     },
     '/': { prerender: true },
     '/login': { prerender: true },
     '/register': { prerender: true },
     '/about': { prerender: true },
 
-    '/api/**': { headers: { 'Cache-Control': 'no-cache' } },
+    '/api/**': { headers: { 'Cache-Control': 'no-store' } },
   },
 
   runtimeConfig: {
