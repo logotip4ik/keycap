@@ -33,7 +33,9 @@ const { data: fetchedNote, error, refresh } = useLazyAsyncData<Note | null>(
 let abortController: AbortController | null;
 const throttledUpdate = useThrottleFn(updateNote, 1000);
 function updateNote(content: string) {
-  if (!note.value) return;
+  // if no note was found in cache that means that it was deleted
+  if (!note.value || !notesCache.get(`/${route.params.user}/${getApiNotePath()}`))
+    return;
 
   const newNote: Partial<Note> = { content };
 
