@@ -70,6 +70,12 @@ export default defineNuxtConfig({
     transpile: ['ufo'],
   },
 
+  nitro: {
+    rollupConfig: {
+      external: ['node-pre-gyp'],
+    },
+  },
+
   vite: {
     build: {
       target: browserslistToEsbuild(),
