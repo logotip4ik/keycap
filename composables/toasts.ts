@@ -36,7 +36,7 @@ function createToast(options: ToastUserOptions & { message?: string; timeout: { 
     id: toastId,
     message: options.message,
     priority: options.priority ?? 0,
-    duration: options.duration ?? 3500,
+    duration: options.duration ?? 6000,
     type: options.type ?? 'info',
     el: shallowRef(null),
     remove: () => {
@@ -65,7 +65,7 @@ export interface ToastInstance {
   priority: number
   /**
    * in milliseconds
-   * @default 3500
+   * @default 6000
    */
   duration: number
   type: ToastType
