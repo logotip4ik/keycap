@@ -2,7 +2,7 @@
 import MonaSansUrl from '~/assets/fonts/Mona-Sans/Mona-Sans.woff2';
 
 const localhost = 'localhost:3000';
-const base = import.meta.env.SITE_ORIGIN || localhost;
+const base = process.env.SITE_ORIGIN || localhost;
 const protocol = base === localhost ? 'http://' : 'https://';
 
 useHead({
