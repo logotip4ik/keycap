@@ -916,7 +916,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mapbox/node-pre-gyp@npm:^1.0.10, @mapbox/node-pre-gyp@npm:^1.0.5":
+"@mapbox/node-pre-gyp@npm:^1.0.5":
   version: 1.0.10
   resolution: "@mapbox/node-pre-gyp@npm:1.0.10"
   dependencies:
@@ -1710,12 +1710,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/bcrypt@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "@types/bcrypt@npm:5.0.0"
-  dependencies:
-    "@types/node": "*"
-  checksum: 063c32c7a519d64768dfc0169a319b8244d6a6cb50a355c93992b3c5fee1dbc236526a1111f0e7bb25abc8b0473e5f40a5edfeb8b33cad2a6ea35aa2d7d7db14
+"@types/bcryptjs@npm:^2.4.2":
+  version: 2.4.2
+  resolution: "@types/bcryptjs@npm:2.4.2"
+  checksum: 220dade7b0312b41e23ccfb15f2ddde7804eb3c7ef41db41a6c49054be1e19a15eb3dd8c8ef196494f0866307cce22ad6f3f272941387124707d81dc66155bbc
   languageName: node
   linkType: hard
 
@@ -1746,13 +1744,6 @@ __metadata:
   dependencies:
     "@types/unist": "*"
   checksum: 3f587bfc0a9a2403ecadc220e61031b01734fedaf82e27eb4d5ba039c0eb54db8c85681ccc070ab4df3f7ec711b736a82b990e69caa14c74bf7ac0ccf2ac7313
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:*":
-  version: 18.11.18
-  resolution: "@types/node@npm:18.11.18"
-  checksum: 03f17f9480f8d775c8a72da5ea7e9383db5f6d85aa5fefde90dd953a1449bd5e4ffde376f139da4f3744b4c83942166d2a7603969a6f8ea826edfb16e6e3b49d
   languageName: node
   linkType: hard
 
@@ -2508,13 +2499,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bcrypt@npm:^5.1.0":
-  version: 5.1.0
-  resolution: "bcrypt@npm:5.1.0"
-  dependencies:
-    "@mapbox/node-pre-gyp": ^1.0.10
-    node-addon-api: ^5.0.0
-  checksum: a590b65d276d75d861dc85acc3128508b8f78c87431719658ea3be7996368b34b397b6efefe6bca0a3d555bf41a9267307fd4ce04e956598fca3ba81199c6706
+"bcryptjs@npm:^2.4.3":
+  version: 2.4.3
+  resolution: "bcryptjs@npm:2.4.3"
+  checksum: 0e80ed852a41f5dfb1853f53ee14a7390b0ef263ce05dba6e2ef3cd919dfad025a7c21ebcfe5bc7fa04b100990edf90c7a877ff7fe623d3e479753253131b629
   languageName: node
   linkType: hard
 
@@ -6755,15 +6743,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-addon-api@npm:^5.0.0":
-  version: 5.1.0
-  resolution: "node-addon-api@npm:5.1.0"
-  dependencies:
-    node-gyp: latest
-  checksum: 2508bd2d2981945406243a7bd31362fc7af8b70b8b4d65f869c61731800058fb818cc2fd36c8eac714ddd0e568cc85becf5e165cebbdf7b5024d5151bbc75ea1
-  languageName: node
-  linkType: hard
-
 "node-domexception@npm:^1.0.0":
   version: 1.0.0
   resolution: "node-domexception@npm:1.0.0"
@@ -8391,10 +8370,10 @@ __metadata:
     "@tiptap/extension-text-align": ^2.0.0-beta.209
     "@tiptap/starter-kit": ^2.0.0-beta.209
     "@tiptap/vue-3": ^2.0.0-beta.209
-    "@types/bcrypt": ^5.0.0
+    "@types/bcryptjs": ^2.4.2
     "@vueuse/core": ^9.11.1
     "@vueuse/nuxt": ^9.11.1
-    bcrypt: ^5.1.0
+    bcryptjs: ^2.4.3
     browserslist-to-esbuild: ^1.2.0
     comlink: ^4.3.1
     command-score: ^0.1.2
