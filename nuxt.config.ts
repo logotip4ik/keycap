@@ -70,12 +70,6 @@ export default defineNuxtConfig({
     transpile: ['ufo'],
   },
 
-  nitro: {
-    rollupConfig: {
-      external: ['bcrypt'],
-    },
-  },
-
   vite: {
     build: {
       target: browserslistToEsbuild(),
