@@ -1024,7 +1024,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxt/kit@npm:3.1.0, @nuxt/kit@npm:^3.0.0, @nuxt/kit@npm:^3.0.0-rc.13":
+"@nuxt/kit@npm:3.1.0, @nuxt/kit@npm:^3.0.0, @nuxt/kit@npm:^3.0.0-rc.13, @nuxt/kit@npm:^3.1.0":
   version: 3.1.0
   resolution: "@nuxt/kit@npm:3.1.0"
   dependencies:
@@ -6889,7 +6889,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nuxt-config-schema@npm:^0.4.2":
+"nuxt-config-schema@npm:^0.4.4":
   version: 0.4.4
   resolution: "nuxt-config-schema@npm:0.4.4"
   dependencies:
@@ -6903,14 +6903,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nuxt-icon@npm:^0.2.7":
-  version: 0.2.7
-  resolution: "nuxt-icon@npm:0.2.7"
+"nuxt-icon@npm:^0.2.10":
+  version: 0.2.10
+  resolution: "nuxt-icon@npm:0.2.10"
   dependencies:
     "@iconify/vue": ^4.0.2
-    "@nuxt/kit": ^3.0.0
-    nuxt-config-schema: ^0.4.2
-  checksum: 46e384d02e9d7691af78e128637546fd6f2a282462cda5de5e5db21f0caa1f6a5d25965839049d561d85e23adb77c0e757dc1b4af485a8f66cfd286f577a0e1d
+    "@nuxt/kit": ^3.1.0
+    nuxt-config-schema: ^0.4.4
+  checksum: 310199d5caca4e7d501d397b9c3e882745d325a6f48b07a7f0066664692c0c9bc5ef4fca6ee7a6465b5a34353b4f88b57675146f4b667e0d3bf0cdde2bc287b0
   languageName: node
   linkType: hard
 
@@ -8248,7 +8248,7 @@ __metadata:
     lru-cache: ^7.14.1
     normalize.css: ^8.0.1
     nuxt: 3.1.0
-    nuxt-icon: ^0.2.7
+    nuxt-icon: ^0.2.10
     prisma: ^4.9.0
     prosemirror-commands: ^1.5.0
     prosemirror-dropcursor: ^1.6.1
