@@ -1,25 +1,21 @@
 <script setup>
-import requrl from 'requrl';
-
 import MonaSansUrl from '~/assets/fonts/Mona-Sans/Mona-Sans.woff2';
 
-if (process.server) {
-  const event = useRequestEvent();
+const localhost = 'localhost:3000';
+const base = import.meta.env.SITE_ORIGIN || localhost;
+const protocol = base === localhost ? 'http://' : 'https://';
 
-  const base = requrl(event.node.req);
-
-  useHead({
-    link: [
-      {
-        rel: 'preload',
-        as: 'font',
-        type: 'font/woff2',
-        crossorigin: 'anonymous',
-        href: `${base}${MonaSansUrl}`,
-      },
-    ],
-  });
-}
+useHead({
+  link: [
+    {
+      rel: 'preload',
+      as: 'font',
+      type: 'font/woff2',
+      crossorigin: 'anonymous',
+      href: `${protocol}${base}${MonaSansUrl}`,
+    },
+  ],
+});
 </script>
 
 <template>
