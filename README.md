@@ -20,6 +20,6 @@ After months of usage windows and android phone, i find that notes are syncing. 
 - [ ] oauth with google and github ?
 - [ ] show notes via sharable links
 - [ ] code highlighting
-- [ ] work without internet
+- [ ] work without internet (kinda working, if page is still cached, notes and folders will be loaded from local copies)
 - [ ] create landing page
 - [ ] create project logo (some sort of 3d keycap with words KEY-CAP)
