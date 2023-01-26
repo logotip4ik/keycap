@@ -11,6 +11,8 @@ const currentNoteState = useCurrentNoteState();
 const createToast = useToast();
 const offlineStorage = useOfflineStorage();
 
+// NOTE: can't use default param in async data because it runs
+// before route navigation and our notes depends on route path
 const note = shallowRef<Note | null | undefined>(
   notesCache.get(`/${route.params.user}/${getApiNotePath()}`),
 );
