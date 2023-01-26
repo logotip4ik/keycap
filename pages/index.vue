@@ -1,3 +1,10 @@
+<script setup lang="ts">
+useSeoMeta({
+  robots: { none: true },
+  ogDescription: 'Another note taking webapp ❤.Simple, fast and purple.',
+});
+</script>
+
 <template>
   <main class="index">
     <!-- TODO: actually craft landing page -->
