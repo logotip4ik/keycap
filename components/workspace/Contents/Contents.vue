@@ -23,6 +23,7 @@ const folderIdentifier = computed(() => {
   return `${route.params.folders.length}-${route.params.folders.at(-1)}`;
 });
 
+let firstTimeFetch = true;
 const { data: fetchedFolder, error } = useLazyAsyncData<FolderWithContents>(
   'folder',
   () => {
@@ -40,8 +41,14 @@ const { data: fetchedFolder, error } = useLazyAsyncData<FolderWithContents>(
     return $fetch(`/api/folder/${getApiFolderPath()}`, {
       retry: 2,
       onRequest: () => {
-        if (!loadingToast)
-          loadingToast = createToast('Seems like your internet is slow 🤔', { duration: 999999, delay: 3000, type: 'loading' });
+        if (!loadingToast) {
+          loadingToast = createToast('Fetching folder contents. Please wait...', {
+            duration: 999999,
+            delay: firstTimeFetch ? 3000 : 0,
+            type: 'loading',
+          });
+          firstTimeFetch = false;
+        }
       },
       onResponse: () => {
         loadingToast?.remove();

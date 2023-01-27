@@ -2,6 +2,8 @@
 import { withoutLeadingSlash } from 'ufo';
 
 import type { Note } from '@prisma/client';
+import type { ToastInstance } from '~/composables/toasts';
+
 import { blankNoteName } from '~/assets/constants';
 
 const route = useRoute();
@@ -17,6 +19,7 @@ const note = shallowRef<Note | null | undefined>(
   notesCache.get(`/${route.params.user}/${getApiNotePath()}`),
 );
 
+let firstTimeFetch = true;
 const { data: fetchedNote, error, refresh } = useLazyAsyncData<Note | null>(
   'note',
   async () => {
@@ -27,7 +30,24 @@ const { data: fetchedNote, error, refresh } = useLazyAsyncData<Note | null>(
 
     currentNoteState.value = 'fetching';
 
-    return $fetch(`/api/note/${getApiNotePath()}`, { retry: 2 });
+    let loadingToast: undefined | ToastInstance;
+
+    return $fetch(`/api/note/${getApiNotePath()}`, {
+      retry: 2,
+      onRequest: () => {
+        if (!loadingToast) {
+          loadingToast = createToast('Fetching note. Please wait...', {
+            duration: 999999,
+            delay: firstTimeFetch ? 3500 : 0,
+            type: 'loading',
+          });
+          firstTimeFetch = false;
+        }
+      },
+      onResponse: () => {
+        loadingToast?.remove();
+      },
+    });
   },
   { server: false },
 );
