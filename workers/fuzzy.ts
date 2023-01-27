@@ -16,6 +16,7 @@ const commandsCache = new Map<SearchActionValues, string>([
   [SearchAction.New, 'new'],
   [SearchAction.Refresh, 'refresh'],
   [SearchAction.RefreshFolder, 'refresh-folder'],
+  [SearchAction.SaveNote, 'save-note'],
 ]);
 
 function addItem(item: FuzzyItem) {

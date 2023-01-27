@@ -8,6 +8,8 @@ import type { SearchActionValues } from '~/types/common';
 interface Emits { (e: 'close'): void }
 const emit = defineEmits<Emits>();
 
+const mitt = useMitt();
+
 const commandActions: Record<SearchActionValues, (args: string[]) => any> = {
   [SearchAction.New]: (args) => {
     const nuxtApp = useNuxtApp();
@@ -19,6 +21,9 @@ const commandActions: Record<SearchActionValues, (args: string[]) => any> = {
   },
   [SearchAction.RefreshFolder]: () => {
     refreshNuxtData('folder');
+  },
+  [SearchAction.SaveNote]: () => {
+    mitt.emit('save:note');
   },
 };
 

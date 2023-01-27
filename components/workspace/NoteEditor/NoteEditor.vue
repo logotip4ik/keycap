@@ -15,6 +15,8 @@ interface Emits { (event: 'update', content: string): void; (event: 'refresh'): 
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
+const mitt = useMitt();
+
 const update = (content: string) => emit('update', content);
 
 const editor = useEditor({
@@ -61,6 +63,8 @@ function hideBubbleMenu() {
 
   editor.value!.commands.focus(from, { scrollIntoView: false });
 }
+
+mitt.on('save:note', saveEditorContent);
 
 // tiptap editor does not handle content change
 watch(() => props.content, (content) => {
