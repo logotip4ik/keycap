@@ -103,6 +103,7 @@ useSeoMeta({
 
     &::after {
       --size: 20vmin;
+      --blur-divider: 1.75;
 
       content: "";
 
@@ -117,10 +118,11 @@ useSeoMeta({
       border-radius: 50%;
       background-color: var(--loading-indicator-color);
 
-      filter: blur(calc(var(--size)));
+      filter: blur(calc(var(--size) / var(--blur-divider)));
 
       @media screen and (max-width: $breakpoint-tablet) {
         --size: 30vmin;
+        --blur-divider: 1;
       }
     }
 
