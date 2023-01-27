@@ -151,6 +151,13 @@ onMounted(() => {
     </Transition>
 
     <Transition name="fade">
+      <WorkspaceFab
+        v-show="isShowingContents"
+        @open-search="isShowingSearch = true"
+      />
+    </Transition>
+
+    <Transition name="fade">
       <WorkspaceWelcome
         v-if="!route.params.note || $route.params.note === blankNoteName"
         key="blank-note"
