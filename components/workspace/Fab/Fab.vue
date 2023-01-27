@@ -168,7 +168,8 @@ function withFoldCallback(func: () => any) {
     }
   }
 
-  &:is(:hover, :focus-visible), &--active {
+  &:is(:hover, :focus-visible),
+  &--active {
     background-color: hsla(var(--text-color-hsl), 1);
 
     svg {
