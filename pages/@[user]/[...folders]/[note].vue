@@ -20,6 +20,7 @@ const note = shallowRef<Note | null | undefined>(
 );
 
 let firstTimeFetch = true;
+let loadingToast: undefined | ToastInstance;
 const { data: fetchedNote, error, refresh } = useLazyAsyncData<Note | null>(
   'note',
   async () => {
@@ -29,8 +30,6 @@ const { data: fetchedNote, error, refresh } = useLazyAsyncData<Note | null>(
       return null;
 
     currentNoteState.value = 'fetching';
-
-    let loadingToast: undefined | ToastInstance;
 
     return $fetch(`/api/note/${getApiNotePath()}`, {
       retry: 2,
