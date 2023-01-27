@@ -24,6 +24,7 @@ const folderIdentifier = computed(() => {
 });
 
 let firstTimeFetch = true;
+let loadingToast: undefined | ToastInstance;
 const { data: fetchedFolder, error } = useLazyAsyncData<FolderWithContents>(
   'folder',
   () => {
@@ -35,8 +36,6 @@ const { data: fetchedFolder, error } = useLazyAsyncData<FolderWithContents>(
 
     if (newCurrentFolder) folder.value = newCurrentFolder;
     else folder.value = null;
-
-    let loadingToast: undefined | ToastInstance;
 
     return $fetch(`/api/folder/${getApiFolderPath()}`, {
       retry: 2,
