@@ -12,9 +12,10 @@ const mitt = useMitt();
 
 const commandActions: Record<SearchActionValues, (args: string[]) => any> = {
   [SearchAction.New]: (args) => {
-    const nuxtApp = useNuxtApp();
+    const { data: folder } = useNuxtData('folder');
 
-    preCreateItem(nuxtApp.payload.data.folder, { name: args?.join(' ') || '' });
+    if (folder.value)
+      preCreateItem(folder.value, { name: args?.join(' ') || '' });
   },
   [SearchAction.Refresh]: () => {
     refreshNuxtData('note');
