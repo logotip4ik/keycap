@@ -141,7 +141,7 @@ watch(() => route.params.note, (noteName) => {
   }
 
   &__back-button {
-    --button-size-basis: 2.5rem;
+    --button-size-basis: 3rem;
 
     display: none;
 
