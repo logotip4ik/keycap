@@ -11,23 +11,27 @@ const route = useRoute();
 const isFallbackMode = useFallbackMode();
 const notesCache = useNotesCache();
 const foldersCache = useFoldersCache();
-const offlineStorage = useOfflineStorage();
+const mitt = useMitt();
 
 // TODO: add loading state
 const newItemName = ref(props.item.name);
 
 const isFolder = computed(() => 'root' in props.item);
+
 const isItemRouteActive = computed(() => decodeURIComponent(route.params.note as string) === props.item.name);
-const isItemDisabled = computedAsync(async () => {
+
+const shouldRefreshItemDisabled = ref(false);
+const isItemDisabled = computed(() => {
+  if (shouldRefreshItemDisabled.value)
+    shouldRefreshItemDisabled.value = false;
+
   const noInternet = isFallbackMode.value;
   const cache = isFolder.value ? foldersCache : notesCache;
 
-  const offlineCopy = await offlineStorage.value?.getItem(props.item.path);
+  return noInternet && !cache.has(props.item.path);
+});
 
-  const itemCached = cache.has(props.item.path) || !!offlineCopy;
-
-  return noInternet && !itemCached;
-}, false);
+mitt.on('cache:populated', () => shouldRefreshItemDisabled.value = true);
 
 async function showItem(item: FolderOrNote, options: NavigateToOptions = {}) {
   const itemRouteParams = generateItemRouteParams(item);

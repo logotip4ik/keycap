@@ -9,6 +9,7 @@ const foldersCache = useFoldersCache();
 const createToast = useToast();
 const offlineStorage = useOfflineStorage();
 const { shortcuts } = useAppConfig();
+const mitt = useMitt();
 
 const folder = shallowRef<FolderWithContents | null | undefined>(
   foldersCache.get(withoutTrailingSlash(`/${route.params.user}/${getApiFolderPath()}`)),
@@ -74,6 +75,10 @@ async function goUpFolder() {
   if (!isFallbackMode.value || foldersCache.has(prevFolderPath))
     await navigateTo(generateItemRouteParams({ ...folder.value!, path: prevFolderPath }));
 }
+
+mitt.on('cache:populated', () => {
+  folder.value = foldersCache.get(withoutTrailingSlash(`/${route.params.user}/${getApiFolderPath()}`));
+});
 
 watch(error, async (error) => {
   // if there was previously error, reset the fallback mode to false

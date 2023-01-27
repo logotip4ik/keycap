@@ -12,6 +12,7 @@ const notesCache = useNotesCache();
 const currentNoteState = useCurrentNoteState();
 const createToast = useToast();
 const offlineStorage = useOfflineStorage();
+const mitt = useMitt();
 
 // NOTE: can't use default param in async data because it runs
 // before route navigation and our notes depends on route path
@@ -101,6 +102,10 @@ function getApiNotePath() {
       .join('/'),
   );
 }
+
+mitt.on('cache:populated', () => {
+  note.value = notesCache.get(`/${route.params.user}/${getApiNotePath()}`);
+});
 
 watch(error, async (error) => {
   // Resetting fallback mode to false is previous error is removed
