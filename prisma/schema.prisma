@@ -19,8 +19,6 @@ model User {
 
   notes   Note[]
   folders Folder[]
-  // folder   Folder @relation(fields: [folderId], references: [id])
-  // folderId BigInt @unique
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
