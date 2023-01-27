@@ -21,6 +21,7 @@ const createToast = useToast();
 const isFallbackMode = useFallbackMode();
 const foldersCache = useFoldersCache();
 const notesCache = useNotesCache();
+const mitt = useMitt();
 
 const fuzzyWorker = useFuzzyWorker();
 const offlineStorage = useOfflineStorage();
@@ -84,14 +85,17 @@ async function defineOfflineStorage() {
 
     createToast('Fallback mode enabled. Populating cache from offline storage.');
 
-    localForage.iterate<FolderOrNote, any>((value) => {
-      const isFolder = 'root' in value;
-      const cache = isFolder ? foldersCache : notesCache;
+    localForage.iterate<FolderOrNote, any>(
+      (value) => {
+        const isFolder = 'root' in value;
+        const cache = isFolder ? foldersCache : notesCache;
 
-      if (!cache.has(value.path))
+        if (!cache.has(value.path))
         // @ts-expect-error idk how to setup this type
-        cache.set(value.path, value);
-    });
+          cache.set(value.path, value);
+      },
+      () => mitt.emit('cache:populated'),
+    );
   }, { immediate: true });
 }
 
