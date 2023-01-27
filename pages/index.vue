@@ -134,7 +134,11 @@ useSeoMeta({
 
       border-radius: 0.25rem;
       border: 1px solid hsla(var(--selection-bg-color-hsl), 0.75);
-      background-color: hsla(var(--selection-bg-color-hsl), 0.25);
+      background-color: hsla(var(--selection-bg-color-hsl), 0.125);
+
+      @media (prefers-color-scheme: dark) {
+        background-color: hsla(var(--selection-bg-color-hsl), 0.25);
+      }
 
       &__icon {
         margin-right: 0.25rem;
