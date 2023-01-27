@@ -14,10 +14,24 @@ const createToast = useToast();
 const offlineStorage = useOfflineStorage();
 const mitt = useMitt();
 
+const notePath = computed(() => {
+  const paths = Array.isArray(route.params.folders)
+    ? [route.params.folders, route.params.note]
+    : [route.params.note];
+
+  const pathString = withoutLeadingSlash(
+    paths
+      .map((string) => encodeURIComponent(string as string))
+      .join('/'),
+  );
+
+  return `/${route.params.user}/${pathString}`;
+});
+
 // NOTE: can't use default param in async data because it runs
 // before route navigation and our notes depends on route path
-const note = shallowRef<Note | null | undefined>(
-  notesCache.get(`/${route.params.user}/${getApiNotePath()}`),
+const note = shallowRef<Note | null>(
+  notesCache.get(notePath.value) || null,
 );
 
 let firstTimeFetch = true;
@@ -32,7 +46,9 @@ const { data: fetchedNote, error, refresh } = useLazyAsyncData<Note | null>(
 
     currentNoteState.value = 'fetching';
 
-    return $fetch(`/api/note/${getApiNotePath()}`, {
+    const apiNotePath = notePath.value.split('/').slice(2).join('/');
+
+    return $fetch(`/api/note/${apiNotePath}`, {
       retry: 2,
       onRequest: () => {
         if (!loadingToast) {
@@ -56,7 +72,7 @@ let abortController: AbortController | null;
 const throttledUpdate = useThrottleFn(updateNote, 1000);
 function updateNote(content: string) {
   // if no note was found in cache that means that it was deleted
-  if (!note.value || !notesCache.get(`/${route.params.user}/${getApiNotePath()}`))
+  if (!note.value || !notesCache.get(notePath.value))
     return;
 
   const newNote: Partial<Note> = { content };
@@ -104,7 +120,7 @@ function getApiNotePath() {
 }
 
 mitt.on('cache:populated', () => {
-  note.value = notesCache.get(`/${route.params.user}/${getApiNotePath()}`);
+  note.value = notesCache.get(notePath.value) || null;
 });
 
 watch(error, async (error) => {
@@ -120,9 +136,7 @@ watch(error, async (error) => {
   if (note.value)
     return;
 
-  const notePath = `/${route.params.user}/${getApiNotePath()}`;
-
-  const offlineNote = await offlineStorage.value?.getItem(notePath) as Note;
+  const offlineNote = await offlineStorage.value?.getItem(notePath.value) as Note;
 
   // if offline storage hasn't got the note, navigate to root of in hope folder is in cache
   if (!offlineNote) {
