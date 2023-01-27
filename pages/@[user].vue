@@ -172,7 +172,7 @@ onMounted(() => {
     <Teleport to="body">
       <Transition
         name="search-fade"
-        @after-enter="search?.input?.focus()"
+        @after-enter="search?.input?.$el?.focus()"
       >
         <LazyWorkspaceSearch
           v-if="isShowingSearch"
