@@ -12,9 +12,11 @@ const { shortcuts } = useAppConfig();
 const mitt = useMitt();
 
 const folderPath = computed(() => {
-  const folders = Array.isArray(route.params.folders) ? route.params.folders : [route.params.folders];
+  const folders = (Array.isArray(route.params.folders) ? route.params.folders : [route.params.folders])
+    .filter((str) => !!str)
+    .map(encodeURIComponent);
 
-  return withoutTrailingSlash(`/${route.params.user}/${folders.map(encodeURIComponent).join('/')}`);
+  return withoutTrailingSlash(`/${route.params.user}/${folders.join('/')}`);
 });
 
 const folder = shallowRef<FolderWithContents | null>(
