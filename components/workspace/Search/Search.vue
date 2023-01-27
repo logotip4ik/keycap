@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { withoutLeadingSlash } from 'ufo';
 
+import breakpoints from '~/assets/constants/breakpoints';
 import { SearchAction } from '~/types/common';
 
 import type { SearchActionValues } from '~/types/common';
@@ -9,6 +10,7 @@ interface Emits { (e: 'close'): void }
 const emit = defineEmits<Emits>();
 
 const mitt = useMitt();
+const { width: windowWidth } = useWindowSize();
 
 const commandActions: Record<SearchActionValues, (args: string[]) => any> = {
   [SearchAction.New]: (args) => {
@@ -135,31 +137,19 @@ useTinykeys({ Escape: handleCancel });
   <div class="search-wrapper" @click.self="handleCancel">
     <div ref="searchEl" class="search">
       <form class="search__form" @submit.prevent="openResult">
-        <input
-          id="workspace-search-input"
+        <WorkspaceSearchInput
           ref="inputEl"
           v-model="searchInput"
-          type="search"
-          required
-          name="workspace-search"
-          autocomplete="off"
-          autocorrect="off"
-          autocapitalize="none"
-          enterkeyhint="go"
           class="search__form__input"
-          aria-autocomplete="both"
-          spellcheck="false"
-          autofocus="true"
           placeholder="Search or enter / for commands"
-          maxlength="64"
           @keydown.up.prevent="changeSelectedResult(-1)"
           @keydown.down.prevent="changeSelectedResult(+1)"
-        >
+        />
 
         <p v-show="typeaheadResult" class="search__form__typeahead">
           <span class="search__form__typeahead__input-clone">{{ searchInput }}</span>
-          <span class="search__form__typeahead__result"> -
-            <template v-if="typeaheadResult?.name !== searchInput">
+          <span class="search__form__typeahead__result">&nbsp;-
+            <template v-if="typeaheadResult?.name.toLowerCase() !== searchInput.toLowerCase()">
               {{ typeaheadResult?.name }}
             </template>
             <template v-else>
@@ -167,6 +157,10 @@ useTinykeys({ Escape: handleCancel });
             </template>
           </span>
         </p>
+
+        <button v-show="windowWidth < breakpoints.tablet" class="search__form__cancel" @click="handleCancel">
+          <Icon name="material-symbols:cancel-outline-rounded" class="search__form__cancel__icon" />
+        </button>
       </form>
 
       <Transition name="fade">
@@ -224,6 +218,14 @@ useTinykeys({ Escape: handleCancel });
     background-color: hsla(var(--surface-color-hsl), 0.8);
   }
 
+  @media screen and (max-width: $breakpoint-tablet) {
+    width: 100%;
+    height: 100%;
+
+    border-radius: 0;
+    padding:  1.5rem;
+  }
+
   &-wrapper {
     position: fixed;
     top: 0;
@@ -240,10 +242,17 @@ useTinykeys({ Escape: handleCancel });
       background-color: hsla(var(--surface-color-hsl), 0.25);
       backdrop-filter: blur(0.5rem);
     }
+
+    @media screen and (max-width: $breakpoint-tablet) {
+      padding-top: 0;
+    }
   }
 
   &__form {
     --search-font-size: 1.75rem;
+
+    display: flex;
+    align-items: center;
 
     position: relative;
     isolation: isolate;
@@ -258,6 +267,10 @@ useTinykeys({ Escape: handleCancel });
     &:is(:hover, :focus-within) {
       outline: none;
       border-color: var(--task-list-indicator-color);
+    }
+
+    @media screen and (max-width: $breakpoint-tablet) {
+      --search-font-size: 1.05rem;
     }
 
     &__input {
@@ -290,7 +303,8 @@ useTinykeys({ Escape: handleCancel });
     }
 
     &__typeahead {
-      display: block;
+      display: flex;
+      align-items: center;
 
       position: absolute;
       top: 0;
@@ -320,6 +334,26 @@ useTinykeys({ Escape: handleCancel });
 
       @media (prefers-color-scheme: dark) {
         color: hsl(var(--hsl-primary-color), 25%, 55%);
+      }
+    }
+
+    &__cancel {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+
+      font-size: 2rem;
+      color: hsla(var(--text-color-hsl), 0.7);
+
+      margin-left: 1rem;
+
+      border: none;
+      border-radius: 0;
+      appearance: none;
+      background-color: transparent;
+
+      &__icon {
+        vertical-align: baseline !important;
       }
     }
   }
