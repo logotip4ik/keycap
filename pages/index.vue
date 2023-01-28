@@ -3,6 +3,10 @@ useSeoMeta({
   robots: { none: true },
   ogDescription: 'Another note taking webapp ❤.Simple, fast and purple.',
 });
+
+const nuxtApp = useNuxtApp();
+
+const lastTimeBuild = Intl.DateTimeFormat('en-UK', { dateStyle: 'medium' }).format(nuxtApp.payload.prerenderedAt);
 </script>
 
 <template>
@@ -35,6 +39,10 @@ useSeoMeta({
         </p>
       </header>
     </div>
+
+    <p class="index__build-time">
+      Last build at {{ lastTimeBuild }}
+    </p>
   </main>
 </template>
 
@@ -167,6 +175,15 @@ useSeoMeta({
       line-height: 1.5;
       color: hsla(var(--text-color-hsl), 0.75);
     }
+  }
+
+  &__build-time {
+    position: absolute;
+    bottom: 0.5rem;
+    left: 50%;
+
+    opacity: 0.5;
+    transform: translate(-50%, 0);
   }
 }
 </style>
