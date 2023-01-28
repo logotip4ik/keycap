@@ -87,8 +87,6 @@ function updateNote(content: string) {
   abortController?.abort();
   abortController = new AbortController();
 
-  const routeBeforeUpdate = window.location.pathname;
-
   $fetch<QuickResponse>(updatePath, {
     method: 'PUT',
     body: newNote,
@@ -101,7 +99,7 @@ function updateNote(content: string) {
 
       // before route update, note will be saved and the indicator will be again reset to saved
       // this checks if route is the same, so this wasn't last save and user is still on the same note
-      if (routeBeforeUpdate === window.location.pathname)
+      if (notePath.value.replace('/', '/@') === window.location.pathname)
         currentNoteState.value = 'saved';
     })
     .catch((error) => console.warn(error));
