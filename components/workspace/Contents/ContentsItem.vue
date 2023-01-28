@@ -240,13 +240,17 @@ function handleContextmenu() {
   z-index: 1;
   isolation: isolate;
 
-  color: hsla(var(--text-color-hsl), 0.7);
+  color: hsla(var(--text-color-hsl), 1);
 
   width: 100%;
 
   border-left: 0.2rem solid hsla(var(--text-color-hsl), 0);
 
   transition: border-color .3s, background-color .3s, color .3s;
+
+  @media (hover: hover) {
+    color: hsla(var(--text-color-hsl), 0.7);
+  }
 
   &[data-creating="true"],
   &[data-editing="true"] {
@@ -327,7 +331,7 @@ function handleContextmenu() {
     --button-size-max: 2rem;
     --button-size-min: 1.9rem;
 
-    color: hsla(var(--text-color-hsl), 0.2);
+    color: hsla(var(--text-color-hsl), 0.45);
 
     width: var(--button-size-basis);
     height: var(--button-size-basis);
@@ -347,6 +351,10 @@ function handleContextmenu() {
 
     cursor: pointer;
     transition: color .3s, background-color .3s;
+
+    @media (hover: hover) {
+      color: hsla(var(--text-color-hsl), 0.2);
+    }
 
     &__icon {
       height: 70%;
