@@ -161,7 +161,7 @@ useTinykeys({ Escape: handleCancel });
           class="search__form__cancel"
           @click="handleCancel"
         >
-          <Icon name="material-symbols:close-rounded" class="search__form__cancel__icon" />
+          <Icon name="close" class="search__form__cancel__icon" />
         </button>
       </form>
 

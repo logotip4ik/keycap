@@ -2,6 +2,9 @@
 import { blankNoteName } from '~/assets/constants';
 import breakpoints from '~/assets/constants/breakpoints';
 
+interface Emits { (event: 'openSearch'): void }
+defineEmits<Emits>();
+
 const route = useRoute();
 const user = useUser();
 const device = useDevice();
@@ -57,10 +60,10 @@ watch(() => route.params.note, (noteName) => {
     <Transition name="nav-back-button">
       <button
         v-show="canShowBackButton && (route.params.note && route.params.note !== blankNoteName)"
-        class="nav__back-button"
+        class="nav__button nav__button--back"
         @click="showFolderContents"
       >
-        <Icon name="ic:baseline-arrow-back" class="nav__back-button__icon" />
+        <Icon name="ic:baseline-arrow-back" class="nav__button__icon" />
       </button>
     </Transition>
 
@@ -68,6 +71,14 @@ watch(() => route.params.note, (noteName) => {
     <p class="nav__heading" :data-note-state="currentNoteState" :data-network-connection="!isFallbackMode">
       {{ headingText }}
     </p>
+
+    <button
+      class="nav__button nav__button--search"
+      :data-show-back-button="canShowBackButton"
+      @click="$emit('openSearch')"
+    >
+      <Icon name="search" class="nav__button__icon" />
+    </button>
   </nav>
 </template>
 
@@ -140,7 +151,7 @@ watch(() => route.params.note, (noteName) => {
     }
   }
 
-  &__back-button {
+  &__button {
     --button-size-basis: 3rem;
 
     display: none;
@@ -150,15 +161,32 @@ watch(() => route.params.note, (noteName) => {
     width: var(--button-size-basis);
     height: var(--button-size-basis);
 
-    margin-right: 1rem;
-
     appearance: none;
     border: none;
     border-radius: 0.2rem;
-    background-color: hsla(var(--text-color-hsl), 0.1);
 
     cursor: pointer;
-    transition: color .3s, background-color .3s;
+    transition: color .3s, background-color .3s, opacity .3s;
+
+    &--back {
+      margin-right: 1rem;
+
+      background-color: hsla(var(--text-color-hsl), 0.1);
+    }
+
+    &--search {
+      margin-left: auto;
+      margin-right: -0.25rem;
+
+      opacity: 0;
+      background-color: transparent;
+
+      @media screen and (max-width: $breakpoint-tablet) {
+        &[data-show-back-button="true"] {
+          opacity: 1;
+        }
+      }
+    }
 
     &__icon {
       height: 70%;

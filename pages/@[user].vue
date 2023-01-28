@@ -139,7 +139,10 @@ onMounted(() => {
 
 <template>
   <div class="workspace">
-    <WorkspaceNavbar class="workspace__navbar" />
+    <WorkspaceNavbar
+      class="workspace__navbar"
+      @open-search="isShowingSearch = true"
+    />
 
     <Transition name="fade">
       <aside

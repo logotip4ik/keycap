@@ -5,4 +5,11 @@ export default defineAppConfig({
   },
 
   iconsToPreload: ['ic:outline-info'],
+
+  nuxtIcon: {
+    aliases: {
+      close: 'material-symbols:close-rounded',
+      search: 'material-symbols:search-rounded',
+    },
+  },
 });

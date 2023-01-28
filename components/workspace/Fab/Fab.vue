@@ -13,7 +13,7 @@ interface FabButton {
 
 const buttons: FabButton[] = [
   {
-    icon: 'material-symbols:search-rounded',
+    icon: 'search',
     action: () => {
       emit('openSearch');
     },
@@ -60,7 +60,7 @@ function withFoldCallback(func: () => any) {
       <Transition name="fade" mode="out-in">
         <span v-if="isFabUnfolded" :key="1">
           <Icon
-            name="material-symbols:close-rounded"
+            name="close"
             class="fab__icon"
           />
         </span>
