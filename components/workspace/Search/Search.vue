@@ -159,7 +159,7 @@ useTinykeys({ Escape: handleCancel });
         </p>
 
         <button v-show="windowWidth < breakpoints.tablet" class="search__form__cancel" @click="handleCancel">
-          <Icon name="material-symbols:cancel-outline-rounded" class="search__form__cancel__icon" />
+          <Icon name="material-symbols:close-rounded" class="search__form__cancel__icon" />
         </button>
       </form>
 
@@ -270,7 +270,7 @@ useTinykeys({ Escape: handleCancel });
     }
 
     @media screen and (max-width: $breakpoint-tablet) {
-      --search-font-size: 1.05rem;
+      --search-font-size: 1.1rem;
     }
 
     &__input {
@@ -345,7 +345,8 @@ useTinykeys({ Escape: handleCancel });
       font-size: 2rem;
       color: hsla(var(--text-color-hsl), 0.7);
 
-      margin-left: 1rem;
+      margin-left: 0.5rem;
+      margin-right: -0.5rem;
 
       border: none;
       border-radius: 0;
