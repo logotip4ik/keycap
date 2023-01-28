@@ -6,7 +6,9 @@ useSeoMeta({
 
 const nuxtApp = useNuxtApp();
 
+// NOTE: This page is working because this page is prerendered!
 const lastTimeBuild = Intl.DateTimeFormat('en-UK', { dateStyle: 'medium' }).format(nuxtApp.payload.prerenderedAt);
+const shortCommitSha = (process.env?.VERCEL_GIT_COMMIT_SHA ?? '').substring(0, 7) || '594d4d7';
 </script>
 
 <template>
@@ -40,8 +42,17 @@ const lastTimeBuild = Intl.DateTimeFormat('en-UK', { dateStyle: 'medium' }).form
       </header>
     </div>
 
-    <p class="index__build-time">
+    <p class="index__build-info">
       Last build at {{ lastTimeBuild }}
+      <br>
+      Commit sha:
+      <NuxtLink
+        class="index__build-info__commit-link"
+        target="_blank"
+        :href="`https://github.com/logotip4ik/keycap/tree/${shortCommitSha}`"
+      >
+        {{ shortCommitSha }}
+      </NuxtLink>
     </p>
   </main>
 </template>
@@ -177,13 +188,27 @@ const lastTimeBuild = Intl.DateTimeFormat('en-UK', { dateStyle: 'medium' }).form
     }
   }
 
-  &__build-time {
+  &__build-info {
     position: absolute;
     bottom: 0.5rem;
     left: 50%;
 
+    font-size: 0.9rem;
+    text-align: center;
+    line-height: 1.5;
+
     opacity: 0.5;
     transform: translate(-50%, 0);
+
+    &__commit-link {
+      font-family: monospace;
+      color: currentColor;
+      text-decoration: none;
+
+      padding: 0.125rem 0.5rem;
+      border-radius: 0.25rem;
+      background-color: hsla(var(--selection-bg-color-hsl), 0.25)
+    }
   }
 }
 </style>
