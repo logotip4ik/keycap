@@ -165,6 +165,12 @@ onBeforeRouteUpdate(() => {
         li {
           display: flex;
 
+          transition: opacity .3s;
+
+          &[data-checked="true"] {
+            opacity: 0.625;
+          }
+
           > label {
             flex: 0 0 auto;
 
