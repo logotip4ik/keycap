@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { withoutLeadingSlash } from 'ufo';
 
-import breakpoints from '~/assets/constants/breakpoints';
 import { SearchAction } from '~/types/common';
 
 import type { SearchActionValues } from '~/types/common';
@@ -10,7 +9,6 @@ interface Emits { (e: 'close'): void }
 const emit = defineEmits<Emits>();
 
 const mitt = useMitt();
-const { width: windowWidth } = useWindowSize();
 
 const commandActions: Record<SearchActionValues, (args: string[]) => any> = {
   [SearchAction.New]: (args) => {
@@ -158,7 +156,11 @@ useTinykeys({ Escape: handleCancel });
           </span>
         </p>
 
-        <button v-show="windowWidth < breakpoints.tablet" class="search__form__cancel" @click="handleCancel">
+        <button
+          type="reset"
+          class="search__form__cancel"
+          @click="handleCancel"
+        >
           <Icon name="material-symbols:close-rounded" class="search__form__cancel__icon" />
         </button>
       </form>
@@ -198,7 +200,7 @@ useTinykeys({ Escape: handleCancel });
 <style lang="scss">
 .search {
   width: 90%;
-  max-width: 600px;
+  max-width: $breakpoint-tablet;
 
   margin: 0 auto;
   padding: 0.5rem;
@@ -338,7 +340,7 @@ useTinykeys({ Escape: handleCancel });
     }
 
     &__cancel {
-      display: inline-flex;
+      display: none;
       justify-content: center;
       align-items: center;
 
@@ -355,6 +357,10 @@ useTinykeys({ Escape: handleCancel });
 
       &__icon {
         vertical-align: baseline !important;
+      }
+
+      @media screen and (max-width: $breakpoint-tablet) {
+        display: inline-flex;
       }
     }
   }
