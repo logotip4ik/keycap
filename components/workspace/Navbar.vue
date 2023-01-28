@@ -179,11 +179,13 @@ watch(() => route.params.note, (noteName) => {
       margin-right: -0.25rem;
 
       opacity: 0;
+      pointer-events: none;
       background-color: transparent;
 
       @media screen and (max-width: $breakpoint-tablet) {
         &[data-show-back-button="true"] {
           opacity: 1;
+          pointer-events: all;
         }
       }
     }
