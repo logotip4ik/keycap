@@ -6,9 +6,8 @@ useSeoMeta({
 
 const nuxtApp = useNuxtApp();
 
-// NOTE: This page is working because this page is prerendered!
 const lastTimeBuild = Intl.DateTimeFormat('en-UK', { dateStyle: 'medium' }).format(nuxtApp.payload.prerenderedAt);
-const shortCommitSha = (process.env?.VERCEL_GIT_COMMIT_SHA ?? '').substring(0, 7) || '594d4d7';
+const shortCommitSha = useState(() => (process.env?.VERCEL_GIT_COMMIT_SHA ?? '').substring(0, 7) || '594d4d7');
 </script>
 
 <template>
