@@ -5,6 +5,7 @@ interface Emits {
 const emit = defineEmits<Emits>();
 
 const isFabUnfolded = ref(false);
+const fabContainer = ref<null | HTMLElement>(null);
 
 interface FabButton {
   icon: string
@@ -34,11 +35,11 @@ function withFoldCallback(func: () => any) {
   isFabUnfolded.value = !isFabUnfolded.value;
 }
 
-// TODO: add click outside handler
+useClickOutside(fabContainer, () => isFabUnfolded.value = false);
 </script>
 
 <template>
-  <div class="fab-container">
+  <div ref="fabContainer" class="fab-container">
     <Transition name="fade">
       <div v-show="isFabUnfolded" class="fab__buttons">
         <button

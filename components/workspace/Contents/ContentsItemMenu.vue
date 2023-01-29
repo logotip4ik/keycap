@@ -28,11 +28,8 @@ const virtualElement: VirtualElement = {
   }),
 };
 
-function onClickOutside(event: Event) {
-  const target = event.target as Node;
-
-  if (!menu.value?.contains(target))
-    emit('close');
+function onClickOutside() {
+  emit('close');
 }
 
 watch([() => props.x, () => props.y], async () => {
@@ -50,17 +47,7 @@ watch([() => props.x, () => props.y], async () => {
   popperInstance.value?.update();
 }, { immediate: true });
 
-onMounted(() => {
-  window.addEventListener('click', onClickOutside, { passive: true, capture: true });
-  window.addEventListener('contextmenu', onClickOutside, { passive: true, capture: true });
-  window.addEventListener('touchstart', onClickOutside, { passive: true, capture: true });
-});
-
-onBeforeUnmount(() => {
-  window.removeEventListener('click', onClickOutside);
-  window.removeEventListener('contextmenu', onClickOutside);
-  window.removeEventListener('touchstart', onClickOutside);
-});
+useClickOutside(menu, onClickOutside);
 </script>
 
 <template>
