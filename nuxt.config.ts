@@ -15,6 +15,9 @@ const defaultHeaders = {
   'X-XSS-Protection': '1; mode=block',
   'Keep-Alive': '5',
   'Referrer-Policy': 'origin-when-cross-origin, strict-origin-when-cross-origin',
+};
+
+const cspHeaders = {
   'Content-Security-Policy': 'default-src \'self\'; connect-src https: \'self\'; script-src \'unsafe-inline\' \'self\'; script-src-elem \'unsafe-inline\' \'self\'; style-src \'unsafe-inline\' \'self\'; upgrade-insecure-requests',
 };
 
@@ -44,7 +47,13 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    '/**': { headers: { ...defaultHeaders, ...noCacheHeaders } },
+    '/**': {
+      headers: {
+        ...defaultHeaders,
+        ...noCacheHeaders,
+        ...(process.env.NODE_ENV === 'production' ? cspHeaders : {}),
+      },
+    },
     '/': { prerender: true },
     '/login': { prerender: true },
     '/register': { prerender: true },
