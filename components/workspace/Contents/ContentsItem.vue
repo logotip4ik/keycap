@@ -267,7 +267,7 @@ function handleContextmenu(event: Event) {
   z-index: 1;
   isolation: isolate;
 
-  color: hsla(var(--text-color-hsl), 1);
+  color: hsla(var(--text-color-hsl), 0.85);
 
   width: 100%;
 
