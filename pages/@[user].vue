@@ -156,7 +156,7 @@ onMounted(() => {
         v-show="isShowingContents"
         class="workspace__contents"
       >
-        <WorkspaceContents />
+        <WorkspaceContents class="workspace__contents__list" />
       </aside>
     </Transition>
 
@@ -237,7 +237,7 @@ onMounted(() => {
 
     border-right: 1px solid hsla(var(--text-color-hsl), 0.25);
 
-    ul {
+    &__list {
       padding: 0;
       margin: 0;
 
