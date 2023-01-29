@@ -3,8 +3,9 @@ import browserslistToEsbuild from 'browserslist-to-esbuild';
 import breakpoints from './assets/constants/breakpoints';
 
 const WEEK_IN_SECONDS = 60 * 60 * 24 * 7;
-const MONTH_IN_SECONDS = 60 * 60 * 24 * 31;
-const DEFAULT_CACHE = `private, immutable, max-age=${WEEK_IN_SECONDS}, stale-while-revalidate=${MONTH_IN_SECONDS}`;
+const SIX_MONTH_IN_SECONDS = 60 * 60 * 24 * 31 * 6;
+const DEFAULT_CACHE = `public, immutable, max-age=${WEEK_IN_SECONDS}, stale-while-revalidate=${SIX_MONTH_IN_SECONDS}`;
+const NO_CACHE = 'private, must-revalidate, max-age=0';
 
 const defaultHeaders = {
   'Cache-Control': DEFAULT_CACHE,
@@ -13,7 +14,13 @@ const defaultHeaders = {
   'X-Frame-Options': 'DENY',
   'X-Content-Type-Options': 'nosniff',
   'X-XSS-Protection': '1; mode=block',
+  'Keep-Alive': '5',
+  'Referrer-Policy': 'origin-when-cross-origin, strict-origin-when-cross-origin',
   'Content-Security-Policy': 'default-src \'self\'; connect-src https: \'self\'; script-src \'unsafe-inline\' \'self\'; script-src-elem \'unsafe-inline\' \'self\'; style-src \'unsafe-inline\' \'self\'; upgrade-insecure-requests',
+};
+
+const noCacheHeaders = {
+  'Cache-Control': NO_CACHE,
 };
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
@@ -34,15 +41,16 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    '/_nuxt/**': {
-      headers: { ...(process.env.NODE_ENV === 'production' ? defaultHeaders : {}) },
-    },
+    '/**': { headers: noCacheHeaders },
     '/': { prerender: true },
     '/login': { prerender: true },
     '/register': { prerender: true },
     '/about': { prerender: true },
 
-    '/api/**': { headers: { 'Cache-Control': 'no-store' } },
+    // Caching only build assets that has build hash in filenames
+    '/_nuxt/**': { headers: { ...(process.env.NODE_ENV === 'production' ? defaultHeaders : {}) } },
+    // Rely on browser to cache favicon
+    '/favicon.ico': { headers: { 'Cache-Control': '' } },
   },
 
   runtimeConfig: {
