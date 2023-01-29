@@ -200,7 +200,7 @@ useTinykeys({ Escape: handleCancel });
 <style lang="scss">
 .search {
   width: 90%;
-  max-width: $breakpoint-tablet;
+  max-width: 575px;
 
   margin: 0 auto;
   padding: 0.5rem;
@@ -222,6 +222,8 @@ useTinykeys({ Escape: handleCancel });
 
   @media screen and (max-width: $breakpoint-tablet) {
     width: 100%;
+    max-width: unset;
+
     height: 100%;
 
     border-radius: 0;
