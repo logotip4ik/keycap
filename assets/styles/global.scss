@@ -104,6 +104,10 @@ kbd {
   transition: opacity 0.3s * 2 ease;
 }
 
+.fade-enter-active.fast-fade {
+  transition-duration: 0.3s;
+}
+
 .fade-leave-active {
   display: none;
 }

@@ -251,6 +251,7 @@ function handleContextmenu(event: Event) {
       :x="menuOptions.x"
       :y="menuOptions.y"
       :actions="menuOptions.actions"
+      class="fast-fade"
       @close="menuOptions.opened = false"
     />
   </Transition>
