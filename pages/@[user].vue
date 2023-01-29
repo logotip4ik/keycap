@@ -17,6 +17,7 @@ const { width: windowWidth } = useWindowSize();
 const { isMobileOrTablet } = useDevice();
 const { shortcuts } = useAppConfig();
 
+const currentNoteState = useCurrentNoteState();
 const createToast = useToast();
 const isFallbackMode = useFallbackMode();
 const foldersCache = useFoldersCache();
@@ -98,6 +99,12 @@ async function defineOfflineStorage() {
     );
   }, { immediate: true });
 }
+
+watch(() => route.params.note, (noteName) => {
+  const isEmptyNoteName = !noteName || noteName === blankNoteName;
+
+  if (isEmptyNoteName) currentNoteState.value = '';
+});
 
 useHead({
   title: () => currentRouteName.value,
