@@ -13,21 +13,12 @@ const isFallbackMode = useFallbackMode();
 
 const canShowBackButton = computed(() => {
   const isServerSide = process.server;
-  let canShow = false;
-
-  if (!user.value)
-    return canShow = false;
+  let canShow = true;
 
   if (isServerSide)
-    return canShow = device.isMobileOrTablet;
-
-  if (window.innerWidth > breakpoints.tablet)
-    return canShow = false;
-
-  if (!route.params.note || route.params.note === blankNoteName)
-    return canShow = false;
-
-  canShow = true;
+    canShow = device.isMobileOrTablet;
+  else if (window.innerWidth > breakpoints.tablet)
+    canShow = false;
 
   return canShow && (route.params.note && route.params.note !== blankNoteName);
 });
