@@ -18,7 +18,15 @@ const defaultHeaders = {
 };
 
 const cspHeaders = {
-  'Content-Security-Policy': 'default-src \'self\'; connect-src https: \'self\'; script-src \'unsafe-inline\' \'self\'; script-src-elem \'unsafe-inline\' \'self\'; style-src \'unsafe-inline\' \'self\'; upgrade-insecure-requests',
+  'Content-Security-Policy': [
+    'default-src \'self\';',
+    'connect-src https: \'self\';',
+    'script-src \'unsafe-inline\' \'self\';',
+    'script-src-elem \'unsafe-inline\' \'self\';',
+    'style-src \'unsafe-inline\' \'self\';',
+    'object-src \'none\';',
+    'upgrade-insecure-requests',
+  ].join(' '),
 };
 
 const longCacheHeaders = {
