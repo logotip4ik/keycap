@@ -61,7 +61,7 @@ const currentRouteName = computed(() => {
 });
 
 function preloadSearch() {
-  preloadComponents('LazyWorkspaceSearch');
+  prefetchComponents('WorkspaceSearch');
 }
 
 async function defineFuzzyWorker() {
