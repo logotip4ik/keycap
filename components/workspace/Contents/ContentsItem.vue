@@ -175,7 +175,6 @@ function handleContextmenu() {
 
   if (isFolder.value)
     updateSubfolderInFolder(props.item, { editing: true }, props.parent);
-
   else
     updateNoteInFolder(props.item, { editing: true }, props.parent);
 
@@ -191,19 +190,20 @@ function handleContextmenu() {
     :class="{ 'item--active': isItemRouteActive, 'item--disabled': isItemDisabled }"
     v-bind="{ 'data-creating': item.creating, 'data-editing': item.editing }"
   >
-    <form
-      v-if="item.creating || item.editing"
-      class="item__input__wrapper"
-      @submit.prevent="handleEnter"
-    >
-      <input
-        v-model="newItemName"
-        class="item__input"
-        enterkeyhint="done"
-        @blur="cancelActions"
-        @keydown.esc="cancelActions"
+    <template v-if="item.creating || item.editing">
+      <form
+        class="item__input__wrapper"
+        @submit.prevent="handleEnter"
       >
-    </form>
+        <input
+          v-model="newItemName"
+          class="item__input"
+          enterkeyhint="done"
+          @blur="cancelActions"
+          @keydown.esc="cancelActions"
+        >
+      </form>
+    </template>
 
     <template v-else>
       <NuxtLink
