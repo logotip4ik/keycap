@@ -11,7 +11,27 @@ const device = useDevice();
 const currentNoteState = useCurrentNoteState();
 const isFallbackMode = useFallbackMode();
 
-const canShowBackButton = ref(false);
+const canShowBackButton = computed(() => {
+  const isServerSide = process.server;
+  let canShow = false;
+
+  if (!user.value)
+    return canShow = false;
+
+  if (isServerSide)
+    return canShow = device.isMobileOrTablet;
+
+  if (window.innerWidth > breakpoints.tablet)
+    return canShow = false;
+
+  if (!route.params.note || route.params.note === blankNoteName)
+    return canShow = false;
+
+  canShow = true;
+
+  return canShow && (route.params.note && route.params.note !== blankNoteName);
+});
+
 const headingText = computed(() => {
   if (!user.value) return '';
 
@@ -29,37 +49,13 @@ const headingText = computed(() => {
 async function showFolderContents() {
   await navigateTo({ ...route, params: { ...route.params, note: blankNoteName } });
 }
-
-watch(() => route.path, () => {
-  const isServerSide = process.server;
-
-  if (!user.value)
-    return canShowBackButton.value = false;
-
-  if (isServerSide)
-    return canShowBackButton.value = device.isMobileOrTablet;
-
-  if (window.innerWidth > breakpoints.tablet)
-    return canShowBackButton.value = false;
-
-  if (!route.params.note || route.params.note === blankNoteName)
-    return canShowBackButton.value = false;
-
-  canShowBackButton.value = true;
-}, { immediate: true });
-
-watch(() => route.params.note, (noteName) => {
-  const isEmptyNoteName = !noteName || noteName === blankNoteName;
-
-  if (isEmptyNoteName) currentNoteState.value = '';
-});
 </script>
 
 <template>
   <nav class="nav">
     <Transition name="nav-back-button">
       <button
-        v-show="canShowBackButton && (route.params.note && route.params.note !== blankNoteName)"
+        v-show="canShowBackButton"
         class="nav__button nav__button--back"
         @click="showFolderContents"
       >
