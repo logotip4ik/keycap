@@ -15,6 +15,14 @@ const mitt = useMitt();
 
 // TODO: add loading state
 const newItemName = ref(props.item.name);
+const menuOptions = shallowReactive({
+  opened: false,
+  x: 0,
+  y: 0,
+  actions: [
+    { name: 'rename', action: renameItem },
+  ],
+});
 
 const isFolder = computed(() => 'root' in props.item);
 
@@ -140,6 +148,19 @@ async function updateFolder() {
 
 }
 
+function renameItem() {
+  if (isFolder.value)
+    updateSubfolderInFolder(props.item, { editing: true }, props.parent);
+  else
+    updateNoteInFolder(props.item, { editing: true }, props.parent);
+
+  menuOptions.opened = false;
+
+  nextTick(() => {
+    (document.querySelector('.item[data-editing="true"] > form > input') as HTMLInputElement | null)?.focus();
+  });
+}
+
 async function handleCreate() {
   const creatingPath = (Array.isArray(route.params.folders) ? route.params.folders.join('/') : route.params.folders) || '/';
   const isCreatingFolder = newItemName.value.at(-1) === '/';
@@ -170,17 +191,12 @@ function handleEnter(e: Event) {
     handleUpdate();
 }
 
-function handleContextmenu() {
+function handleContextmenu(event: Event) {
   if (isFallbackMode.value) return;
 
-  if (isFolder.value)
-    updateSubfolderInFolder(props.item, { editing: true }, props.parent);
-  else
-    updateNoteInFolder(props.item, { editing: true }, props.parent);
-
-  nextTick(() => {
-    (document.querySelector('.item[data-editing="true"] > form > input') as HTMLInputElement | null)?.focus();
-  });
+  menuOptions.opened = true;
+  menuOptions.x = (event as MouseEvent).clientX;
+  menuOptions.y = (event as MouseEvent).clientY;
 }
 </script>
 
@@ -228,6 +244,16 @@ function handleContextmenu() {
       </button>
     </template>
   </div>
+
+  <Transition name="fade">
+    <LazyWorkspaceContentsItemMenu
+      v-if="menuOptions.opened"
+      :x="menuOptions.x"
+      :y="menuOptions.y"
+      :actions="menuOptions.actions"
+      @close="menuOptions.opened = false"
+    />
+  </Transition>
 </template>
 
 <style lang="scss">
@@ -370,7 +396,7 @@ function handleContextmenu() {
     }
 
     @media screen and (max-width: $breakpoint-tablet) {
-      --button-size-min: 2.25rem;
+      --button-size-min: 2.5rem;
     }
   }
 
@@ -416,7 +442,7 @@ function handleContextmenu() {
   };
 
   @media screen and (max-width: $breakpoint-tablet) {
-    font-size: 1.125rem;
+    font-size: 1.2rem;
   }
 }
 </style>
