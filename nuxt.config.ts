@@ -8,7 +8,6 @@ const DEFAULT_CACHE = `public, immutable, max-age=${WEEK_IN_SECONDS}, stale-whil
 const NO_CACHE = 'private, must-revalidate, max-age=0';
 
 const defaultHeaders = {
-  'Cache-Control': DEFAULT_CACHE,
   'Access-Control-Allow-Origin': process.env.SITE_ORIGIN || '*',
   'Access-Control-Allow-Methods': 'GET, OPTIONS, PUT, POST, DELETE',
   'X-Frame-Options': 'DENY',
@@ -19,6 +18,10 @@ const defaultHeaders = {
   'Content-Security-Policy': 'default-src \'self\'; connect-src https: \'self\'; script-src \'unsafe-inline\' \'self\'; script-src-elem \'unsafe-inline\' \'self\'; style-src \'unsafe-inline\' \'self\'; upgrade-insecure-requests',
 };
 
+const longCacheHeaders = {
+  'Cache-Control': DEFAULT_CACHE,
+};
+
 const noCacheHeaders = {
   'Cache-Control': NO_CACHE,
 };
@@ -27,7 +30,7 @@ const noCacheHeaders = {
 export default defineNuxtConfig({
   app: {
     head: {
-      htmlAttrs: { translate: 'no' },
+      htmlAttrs: { translate: 'no', lang: 'en' },
       title: 'Keycap',
       meta: [
         { name: 'description', content: 'Better notes ❤. Synced between your devices' },
@@ -41,14 +44,14 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    '/**': { headers: noCacheHeaders },
+    '/**': { headers: { ...defaultHeaders, ...noCacheHeaders } },
     '/': { prerender: true },
     '/login': { prerender: true },
     '/register': { prerender: true },
     '/about': { prerender: true },
 
     // Caching only build assets that has build hash in filenames
-    '/_nuxt/**': { headers: { ...(process.env.NODE_ENV === 'production' ? defaultHeaders : {}) } },
+    '/_nuxt/**': { headers: { ...(process.env.NODE_ENV === 'production' ? longCacheHeaders : {}) } },
     // Rely on browser to cache favicon
     '/favicon.ico': { headers: { 'Cache-Control': '' } },
   },
