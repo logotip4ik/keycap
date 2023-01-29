@@ -8,7 +8,6 @@ let timeout: NodeJS.Timeout;
 
 onMounted(() => {
   const totalTime = props.animationDuration + props.toast.duration;
-  // TODO: add animation duration to total show duration of notification item
   timeout = setTimeout(() => props.toast.remove(), totalTime);
 });
 
@@ -16,16 +15,21 @@ onBeforeUnmount(() => clearTimeout(timeout));
 </script>
 
 <template>
-  <output :ref="toast.el" class="notification" role="status" aria-live="polite">
-    <Icon v-if="toast.type === 'info'" name="ic:outline-info" class="notification__icon" aria-hidden="true" data-icon />
-    <span v-else-if="toast.type === 'loading'" class="notification__icon notification__icon--spinner" aria-hidden="true" data-icon />
+  <output
+    :ref="toast.el"
+    class="toast"
+    role="status"
+    aria-live="polite"
+  >
+    <Icon v-if="toast.type === 'info'" name="ic:outline-info" class="toast__icon" aria-hidden="true" data-icon />
+    <span v-else-if="toast.type === 'loading'" class="toast__icon toast__icon--spinner" aria-hidden="true" data-icon />
 
-    <p class="notification__text">{{ toast.message }}</p>
+    <p class="toast__text">{{ toast.message }}</p>
   </output>
 </template>
 
 <style lang="scss">
-.notification {
+.toast {
   --icon-size: 1.4rem;
 
   display: flex;
@@ -36,6 +40,7 @@ onBeforeUnmount(() => clearTimeout(timeout));
   font-size: 1.05rem;
   color: var(--surface-color);
 
+  width: 94%;
   max-width: 33ch;
 
   padding: 0.6rem 1rem;
@@ -55,10 +60,6 @@ onBeforeUnmount(() => clearTimeout(timeout));
     background-color: hsla(var(--selection-bg-color-hsl), 0.1);
     border: 1px solid hsla(var(--selection-bg-color-hsl), 0.25);
     backdrop-filter: blur(6px);
-  }
-
-  @media screen and (max-width: $breakpoint-tablet) {
-    max-width: 28ch;
   }
 
   &__text {

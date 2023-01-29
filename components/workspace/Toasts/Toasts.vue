@@ -24,7 +24,7 @@ function beforeLeaveHook(el: Element) {
 <template>
   <TransitionGroup
     ref="toasterEl"
-    class="notifications"
+    class="toasts"
     tag="section"
     name="toast"
     @before-leave="beforeLeaveHook"
@@ -36,7 +36,7 @@ function beforeLeaveHook(el: Element) {
 </template>
 
 <style lang="scss">
-.notifications {
+.toasts {
   --screen-spacing-bottom: 3rem;
   --screen-spacing-x: max(3vw, 1rem);
 
