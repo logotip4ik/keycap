@@ -1,11 +1,13 @@
 import type { Note } from '@prisma/client';
 
 import getPrisma from '~/prisma';
-import { getUserFromEvent } from '~/server/utils/auth';
-import { generateNotePath, toBigInt } from '~/server/utils';
 
 export default defineEventHandler(async (event) => {
+  const timer = createTimer();
+
+  timer.start('user');
   const user = await getUserFromEvent(event);
+  timer.end();
 
   if (!user) return sendError(event, createError({ statusCode: 401 }));
 
@@ -23,6 +25,7 @@ export default defineEventHandler(async (event) => {
       return sendError(event, createError({ statusCode: 400, statusMessage: 'not enough data' }));
 
     try {
+      timer.start('db');
       const note = await prisma.note.create({
         data: {
           name: decodeURIComponent(path.split('/').at(-1)), // last route param always should be note name
@@ -34,6 +37,9 @@ export default defineEventHandler(async (event) => {
         select: { id: true, name: true, content: true, path: true, updatedAt: true, createdAt: true },
       });
 
+      timer.end();
+      timer.appendHeader(event);
+
       return note;
     }
     catch (error) {
@@ -43,10 +49,15 @@ export default defineEventHandler(async (event) => {
 
   if (isMethod(event, 'GET')) {
     try {
+      timer.start('db');
+
       const note = await prisma.note.findFirst({
         where: { path: generateNotePath(user.username, notePath), ownerId: user.id },
         select: { id: true, name: true, content: true, path: true, updatedAt: true, createdAt: true },
       });
+
+      timer.end();
+      timer.appendHeader(event);
 
       if (!note)
         return sendError(event, createError({ statusCode: 404 }));
@@ -81,11 +92,16 @@ export default defineEventHandler(async (event) => {
     let updatedNote: Omit<Note, 'ownerId' | 'parentId'>;
 
     try {
+      timer.start('db');
+
       updatedNote = await prisma.note.update({
         data,
         where: { path: generateNotePath(user.username, notePath) },
         select: { id: true, name: true, content: true, path: true, updatedAt: true, createdAt: true },
       });
+
+      timer.end();
+      timer.appendHeader(event);
     }
     catch {
       return sendError(event, createError({ statusCode: 400 }));
@@ -106,7 +122,12 @@ export default defineEventHandler(async (event) => {
       return sendError(event, createError({ statusCode: 400, statusMessage: 'not enough data' }));
 
     try {
+      timer.start('db');
+
       await prisma.note.delete({ where: { path: generateNotePath(user.username, path) } });
+
+      timer.end();
+      timer.appendHeader(event);
 
       return { ok: true };
     }

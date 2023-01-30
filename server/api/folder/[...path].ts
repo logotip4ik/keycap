@@ -1,9 +1,11 @@
-import { getUserFromEvent } from '~/server/utils/auth';
-import { generateFolderPath, toBigInt } from '~/server/utils';
 import getPrisma from '~/prisma';
 
 export default defineEventHandler(async (event) => {
+  const timer = createTimer();
+
+  timer.start('user');
   const user = await getUserFromEvent(event);
+  timer.end();
 
   if (!user) return sendError(event, createError({ statusCode: 401 }));
 
@@ -13,6 +15,7 @@ export default defineEventHandler(async (event) => {
   const folderPath = generateFolderPath(user.username, path);
 
   if (isMethod(event, 'GET')) {
+    timer.start('db');
     const folder = await prisma.folder.findFirst({
       where: { ownerId: user.id, path: folderPath },
 
@@ -35,8 +38,11 @@ export default defineEventHandler(async (event) => {
         },
       },
     });
+    timer.end();
 
     if (!folder) return sendError(event, createError({ statusCode: 404 }));
+
+    timer.appendHeader(event);
 
     return folder;
   }
@@ -47,6 +53,7 @@ export default defineEventHandler(async (event) => {
     const body = await readBody<CreateFolderProps>(event);
 
     try {
+      timer.start('db');
       const folder = await prisma.folder.create({
         data: {
           name: body.name,
@@ -68,6 +75,9 @@ export default defineEventHandler(async (event) => {
           subfolders: true,
         },
       });
+      timer.end();
+
+      timer.appendHeader(event);
 
       return folder;
     }
@@ -78,7 +88,11 @@ export default defineEventHandler(async (event) => {
 
   if (isMethod(event, 'DELETE')) {
     try {
+      timer.start('db');
       await prisma.folder.delete({ where: { path: folderPath } });
+      timer.end();
+
+      timer.appendHeader(event);
 
       return { ok: true };
     }

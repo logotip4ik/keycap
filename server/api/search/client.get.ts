@@ -1,8 +1,11 @@
 import getPrisma from '~/prisma';
-import { getUserFromEvent } from '~/server/utils/auth';
 
 export default defineEventHandler(async (event) => {
+  const timer = createTimer();
+
+  timer.start('user');
   const user = await getUserFromEvent(event);
+  timer.end();
 
   if (!user)
     return sendError(event, createError({ statusCode: 401 }));
@@ -23,6 +26,7 @@ export default defineEventHandler(async (event) => {
 
   const pathToSearch = `/${user.username}`;
 
+  timer.start('db');
   const [notes, folders] = await Promise.all([
     prisma.note.findMany({
       skip,
@@ -37,6 +41,9 @@ export default defineEventHandler(async (event) => {
       select: { name: true, path: true, root: true },
     }),
   ]);
+  timer.end();
+
+  timer.appendHeader(event);
 
   return [...notes, ...folders] as FuzzyItem[];
 });
