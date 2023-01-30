@@ -94,7 +94,7 @@ export async function createNote(noteName: string, self: FolderOrNote, parent: F
     body: { parentId: parent.id },
   });
 
-  notesCache.set(newlyCreatedNote.id.toString(), newlyCreatedNote);
+  notesCache.set(newlyCreatedNote.path, newlyCreatedNote);
   updateNoteInFolder(self, { ...newlyCreatedNote, content: '', creating: false }, parent);
 
   showItem(newlyCreatedNote as FolderOrNote);
