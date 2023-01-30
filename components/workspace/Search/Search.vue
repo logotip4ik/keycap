@@ -100,7 +100,8 @@ const isResultsEmpty = computed(() => {
 
   const inputValue = withoutLeadingSlash(debouncedSearchInput.value);
 
-  return inputValue.length !== 0 && (results.value.length === 0 && !isLoadingResults.value);
+  return (!inputValue && inputValue !== '/')
+    && (results.value.length === 0 && !isLoadingResults.value);
 });
 
 watch(debouncedSearchInput, handleSearchInput);
