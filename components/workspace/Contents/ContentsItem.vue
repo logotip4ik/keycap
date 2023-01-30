@@ -127,7 +127,7 @@ async function updateNote() {
   const noteName = encodeURIComponent(decodeURIComponent(props.item.name));
   const notePath = withTrailingSlash(parentPath) + noteName;
 
-  const response = await $fetch<QuickResponse>(`/api/note${notePath}`, { method: 'PUT', body: newNote })
+  const response = await $fetch<QuickResponse>(`/api/note${notePath}`, { method: 'PATCH', body: newNote })
     .catch(() => updateNoteInFolder(props.item, { editing: false }, props.parent));
 
   if (!response)

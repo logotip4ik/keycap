@@ -69,7 +69,7 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  if (isMethod(event, 'PUT')) {
+  if (isMethod(event, 'PATCH')) {
     interface UpdatableFields { name?: string; content?: string }
 
     const whitelistedFieldUpdates: Array<'name' | 'content'> = ['name', 'content'];

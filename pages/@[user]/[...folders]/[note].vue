@@ -88,7 +88,7 @@ function updateNote(content: string) {
   abortController = new AbortController();
 
   $fetch<QuickResponse>(updatePath, {
-    method: 'PUT',
+    method: 'PATCH',
     body: newNote,
     retry: 2,
     signal: abortController.signal,

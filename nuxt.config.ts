@@ -9,7 +9,7 @@ const NO_CACHE = 'private, must-revalidate, max-age=0';
 
 const defaultHeaders = {
   'Access-Control-Allow-Origin': process.env.SITE_ORIGIN || '*',
-  'Access-Control-Allow-Methods': 'GET, OPTIONS, PUT, POST, DELETE',
+  'Access-Control-Allow-Methods': 'GET, OPTIONS, PATCH, POST, DELETE',
   'X-Frame-Options': 'DENY',
   'X-Content-Type-Options': 'nosniff',
   'X-XSS-Protection': '1; mode=block',
