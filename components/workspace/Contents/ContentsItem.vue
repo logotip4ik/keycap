@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import { withLeadingSlash, withTrailingSlash } from 'ufo';
-
-import type { Note } from '@prisma/client';
-import type { NavigateToOptions } from 'nuxt/dist/app/composables/router';
+import { withoutLeadingSlash, withoutTrailingSlash } from 'ufo';
 
 interface Props { item: FolderOrNote; parent: FolderWithContents }
 const props = defineProps<Props>();
@@ -15,12 +12,14 @@ const mitt = useMitt();
 
 // TODO: add loading state
 const newItemName = ref(props.item.name);
+
 const menuOptions = shallowReactive({
   opened: false,
   x: 0,
   y: 0,
   actions: [
-    { name: 'rename', action: renameItem },
+    { name: 'rename', action: editItem },
+    { name: 'delete', action: deleteItem },
   ],
 });
 
@@ -28,131 +27,18 @@ const isFolder = 'root' in props.item;
 
 const isItemRouteActive = computed(() => decodeURIComponent(route.params.note as string) === props.item.name);
 
-const shouldRefreshItemDisabled = ref(false);
 const isItemDisabled = computed(() => {
-  if (shouldRefreshItemDisabled.value)
-    shouldRefreshItemDisabled.value = false;
-
-  const noInternet = isFallbackMode.value;
   const cache = isFolder ? foldersCache : notesCache;
 
-  return noInternet && !cache.has(props.item.path);
+  return isFallbackMode.value && !cache.has(props.item.path);
 });
 
-mitt.on('cache:populated', () => shouldRefreshItemDisabled.value = true);
+mitt.on('cache:populated', () => triggerRef(isItemDisabled));
 
-async function showItem(item: FolderOrNote, options: NavigateToOptions = {}) {
-  const itemRouteParams = generateItemRouteParams(item);
+function editItem() {
+  const update = isFolder ? updateSubfolderInFolder : updateNoteInFolder;
 
-  await navigateTo(itemRouteParams, options);
-}
-
-function cancelActions() {
-  if (props.item.creating)
-    return deleteNoteFromFolder(props.item, props.parent);
-
-  newItemName.value = props.item.name;
-
-  updateNoteInFolder(props.item, { editing: false, creating: false }, props.parent);
-}
-
-async function createNote(folderPath: string) {
-  const newNoteName = encodeURIComponent(newItemName.value.trim());
-  const newNotePath = withTrailingSlash(folderPath) + encodeURIComponent(decodeURIComponent(newNoteName));
-
-  const newlyCreatedNote = await $fetch<Note>(`/api/note${withLeadingSlash(newNotePath)}`, {
-    method: 'POST',
-    body: { parentId: props.parent.id },
-  });
-
-  notesCache.set(newlyCreatedNote.id.toString(), newlyCreatedNote);
-  updateNoteInFolder(props.item, { ...newlyCreatedNote, content: '', creating: false }, props.parent);
-
-  showItem(newlyCreatedNote as FolderOrNote);
-}
-
-async function createFolder(folderPath: string) {
-  const newFolderName = newItemName.value.trim().substring(0, newItemName.value.length - 1);
-  const newFolderPath = withTrailingSlash(folderPath) + encodeURIComponent(decodeURIComponent(newFolderName));
-
-  const newlyCreatedFolder = await $fetch<FolderWithContents>(`/api/folder${withLeadingSlash(newFolderPath)}`, {
-    method: 'POST',
-    body: { name: newFolderName, parentId: props.parent.id },
-  });
-
-  newlyCreatedFolder.notes = newlyCreatedFolder.notes || [];
-  newlyCreatedFolder.subfolders = newlyCreatedFolder.subfolders || [];
-
-  foldersCache.set(newlyCreatedFolder.path, newlyCreatedFolder);
-
-  deleteNoteFromFolder(props.item, props.parent);
-  updateSubfolderInFolder(props.item, { ...newlyCreatedFolder, creating: false }, props.parent);
-
-  showItem(newlyCreatedFolder);
-}
-
-async function removeFolder() {
-  const parentPath = (Array.isArray(route.params.folders) ? route.params.folders.join('/') : route.params.folders) || '/';
-  const folderName = encodeURIComponent(decodeURIComponent(props.item.name));
-  const folderPath = withLeadingSlash(withTrailingSlash(parentPath) + folderName);
-
-  await $fetch<QuickResponse>(`/api/folder${folderPath}`, { method: 'DELETE' });
-
-  deleteSubfolderFromFolder(props.item, props.parent);
-
-  notesCache.delete(props.item.path);
-}
-
-async function removeNote() {
-  const parentPath = (Array.isArray(route.params.folders) ? route.params.folders.join('/') : route.params.folders) || '/';
-  const noteName = encodeURIComponent(decodeURIComponent(props.item.name));
-  const notePath = withLeadingSlash(withTrailingSlash(parentPath) + noteName);
-
-  await $fetch<QuickResponse>(`/api/note${notePath}`, { method: 'DELETE' });
-
-  showItem(props.parent);
-
-  deleteNoteFromFolder(props.item, props.parent);
-
-  notesCache.delete(props.item.path);
-}
-
-async function updateNote() {
-  const newNote: Partial<Note> = { name: newItemName.value.trim() };
-
-  if (!newNote.name)
-    return updateNoteInFolder(props.item, { editing: false }, props.parent);
-
-  const parentPath = (Array.isArray(route.params.folders) ? route.params.folders.join('/') : route.params.folders) || '/';
-  const noteName = encodeURIComponent(decodeURIComponent(props.item.name));
-  const notePath = withTrailingSlash(parentPath) + noteName;
-
-  const response = await $fetch<QuickResponse>(`/api/note${notePath}`, { method: 'PATCH', body: newNote })
-    .catch(() => updateNoteInFolder(props.item, { editing: false }, props.parent));
-
-  if (!response)
-    return;
-
-  const newNotePath = withLeadingSlash(
-    props.item.path.split('/').slice(0, -1).concat([encodeURIComponent(newNote.name)]).join('/'),
-  );
-
-  // @ts-expect-error undefined and null here are the same things
-  notesCache.set(props.item.path, { ...props.item, name: newItemName.value.trim(), path: newNotePath });
-  updateNoteInFolder(props.item, { editing: false, name: newItemName.value.trim(), path: newNotePath }, props.parent);
-
-  showItem({ ...props.item, name: newItemName.value.trim(), path: newNotePath }, { replace: true });
-}
-
-async function updateFolder() {
-
-}
-
-function renameItem() {
-  if (isFolder)
-    updateSubfolderInFolder(props.item, { editing: true }, props.parent);
-  else
-    updateNoteInFolder(props.item, { editing: true }, props.parent);
+  update(props.item, { editing: true }, props.parent);
 
   menuOptions.opened = false;
 
@@ -161,31 +47,39 @@ function renameItem() {
   });
 }
 
-async function handleCreate() {
-  const creatingPath = (Array.isArray(route.params.folders) ? route.params.folders.join('/') : route.params.folders) || '/';
-  const isCreatingFolder = newItemName.value.at(-1) === '/';
+function deleteItem() {
+  const deleteItem = isFolder ? deleteFolder : deleteNote;
 
-  if (isCreatingFolder) createFolder(creatingPath);
-  else createNote(creatingPath);
+  deleteItem(props.item, props.parent);
+
+  menuOptions.opened = false;
 }
 
-async function handleRemove() {
-  if (isFolder)
-    return removeFolder();
-  else
-    return removeNote();
+function handleFormSubmit() {
+  if (props.item.creating) {
+    const creationName = withoutLeadingSlash(withoutTrailingSlash(newItemName.value));
+
+    const create = creationName.length !== newItemName.value.length ? createFolder : createNote;
+
+    create(creationName, props.item, props.parent);
+  }
+
+  else if (props.item.editing) {
+    const rename = isFolder ? renameFolder : renameNote;
+
+    rename(newItemName.value, props.item, props.parent);
+  }
 }
 
-async function handleUpdate() {
-  if (isFolder) updateFolder();
-  else updateNote();
-}
-
-function handleEnter() {
+function handleFormCancel() {
   if (props.item.creating)
-    handleCreate();
-  else if (props.item.editing)
-    handleUpdate();
+    return deleteNoteFromFolder(props.item, props.parent);
+
+  const update = isFolder ? updateSubfolderInFolder : updateNoteInFolder;
+
+  update(props.item, { editing: false, creating: false }, props.parent);
+
+  newItemName.value = props.item.name;
 }
 
 function handleContextmenu(event: Event) {
@@ -206,14 +100,15 @@ function handleContextmenu(event: Event) {
     <template v-if="item.creating || item.editing">
       <form
         class="item__input__wrapper"
-        @submit.prevent="handleEnter"
+        @submit.prevent="handleFormSubmit"
+        @reset.prevent="handleFormCancel"
       >
         <input
           v-model="newItemName"
           class="item__input"
           enterkeyhint="done"
-          @blur="cancelActions"
-          @keydown.esc="cancelActions"
+          @blur="handleFormCancel"
+          @keydown.esc="handleFormCancel"
         >
       </form>
     </template>
@@ -236,9 +131,9 @@ function handleContextmenu(event: Event) {
         <Icon name="ic:baseline-more-vert" class="item__delete__icon" />
       </button>
 
-      <button class="item__delete" @click="handleRemove">
+      <!-- <button class="item__delete" @click="deleteItem">
         <Icon name="ic:baseline-delete-outline" class="item__delete__icon" />
-      </button>
+      </button> -->
     </template>
   </div>
 
@@ -278,7 +173,7 @@ function handleContextmenu(event: Event) {
 
   &[data-creating="true"],
   &[data-editing="true"] {
-    padding: 0.3rem 0.1rem;
+    padding: 0.4rem 0.075rem;
   }
 
   &__input {
@@ -320,7 +215,7 @@ function handleContextmenu(event: Event) {
     width: 100%;
     min-height: 100%;
 
-    padding: 0.5rem 0.35rem;
+    padding: 0.75rem 0.35rem;
 
     appearance: none;
     border-radius: 0;
