@@ -181,11 +181,9 @@ async function handleUpdate() {
   else updateNote();
 }
 
-function handleEnter(e: Event) {
-  if (props.item.creating) {
-    e.preventDefault();
+function handleEnter() {
+  if (props.item.creating)
     handleCreate();
-  }
 
   if (props.item.editing)
     handleUpdate();
