@@ -93,7 +93,7 @@ function updateNote(content: string) {
     retry: 2,
     signal: abortController.signal,
   })
-    .then((response) => {
+    .then(() => {
       if (note.value)
         notesCache.set(note.value.path, { ...note.value, ...newNote });
 
