@@ -60,8 +60,11 @@ const currentRouteName = computed(() => {
   return null;
 });
 
-function preloadSearch() {
+function preloadComponents() {
   prefetchComponents('WorkspaceSearch');
+
+  const blankNotePath = `/@${user.value!.username}/${blankNoteName}`;
+  preloadRouteComponents(blankNotePath);
 }
 
 async function defineFuzzyWorker() {
@@ -129,7 +132,7 @@ useTinykeys({
 
 onMounted(() => {
   const act = () => {
-    preloadSearch();
+    preloadComponents();
     defineFuzzyWorker();
     defineOfflineStorage();
   };
