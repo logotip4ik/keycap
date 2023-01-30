@@ -87,6 +87,9 @@ export default defineEventHandler(async (event) => {
   }
 
   if (isMethod(event, 'DELETE')) {
+    if (generateRootFolderPath(user.username) === folderPath)
+      return {};
+
     try {
       timer.start('db');
       await prisma.folder.delete({ where: { path: folderPath } });

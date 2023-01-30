@@ -9,6 +9,10 @@ export function generateNotePath(username: string, path: string): string {
   return generateFolderPath(username, path);
 }
 
+export function generateRootFolderPath(username: string) {
+  return `/${username}`;
+}
+
 export function toBigInt(string: string): bigint {
   if (string.at(-1) === 'n') return BigInt(string.substring(0, string.length - 1));
 

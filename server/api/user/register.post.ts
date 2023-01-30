@@ -29,7 +29,7 @@ export default defineEventHandler(async (event) => {
           create: {
             name: `${body.username}'s workspace`,
             root: true,
-            path: `/${body.username}`,
+            path: generateRootFolderPath(body.username),
           },
         },
       },
