@@ -24,7 +24,7 @@ const menuOptions = shallowReactive({
   ],
 });
 
-const isFolder = computed(() => 'root' in props.item);
+const isFolder = 'root' in props.item;
 
 const isItemRouteActive = computed(() => decodeURIComponent(route.params.note as string) === props.item.name);
 
@@ -34,7 +34,7 @@ const isItemDisabled = computed(() => {
     shouldRefreshItemDisabled.value = false;
 
   const noInternet = isFallbackMode.value;
-  const cache = isFolder.value ? foldersCache : notesCache;
+  const cache = isFolder ? foldersCache : notesCache;
 
   return noInternet && !cache.has(props.item.path);
 });
@@ -149,7 +149,7 @@ async function updateFolder() {
 }
 
 function renameItem() {
-  if (isFolder.value)
+  if (isFolder)
     updateSubfolderInFolder(props.item, { editing: true }, props.parent);
   else
     updateNoteInFolder(props.item, { editing: true }, props.parent);
@@ -170,14 +170,14 @@ async function handleCreate() {
 }
 
 async function handleRemove() {
-  if (isFolder.value)
+  if (isFolder)
     return removeFolder();
   else
     return removeNote();
 }
 
 async function handleUpdate() {
-  if (isFolder.value) updateFolder();
+  if (isFolder) updateFolder();
   else updateNote();
 }
 
