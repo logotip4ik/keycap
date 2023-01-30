@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// @ts-expect-error no types for font
 import MonaSansUrl from '~/assets/fonts/Mona-Sans/Mona-Sans.woff2';
 
 useHead({
