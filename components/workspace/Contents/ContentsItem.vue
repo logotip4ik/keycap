@@ -184,8 +184,7 @@ async function handleUpdate() {
 function handleEnter() {
   if (props.item.creating)
     handleCreate();
-
-  if (props.item.editing)
+  else if (props.item.editing)
     handleUpdate();
 }
 
