@@ -51,9 +51,11 @@ export function preCreateItem(folderToAppend: FolderWithContents, initialValues?
 export function getCurrentFolderPath() {
   const route = useRoute();
 
-  return withLeadingSlash(
-    (Array.isArray(route.params.folders) ? route.params.folders.join('/') : route.params.folders) || '/',
+  const path = withLeadingSlash(
+    (Array.isArray(route.params.folders) ? route.params.folders.join('/') : route.params.folders),
   );
+
+  return path === '/' ? '' : path;
 }
 
 export async function createFolder(folderName: string, self: FolderOrNote, parent: FolderWithContents) {
@@ -117,11 +119,10 @@ export async function renameNote(newName: string, self: FolderOrNote, parent: Fo
   await $fetch<QuickResponse>(`/api/note${notePath}`, { method: 'PATCH', body: newNote })
     .catch(() => updateNoteInFolder(self, { editing: false }, parent));
 
-  const newNotePath = currentFolderPath + withLeadingSlash(encodeURIComponent(newNote.name));
+  const { user: username } = useRoute().params;
+  const newNotePath = `/${username}${currentFolderPath}${withLeadingSlash(encodeURIComponent(newNote.name))}`;
 
   notesCache.delete(self.path);
-  // @ts-expect-error undefined and null here are the same things
-  notesCache.set(newNotePath, { ...self, ...newNote, path: newNotePath });
 
   updateNoteInFolder(self, { editing: false, ...newNote, path: newNotePath }, parent);
 
