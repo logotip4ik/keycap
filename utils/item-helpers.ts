@@ -78,7 +78,6 @@ export async function createFolder(folderName: string, self: FolderOrNote, paren
   deleteNoteFromFolder(self, parent);
   updateSubfolderInFolder(self, { ...newlyCreatedFolder, creating: false }, parent);
 
-  // TODO: show item
   showItem(newlyCreatedFolder);
 }
 
