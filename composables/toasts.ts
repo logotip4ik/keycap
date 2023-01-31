@@ -40,7 +40,7 @@ function createToast(options: ToastUserOptions & { message?: string; timeout: { 
     type: options.type ?? 'info',
     el: shallowRef(null),
     remove: () => {
-      if (options.timeout && options.timeout.value)
+      if (options.timeout.value)
         clearTimeout(options.timeout.value);
       else
         toasts.value = toasts.value.filter((toast) => toast.id !== toastId);
