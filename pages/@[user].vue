@@ -143,9 +143,6 @@ onMounted(() => {
       idleCallback(fn);
     }),
   );
-
-  // @ts-expect-error only for dev
-  if (import.meta.env.DEV) window.$createToast = createToast;
 });
 </script>
 
