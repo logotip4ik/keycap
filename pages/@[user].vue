@@ -68,7 +68,7 @@ function preloadComponents() {
 }
 
 async function defineFuzzyWorker() {
-  const wrap = await import('comlink').then(({ wrap }) => wrap);
+  const { wrap } = await import('comlink');
 
   fuzzyWorker.value = wrap(new FuzzyWorker());
 }
@@ -131,19 +131,21 @@ useTinykeys({
 });
 
 onMounted(() => {
-  const act = () => {
-    preloadComponents();
-    defineFuzzyWorker();
-    defineOfflineStorage();
-  };
+  // request idle callback is polyfilled by nuxt
+  const idleCallback = window.requestIdleCallback;
 
-  if ('requestIdleCallback' in window)
-    window.requestIdleCallback(act);
-  else
-    setTimeout(act, 500);
+  const callbacks = [preloadComponents, defineFuzzyWorker, defineOfflineStorage];
+
+  idleCallback(
+    // calls functions in idle waterfall
+    callbacks.reduce((acc, fn) => () => {
+      acc();
+      idleCallback(fn);
+    }),
+  );
 
   // @ts-expect-error only for dev
-  if (process.env.NODE_ENV === 'development') window.$createToast = createToast;
+  if (import.meta.env.DEV) window.$createToast = createToast;
 });
 </script>
 
