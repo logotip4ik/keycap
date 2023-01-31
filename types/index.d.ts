@@ -3,10 +3,17 @@ interface Shortcuts {
   search: string
 }
 
-declare module '@nuxt/schema' {
+export interface BuildInfo {
+  time: number
+  commit: string
+}
+
+export declare module '@nuxt/schema' {
   interface AppConfigInput {
     shortcuts: Shortcuts
 
+    buildInfo: BuildInfo
+    
     iconsToPreload?: string[]
   }
 }

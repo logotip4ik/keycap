@@ -4,10 +4,10 @@ useSeoMeta({
   ogDescription: 'Another note taking webapp ❤.Simple, fast and purple.',
 });
 
-const nuxtApp = useNuxtApp();
+const { buildInfo } = useAppConfig();
 
-const lastTimeBuild = Intl.DateTimeFormat('en-UK', { dateStyle: 'medium' }).format(nuxtApp.payload.prerenderedAt);
-const shortCommitSha = useState(() => (process.env?.VERCEL_GIT_COMMIT_SHA ?? '').substring(0, 7) || '594d4d7');
+const lastTimeBuild = Intl.DateTimeFormat('en-UK', { dateStyle: 'medium' }).format(buildInfo.time);
+const shortCommitSha = buildInfo.commit;
 </script>
 
 <template>
