@@ -10,15 +10,15 @@ export function useToast() {
 
     const toast = createToast({ ...(options ?? {}), message, timeout });
 
-    const updateToasts = () => {
+    const addToastToQueue = () => {
       timeout.value = null;
       toasts.value = toasts.value.concat(toast);
     };
 
     if (options?.delay)
-      timeout.value = setTimeout(updateToasts, options.delay);
+      timeout.value = setTimeout(addToastToQueue, options.delay);
     else
-      updateToasts();
+      addToastToQueue();
 
     return toast;
   };
