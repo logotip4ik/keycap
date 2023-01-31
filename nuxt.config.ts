@@ -90,6 +90,8 @@ export default defineNuxtConfig({
     '@nuxtjs/device',
     'nuxt-icon',
     '@nuxtjs/fontaine',
+    '~/modules/build-env',
+    '~/modules/purge-comments',
   ],
 
   css: [
