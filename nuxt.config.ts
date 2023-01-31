@@ -54,6 +54,12 @@ export default defineNuxtConfig({
     },
   },
 
+  typescript: {
+    tsConfig: {
+      exclude: ['../data'],
+    },
+  },
+
   routeRules: {
     '/**': {
       headers: {
