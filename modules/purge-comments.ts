@@ -21,7 +21,7 @@ export default defineNuxtModule({
         if (s.hasChanged()) {
           return {
             code: s.toString(),
-            map: isDevelopment ? s.generateMap({ source: id, includeContent: true }) : '',
+            map: isDevelopment ? s.generateMap({ source: id, includeContent: true }) : null,
           };
         }
       },
