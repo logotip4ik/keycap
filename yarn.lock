@@ -917,6 +917,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@kwsites/file-exists@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@kwsites/file-exists@npm:1.1.1"
+  dependencies:
+    debug: ^4.1.1
+  checksum: 4ff945de7293285133aeae759caddc71e73c4a44a12fac710fdd4f574cce2671a3f89d8165fdb03d383cfc97f3f96f677d8de3c95133da3d0e12a123a23109fe
+  languageName: node
+  linkType: hard
+
+"@kwsites/promise-deferred@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@kwsites/promise-deferred@npm:1.1.1"
+  checksum: 07455477a0123d9a38afb503739eeff2c5424afa8d3dbdcc7f9502f13604488a4b1d9742fc7288832a52a6422cf1e1c0a1d51f69a39052f14d27c9a0420b6629
+  languageName: node
+  linkType: hard
+
 "@mapbox/node-pre-gyp@npm:^1.0.5":
   version: 1.0.10
   resolution: "@mapbox/node-pre-gyp@npm:1.0.10"
@@ -8230,6 +8246,7 @@ __metadata:
   resolution: "root-workspace-0b6124@workspace:."
   dependencies:
     "@antfu/eslint-config": ^0.35.1
+    "@nuxt/kit": ^3.1.1
     "@nuxtjs/device": ^3.0.0
     "@nuxtjs/fontaine": ^0.2.4
     "@popperjs/core": ^2.11.6
@@ -8254,6 +8271,7 @@ __metadata:
     jose: ^4.11.2
     localforage: ^1.10.0
     lru-cache: ^7.14.1
+    magic-string: ^0.27.0
     mitt: ^3.0.0
     normalize.css: ^8.0.1
     nuxt: ^3.1.1
@@ -8266,6 +8284,7 @@ __metadata:
     prosemirror-keymap: ^1.2.0
     prosemirror-schema-list: ^1.2.2
     sass: ^1.57.1
+    simple-git: ^3.16.0
     tinykeys: ^1.4.0
     typescript: ^4.9.4
     ufo: ^1.0.1
@@ -8497,6 +8516,17 @@ __metadata:
   version: 3.0.7
   resolution: "signal-exit@npm:3.0.7"
   checksum: a2f098f247adc367dffc27845853e9959b9e88b01cb301658cfe4194352d8d2bb32e18467c786a7fe15f1d44b233ea35633d076d5e737870b7139949d1ab6318
+  languageName: node
+  linkType: hard
+
+"simple-git@npm:^3.16.0":
+  version: 3.16.0
+  resolution: "simple-git@npm:3.16.0"
+  dependencies:
+    "@kwsites/file-exists": ^1.1.1
+    "@kwsites/promise-deferred": ^1.1.1
+    debug: ^4.3.4
+  checksum: fd28eb43be39d158d2c321cd34eb00f61c365513478ff2bb31f4da06315dcd018e03c6ece9f99558f3fd8834171072850aed1376bf50f8d922b0e2dadede0c2d
   languageName: node
   linkType: hard
 
