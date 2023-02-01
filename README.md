@@ -4,7 +4,7 @@ Simple note taking app with support for markdown. Organize your notes into folde
 
 ## Why ?
 
-After months of usage windows and android phone, i find that notes are syncing. Plus there wasn't support for markdown. But you can ask why to build something similar to notion and answer will be pretty simple. With this project i developed my skills and i hope it will load much faster that notion 🙃
+After months of usage windows and android phone, i found out that notes aren't syncing. Plus there wasn't support for markdown. But you can ask why to build something similar to notion? and answer will be pretty simple. With this project i developed my skills and i hope it will load much faster than notion 🙃
 
 ## Stack
 
