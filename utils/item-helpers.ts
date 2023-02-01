@@ -1,4 +1,4 @@
-import { withLeadingSlash, withoutLeadingSlash } from 'ufo';
+import { withLeadingSlash, withTrailingSlash, withoutLeadingSlash } from 'ufo';
 
 import type { Note } from '@prisma/client';
 import type { RouteLocationNamedRaw } from 'vue-router';
@@ -51,19 +51,21 @@ export function preCreateItem(folderToAppend: FolderWithContents, initialValues?
 export function getCurrentFolderPath() {
   const route = useRoute();
 
-  const path = withLeadingSlash(
-    (Array.isArray(route.params.folders) ? route.params.folders.join('/') : route.params.folders),
-  );
+  const path = withLeadingSlash(withTrailingSlash(
+    (Array.isArray(route.params.folders)
+      ? route.params.folders.map(encodeURIComponent).join('/')
+      : encodeURIComponent(route.params.folders)),
+  ));
 
-  return path === '/' ? '' : path;
+  return path;
 }
 
 export async function createFolder(folderName: string, self: FolderOrNote, parent: FolderWithContents) {
   const foldersCache = useFoldersCache();
 
   const currentFolderPath = getCurrentFolderPath();
-  const newFolderPathName = encodeURIComponent(decodeURIComponent(folderName.trim()));
-  const newFolderPath = currentFolderPath + withLeadingSlash(newFolderPathName);
+  const newFolderPathName = encodeURIComponent(folderName.trim());
+  const newFolderPath = currentFolderPath + newFolderPathName;
 
   const newlyCreatedFolder = await $fetch<FolderWithContents>(`/api/folder${newFolderPath}`, {
     method: 'POST',
@@ -85,8 +87,8 @@ export async function createNote(noteName: string, self: FolderOrNote, parent: F
   const notesCache = useNotesCache();
 
   const currentFolderPath = getCurrentFolderPath();
-  const newNotePathName = encodeURIComponent(decodeURIComponent(noteName.trim()));
-  const newNotePath = currentFolderPath + withLeadingSlash(newNotePathName);
+  const newNotePathName = encodeURIComponent(noteName.trim());
+  const newNotePath = currentFolderPath + newNotePathName;
 
   const newlyCreatedNote = await $fetch<Note>(`/api/note${newNotePath}`, {
     method: 'POST',
@@ -112,17 +114,16 @@ export async function renameNote(newName: string, self: FolderOrNote, parent: Fo
   const notesCache = useNotesCache();
 
   const currentFolderPath = getCurrentFolderPath();
-  const noteName = encodeURIComponent(decodeURIComponent(self.name));
-  const notePath = currentFolderPath + withLeadingSlash(noteName);
+  const notePathName = encodeURIComponent(self.name);
+  const notePath = currentFolderPath + notePathName;
 
   await $fetch<QuickResponse>(`/api/note${notePath}`, { method: 'PATCH', body: newNote })
     .catch(() => updateNoteInFolder(self, { editing: false }, parent));
 
   const { user: username } = useRoute().params;
-  const newNotePath = `/${username}${currentFolderPath}${withLeadingSlash(encodeURIComponent(newNote.name))}`;
+  const newNotePath = `/${username}${currentFolderPath}${encodeURIComponent(newNote.name)}`;
 
   notesCache.delete(self.path);
-
   updateNoteInFolder(self, { editing: false, ...newNote, path: newNotePath }, parent);
 
   showItem({ ...self, ...newNote, path: newNotePath }, { replace: true });
@@ -132,8 +133,8 @@ export async function deleteNote(self: FolderOrNote, parent: FolderWithContents)
   const notesCache = useNotesCache();
 
   const currentFolderPath = getCurrentFolderPath();
-  const noteName = encodeURIComponent(decodeURIComponent(self.name));
-  const notePath = currentFolderPath + withLeadingSlash(noteName);
+  const notePathName = encodeURIComponent(self.name);
+  const notePath = currentFolderPath + withLeadingSlash(notePathName);
 
   await $fetch<QuickResponse>(`/api/note${notePath}`, { method: 'DELETE' });
 
@@ -147,12 +148,11 @@ export async function deleteFolder(self: FolderOrNote, parent: FolderWithContent
   const foldersCache = useFoldersCache();
 
   const currentFolderPath = getCurrentFolderPath();
-  const folderName = encodeURIComponent(decodeURIComponent(self.name));
-  const folderPath = currentFolderPath + withLeadingSlash(folderName);
+  const folderPathName = encodeURIComponent(self.name);
+  const folderPath = currentFolderPath + withLeadingSlash(folderPathName);
 
   await $fetch<QuickResponse>(`/api/folder${folderPath}`, { method: 'DELETE' });
 
   deleteSubfolderFromFolder(self, parent);
-
   foldersCache.delete(self.path);
 }
