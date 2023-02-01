@@ -84,7 +84,7 @@ export default defineEventHandler(async (event) => {
     // if user updates note name we also need to update its path
     if (data.name) {
       // replacing last string after `/` with new note name
-      const newNotePath = notePath.split('/').slice(1, -1).concat([encodeURIComponent(data.name)]).join('/');
+      const newNotePath = notePath.split('/').slice(0, -1).concat(encodeURIComponent(data.name)).join('/');
 
       data.path = generateNotePath(user.username, newNotePath);
     }
