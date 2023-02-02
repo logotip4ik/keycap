@@ -8,6 +8,12 @@ export interface BuildInfo {
   commit: string
 }
 
+export declare global {
+  interface BigInt {
+    toJSON: () => string
+  }
+}
+
 export declare module '@nuxt/schema' {
   interface AppConfigInput {
     shortcuts: Shortcuts
