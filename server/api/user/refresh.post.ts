@@ -1,9 +1,7 @@
 export default defineEventHandler(async (event) => {
   const timer = createTimer();
 
-  timer.start('user');
-  const user = await getUserFromEvent(event);
-  timer.end();
+  const { user } = event.context;
 
   if (!user) return send(event);
 
