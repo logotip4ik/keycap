@@ -74,32 +74,32 @@ async function defineFuzzyWorker() {
 }
 
 async function defineOfflineStorage() {
-  const localForage = await import('localforage').then((localForage) => localForage.default);
+  const { del, get, set, values } = await import('idb-keyval');
 
-  localForage.config({
-    driver: localForage.INDEXEDDB,
-    name: 'keycap',
-    version: 1.0,
-  });
+  offlineStorage.value = {
+    setItem: set,
+    getItem: get,
+    removeItem: del,
+    getAllItems: values,
+  };
 
-  offlineStorage.value = localForage;
-
-  watch(isFallbackMode, (value) => {
+  watch(isFallbackMode, async (value) => {
     if (!value) return;
 
     createToast('Fallback mode enabled. Populating cache from offline storage.');
 
-    localForage.iterate<FolderOrNote, any>(
-      (value) => {
-        const isFolder = 'root' in value;
-        const cache = isFolder ? foldersCache : notesCache;
+    const items = await values<FolderOrNote>();
 
-        if (!cache.has(value.path))
+    for (const item of items) {
+      const isFolder = 'root' in item;
+      const cache = isFolder ? foldersCache : notesCache;
+
+      if (!cache.has(item.path))
         // @ts-expect-error idk how to setup this type
-          cache.set(value.path, value);
-      },
-      () => mitt.emit('cache:populated'),
-    );
+        cache.set(item.path, item);
+    }
+
+    mitt.emit('cache:populated');
   }, { immediate: true });
 }
 

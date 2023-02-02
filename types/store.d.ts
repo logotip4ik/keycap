@@ -37,6 +37,13 @@ declare global {
 
   interface IFuzzyWorker extends Remote<_IFuzzyWorker> {
   }
+
+  interface OfflineStorage {
+    setItem: <T = any>(key: string, value: T) => Promise<void>
+    getItem: <T = any>(key: string) => Promise<T | undefined>
+    removeItem: (key: string) => Promise<void>
+    getAllItems: <T = any>() => Promise<T[]>
+  }
 }
 
 export {}
