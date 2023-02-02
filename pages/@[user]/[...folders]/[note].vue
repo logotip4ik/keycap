@@ -118,7 +118,8 @@ function getApiNotePath() {
 }
 
 mitt.on('cache:populated', () => {
-  note.value = notesCache.get(notePath.value) || null;
+  if (!note.value)
+    note.value = notesCache.get(notePath.value) || null;
 });
 
 watch(error, async (error) => {
