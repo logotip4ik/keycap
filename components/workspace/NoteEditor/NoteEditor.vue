@@ -52,10 +52,11 @@ function saveEditorContent() {
   update(noteContent || '');
 }
 
-function refreshNoteOnVisibilityChange() {
-  if (document.visibilityState !== 'visible') return;
-
-  emit('refresh');
+function handleVisibilityChange() {
+  if (document.visibilityState === 'visible')
+    emit('refresh');
+  else if (document.visibilityState === 'hidden')
+    saveEditorContent();
 }
 
 function hideBubbleMenu() {
@@ -93,11 +94,11 @@ useTinykeys({
 });
 
 onMounted(() => {
-  window.addEventListener('visibilitychange', refreshNoteOnVisibilityChange, { passive: true });
+  window.addEventListener('visibilitychange', handleVisibilityChange, { passive: true });
 });
 
 onBeforeUnmount(() => {
-  window.removeEventListener('visibilitychange', refreshNoteOnVisibilityChange);
+  window.removeEventListener('visibilitychange', handleVisibilityChange);
 });
 
 // if user updated current note and switched to another note
