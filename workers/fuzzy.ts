@@ -1,6 +1,7 @@
-import { expose } from 'comlink';
 // @ts-expect-error no types for command score :(
 import commandScore from 'command-score';
+
+import { expose } from '~/lib/comlink-worker';
 
 import { SearchAction } from '~/types/common';
 

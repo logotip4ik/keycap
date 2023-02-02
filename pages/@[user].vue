@@ -68,13 +68,13 @@ function preloadComponents() {
 }
 
 async function defineFuzzyWorker() {
-  const { wrap } = await import('comlink');
+  const { wrap } = await import('~/lib/comlink-client');
 
   fuzzyWorker.value = wrap(new FuzzyWorker());
 }
 
 async function defineOfflineStorage() {
-  const { del, get, set, values } = await import('idb-keyval');
+  const { del, get, set, values } = await import('~/lib/idb-keyval');
 
   offlineStorage.value = {
     setItem: set,
