@@ -157,7 +157,7 @@ watch(fetchedNote, (value) => {
   currentNoteState.value = 'saved';
 
   isFallbackMode.value = false;
-  offlineStorage?.value?.setItem(value.path, toRaw(value));
+  offlineStorage.value?.setItem(value.path, toRaw(value));
 });
 </script>
 

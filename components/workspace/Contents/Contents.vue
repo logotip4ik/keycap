@@ -105,7 +105,7 @@ watch(fetchedFolder, (value) => {
   folder.value = value;
 
   isFallbackMode.value = false;
-  offlineStorage?.value?.setItem(value.path, toRaw(value));
+  offlineStorage.value?.setItem(value.path, toRaw(value));
 });
 
 useTinykeys({
