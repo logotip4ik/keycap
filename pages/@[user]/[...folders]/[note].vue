@@ -27,6 +27,7 @@ const notePath = computed(() => {
 
   return `/${route.params.user}/${pathString}`;
 });
+const noteApiPath = computed(() => notePath.value.split('/').slice(2).join('/'));
 
 // NOTE: can't use default param in async data because it runs
 // before route navigation and our notes depends on route path
@@ -46,9 +47,7 @@ const { data: fetchedNote, error, refresh } = useLazyAsyncData<Note | null>(
 
     currentNoteState.value = 'fetching';
 
-    const apiNotePath = notePath.value.split('/').slice(2).join('/');
-
-    return $fetch(`/api/note/${apiNotePath}`, {
+    return $fetch(`/api/note/${noteApiPath.value}`, {
       retry: 2,
       onRequest: () => {
         if (!loadingToast) {
@@ -77,8 +76,6 @@ function updateNote(content: string) {
 
   const newNote: Partial<Note> = { content };
 
-  const updatePath = `/api/note/${getApiNotePath()}`;
-
   // enables optimistic ui
   notesCache.set(note.value.path, { ...note.value, ...newNote });
 
@@ -87,7 +84,7 @@ function updateNote(content: string) {
   abortController?.abort();
   abortController = new AbortController();
 
-  $fetch<QuickResponse>(updatePath, {
+  $fetch<QuickResponse>(`/api/note/${noteApiPath.value}`, {
     method: 'PATCH',
     body: newNote,
     retry: 2,
@@ -103,18 +100,6 @@ function updateNote(content: string) {
         currentNoteState.value = 'saved';
     })
     .catch((error) => console.warn(error));
-}
-
-function getApiNotePath() {
-  const paths = Array.isArray(route.params.folders)
-    ? [route.params.folders, route.params.note]
-    : [route.params.note];
-
-  return withoutLeadingSlash(
-    paths
-      .map((string) => encodeURIComponent(string as string))
-      .join('/'),
-  );
 }
 
 mitt.on('cache:populated', () => {
