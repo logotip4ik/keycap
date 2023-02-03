@@ -92,6 +92,7 @@ export default defineNuxtConfig({
     '@nuxtjs/fontaine',
     '~/modules/build-env',
     '~/modules/purge-comments',
+    'unplugin-ltsdi/nuxt',
   ],
 
   css: [

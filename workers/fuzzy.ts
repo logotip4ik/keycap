@@ -1,7 +1,8 @@
 // @ts-expect-error no types for command score :(
 import commandScore from 'command-score';
 
-import { expose } from '~/lib/comlink-worker';
+// @ts-expect-error idk how to setup this
+import { expose } from 'comlink?only=expose';
 
 import { SearchAction } from '~/types/common';
 

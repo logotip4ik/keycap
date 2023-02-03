@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type * as IDBKeyval from 'idb-keyval';
+
 import { blankNoteName } from '~/assets/constants';
 import breakpoints from '~/assets/constants/breakpoints';
 
@@ -68,13 +70,15 @@ function preloadComponents() {
 }
 
 async function defineFuzzyWorker() {
-  const { wrap } = await import('~/lib/comlink-client');
+// @ts-expect-error idk how to setup this
+  const { wrap } = await import('comlink?only=wrap');
 
   fuzzyWorker.value = wrap(new FuzzyWorker());
 }
 
 async function defineOfflineStorage() {
-  const { del, get, set, values } = await import('~/lib/idb-keyval');
+  // @ts-expect-error idk how to setup this
+  const { del, get, set, values } = await import('idb-keyval?only=del,get,set,values') as typeof IDBKeyval;
 
   offlineStorage.value = {
     setItem: set,
