@@ -50,5 +50,8 @@
     "tinykeys": "^1.4.0",
     "ufo": "^1.0.1"
   },
-  "packageManager": "yarn@3.4.1"
+  "packageManager": "yarn@3.4.1",
+  "resolutions": {
+    "@tiptap/extension-bubble-menu@^2.0.0-beta.212": "patch:@tiptap/extension-bubble-menu@npm%3A2.0.0-beta.212#./.yarn/patches/@tiptap-extension-bubble-menu-npm-2.0.0-beta.212-70b79cf1f7.patch"
+  }
 }
