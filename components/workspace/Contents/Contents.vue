@@ -99,9 +99,8 @@ watch(fetchedFolder, (value) => {
   value.notes = value.notes || [];
   value.subfolders = value.subfolders || [];
 
+  folder.value = toRaw(value);
   foldersCache.set(value.path, toRaw(value));
-
-  folder.value = value;
 
   isFallbackMode.value = false;
   offlineStorage.value?.setItem(value.path, toRaw(value));

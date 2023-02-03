@@ -136,7 +136,7 @@ watch(error, async (error) => {
 watch(fetchedNote, (value) => {
   if (!value) return;
 
-  note.value = value;
+  note.value = toRaw(value);
   notesCache.set(value.path, toRaw(value));
   currentNoteState.value = 'saved';
 
