@@ -59,9 +59,8 @@ const { data: fetchedNote, error, refresh } = useLazyAsyncData<Note | null>(
           firstTimeFetch = false;
         }
       },
-      onResponse: () => {
-        loadingToast?.remove();
-      },
+      onResponse: loadingToast?.remove,
+      onResponseError: loadingToast?.remove,
     });
   },
   { server: false },
