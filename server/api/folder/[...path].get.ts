@@ -3,10 +3,7 @@ import getPrisma from '~/prisma';
 export default defineEventHandler(async (event) => {
   const timer = createTimer();
 
-  const { user } = event.context;
-
-  if (!user)
-    return createError({ statusCode: 401 });
+  const user = event.context.user!;
 
   const prisma = getPrisma();
 

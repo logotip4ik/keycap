@@ -3,13 +3,11 @@ import getPrisma from '~/prisma';
 export default defineEventHandler(async (event) => {
   const timer = createTimer();
 
-  const { user } = event.context;
-
-  if (!user) return sendError(event, createError({ statusCode: 401 }));
+  const user = event.context.user!;
 
   const prisma = getPrisma();
 
-  const body = await readBody<Partial<{ parentId: string }>>(event) || {};
+  const body = await readBody<{ parentId?: string }>(event) || {};
   const path = getRouterParam(event, 'path') as string;
   const notePath = generateNotePath(user.username, path);
 
