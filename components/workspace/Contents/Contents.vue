@@ -44,8 +44,8 @@ const { data: fetchedFolder, error } = useLazyAsyncData<FolderWithContents>(
           firstTimeFetch = false;
         }
       },
-      onResponse: loadingToast?.remove,
-      onResponseError: loadingToast?.remove,
+      onResponse: () => loadingToast?.remove(),
+      onResponseError: () => loadingToast?.remove(),
     });
   },
   { server: false, watch: [folderPath] },
