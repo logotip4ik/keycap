@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type * as Comlink from 'comlink';
 import type * as IDBKeyval from 'idb-keyval';
 
 import { blankNoteName } from '~/assets/constants';
@@ -71,7 +72,7 @@ function preloadComponents() {
 
 async function defineFuzzyWorker() {
 // @ts-expect-error idk how to setup this
-  const { wrap } = await import('comlink?only=wrap');
+  const { wrap } = await import('comlink?only=wrap') as typeof Comlink;
 
   fuzzyWorker.value = wrap(new FuzzyWorker());
 }
