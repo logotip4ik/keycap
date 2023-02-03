@@ -1,4 +1,5 @@
 import browserslistToEsbuild from 'browserslist-to-esbuild';
+import LTSDI from 'unplugin-ltsdi/vite';
 
 import breakpoints from './assets/constants/breakpoints';
 
@@ -120,6 +121,10 @@ export default defineNuxtConfig({
           ].join('\n'),
         },
       },
+    },
+
+    worker: {
+      plugins: [LTSDI()],
     },
   },
 
