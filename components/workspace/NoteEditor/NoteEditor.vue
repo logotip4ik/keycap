@@ -2,6 +2,7 @@
 import { EditorContent, useEditor } from '@tiptap/vue-3';
 
 import StarterKir from '@tiptap/starter-kit';
+import Code from '@tiptap/extension-code';
 import Link from '@tiptap/extension-link';
 import Placeholder from '@tiptap/extension-placeholder';
 import TaskList from '@tiptap/extension-task-list';
@@ -24,20 +25,38 @@ const editor = useEditor({
   content: props.content,
   editable: props.editable,
   extensions: [
-    StarterKir.configure({ codeBlock: false }),
+    StarterKir.configure({ code: false, codeBlock: false }),
     Link,
     TaskList,
     TaskItem,
     BubbleMenuPlugin,
+    Code.configure({
+      HTMLAttributes: {
+        autocomplete: 'off',
+        autocorrect: 'off',
+        autocapitalize: 'none',
+        spellcheck: 'false',
+      },
+    }),
     // TODO: https://tiptap.dev/api/nodes/code-block-lowlight
-    CodeBlock,
+    CodeBlock.extend({
+      addAttributes() {
+        return {
+          ...this.parent?.(),
+          autocomplete: { default: 'off' },
+          autocorrect: { default: 'off' },
+          autocapitalize: { default: 'none' },
+          spellcheck: { default: 'false' },
+        };
+      },
+    }),
     TextAlign.configure({
       types: ['heading', 'paragraph'],
       alignments: ['left', 'center', 'right'],
     }),
     Placeholder.configure({
       placeholder: ({ editor }) =>
-        editor.isEmpty ? 'Start with heading...' : 'Write something...',
+        editor.isEmpty ? ' # Start with heading...' : 'Write something...',
     }),
   ],
 
