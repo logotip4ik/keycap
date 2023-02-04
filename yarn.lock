@@ -1894,6 +1894,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/memory-cache@npm:^0.2.2":
+  version: 0.2.2
+  resolution: "@types/memory-cache@npm:0.2.2"
+  checksum: f2c9182432057f0034f6acb69d0c6f1df58adaeb970749444b86834325018a24cb7dedfbdc4086d859497167fc82a06538f80354cfccdc6a3f011af80bc75697
+  languageName: node
+  linkType: hard
+
 "@types/node@npm:^18.11.18":
   version: 18.11.18
   resolution: "@types/node@npm:18.11.18"
@@ -6542,6 +6549,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"memory-cache@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "memory-cache@npm:0.2.0"
+  checksum: 255c87fec360ce06818ca7aeb5850d798e14950a9fcea879d88e1f8d1f4a6cffb8ed16da54aa677f5ec8e47773fbe15775a1cdf837ac190e17e9fb4b71e87bee
+  languageName: node
+  linkType: hard
+
 "memory-fs@npm:^0.5.0":
   version: 0.5.0
   resolution: "memory-fs@npm:0.5.0"
@@ -8618,6 +8632,7 @@ __metadata:
     "@tiptap/starter-kit": ^2.0.0-beta.212
     "@tiptap/vue-3": ^2.0.0-beta.212
     "@types/bcryptjs": ^2.4.2
+    "@types/memory-cache": ^0.2.2
     "@types/node": ^18.11.18
     "@vueuse/core": ^9.12.0
     "@vueuse/nuxt": ^9.12.0
@@ -8631,6 +8646,7 @@ __metadata:
     limiter: ^2.1.0
     lru-cache: ^7.14.1
     magic-string: ^0.27.0
+    memory-cache: ^0.2.0
     mitt: ^3.0.0
     normalize.css: ^8.0.1
     nuxt: ^3.1.2
