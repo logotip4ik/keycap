@@ -74,6 +74,11 @@ export default defineNuxtConfig({
       },
     },
 
+    '/': { prerender: true },
+    '/about': { prerender: true },
+    '/login': { prerender: true },
+    '/register': { prerender: true },
+
     // Caching only build assets that has build hash in filenames
     '/_nuxt/**': { headers: { ...(process.env.NODE_ENV === 'production' ? longCacheHeaders : {}) } },
     // Rely on browser to cache favicon
