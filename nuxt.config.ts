@@ -75,21 +75,11 @@ export default defineNuxtConfig({
         ...(process.env.NODE_ENV === 'production' ? cspHeaders : {}),
       },
     },
-    '/': { prerender: true },
-    '/login': { prerender: true },
-    '/register': { prerender: true },
-    '/about': { prerender: true },
 
     // Caching only build assets that has build hash in filenames
     '/_nuxt/**': { headers: { ...(process.env.NODE_ENV === 'production' ? longCacheHeaders : {}) } },
     // Rely on browser to cache favicon
     '/favicon.ico': { headers: { 'Cache-Control': '' } },
-  },
-
-  runtimeConfig: {
-    public: {
-      authCookiePrefix: 'auth',
-    },
   },
 
   modules: [
