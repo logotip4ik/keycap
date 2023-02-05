@@ -1,4 +1,4 @@
-import { deleteCookie, getCookie, setCookie } from 'h3';
+import { getCookie, setCookie } from 'h3';
 import { SignJWT, jwtVerify } from 'jose';
 import bcrypt from 'bcryptjs';
 
@@ -20,9 +20,7 @@ async function generateAccessToken(object: object): Promise<string> {
 }
 
 function getAccessTokenName(): string {
-  const { authCookiePrefix } = useRuntimeConfig().public;
-
-  return `${authCookiePrefix}-access-token`;
+  return 'Authorization';
 }
 
 function getJWTSecret(): Uint8Array {
@@ -38,12 +36,12 @@ function getJWTIssuer(): string {
 }
 
 export async function setAuthCookies(event: H3Event, user: Pick<User, 'id' | 'username' | 'email'>) {
-  const accessToken = await generateAccessToken(user);
   const accessTokenName = getAccessTokenName();
+  const accessToken = await generateAccessToken(user);
 
   const twentyFourHours = 60 * 60 * 24;
 
-  setCookie(event, accessTokenName, accessToken, {
+  setCookie(event, accessTokenName, toBearerValue(accessToken), {
     path: '/',
     sameSite: 'strict',
     maxAge: twentyFourHours,
@@ -53,9 +51,7 @@ export async function setAuthCookies(event: H3Event, user: Pick<User, 'id' | 'us
 }
 
 export async function removeAuthCookies(event: H3Event) {
-  const accessTokenName = getAccessTokenName();
-
-  deleteCookie(event, accessTokenName);
+  setCookie(event, 'WWW-Authorization', toBearerValue('realm="access to keycap user"'));
 }
 
 export async function getUserFromEvent(event: H3Event): Promise<Pick<User, 'id' | 'username' | 'email'> | null> {
@@ -68,7 +64,7 @@ export async function getUserFromEvent(event: H3Event): Promise<Pick<User, 'id' 
   const issuer = getJWTIssuer();
 
   try {
-    const { payload } = await jwtVerify(accessToken, secret, { issuer });
+    const { payload } = await jwtVerify(fromBearerValue(accessToken), secret, { issuer });
 
     return {
       id: toBigInt(payload.id as string),
@@ -91,4 +87,12 @@ export async function hashPassword(pass: string): Promise<string> {
 
 export async function verifyPassword(hashedPass: string, pass: string): Promise<boolean> {
   return bcrypt.compare(pass, hashedPass);
+}
+
+export function toBearerValue(token: string) {
+  return `Bearer ${token}`;
+}
+
+export function fromBearerValue(headerValue: string) {
+  return headerValue.split(' ')[1].trim();
 }
