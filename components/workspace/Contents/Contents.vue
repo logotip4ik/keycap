@@ -19,7 +19,7 @@ const folderPath = computed(() => {
   return withoutTrailingSlash(`/${route.params.user}/${folders.join('/')}`);
 });
 
-const folder = shallowRef<FolderWithContents | null>(
+const folder = ref<FolderWithContents | null>(
   foldersCache.get(folderPath.value) || null,
 );
 
