@@ -47,10 +47,8 @@ export default defineNuxtConfig({
       meta: [
         { name: 'description', content: 'Better notes ❤. Synced between your devices' },
         { name: 'mobile-web-app-capable', content: 'yes' },
-        { name: 'theme-color', content: '#f2f1f3', media: '(prefers-color-scheme: light)' },
-        { name: 'theme-color', content: '#1b1a1e', media: '(prefers-color-scheme: dark)' },
-        { name: 'apple-mobile-web-app-status-bar-style', content: 'default', media: '(prefers-color-scheme: light)' },
-        { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent', media: '(prefers-color-scheme: dark)' },
+        { name: 'theme-color', content: '#1b1a1e' },
+        { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
       ],
       link: [
         { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
