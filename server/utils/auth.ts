@@ -51,7 +51,7 @@ export async function setAuthCookies(event: H3Event, user: Pick<User, 'id' | 'us
 }
 
 export async function removeAuthCookies(event: H3Event) {
-  setCookie(event, 'WWW-Authorization', toBearerValue('realm="access to keycap user"'));
+  setCookie(event, 'WWW-Authenticate', toBearerValue('realm="access to keycap user"'));
 }
 
 export async function getUserFromEvent(event: H3Event): Promise<Pick<User, 'id' | 'username' | 'email'> | null> {
