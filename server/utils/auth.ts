@@ -1,5 +1,6 @@
 import { getCookie, setCookie } from 'h3';
 import { SignJWT, jwtVerify } from 'jose';
+import { isDevelopment } from 'std-env';
 import bcrypt from 'bcryptjs';
 
 import type { H3Event } from 'h3';
@@ -21,7 +22,9 @@ async function generateAccessToken(object: object): Promise<string> {
 
 function getAccessTokenName(): string {
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#cookie_prefixes
-  return '__Host-keycap-user';
+  const prefix = isDevelopment ? '' : '__host-';
+
+  return `${prefix}keycap-user`;
 }
 
 function getJWTSecret(): Uint8Array {
@@ -51,8 +54,8 @@ export async function setAuthCookies(event: H3Event, user: Pick<User, 'id' | 'us
   });
 }
 
-export async function removeAuthCookies(event: H3Event) {
-  // empty
+export async function removeAuthCookies(_event: H3Event) {
+  // noop
 }
 
 export async function getUserFromEvent(event: H3Event): Promise<Pick<User, 'id' | 'username' | 'email'> | null> {
