@@ -20,7 +20,8 @@ async function generateAccessToken(object: object): Promise<string> {
 }
 
 function getAccessTokenName(): string {
-  return 'Authorization';
+  // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#cookie_prefixes
+  return '__Host-keycap-user';
 }
 
 function getJWTSecret(): Uint8Array {
@@ -41,17 +42,17 @@ export async function setAuthCookies(event: H3Event, user: Pick<User, 'id' | 'us
 
   const twentyFourHours = 60 * 60 * 24;
 
-  setCookie(event, accessTokenName, toBearerValue(accessToken), {
+  setCookie(event, accessTokenName, accessToken, {
     path: '/',
     sameSite: 'strict',
     maxAge: twentyFourHours,
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    secure: true,
   });
 }
 
 export async function removeAuthCookies(event: H3Event) {
-  setCookie(event, 'WWW-Authenticate', toBearerValue('realm="access to keycap user"'));
+  // empty
 }
 
 export async function getUserFromEvent(event: H3Event): Promise<Pick<User, 'id' | 'username' | 'email'> | null> {
@@ -64,7 +65,7 @@ export async function getUserFromEvent(event: H3Event): Promise<Pick<User, 'id' 
   const issuer = getJWTIssuer();
 
   try {
-    const { payload } = await jwtVerify(fromBearerValue(accessToken), secret, { issuer });
+    const { payload } = await jwtVerify(accessToken, secret, { issuer });
 
     return {
       id: toBigInt(payload.id as string),
@@ -87,12 +88,4 @@ export async function hashPassword(pass: string): Promise<string> {
 
 export async function verifyPassword(hashedPass: string, pass: string): Promise<boolean> {
   return bcrypt.compare(pass, hashedPass);
-}
-
-export function toBearerValue(token: string) {
-  return `Bearer ${token}`;
-}
-
-export function fromBearerValue(headerValue: string) {
-  return headerValue.split(' ')[1].trim();
 }
