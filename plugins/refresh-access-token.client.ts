@@ -8,11 +8,7 @@ export default defineNuxtPlugin(async () => {
   const refreshToken = () => {
     const fetcher = () => $fetch('/api/user/refresh', { method: 'POST', retry: 2 });
 
-    let actWith = (cb: () => any) => cb();
-
-    if (window.requestIdleCallback) actWith = window.requestIdleCallback;
-
-    actWith(fetcher);
+    window.requestIdleCallback(fetcher);
   };
 
   watch(user, (newUser) => {
