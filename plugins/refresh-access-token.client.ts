@@ -18,8 +18,7 @@ export default defineNuxtPlugin(async () => {
   watch(user, (newUser) => {
     if (!newUser) return clearInterval(prevInterval);
 
-    // initial refresh of token is in auth.server.ts plugin
-    // refreshToken();
+    refreshToken();
 
     prevInterval = setInterval(refreshToken, REFRESH_AFTER * 1000);
   }, { immediate: true });
