@@ -44,7 +44,7 @@ export async function setAuthCookies(event: H3Event, user: Pick<User, 'id' | 'us
 
   setCookie(event, accessTokenName, accessToken, {
     path: '/',
-    sameSite: 'strict',
+    sameSite: 'lax',
     maxAge: twentyFourHours,
     httpOnly: true,
     secure: true,
