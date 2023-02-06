@@ -95,6 +95,11 @@ function changeSelectedResult(difference: number) {
   selectedResult.value = newSelectedResult < 0 ? results.value.length - 1 : newSelectedResult;
 }
 
+function handleTab() {
+  if (typeaheadResult.value)
+    searchInput.value = typeaheadResult.value.name;
+}
+
 const isResultsEmpty = computed(() => {
   if (!debouncedSearchInput.value) return false;
 
@@ -143,6 +148,7 @@ useTinykeys({ Escape: handleCancel });
           placeholder="Search or enter / for commands"
           @keydown.up.prevent="changeSelectedResult(-1)"
           @keydown.down.prevent="changeSelectedResult(+1)"
+          @keydown.tab.prevent="handleTab"
         />
 
         <p v-show="typeaheadResult" class="search__form__typeahead">
