@@ -11,16 +11,14 @@ export default defineEventHandler(async (event) => {
     return sendError(event, error);
   }
 
-  const timer = createTimer();
+  const timer = event.context.timer!;
   const prisma = getPrisma();
 
   timer.start('db');
-
   const user = await prisma.user.findUnique({
     where: { email: body.email },
     select: { id: true, email: true, username: true, password: true },
   });
-
   timer.end();
 
   if (!user) {

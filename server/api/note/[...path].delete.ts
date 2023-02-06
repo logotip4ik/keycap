@@ -1,9 +1,8 @@
 import getPrisma from '~/prisma';
 
 export default defineEventHandler(async (event) => {
-  const timer = createTimer();
-
   const user = event.context.user!;
+  const timer = event.context.timer!;
 
   const path = getRouterParam(event, 'path') as string;
   const notePath = generateNotePath(user.username, path);
