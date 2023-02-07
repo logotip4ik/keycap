@@ -13,11 +13,13 @@ const mitt = useMitt();
 // TODO: add loading state
 const newItemName = ref(props.item.name);
 
+// TODO: add loading state
 const menuOptions = shallowReactive({
   opened: false,
   x: 0,
   y: 0,
   actions: [
+    { name: 'preload', action: _preloadItem },
     { name: 'rename', action: renameItem },
     { name: 'delete', action: deleteItem },
   ],
@@ -38,6 +40,12 @@ const isItemDisabled = computed(() => {
 });
 
 mitt.on('cache:populated', () => shouldRefreshItemDisabled.value = true);
+
+function _preloadItem() {
+  preloadItem(props.item);
+
+  menuOptions.opened = false;
+}
 
 function renameItem() {
   const update = isFolder ? updateSubfolderInFolder : updateNoteInFolder;

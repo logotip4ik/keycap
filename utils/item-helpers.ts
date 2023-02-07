@@ -156,3 +156,27 @@ export async function deleteFolder(self: FolderOrNote, parent: FolderWithContent
   deleteSubfolderFromFolder(self, parent);
   foldersCache.delete(self.path);
 }
+
+// NOTE: Refactor all functions above to use this approach ?
+export async function preloadItem(self: FolderOrNote) {
+  const isFolder = 'root' in self;
+
+  const currentFolderPath = getCurrentFolderPath();
+  const pathPrefix = isFolder ? 'folder' : 'note';
+  const pathName = encodeURIComponent(self.name);
+  const path = pathPrefix + currentFolderPath + pathName;
+
+  const item = await $fetch(`/api/${path}`).catch(() => null);
+
+  if (!item) return;
+
+  const offlineStorage = useOfflineStorage();
+  const notesCache = useNotesCache();
+  const foldersCache = useFoldersCache();
+
+  const cache = isFolder ? foldersCache : notesCache;
+
+  // @ts-expect-error idk how to setup this type
+  cache.set(item.path, item);
+  offlineStorage.value?.setItem(item.path, item);
+}
