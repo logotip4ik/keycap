@@ -151,7 +151,7 @@ onBeforeRouteUpdate(() => {
 
     min-height: 100%;
 
-    padding: 10vh 1.5rem 25vh;
+    padding: 12.5vh 1.5rem 25vh;
 
     outline: none;
 
