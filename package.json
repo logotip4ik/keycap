@@ -51,5 +51,8 @@
     "ufo": "^1.0.1",
     "unplugin-ltsdi": "^0.1.0"
   },
-  "packageManager": "yarn@3.4.1"
+  "packageManager": "yarn@3.4.1",
+  "resolutions": {
+    "@tiptap/core@^2.0.0-beta.213": "patch:@tiptap/core@npm%3A2.0.0-beta.213#./.yarn/patches/@tiptap-core-npm-2.0.0-beta.213-ee55233af5.patch"
+  }
 }
