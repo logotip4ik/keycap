@@ -35,7 +35,6 @@ const note = shallowRef<Note | null>(
   notesCache.get(notePath.value) || null,
 );
 
-// NOTE: migrate also to lazy fetch ?
 let firstTimeFetch = true;
 let loadingToast: undefined | ToastInstance;
 const { data: fetchedNote, error, refresh } = useLazyAsyncData<Note | null>(
