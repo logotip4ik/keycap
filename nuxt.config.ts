@@ -1,21 +1,16 @@
 import browserslistToEsbuild from 'browserslist-to-esbuild';
 import LTSDI from 'unplugin-ltsdi/vite';
+import { isProduction } from 'std-env';
 
 import breakpoints from './assets/constants/breakpoints';
 
 const WEEK_IN_SECONDS = 60 * 60 * 24 * 7;
 const SIX_MONTH_IN_SECONDS = 60 * 60 * 24 * 31 * 6;
-const DEFAULT_CACHE = `public, immutable, max-age=${WEEK_IN_SECONDS}, stale-while-revalidate=${SIX_MONTH_IN_SECONDS}`;
-const NO_CACHE = 'private, must-revalidate, max-age=0';
 
-const defaultHeaders = {
+const corsHeaders = {
   'Access-Control-Allow-Origin': process.env.SITE_ORIGIN || '*',
   'Access-Control-Allow-Methods': 'GET, OPTIONS, PATCH, POST, DELETE',
-  'X-Frame-Options': 'DENY',
-  'X-Content-Type-Options': 'nosniff',
-  'X-XSS-Protection': '1; mode=block',
-  'Keep-Alive': '5',
-  'Referrer-Policy': 'origin-when-cross-origin, strict-origin-when-cross-origin',
+  'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept',
 };
 
 const cspHeaders = {
@@ -31,11 +26,23 @@ const cspHeaders = {
 };
 
 const longCacheHeaders = {
-  'Cache-Control': DEFAULT_CACHE,
+  'Cache-Control': `public, immutable, max-age=${WEEK_IN_SECONDS}, stale-while-revalidate=${SIX_MONTH_IN_SECONDS}`,
 };
 
 const noCacheHeaders = {
-  'Cache-Control': NO_CACHE,
+  'Cache-Control': 'private, must-revalidate, max-age=0',
+};
+
+const defaultHeaders = {
+  'X-Frame-Options': 'DENY',
+  'X-Content-Type-Options': 'nosniff',
+  'X-XSS-Protection': '0',
+  'Keep-Alive': '5',
+  'Referrer-Policy': 'origin-when-cross-origin, strict-origin-when-cross-origin',
+  'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
+  'Vary': 'Accept-Encoding, Accept, X-Requested-With',
+  ...noCacheHeaders,
+  ...(isProduction ? cspHeaders : {}),
 };
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
@@ -69,10 +76,21 @@ export default defineNuxtConfig({
 
   routeRules: {
     '/**': {
+      headers: { ...defaultHeaders },
+    },
+
+    // Caching only build assets that has build hash in filenames
+    '/_nuxt/**': {
       headers: {
         ...defaultHeaders,
-        ...noCacheHeaders,
-        ...(process.env.NODE_ENV === 'production' ? cspHeaders : {}),
+        ...(isProduction ? longCacheHeaders : {}),
+      },
+    },
+
+    '/api/**': {
+      headers: {
+        ...defaultHeaders,
+        ...(isProduction ? corsHeaders : {}),
       },
     },
 
@@ -80,15 +98,6 @@ export default defineNuxtConfig({
     '/about': { prerender: true },
     '/login': { prerender: true },
     '/register': { prerender: true },
-
-    // Caching only build assets that has build hash in filenames
-    '/_nuxt/**': {
-      headers: {
-        ...defaultHeaders,
-        ...(process.env.NODE_ENV === 'production' ? cspHeaders : {}),
-        ...(process.env.NODE_ENV === 'production' ? longCacheHeaders : {}),
-      },
-    },
   },
 
   modules: [
