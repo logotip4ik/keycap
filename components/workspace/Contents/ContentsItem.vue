@@ -27,13 +27,17 @@ const isFolder = 'root' in props.item;
 
 const isItemRouteActive = computed(() => decodeURIComponent(route.params.note as string) === props.item.name);
 
+const shouldRefreshItemDisabled = ref(false);
 const isItemDisabled = computed(() => {
+  if (shouldRefreshItemDisabled.value)
+    shouldRefreshItemDisabled.value = false;
+
   const cache = isFolder ? foldersCache : notesCache;
 
   return isFallbackMode.value && !cache.has(props.item.path);
 });
 
-mitt.on('cache:populated', () => triggerRef(isItemDisabled));
+mitt.on('cache:populated', () => shouldRefreshItemDisabled.value = true);
 
 function editItem() {
   const update = isFolder ? updateSubfolderInFolder : updateNoteInFolder;
