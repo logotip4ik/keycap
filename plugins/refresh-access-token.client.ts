@@ -1,4 +1,4 @@
-const REFRESH_AFTER = 60 * 60 - 10; // in seconds
+const NEAR_HOUR = 60 * 60 - 10; // in seconds
 
 let prevInterval: NodeJS.Timer;
 
@@ -16,6 +16,6 @@ export default defineNuxtPlugin(async () => {
 
     refreshToken();
 
-    prevInterval = setInterval(refreshToken, REFRESH_AFTER * 1000);
+    prevInterval = setInterval(refreshToken, NEAR_HOUR * 1000);
   }, { immediate: true });
 });
