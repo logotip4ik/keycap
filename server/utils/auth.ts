@@ -22,7 +22,7 @@ async function generateAccessToken(object: object): Promise<string> {
 
 function getAccessTokenName(): string {
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#cookie_prefixes
-  const prefix = isDevelopment ? '' : '__host-';
+  const prefix = isDevelopment ? '' : '__Host-';
 
   return `${prefix}keycap-user`;
 }
