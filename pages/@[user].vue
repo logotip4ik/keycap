@@ -88,10 +88,13 @@ async function defineOfflineStorage() {
     getAllItems: values,
   };
 
+  let fallbackToast: ReturnType<typeof createToast>;
+
   watch(isFallbackMode, async (value) => {
     if (!value) return;
 
-    createToast('Fallback mode enabled. Populating cache from offline storage.');
+    if (!fallbackToast)
+      fallbackToast = createToast('Fallback mode enabled. Populating cache from offline storage.');
 
     const items = await values<FolderOrNote>();
 
