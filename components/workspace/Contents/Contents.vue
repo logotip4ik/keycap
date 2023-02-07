@@ -18,6 +18,7 @@ const folderPath = computed(() => {
 
   return withoutTrailingSlash(`/${route.params.user}/${folders.join('/')}`);
 });
+const apiFolderPath = computed(() => folderPath.value.split('/').slice(2).join('/'));
 
 const folder = ref<FolderWithContents | null>(
   foldersCache.get(folderPath.value) || null,
@@ -25,31 +26,22 @@ const folder = ref<FolderWithContents | null>(
 
 let firstTimeFetch = true;
 let loadingToast: undefined | ToastInstance;
-const { data: fetchedFolder, error } = useLazyAsyncData<FolderWithContents>(
-  'folder',
-  () => {
-    folder.value = foldersCache.get(folderPath.value) || null;
-
-    const apiFolderPath = folderPath.value.split('/').slice(2).join('/');
-
-    return $fetch(`/api/folder/${apiFolderPath}`, {
-      retry: 2,
-      onRequest: () => {
-        if (!loadingToast) {
-          loadingToast = createToast('Fetching folder contents. Please wait...', {
-            duration: 999999,
-            delay: firstTimeFetch ? 3000 : 0,
-            type: 'loading',
-          });
-          firstTimeFetch = false;
-        }
-      },
-      onResponse: () => loadingToast?.remove(),
-      onResponseError: () => loadingToast?.remove(),
-    });
+const { data: fetchedFolder, error } = useLazyFetch<FolderWithContents>(() => `/api/folder/${apiFolderPath.value}`, {
+  retry: 2,
+  server: false,
+  onRequest: () => {
+    if (!loadingToast) {
+      loadingToast = createToast('Fetching folder contents. Please wait...', {
+        duration: 999999,
+        delay: firstTimeFetch ? 3000 : 0,
+        type: 'loading',
+      });
+      firstTimeFetch = false;
+    }
   },
-  { server: false, watch: [folderPath] },
-);
+  onResponse: () => loadingToast?.remove(),
+  onResponseError: () => loadingToast?.remove(),
+});
 
 const mergedContents = computed(() => {
   if (!folder.value) return [];
@@ -67,6 +59,10 @@ async function goUpFolder() {
 
 mitt.on('cache:populated', () => {
   folder.value = foldersCache.get(folderPath.value) || null;
+});
+
+watch(folderPath, (value) => {
+  folder.value = foldersCache.get(value) || null;
 });
 
 watch(error, async (error) => {
