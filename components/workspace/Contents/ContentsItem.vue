@@ -18,7 +18,7 @@ const menuOptions = shallowReactive({
   x: 0,
   y: 0,
   actions: [
-    { name: 'rename', action: editItem },
+    { name: 'rename', action: renameItem },
     { name: 'delete', action: deleteItem },
   ],
 });
@@ -39,7 +39,7 @@ const isItemDisabled = computed(() => {
 
 mitt.on('cache:populated', () => shouldRefreshItemDisabled.value = true);
 
-function editItem() {
+function renameItem() {
   const update = isFolder ? updateSubfolderInFolder : updateNoteInFolder;
 
   update(props.item, { editing: true }, props.parent);
