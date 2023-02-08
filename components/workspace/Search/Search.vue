@@ -224,7 +224,7 @@ useTinykeys({ Escape: handleCancel });
 
   @supports (backdrop-filter: blur(1px)) {
     backdrop-filter: blur(5px);
-    background-color: hsla(var(--surface-color-hsl), 0.8);
+    background-color: hsla(var(--surface-color-hsl), 0.5);
   }
 
   @media screen and (max-width: $breakpoint-tablet) {
