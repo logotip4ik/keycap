@@ -45,6 +45,11 @@ const { data: fetchedNote, error, refresh } = useLazyAsyncData<Note | null>(
     if (!route.params.note || route.params.note === blankNoteName)
       return null;
 
+    if (!note.value) {
+      offlineStorage.value?.getItem(notePath.value)
+        .then((noteCopy) => noteCopy && (note.value = noteCopy));
+    }
+
     currentNoteState.value = 'fetching';
 
     return $fetch(`/api/note/${noteApiPath.value}`, {
