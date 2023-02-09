@@ -72,7 +72,7 @@ const { data: fetchedNote, error, refresh } = useLazyAsyncData<Note | null>(
 );
 
 let abortController: AbortController | null;
-const throttledUpdate = useThrottleFn(updateNote, 1000, true, false);
+const throttledUpdate = useThrottleFn(updateNote, 1000, true, false); // enable trailing call and disabled leading
 function updateNote(content: string) {
   // if no note was found in cache that means that it was deleted
   if (!note.value || !notesCache.get(notePath.value))
