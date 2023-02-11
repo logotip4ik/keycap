@@ -1,4 +1,3 @@
-import browserslistToEsbuild from 'browserslist-to-esbuild';
 import LTSDI from 'unplugin-ltsdi/vite';
 import { isProduction } from 'std-env';
 
@@ -123,10 +122,6 @@ export default defineNuxtConfig({
   },
 
   vite: {
-    build: {
-      target: browserslistToEsbuild(),
-    },
-
     css: {
       preprocessorOptions: {
         scss: {
