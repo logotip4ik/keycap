@@ -140,7 +140,7 @@ const shortCommitSha = buildInfo.commit;
 
       @media screen and (max-width: $breakpoint-tablet) {
         --size: 30vmin;
-        --blur-divider: 1;
+        --blur-divider: 2;
       }
     }
 

@@ -1,4 +1,9 @@
+[![SWUbanner](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner-direct-single.svg)](https://stand-with-ukraine.pp.ua/)
+
 # Keycap
+
+<img src="public\android-chrome-192x192.png" align="right"
+  alt="Purple keycap with capital letter K" width="150" height="150"/>
 
 Simple note taking app with support for markdown. Organize your notes into folders.
 
@@ -22,4 +27,4 @@ After months of usage windows and android phone, i found out that notes aren't s
 - [ ] code highlighting
 - [ ] work without internet (kinda working, if page is still cached, notes and folders will be loaded from local copies)
 - [ ] create landing page
-- [ ] create project logo (some sort of 3d keycap with words KEY-CAP)
+- [x] create project logo

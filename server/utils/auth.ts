@@ -1,5 +1,6 @@
-import { deleteCookie, getCookie, setCookie } from 'h3';
+import { getCookie, setCookie } from 'h3';
 import { SignJWT, jwtVerify } from 'jose';
+import { isDevelopment } from 'std-env';
 import bcrypt from 'bcryptjs';
 
 import type { H3Event } from 'h3';
@@ -20,9 +21,10 @@ async function generateAccessToken(object: object): Promise<string> {
 }
 
 function getAccessTokenName(): string {
-  const { authCookiePrefix } = useRuntimeConfig().public;
+  // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#cookie_prefixes
+  const prefix = isDevelopment ? '' : '__Host-';
 
-  return `${authCookiePrefix}-access-token`;
+  return `${prefix}keycap-user`;
 }
 
 function getJWTSecret(): Uint8Array {
@@ -38,24 +40,22 @@ function getJWTIssuer(): string {
 }
 
 export async function setAuthCookies(event: H3Event, user: Pick<User, 'id' | 'username' | 'email'>) {
-  const accessToken = await generateAccessToken(user);
   const accessTokenName = getAccessTokenName();
+  const accessToken = await generateAccessToken(user);
 
   const twentyFourHours = 60 * 60 * 24;
 
   setCookie(event, accessTokenName, accessToken, {
     path: '/',
-    sameSite: 'strict',
+    sameSite: 'lax',
     maxAge: twentyFourHours,
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    secure: true,
   });
 }
 
-export async function removeAuthCookies(event: H3Event) {
-  const accessTokenName = getAccessTokenName();
-
-  deleteCookie(event, accessTokenName);
+export async function removeAuthCookies(_event: H3Event) {
+  // noop
 }
 
 export async function getUserFromEvent(event: H3Event): Promise<Pick<User, 'id' | 'username' | 'email'> | null> {

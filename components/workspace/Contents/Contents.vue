@@ -19,7 +19,7 @@ const folderPath = computed(() => {
   return withoutTrailingSlash(`/${route.params.user}/${folders.join('/')}`);
 });
 
-const folder = shallowRef<FolderWithContents | null>(
+const folder = ref<FolderWithContents | null>(
   foldersCache.get(folderPath.value) || null,
 );
 
@@ -29,6 +29,11 @@ const { data: fetchedFolder, error } = useLazyAsyncData<FolderWithContents>(
   'folder',
   () => {
     folder.value = foldersCache.get(folderPath.value) || null;
+
+    if (folder.value) {
+      offlineStorage.value?.getItem(folderPath.value)
+        .then((folderCopy) => folderCopy && (folder.value = folderCopy));
+    }
 
     const apiFolderPath = folderPath.value.split('/').slice(2).join('/');
 
@@ -117,7 +122,7 @@ useTinykeys({
 
 <template>
   <Transition name="fade">
-    <TransitionGroup v-if="folder" :key="folder.path" tag="ul" name="list">
+    <TransitionGroup v-if="folder" :key="folder.path" tag="ul" name="list" class="workspace__contents__list">
       <li v-if="!folder.root" key="cd.." class="item">
         <button class="item__name" @click="goUpFolder">
           cd ..

@@ -9,16 +9,19 @@ const isFallbackMode = useFallbackMode();
 const notesCache = useNotesCache();
 const foldersCache = useFoldersCache();
 const mitt = useMitt();
+const createToast = useToast();
 
 // TODO: add loading state
 const newItemName = ref(props.item.name);
 
+// TODO: add loading state
 const menuOptions = shallowReactive({
   opened: false,
   x: 0,
   y: 0,
   actions: [
-    { name: 'rename', action: editItem },
+    { name: 'preload', action: _preloadItem },
+    { name: 'rename', action: renameItem },
     { name: 'delete', action: deleteItem },
   ],
 });
@@ -27,15 +30,30 @@ const isFolder = 'root' in props.item;
 
 const isItemRouteActive = computed(() => decodeURIComponent(route.params.note as string) === props.item.name);
 
+const shouldRefreshItemDisabled = ref(false);
 const isItemDisabled = computed(() => {
+  if (shouldRefreshItemDisabled.value)
+    shouldRefreshItemDisabled.value = false;
+
   const cache = isFolder ? foldersCache : notesCache;
 
   return isFallbackMode.value && !cache.has(props.item.path);
 });
 
-mitt.on('cache:populated', () => triggerRef(isItemDisabled));
+mitt.on('cache:populated', () => shouldRefreshItemDisabled.value = true);
 
-function editItem() {
+function _preloadItem() {
+  const loadingToast = createToast(`Preloading into cache "${props.item.name}"`,
+    { duration: Infinity, type: 'loading' },
+  );
+
+  preloadItem(props.item)
+    .finally(() => loadingToast.remove());
+
+  menuOptions.opened = false;
+}
+
+function renameItem() {
   const update = isFolder ? updateSubfolderInFolder : updateNoteInFolder;
 
   update(props.item, { editing: true }, props.parent);
@@ -130,10 +148,6 @@ function handleContextmenu(event: Event) {
       <button class="item__edit" @click="handleContextmenu">
         <Icon name="ic:baseline-more-vert" class="item__delete__icon" />
       </button>
-
-      <!-- <button class="item__delete" @click="deleteItem">
-        <Icon name="ic:baseline-delete-outline" class="item__delete__icon" />
-      </button> -->
     </template>
   </div>
 

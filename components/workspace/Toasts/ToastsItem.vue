@@ -8,7 +8,9 @@ let timeout: NodeJS.Timeout;
 
 onMounted(() => {
   const totalTime = props.animationDuration + props.toast.duration;
-  timeout = setTimeout(() => props.toast.remove(), totalTime);
+
+  if (props.toast.duration < Infinity)
+    timeout = setTimeout(() => props.toast.remove(), totalTime);
 });
 
 onBeforeUnmount(() => clearTimeout(timeout));
@@ -40,7 +42,7 @@ onBeforeUnmount(() => clearTimeout(timeout));
   font-size: 1.05rem;
   color: var(--surface-color);
 
-  width: 94%;
+  width: 90vw;
   max-width: 33ch;
 
   padding: 0.6rem 1rem;

@@ -45,6 +45,11 @@ const { data: fetchedNote, error, refresh } = useLazyAsyncData<Note | null>(
     if (!route.params.note || route.params.note === blankNoteName)
       return null;
 
+    if (!note.value) {
+      offlineStorage.value?.getItem(notePath.value)
+        .then((noteCopy) => noteCopy && (note.value = noteCopy));
+    }
+
     currentNoteState.value = 'fetching';
 
     return $fetch(`/api/note/${noteApiPath.value}`, {
@@ -67,7 +72,7 @@ const { data: fetchedNote, error, refresh } = useLazyAsyncData<Note | null>(
 );
 
 let abortController: AbortController | null;
-const throttledUpdate = useThrottleFn(updateNote, 1000);
+const throttledUpdate = useThrottleFn(updateNote, 1000, true, false); // enable trailing call and disabled leading
 function updateNote(content: string) {
   // if no note was found in cache that means that it was deleted
   if (!note.value || !notesCache.get(notePath.value))
