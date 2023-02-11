@@ -8,7 +8,9 @@ let timeout: NodeJS.Timeout;
 
 onMounted(() => {
   const totalTime = props.animationDuration + props.toast.duration;
-  timeout = setTimeout(() => props.toast.remove(), totalTime);
+
+  if (props.toast.duration < Infinity)
+    timeout = setTimeout(() => props.toast.remove(), totalTime);
 });
 
 onBeforeUnmount(() => clearTimeout(timeout));
