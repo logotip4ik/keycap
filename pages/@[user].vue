@@ -71,7 +71,7 @@ function preloadComponents() {
 }
 
 async function defineFuzzyWorker() {
-// @ts-expect-error idk how to setup this
+  // @ts-expect-error idk how to setup this
   const { wrap } = await import('comlink?only=wrap') as typeof Comlink;
 
   fuzzyWorker.value = wrap(new FuzzyWorker());
