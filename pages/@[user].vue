@@ -69,10 +69,7 @@ useTinykeys({
   [shortcuts.search]: (event) => {
     event.preventDefault();
 
-    const selection = document.getSelection();
-
-    if (selection?.isCollapsed)
-      isShowingSearch.value = !isShowingSearch.value;
+    isShowingSearch.value = !isShowingSearch.value;
   },
 });
 
