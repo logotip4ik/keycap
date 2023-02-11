@@ -9,6 +9,7 @@ const isFallbackMode = useFallbackMode();
 const notesCache = useNotesCache();
 const foldersCache = useFoldersCache();
 const mitt = useMitt();
+const createToast = useToast();
 
 // TODO: add loading state
 const newItemName = ref(props.item.name);
@@ -42,7 +43,12 @@ const isItemDisabled = computed(() => {
 mitt.on('cache:populated', () => shouldRefreshItemDisabled.value = true);
 
 function _preloadItem() {
-  preloadItem(props.item);
+  const loadingToast = createToast(`Preloading into cache "${props.item.name}"`,
+    { duration: Infinity, type: 'loading' },
+  );
+
+  preloadItem(props.item)
+    .finally(() => loadingToast.remove());
 
   menuOptions.opened = false;
 }
