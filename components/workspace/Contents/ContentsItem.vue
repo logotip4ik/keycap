@@ -148,10 +148,6 @@ function handleContextmenu(event: Event) {
       <button class="item__edit" @click="handleContextmenu">
         <Icon name="ic:baseline-more-vert" class="item__delete__icon" />
       </button>
-
-      <!-- <button class="item__delete" @click="deleteItem">
-        <Icon name="ic:baseline-delete-outline" class="item__delete__icon" />
-      </button> -->
     </template>
   </div>
 

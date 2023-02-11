@@ -166,7 +166,7 @@ onMounted(() => {
         v-show="isShowingContents"
         class="workspace__contents"
       >
-        <WorkspaceContents class="workspace__contents__list" />
+        <WorkspaceContents />
       </aside>
     </Transition>
 
