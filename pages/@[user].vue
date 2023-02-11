@@ -1,12 +1,6 @@
 <script setup lang="ts">
-import type * as Comlink from 'comlink';
-import type * as IDBKeyval from 'idb-keyval';
-
 import { blankNoteName } from '~/assets/constants';
 import breakpoints from '~/assets/constants/breakpoints';
-
-// @ts-expect-error no types for worker
-import FuzzyWorker from '~/workers/fuzzy?worker';
 
 import type WorkspaceSearch from '~/components/workspace/Search/index.vue';
 
@@ -21,14 +15,6 @@ const { isMobileOrTablet } = useDevice();
 const { shortcuts } = useAppConfig();
 
 const currentNoteState = useCurrentNoteState();
-const createToast = useToast();
-const isFallbackMode = useFallbackMode();
-const foldersCache = useFoldersCache();
-const notesCache = useNotesCache();
-const mitt = useMitt();
-
-const fuzzyWorker = useFuzzyWorker();
-const offlineStorage = useOfflineStorage();
 
 const search = ref<InstanceType<typeof WorkspaceSearch> | null>(null);
 
@@ -63,54 +49,6 @@ const currentRouteName = computed(() => {
   return null;
 });
 
-function preloadComponents() {
-  prefetchComponents('WorkspaceSearch');
-
-  const blankNotePath = `/@${user.value!.username}/${blankNoteName}`;
-  preloadRouteComponents(blankNotePath);
-}
-
-async function defineFuzzyWorker() {
-  // @ts-expect-error idk how to setup this
-  const { wrap } = await import('comlink?only=wrap') as typeof Comlink;
-
-  fuzzyWorker.value = wrap(new FuzzyWorker());
-}
-
-async function defineOfflineStorage() {
-  // @ts-expect-error idk how to setup this
-  const { del, get, set, values } = await import('idb-keyval?only=del,get,set,values') as typeof IDBKeyval;
-
-  offlineStorage.value = {
-    setItem: set,
-    getItem: get,
-    removeItem: del,
-    getAllItems: values,
-  };
-
-  let fallbackToast: ReturnType<typeof createToast>;
-
-  watch(isFallbackMode, async (value) => {
-    if (!value) return;
-
-    if (!fallbackToast)
-      fallbackToast = createToast('Fallback mode enabled. Populating cache from offline storage.');
-
-    const items = await values<FolderOrNote>();
-
-    for (const item of items) {
-      const isFolder = 'root' in item;
-      const cache = isFolder ? foldersCache : notesCache;
-
-      if (!cache.has(item.path))
-        // @ts-expect-error idk how to setup this type
-        cache.set(item.path, item);
-    }
-
-    mitt.emit('cache:populated');
-  }, { immediate: true });
-}
-
 watch(() => route.params.note, (noteName) => {
   const isEmptyNoteName = !noteName || noteName === blankNoteName;
 
@@ -142,7 +80,7 @@ onMounted(() => {
   // request idle callback is polyfilled by nuxt
   const idleCallback = window.requestIdleCallback;
 
-  const callbacks = [preloadComponents, defineFuzzyWorker, defineOfflineStorage];
+  const callbacks = [preloadDashboardComponents, defineFuzzyWorker, defineOfflineStorage];
 
   idleCallback(
     // calls functions in idle waterfall
