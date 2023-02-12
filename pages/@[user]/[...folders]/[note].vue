@@ -37,7 +37,7 @@ const note = shallowRef<Note | null>(
 
 let firstTimeFetch = true;
 let loadingToast: undefined | ToastInstance;
-const { data: fetchedNote, error, refresh } = useLazyAsyncData<Note | null>(
+const { data: fetchedNote, pending, error, refresh } = useLazyAsyncData<Note | null>(
   'note',
   async () => {
     currentNoteState.value = '';
@@ -81,6 +81,18 @@ const { data: fetchedNote, error, refresh } = useLazyAsyncData<Note | null>(
 let abortController: AbortController | null;
 const throttledUpdate = useThrottleFn(updateNote, 1000, true, false); // enable trailing call and disabled leading
 function updateNote(content: string) {
+  // send update request after get
+  if (pending.value) {
+    const stop = watch(pending, (pending) => {
+      if (!pending) {
+        updateNote(content);
+        stop();
+      }
+    });
+
+    return;
+  }
+
   // if no note was found in cache that means that it was deleted
   if (!note.value || !notesCache.get(notePath.value))
     return;
