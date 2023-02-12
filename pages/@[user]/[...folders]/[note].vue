@@ -96,7 +96,8 @@ function updateNote(content: string) {
   // enables optimistic ui
   notesCache.set(note.value.path, { ...note.value, ...newNote });
 
-  currentNoteState.value = 'updating';
+  if (notePath.value.replace('/', '/@') === window.location.pathname)
+    currentNoteState.value = 'updating';
 
   abortController?.abort();
   abortController = new AbortController();
