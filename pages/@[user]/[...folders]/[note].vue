@@ -61,11 +61,18 @@ const { data: fetchedNote, error, refresh } = useLazyAsyncData<Note | null>(
             delay: firstTimeFetch ? 3500 : 0,
             type: 'loading',
           });
+
           firstTimeFetch = false;
         }
       },
-      onResponse: () => loadingToast?.remove(),
-      onResponseError: () => loadingToast?.remove(),
+      onResponse: () => {
+        loadingToast?.remove();
+        loadingToast = undefined;
+      },
+      onResponseError: () => {
+        loadingToast?.remove();
+        loadingToast = undefined;
+      },
     });
   },
   { server: false },

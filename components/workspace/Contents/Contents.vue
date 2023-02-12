@@ -46,11 +46,18 @@ const { data: fetchedFolder, error } = useLazyAsyncData<FolderWithContents>(
             delay: firstTimeFetch ? 3000 : 0,
             type: 'loading',
           });
+
           firstTimeFetch = false;
         }
       },
-      onResponse: () => loadingToast?.remove(),
-      onResponseError: () => loadingToast?.remove(),
+      onResponse: () => {
+        loadingToast?.remove();
+        loadingToast = undefined;
+      },
+      onResponseError: () => {
+        loadingToast?.remove();
+        loadingToast = undefined;
+      },
     });
   },
   { server: false, watch: [folderPath] },
