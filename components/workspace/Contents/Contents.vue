@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { withLeadingSlash, withoutTrailingSlash } from 'ufo';
 
-import type { ToastInstance } from '~/composables/toasts';
+import type { RefToastInstance } from '~/composables/toasts';
 
 const route = useRoute();
 const isFallbackMode = useFallbackMode();
@@ -24,7 +24,7 @@ const folder = ref<FolderWithContents | null>(
 );
 
 let firstTimeFetch = true;
-let loadingToast: undefined | ToastInstance;
+let loadingToast: RefToastInstance;
 const { data: fetchedFolder, error } = useLazyAsyncData<FolderWithContents>(
   'folder',
   () => {
@@ -40,7 +40,7 @@ const { data: fetchedFolder, error } = useLazyAsyncData<FolderWithContents>(
     return $fetch(`/api/folder/${apiFolderPath}`, {
       retry: 2,
       onRequest: () => {
-        if (!loadingToast) {
+        if (!loadingToast?.value) {
           loadingToast = createToast('Fetching folder contents. Please wait...', {
             duration: 999999,
             delay: firstTimeFetch ? 3000 : 0,
@@ -50,14 +50,8 @@ const { data: fetchedFolder, error } = useLazyAsyncData<FolderWithContents>(
           firstTimeFetch = false;
         }
       },
-      onResponse: () => {
-        loadingToast?.remove();
-        loadingToast = undefined;
-      },
-      onResponseError: () => {
-        loadingToast?.remove();
-        loadingToast = undefined;
-      },
+      onResponse: () => loadingToast.value?.remove(),
+      onResponseError: () => loadingToast.value?.remove(),
     });
   },
   { server: false, watch: [folderPath] },

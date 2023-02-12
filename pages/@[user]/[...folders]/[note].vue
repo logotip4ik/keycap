@@ -2,7 +2,7 @@
 import { withoutLeadingSlash } from 'ufo';
 
 import type { Note } from '@prisma/client';
-import type { ToastInstance } from '~/composables/toasts';
+import type { RefToastInstance } from '~/composables/toasts';
 
 import { blankNoteName } from '~/assets/constants';
 
@@ -36,7 +36,7 @@ const note = shallowRef<Note | null>(
 );
 
 let firstTimeFetch = true;
-let loadingToast: undefined | ToastInstance;
+let loadingToast: RefToastInstance;
 const { data: fetchedNote, pending, error, refresh } = useLazyAsyncData<Note | null>(
   'note',
   async () => {
@@ -55,7 +55,7 @@ const { data: fetchedNote, pending, error, refresh } = useLazyAsyncData<Note | n
     return $fetch(`/api/note/${noteApiPath.value}`, {
       retry: 2,
       onRequest: () => {
-        if (!loadingToast) {
+        if (!loadingToast?.value) {
           loadingToast = createToast('Fetching note. Please wait...', {
             duration: 999999,
             delay: firstTimeFetch ? 3500 : 0,
@@ -65,14 +65,8 @@ const { data: fetchedNote, pending, error, refresh } = useLazyAsyncData<Note | n
           firstTimeFetch = false;
         }
       },
-      onResponse: () => {
-        loadingToast?.remove();
-        loadingToast = undefined;
-      },
-      onResponseError: () => {
-        loadingToast?.remove();
-        loadingToast = undefined;
-      },
+      onResponse: () => loadingToast.value?.remove(),
+      onResponseError: () => loadingToast.value?.remove(),
     });
   },
   { server: false },

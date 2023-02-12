@@ -5,14 +5,14 @@ const toasts = shallowRef<ToastInstance[]>([]);
 export const useToasts = () => toasts;
 
 export function useToast() {
-  return (message: string, options?: ToastUserOptions & { delay?: number }): ToastInstance => {
+  return (message: string, options?: ToastUserOptions & { delay?: number }): RefToastInstance => {
     const timeout: { value: NodeJS.Timeout | null } = { value: null };
 
     const toast = createToast({ ...(options ?? {}), message, timeout });
 
     const addToastToQueue = () => {
       timeout.value = null;
-      toasts.value = toasts.value.concat(toast);
+      toasts.value = toasts.value.concat(toast.value!);
     };
 
     if (options?.delay)
@@ -24,7 +24,7 @@ export function useToast() {
   };
 }
 
-function createToast(options: ToastUserOptions & { message?: string; timeout: { value: NodeJS.Timeout | null } }): ToastInstance {
+function createToast(options: ToastUserOptions & { message?: string; timeout: { value: NodeJS.Timeout | null } }): RefToastInstance {
   options.message = (options.message ?? '').trim();
 
   if (options.message === '')
@@ -32,20 +32,26 @@ function createToast(options: ToastUserOptions & { message?: string; timeout: { 
 
   const toastId = Math.floor(Math.random() * 9999999);
 
-  return {
-    id: toastId,
-    message: options.message,
-    priority: options.priority ?? 0,
-    duration: options.duration ?? 6000,
-    type: options.type ?? 'info',
-    el: shallowRef(null),
-    remove: () => {
-      if (options.timeout.value)
-        clearTimeout(options.timeout.value);
-      else
-        toasts.value = toasts.value.filter((toast) => toast.id !== toastId);
+  const toast: RefToastInstance = {
+    value: {
+      id: toastId,
+      message: options.message,
+      priority: options.priority ?? 0,
+      duration: options.duration ?? 6000,
+      type: options.type ?? 'info',
+      el: shallowRef(null),
+      remove: () => {
+        if (options.timeout.value)
+          clearTimeout(options.timeout.value);
+        else
+          toasts.value = toasts.value.filter((toast) => toast.id !== toastId);
+
+        toast.value = undefined;
+      },
     },
   };
+
+  return toast;
 }
 
 type ToastType = 'info' | 'loading';
@@ -71,4 +77,8 @@ export interface ToastInstance {
   type: ToastType
   el: ShallowRef<HTMLOutputElement | null>
   remove: () => void
+}
+
+export interface RefToastInstance {
+  value?: ToastInstance
 }
