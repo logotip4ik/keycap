@@ -52,15 +52,16 @@ onBeforeUnmount(() => clearTimeout(timeout));
   background-color: hsla(var(--text-color-hsl), 0.9);
 
   box-shadow:
-      0px 0px 5.3px -10px rgba(0, 0, 0, 0.028),
-      0px 0px 17.9px -10px rgba(0, 0, 0, 0.042),
-      0px 0px 80px -10px rgba(0, 0, 0, 0.07);
+    2px 1.7px 5.3px rgba(0, 0, 0, 0.02),
+    6.7px 5.6px 17.9px rgba(0, 0, 0, 0.03),
+    30px 25px 80px rgba(0, 0, 0, 0.05)
+  ;
 
   @supports (backdrop-filter: blur(1px)) {
     color: var(--text-color);
 
     background-color: hsla(var(--selection-bg-color-hsl), 0.1);
-    border: 1px solid hsla(var(--selection-bg-color-hsl), 0.25);
+    border: 1px solid hsla(var(--selection-bg-color-hsl), 0.5);
     backdrop-filter: blur(6px);
   }
 
