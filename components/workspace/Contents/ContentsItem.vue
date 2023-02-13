@@ -48,7 +48,7 @@ function _preloadItem() {
   );
 
   preloadItem(props.item)
-    .finally(() => loadingToast.remove());
+    .finally(() => loadingToast.value?.remove());
 
   menuOptions.opened = false;
 }
