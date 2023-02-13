@@ -18,7 +18,7 @@ export declare module '@nuxt/schema' {
   interface AppConfigInput {
     shortcuts: Shortcuts
 
-    buildInfo: BuildInfo
+    buildInfo?: BuildInfo
     
     iconsToPreload?: string[]
   }
