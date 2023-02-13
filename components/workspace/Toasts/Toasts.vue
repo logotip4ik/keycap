@@ -50,6 +50,8 @@ function beforeLeaveHook(el: Element) {
   right: var(--screen-spacing-x);
   z-index: 2;
 
+  width: 50vw;
+
   pointer-events: none;
 
   @media screen and (max-width: $breakpoint-tablet) {
