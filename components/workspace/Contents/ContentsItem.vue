@@ -43,7 +43,7 @@ const isItemDisabled = computed(() => {
 mitt.on('cache:populated', () => shouldRefreshItemDisabled.value = true);
 
 function _preloadItem() {
-  const loadingToast = createToast(`Preloading into cache "${props.item.name}"`,
+  const loadingToast = createToast(`Preloading into cache: "${props.item.name}"`,
     { duration: Infinity, type: 'loading' },
   );
 
