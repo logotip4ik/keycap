@@ -1,6 +1,6 @@
 import { getCookie, setCookie } from 'h3';
 import { SignJWT, jwtVerify } from 'jose';
-import { isDevelopment } from 'std-env';
+import { isDevelopment, isProduction } from 'std-env';
 import bcrypt from 'bcryptjs';
 
 import type { H3Event } from 'h3';
@@ -50,7 +50,7 @@ export async function setAuthCookies(event: H3Event, user: Pick<User, 'id' | 'us
     sameSite: 'lax',
     maxAge: twentyFourHours,
     httpOnly: true,
-    secure: true,
+    secure: isProduction,
   });
 }
 
