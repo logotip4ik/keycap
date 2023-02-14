@@ -50,7 +50,7 @@ function beforeLeaveHook(el: Element) {
   right: var(--screen-spacing-x);
   z-index: 2;
 
-  width: 50vw;
+  width: calc(100vw - var(--screen-spacing-x) * 2);
 
   pointer-events: none;
 
