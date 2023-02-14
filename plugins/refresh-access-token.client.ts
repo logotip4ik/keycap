@@ -6,7 +6,10 @@ export default defineNuxtPlugin(async () => {
   const user = useUser();
 
   const refreshToken = () => {
-    const fetcher = () => $fetch('/api/user/refresh', { method: 'POST', retry: 2 });
+    const fetcher = () =>
+      $fetch('/api/user/refresh', { method: 'POST', retry: 2 })
+        // https://github.com/unjs/ofetch#%EF%B8%8F-handling-errors
+        .catch((error) => error.data);
 
     window.requestIdleCallback(fetcher);
   };

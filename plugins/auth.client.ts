@@ -5,5 +5,6 @@ export default defineNuxtPlugin(() => {
 
   $fetch('/api/user/me')
     .then((fetchedUser) => user.value = fetchedUser)
-    .catch(() => null);
+    // https://github.com/unjs/ofetch#%EF%B8%8F-handling-errors
+    .catch((error) => error.data);
 });
