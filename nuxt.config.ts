@@ -36,7 +36,7 @@ const noCacheHeaders = {
 const defaultHeaders = {
   // 'Cross-Origin-Embedder-Policy': 'require-corp',
   // 'Cross-Origin-Opener-Policy': 'same-origin',
-  // 'Cross-Origin-Resource-Policy': 'same-origin',
+  'Cross-Origin-Resource-Policy': 'same-origin',
   'Origin-Agent-Cluster': '?1',
   'X-DNS-Prefetch-Control': 'off',
   'X-Download-Options': 'noopen',
