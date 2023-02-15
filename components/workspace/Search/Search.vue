@@ -8,7 +8,10 @@ import type { SearchActionValues } from '~/types/common';
 interface Emits { (e: 'close'): void }
 const emit = defineEmits<Emits>();
 
+const route = useRoute();
 const mitt = useMitt();
+
+const fuzzyWorker = useFuzzyWorker();
 
 const commandActions: Record<SearchActionValues, (args: string[]) => any> = {
   [SearchAction.New]: (args) => {
@@ -27,8 +30,6 @@ const commandActions: Record<SearchActionValues, (args: string[]) => any> = {
     mitt.emit('save:note');
   },
 };
-
-const fuzzyWorker = useFuzzyWorker();
 
 const results = shallowRef<(FuzzyItem | CommandItem)[]>([]);
 const isLoadingResults = ref(false);
@@ -110,6 +111,8 @@ const isResultsEmpty = computed(() => {
 });
 
 watch(debouncedSearchInput, handleSearchInput);
+
+watch(() => route.query.search, (search) => !search && emit('close'));
 
 let prevHeight = 0;
 useResizeObserver(searchEl, (entries) => {

@@ -55,6 +55,16 @@ watch(() => route.params.note, (noteName) => {
   if (isEmptyNoteName) currentNoteState.value = '';
 });
 
+watch(isShowingSearch, async (search) => {
+  const query = { ...route.query };
+
+  // empty array removes query param from url
+  // `undefined` also does the thing but typescript is not happy
+  query.search = search ? search.toString() : [];
+
+  await navigateTo({ ...route, query });
+});
+
 useHead({
   title: () => currentRouteName.value,
   titleTemplate: (name) => {
