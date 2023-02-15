@@ -13,8 +13,7 @@ const mitt = useMitt();
 
 const folderPath = computed(() => {
   const folders = (Array.isArray(route.params.folders) ? route.params.folders : [route.params.folders])
-    .filter((str) => !!str)
-    .map(encodeURIComponent);
+    .filter((str) => !!str);
 
   return withoutTrailingSlash(`/${route.params.user}/${folders.join('/')}`);
 });
@@ -24,6 +23,7 @@ const folder = ref<FolderWithContents | null>(
 );
 
 let firstTimeFetch = true;
+let prevFolderPath = folderPath.value;
 let loadingToast: RefToastInstance;
 const { data: fetchedFolder, error } = useLazyAsyncData<FolderWithContents>(
   'folder',
@@ -40,6 +40,9 @@ const { data: fetchedFolder, error } = useLazyAsyncData<FolderWithContents>(
     return $fetch(`/api/folder/${apiFolderPath}`, {
       retry: 2,
       onRequest: () => {
+        if (prevFolderPath !== folderPath.value)
+          firstTimeFetch = true;
+
         if (!loadingToast?.value) {
           loadingToast = createToast('Fetching folder contents. Please wait...', {
             duration: 999999,
@@ -49,6 +52,8 @@ const { data: fetchedFolder, error } = useLazyAsyncData<FolderWithContents>(
 
           firstTimeFetch = false;
         }
+
+        prevFolderPath = folderPath.value;
       },
       onResponse: () => loadingToast.value?.remove(),
       onResponseError: () => loadingToast.value?.remove(),
