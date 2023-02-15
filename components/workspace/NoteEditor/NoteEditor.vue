@@ -202,7 +202,8 @@ onBeforeRouteUpdate(() => {
 
               accent-color: var(--task-list-indicator-color);
 
-              transform: scale(1.125)
+              transform: scale(1.125);
+              transform-origin: center center;
             }
           }
 
