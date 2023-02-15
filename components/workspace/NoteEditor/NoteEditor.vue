@@ -60,9 +60,7 @@ const editor = useEditor({
     }),
   ],
 
-  onUpdate: useDebounceFn(({ editor }) => {
-    update(editor.isEmpty ? '' : editor.getHTML());
-  }, 350),
+  onUpdate: useDebounceFn(saveEditorContent, 350),
 });
 
 function saveEditorContent() {
@@ -106,9 +104,7 @@ useTinykeys({
 
     event.preventDefault();
 
-    const noteContent = editor.value?.isEmpty ? '' : editor.value?.getHTML();
-
-    update(noteContent || '');
+    saveEditorContent();
   },
 });
 
@@ -122,8 +118,9 @@ onBeforeUnmount(() => {
 
 // if user updated current note and switched to another note
 // before debounced function execution, try to save content
-onBeforeRouteUpdate(() => {
-  saveEditorContent();
+onBeforeRouteUpdate((from, to) => {
+  if (from.path !== to.path)
+    saveEditorContent();
 });
 </script>
 
