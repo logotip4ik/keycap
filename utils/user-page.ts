@@ -4,9 +4,6 @@ import type * as IDBKeyval from 'idb-keyval';
 
 import { blankNoteName } from '~/assets/constants';
 
-// @ts-expect-error no types for worker
-import FuzzyWorker from '~/workers/fuzzy?worker';
-
 export function preloadDashboardComponents() {
   const user = useUser();
 
@@ -22,7 +19,10 @@ export async function defineFuzzyWorker() {
 
   const fuzzyWorker = useFuzzyWorker();
 
-  fuzzyWorker.value = wrap(new FuzzyWorker());
+  // https://vitejs.dev/guide/features.html#web-workers
+  const worker = new Worker(new URL('../workers/fuzzy.ts', import.meta.url));
+
+  fuzzyWorker.value = wrap(worker);
 }
 
 export async function defineOfflineStorage() {
