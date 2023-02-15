@@ -40,7 +40,7 @@ const defaultHeaders = {
   // 'Origin-Agent-Cluster': '?1',
   // 'X-DNS-Prefetch-Control': 'off',
   // 'X-Download-Options': 'noopen',
-  // 'X-Permitted-Cross-Domain-Policies': 'none',
+  'X-Permitted-Cross-Domain-Policies': 'none',
   'X-Frame-Options': 'DENY',
   'X-Content-Type-Options': 'nosniff',
   'X-XSS-Protection': '0',
