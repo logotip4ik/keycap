@@ -189,6 +189,7 @@ onBeforeRouteUpdate(() => {
 
           &[data-checked="true"] {
             opacity: 0.625;
+            filter: blur(1px);
           }
 
           > label {
