@@ -1,56 +1,7 @@
 import LTSDI from 'unplugin-ltsdi/vite';
-import { isProduction } from 'std-env';
 
+import { getHeaders } from './headers.config';
 import breakpoints from './assets/constants/breakpoints';
-
-const WEEK_IN_SECONDS = 60 * 60 * 24 * 7;
-const SIX_MONTH_IN_SECONDS = 60 * 60 * 24 * 31 * 6;
-
-const corsHeaders = {
-  'Access-Control-Allow-Origin': process.env.SITE_ORIGIN || '*',
-  'Access-Control-Allow-Methods': 'GET, OPTIONS, PATCH, POST, DELETE',
-  'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept',
-};
-
-const cspHeaders = {
-  'Content-Security-Policy': [
-    'default-src \'self\';',
-    'connect-src https: \'self\';',
-    'script-src \'unsafe-inline\' \'self\';',
-    'script-src-elem \'unsafe-inline\' \'self\';',
-    'style-src \'unsafe-inline\' \'self\';',
-    'object-src \'none\';',
-    'upgrade-insecure-requests',
-  ].join(' '),
-};
-
-const longCacheHeaders = {
-  'Cache-Control': `public, immutable, max-age=${WEEK_IN_SECONDS}, stale-while-revalidate=${SIX_MONTH_IN_SECONDS}`,
-};
-
-const noCacheHeaders = {
-  'Cache-Control': 'private, must-revalidate, max-age=0',
-};
-
-// basically helmet defaults with some customizations
-const defaultHeaders = {
-  'Cross-Origin-Embedder-Policy': 'require-corp',
-  'Cross-Origin-Opener-Policy': 'same-origin',
-  'Cross-Origin-Resource-Policy': 'same-origin',
-  'Origin-Agent-Cluster': '?1',
-  'X-DNS-Prefetch-Control': 'off',
-  'X-Download-Options': 'noopen',
-  'X-Permitted-Cross-Domain-Policies': 'none',
-  'X-Frame-Options': 'DENY',
-  'X-Content-Type-Options': 'nosniff',
-  'X-XSS-Protection': '0',
-  'Keep-Alive': '5',
-  'Referrer-Policy': 'origin-when-cross-origin, strict-origin-when-cross-origin',
-  'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
-  'Vary': 'Accept-Encoding, Accept, X-Requested-With',
-  ...noCacheHeaders,
-  ...(isProduction ? cspHeaders : {}),
-};
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
@@ -82,24 +33,12 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    '/**': {
-      headers: { ...defaultHeaders },
-    },
+    '/**': { headers: getHeaders('default') },
 
     // Caching only build assets that has build hash in filenames
-    '/_nuxt/**': {
-      headers: {
-        ...defaultHeaders,
-        ...(isProduction ? longCacheHeaders : {}),
-      },
-    },
+    '/_nuxt/**': { headers: getHeaders('assets') },
 
-    '/api/**': {
-      headers: {
-        ...defaultHeaders,
-        ...(isProduction ? corsHeaders : {}),
-      },
-    },
+    '/api/**': { headers: getHeaders('api') },
 
     '/': { prerender: true },
     '/about': { prerender: true },
