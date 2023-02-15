@@ -185,7 +185,7 @@ onBeforeRouteUpdate(() => {
         li {
           display: flex;
 
-          transition: opacity .3s;
+          transition: opacity .3s, filter .3s;
 
           &[data-checked="true"] {
             opacity: 0.625;
