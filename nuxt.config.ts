@@ -34,13 +34,13 @@ const noCacheHeaders = {
 
 // basically helmet defaults with some customizations
 const defaultHeaders = {
-  'Cross-Origin-Embedder-Policy': 'require-corp',
-  'Cross-Origin-Opener-Policy': 'same-origin',
-  'Cross-Origin-Resource-Policy': 'same-origin',
-  'Origin-Agent-Cluster': '?1',
-  'X-DNS-Prefetch-Control': 'off',
-  'X-Download-Options': 'noopen',
-  'X-Permitted-Cross-Domain-Policies': 'none',
+  // 'Cross-Origin-Embedder-Policy': 'require-corp',
+  // 'Cross-Origin-Opener-Policy': 'same-origin',
+  // 'Cross-Origin-Resource-Policy': 'same-origin',
+  // 'Origin-Agent-Cluster': '?1',
+  // 'X-DNS-Prefetch-Control': 'off',
+  // 'X-Download-Options': 'noopen',
+  // 'X-Permitted-Cross-Domain-Policies': 'none',
   'X-Frame-Options': 'DENY',
   'X-Content-Type-Options': 'nosniff',
   'X-XSS-Protection': '0',
