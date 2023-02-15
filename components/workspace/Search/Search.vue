@@ -22,6 +22,10 @@ const commandActions: Record<SearchActionValues, (args: string[]) => any> = {
   },
   [SearchAction.Refresh]: () => {
     refreshNuxtData('note');
+    refreshNuxtData('folder');
+  },
+  [SearchAction.RefreshNote]: () => {
+    refreshNuxtData('note');
   },
   [SearchAction.RefreshFolder]: () => {
     refreshNuxtData('folder');
@@ -55,7 +59,7 @@ function handleSearchInput(value: string) {
   value = value.trim();
   selectedResult.value = 0;
 
-  if (value.length < 2 || !fuzzyWorker.value)
+  if (value.length < 1 || !fuzzyWorker.value)
     return results.value = [];
 
   isLoadingResults.value = true;
