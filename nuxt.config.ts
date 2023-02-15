@@ -38,7 +38,7 @@ const defaultHeaders = {
   // 'Cross-Origin-Opener-Policy': 'same-origin',
   // 'Cross-Origin-Resource-Policy': 'same-origin',
   // 'Origin-Agent-Cluster': '?1',
-  // 'X-DNS-Prefetch-Control': 'off',
+  'X-DNS-Prefetch-Control': 'off',
   'X-Download-Options': 'noopen',
   'X-Permitted-Cross-Domain-Policies': 'none',
   'X-Frame-Options': 'DENY',
