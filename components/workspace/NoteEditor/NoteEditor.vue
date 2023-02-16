@@ -186,9 +186,9 @@ onBeforeRouteUpdate((from, to) => {
 
           &[data-checked="true"] {
             opacity: 0.625;
-            filter: blur(1px);
+            filter: blur(0.75px);
 
-            &:is(:hover, :focus) {
+            &:is(:hover, :focus-within) {
               opacity: 0.9;
               filter: none;
             }
