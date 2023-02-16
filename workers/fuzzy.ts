@@ -34,8 +34,11 @@ function addItems(items: FuzzyItem[]) {
 function search(query: string, maxLength = 4): (FuzzyItem | CommandItem)[] {
   const results = [];
 
+  // this is actually faster then creating array from cache and
+  // going through with good-old for(let i=0) loop
+
   if (query.startsWith('/')) {
-    query = query.slice(1).trim().split(' ')[0];
+    query = query.match(/\w+/)![0];
 
     for (const [key, name] of commandsCache) {
       if (!name) continue;
