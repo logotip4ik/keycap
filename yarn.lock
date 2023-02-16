@@ -846,7 +846,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@iconify/vue@npm:^4.0.2":
+"@iconify/vue@npm:^4.1.0":
   version: 4.1.0
   resolution: "@iconify/vue@npm:4.1.0"
   dependencies:
@@ -1057,7 +1057,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxt/kit@npm:3.2.0, @nuxt/kit@npm:^3.0.0, @nuxt/kit@npm:^3.0.0-rc.13, @nuxt/kit@npm:^3.1.0, @nuxt/kit@npm:^3.1.1, @nuxt/kit@npm:^3.2.0":
+"@nuxt/kit@npm:3.2.0, @nuxt/kit@npm:^3.0.0, @nuxt/kit@npm:^3.0.0-rc.13, @nuxt/kit@npm:^3.1.1, @nuxt/kit@npm:^3.2.0":
   version: 3.2.0
   resolution: "@nuxt/kit@npm:3.2.0"
   dependencies:
@@ -6369,6 +6369,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lru-cache@npm:^7.15.0":
+  version: 7.15.0
+  resolution: "lru-cache@npm:7.15.0"
+  checksum: 85fafe28ddb14fc4518a1f268241861bdb5339ed35b51a23c742cf2467c639a05f0c8d11594e3d27cdf1052c51ddb1fa06ece024c28caa5a0312c8f1ac2fc2c3
+  languageName: node
+  linkType: hard
+
 "magic-regexp@npm:^0.6.0":
   version: 0.6.2
   resolution: "magic-regexp@npm:0.6.2"
@@ -7127,14 +7134,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nuxt-icon@npm:^0.2.11":
-  version: 0.2.11
-  resolution: "nuxt-icon@npm:0.2.11"
+"nuxt-icon@npm:^0.3.0":
+  version: 0.3.0
+  resolution: "nuxt-icon@npm:0.3.0"
   dependencies:
-    "@iconify/vue": ^4.0.2
-    "@nuxt/kit": ^3.1.0
+    "@iconify/vue": ^4.1.0
+    "@nuxt/kit": ^3.2.0
     nuxt-config-schema: ^0.4.4
-  checksum: 356435613644f55008e0796ac5fc53435870417783264b0cda1f34f1c98a68f43364d4d609db2a14c6ce5a62f253728e6dcb99319f72713c2d1f0b203b94d8ed
+  checksum: 23be0290a98dc970a952624fd7e8b80f956043f657f620069bca4f8425370de81e51c0d8100a9319bf734ffc226f4b2a943e98360001ef8952f0f3f9a4467dc2
   languageName: node
   linkType: hard
 
@@ -8579,12 +8586,12 @@ __metadata:
     idb-keyval: ^6.2.0
     jose: ^4.12.0
     lambda-rate-limiter: ^3.0.1
-    lru-cache: ^7.14.1
+    lru-cache: ^7.15.0
     magic-string: ^0.29.0
     mitt: ^3.0.0
     normalize.css: ^8.0.1
     nuxt: ^3.2.0
-    nuxt-icon: ^0.2.11
+    nuxt-icon: ^0.3.0
     prisma: ^4.10.1
     sass: ^1.58.1
     simple-git: ^3.16.1
