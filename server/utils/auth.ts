@@ -84,11 +84,9 @@ export async function getUserFromEvent(event: H3Event): Promise<Pick<User, 'id' 
 }
 
 export async function hashPassword(pass: string): Promise<string> {
-  const hashedPass = await bcrypt.hash(pass, 10);
-
-  return hashedPass;
+  return await bcrypt.hash(pass, 10);
 }
 
 export async function verifyPassword(hashedPass: string, pass: string): Promise<boolean> {
-  return bcrypt.compare(pass, hashedPass);
+  return await bcrypt.compare(pass, hashedPass);
 }
