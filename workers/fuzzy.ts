@@ -1,25 +1,21 @@
-// @ts-expect-error no types for command score :(
-import commandScore from 'command-score';
-
-// @ts-expect-error idk how to setup this
-import { expose } from 'comlink?only=expose';
+// @ts-expect-error no types :(
+import getScore from 'command-score';
+import { expose } from 'comlink';
 
 import { SearchAction } from '~/types/common';
 
 import type { SearchActionValues } from '~/types/common';
 
-// will store only item name, path and root for folder
-// const itemsCache = new LRU<string, FuzzyItem>({ max: 100 });
 const itemsCache = new Map<string, FuzzyItem>();
 
 // NOTE: command could be only one word,
 // or use '-' as space replace
-const commandsCache = new Map<SearchActionValues, string>([
-  [SearchAction.New, 'new'],
-  [SearchAction.Refresh, 'refresh'],
-  [SearchAction.RefreshNote, 'refresh-note'],
-  [SearchAction.RefreshFolder, 'refresh-folder'],
-  [SearchAction.SaveNote, 'save-note'],
+const commandsCache = new Map<SearchActionValues, CommandItem>([
+  [SearchAction.New, { name: 'new', key: SearchAction.New }],
+  [SearchAction.Refresh, { name: 'refresh', key: SearchAction.Refresh }],
+  [SearchAction.RefreshNote, { name: 'refresh-note', key: SearchAction.RefreshNote }],
+  [SearchAction.RefreshFolder, { name: 'refresh-folder', key: SearchAction.RefreshFolder }],
+  [SearchAction.SaveNote, { name: 'save-note', key: SearchAction.SaveNote }],
 ]);
 
 function addItem(item: FuzzyItem) {
@@ -32,37 +28,27 @@ function addItems(items: FuzzyItem[]) {
 }
 
 function search(query: string, maxLength = 4): (FuzzyItem | CommandItem)[] {
+  // See https://stackblitz.com/edit/node-ezlzug?file=index.js&view=editor and run `node index.js`
+  // but in `real world`? fuzzaldrin was a bit slower plus had much more bigger bundle footprint
+
+  const isCommand = query.startsWith('/');
+
+  if (isCommand)
+    query = (query.match(/\w+/) || [''])[0];
+
   const results = [];
+  const cache = isCommand ? commandsCache : itemsCache;
 
-  // this is actually faster then creating array from cache and
-  // going through with good-old for(let i=0) loop
+  for (const [, value] of cache) {
+    const score = getScore(value.name, query);
 
-  if (query.startsWith('/')) {
-    query = query.match(/\w+/)![0];
-
-    for (const [key, name] of commandsCache) {
-      if (!name) continue;
-
-      const score = commandScore(name, query);
-
-      if (score > 0)
-        results.push({ score, item: { name, key } });
-    }
-  }
-  else {
-    for (const [, item] of itemsCache) {
-      if (!item) continue;
-
-      const score = commandScore(item.name, query);
-
-      if (score > 0)
-        results.push({ score, item });
-    }
+    if (score > 0)
+      results.push({ score, value });
   }
 
   return results
     .sort((a, b) => b.score - a.score)
-    .map((suggestion) => suggestion.item)
+    .map((suggestion) => suggestion.value)
     .slice(0, maxLength);
 }
 
