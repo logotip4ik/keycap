@@ -178,6 +178,8 @@ function handleContextmenu(event: Event) {
 
   width: 100%;
 
+  padding: 0;
+
   border: none;
   border-left: 0.2rem solid hsla(var(--text-color-hsl), 0);
   background-color: transparent;
