@@ -24,7 +24,7 @@ export function deleteNoteFromFolder(noteToDelete: NoteMinimal, parent: FolderWi
 
   parent.notes.splice(noteIdxToDelete, 1);
 
-  if (fuzzyWorker.value) fuzzyWorker.value.refreshItemsCache();
+  if (fuzzyWorker.value && !noteToDelete.creating) fuzzyWorker.value.refreshItemsCache();
   if (offlineStorage.value) offlineStorage.value.removeItem(noteToDelete.path);
 }
 
