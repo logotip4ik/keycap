@@ -25,8 +25,8 @@ export const longCacheHeaders = {
   'Cache-Control': `public, immutable, max-age=${WEEK_IN_SECONDS}, stale-while-revalidate=${SIX_MONTH_IN_SECONDS}`,
 };
 
-export const noCacheHeaders = {
-  'Cache-Control': 'private, must-revalidate, max-age=0',
+export const shortCacheHeaders = {
+  'Cache-Control': 'private, must-revalidate, max-age=1',
 };
 
 // basically helmet defaults with some customizations
@@ -45,7 +45,7 @@ export const defaultHeaders = {
   'Referrer-Policy': 'origin-when-cross-origin, strict-origin-when-cross-origin',
   'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
   'Vary': 'Accept-Encoding, Accept, X-Requested-With',
-  ...noCacheHeaders,
+  ...shortCacheHeaders,
   ...(isDevelopment ? {} : cspHeaders),
 };
 
