@@ -54,7 +54,7 @@ export function getCurrentFolderPath() {
   const path = withLeadingSlash(withTrailingSlash(
     (Array.isArray(route.params.folders)
       ? route.params.folders.map(encodeURIComponent).join('/')
-      : encodeURIComponent(route.params.folders)),
+      : encodeURIComponent(route.params.folders || '')),
   ));
 
   return path;
