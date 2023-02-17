@@ -129,9 +129,9 @@ useTinykeys({
 <template>
   <Transition name="fade">
     <TransitionGroup v-if="folder" :key="folder.path" tag="ul" name="list" class="workspace__contents__list">
-      <li v-if="!folder.root" key="cd.." class="item">
-        <button class="item__name" @click="goUpFolder">
-          cd ..
+      <li v-if="!folder.root" key="1">
+        <button class="item" @click="goUpFolder">
+          <span class="item__name">cd ..</span>
         </button>
       </li>
 

@@ -173,11 +173,14 @@ function handleContextmenu(event: Event) {
   z-index: 1;
   isolation: isolate;
 
+  font: inherit;
   color: hsla(var(--text-color-hsl), 0.85);
 
   width: 100%;
 
+  border: none;
   border-left: 0.2rem solid hsla(var(--text-color-hsl), 0);
+  background-color: transparent;
 
   transition: border-color .3s, background-color .3s, color .3s;
 
