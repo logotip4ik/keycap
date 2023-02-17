@@ -43,6 +43,7 @@ const itemHref = (() => {
 
   position: relative;
 
+  font-family: inherit;
   font-size: 1.25rem;
   color: currentColor;
   text-decoration: none;
