@@ -46,7 +46,7 @@ function enterAnimation(el: HTMLElement) {
   if (!isEditingLink.value) return;
 
   const activeUrl = props.editor.isActive('link')
-    ? props.editor.getAttributes('link').href || ''
+    ? props.editor.getAttributes('link').href
     : '';
 
   editingLink.value = activeUrl;
@@ -58,7 +58,7 @@ function enterAnimation(el: HTMLElement) {
 
 function saveEditingLink() {
   const currentLinkUrl = props.editor.isActive('link')
-    ? props.editor.getAttributes('link').href || ''
+    ? props.editor.getAttributes('link').href
     : '';
 
   if (editingLink.value !== '') {
