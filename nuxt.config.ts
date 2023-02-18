@@ -1,5 +1,3 @@
-import LTSDI from 'unplugin-ltsdi/vite';
-
 import { getHeaders } from './headers.config';
 import breakpoints from './assets/constants/breakpoints';
 
@@ -82,10 +80,6 @@ export default defineNuxtConfig({
           ].join('\n'),
         },
       },
-    },
-
-    worker: {
-      plugins: [LTSDI()],
     },
   },
 
