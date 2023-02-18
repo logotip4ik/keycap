@@ -22,8 +22,6 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  @@index([username, email])
 }
 
 model Note {
@@ -41,6 +39,8 @@ model Note {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([path])
 }
 
 model Folder {
@@ -62,5 +62,5 @@ model Folder {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([name, path, ownerId, parentId])
+  @@index([path, ownerId])
 }
