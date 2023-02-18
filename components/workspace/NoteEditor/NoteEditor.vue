@@ -127,7 +127,7 @@ onBeforeRouteUpdate((from, to) => {
 <template>
   <div class="note-editor__wrapper">
     <template v-if="editor">
-      <WorkspaceNoteEditorBubbleMenu :editor="editor" @hide="hideBubbleMenu" />
+      <LazyWorkspaceNoteEditorBubbleMenu :editor="editor" @hide="hideBubbleMenu" />
     </template>
 
     <EditorContent class="note-editor" :editor="editor" />
