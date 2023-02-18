@@ -26,6 +26,11 @@ export default defineNuxtConfig({
     },
   },
 
+  experimental: {
+    emitRouteChunkError: 'reload',
+    writeEarlyHints: true,
+  },
+
   typescript: {
     tsConfig: {
       exclude: ['../data'],
