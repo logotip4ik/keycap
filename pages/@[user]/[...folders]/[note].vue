@@ -168,7 +168,7 @@ watch(fetchedNote, (value) => {
   <Transition name="fade" appear>
     <template v-if="note">
       <!-- NOTE: This component should be wrapped inside client only, if note is rendered on server -->
-      <LazyWorkspaceNoteEditor
+      <WorkspaceNoteEditor
         key="content"
         class="workspace__note-editor"
         :content="note.content || ''"
