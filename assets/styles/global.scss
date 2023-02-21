@@ -138,3 +138,19 @@ kbd {
 .list-leave-active {
   display: none;
 }
+
+.nuxt-loading-indicator::after {
+  --blur-size: 1rem;
+  
+  content: '';
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  
+  background: inherit;
+  filter: blur(var(--blur-size));
+}
