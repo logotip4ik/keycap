@@ -30,7 +30,7 @@ const { data: fetchedFolder, error } = useLazyAsyncData<FolderWithContents>(
   () => {
     folder.value = foldersCache.get(folderPath.value) || null;
 
-    if (folder.value) {
+    if (!folder.value) {
       offlineStorage.value?.getItem(folderPath.value)
         .then((folderCopy) => folderCopy && (folder.value = folderCopy));
     }
