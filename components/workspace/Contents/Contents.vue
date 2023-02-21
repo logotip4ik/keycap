@@ -35,11 +35,14 @@ const { data: fetchedFolder, error } = useLazyAsyncData<FolderWithContents>(
         .then((folderCopy) => folderCopy && (folder.value = folderCopy));
     }
 
+    const nuxtApp = useNuxtApp();
     const apiFolderPath = folderPath.value.split('/').slice(2).join('/');
 
     return $fetch(`/api/folder/${apiFolderPath}`, {
       retry: 2,
       onRequest: () => {
+        nuxtApp.callHook('page:start');
+
         if (prevFolderPath !== folderPath.value)
           firstTimeFetch = true;
 
@@ -55,8 +58,11 @@ const { data: fetchedFolder, error } = useLazyAsyncData<FolderWithContents>(
 
         prevFolderPath = folderPath.value;
       },
-      onResponse: () => loadingToast.value?.remove(),
-      onResponseError: () => loadingToast.value?.remove(),
+      onResponse: () => {
+        nuxtApp.callHook('page:finish');
+
+        loadingToast.value?.remove();
+      },
     });
   },
   { server: false, watch: [folderPath] },

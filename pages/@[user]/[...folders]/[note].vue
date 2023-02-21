@@ -52,9 +52,14 @@ const { data: fetchedNote, pending, error, refresh } = useLazyAsyncData<Note | n
 
     currentNoteState.value = 'fetching';
 
+    const nuxtApp = useNuxtApp();
+
     return $fetch(`/api/note/${noteApiPath.value}`, {
       retry: 2,
       onRequest: () => {
+        // https://github.com/nuxt/nuxt/issues/14221#issuecomment-1397723845
+        nuxtApp.callHook('page:start');
+
         if (!loadingToast?.value) {
           loadingToast = createToast('Fetching note. Please wait...', {
             duration: 999999,
@@ -65,15 +70,18 @@ const { data: fetchedNote, pending, error, refresh } = useLazyAsyncData<Note | n
           firstTimeFetch = false;
         }
       },
-      onResponse: () => loadingToast.value?.remove(),
-      onResponseError: () => loadingToast.value?.remove(),
+      onResponse: () => {
+        nuxtApp.callHook('page:finish');
+
+        loadingToast.value?.remove();
+      },
     });
   },
   { server: false },
 );
 
 let abortController: AbortController | null;
-const throttledUpdate = useThrottleFn(updateNote, 1000, true, false); // enable trailing call and disabled leading
+const throttledUpdate = useThrottleFn(updateNote, 1000, true, false); // enable trailing call and disable leading
 function updateNote(content: string) {
   // send update request after get
   if (pending.value) {
