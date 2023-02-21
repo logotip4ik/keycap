@@ -85,16 +85,9 @@ useTinykeys({
 
 onMounted(() => {
   // request idle callback is polyfilled by nuxt
-  const idleCallback = window.requestIdleCallback;
-
-  const callbacks = [preloadDashboardComponents, defineFuzzyWorker, defineOfflineStorage];
-
-  idleCallback(
-    // calls functions in idle waterfall
-    callbacks.reduce((acc, fn) => () => {
-      acc();
-      idleCallback(fn);
-    }),
+  window.requestIdleCallback(
+    () => [preloadDashboardComponents, defineFuzzyWorker, defineOfflineStorage]
+      .map((cb) => cb()),
   );
 });
 </script>
