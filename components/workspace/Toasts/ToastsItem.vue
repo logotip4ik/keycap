@@ -39,12 +39,12 @@ onBeforeUnmount(() => clearTimeout(timeout));
   align-items: flex-start;
 
   font: inherit;
-  font-size: 1.05rem;
+  font-size: 1.125rem;
   color: var(--surface-color);
 
   max-width: 33ch;
 
-  padding: 0.6rem 1rem;
+  padding: 0.85rem 1.5rem;
 
   border-radius: 0.25rem;
   border: 1px solid hsla(var(--text-color-hsl), 1.0);
