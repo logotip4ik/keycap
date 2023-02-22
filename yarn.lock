@@ -6520,6 +6520,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"magic-string@npm:^0.30.0":
+  version: 0.30.0
+  resolution: "magic-string@npm:0.30.0"
+  dependencies:
+    "@jridgewell/sourcemap-codec": ^1.4.13
+  checksum: 7bdf22e27334d8a393858a16f5f840af63a7c05848c000fd714da5aa5eefa09a1bc01d8469362f25cc5c4a14ec01b46557b7fff8751365522acddf21e57c488d
+  languageName: node
+  linkType: hard
+
 "make-dir@npm:^3.1.0, make-dir@npm:~3.1.0":
   version: 3.1.0
   resolution: "make-dir@npm:3.1.0"
@@ -8726,7 +8735,7 @@ __metadata:
     jose: ^4.12.0
     lambda-rate-limiter: ^3.0.1
     lru-cache: ^7.17.0
-    magic-string: ^0.29.0
+    magic-string: ^0.30.0
     mitt: ^3.0.0
     normalize.css: ^8.0.1
     nuxt: ^3.2.2
