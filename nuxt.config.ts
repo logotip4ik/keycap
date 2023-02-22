@@ -72,6 +72,14 @@ export default defineNuxtConfig({
   },
 
   vite: {
+    build: {
+      rollupOptions: {
+        treeshake: {
+          preset: 'smallest',
+        },
+      },
+    },
+
     css: {
       preprocessorOptions: {
         scss: {
