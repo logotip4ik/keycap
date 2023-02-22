@@ -104,20 +104,21 @@ onMounted(() => {
         v-show="isShowingContents"
         class="workspace__contents"
       >
-        <WorkspaceContents />
+        <LazyWorkspaceContents />
       </aside>
     </Transition>
 
     <Transition name="fade">
-      <WorkspaceFab
+      <LazyWorkspaceFab
         v-show="isShowingContents"
         @open-search="isShowingSearch = true"
       />
     </Transition>
 
     <Transition name="fade">
+      <!-- Do not load welcome component on mobile devices -->
       <LazyWorkspaceWelcome
-        v-if="!route.params.note || $route.params.note === blankNoteName"
+        v-if="(!route.params.note || route.params.note === blankNoteName) && windowWidth > breakpoints.tablet"
         key="blank-note"
         class="workspace__note"
       />
@@ -141,7 +142,9 @@ onMounted(() => {
     </Teleport>
 
     <Teleport to="body">
-      <WorkspaceToasts />
+      <Suspense>
+        <LazyWorkspaceToasts />
+      </Suspense>
     </Teleport>
   </div>
 </template>
