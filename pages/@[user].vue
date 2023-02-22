@@ -142,9 +142,7 @@ onMounted(() => {
     </Teleport>
 
     <Teleport to="body">
-      <Suspense>
-        <LazyWorkspaceToasts />
-      </Suspense>
+      <WorkspaceToasts />
     </Teleport>
   </div>
 </template>
