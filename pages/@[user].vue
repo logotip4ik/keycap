@@ -116,7 +116,7 @@ onMounted(() => {
     </Transition>
 
     <Transition name="fade">
-      <WorkspaceWelcome
+      <LazyWorkspaceWelcome
         v-if="!route.params.note || $route.params.note === blankNoteName"
         key="blank-note"
         class="workspace__note"
