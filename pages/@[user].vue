@@ -118,14 +118,16 @@ onMounted(() => {
     <Transition name="fade">
       <!-- Do not load welcome component on mobile devices -->
       <LazyWorkspaceWelcome
-        v-if="(!route.params.note || route.params.note === blankNoteName) && windowWidth > breakpoints.tablet"
+        v-if="windowWidth > breakpoints.tablet && !(route.params.note !== blankNoteName)"
         key="blank-note"
         class="workspace__note"
       />
 
-      <main v-else class="workspace__note">
+      <main v-else-if="windowWidth > breakpoints.tablet || !isShowingContents" class="workspace__note">
         <NuxtPage />
       </main>
+
+      <div v-else v-once class="workspace__note" />
     </Transition>
 
     <Teleport to="body">
