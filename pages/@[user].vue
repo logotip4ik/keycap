@@ -2,8 +2,6 @@
 import { blankNoteName } from '~/assets/constants';
 import breakpoints from '~/assets/constants/breakpoints';
 
-import type WorkspaceSearch from '~/components/workspace/Search/index.vue';
-
 definePageMeta({
   middleware: ['auth'],
 });
@@ -15,8 +13,6 @@ const { isMobileOrTablet } = useDevice();
 const { shortcuts } = useAppConfig();
 
 const currentNoteState = useCurrentNoteState();
-
-const search = ref<InstanceType<typeof WorkspaceSearch> | null>(null);
 
 const isShowingSearch = ref(false);
 const isShowingContents = computed(() => {
@@ -48,6 +44,10 @@ const currentRouteName = computed(() => {
 
   return null;
 });
+
+function focusSearchInput(event: HTMLElement) {
+  nextTick(() => event.querySelector('input')?.focus());
+}
 
 watch(() => route.params.note, (noteName) => {
   const isEmptyNoteName = !noteName || noteName === blankNoteName;
@@ -133,11 +133,10 @@ onMounted(() => {
     <Teleport to="body">
       <Transition
         name="search-fade"
-        @after-enter="search?.input?.$el?.focus()"
+        @after-enter="focusSearchInput"
       >
         <LazyWorkspaceSearch
           v-if="isShowingSearch"
-          ref="search"
           @close="isShowingSearch = false"
         />
       </Transition>
