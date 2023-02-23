@@ -118,7 +118,7 @@ onMounted(() => {
     <Transition name="fade">
       <!-- Do not load welcome component on mobile devices -->
       <LazyWorkspaceWelcome
-        v-if="windowWidth > breakpoints.tablet && !(route.params.note !== blankNoteName)"
+        v-if="windowWidth > breakpoints.tablet && (!route.params.note || route.params.note === blankNoteName)"
         key="blank-note"
         class="workspace__note"
       />
