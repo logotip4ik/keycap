@@ -4,7 +4,7 @@ export default defineAppConfig({
     search: '$mod+K',
   },
 
-  iconsToPreload: ['ic:outline-info'],
+  iconsToPreload: ['ic:outline-info', 'material-symbols:close-rounded'],
 
   nuxtIcon: {
     aliases: {
