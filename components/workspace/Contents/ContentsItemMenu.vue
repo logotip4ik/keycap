@@ -5,7 +5,8 @@ import type { Instance as PopperInstance, VirtualElement } from '@popperjs/core'
 
 interface MenuAction {
   name: string
-  action: () => any | Promise<any>
+  needConfirmation?: boolean
+  handler: () => any | Promise<any>
 }
 
 interface Emits { (event: 'close'): void }
@@ -15,7 +16,9 @@ const emit = defineEmits<Emits>();
 
 const popperInstance = shallowRef<null | PopperInstance>(null);
 const menu = ref<null | HTMLElement>(null);
+const currentlyConfirming = ref(-1); // You can confirm one at a time
 
+const confirmDurationInSeconds = 3;
 const virtualElement: VirtualElement = {
   // @ts-expect-error missing toJSON method
   getBoundingClientRect: () => ({
@@ -28,8 +31,28 @@ const virtualElement: VirtualElement = {
   }),
 };
 
-function onClickOutside() {
-  emit('close');
+function withEffects(event: Event, action: MenuAction) {
+  if (!action.needConfirmation) return action.handler();
+
+  const target = event.target as HTMLElement;
+  currentlyConfirming.value = Number(target.dataset.key);
+
+  const animation = target.animate([
+    { opacity: 1, transform: 'translate(-100%, 0%)' },
+    { opacity: 1, transform: 'translate(0%, 0%)' },
+  ], { duration: confirmDurationInSeconds * 1000, pseudoElement: '::after' });
+
+  const executeHandler = () => {
+    action.handler();
+    currentlyConfirming.value = -1;
+  };
+
+  animation.addEventListener('finish', executeHandler);
+
+  target.addEventListener('pointerup', () => {
+    animation.cancel();
+    currentlyConfirming.value = -1;
+  });
 }
 
 watch([() => props.x, () => props.y], async () => {
@@ -47,7 +70,7 @@ watch([() => props.x, () => props.y], async () => {
   popperInstance.value?.update();
 }, { immediate: true });
 
-useClickOutside(menu, onClickOutside);
+useClickOutside(menu, () => emit('close'));
 </script>
 
 <template>
@@ -58,10 +81,18 @@ useClickOutside(menu, onClickOutside);
       class="item-context-menu__item"
     >
       <button
+        :data-key="key"
         class="item-context-menu__item__button"
-        @click="action.action"
+        @pointerdown="withEffects($event, action)"
       >
-        {{ action.name }}
+        <Transition name="fade">
+          <span v-if="currentlyConfirming !== key">
+            {{ action.name }}
+          </span>
+          <span v-else>
+            Hold to confirm
+          </span>
+        </Transition>
       </button>
     </li>
   </ul>
@@ -95,6 +126,10 @@ useClickOutside(menu, onClickOutside);
     &__button {
       display: block;
 
+      position: relative;
+      isolation: isolate;
+      z-index: 1;
+
       font: inherit;
       color: hsla(var(--text-color-hsl), 1);
       text-align: left;
@@ -108,17 +143,38 @@ useClickOutside(menu, onClickOutside);
       outline: none;
       background-color: transparent;
       cursor: pointer;
+      overflow: hidden;
 
-      transition: color .3s, background-color .3s;
+      transition: color .3s;
+
+      &::after {
+        content: "";
+
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+
+        width: 100%;
+        height: 100%;
+
+        opacity: 0;
+        background-color: hsla(var(--text-color-hsl), 0.075);
+
+        transition: .3s opacity;
+      }
 
       @media (hover: hover) {
         color: hsla(var(--text-color-hsl), 0.75);
 
         &:hover {
           color: hsla(var(--text-color-hsl), 1);
-          background-color: hsla(var(--text-color-hsl), 0.075);
-
           transition-duration: 0.1s;
+
+          &::after {
+            opacity: 1;
+            transition-duration: 0.1s;
+          }
         }
       }
 

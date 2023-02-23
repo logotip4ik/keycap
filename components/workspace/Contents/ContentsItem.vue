@@ -20,9 +20,9 @@ const menuOptions = shallowReactive({
   x: 0,
   y: 0,
   actions: [
-    { name: 'preload', action: _preloadItem },
-    { name: 'rename', action: renameItem },
-    { name: 'delete', action: deleteItem },
+    { name: 'preload', handler: _preloadItem },
+    { name: 'rename', handler: renameItem },
+    { name: 'delete', needConfirmation: true, handler: deleteItem },
   ],
 });
 
