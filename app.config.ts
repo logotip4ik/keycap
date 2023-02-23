@@ -1,7 +1,7 @@
 export default defineAppConfig({
   shortcuts: {
     new: '$mod+Shift+A',
-    search: '$mod+K',
+    search: '$mod+KeyK',
   },
 
   iconsToPreload: ['ic:outline-info', 'material-symbols:close-rounded'],
