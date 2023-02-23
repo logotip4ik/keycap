@@ -12,7 +12,7 @@ const currentFolderPath = computed(() => {
 });
 
 function normalizeShortcut(shortcut: string) {
-  return shortcut.replace(/\$mod/g, 'Ctrl');
+  return shortcut.replace(/\$mod/g, 'Ctrl').replace(/Key/g, '');
 }
 </script>
 
