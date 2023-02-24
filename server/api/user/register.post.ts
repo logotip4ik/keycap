@@ -1,24 +1,37 @@
-import type { User } from '@prisma/client';
+import { compile, v } from 'suretype';
 
 import getPrisma from '~/prisma';
 
+const registrationSchema = v.object({
+  username: v.string().minLength(4).required(),
+  email: v.string().format('email').required(),
+  password: v.string().minLength(8).required(),
+});
+
+const useRegistrationValidator = compile(registrationSchema, { colors: false });
+
 export default defineEventHandler(async (event) => {
-  const body = await readBody<{ username?: string; email?: string; password?: string }>(event) || {};
+  if (event.context.user) return null;
 
-  if (!body.email || !body.username || !body.password) {
-    const error = createError({ statusCode: 400, statusMessage: 'not enough data' });
+  const body = await readBody(event) || {};
 
-    return sendError(event, error);
+  const validation = useRegistrationValidator(body);
+
+  if (!validation.ok) {
+    return createError({
+      statusCode: 400,
+      statusMessage: validation.errors.map((error) => error.message).join('\n'),
+    });
   }
 
   body.email = body.email.trim();
   body.username = body.username.trim().replace(/\s/g, '_');
+  body.password = body.username.trim();
 
   const prisma = getPrisma();
-  let user: Pick<User, 'id' | 'email' | 'username'>;
 
   try {
-    user = await prisma.user.create({
+    const user = await prisma.user.create({
       data: {
         email: body.email,
         username: body.username,
@@ -34,14 +47,14 @@ export default defineEventHandler(async (event) => {
 
       select: { id: true, email: true, username: true },
     });
+
+    await setAuthCookies(event, user);
+
+    return user;
   }
   catch {
     const error = createError({ statusCode: 400, statusMessage: 'user with this email or username might already exist' });
 
     return sendError(event, error);
   }
-
-  await setAuthCookies(event, user);
-
-  return user;
 });

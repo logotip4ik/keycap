@@ -1,22 +1,37 @@
+import { compile, v } from 'suretype';
+
 import type { User } from '@prisma/client';
 
 import getPrisma from '~/prisma';
 
+const loginSchema = v.object({
+  username: v.string().minLength(4).required(),
+  password: v.string().minLength(8).required(),
+});
+
+const useLoginValidator = compile(loginSchema, { colors: false });
+
 export default defineEventHandler(async (event) => {
-  const body = await readBody<{ email?: string; password?: string }>(event) || {};
+  const body = await readBody(event) || {};
 
-  if (!body.email || !body.password) {
-    const error = createError({ statusCode: 400, statusMessage: 'not enough data' });
+  const validation = useLoginValidator(body);
 
-    return sendError(event, error);
+  if (!validation.ok) {
+    return createError({
+      statusCode: 400,
+      statusMessage: validation.errors.map((error) => error.message).join('\n'),
+    });
   }
+
+  body.email = body.email.trim();
+  body.password = body.password.trim();
 
   const prisma = getPrisma();
 
   const user = await prisma.user.findUnique({
     where: { email: body.email },
     select: { id: true, email: true, username: true, password: true },
-  });
+  }).catch(() => null);
 
   if (!user) {
     const error = createError({ statusCode: 400, statusMessage: 'email or password is incorrect' });
