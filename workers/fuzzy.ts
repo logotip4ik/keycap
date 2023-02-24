@@ -1,5 +1,5 @@
 // @ts-expect-error no types :(
-import getScore from 'command-score';
+import getScore from '@superhuman/command-score';
 import { expose } from 'comlink';
 
 import { SearchAction } from '~/types/common';
