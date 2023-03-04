@@ -4,6 +4,7 @@ definePageMeta({
 });
 
 const user = useUser();
+const createToast = useToast();
 
 const data = reactive({ username: '', email: '', password: '' });
 const isLoading = ref(false);
@@ -13,7 +14,7 @@ async function register() {
 
   $fetch('/api/user/register', { method: 'POST', body: data })
     .then((newUser) => user.value = newUser)
-    .catch((e) => console.warn(e))
+    .catch((e) => createToast(e.statusMessage))
     .finally(() => isLoading.value = false);
 }
 
@@ -22,6 +23,8 @@ watch(user, async (value) => value && await navigateTo(`/@${value.username}`));
 
 <template>
   <main class="register-page">
+    <LazyWorkspaceToasts />
+
     <form class="register-page__form" @submit.prevent="register">
       <p class="register-page__form__title">
         We are gonna create an account for you

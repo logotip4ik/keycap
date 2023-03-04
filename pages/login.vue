@@ -4,6 +4,7 @@ definePageMeta({
 });
 
 const user = useUser();
+const createToast = useToast();
 
 const data = reactive({ email: '', password: '' });
 const isLoading = ref(false);
@@ -13,7 +14,7 @@ async function login() {
 
   $fetch('/api/user/login', { method: 'POST', body: data })
     .then((newUser) => user.value = newUser)
-    .catch((e) => console.warn(e))
+    .catch((e) => createToast(e.statusMessage))
     .finally(() => isLoading.value = false);
 }
 
@@ -22,6 +23,8 @@ watch(user, async (value) => value && await navigateTo(`/@${value.username}`));
 
 <template>
   <main class="login-page">
+    <LazyWorkspaceToasts />
+
     <form class="login-page__form" @submit.prevent="login">
       <p class="login-page__form__title">
         Let's sign you in
