@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
   if (!validation.ok) {
     return createError({
       statusCode: 400,
-      statusMessage: validation.errors.map((error) => error.message).join('\n'),
+      statusMessage: `${validation.errors[0].dataPath.split('.').at(-1)} ${validation.errors[0].message}`,
     });
   }
 
