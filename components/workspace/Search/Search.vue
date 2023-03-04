@@ -1,39 +1,12 @@
 <script setup lang="ts">
 import { withoutLeadingSlash } from 'ufo';
 
-import { SearchAction } from '~/types/common';
-
-import type { SearchActionValues } from '~/types/common';
-
 interface Emits { (e: 'close'): void }
 const emit = defineEmits<Emits>();
 
 const route = useRoute();
-const mitt = useMitt();
 
 const fuzzyWorker = useFuzzyWorker();
-
-const commandActions: Record<SearchActionValues, (args: string[]) => any> = {
-  [SearchAction.New]: (args) => {
-    const { data: folder } = useNuxtData('folder');
-
-    if (folder.value)
-      preCreateItem(folder.value, { name: args?.join(' ') || '' });
-  },
-  [SearchAction.Refresh]: () => {
-    refreshNuxtData('note');
-    refreshNuxtData('folder');
-  },
-  [SearchAction.RefreshNote]: () => {
-    refreshNuxtData('note');
-  },
-  [SearchAction.RefreshFolder]: () => {
-    refreshNuxtData('folder');
-  },
-  [SearchAction.SaveNote]: () => {
-    mitt.emit('save:note');
-  },
-};
 
 const results = shallowRef<(FuzzyItem | CommandItem)[]>([]);
 const isLoadingResults = ref(false);

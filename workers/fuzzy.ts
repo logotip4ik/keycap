@@ -2,21 +2,9 @@
 import getScore from '@superhuman/command-score';
 import { expose } from 'comlink';
 
-import { SearchAction } from '~/types/common';
-
-import type { SearchActionValues } from '~/types/common';
+import { commandActionsMin as commandsCache } from '~/utils/menu';
 
 const itemsCache = new Map<string, FuzzyItem>();
-
-// NOTE: command could be only one word,
-// or use '-' as space replace
-const commandsCache = new Map<SearchActionValues, CommandItem>([
-  [SearchAction.New, { name: 'new', key: SearchAction.New }],
-  [SearchAction.Refresh, { name: 'refresh', key: SearchAction.Refresh }],
-  [SearchAction.RefreshNote, { name: 'refresh-note', key: SearchAction.RefreshNote }],
-  [SearchAction.RefreshFolder, { name: 'refresh-folder', key: SearchAction.RefreshFolder }],
-  [SearchAction.SaveNote, { name: 'save-note', key: SearchAction.SaveNote }],
-]);
 
 function addItem(item: FuzzyItem) {
   itemsCache.set(item.path, item);
