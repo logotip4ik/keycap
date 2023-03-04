@@ -15,11 +15,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@antfu/eslint-config-basic@npm:0.35.3":
-  version: 0.35.3
-  resolution: "@antfu/eslint-config-basic@npm:0.35.3"
+"@antfu/eslint-config-basic@npm:0.36.0":
+  version: 0.36.0
+  resolution: "@antfu/eslint-config-basic@npm:0.36.0"
   dependencies:
-    eslint-plugin-antfu: 0.35.3
+    eslint-plugin-antfu: 0.36.0
     eslint-plugin-eslint-comments: ^3.2.0
     eslint-plugin-html: ^7.1.0
     eslint-plugin-import: ^2.27.5
@@ -35,44 +35,44 @@ __metadata:
     yaml-eslint-parser: ^1.1.0
   peerDependencies:
     eslint: ">=7.4.0"
-  checksum: c557edbf70a98473a428399c78ab3078e4912ff052e7814ad8a12df60b820eaf59e8fe9808dd001b150b2812aea9c62dcbe5fb17f07f399fb39134330bddca43
+  checksum: 9c502eb1cfd8201b8255fc053f6dca77b7cf9ff1801435ff37368a1259aec7a3ceee4ac7ab2f1de3d2613f2977faad769ba5c25369ce36799d05a11afd3fd7e8
   languageName: node
   linkType: hard
 
-"@antfu/eslint-config-ts@npm:0.35.3":
-  version: 0.35.3
-  resolution: "@antfu/eslint-config-ts@npm:0.35.3"
+"@antfu/eslint-config-ts@npm:0.36.0":
+  version: 0.36.0
+  resolution: "@antfu/eslint-config-ts@npm:0.36.0"
   dependencies:
-    "@antfu/eslint-config-basic": 0.35.3
+    "@antfu/eslint-config-basic": 0.36.0
     "@typescript-eslint/eslint-plugin": ^5.53.0
     "@typescript-eslint/parser": ^5.53.0
     eslint-plugin-jest: ^27.2.1
   peerDependencies:
     eslint: ">=7.4.0"
     typescript: ">=3.9"
-  checksum: cb7a2ca22c4df6a11700e575ba8efc28489d8aee0eaf35e0e2c54f89a51bc993dd6d42cb81f491941155ee4cbf55d3144f788e7728edeac10d50933a5bbd4029
+  checksum: 430ac0de2bfecf2b08c2e78f917e320f8b402e958daccc91dcfe93b0feda4cfa73dd3d88c384aa665bb6f4885109e7be6fdf959b533ac9cbcb086560fc56e5c3
   languageName: node
   linkType: hard
 
-"@antfu/eslint-config-vue@npm:0.35.3":
-  version: 0.35.3
-  resolution: "@antfu/eslint-config-vue@npm:0.35.3"
+"@antfu/eslint-config-vue@npm:0.36.0":
+  version: 0.36.0
+  resolution: "@antfu/eslint-config-vue@npm:0.36.0"
   dependencies:
-    "@antfu/eslint-config-basic": 0.35.3
-    "@antfu/eslint-config-ts": 0.35.3
+    "@antfu/eslint-config-basic": 0.36.0
+    "@antfu/eslint-config-ts": 0.36.0
     eslint-plugin-vue: ^9.9.0
     local-pkg: ^0.4.3
   peerDependencies:
     eslint: ">=7.4.0"
-  checksum: 345d720d1345093461949cd43fe5cffb92c22620dbc3c822bd9ae41985f5dd1bdf1db4a858ca664f8329f663b35b2869d1964b9bd7d8d4da1bffa8a8dd75c821
+  checksum: a995ba69cd8573a02d2eab1f987136c86360959a58cf228775e3740e9374164d1ade710706c5c485b0f2518278786991345cf8e13c72059b708c9cf5b0738efb
   languageName: node
   linkType: hard
 
-"@antfu/eslint-config@npm:^0.35.3":
-  version: 0.35.3
-  resolution: "@antfu/eslint-config@npm:0.35.3"
+"@antfu/eslint-config@npm:^0.36.0":
+  version: 0.36.0
+  resolution: "@antfu/eslint-config@npm:0.36.0"
   dependencies:
-    "@antfu/eslint-config-vue": 0.35.3
+    "@antfu/eslint-config-vue": 0.36.0
     "@typescript-eslint/eslint-plugin": ^5.53.0
     "@typescript-eslint/parser": ^5.53.0
     eslint-plugin-eslint-comments: ^3.2.0
@@ -88,7 +88,7 @@ __metadata:
     yaml-eslint-parser: ^1.1.0
   peerDependencies:
     eslint: ">=7.4.0"
-  checksum: 53c274f0ecad82e49268cfce3683277f67681aff45d3030a4fd9f85e0f348353b2544f19a276dcc61bdb4b4a8774e821559eb19cb155f7f503efdfe3ed1500db
+  checksum: db578cb2ac1283b1a5c523647773d68ed541a93565412ece594c437183cb799b447db043e39c93741c6ea572d94913efb2782517c67c37c81c00b79b7ee07365
   languageName: node
   linkType: hard
 
@@ -1910,10 +1910,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^18.14.5":
-  version: 18.14.5
-  resolution: "@types/node@npm:18.14.5"
-  checksum: 415fb0edc132baa9580f1b7a381a3f10b662f5d7a7d11641917fa0961788ccede3272badc414aadc47306e9fc35c5f6c59159ac470b46d3f3a15fb0446224c8c
+"@types/node@npm:^18.14.6":
+  version: 18.14.6
+  resolution: "@types/node@npm:18.14.6"
+  checksum: 2f88f482cabadc6dbddd627a1674239e68c3c9beab56eb4ae2309fb96fd17fc3a509d99b0309bafe13b58529574f49ecf3a583f2ebe2896dd32fe4be436dc96e
   languageName: node
   linkType: hard
 
@@ -4333,12 +4333,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-antfu@npm:0.35.3":
-  version: 0.35.3
-  resolution: "eslint-plugin-antfu@npm:0.35.3"
+"eslint-plugin-antfu@npm:0.36.0":
+  version: 0.36.0
+  resolution: "eslint-plugin-antfu@npm:0.36.0"
   dependencies:
     "@typescript-eslint/utils": ^5.53.0
-  checksum: 4fb4f178a0b4b1f16f36a5048e5ebd0ac1e128cd7c7bda36a439091724dc1ee8ad296c6cfbad12cbc9194b1e3fde342f3392c4801f20aab1a3377c368cebd8fa
+  checksum: 6652f02239790e7dc79183187c50dfcf5e76f332833c6f5b9e752869ac86d98827974be883b52b1660b6d1648d15532f4fd2b99f7ea5b519d4091cac2160b95f
   languageName: node
   linkType: hard
 
@@ -8865,7 +8865,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "root-workspace-0b6124@workspace:."
   dependencies:
-    "@antfu/eslint-config": ^0.35.3
+    "@antfu/eslint-config": ^0.36.0
     "@nuxt/kit": ^3.2.3
     "@nuxtjs/device": ^3.1.0
     "@nuxtjs/fontaine": ^0.2.4
@@ -8884,7 +8884,7 @@ __metadata:
     "@tiptap/vue-3": ^2.0.0-beta.220
     "@types/bcryptjs": ^2.4.2
     "@types/lambda-rate-limiter": ^3.0.0
-    "@types/node": ^18.14.5
+    "@types/node": ^18.14.6
     "@vueuse/core": ^9.13.0
     "@vueuse/nuxt": ^9.13.0
     bcryptjs: ^2.4.3
@@ -8901,7 +8901,7 @@ __metadata:
     nuxt-icon: ^0.3.2
     prisma: ^4.11.0
     sass: ^1.58.3
-    simple-git: ^3.16.1
+    simple-git: ^3.17.0
     suretype: ^3.2.1
     tinykeys: ^1.4.0
     typescript: ^4.9.5
@@ -9145,14 +9145,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"simple-git@npm:^3.16.1":
-  version: 3.16.1
-  resolution: "simple-git@npm:3.16.1"
+"simple-git@npm:^3.17.0":
+  version: 3.17.0
+  resolution: "simple-git@npm:3.17.0"
   dependencies:
     "@kwsites/file-exists": ^1.1.1
     "@kwsites/promise-deferred": ^1.1.1
     debug: ^4.3.4
-  checksum: 02ed36d580ea20efc0d26571742d120ff86edebba5a94cc91c8de17529d4e8cf4ea57fc11cbbae11f4713400fab11df5e4f1639cfbf643fcce5e80e79effa762
+  checksum: 977a05cb0b5087296348b5afa682ce552f43234f5fd29b44c3d7f56b3682d10dcb03752a418e508aaffcbdb6ea2e304a3ef10095197d6743d2353adb85f32592
   languageName: node
   linkType: hard
 
