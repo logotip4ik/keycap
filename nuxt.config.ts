@@ -83,10 +83,6 @@ export default defineNuxtConfig({
     },
   },
 
-  device: {
-    refreshOnResize: true,
-  },
-
   fontMetrics: {
     fonts: [
       // src is relative to public folder
