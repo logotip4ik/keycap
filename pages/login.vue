@@ -10,6 +10,9 @@ const data = reactive({ email: '', password: '' });
 const isLoading = ref(false);
 
 async function login() {
+  if (!data.email || !data.password)
+    return createToast('Fill all required fields');
+
   isLoading.value = true;
 
   $fetch('/api/user/login', { method: 'POST', body: data })
