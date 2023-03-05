@@ -58,11 +58,12 @@ watch(() => route.params.note, (noteName) => {
 watch(isShowingSearch, async (search) => {
   const query = { ...route.query };
 
-  // empty array removes query param from url
-  // `undefined` also does the thing but typescript is not happy
-  query.search = search ? search.toString() : [];
+  // `undefined` and empty array removes param from query
+  // `null` means that query param should be there but value should be empty
+  // @ts-expect-error idk why it is not happy, but it works
+  query.search = search ? null : undefined;
 
-  await navigateTo({ ...route, query });
+  await navigateTo({ ...route, query }, { replace: true });
 });
 
 useHead({
