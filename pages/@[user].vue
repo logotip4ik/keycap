@@ -84,6 +84,9 @@ useTinykeys({
 });
 
 onMounted(() => {
+  if (typeof route.query.search !== 'undefined')
+    isShowingSearch.value = true;
+
   // request idle callback is polyfilled by nuxt
   window.requestIdleCallback(
     () => [preloadDashboardComponents, defineFuzzyWorker, defineOfflineStorage]
