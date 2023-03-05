@@ -4,8 +4,6 @@ import { withoutLeadingSlash } from 'ufo';
 interface Emits { (e: 'close'): void }
 const emit = defineEmits<Emits>();
 
-const route = useRoute();
-
 const fuzzyWorker = useFuzzyWorker();
 
 const results = shallowRef<(FuzzyItem | CommandItem)[]>([]);
@@ -88,8 +86,6 @@ const isResultsEmpty = computed(() => {
 });
 
 watch(debouncedSearchInput, handleSearchInput);
-
-watch(() => route.query.search, (search) => !search && emit('close'));
 
 let prevHeight = 0;
 useResizeObserver(searchEl, (entries) => {
