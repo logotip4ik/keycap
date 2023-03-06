@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
 
       notes: {
         select: { id: true, name: true, path: true, updatedAt: true, createdAt: true },
-        orderBy: { updatedAt: 'desc' },
+        orderBy: { name: 'asc' },
       },
 
       subfolders: {
