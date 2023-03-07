@@ -11,6 +11,8 @@ const foldersCache = useFoldersCache();
 const mitt = useMitt();
 const createToast = useToast();
 
+const isFolder = 'root' in props.item;
+
 // TODO: add loading state
 const newItemName = ref(props.item.name);
 
@@ -21,12 +23,10 @@ const menuOptions = shallowReactive({
   y: 0,
   actions: [
     { name: 'preload', handler: _preloadItem },
-    { name: 'rename', handler: renameItem },
+    (!isFolder && { name: 'rename', handler: renameItem }),
     { name: 'delete', needConfirmation: true, handler: deleteItem },
-  ],
+  ].filter(Boolean),
 });
-
-const isFolder = 'root' in props.item;
 
 const isItemRouteActive = computed(() => decodeURIComponent(route.params.note as string) === props.item.name);
 
