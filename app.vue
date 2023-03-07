@@ -14,7 +14,7 @@ useHead({
 </script>
 
 <template>
-  <NuxtLoadingIndicator color="var(--loading-indicator-color)" :throttle="100" />
+  <NuxtLoadingIndicator color="var(--loading-indicator-color)" />
 
   <NuxtLayout>
     <NuxtPage />
