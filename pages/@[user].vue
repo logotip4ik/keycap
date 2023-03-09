@@ -13,6 +13,7 @@ const { isMobileOrTablet } = useDevice();
 const { shortcuts } = useAppConfig();
 
 const currentNoteState = useCurrentNoteState();
+const currentItemForDetails = useCurrentItemForDetails();
 
 const isShowingSearch = ref(false);
 const isShowingContents = computed(() => {
@@ -147,6 +148,13 @@ onMounted(() => {
     </Teleport>
 
     <LazyWorkspaceToasts />
+
+    <Transition name="fade">
+      <LazyWorkspaceItemDetails
+        v-if="currentItemForDetails"
+        :item="currentItemForDetails"
+      />
+    </Transition>
   </div>
 </template>
 
