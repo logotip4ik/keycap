@@ -14,9 +14,9 @@ const ANIMATION_DURATION = 300;
 function beforeLeaveHook(el: Element) {
   const elClientRect = el.getBoundingClientRect();
 
-  toasterElClientRect = toasterElClientRect || toasterEl.value!.getBoundingClientRect();
+  toasterElClientRect = toasterElClientRect || toasterEl.value!.$el.getBoundingClientRect();
 
-  const relativeBottomPos = (toasterElClientRect.bottom - elClientRect.bottom);
+  const relativeBottomPos = (toasterElClientRect!.bottom - elClientRect.bottom);
 
   (el as HTMLElement).style.setProperty('--prev-bottom', `${relativeBottomPos}px`);
   (el as HTMLElement).style.setProperty('--prev-width', `${elClientRect.width}px`);
