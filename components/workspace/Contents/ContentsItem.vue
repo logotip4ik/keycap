@@ -25,7 +25,7 @@ const menuOptions = shallowReactive({
   actions: [
     { name: 'preload', handler: _preloadItem },
     (!isFolder && { name: 'rename', handler: renameItem }),
-    (!isFolder && { name: 'show details', handler: showDetails }),
+    { name: 'show details', handler: showDetails },
     { name: 'delete', needConfirmation: true, handler: deleteItem },
   ].filter(Boolean),
 });
