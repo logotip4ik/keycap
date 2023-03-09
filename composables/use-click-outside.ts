@@ -1,22 +1,39 @@
 import type { Ref } from 'vue';
 
-export default (target: Ref<HTMLElement | null>, callback: () => any) => {
-  function onClickOutside(event: Event) {
-    const eventTarget = event.target as Node;
+export default (target: Ref<HTMLElement | null>, callback: (e: Event) => any) => {
+  const register = (event: string, action: (e: any) => any, opts: object) => {
+    window.addEventListener(event, action, opts);
+    return () => window.removeEventListener(event, action, opts);
+  };
 
-    if (!target.value?.contains(eventTarget))
-      callback();
-  }
+  const listener = (event: PointerEvent) => {
+    if (!target.value?.contains(event.target as HTMLElement))
+      callback(event);
+  };
 
-  watch(target, (target) => {
-    if (!target) return;
+  const cleanups: Function[] = [];
+  const cleanup = () => {
+    cleanups.forEach((fn) => fn());
+    cleanups.length = 0;
+  };
 
-    window.addEventListener('click', onClickOutside, { passive: true, capture: true });
-    window.addEventListener('pointerdown', onClickOutside, { passive: true, capture: true });
-  }, { immediate: true });
+  const stopWatch = watch(target, (target) => {
+    cleanup();
 
-  onScopeDispose(() => {
-    window.addEventListener('click', onClickOutside);
-    window.addEventListener('pointerdown', onClickOutside);
-  });
+    if (!target)
+      return;
+
+    cleanups.push(
+      register('click', listener, { passive: true, capture: true }),
+    );
+  }, { immediate: true, flush: 'post' });
+
+  const stop = () => {
+    stopWatch();
+    cleanup();
+  };
+
+  onScopeDispose(stop);
+
+  return stop;
 };
