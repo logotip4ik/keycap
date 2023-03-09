@@ -39,8 +39,6 @@ model Note {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  @@index([path])
 }
 
 model Folder {
@@ -61,6 +59,4 @@ model Folder {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  @@index([path, ownerId])
 }
