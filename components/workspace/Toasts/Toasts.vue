@@ -4,35 +4,46 @@ import type { ComponentPublicInstance } from 'vue';
 const toasts = useToasts();
 
 const toasterEl = ref<null | ComponentPublicInstance<HTMLElement>>(null);
-const toasterElClientRect = useElementBounding(toasterEl, { windowScroll: false });
 
 const sortedToasts = computed(() =>
   toasts.value.sort((a, b) => a.priority - b.priority),
 );
 
+let toasterElClientRect: DOMRect | null;
 const ANIMATION_DURATION = 300;
 function beforeLeaveHook(el: Element) {
   const elClientRect = el.getBoundingClientRect();
 
-  const relativeBottomPos = (toasterElClientRect.bottom.value - elClientRect.bottom);
+  toasterElClientRect = toasterElClientRect || toasterEl.value!.getBoundingClientRect();
+
+  const relativeBottomPos = (toasterElClientRect.bottom - elClientRect.bottom);
 
   (el as HTMLElement).style.setProperty('--prev-bottom', `${relativeBottomPos}px`);
   (el as HTMLElement).style.setProperty('--prev-width', `${elClientRect.width}px`);
 }
+
+function handleResize() {
+  toasterElClientRect = null;
+}
+
+onMounted(() => window.addEventListener('resize', handleResize, { passive: true }));
+onBeforeUnmount(() => window.removeEventListener('resize', handleResize));
 </script>
 
 <template>
-  <TransitionGroup
-    ref="toasterEl"
-    class="toasts"
-    tag="section"
-    name="toast"
-    @before-leave="beforeLeaveHook"
-  >
-    <template v-for="toast in sortedToasts" :key="toast.id">
-      <WorkspaceToastsItem :toast="toast" :animation-duration="ANIMATION_DURATION" />
-    </template>
-  </TransitionGroup>
+  <Teleport to="body">
+    <TransitionGroup
+      ref="toasterEl"
+      class="toasts"
+      tag="section"
+      name="toast"
+      @before-leave="beforeLeaveHook"
+    >
+      <template v-for="toast in sortedToasts" :key="toast.id">
+        <WorkspaceToastsItem :toast="toast" :animation-duration="ANIMATION_DURATION" />
+      </template>
+    </TransitionGroup>
+  </Teleport>
 </template>
 
 <style lang="scss">

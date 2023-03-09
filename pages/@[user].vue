@@ -146,9 +146,7 @@ onMounted(() => {
       </Transition>
     </Teleport>
 
-    <Teleport to="body">
-      <WorkspaceToasts />
-    </Teleport>
+    <LazyWorkspaceToasts />
   </div>
 </template>
 
