@@ -2,6 +2,7 @@ import LRU from 'lru-cache';
 
 import type { Note } from '@prisma/client';
 
+export const useCurrentItemForDetails = () => useState<FolderOrNote | null>(() => null);
 export const useRootFolderContents = () => useState<FolderWithContents | null>(() => null);
 export const useCurrentNoteState = () => useState<'' | 'updating' | 'fetching' | 'saved'>(() => '' as const);
 
