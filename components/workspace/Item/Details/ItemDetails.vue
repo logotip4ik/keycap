@@ -24,6 +24,7 @@ function unsetCurrentItemForDetails() {
 }
 
 useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
+useTinykeys({ Escape: unsetCurrentItemForDetails });
 </script>
 
 <template>
