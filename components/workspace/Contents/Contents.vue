@@ -9,6 +9,7 @@ const foldersCache = useFoldersCache();
 const createToast = useToast();
 const offlineStorage = useOfflineStorage();
 const { shortcuts } = useAppConfig();
+const { showLoading, hideLoading } = useLoadingIndicator();
 const mitt = useMitt();
 
 const folderPath = computed(() => {
@@ -35,13 +36,12 @@ const { data: fetchedFolder, error } = useLazyAsyncData<FolderWithContents>(
         .then((folderCopy) => folderCopy && (folder.value = folderCopy));
     }
 
-    const nuxtApp = useNuxtApp();
     const apiFolderPath = folderPath.value.split('/').slice(2).join('/');
 
     return $fetch(`/api/folder/${apiFolderPath}`, {
       retry: 2,
       onRequest: () => {
-        nuxtApp.callHook('page:start');
+        showLoading();
 
         if (prevFolderPath !== folderPath.value)
           firstTimeFetch = true;
@@ -59,7 +59,7 @@ const { data: fetchedFolder, error } = useLazyAsyncData<FolderWithContents>(
         prevFolderPath = folderPath.value;
       },
       onResponse: () => {
-        nuxtApp.callHook('page:finish');
+        hideLoading();
 
         loadingToast.value?.remove();
       },

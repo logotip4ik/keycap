@@ -13,6 +13,7 @@ const currentNoteState = useCurrentNoteState();
 const createToast = useToast();
 const offlineStorage = useOfflineStorage();
 const currentItemForDetails = useCurrentItemForDetails();
+const { showLoading, hideLoading } = useLoadingIndicator();
 const mitt = useMitt();
 
 const notePath = computed(() => {
@@ -53,13 +54,10 @@ const { data: fetchedNote, pending, error, refresh } = useLazyAsyncData<Note | n
 
     currentNoteState.value = 'fetching';
 
-    const nuxtApp = useNuxtApp();
-
     return $fetch(`/api/note/${noteApiPath.value}`, {
       retry: 2,
       onRequest: () => {
-        // https://github.com/nuxt/nuxt/issues/14221#issuecomment-1397723845
-        nuxtApp.callHook('page:start');
+        showLoading();
 
         if (!loadingToast?.value) {
           loadingToast = createToast('Fetching note. Please wait...', {
@@ -72,7 +70,7 @@ const { data: fetchedNote, pending, error, refresh } = useLazyAsyncData<Note | n
         }
       },
       onResponse: () => {
-        nuxtApp.callHook('page:finish');
+        hideLoading();
 
         loadingToast.value?.remove();
       },
