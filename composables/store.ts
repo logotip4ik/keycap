@@ -6,7 +6,7 @@ export const useCurrentItemForDetails = () => useState<FolderOrNote | null>(() =
 export const useRootFolderContents = () => useState<FolderWithContents | null>(() => null);
 export const useCurrentNoteState = () => useState<'' | 'updating' | 'fetching' | 'saved'>(() => '' as const);
 
-const notesCache = new LRU<string, Note>({ max: 30 });
+const notesCache = new LRU<string, Note | NoteMinimal>({ max: 30 });
 export const useNotesCache = () => notesCache;
 
 const foldersCache = new LRU<string, FolderWithContents>({ max: 30 });

@@ -1,6 +1,5 @@
 import { withLeadingSlash, withTrailingSlash, withoutLeadingSlash } from 'ufo';
 
-import type { Note } from '@prisma/client';
 import type { RouteLocationNamedRaw } from 'vue-router';
 import type { NavigateToOptions } from 'nuxt/dist/app/composables/router';
 
@@ -90,7 +89,7 @@ export async function createNote(noteName: string, self: FolderOrNote, parent: F
   const newNotePathName = encodeURIComponent(noteName.trim());
   const newNotePath = currentFolderPath + newNotePathName;
 
-  const newlyCreatedNote = await $fetch<Note>(`/api/note${newNotePath}`, {
+  const newlyCreatedNote = await $fetch<NoteMinimal>(`/api/note${newNotePath}`, {
     method: 'POST',
     body: { parentId: parent.id },
   });
@@ -178,5 +177,5 @@ export async function preloadItem(self: FolderOrNote) {
 
   // @ts-expect-error idk how to setup this type
   cache.set(item.path, item);
-  offlineStorage.value?.setItem(item.path, item);
+  offlineStorage.value?.setItem(item.path!, item);
 }
