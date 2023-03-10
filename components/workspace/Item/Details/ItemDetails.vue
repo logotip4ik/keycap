@@ -5,10 +5,14 @@ const props = defineProps<Props>();
 const currentItemForDetails = useCurrentItemForDetails();
 
 const isFolder = 'root' in props.item;
-const { data: details } = useLazyFetch(
-  // /api/[note|folder]/[item path without username]
-  `/api/${isFolder ? 'folder' : 'note'}/${props.item.path.split('/').slice(2).join('/')}`,
-  { query: { details: true }, retry: 2 });
+// NOTE(perf improvement): client bundle size reduced by using only useAsyncData or useFetch
+const { data: details } = useLazyAsyncData(() =>
+  $fetch(
+    // /api/[note|folder]/[item path without username]
+    `/api/${isFolder ? 'folder' : 'note'}/${props.item.path.split('/').slice(2).join('/')}`,
+    { query: { details: true }, retry: 2 },
+  ),
+);
 
 const itemDetailsEl = ref<HTMLElement | null>(null);
 const mergedDetails = computed(() => {
