@@ -25,6 +25,7 @@ export default (target: Ref<HTMLElement | null>, callback: (e: Event) => any) =>
 
     cleanups.push(
       register('click', listener, { passive: true, capture: true }),
+      register('contextmenu', listener, { passive: true, capture: true }),
     );
   }, { immediate: true, flush: 'post' });
 
