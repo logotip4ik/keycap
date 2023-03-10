@@ -12,6 +12,7 @@ const notesCache = useNotesCache();
 const currentNoteState = useCurrentNoteState();
 const createToast = useToast();
 const offlineStorage = useOfflineStorage();
+const currentItemForDetails = useCurrentItemForDetails();
 const mitt = useMitt();
 
 const notePath = computed(() => {
@@ -128,6 +129,11 @@ function updateNote(content: string) {
     .catch((error) => console.warn(error));
 }
 
+function showDetails() {
+  // @ts-expect-error idk why it is complaining
+  currentItemForDetails.value = note.value!;
+}
+
 mitt.on('cache:populated', () => {
   if (!note.value)
     note.value = notesCache.get(notePath.value) || null;
@@ -183,6 +189,7 @@ watch(fetchedNote, (value) => {
         :editable="!isFallbackMode && !!note"
         @refresh="refresh"
         @update="throttledUpdate"
+        @show-details="showDetails"
       />
     </template>
 

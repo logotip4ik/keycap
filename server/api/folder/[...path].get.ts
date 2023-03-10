@@ -9,28 +9,13 @@ export default defineEventHandler(async (event) => {
   const path = getRouterParam(event, 'path');
   const folderPath = generateFolderPath(user.username, path);
 
+  const selectParams = getFolderSelectParamsFromEvent(event);
+
   timer.start('db');
   const folder = await prisma.folder.findFirst({
     where: { path: folderPath, ownerId: user.id },
 
-    select: {
-      id: true,
-      name: true,
-      path: true,
-      root: true,
-      updatedAt: true,
-      createdAt: true,
-
-      notes: {
-        select: { id: true, name: true, path: true, updatedAt: true, createdAt: true },
-        orderBy: { name: 'asc' },
-      },
-
-      subfolders: {
-        select: { id: true, name: true, root: true, path: true, updatedAt: true, createdAt: true },
-        orderBy: { name: 'asc' },
-      },
-    },
+    select: { ...selectParams },
   });
   timer.end();
 

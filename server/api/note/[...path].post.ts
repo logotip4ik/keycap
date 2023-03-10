@@ -13,6 +13,8 @@ export default defineEventHandler(async (event) => {
   if (!body.parentId || !path)
     return sendError(event, createError({ statusCode: 400, statusMessage: 'not enough data' }));
 
+  const selectParams = getNoteSelectParamsFromEvent(event);
+
   try {
     timer.start('db');
     const note = await prisma.note.create({
@@ -24,7 +26,7 @@ export default defineEventHandler(async (event) => {
         owner: { connect: { id: user.id } },
         parent: { connect: { id: toBigInt(body.parentId) } },
       },
-      select: { id: true, name: true, content: true, path: true, updatedAt: true, createdAt: true },
+      select: { ...selectParams },
     });
     timer.end();
 

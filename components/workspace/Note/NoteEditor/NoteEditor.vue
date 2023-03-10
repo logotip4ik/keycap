@@ -12,7 +12,7 @@ import TextAlign from '@tiptap/extension-text-align';
 import CodeBlock from '@tiptap/extension-code-block';
 
 interface Props { content: string; editable: boolean }
-interface Emits { (event: 'update', content: string): void; (event: 'refresh'): void }
+interface Emits { (e: 'update', content: string): void; (e: 'refresh'): void; (e: 'showDetails'): void }
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
@@ -130,6 +130,10 @@ onBeforeRouteUpdate((from, to) => {
       <LazyWorkspaceNoteEditorBubbleMenu :editor="editor" @hide="hideBubbleMenu" />
     </template>
 
+    <button class="note-editor__details-button" @click="$emit('showDetails')">
+      details
+    </button>
+
     <EditorContent class="note-editor" :editor="editor" />
   </div>
 </template>
@@ -139,7 +143,42 @@ onBeforeRouteUpdate((from, to) => {
   height: 100%;
 
   &__wrapper {
+    position: relative;
+    isolation: isolate;
+    z-index: 0;
+
     height: 100%;
+  }
+
+  &__details-button {
+    position: absolute;
+    top: 1rem;
+    right: 0;
+    z-index: 2;
+
+    font: inherit;
+    text-decoration: underline;
+    color: hsla(var(--text-color-hsl), 0.5);
+
+    padding: 0.5rem 0.75rem;
+
+    border: none;
+    outline-color: transparent;
+    background: transparent;
+    cursor: pointer;
+
+    transition: color .3s, text-shadow .3s;
+
+    @media screen and (max-width: $breakpoint-tablet) {
+      top: 0;
+    }
+
+    &:is(:hover, :focus-visible) {
+      color: hsla(var(--text-color-hsl), 1);
+      text-shadow: 0 0 2rem hsla(var(--text-color-hsl), 1);
+
+      transition-duration: .05s;
+    }
   }
 
   .ProseMirror {

@@ -10,6 +10,7 @@ const notesCache = useNotesCache();
 const foldersCache = useFoldersCache();
 const mitt = useMitt();
 const createToast = useToast();
+const currentItemForDetails = useCurrentItemForDetails();
 
 const isFolder = 'root' in props.item;
 
@@ -24,6 +25,7 @@ const menuOptions = shallowReactive({
   actions: [
     { name: 'preload', handler: _preloadItem },
     (!isFolder && { name: 'rename', handler: renameItem }),
+    { name: 'show details', handler: showDetails },
     { name: 'delete', needConfirmation: true, handler: deleteItem },
   ].filter(Boolean),
 });
@@ -41,6 +43,12 @@ const isItemDisabled = computed(() => {
 });
 
 mitt.on('cache:populated', () => shouldRefreshItemDisabled.value = true);
+
+function showDetails() {
+  currentItemForDetails.value = props.item;
+
+  menuOptions.opened = false;
+}
 
 function _preloadItem() {
   const loadingToast = createToast(`Preloading into cache: "${props.item.name}"`,
