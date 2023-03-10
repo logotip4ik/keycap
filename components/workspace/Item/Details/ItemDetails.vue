@@ -2,8 +2,20 @@
 interface Props { item: NoteMinimal }
 const props = defineProps<Props>();
 
+const isFolder = 'root' in props.item;
+
 const itemDetailsEl = ref(null);
-const details = /* useFetch */ ref(null);
+
+const { data: details } = useLazyFetch(
+  // /api/[note|folder]/[item path without username]
+  `/api/${isFolder ? 'folder' : 'note'}/${props.item.path.split('/').slice(2).join('/')}`,
+  { query: { details: true } });
+
+const mergedDetails = computed(() => {
+  if (!details.value) return null;
+
+  return { ...props.item, ...details.value };
+});
 
 const currentItemForDetails = useCurrentItemForDetails();
 
@@ -14,7 +26,9 @@ useClickOutside(itemDetailsEl, () => currentItemForDetails.value = null);
   <div class="item-details__wrapper fast-fade">
     <section ref="itemDetailsEl" class="item-details">
       <Transition name="fade">
-        <div v-if="details" key="content" class="something" />
+        <div v-if="mergedDetails" key="content" class="something">
+          {{ mergedDetails }}
+        </div>
 
         <WorkspaceItemDetailsSkeleton v-else key="skeleton" />
       </Transition>
