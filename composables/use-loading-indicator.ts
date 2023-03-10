@@ -11,11 +11,11 @@ export default () => {
   };
 };
 
-function createToggle(hookName: HookKeys<RuntimeNuxtHooks>, setValue: any, shouldToggle: () => any) {
+function createToggle(hookName: HookKeys<RuntimeNuxtHooks>, setValue: any, shouldIgnore: () => any) {
   const nuxtApp = useNuxtApp();
 
   return () => {
-    if (shouldToggle())
+    if (shouldIgnore())
       return;
 
     nuxtApp.callHook(hookName);
