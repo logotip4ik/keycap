@@ -167,8 +167,17 @@ onBeforeRouteUpdate((from, to) => {
     background: transparent;
     cursor: pointer;
 
+    transition: color .3s, text-shadow .3s;
+
     @media screen and (max-width: $breakpoint-tablet) {
       top: 0;
+    }
+
+    &:is(:hover, :focus-visible) {
+      color: hsla(var(--text-color-hsl), 1);
+      text-shadow: 0 0 2rem hsla(var(--text-color-hsl), 1);
+
+      transition-duration: .05s;
     }
   }
 
