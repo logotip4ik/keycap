@@ -4,7 +4,7 @@ const props = defineProps<Props>();
 
 const isFolder = 'root' in props.item;
 
-const itemDetailsEl = ref(null);
+const itemDetailsEl = ref<HTMLElement | null>(null);
 
 const currentItemForDetails = useCurrentItemForDetails();
 
@@ -23,6 +23,25 @@ function unsetCurrentItemForDetails() {
   currentItemForDetails.value = null;
 }
 
+let prevPopupHeight: number | null;
+function storeHeight() {
+  prevPopupHeight = itemDetailsEl.value!.clientHeight;
+}
+
+async function transitionHeight(_: any, done: () => void) {
+  const newHeight = itemDetailsEl.value!.clientHeight;
+
+  if (prevPopupHeight === newHeight)
+    return;
+
+  const animation = itemDetailsEl.value!.animate([
+    { height: `${prevPopupHeight}px` },
+    { height: `${newHeight}px` },
+  ], { duration: 400, easing: 'cubic-bezier(0.33, 1, 0.68, 1)' });
+
+  animation.addEventListener('finish', () => done());
+}
+
 useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
 useTinykeys({ Escape: unsetCurrentItemForDetails });
 </script>
@@ -34,7 +53,7 @@ useTinykeys({ Escape: unsetCurrentItemForDetails });
         <Icon name="close" class="item-details__close-button__icon" />
       </button>
 
-      <Transition name="fade">
+      <Transition name="fade" :css="false" @before-leave="storeHeight" @enter="transitionHeight">
         <div v-if="mergedDetails" key="content" class="something">
           {{ mergedDetails }}
         </div>
