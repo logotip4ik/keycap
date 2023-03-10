@@ -1,5 +1,6 @@
 import { withLeadingSlash, withTrailingSlash, withoutLeadingSlash } from 'ufo';
 
+import type { Note } from '@prisma/client';
 import type { RouteLocationNamedRaw } from 'vue-router';
 import type { NavigateToOptions } from 'nuxt/dist/app/composables/router';
 
@@ -94,7 +95,7 @@ export async function createNote(noteName: string, self: FolderOrNote, parent: F
     body: { parentId: parent.id },
   });
 
-  notesCache.set(newlyCreatedNote.path, newlyCreatedNote);
+  notesCache.set(newlyCreatedNote.path, newlyCreatedNote as Note);
   updateNoteInFolder(self, { ...newlyCreatedNote, content: '', creating: false }, parent);
 
   showItem(newlyCreatedNote as FolderOrNote);
