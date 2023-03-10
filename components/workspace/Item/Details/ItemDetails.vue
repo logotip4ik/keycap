@@ -2,33 +2,36 @@
 interface Props { item: NoteMinimal }
 const props = defineProps<Props>();
 
-const isFolder = 'root' in props.item;
-
-const itemDetailsEl = ref<HTMLElement | null>(null);
-
 const currentItemForDetails = useCurrentItemForDetails();
 
+const isFolder = 'root' in props.item;
 const { data: details } = useLazyFetch(
   // /api/[note|folder]/[item path without username]
   `/api/${isFolder ? 'folder' : 'note'}/${props.item.path.split('/').slice(2).join('/')}`,
   { query: { details: true }, retry: 2 });
 
+const itemDetailsEl = ref<HTMLElement | null>(null);
 const mergedDetails = computed(() => {
   if (!details.value) return null;
 
   return { ...props.item, ...details.value };
 });
 
+const rowsData = computed(() => [
+  { title: 'Last update', value: formatDate(mergedDetails.value?.updatedAt) },
+  { title: 'Created at', value: formatDate(mergedDetails.value?.createdAt) },
+]);
+
 function unsetCurrentItemForDetails() {
   currentItemForDetails.value = null;
 }
 
 let prevPopupHeight: number | null;
-function storeHeight() {
+function storePopupHeight() {
   prevPopupHeight = itemDetailsEl.value!.clientHeight;
 }
 
-async function transitionHeight(_: any, done: () => void) {
+function transitionHeight(_: any, done: () => void) {
   const newHeight = itemDetailsEl.value!.clientHeight;
 
   if (prevPopupHeight === newHeight)
@@ -42,6 +45,21 @@ async function transitionHeight(_: any, done: () => void) {
   animation.addEventListener('finish', () => done());
 }
 
+function formatDate(dateString?: Date | string) {
+  if (!dateString) return '';
+
+  const date = new Date(dateString);
+
+  return Intl.DateTimeFormat(undefined, {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+  }).format(date);
+}
+
 useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
 useTinykeys({ Escape: unsetCurrentItemForDetails });
 </script>
@@ -53,9 +71,23 @@ useTinykeys({ Escape: unsetCurrentItemForDetails });
         <Icon name="close" class="item-details__close-button__icon" />
       </button>
 
-      <Transition name="fade" :css="false" @before-leave="storeHeight" @enter="transitionHeight">
-        <div v-if="mergedDetails" key="content" class="something">
-          {{ mergedDetails }}
+      <Transition name="fade" :css="false" @before-leave="storePopupHeight" @enter="transitionHeight">
+        <div v-if="mergedDetails" key="content" class="item-details__data">
+          <p class="item-details__data__title">
+            {{ mergedDetails.name }}
+          </p>
+
+          <div v-for="(data, key) in rowsData" :key="key" class="item-details__data__row">
+            <p class="item-details__data__row__title">
+              {{ data.title }}
+            </p>
+
+            <hr class="item-details__data__row__hr">
+
+            <p class="item-details__data__row__value">
+              {{ data.value }}
+            </p>
+          </div>
         </div>
 
         <WorkspaceItemDetailsSkeleton v-else key="skeleton" />
@@ -139,6 +171,44 @@ useTinykeys({ Escape: unsetCurrentItemForDetails });
     &__icon {
       width: auto;
       height: 65%;
+    }
+  }
+
+  &__data {
+    &__title {
+      font-size: clamp(1.25rem, 2vw + 0.75rem, 2rem);
+      margin: 0;
+      margin-bottom: 2.25rem
+    }
+
+    &__row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      font-size: 1.1rem;
+      color: hsla(var(--text-color-hsl), 0.75);
+
+      & + & {
+        margin-top: 0.825rem;
+      }
+
+      &__hr {
+        flex: 1;
+
+        width: 100%;
+        height: 0.1rem;
+
+        margin: 0 1rem;
+
+        border: none;
+        background-color: hsla(var(--text-color-hsl), 0.1);
+      }
+
+      &__title,
+      &__value {
+        margin: 0;
+      }
     }
   }
 
