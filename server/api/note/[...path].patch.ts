@@ -33,7 +33,7 @@ export default defineEventHandler(async (event) => {
     const updatedNote = await prisma.note.update({
       data,
       where: { path: notePath },
-      select: { id: true, name: true, content: true, path: true, updatedAt: true, createdAt: true },
+      select: { id: true, name: true, content: true, path: true },
     });
     timer.end();
 

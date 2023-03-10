@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
         parent: { connect: { id: toBigInt(body.parentId) } },
       },
 
-      select: { id: true, name: true, path: true, root: true, updatedAt: true, createdAt: true },
+      select: { id: true, name: true, path: true, root: true },
     });
     timer.end();
 

@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
   timer.start('db');
   const note = await prisma.note.findFirst({
     where: { path: notePath, ownerId: user.id },
-    select: { id: true, name: true, content: true, path: true, updatedAt: true, createdAt: true },
+    select: { id: true, name: true, content: true, path: true },
   });
   timer.end();
 

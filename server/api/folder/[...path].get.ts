@@ -22,12 +22,12 @@ export default defineEventHandler(async (event) => {
       createdAt: true,
 
       notes: {
-        select: { id: true, name: true, path: true, updatedAt: true, createdAt: true },
+        select: { id: true, name: true, path: true },
         orderBy: { name: 'asc' },
       },
 
       subfolders: {
-        select: { id: true, name: true, root: true, path: true, updatedAt: true, createdAt: true },
+        select: { id: true, name: true, root: true, path: true },
         orderBy: { name: 'asc' },
       },
     },

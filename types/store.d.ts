@@ -15,11 +15,9 @@ declare global {
     content?: string
     editing?: boolean
     creating?: boolean
-    updatedAt?: Date
-    createdAt?: Date
   };
 
-  interface FolderWithContents extends Folder {
+  interface FolderWithContents extends Omit<Folder, 'createdAt' | 'updatedAt'> {
     editing?: boolean
     creating?: boolean
     notes: NoteMinimal[]
