@@ -11,7 +11,7 @@ const currentItemForDetails = useCurrentItemForDetails();
 const { data: details } = useLazyFetch(
   // /api/[note|folder]/[item path without username]
   `/api/${isFolder ? 'folder' : 'note'}/${props.item.path.split('/').slice(2).join('/')}`,
-  { query: { details: true } });
+  { query: { details: true }, retry: 2 });
 
 const mergedDetails = computed(() => {
   if (!details.value) return null;
