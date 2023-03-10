@@ -28,12 +28,14 @@ export default defineEventHandler(async (event) => {
     data.path = generateNotePath(user.username, newNotePath);
   }
 
+  const selectParams = getNoteSelectParamsFromEvent(event);
+
   try {
     timer.start('db');
     const updatedNote = await prisma.note.update({
       data,
       where: { path: notePath },
-      select: { id: true, name: true, content: true, path: true },
+      select: { ...selectParams },
     });
     timer.end();
 

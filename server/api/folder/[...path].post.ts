@@ -15,6 +15,8 @@ export default defineEventHandler(async (event) => {
   if (!body.name || !body.parentId || !path)
     return createError({ statusCode: 400 });
 
+  const selectParams = getFolderSelectParamsFromEvent(event);
+
   try {
     timer.start('db');
     const folder = await prisma.folder.create({
@@ -25,7 +27,7 @@ export default defineEventHandler(async (event) => {
         parent: { connect: { id: toBigInt(body.parentId) } },
       },
 
-      select: { id: true, name: true, path: true, root: true },
+      select: { ...selectParams },
     });
     timer.end();
 
