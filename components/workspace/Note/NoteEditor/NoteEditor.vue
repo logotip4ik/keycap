@@ -145,7 +145,7 @@ onBeforeRouteUpdate((from, to) => {
   &__wrapper {
     position: relative;
     isolation: isolate;
-    z-index: 1;
+    z-index: 0;
 
     height: 100%;
   }
