@@ -6,6 +6,8 @@ const isFolder = 'root' in props.item;
 
 const itemDetailsEl = ref(null);
 
+const currentItemForDetails = useCurrentItemForDetails();
+
 const { data: details } = useLazyFetch(
   // /api/[note|folder]/[item path without username]
   `/api/${isFolder ? 'folder' : 'note'}/${props.item.path.split('/').slice(2).join('/')}`,
@@ -17,14 +19,20 @@ const mergedDetails = computed(() => {
   return { ...props.item, ...details.value };
 });
 
-const currentItemForDetails = useCurrentItemForDetails();
+function unsetCurrentItemForDetails() {
+  currentItemForDetails.value = null;
+}
 
-useClickOutside(itemDetailsEl, () => currentItemForDetails.value = null);
+useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
 </script>
 
 <template>
   <div class="item-details__wrapper fast-fade">
     <section ref="itemDetailsEl" class="item-details">
+      <button class="item-details__close-button" @click="unsetCurrentItemForDetails">
+        <Icon name="close" class="item-details__close-button__icon" />
+      </button>
+
       <Transition name="fade">
         <div v-if="mergedDetails" key="content" class="something">
           {{ mergedDetails }}
@@ -38,6 +46,10 @@ useClickOutside(itemDetailsEl, () => currentItemForDetails.value = null);
 
 <style lang="scss">
 .item-details {
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
+
   width: 90%;
   max-width: $breakpoint-tablet;
 
@@ -84,7 +96,29 @@ useClickOutside(itemDetailsEl, () => currentItemForDetails.value = null);
 
     @supports (backdrop-filter: blur(1px)) {
       background-color: hsla(var(--surface-color-hsl), 0.25);
-      backdrop-filter: blur(0.5rem);
+      backdrop-filter: blur(0.35rem);
+    }
+  }
+
+  &__close-button {
+    --size: clamp(2rem, 3vw + 1.5rem, 2.5rem);
+
+    position: absolute;
+    top: calc(var(--size) / 6);
+    right: calc(var(--size) / 6);
+
+    width: var(--size);
+    height: var(--size);
+
+    border: none;
+    outline-color: transparent;
+    background-color: transparent;
+
+    cursor: pointer;
+
+    &__icon {
+      width: auto;
+      height: 65%;
     }
   }
 
