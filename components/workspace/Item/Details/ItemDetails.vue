@@ -115,9 +115,9 @@ useTinykeys({ Escape: unsetCurrentItemForDetails });
   background-color: rgba(var(--surface-color-hsl), 0.98);
   box-shadow:
     inset -1px -1px 0.1rem rgba($color: #000000, $alpha: 0.025),
-          2px 1.3px 2.1px rgba(0, 0, 0, 0.024),
-          6.7px 4.5px 7.1px rgba(0, 0, 0, 0.036),
-          30px 20px 32px rgba(0, 0, 0, 0.06);
+          1.3px 1.3px 5.3px rgba(0, 0, 0, 0.028),
+          4.5px 4.5px 17.9px rgba(0, 0, 0, 0.042),
+          20px 20px 80px rgba(0, 0, 0, 0.07);
 
   @supports (backdrop-filter: blur(1px)) {
     backdrop-filter: blur(5px);
