@@ -76,17 +76,26 @@ onBeforeUnmount(() => window.removeEventListener('resize', handleResize));
   }
 }
 
-.toast-enter-active,
-.toast-leave-active {
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
+.toast-enter-active {
+  transform-origin: right center;
 
-.toast-enter-active [data-icon] {
-  transition: opacity 0.4s ease;
+  transition: transform 0.4s cubic-bezier(0.33, 1, 0.68, 1), opacity 0.3s;
+
+  @media screen and (max-width: $breakpoint-tablet) {
+    transform-origin: left center;
+  }
+
+  [data-icon] {
+    transition: opacity 0.4s;
+  }
 }
 
 .toast-move {
   transition-duration: 0.3s;
+}
+
+.toast-enter-from {
+  transform: scale(0.9) translate(0px, 5px) rotate(0deg);
 }
 
 .toast-enter-from,
@@ -101,6 +110,8 @@ onBeforeUnmount(() => window.removeEventListener('resize', handleResize));
   right: 0;
 
   width: var(--prev-width);
+
+  transition: opacity .3s;
 
   @media screen and (max-width: $breakpoint-tablet) {
     right: unset;
