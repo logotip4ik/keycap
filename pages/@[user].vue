@@ -94,6 +94,10 @@ onMounted(() => {
     () => [preloadDashboardComponents, defineFuzzyWorker, defineOfflineStorage]
       .map((cb) => cb()),
   );
+
+  if (process.dev)
+    // @ts-expect-error this should not be defined
+    window.$createToast = useToast();
 });
 </script>
 
