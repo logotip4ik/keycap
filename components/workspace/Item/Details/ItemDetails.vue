@@ -167,10 +167,26 @@ useTinykeys({ Escape: unsetCurrentItemForDetails });
     height: var(--size);
 
     border: none;
-    outline-color: transparent;
+    border-radius: 0.2rem;
+    outline: 1px transparent solid;
+    outline-offset: -2px;
     background-color: transparent;
 
     cursor: pointer;
+
+    transition: color .3s, outline-color .3s, outline-offset .3s;
+
+    @media (hover: hover) {
+      color: hsla(var(--text-color-hsl), 0.65);
+    }
+
+    &:is(:hover, :focus-visible) {
+      color: hsla(var(--text-color-hsl), 1);
+      outline-color: hsla(var(--text-color-hsl), 0.5);
+      outline-offset: 0px;
+
+      transition-duration: .1s;
+    }
 
     &__icon {
       width: auto;
