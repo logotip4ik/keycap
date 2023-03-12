@@ -95,7 +95,7 @@ onBeforeUnmount(() => window.removeEventListener('resize', handleResize));
 }
 
 .toast-enter-from {
-  transform: scale(0.9) translate(0px, 5px) rotate(0deg);
+  transform: scale(0.95) translate(0px, 5px) rotate(0deg);
 }
 
 .toast-enter-from,
