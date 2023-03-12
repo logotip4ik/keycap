@@ -1,3 +1,5 @@
+import { isDevelopment } from 'std-env';
+
 import { getHeaders } from './headers.config';
 import breakpoints from './assets/constants/breakpoints';
 
@@ -65,11 +67,7 @@ export default defineNuxtConfig({
     '~/assets/fonts/Mona-Sans/style.css',
   ],
 
-  sourcemap: process.env.NODE_ENV === 'development',
-
-  build: {
-    transpile: ['ufo'],
-  },
+  sourcemap: isDevelopment,
 
   vite: {
     css: {
