@@ -182,7 +182,7 @@ useTinykeys({ Escape: unsetCurrentItemForDetails });
 
     &:is(:hover, :focus-visible) {
       color: hsla(var(--text-color-hsl), 1);
-      outline-color: hsla(var(--text-color-hsl), 0.5);
+      outline-color: hsla(var(--text-color-hsl), 0.35);
       outline-offset: 0px;
 
       transition-duration: .1s;
