@@ -5,14 +5,13 @@ const props = defineProps<Props>();
 const currentItemForDetails = useCurrentItemForDetails();
 
 const isFolder = 'root' in props.item;
+
 // NOTE(perf improvement): client bundle size reduced by using only useAsyncData or useFetch
-const { data: details } = useLazyAsyncData(() =>
-  $fetch(
-    // /api/[note|folder]/[item path without username]
-    `/api/${isFolder ? 'folder' : 'note'}/${props.item.path.split('/').slice(2).join('/')}`,
-    { query: { details: true }, retry: 2 },
-  ),
-);
+const { data: details, pending } = useLazyAsyncData(() => $fetch(
+  // /api/[note|folder]/[item path without username]
+  `/api/${isFolder ? 'folder' : 'note'}/${props.item.path.split('/').slice(2).join('/')}`,
+  { query: { details: true }, retry: 2 },
+));
 
 const itemDetailsEl = ref<HTMLElement | null>(null);
 const mergedDetails = computed(() => {
@@ -75,8 +74,10 @@ useTinykeys({ Escape: unsetCurrentItemForDetails });
         <Icon name="close" class="item-details__close-button__icon" />
       </button>
 
-      <Transition name="fade" :css="false" @before-leave="storePopupHeight" @enter="transitionHeight">
-        <div v-if="mergedDetails" key="content" class="item-details__data">
+      <Transition name="fade" appear @before-leave="storePopupHeight" @enter="transitionHeight">
+        <WorkspaceItemDetailsSkeleton v-if="pending || !mergedDetails" key="skeleton" />
+
+        <div v-else-if="mergedDetails" key="content" class="item-details__data">
           <p class="item-details__data__title">
             {{ mergedDetails.name }}
           </p>
@@ -93,8 +94,6 @@ useTinykeys({ Escape: unsetCurrentItemForDetails });
             </p>
           </div>
         </div>
-
-        <WorkspaceItemDetailsSkeleton v-else key="skeleton" />
       </Transition>
     </section>
   </div>
