@@ -63,8 +63,8 @@ function formatDate(dateString?: Date | string) {
   }).format(date);
 }
 
-useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
 useTinykeys({ Escape: unsetCurrentItemForDetails });
+useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
 </script>
 
 <template>
