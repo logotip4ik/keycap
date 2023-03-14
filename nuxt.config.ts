@@ -27,7 +27,6 @@ export default defineNuxtConfig({
   },
 
   experimental: {
-    emitRouteChunkError: 'reload',
     writeEarlyHints: true,
   },
 
@@ -57,8 +56,6 @@ export default defineNuxtConfig({
     'nuxt-icon',
     '@nuxtjs/fontaine',
     'unplugin-ltsdi/nuxt',
-    '~/modules/build-env',
-    '~/modules/purge-comments',
   ],
 
   css: [
