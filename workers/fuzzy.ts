@@ -1,6 +1,7 @@
 // @ts-expect-error no types :(
 import getScore from '@superhuman/command-score';
 import { expose } from 'comlink';
+import slug from 'slug';
 
 import { commandActionsMin as commandsCache } from '~/utils/menu';
 
@@ -20,18 +21,27 @@ function search(query: string, maxLength = 4): (FuzzyItem | CommandItem)[] {
   // but in `real world`? fuzzaldrin was a bit slower plus had much more bigger bundle footprint
 
   const isCommand = query.startsWith('/');
+  const searchWithCache = (q: string, c: Map<any, any>) => {
+    const results = [];
+
+    for (const [, value] of c) {
+      const score = getScore(value.name, q);
+
+      if (score > 0)
+        results.push({ score, value });
+    }
+
+    return results;
+  };
 
   if (isCommand)
     query = (query.match(/\w+/) || [''])[0];
 
-  const results = [];
-  const cache = isCommand ? commandsCache : itemsCache;
+  let results = searchWithCache(query, isCommand ? commandsCache : itemsCache);
 
-  for (const [, value] of cache) {
-    const score = getScore(value.name, query);
-
-    if (score > 0)
-      results.push({ score, value });
+  if (results.length === 0 && !isCommand) {
+    query = slug(query);
+    results = searchWithCache(query, itemsCache);
   }
 
   return results
