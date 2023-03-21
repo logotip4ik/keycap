@@ -273,7 +273,7 @@ onBeforeRouteUpdate((from, to) => {
 
     li {
       & > p {
-        padding: 0.25rem 0;
+        padding: 0.125rem 0;
       }
     }
 
