@@ -67,6 +67,10 @@ export default defineNuxtConfig({
   sourcemap: isDevelopment,
 
   vite: {
+    optimizeDeps: {
+      include: ['@superhuman/command-score'],
+    },
+
     css: {
       preprocessorOptions: {
         scss: {
