@@ -288,7 +288,11 @@ onBeforeRouteUpdate((from, to) => {
     }
 
     blockquote {
-      border-left: 2px solid var(--task-list-indicator-color);
+      margin-left: 1.25rem;
+      padding-left: 0.75rem;
+
+      border-left: 2px solid var(--loading-indicator-color);
+      background-color: hsla(var(--text-color-hsl), 0.075);
     }
 
     @for $i from 1 to 7 {
