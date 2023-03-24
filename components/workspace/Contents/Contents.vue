@@ -86,6 +86,7 @@ mitt.on('cache:populated', () => {
   folder.value = foldersCache.get(folderPath.value) || null;
 });
 
+// TODO:Create wrapper function for fetch that will handle showing loading and error toast
 watch(error, async (error) => {
   // if there was previously error, reset the fallback mode to false
   if (!error)
@@ -95,6 +96,8 @@ watch(error, async (error) => {
   // emulates no network connection, so turning fallback mode on
   if (error.name === 'FetchError')
     isFallbackMode.value = true;
+
+  loadingToast.value?.remove();
 
   // But if folder was found in cache, then do nothing, just display it
   if (folder.value)

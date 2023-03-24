@@ -39,6 +39,7 @@ const note = shallowRef<Note | null>(
 
 let firstTimeFetch = true;
 let loadingToast: RefToastInstance;
+
 const { data: fetchedNote, pending, error, refresh } = useLazyAsyncData<Note | null>(
   'note',
   async () => {
@@ -145,6 +146,8 @@ watch(error, async (error) => {
   // No network connection
   if (error.name === 'FetchError')
     isFallbackMode.value = true;
+
+  loadingToast.value?.remove();
 
   // But note was found in cache just display it
   if (note.value)
