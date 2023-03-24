@@ -83,8 +83,10 @@ const { data: fetchedNote, pending, error, refresh } = useLazyAsyncData<Note | n
 let abortController: AbortController | null;
 const throttledUpdate = useThrottleFn(updateNote, 1000, true, false); // enable trailing call and disable leading
 function updateNote(content: string) {
+  const updatingCurrentNote = notePath.value.replace('/', '/@') === window.location.pathname;
+
   // send update request after get
-  if (pending.value) {
+  if (pending.value && updatingCurrentNote) {
     const stop = watch(pending, (pending) => {
       if (!pending) {
         updateNote(content);
@@ -104,7 +106,7 @@ function updateNote(content: string) {
   // enables optimistic ui
   notesCache.set(note.value.path, { ...note.value, ...newNote });
 
-  if (notePath.value.replace('/', '/@') === window.location.pathname)
+  if (updatingCurrentNote)
     currentNoteState.value = 'updating';
 
   abortController?.abort();
@@ -122,7 +124,7 @@ function updateNote(content: string) {
 
       // before route update, note will be saved and the indicator will be again reset to saved
       // this checks if route is the same, so this wasn't last save and user is still on the same note
-      if (notePath.value.replace('/', '/@') === window.location.pathname)
+      if (updatingCurrentNote)
         currentNoteState.value = 'saved';
     })
     .catch((error) => console.warn(error));
