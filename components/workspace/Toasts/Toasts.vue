@@ -95,13 +95,14 @@ onBeforeUnmount(() => window.removeEventListener('resize', handleResize));
 }
 
 .toast-enter-from {
-  transform: scale(0.95) translate(0px, 5px) rotate(0deg);
+  transform: scale(0.925) translate(0px, 7px) rotate(0deg);
 }
 
 .toast-enter-from,
 .toast-enter-from [data-icon],
 .toast-leave-to {
   opacity: 0;
+  filter: blur(2px);
 }
 
 .toast-leave-active {
