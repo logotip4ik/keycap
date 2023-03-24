@@ -287,6 +287,10 @@ onBeforeRouteUpdate((from, to) => {
       cursor: pointer;
     }
 
+    blockquote {
+      border-left: 2px solid var(--task-list-indicator-color);
+    }
+
     @for $i from 1 to 7 {
       h#{$i} {
         margin: 0;
