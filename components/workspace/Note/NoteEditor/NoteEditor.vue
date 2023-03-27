@@ -1,7 +1,19 @@
 <script setup lang="ts">
 import { EditorContent, useEditor } from '@tiptap/vue-3';
 
-import StarterKir from '@tiptap/starter-kit';
+import Document from '@tiptap/extension-document';
+import Paragraph from '@tiptap/extension-paragraph';
+import Text from '@tiptap/extension-text';
+import Bold from '@tiptap/extension-bold';
+import Italic from '@tiptap/extension-italic';
+import Strike from '@tiptap/extension-strike';
+import Blockquote from '@tiptap/extension-blockquote';
+import BulletList from '@tiptap/extension-bullet-list';
+import HardBreak from '@tiptap/extension-hard-break';
+import Heading from '@tiptap/extension-heading';
+import HorizontalRule from '@tiptap/extension-horizontal-rule';
+import ListItem from '@tiptap/extension-list-item';
+import OrderedList from '@tiptap/extension-ordered-list';
 import Code from '@tiptap/extension-code';
 import Link from '@tiptap/extension-link';
 import Placeholder from '@tiptap/extension-placeholder';
@@ -10,6 +22,7 @@ import TaskItem from '@tiptap/extension-task-item';
 import BubbleMenuPlugin from '@tiptap/extension-bubble-menu';
 import TextAlign from '@tiptap/extension-text-align';
 import CodeBlock from '@tiptap/extension-code-block';
+import History from '@tiptap/extension-history';
 
 interface Props { content: string; editable: boolean }
 interface Emits { (e: 'update', content: string): void; (e: 'refresh'): void; (e: 'showDetails'): void }
@@ -20,12 +33,26 @@ const mitt = useMitt();
 
 const update = (content: string) => emit('update', content);
 
+// TODO: export this whole mess into separate file
 const editor = useEditor({
   autofocus: window.innerWidth > 740 && 'start', // disable auto focus on small screens
   content: props.content,
   editable: props.editable,
   extensions: [
-    StarterKir.configure({ code: false, codeBlock: false }),
+    Document,
+    Text,
+    Paragraph,
+    Blockquote,
+    BulletList,
+    HardBreak,
+    Heading,
+    HorizontalRule,
+    ListItem,
+    OrderedList,
+    Bold,
+    Italic,
+    Strike,
+    History,
     Link,
     TaskList,
     TaskItem,
