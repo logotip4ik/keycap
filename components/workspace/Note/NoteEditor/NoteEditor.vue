@@ -293,6 +293,7 @@ onBeforeRouteUpdate((from, to) => {
 
       border-left: 2px solid var(--loading-indicator-color);
       background-color: hsla(var(--text-color-hsl), 0.075);
+      box-shadow: 0 0 1rem 0 hsla(var(--selection-bg-color-hsl), 0.075);
     }
 
     @for $i from 1 to 7 {
