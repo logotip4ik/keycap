@@ -4,7 +4,7 @@ import 'tippy.js/animations/shift-away.css';
 
 import { BubbleMenu } from '@tiptap/vue-3';
 
-import type { Editor } from '@tiptap/vue-3';
+import type { ChainedCommands, Editor } from '@tiptap/vue-3';
 import type { Props as TippyProps } from 'tippy.js';
 
 interface Props { editor: Editor }
@@ -79,6 +79,40 @@ function saveEditingLink() {
     emit('hide');
 }
 
+function cycleTextFormatting() {
+  let actionIdx = 0;
+
+  if (props.editor.isActive('heading', { level: 1 }))
+    actionIdx = 1;
+
+  else if (props.editor.isActive('heading', { level: 2 }))
+    actionIdx = 2;
+
+  else if (props.editor.isActive('heading', { level: 3 }))
+    actionIdx = 3;
+
+  else if (props.editor.isActive('taskItem'))
+    actionIdx = 4;
+
+  else if (props.editor.isActive('paragraph'))
+    actionIdx = 5;
+
+  const actions = [
+    (commands: ChainedCommands) => commands.setHeading({ level: 1 }),
+    (commands: ChainedCommands) => commands.toggleHeading({ level: 2 }),
+    (commands: ChainedCommands) => commands.toggleHeading({ level: 3 }),
+    (commands: ChainedCommands) => commands.toggleTaskList(),
+    (commands: ChainedCommands) => commands.liftListItem('taskItem'),
+  ];
+
+  actionIdx %= actions.length;
+
+  const commands = props.editor!.chain().focus();
+  const toggleWith = actions.at(actionIdx);
+
+  toggleWith?.(commands).run();
+}
+
 useTinykeys({
   '$mod+l': (event) => {
     const { from, to } = props.editor.state.selection;
@@ -99,7 +133,25 @@ useTinykeys({
     class="note-editor__bubble-menu"
   >
     <Transition name="bubble-menu-fade" @before-leave="beforeLeaveAnimation" @enter="enterAnimation">
-      <div v-if="!isEditingLink">
+      <div v-if="!isEditingLink" class="note-editor__bubble-menu__link-wrapper">
+        <button
+          title="CTRL+G"
+          class="note-editor__bubble-menu__button"
+          :class="{
+            'note-editor__bubble-menu__button--active':
+              editor.isActive('heading') || editor.isActive('taskItem'),
+          }"
+          @click="cycleTextFormatting"
+        >
+          <Icon v-if="editor.isActive('heading', { level: 1 })" name="lucide:heading-1" />
+          <Icon v-else-if="editor.isActive('heading', { level: 2 })" name="lucide:heading-2" />
+          <Icon v-else-if="editor.isActive('heading', { level: 3 })" name="lucide:heading-3" />
+          <Icon v-else-if="editor.isActive('taskItem')" name="material-symbols:list" />
+          <Icon v-else name="material-symbols:format-paragraph" />
+        </button>
+
+        <div class="note-editor__bubble-menu__vr" aria-hidden="true" />
+
         <button
           title="CTRL+B"
           class="note-editor__bubble-menu__button"
@@ -164,6 +216,16 @@ useTinykeys({
 .note-editor__bubble-menu {
   --items-spacing: 0.5rem;
 
+  &__vr {
+    align-self: stretch;
+
+    width: 0.5px;
+
+    margin-block: 0.125rem;
+
+    background-color: hsla(var(--text-color-hsl), 0.125);
+  }
+
   &__link-wrapper {
     display: flex;
     align-items: center;
@@ -201,10 +263,6 @@ useTinykeys({
 
   &__button {
     --size-basis: 2rem;
-
-    & + & {
-      margin-left: var(--items-spacing);
-    }
 
     flex-shrink: 0;
 
