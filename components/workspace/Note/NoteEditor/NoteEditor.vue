@@ -43,7 +43,7 @@ const editor = useEditor({
     Blockquote,
     BulletList,
     HardBreak,
-    Heading,
+    Heading.configure({ levels: [1, 2, 3] }),
     HorizontalRule,
     ListItem,
     OrderedList,
