@@ -1,3 +1,4 @@
+import { isProduction } from 'std-env';
 import { compile, v } from 'suretype';
 
 import getPrisma from '~/prisma';
@@ -17,7 +18,7 @@ export default defineEventHandler(async (event) => {
 
   const validation = useRegistrationValidator(body);
 
-  if (!validation.ok) {
+  if (isProduction && !validation.ok) {
     return createError({
       statusCode: 400,
       statusMessage: `${validation.errors[0].dataPath.split('.').at(-1)} ${validation.errors[0].message}`,
