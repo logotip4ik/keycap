@@ -31,8 +31,6 @@ const emit = defineEmits<Emits>();
 
 const mitt = useMitt();
 
-const update = (content: string) => emit('update', content);
-
 // TODO: export this whole mess into separate file
 const editor = useEditor({
   autofocus: window.innerWidth > 740 && 'start', // disable auto focus on small screens
@@ -89,6 +87,10 @@ const editor = useEditor({
 
   onUpdate: useDebounceFn(saveEditorContent, 350),
 });
+
+function update(content: string) {
+  emit('update', content);
+}
 
 function saveEditorContent() {
   const noteContent = editor.value?.isEmpty ? '' : editor.value?.getHTML();
