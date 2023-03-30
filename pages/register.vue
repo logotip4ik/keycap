@@ -16,6 +16,7 @@ async function register() {
   isLoading.value = true;
 
   $fetch('/api/user/register', { method: 'POST', body: data })
+    // @ts-expect-error idk, fetch has broken types
     .then((newUser) => user.value = newUser)
     .catch((e) => createToast(e.statusMessage))
     .finally(() => isLoading.value = false);
@@ -30,7 +31,7 @@ watch(user, async (value) => value && await navigateTo(`/@${value.username}`));
 
     <form class="register-page__form" @submit.prevent="register">
       <p class="register-page__form__title">
-        We are gonna create an account for you
+        We are going to create an account for you
       </p>
 
       <div class="register-page__form__item">
