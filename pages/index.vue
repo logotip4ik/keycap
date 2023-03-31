@@ -138,6 +138,10 @@ const shortCommitSha = buildInfo.commit;
 
       filter: blur(calc(var(--size) / var(--blur-divider)));
 
+      @media (prefers-reduced-motion: no-preference) {
+        animation: blob-anim 25s infinite linear alternate;
+      }
+
       @media screen and (max-width: $breakpoint-tablet) {
         --size: 30vmin;
         --blur-divider: 2;
@@ -208,6 +212,43 @@ const shortCommitSha = buildInfo.commit;
       border-radius: 0.25rem;
       background-color: hsla(var(--selection-bg-color-hsl), 0.25)
     }
+  }
+}
+
+@keyframes blob-anim {
+  0% {
+    width: 20vmin;
+    height: 20vmin;
+
+    transform: translate(0px, 0px) rotate(0deg);
+  }
+
+  25% {
+    width: 25vmin;
+    height: 20vmin;
+
+    transform: translate(1vmax, 0px) rotate(0deg);
+  }
+
+  50% {
+    width: 25vmin;
+    height: 30vmin;
+
+    transform: translate(0.5vmax -1vmax) rotate(0deg);
+  }
+
+  75% {
+    width: 20vmin;
+    height: 22.5vmin;
+
+    transform: translate(-1vmax, 1vmax) rotate(0deg);
+  }
+
+  100% {
+    width: 25vmin;
+    height: 21.5vmin;
+
+    transform: translate(-0.5vmax, 0.25vmax) rotate(0deg);
   }
 }
 </style>
