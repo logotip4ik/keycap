@@ -323,6 +323,10 @@ useTinykeys({
   }
 }
 
+.tippy-content {
+  padding: 0.325rem;
+}
+
 .bubble-menu-fade-enter-active,
 .bubble-menu-fade-leave-active {
   transition: opacity .4s;
