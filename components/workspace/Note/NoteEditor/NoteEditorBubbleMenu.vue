@@ -219,11 +219,11 @@ useTinykeys({
   &__vr {
     align-self: stretch;
 
-    width: 0.5px;
+    width: 1px;
 
     margin-block: 0.125rem;
 
-    background-color: hsla(var(--text-color-hsl), 0.125);
+    background-color: hsla(var(--text-color-hsl), 0.1);
   }
 
   &__link-wrapper {
