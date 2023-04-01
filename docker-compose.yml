@@ -4,6 +4,8 @@ services:
   cockroach:
     image: cockroachdb/cockroach:latest
     command: start-single-node --insecure
+    volumes:
+      - ./data/node_1:/cockroach/cockroach-data      
     ports:
       - "26257:26257"
       - "8080:8080"
