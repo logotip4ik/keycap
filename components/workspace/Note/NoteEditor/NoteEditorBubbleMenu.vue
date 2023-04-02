@@ -4,7 +4,7 @@ import 'tippy.js/animations/shift-away.css';
 
 import { BubbleMenu } from '@tiptap/vue-3';
 
-import type { ChainedCommands, Editor } from '@tiptap/vue-3';
+import type { ChainedCommands, Editor } from '@tiptap/core';
 import type { Props as TippyProps } from 'tippy.js';
 
 interface Props { editor: Editor }
@@ -18,6 +18,9 @@ const editingLink = ref('');
 const { width } = useWindowSize();
 const isPhoneScreen = computed(() => width.value < 740);
 
+let prevListItem: string | undefined;
+let prevHeadingLevel: number | undefined;
+
 const tippyOptions: Partial<TippyProps> = {
   // this element will never be displayed on server, so this should work
   appendTo: document.body,
@@ -27,7 +30,11 @@ const tippyOptions: Partial<TippyProps> = {
   animation: 'shift-away',
   arrow: false,
   placement: isPhoneScreen.value ? 'bottom' : 'top',
-  onHidden: () => isEditingLink.value = false,
+  onHidden: () => {
+    isEditingLink.value = false;
+    prevListItem = undefined;
+    prevHeadingLevel = undefined;
+  },
 };
 
 let prevContainerWidth = '';
@@ -79,38 +86,77 @@ function saveEditingLink() {
     emit('hide');
 }
 
-function cycleTextFormatting() {
+function toggleHeading() {
   let actionIdx = 0;
 
-  if (props.editor.isActive('heading', { level: 1 }))
-    actionIdx = 1;
+  const commands = props.editor!.chain().focus();
 
-  else if (props.editor.isActive('heading', { level: 2 }))
-    actionIdx = 2;
+  for (let i = 0; i < 3; i++) {
+    if (props.editor.isActive('heading', { level: i + 1 })) {
+      if (prevHeadingLevel === undefined) prevHeadingLevel = i + 1;
 
-  else if (props.editor.isActive('heading', { level: 3 }))
-    actionIdx = 3;
+      actionIdx = i + 1;
 
-  else if (props.editor.isActive('taskItem'))
-    actionIdx = 4;
+      break;
+    }
+  }
 
-  else if (props.editor.isActive('paragraph'))
-    actionIdx = 5;
+  if (prevHeadingLevel && prevHeadingLevel !== -1) {
+    commands.toggleHeading({ level: prevHeadingLevel }).run();
+
+    prevHeadingLevel = -1;
+
+    return;
+  }
 
   const actions = [
     (commands: ChainedCommands) => commands.setHeading({ level: 1 }),
     (commands: ChainedCommands) => commands.toggleHeading({ level: 2 }),
     (commands: ChainedCommands) => commands.toggleHeading({ level: 3 }),
-    (commands: ChainedCommands) => commands.toggleTaskList(),
-    (commands: ChainedCommands) => commands.liftListItem('taskItem'),
+    (commands: ChainedCommands) => commands.toggleHeading({ level: 3 }),
   ];
 
-  actionIdx %= actions.length;
-
-  const commands = props.editor!.chain().focus();
   const toggleWith = actions.at(actionIdx);
 
   toggleWith?.(commands).run();
+
+  prevHeadingLevel = -1;
+}
+
+function toggleListItem() {
+  let actionIdx = 0;
+
+  const commands = props.editor!.chain().focus();
+
+  ['bulletList', 'orderedList', 'taskList'].forEach((list, i) => {
+    if (props.editor.isActive(list)) {
+      if (prevListItem === undefined) prevListItem = list;
+
+      actionIdx = i + 1;
+    }
+  });
+
+  if (prevListItem && prevListItem !== 'auto') {
+    if (prevListItem === 'taskList') commands.toggleTaskList().run();
+    else commands.liftListItem('listItem').run();
+
+    prevListItem = 'auto'; // enable cycling on next toggle
+
+    return;
+  }
+
+  const actions = [
+    (commands: ChainedCommands) => commands.toggleBulletList(),
+    (commands: ChainedCommands) => commands.toggleOrderedList(),
+    (commands: ChainedCommands) => commands.toggleTaskList(),
+    (commands: ChainedCommands) => commands.toggleTaskList(),
+  ];
+
+  const toggleWith = actions.at(actionIdx);
+
+  toggleWith?.(commands).run();
+
+  prevListItem = 'auto';
 }
 
 useTinykeys({
@@ -135,19 +181,37 @@ useTinykeys({
     <Transition name="bubble-menu-fade" @before-leave="beforeLeaveAnimation" @enter="enterAnimation">
       <div v-if="!isEditingLink" class="note-editor__bubble-menu__link-wrapper">
         <button
-          title="CTRL+G"
           class="note-editor__bubble-menu__button"
           :class="{
-            'note-editor__bubble-menu__button--active':
-              editor.isActive('heading') || editor.isActive('taskItem'),
+            'note-editor__bubble-menu__button--active': editor.isActive('heading'),
           }"
-          @click="cycleTextFormatting"
+          @click="toggleHeading"
         >
           <Icon v-if="editor.isActive('heading', { level: 1 })" name="lucide:heading-1" />
           <Icon v-else-if="editor.isActive('heading', { level: 2 })" name="lucide:heading-2" />
           <Icon v-else-if="editor.isActive('heading', { level: 3 })" name="lucide:heading-3" />
-          <Icon v-else-if="editor.isActive('taskItem')" name="material-symbols:list" />
-          <Icon v-else name="material-symbols:format-paragraph" />
+          <Icon v-else name="lucide:heading-1" />
+        </button>
+
+        <button
+          class="note-editor__bubble-menu__button"
+          :class="{
+            'note-editor__bubble-menu__button--active':
+              editor.isActive('taskItem') || editor.isActive('listItem'),
+          }"
+          @click="toggleListItem"
+        >
+          <Icon name="material-symbols:list" />
+        </button>
+
+        <button
+          class="note-editor__bubble-menu__button"
+          :class="{
+            'note-editor__bubble-menu__button--active': editor.isActive('blockquote'),
+          }"
+          @click="editor.chain().focus().toggleBlockquote().run()"
+        >
+          <Icon name="ri:double-quotes-r" />
         </button>
 
         <div class="note-editor__bubble-menu__vr" aria-hidden="true" />
