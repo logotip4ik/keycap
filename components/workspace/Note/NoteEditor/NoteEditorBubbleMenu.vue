@@ -225,6 +225,7 @@ useTinykeys({
         >
           <Icon name="ic:baseline-format-bold" />
         </button>
+
         <button
           title="CTRL+I"
           class="note-editor__bubble-menu__button"
@@ -233,14 +234,7 @@ useTinykeys({
         >
           <Icon name="ic:baseline-format-italic" />
         </button>
-        <button
-          title="CTRL+SHIFT+X"
-          class="note-editor__bubble-menu__button"
-          :class="{ 'note-editor__bubble-menu__button--active': editor.isActive('strike') }"
-          @click="editor!.chain().focus().toggleStrike().run()"
-        >
-          <Icon name="ic:baseline-format-strikethrough" />
-        </button>
+
         <button
           title="CTRL+E"
           class="note-editor__bubble-menu__button"
@@ -249,6 +243,7 @@ useTinykeys({
         >
           <Icon name="ic:baseline-code" />
         </button>
+
         <button
           title="CTRL+L"
           class="note-editor__bubble-menu__button"
