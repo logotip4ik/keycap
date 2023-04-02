@@ -1,6 +1,7 @@
+import { del, get, set, values } from 'idb-keyval';
+
 import type LRU from 'lru-cache';
 import type * as Comlink from 'comlink';
-import type * as IDBKeyval from 'idb-keyval';
 
 import { blankNoteName } from '~/assets/constants';
 
@@ -26,9 +27,6 @@ export async function defineFuzzyWorker() {
 }
 
 export async function defineOfflineStorage() {
-  // @ts-expect-error idk how to setup this
-  const { del, get, set, values } = await import('idb-keyval?only=del,get,set,values') as typeof IDBKeyval;
-
   const createToast = useToast();
   const offlineStorage = useOfflineStorage();
   const isFallbackMode = useFallbackMode();
