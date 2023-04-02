@@ -6,6 +6,7 @@ import { BubbleMenu } from '@tiptap/vue-3';
 
 import type { ChainedCommands, Editor } from '@tiptap/core';
 import type { Props as TippyProps } from 'tippy.js';
+import type { Level } from '@tiptap/extension-heading';
 
 interface Props { editor: Editor }
 interface Emits { (e: 'hide'): void }
@@ -102,7 +103,7 @@ function toggleHeading() {
   }
 
   if (prevHeadingLevel && prevHeadingLevel !== -1) {
-    commands.toggleHeading({ level: prevHeadingLevel }).run();
+    commands.toggleHeading({ level: prevHeadingLevel as Level }).run();
 
     prevHeadingLevel = -1;
 
