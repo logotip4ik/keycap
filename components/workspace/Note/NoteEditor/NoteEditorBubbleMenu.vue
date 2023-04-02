@@ -31,6 +31,7 @@ const tippyOptions: Partial<TippyProps> = {
   animation: 'shift-away',
   arrow: false,
   placement: isPhoneScreen.value ? 'bottom' : 'top',
+  offset: isPhoneScreen.value ? [0, 20] : [0, 10], // 10 is default
   onHidden: () => {
     isEditingLink.value = false;
     prevListItem = undefined;
