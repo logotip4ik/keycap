@@ -7,7 +7,7 @@ defineEmits<Emits>();
 
 const route = useRoute();
 const user = useUser();
-const device = useDevice();
+const { isMobileOrTablet } = useDevice();
 const currentNoteState = useCurrentNoteState();
 const isFallbackMode = useFallbackMode();
 
@@ -16,7 +16,7 @@ const canShowBackButton = computed(() => {
   let canShow = true;
 
   if (isServerSide)
-    canShow = device.isMobileOrTablet;
+    canShow = isMobileOrTablet;
   else if (window.innerWidth > breakpoints.tablet)
     canShow = false;
 
