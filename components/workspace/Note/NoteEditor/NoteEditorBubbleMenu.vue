@@ -282,8 +282,6 @@ useTinykeys({
 
     width: 1px;
 
-    margin-block: 0.125rem;
-
     background-color: hsla(var(--text-color-hsl), 0.1);
   }
 
