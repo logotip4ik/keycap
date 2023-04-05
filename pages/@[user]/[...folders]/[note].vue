@@ -15,6 +15,7 @@ const offlineStorage = useOfflineStorage();
 const currentItemForDetails = useCurrentItemForDetails();
 const { showLoading, hideLoading } = useLoadingIndicator();
 const mitt = useMitt();
+const user = useUser();
 
 const notePath = computed(() => {
   const paths = Array.isArray(route.params.folders)
@@ -145,11 +146,18 @@ watch(error, async (error) => {
   if (!error)
     return isFallbackMode.value = false;
 
+  loadingToast.value?.remove();
+
+  // @ts-expect-error there actually is statusCode
+  if (error.statusCode && error.statusCode === 401) {
+    user.value = null;
+    await navigateTo('/login');
+    return;
+  }
+
   // No network connection
   if (error.name === 'FetchError')
     isFallbackMode.value = true;
-
-  loadingToast.value?.remove();
 
   // But note was found in cache just display it
   if (note.value)

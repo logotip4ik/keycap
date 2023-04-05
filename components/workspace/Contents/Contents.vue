@@ -11,6 +11,7 @@ const offlineStorage = useOfflineStorage();
 const { shortcuts } = useAppConfig();
 const { showLoading, hideLoading } = useLoadingIndicator();
 const mitt = useMitt();
+const user = useUser();
 
 const folderPath = computed(() => {
   const folders = (Array.isArray(route.params.folders) ? route.params.folders : [route.params.folders])
@@ -92,12 +93,18 @@ watch(error, async (error) => {
   if (!error)
     return isFallbackMode.value = false;
 
-  // This error name was logged when request is taking to long to respond
-  // emulates no network connection, so turning fallback mode on
+  loadingToast.value?.remove();
+
+  // @ts-expect-error there actually is statusCode
+  if (error.statusCode && error.statusCode === 401) {
+    user.value = null;
+    await navigateTo('/login');
+    return;
+  }
+
+  // No network connection
   if (error.name === 'FetchError')
     isFallbackMode.value = true;
-
-  loadingToast.value?.remove();
 
   // But if folder was found in cache, then do nothing, just display it
   if (folder.value)
