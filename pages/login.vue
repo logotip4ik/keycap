@@ -6,6 +6,9 @@ definePageMeta({
 const user = useUser();
 const createToast = useToast();
 
+const emailInput = ref<HTMLInputElement | null>(null);
+const passwordInput = ref<HTMLInputElement | null>(null);
+
 const data = reactive({ email: '', password: '' });
 const isLoading = ref(false);
 
@@ -16,12 +19,23 @@ async function login() {
   isLoading.value = true;
 
   $fetch('/api/user/login', { method: 'POST', body: data })
+    // @ts-expect-error idk, fetch has broken types
     .then((newUser) => user.value = newUser)
     .catch((e) => createToast(e.statusMessage))
     .finally(() => isLoading.value = false);
 }
 
 watch(user, async (value) => value && await navigateTo(`/@${value.username}`));
+
+onMounted(() => {
+  setTimeout(() => {
+    const preDefinedEmail = emailInput.value!.value;
+    const preDefinedPassword = passwordInput.value!.value;
+
+    if (preDefinedEmail) data.email = preDefinedEmail;
+    if (preDefinedPassword) data.email = preDefinedEmail;
+  });
+});
 </script>
 
 <template>
@@ -36,6 +50,7 @@ watch(user, async (value) => value && await navigateTo(`/@${value.username}`));
       <div class="login-page__form__item">
         <input
           id="login:email"
+          ref="emailInput"
           v-model="data.email"
           type="email"
           name="email"
@@ -48,6 +63,7 @@ watch(user, async (value) => value && await navigateTo(`/@${value.username}`));
       <div class="login-page__form__item">
         <input
           id="login:password"
+          ref="passwordInput"
           v-model="data.password"
           type="password"
           name="password"

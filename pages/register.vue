@@ -6,6 +6,10 @@ definePageMeta({
 const user = useUser();
 const createToast = useToast();
 
+const usernameInput = ref<HTMLInputElement | null>(null);
+const emailInput = ref<HTMLInputElement | null>(null);
+const passwordInput = ref<HTMLInputElement | null>(null);
+
 const data = reactive({ username: '', email: '', password: '' });
 const isLoading = ref(false);
 
@@ -23,6 +27,18 @@ async function register() {
 }
 
 watch(user, async (value) => value && await navigateTo(`/@${value.username}`));
+
+onMounted(() => {
+  setTimeout(() => {
+    const preDefinedUsername = usernameInput.value!.value;
+    const preDefinedEmail = emailInput.value!.value;
+    const preDefinedPassword = passwordInput.value!.value;
+
+    if (preDefinedUsername) data.username = preDefinedUsername;
+    if (preDefinedEmail) data.email = preDefinedEmail;
+    if (preDefinedPassword) data.email = preDefinedEmail;
+  });
+});
 </script>
 
 <template>
@@ -37,6 +53,7 @@ watch(user, async (value) => value && await navigateTo(`/@${value.username}`));
       <div class="register-page__form__item">
         <input
           id="register:username"
+          ref="usernameInput"
           v-model="data.username"
           type="text"
           name="username"
@@ -53,6 +70,7 @@ watch(user, async (value) => value && await navigateTo(`/@${value.username}`));
       <div class="register-page__form__item">
         <input
           id="register:email"
+          ref="emailInput"
           v-model="data.email"
           type="email"
           name="email"
@@ -65,6 +83,7 @@ watch(user, async (value) => value && await navigateTo(`/@${value.username}`));
       <div class="register-page__form__item">
         <input
           id="register:password"
+          ref="passwordInput"
           v-model="data.password"
           type="password"
           name="password"
