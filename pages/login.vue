@@ -9,10 +9,14 @@ const createToast = useToast();
 const emailInput = ref<HTMLInputElement | null>(null);
 const passwordInput = ref<HTMLInputElement | null>(null);
 
-const data = reactive({ email: '', password: '' });
 const isLoading = ref(false);
 
 async function login() {
+  const data = {
+    email: emailInput.value!.value,
+    password: passwordInput.value!.value,
+  };
+
   if (!data.email || !data.password)
     return createToast('Fill all required fields');
 
@@ -26,16 +30,6 @@ async function login() {
 }
 
 watch(user, async (value) => value && await navigateTo(`/@${value.username}`));
-
-onMounted(() => {
-  setTimeout(() => {
-    const preDefinedEmail = emailInput.value!.value;
-    const preDefinedPassword = passwordInput.value!.value;
-
-    if (preDefinedEmail) data.email = preDefinedEmail;
-    if (preDefinedPassword) data.email = preDefinedEmail;
-  });
-});
 </script>
 
 <template>
@@ -51,7 +45,6 @@ onMounted(() => {
         <input
           id="login:email"
           ref="emailInput"
-          v-model="data.email"
           type="email"
           name="email"
           class="login-page__form__item__input"
@@ -64,7 +57,6 @@ onMounted(() => {
         <input
           id="login:password"
           ref="passwordInput"
-          v-model="data.password"
           type="password"
           name="password"
           class="login-page__form__item__input"

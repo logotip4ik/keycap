@@ -10,10 +10,15 @@ const usernameInput = ref<HTMLInputElement | null>(null);
 const emailInput = ref<HTMLInputElement | null>(null);
 const passwordInput = ref<HTMLInputElement | null>(null);
 
-const data = reactive({ username: '', email: '', password: '' });
 const isLoading = ref(false);
 
 async function register() {
+  const data = {
+    username: usernameInput.value!.value,
+    email: emailInput.value!.value,
+    password: passwordInput.value!.value,
+  };
+
   if (!data.username || !data.email || !data.password)
     return createToast('Fill all required fields');
 
@@ -27,18 +32,6 @@ async function register() {
 }
 
 watch(user, async (value) => value && await navigateTo(`/@${value.username}`));
-
-onMounted(() => {
-  setTimeout(() => {
-    const preDefinedUsername = usernameInput.value!.value;
-    const preDefinedEmail = emailInput.value!.value;
-    const preDefinedPassword = passwordInput.value!.value;
-
-    if (preDefinedUsername) data.username = preDefinedUsername;
-    if (preDefinedEmail) data.email = preDefinedEmail;
-    if (preDefinedPassword) data.email = preDefinedEmail;
-  });
-});
 </script>
 
 <template>
@@ -54,7 +47,6 @@ onMounted(() => {
         <input
           id="register:username"
           ref="usernameInput"
-          v-model="data.username"
           type="text"
           name="username"
           class="register-page__form__item__input"
@@ -71,7 +63,6 @@ onMounted(() => {
         <input
           id="register:email"
           ref="emailInput"
-          v-model="data.email"
           type="email"
           name="email"
           class="register-page__form__item__input"
@@ -84,7 +75,6 @@ onMounted(() => {
         <input
           id="register:password"
           ref="passwordInput"
-          v-model="data.password"
           type="password"
           name="password"
           class="register-page__form__item__input"
