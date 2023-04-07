@@ -7,13 +7,14 @@ const currentItemForDetails = useCurrentItemForDetails();
 const isFolder = 'root' in props.item;
 
 // NOTE(perf improvement): client bundle size reduced by using only useAsyncData or useFetch
-const { data: details, pending } = useLazyAsyncData(() => $fetch(
+const { data: details, pending } = useLazyAsyncData<{ createdAt: string; updatedAt: string }>(() => $fetch(
   // /api/[note|folder]/[item path without username]
   `/api/${isFolder ? 'folder' : 'note'}/${props.item.path.split('/').slice(2).join('/')}`,
   { query: { details: true }, retry: 2 },
 ));
 
 const itemDetailsEl = ref<HTMLElement | null>(null);
+
 const mergedDetails = computed(() => {
   if (!details.value) return null;
 
@@ -114,9 +115,9 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
   background-color: rgba(var(--surface-color-hsl), 0.98);
   box-shadow:
     inset -1px -1px 0.1rem rgba($color: #000000, $alpha: 0.025),
-          1.3px 1.3px 5.3px rgba(0, 0, 0, 0.028),
-          4.5px 4.5px 17.9px rgba(0, 0, 0, 0.042),
-          20px 20px 80px rgba(0, 0, 0, 0.07);
+    1.3px 1.3px 5.3px rgba(0, 0, 0, 0.028),
+    4.5px 4.5px 17.9px rgba(0, 0, 0, 0.042),
+    20px 20px 80px rgba(0, 0, 0, 0.07);
 
   @supports (backdrop-filter: blur(1px)) {
     backdrop-filter: blur(5px);
@@ -208,7 +209,7 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
       font-size: 1.1rem;
       color: hsla(var(--text-color-hsl), 0.75);
 
-      & + & {
+      &+& {
         margin-top: 0.825rem;
       }
 
