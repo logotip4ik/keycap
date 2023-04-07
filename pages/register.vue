@@ -79,7 +79,7 @@ watch(user, async (value) => value && await navigateTo(`/@${value.username}`));
           name="password"
           class="register-page__form__item__input"
           placeholder="password"
-          autocomplete="current-password"
+          autocomplete="new-password"
         >
       </div>
 
