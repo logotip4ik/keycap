@@ -159,6 +159,9 @@ async function showFolderContents() {
       margin-right: 1rem;
 
       background-color: hsla(var(--text-color-hsl), 0.1);
+      box-shadow:
+        1px -1px 0.1rem hsla(var(--text-color-hsl), 0.05),
+        inset -1px -1px 0.1rem hsla(var(--text-color-hsl), 0.05);
     }
 
     &--search {
