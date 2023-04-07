@@ -1,6 +1,5 @@
-import { del, get, set, values } from 'idb-keyval';
-
 import type LRU from 'lru-cache';
+import type * as IDB from 'idb-keyval';
 import type * as Comlink from 'comlink';
 
 import { blankNoteName } from '~/assets/constants';
@@ -33,6 +32,9 @@ export async function defineOfflineStorage() {
   const foldersCache = useFoldersCache();
   const notesCache = useNotesCache();
   const mitt = useMitt();
+
+  // @ts-expect-error no yet ts plugin
+  const { set, get, del, values } = await import('idb-keyval?only=set,get,del,values') as typeof IDB;
 
   offlineStorage.value = {
     setItem: set,
