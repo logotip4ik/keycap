@@ -213,6 +213,7 @@ onBeforeRouteUpdate((from, to) => {
   .ProseMirror {
     font-size: 105%;
     line-height: 1.35;
+    word-break: break-word;
 
     min-height: 100%;
 
