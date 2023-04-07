@@ -32,27 +32,30 @@ const virtualElement: VirtualElement = {
 };
 
 function withEffects(event: Event, action: MenuAction) {
-  if (!action.needConfirmation) return action.handler();
+  if (event.type === 'click' && !action.needConfirmation)
+    return action.handler();
 
-  const target = event.target as HTMLElement;
-  currentlyConfirming.value = Number(target.dataset.key);
+  if (event.type === 'pointerdown' && action.needConfirmation) {
+    const target = event.target as HTMLElement;
+    currentlyConfirming.value = Number(target.dataset.key);
 
-  const animation = target.animate([
-    { opacity: 1, transform: 'translate(-100%, 0%)' },
-    { opacity: 1, transform: 'translate(0%, 0%)' },
-  ], { duration: confirmDurationInSeconds * 1000, pseudoElement: '::after' });
+    const animation = target.animate([
+      { opacity: 1, transform: 'translate(-100%, 0%)' },
+      { opacity: 1, transform: 'translate(0%, 0%)' },
+    ], { duration: confirmDurationInSeconds * 1000, pseudoElement: '::after' });
 
-  const executeHandler = () => {
-    action.handler();
-    currentlyConfirming.value = -1;
-  };
+    const executeHandler = () => {
+      action.handler();
+      currentlyConfirming.value = -1;
+    };
 
-  animation.addEventListener('finish', executeHandler);
+    animation.addEventListener('finish', executeHandler);
 
-  target.addEventListener('pointerup', () => {
-    animation.cancel();
-    currentlyConfirming.value = -1;
-  });
+    target.addEventListener('pointerup', () => {
+      animation.cancel();
+      currentlyConfirming.value = -1;
+    });
+  }
 }
 
 watch([() => props.x, () => props.y], async () => {
@@ -83,6 +86,7 @@ useClickOutside(menu, () => emit('close'));
       <button
         :data-key="key"
         class="item-context-menu__item__button"
+        @click="withEffects($event, action)"
         @pointerdown="withEffects($event, action)"
       >
         <Transition name="fade">
