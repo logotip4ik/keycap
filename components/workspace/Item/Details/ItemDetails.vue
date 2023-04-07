@@ -38,7 +38,7 @@ function storePopupHeight() {
 function transitionHeight(_: any, done: () => void) {
   const newHeight = itemDetailsEl.value!.clientHeight;
 
-  if (prevPopupHeight === newHeight)
+  if (!prevPopupHeight || !newHeight || prevPopupHeight === newHeight)
     return;
 
   const animation = itemDetailsEl.value!.animate([
