@@ -53,11 +53,14 @@ body {
   min-height: 100vh;
 }
 
-@for $i from 1 to 7 {
-  h#{$i} {
-    font-weight: 500;
-    font-stretch: 110%;
-  }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 500;
+  font-stretch: 110%;
 }
 
 input,
