@@ -1331,12 +1331,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/core@npm:^2.0.2":
-  version: 2.0.2
-  resolution: "@tiptap/core@npm:2.0.2"
+"@tiptap/core@npm:2.0.0-beta.217":
+  version: 2.0.0-beta.217
+  resolution: "@tiptap/core@npm:2.0.0-beta.217"
   peerDependencies:
-    "@tiptap/pm": ^2.0.0
-  checksum: 70a5ee43b6e8ab1ec7acc67df5cf082b9622558c1b796d6c487b1fb80266c6498c746f3123a20557cc9c7a1c5ca9535d3f1befbdd8dc9bdc506115452ff50fb9
+    "@tiptap/pm": ^2.0.0-beta.209
+  checksum: 25103b27476eda1a8810cd2a80d0ed74b7c3d1beeaee580adcd9ec955f5b2a15b2ad8cd6ceb6e778df461b023f97c42de68e9661c9c30dd446f74a42c1c04342
+  languageName: node
+  linkType: hard
+
+"@tiptap/core@patch:@tiptap/core@npm%3A2.0.0-beta.217#./.yarn/patches/@tiptap-core-npm-2.0.0-beta.217-956b2151ab.patch::locator=root-workspace-0b6124%40workspace%3A.":
+  version: 2.0.0-beta.217
+  resolution: "@tiptap/core@patch:@tiptap/core@npm%3A2.0.0-beta.217#./.yarn/patches/@tiptap-core-npm-2.0.0-beta.217-956b2151ab.patch::version=2.0.0-beta.217&hash=8e9fbc&locator=root-workspace-0b6124%40workspace%3A."
+  peerDependencies:
+    "@tiptap/pm": ^2.0.0-beta.209
+  checksum: 3982118155f83f2a421499a07c629d7aa2fed5a05878bf5613157d6d82ca68ee08f4b48469d3e48cdc9db6413dace0dde33d2de265df358627ac5ab99ba44d8b
   languageName: node
   linkType: hard
 
