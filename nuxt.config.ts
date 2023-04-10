@@ -1,4 +1,4 @@
-import { isDevelopment, isProduction } from 'std-env';
+import { isDevelopment } from 'std-env';
 
 import { getHeaders } from './headers.config';
 import breakpoints from './assets/constants/breakpoints';
@@ -30,7 +30,6 @@ export default defineNuxtConfig({
     writeEarlyHints: true,
     polyfillVueUseHead: false,
     crossOriginPrefetch: true,
-    noVueServer: isProduction,
   },
 
   typescript: {
