@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
 
   const note = await prisma.note.findFirst({
     select: { name: true, content: true, updatedAt: true, createdAt: true },
-    where: { share: { some: { link } } },
+    where: { shares: { some: { link } } },
   }).catch(() => null);
 
   if (!note)
