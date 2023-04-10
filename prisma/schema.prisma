@@ -38,7 +38,7 @@ model Note {
   parent   Folder @relation(fields: [parentId], references: [id], onDelete: Cascade)
   parentId BigInt
 
-  share Share[]
+  shares Share[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
