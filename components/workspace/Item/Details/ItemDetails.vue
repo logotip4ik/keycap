@@ -1,13 +1,19 @@
 <script setup lang="ts">
+import type { Note, Prisma } from '@prisma/client';
+
 interface Props { item: NoteMinimal }
 const props = defineProps<Props>();
 
 const currentItemForDetails = useCurrentItemForDetails();
+const createToast = useToast();
+const isLoadingItemDetails = ref(false);
 
 const isFolder = 'root' in props.item;
 
+type NoteDetails = Partial<Note> & Prisma.NoteGetPayload<{ select: { shares: { select: { link: true; updatedAt: true; createdAt: true } } } }>;
+
 // NOTE(perf improvement): client bundle size reduced by using only useAsyncData or useFetch
-const { data: details, pending } = useLazyAsyncData<{ createdAt: string; updatedAt: string }>(() => $fetch(
+const { data: details, refresh } = useLazyAsyncData<NoteDetails>(() => $fetch(
   // /api/[note|folder]/[item path without username]
   `/api/${isFolder ? 'folder' : 'note'}/${props.item.path.split('/').slice(2).join('/')}`,
   { query: { details: true }, retry: 2 },
@@ -18,7 +24,7 @@ const itemDetailsEl = ref<HTMLElement | null>(null);
 const mergedDetails = computed(() => {
   if (!details.value) return null;
 
-  return { ...props.item, ...details.value };
+  return { ...props.item, ...details.value, shares: details.value.shares[0] };
 });
 
 const rowsData = computed(() => [
@@ -64,6 +70,33 @@ function formatDate(dateString?: Date | string) {
   }).format(date);
 }
 
+async function copyShareLink() {
+  if (!mergedDetails.value?.shares) return;
+
+  const { protocol, host } = window.location;
+  const link = mergedDetails.value?.shares.link;
+
+  await navigator.clipboard.writeText(`${protocol}//${host}/view/${link}`);
+
+  createToast('Copied share link');
+}
+
+const debouncedToggleShareLink = useDebounceFn(toggleShareLink, 250);
+function toggleShareLink(needToCreate: boolean) {
+  if (isLoadingItemDetails.value)
+    return;
+
+  const notePath = currentItemForDetails.value!.path.split('/').slice(2).join('/');
+
+  isLoadingItemDetails.value = true;
+
+  $fetch(`/api/share/note/${notePath}`, {
+    method: needToCreate ? 'POST' : 'DELETE',
+  })
+    .then(() => refresh())
+    .finally(() => isLoadingItemDetails.value = false);
+}
+
 useTinykeys({ Escape: unsetCurrentItemForDetails });
 useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
 </script>
@@ -76,12 +109,41 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
       </button>
 
       <Transition name="fade" appear @before-leave="storePopupHeight" @enter="transitionHeight">
-        <WorkspaceItemDetailsSkeleton v-if="pending || !mergedDetails" key="skeleton" />
+        <WorkspaceItemDetailsSkeleton v-if="!mergedDetails" key="skeleton" />
 
+        <!-- TODO: split into smaller components -->
         <div v-else-if="mergedDetails" key="content" class="item-details__data">
           <p class="item-details__data__title">
             {{ mergedDetails.name }}
           </p>
+
+          <div v-if="!isFolder" class="item-details__data__row">
+            <p class="item-details__data__row__title">
+              Note share
+            </p>
+
+            <hr class="item-details__data__row__hr">
+
+            <button
+              class="item-details__data__row__share-link"
+              @click="copyShareLink"
+            >
+              <Transition name="fade">
+                <!-- NOTE: skeleton class add appear delay -->
+                <span v-if="isLoadingItemDetails" class="skeleton">Wait...</span>
+                <span v-else-if="mergedDetails.shares">{{ mergedDetails.shares.link }}</span>
+                <span v-else>Disabled</span>
+              </Transition>
+            </button>
+
+            <input
+              :checked="!!mergedDetails.shares"
+              :readonly="isLoadingItemDetails"
+              type="checkbox"
+              class="item-details__data__row__checkbox"
+              @input="debouncedToggleShareLink(!mergedDetails?.shares)"
+            >
+          </div>
 
           <div v-for="(data, key) in rowsData" :key="key" class="item-details__data__row">
             <p class="item-details__data__row__title">
@@ -111,7 +173,8 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
 
   padding: 2rem 1.25rem 1.75rem;
 
-  border-radius: 0.25rem;
+  border-radius: 0.5rem;
+  border: 1px solid hsla(var(--text-color-hsl), 0.125);
   background-color: rgba(var(--surface-color-hsl), 0.98);
   box-shadow:
     inset -1px -1px 0.1rem rgba($color: #000000, $alpha: 0.025),
@@ -212,7 +275,7 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
       font-size: 1.1rem;
       color: hsla(var(--text-color-hsl), 0.75);
 
-      &+& {
+      & + & {
         margin-top: 0.825rem;
       }
 
@@ -231,6 +294,29 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
       &__title,
       &__value {
         margin: 0;
+      }
+
+      &__checkbox {
+        transform: scale(1.5);
+
+        cursor: pointer;
+        accent-color: var(--task-list-indicator-color);
+      }
+
+      &__share-link {
+        font: inherit;
+        text-align: center;
+
+        width: 16.75ch;
+
+        margin-right: 1rem;
+        padding: 0.25rem 0;
+
+        cursor: pointer;
+        border: none;
+        border-radius: 0.125rem;
+        background-color: transparent;
+        outline: 1px solid hsla(var(--text-color-hsl), 0.25);
       }
     }
   }
