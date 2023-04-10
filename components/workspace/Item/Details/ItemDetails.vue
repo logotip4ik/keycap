@@ -169,12 +169,13 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
     border: none;
     border-radius: 0.2rem;
     outline: 1px transparent solid;
-    outline-offset: -2px;
+    outline-offset: -1px;
     background-color: transparent;
 
     cursor: pointer;
 
-    transition: color .3s, outline-color .3s, outline-offset .3s;
+    transition: color, outline-color, outline-offset, background-color;
+    transition-duration: .3s;
 
     @media (hover: hover) {
       color: hsla(var(--text-color-hsl), 0.65);
@@ -182,6 +183,8 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
 
     &:is(:hover, :focus-visible) {
       color: hsla(var(--text-color-hsl), 1);
+      background-color: hsla(var(--text-color-hsl), 0.075);
+
       outline-color: hsla(var(--text-color-hsl), 0.35);
       outline-offset: 0px;
 
