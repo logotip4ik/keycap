@@ -59,7 +59,7 @@ onBeforeUnmount(() => window.removeEventListener('resize', handleResize));
   position: fixed;
   bottom: var(--screen-spacing-bottom);
   right: var(--screen-spacing-x);
-  z-index: 2;
+  z-index: 20;
 
   width: calc(100vw - var(--screen-spacing-x) * 2);
 
