@@ -29,6 +29,7 @@ export default defineNuxtConfig({
   experimental: {
     writeEarlyHints: true,
     polyfillVueUseHead: false,
+    crossOriginPrefetch: true,
   },
 
   typescript: {
