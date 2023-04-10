@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
     { path: '/api/search' },
     { path: '/api/user/me' },
     { path: '/api/user/refresh' },
-    { path: '/api/share', onlyMethods: ['POST'] },
+    { path: '/api/share/note' },
   ];
 
   let isAuthorizedRoute = false;
