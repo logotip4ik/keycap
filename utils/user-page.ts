@@ -1,4 +1,4 @@
-import type LRU from 'lru-cache';
+import type { LRUCache } from 'lru-cache';
 import type * as IDB from 'idb-keyval';
 import type * as Comlink from 'comlink';
 
@@ -55,7 +55,7 @@ export async function defineOfflineStorage() {
 
     for (const item of items) {
       const isFolder = 'root' in item;
-      const cache = (isFolder ? foldersCache : notesCache) as LRU<string, FolderOrNote>;
+      const cache = (isFolder ? foldersCache : notesCache) as LRUCache<string, FolderOrNote>;
 
       if (!cache.has(item.path))
         cache.set(item.path, item);

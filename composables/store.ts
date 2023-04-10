@@ -1,4 +1,6 @@
-import LRU from 'lru-cache';
+/* eslint-disable antfu/top-level-function */
+
+import { LRUCache } from 'lru-cache';
 
 import type { Note } from '@prisma/client';
 
@@ -6,10 +8,10 @@ export const useCurrentItemForDetails = () => useState<FolderOrNote | null>(() =
 export const useRootFolderContents = () => useState<FolderWithContents | null>(() => null);
 export const useCurrentNoteState = () => useState<'' | 'updating' | 'fetching' | 'saved'>(() => '' as const);
 
-const notesCache = new LRU<string, Note>({ max: 30 });
+const notesCache = new LRUCache<string, Note>({ max: 30 });
 export const useNotesCache = () => notesCache;
 
-const foldersCache = new LRU<string, FolderWithContents>({ max: 30 });
+const foldersCache = new LRUCache<string, FolderWithContents>({ max: 30 });
 export const useFoldersCache = () => foldersCache;
 
 const fuzzyWorker = shallowRef<null | IFuzzyWorker>(null);
