@@ -8,10 +8,10 @@ export const useCurrentItemForDetails = () => useState<FolderOrNote | null>(() =
 export const useRootFolderContents = () => useState<FolderWithContents | null>(() => null);
 export const useCurrentNoteState = () => useState<'' | 'updating' | 'fetching' | 'saved'>(() => '' as const);
 
-const notesCache = new LRUCache<string, Note>({ max: 30 });
+const notesCache = new LRUCache<string, Note>({ max: 100 });
 export const useNotesCache = () => notesCache;
 
-const foldersCache = new LRUCache<string, FolderWithContents>({ max: 30 });
+const foldersCache = new LRUCache<string, FolderWithContents>({ max: 50 });
 export const useFoldersCache = () => foldersCache;
 
 const fuzzyWorker = shallowRef<null | IFuzzyWorker>(null);
