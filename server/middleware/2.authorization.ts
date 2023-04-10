@@ -1,20 +1,26 @@
+import type { HTTPMethod } from 'h3';
+
+// NOTE: avg time to check auth is 0.01-0.02ms
 export default defineEventHandler(async (event) => {
   const path = event.path;
   const user = event.context.user;
 
-  const authorizedRoutes = [
-    '/api/note',
-    '/api/folder',
-    '/api/search',
-    '/api/user/me',
-    '/api/user/refresh',
-    '/api/share/note',
+  const authorizedRoutes: ({ path: string; onlyMethods?: HTTPMethod[] })[] = [
+    { path: '/api/note' },
+    { path: '/api/folder' },
+    { path: '/api/search' },
+    { path: '/api/user/me' },
+    { path: '/api/user/refresh' },
+    { path: '/api/share', onlyMethods: ['POST'] },
   ];
 
   let isAuthorizedRoute = false;
 
   for (const route of authorizedRoutes) {
-    isAuthorizedRoute = path!.startsWith(route);
+    isAuthorizedRoute = path!.startsWith(route.path);
+
+    if (route.onlyMethods && !route.onlyMethods.some((method) => isMethod(event, method)))
+      isAuthorizedRoute = false;
 
     if (isAuthorizedRoute)
       break;
