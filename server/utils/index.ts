@@ -37,8 +37,14 @@ export function getNoteSelectParamsFromEvent(event: H3Event): Prisma.NoteSelect 
 
   const defaultSelects = { id: true, name: true, content: true, path: true };
 
-  if (isMethod(event, 'GET') && isDetailsRequest)
-    return { updatedAt: true, createdAt: true };
+  if (isMethod(event, 'GET') && isDetailsRequest) {
+    return {
+      // TODO: ability to add multiple shares to one note ?
+      shares: { take: 1, select: { link: true, updatedAt: true, createdAt: true } },
+      updatedAt: true,
+      createdAt: true,
+    };
+  }
 
   if (isMethod(event, 'PATCH')) {
     if (isGetNoteQuery)
