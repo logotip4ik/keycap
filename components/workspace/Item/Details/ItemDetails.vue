@@ -13,15 +13,11 @@ const isFolder = 'root' in props.item;
 type NoteDetails = Partial<Note> & Prisma.NoteGetPayload<{ select: { shares: { select: { link: true; updatedAt: true; createdAt: true } } } }>;
 
 // NOTE(perf improvement): client bundle size reduced by using only useAsyncData or useFetch
-const { data: details, refresh } = useLazyAsyncData<NoteDetails>(() => {
-  details.value = null; // clearing details from prev request
-
-  return $fetch(
-    // /api/[note|folder]/[item path without username]
-    `/api/${isFolder ? 'folder' : 'note'}/${props.item.path.split('/').slice(2).join('/')}`,
-    { query: { details: true }, retry: 2 },
-  );
-});
+const { data: details, refresh } = useLazyAsyncData<NoteDetails>(() => $fetch(
+  // /api/[note|folder]/[item path without username]
+  `/api/${isFolder ? 'folder' : 'note'}/${props.item.path.split('/').slice(2).join('/')}`,
+  { query: { details: true }, retry: 2 },
+));
 
 const itemDetailsEl = ref<HTMLElement | null>(null);
 
@@ -41,6 +37,7 @@ const rowsData = computed(() => [
 ]);
 
 function unsetCurrentItemForDetails() {
+  details.value = null; // clearing details from prev request
   currentItemForDetails.value = null;
 }
 
@@ -318,13 +315,20 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
         width: 16.75ch;
 
         margin-right: 1rem;
-        padding: 0.25rem 0;
+        padding: 0.275rem 0 0.25rem;
 
         cursor: pointer;
         border: none;
         border-radius: 0.125rem;
         background-color: transparent;
         outline: 1px solid hsla(var(--text-color-hsl), 0.25);
+
+        transition: background-color .3s;
+
+        &:active {
+          background-color: hsla(var(--text-color-hsl), 0.05);
+          transition-duration: 0s;
+        }
       }
     }
   }
