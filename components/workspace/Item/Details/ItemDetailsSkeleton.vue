@@ -10,6 +10,10 @@
       <p class="skeleton__row__text skeleton-loading-bg" />
       <p class="skeleton__row__date skeleton-loading-bg" />
     </div>
+    <div class="skeleton__row">
+      <p class="skeleton__row__text skeleton-loading-bg" />
+      <p class="skeleton__row__date skeleton-loading-bg" />
+    </div>
   </div>
 </template>
 
@@ -17,14 +21,14 @@
 @use "sass:math";
 
 .skeleton__row {
-  $numberOfItems: 2;
+  $numberOfItems: 3;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
 
   & + & {
-    margin-top: 0.75rem;
+    margin-top: 0.85rem;
   }
 
   &__text,
