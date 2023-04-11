@@ -30,6 +30,7 @@ export default defineNuxtConfig({
     writeEarlyHints: true,
     polyfillVueUseHead: false,
     crossOriginPrefetch: true,
+    renderJsonPayloads: true,
   },
 
   typescript: {
