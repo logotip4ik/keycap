@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import '~/assets/styles/note-editor.scss';
+
 import { EditorContent, useEditor } from '@tiptap/vue-3';
 
 import Document from '@tiptap/extension-document';
