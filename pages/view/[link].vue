@@ -41,7 +41,7 @@ watch(error, (error) => {
 
     <!-- TODO: render content with Client only component, similar to note editor -->
     <main class="note-view__main">
-      <NoteRendered class="note-view__main__note-renderer" :content="note.content!" />
+      <LazyNoteRendered class="note-view__main__note-renderer" :content="note.content!" />
     </main>
   </div>
 </template>
