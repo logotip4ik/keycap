@@ -131,6 +131,7 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
 
             <button
               class="item-details__data__row__share-link"
+              :disabled="!mergedDetails.shares || isLoadingItemDetails"
               @click="copyShareLink"
             >
               <Transition name="fade">
@@ -311,11 +312,14 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
       &__share-link {
         font: inherit;
         text-align: center;
+        color: hsla(var(--text-color-hsl), 0.95);
 
         width: 16.75ch;
 
         margin-right: 1rem;
         padding: 0.275rem 0 0.25rem;
+
+        white-space: nowrap;
 
         cursor: pointer;
         border: none;
@@ -323,9 +327,19 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
         background-color: transparent;
         outline: 1px solid hsla(var(--text-color-hsl), 0.25);
 
-        transition: background-color .3s;
+        transition: width .2s, background-color .3s;
 
-        &:active {
+        &:disabled {
+          color: hsla(var(--text-color-hsl), 0.75);
+
+          width: 10ch;
+
+          cursor: default;
+
+          transition-duration: .4s;
+        }
+
+        &:active:not(:disabled) {
           background-color: hsla(var(--text-color-hsl), 0.05);
           transition-duration: 0s;
         }
