@@ -1,5 +1,3 @@
-/* eslint-disable antfu/top-level-function */
-
 import { LRUCache } from 'lru-cache';
 
 import type { Note } from '@prisma/client';
