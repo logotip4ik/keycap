@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import '~/assets/styles/note-editor.scss';
+
 import type { Note } from '@prisma/client';
 
 const route = useRoute();
