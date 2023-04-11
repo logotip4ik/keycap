@@ -135,7 +135,7 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
             >
               <Transition name="fade">
                 <!-- NOTE: skeleton class add appear delay -->
-                <span v-if="isLoadingItemDetails" class="skeleton">Wait...</span>
+                <span v-if="isLoadingItemDetails" class="skeleton">Loading...</span>
                 <span v-else-if="mergedDetails.shares">{{ mergedDetails.shares.link }}</span>
                 <span v-else>Disabled</span>
               </Transition>
