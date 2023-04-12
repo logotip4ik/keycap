@@ -77,12 +77,12 @@ function handleTab() {
 }
 
 const isResultsEmpty = computed(() => {
-  if (!debouncedSearchInput.value) return false;
+  if (!debouncedSearchInput.value || isLoadingResults.value)
+    return false;
 
   const inputValue = withoutLeadingSlash(debouncedSearchInput.value);
 
-  return (!inputValue && inputValue !== '/')
-    && (results.value.length === 0 && !isLoadingResults.value);
+  return (inputValue || inputValue === '/') && results.value.length === 0;
 });
 
 watch(debouncedSearchInput, handleSearchInput);
