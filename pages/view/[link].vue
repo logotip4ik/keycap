@@ -52,7 +52,6 @@ watch(error, (error) => {
       </p>
     </header>
 
-    <!-- TODO: render content with Client only component, similar to note editor -->
     <main class="note-view__main">
       <NoteRenderer class="note-view__main__note-renderer" :content="note.content!" />
     </main>
