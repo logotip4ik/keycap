@@ -1,0 +1,30 @@
+<script setup lang="ts">
+import '~/assets/styles/note-editor.scss';
+
+import sanitizeHtml from 'sanitize-html';
+
+interface Props { content: string }
+const props = defineProps<Props>();
+
+const sanitized = sanitizeHtml(props.content, {
+  allowedTags: [
+    ...sanitizeHtml.defaults.allowedTags,
+    'label',
+    'input',
+  ],
+  allowedAttributes: {
+    ...sanitizeHtml.defaults.allowedAttributes,
+    label: ['contenteditable'],
+    input: ['type', 'checked'],
+    ul: ['data-type'],
+    li: ['data-checked'],
+    a: ['href', 'name', 'target', 'rel'],
+  },
+});
+</script>
+
+<template>
+  <div class="note-editor">
+    <div class="ProseMirror ProseMirror--renderer" v-html="sanitized" />
+  </div>
+</template>
