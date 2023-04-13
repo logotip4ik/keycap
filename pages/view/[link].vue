@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import '~/assets/styles/note-editor.scss';
-
 import type { Note } from '@prisma/client';
 
 const route = useRoute();
@@ -56,7 +54,7 @@ watch(error, (error) => {
 
     <!-- TODO: render content with Client only component, similar to note editor -->
     <main class="note-view__main">
-      <LazyNoteRenderer class="note-view__main__note-renderer" :content="note.content!" />
+      <NoteRenderer class="note-view__main__note-renderer" :content="note.content!" />
     </main>
   </div>
 </template>
@@ -139,15 +137,6 @@ watch(error, (error) => {
     &__updated-at {
       opacity: 0.75;
       margin: 0;
-    }
-  }
-
-  &__main {
-    &__note-renderer {
-      .ProseMirror {
-        padding-top: 0;
-        padding-inline: 0;
-      }
     }
   }
 }
