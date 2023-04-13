@@ -103,6 +103,10 @@
             margin-right: 0.5rem;
             user-select: none;
 
+            &.readonly {
+              pointer-events: none;
+            }
+            
             input {
               cursor: pointer;
 

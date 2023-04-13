@@ -14,11 +14,15 @@ const sanitized = sanitizeHtml(props.content, {
   ],
   allowedAttributes: {
     ...sanitizeHtml.defaults.allowedAttributes,
-    label: ['contenteditable'],
+    label: ['contenteditable', 'class'],
     input: ['type', 'checked'],
     ul: ['data-type'],
     li: ['data-checked'],
     a: ['href', 'name', 'target', 'rel'],
+  },
+  transformTags: {
+    // disabled state modifies accent color :(
+    label: sanitizeHtml.simpleTransform('label', { class: 'readonly' }, true),
   },
 });
 </script>
