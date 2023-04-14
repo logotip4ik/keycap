@@ -1,4 +1,13 @@
+import { compile, v } from 'suretype';
+
 import getPrisma from '~/prisma';
+
+const noteUpdateSchema = v.object({
+  name: v.string().minLength(2),
+  content: v.string(),
+});
+
+const useNoteUpdateValidator = compile(noteUpdateSchema, { colors: false });
 
 export default defineEventHandler(async (event) => {
   const user = event.context.user!;
@@ -10,15 +19,20 @@ export default defineEventHandler(async (event) => {
   const path = getRouterParam(event, 'path') as string;
   const notePath = generateNotePath(user.username, path);
 
-  const whitelistedFieldUpdates: Array<'name' | 'content'> = ['name', 'content'];
+  interface UpdatableFields { name?: string; content?: string; path?: string }
+  const data = await readBody<UpdatableFields>(event) || {};
 
-  interface UpdatableFields { name?: string; content?: string }
-  const fieldsToUpdate = await readBody<UpdatableFields>(event);
+  if (data.name) data.name = data.name.trim();
+  if (data.content) data.content = data.content.trim();
 
-  const data: UpdatableFields & { path?: string } = {};
+  const validation = useNoteUpdateValidator(data);
 
-  for (const field of whitelistedFieldUpdates)
-    if (fieldsToUpdate[field]) data[field] = fieldsToUpdate[field];
+  if (!validation.ok) {
+    return createError({
+      statusCode: 400,
+      statusMessage: `${validation.errors[0].dataPath.split('.').at(-1)} ${validation.errors[0].message}`,
+    });
+  }
 
   // if user updates note name we also need to update its path
   if (data.name) {

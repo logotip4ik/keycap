@@ -9,9 +9,10 @@ export default defineEventHandler(async (event) => {
   const body = await readBody<{ parentId?: string }>(event) || {};
   const path = getRouterParam(event, 'path') as string;
   const notePath = generateNotePath(user.username, path);
+  const noteName = decodeURIComponent(notePath.split('/').at(-1)!).trim();
 
-  if (!body.parentId || !path)
-    return sendError(event, createError({ statusCode: 400, statusMessage: 'not enough data' }));
+  if (!body.parentId || !path || noteName.length < 2)
+    return createError({ statusCode: 400 });
 
   const selectParams = getNoteSelectParamsFromEvent(event);
 
@@ -20,7 +21,7 @@ export default defineEventHandler(async (event) => {
     const note = await prisma.note.create({
       data: {
         // last route param always should be note name
-        name: decodeURIComponent(notePath.split('/').at(-1)!),
+        name: noteName,
         content: '',
         path: notePath,
         owner: { connect: { id: user.id } },

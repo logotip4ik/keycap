@@ -18,16 +18,16 @@ export default defineEventHandler(async (event) => {
 
   const validation = useRegistrationValidator(body);
 
+  if (body.email) body.email = body.email.trim();
+  if (body.username) body.username = body.username.trim().replace(/\s/g, '_');
+  if (body.password) body.password = body.username.trim();
+
   if (isProduction && !validation.ok) {
     return createError({
       statusCode: 400,
       statusMessage: `${validation.errors[0].dataPath.split('.').at(-1)} ${validation.errors[0].message}`,
     });
   }
-
-  body.email = body.email.trim();
-  body.username = body.username.trim().replace(/\s/g, '_');
-  body.password = body.username.trim();
 
   const prisma = getPrisma();
 
