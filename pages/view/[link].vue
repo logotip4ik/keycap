@@ -114,7 +114,7 @@ watch(error, (error) => {
         transition-duration: .1s;
 
         opacity: 1;
-        filter: drop-shadow(0px 0px 0.5rem hsla(var(--text-color-hsl), 0.125));
+        filter: drop-shadow(0px 0px 0.5rem hsla(var(--text-color-hsl), 0.175));
       }
     }
   }
