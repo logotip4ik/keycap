@@ -138,7 +138,7 @@ const shortCommitSha = buildInfo.commit;
       filter: blur(calc(var(--size) / var(--blur-divider)));
 
       @media (prefers-reduced-motion: no-preference) {
-        animation: blob-anim 15s infinite linear alternate;
+        animation: blob-anim 20s infinite linear alternate;
       }
 
       @media screen and (max-width: $breakpoint-tablet) {
