@@ -8,7 +8,6 @@ export default defineNuxtConfig({
   app: {
     head: {
       htmlAttrs: { translate: 'no', lang: 'en' },
-      title: 'Keycap',
       meta: [
         { name: 'description', content: 'Better notes ❤. Synced between your devices' },
         { name: 'mobile-web-app-capable', content: 'yes' },
