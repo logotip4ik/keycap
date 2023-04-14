@@ -23,7 +23,7 @@ After months of usage windows and android phone, i found out that notes aren't s
 - [x] commands through `ctrl+k`
 - [ ] add support for renaming __folders__
 - [ ] oauth with google and github ?
-- [ ] show notes via sharable links
+- [x] show notes via sharable links
 - [ ] code highlighting
 - [ ] work without internet (kinda working, if page is still cached, notes and folders will be loaded from local copies)
 - [ ] create landing page
