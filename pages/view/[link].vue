@@ -24,7 +24,7 @@ watch(error, (error) => {
   if (error) {
     showError({
       statusCode: 404,
-      statusMessage: `nothing found with link:${route.params.link}`,
+      statusMessage: `nothing found with link: ${route.params.link}`,
     });
   }
 }, { immediate: true });
