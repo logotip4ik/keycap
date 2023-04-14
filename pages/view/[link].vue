@@ -40,6 +40,8 @@ watch(error, (error) => {
           class="note-view__nav__title__img"
           fetchpriority="high"
           decoding="async"
+          width="32"
+          height="32"
         >
         Keycap
       </NuxtLink>
@@ -98,7 +100,7 @@ watch(error, (error) => {
 
       font-size: 1.25rem;
       font-weight: 500;
-      font-stretch: 110%;
+      font-stretch: 125%;
       text-decoration: none;
       color: var(--text-color);
 
@@ -111,7 +113,7 @@ watch(error, (error) => {
       &__img {
         display: block;
 
-        width: 1.75rem;
+        width: 2rem;
         height: auto;
 
         margin-right: 0.5rem;
