@@ -157,7 +157,7 @@ const shortCommitSha = buildInfo.commit;
       margin-bottom: 0.5rem;
 
       border-radius: 0.25rem;
-      border: 1px solid hsla(var(--selection-bg-color-hsl), 0.75);
+      border: 1px solid hsla(var(--selection-bg-color-hsl), 0.5);
       background-color: hsla(var(--selection-bg-color-hsl), 0.125);
 
       @media (prefers-color-scheme: dark) {
