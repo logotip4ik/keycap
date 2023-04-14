@@ -74,9 +74,9 @@ function formatDate(dateString?: Date | string) {
     day: '2-digit',
     month: 'short',
     year: 'numeric',
+    hourCycle: 'h23',
     hour: '2-digit',
     minute: '2-digit',
-    second: '2-digit',
   }).format(date);
 }
 
