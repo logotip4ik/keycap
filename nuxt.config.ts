@@ -31,6 +31,7 @@ export default defineNuxtConfig({
     polyfillVueUseHead: false,
     crossOriginPrefetch: true,
     componentIslands: true,
+    renderJsonPayloads: true,
   },
 
   typescript: {

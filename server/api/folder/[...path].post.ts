@@ -11,8 +11,9 @@ export default defineEventHandler(async (event) => {
   const body = await readBody<CreateFolderProps>(event);
   const path = getRouterParam(event, 'path');
   const folderPath = generateFolderPath(user.username, path);
+  const folderName = body.name.trim();
 
-  if (!body.name || !body.parentId || !path)
+  if (folderName.length < 2 || !body.parentId || !path)
     return createError({ statusCode: 400 });
 
   const selectParams = getFolderSelectParamsFromEvent(event);
@@ -21,7 +22,7 @@ export default defineEventHandler(async (event) => {
     timer.start('db');
     const folder = await prisma.folder.create({
       data: {
-        name: body.name,
+        name: folderName,
         path: folderPath,
         owner: { connect: { email: user.email } },
         parent: { connect: { id: toBigInt(body.parentId) } },

@@ -17,15 +17,15 @@ export default defineEventHandler(async (event) => {
 
   const validation = useLoginValidator(body);
 
+  if (body.email) body.email = body.email.trim();
+  if (body.password) body.password = body.password.trim();
+
   if (isProduction && !validation.ok) {
     return createError({
       statusCode: 400,
       statusMessage: `${validation.errors[0].dataPath.split('.').at(-1)} ${validation.errors[0].message}`,
     });
   }
-
-  body.email = body.email.trim();
-  body.password = body.password.trim();
 
   const prisma = getPrisma();
 

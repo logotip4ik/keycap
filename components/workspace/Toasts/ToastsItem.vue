@@ -61,7 +61,7 @@ onBeforeUnmount(() => clearTimeout(timeout));
 
     background-color: hsla(var(--selection-bg-color-hsl), 0.1);
     border: 1px solid hsla(var(--selection-bg-color-hsl), 0.5);
-    backdrop-filter: blur(6px);
+    backdrop-filter: blur(9px);
   }
 
   &__text {
