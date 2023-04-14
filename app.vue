@@ -1,6 +1,6 @@
 <script setup lang="ts">
 useHead({
-  titleTemplate: (title) => title ? `${title} - Keycap` : 'Keycap - Better notes ❤️',
+  titleTemplate: (title) => title ? `${title} - Keycap` : 'Keycap - Better notes',
 });
 
 if (process.server) {
