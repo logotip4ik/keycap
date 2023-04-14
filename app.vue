@@ -1,5 +1,19 @@
 <script setup lang="ts">
+useHead({
+  titleTemplate: (title) => title ? `${title} - Keycap` : 'Keycap - Better notes ❤️',
+});
+
 if (process.server) {
+  useSeoMeta({
+    ogImage: `https://${process.env.SITE_ORIGIN}/og-image.webp`,
+    ogImageWidth: 1200,
+    ogImageHeight: 630,
+    ogUrl: `https://${process.env.SITE_ORIGIN}`,
+    robots: { none: true },
+    applicationName: 'Keycap',
+    author: 'Bogdan Kostyuk',
+  });
+
   useHead({
     link: [
       {
