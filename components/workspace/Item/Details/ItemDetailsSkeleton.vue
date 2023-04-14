@@ -28,12 +28,12 @@
   align-items: center;
 
   & + & {
-    margin-top: 0.85rem;
+    margin-top: 0.75rem;
   }
 
   &__text,
   &__date {
-    height: 1.5rem;
+    height: 1.65rem;
 
     margin: 0;
 
