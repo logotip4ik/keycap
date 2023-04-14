@@ -916,7 +916,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxt/kit@npm:3.4.1, @nuxt/kit@npm:^3.0.0, @nuxt/kit@npm:^3.0.0-rc.13, @nuxt/kit@npm:^3.2.0, @nuxt/kit@npm:^3.3.1, @nuxt/kit@npm:^3.3.3, @nuxt/kit@npm:^3.4.1":
+"@nuxt/kit@npm:3.4.1, @nuxt/kit@npm:^3.0.0, @nuxt/kit@npm:^3.0.0-rc.13, @nuxt/kit@npm:^3.3.1, @nuxt/kit@npm:^3.3.3, @nuxt/kit@npm:^3.4.1":
   version: 3.4.1
   resolution: "@nuxt/kit@npm:3.4.1"
   dependencies:
@@ -1076,7 +1076,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxtjs/fontaine@npm:^0.2.4":
+"@nuxtjs/fontaine@npm:^0.2.5":
   version: 0.2.5
   resolution: "@nuxtjs/fontaine@npm:0.2.5"
   dependencies:
@@ -2112,46 +2112,46 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vueuse/core@npm:9.13.0, @vueuse/core@npm:^9.13.0":
-  version: 9.13.0
-  resolution: "@vueuse/core@npm:9.13.0"
+"@vueuse/core@npm:10.0.2, @vueuse/core@npm:^10.0.2":
+  version: 10.0.2
+  resolution: "@vueuse/core@npm:10.0.2"
   dependencies:
     "@types/web-bluetooth": ^0.0.16
-    "@vueuse/metadata": 9.13.0
-    "@vueuse/shared": 9.13.0
-    vue-demi: "*"
-  checksum: 2b19d8ec4305f6c65650813c0fa9c15af6b322fc253ad656eb1c4bc8d7617a2ddd46a46d7ea359c4cdc5a5724aa5fc152fa7a3816ed6ebeaec4f7e58defb7153
+    "@vueuse/metadata": 10.0.2
+    "@vueuse/shared": 10.0.2
+    vue-demi: ">=0.14.0"
+  checksum: 3ac42789cac0e1610a27706c2a73e8a37a101174dd077fb14fcad50c2d73c3e72ccc95677cebc6415f4bd757562207ed87a210364337826501f75efe60c2b1f8
   languageName: node
   linkType: hard
 
-"@vueuse/metadata@npm:9.13.0":
-  version: 9.13.0
-  resolution: "@vueuse/metadata@npm:9.13.0"
-  checksum: 91e137bf2fb1406587b523edae26b58b315d3a59797c9f2ed5dde9cb707026aa740b86da5955ea7f9662a93ce92249d0b3af763c65449b4a843bbd0725eb67f6
+"@vueuse/metadata@npm:10.0.2":
+  version: 10.0.2
+  resolution: "@vueuse/metadata@npm:10.0.2"
+  checksum: fb8039205fe58ab71a70c363525f6b66862747bca8861cfa6c8d8cecb442206d7fb917dc3f60ea3a1625da433c604333238589a230f8d149692d51354dca077f
   languageName: node
   linkType: hard
 
-"@vueuse/nuxt@npm:^9.13.0":
-  version: 9.13.0
-  resolution: "@vueuse/nuxt@npm:9.13.0"
+"@vueuse/nuxt@npm:^10.0.2":
+  version: 10.0.2
+  resolution: "@vueuse/nuxt@npm:10.0.2"
   dependencies:
-    "@nuxt/kit": ^3.2.0
-    "@vueuse/core": 9.13.0
-    "@vueuse/metadata": 9.13.0
+    "@nuxt/kit": ^3.4.1
+    "@vueuse/core": 10.0.2
+    "@vueuse/metadata": 10.0.2
     local-pkg: ^0.4.3
-    vue-demi: "*"
+    vue-demi: ">=0.14.0"
   peerDependencies:
     nuxt: ^3.0.0
-  checksum: ecea1c6015d0fd29adcd9bab08aec6d7cf9619d3c85cbfd9b6a09cd8a67bfd3223ab623b6f81a58dc63e117ee6156dc070c5311aa635f8e3c476db3d825d6abd
+  checksum: 54ce94f8bf6b875b6984e45628647cfa28790192eb387d1f167ec2dfd3baaef683af994b24d50a8bdc621673ffc1ee71c0e3b136594ab957bae3dfeac535776d
   languageName: node
   linkType: hard
 
-"@vueuse/shared@npm:9.13.0":
-  version: 9.13.0
-  resolution: "@vueuse/shared@npm:9.13.0"
+"@vueuse/shared@npm:10.0.2":
+  version: 10.0.2
+  resolution: "@vueuse/shared@npm:10.0.2"
   dependencies:
-    vue-demi: "*"
-  checksum: e53e7312bdd2030b7970afcf4d3dc3f9a47f7721a92ccb51c364d23246233cb54758f7ddacbdb9ac63d1e86ec82e97d06cb53b05a4b8d43be877d16ab61dd9bb
+    vue-demi: ">=0.14.0"
+  checksum: c0082a592c3f2e5d43bea66435d72878c071c7fa97f1f39fc9530b4ebe8c9d3d3741496876addb15735d10f6162af0150eca92f36082e03bd5322dffe5e32ff7
   languageName: node
   linkType: hard
 
@@ -3597,9 +3597,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.284":
-  version: 1.4.363
-  resolution: "electron-to-chromium@npm:1.4.363"
-  checksum: e3a84cf652d97b124e0d328688454d6d7b81e533e671edc7c32dc4b18e5d90369001f61ffd503edf11a9d6d35ecb17385e74060b59b4a70b2bd53a71108ff286
+  version: 1.4.364
+  resolution: "electron-to-chromium@npm:1.4.364"
+  checksum: 0f2a2bdb1c7e99038e73542ba993f40deedee2cdb04bb3a0e66bbc85948e103931526e919ed8ccfb62a0fe832278f48c9878c949f7466b1345919304da988141
   languageName: node
   linkType: hard
 
@@ -5452,7 +5452,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-core-module@npm:^2.11.0":
+"is-core-module@npm:^2.11.0, is-core-module@npm:^2.12.0":
   version: 2.12.0
   resolution: "is-core-module@npm:2.12.0"
   dependencies:
@@ -5790,10 +5790,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jose@npm:^4.13.2":
-  version: 4.13.2
-  resolution: "jose@npm:4.13.2"
-  checksum: d388c7b7c6a7ecd5798e8b11c7efb55eff1950e73f13adc00fd431ec3042a2007af4bf994fcc1fcd7586458df7503b7e7140ceb570265825a844877a41ada93c
+"jose@npm:^4.14.0":
+  version: 4.14.0
+  resolution: "jose@npm:4.14.0"
+  checksum: 107b64e005d1bac3ae648d57c141f80651d8956d4e7107a0c9e3481c685f74c8c8c4494463a412abd2ec0682dc0049c721883f2dac55fc8c25f4101093a4375a
   languageName: node
   linkType: hard
 
@@ -8348,28 +8348,28 @@ __metadata:
   linkType: hard
 
 "resolve@npm:^1.1.7, resolve@npm:^1.10.0, resolve@npm:^1.22.1":
-  version: 1.22.2
-  resolution: "resolve@npm:1.22.2"
+  version: 1.22.3
+  resolution: "resolve@npm:1.22.3"
   dependencies:
-    is-core-module: ^2.11.0
+    is-core-module: ^2.12.0
     path-parse: ^1.0.7
     supports-preserve-symlinks-flag: ^1.0.0
   bin:
     resolve: bin/resolve
-  checksum: 7e5df75796ebd429445d102d5824482ee7e567f0070b2b45897b29bb4f613dcbc262e0257b8aeedb3089330ccaea0d6a0464df1a77b2992cf331dcda0f4cb549
+  checksum: fb834b81348428cb545ff1b828a72ea28feb5a97c026a1cf40aa1008352c72811ff4d4e71f2035273dc536dcfcae20c13604ba6283c612d70fa0b6e44519c374
   languageName: node
   linkType: hard
 
 "resolve@patch:resolve@^1.1.7#~builtin<compat/resolve>, resolve@patch:resolve@^1.10.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.22.1#~builtin<compat/resolve>":
-  version: 1.22.2
-  resolution: "resolve@patch:resolve@npm%3A1.22.2#~builtin<compat/resolve>::version=1.22.2&hash=c3c19d"
+  version: 1.22.3
+  resolution: "resolve@patch:resolve@npm%3A1.22.3#~builtin<compat/resolve>::version=1.22.3&hash=c3c19d"
   dependencies:
-    is-core-module: ^2.11.0
+    is-core-module: ^2.12.0
     path-parse: ^1.0.7
     supports-preserve-symlinks-flag: ^1.0.0
   bin:
     resolve: bin/resolve
-  checksum: 66cc788f13b8398de18eb4abb3aed90435c84bb8935953feafcf7231ba4cd191b2c10b4a87b1e9681afc34fb138c705f91f7330ff90bfa36f457e5584076a2b8
+  checksum: ad59734723b596d0891321c951592ed9015a77ce84907f89c9d9307dd0c06e11a67906a3e628c4cae143d3e44898603478af0ddeb2bba3f229a9373efe342665
   languageName: node
   linkType: hard
 
@@ -8455,7 +8455,7 @@ __metadata:
     "@antfu/eslint-config": ^0.38.4
     "@nuxt/kit": ^3.4.1
     "@nuxtjs/device": ^3.1.0
-    "@nuxtjs/fontaine": ^0.2.4
+    "@nuxtjs/fontaine": ^0.2.5
     "@prisma/client": ^4.12.0
     "@superhuman/command-score": ^0.5.0
     "@tiptap/core": ^2.0.3
@@ -8488,13 +8488,13 @@ __metadata:
     "@types/lambda-rate-limiter": ^3.0.0
     "@types/node": ^18.15.11
     "@types/sanitize-html": ^2.9.0
-    "@vueuse/core": ^9.13.0
-    "@vueuse/nuxt": ^9.13.0
+    "@vueuse/core": ^10.0.2
+    "@vueuse/nuxt": ^10.0.2
     bcryptjs: ^2.4.3
     comlink: ^4.4.1
     eslint: ^8.38.0
     idb-keyval: ^6.2.0
-    jose: ^4.13.2
+    jose: ^4.14.0
     lambda-rate-limiter: ^3.0.1
     lru-cache: ^9.0.2
     magic-string: ^0.30.0
@@ -9799,8 +9799,8 @@ __metadata:
   linkType: hard
 
 "vite@npm:^4.3.0-beta.3":
-  version: 4.3.0-beta.5
-  resolution: "vite@npm:4.3.0-beta.5"
+  version: 4.3.0-beta.6
+  resolution: "vite@npm:4.3.0-beta.6"
   dependencies:
     esbuild: ^0.17.5
     fsevents: ~2.3.2
@@ -9831,7 +9831,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 31faf3f66bf7978291e262e4ca43ac916c016f9e6072bd0951167be7aa8c2bf9e8525ec515fdf12325d48b4c54fce37e26087f8e35ff899423bd962cbadd6cec
+  checksum: cee852922e7cd2dd754b30ceead6012cd1f902046ac2dd8ac5af16dd8fcc716febe55e6a2bf3944ebd6d20b6526c5a67ccdb1093ff614c809f9f505a0a9e872b
   languageName: node
   linkType: hard
 
@@ -9904,7 +9904,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue-demi@npm:*":
+"vue-demi@npm:>=0.14.0":
   version: 0.14.0
   resolution: "vue-demi@npm:0.14.0"
   peerDependencies:
