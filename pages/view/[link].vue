@@ -106,7 +106,8 @@ watch(error, (error) => {
         width: 1.75rem;
         height: auto;
 
-        margin-right: 0.25rem;
+        margin-right: 0.5rem;
+        margin-bottom: 0.125rem;
       }
 
       &:is(:hover, :focus-visible) {
