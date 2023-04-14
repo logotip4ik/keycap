@@ -10,10 +10,10 @@ const isLoadingItemDetails = ref(false);
 
 const isFolder = 'root' in props.item;
 
-type NoteDetails = Partial<Note> & Prisma.NoteGetPayload<{ select: { shares: { select: { link: true; updatedAt: true; createdAt: true } } } }>;
+type NoteDetails = Note & Prisma.NoteGetPayload<{ select: { shares: { select: { link: true; updatedAt: true; createdAt: true } } } }>;
 
 // NOTE(perf improvement): client bundle size reduced by using only useAsyncData or useFetch
-const { data: details, refresh } = useLazyAsyncData<NoteDetails>(() => $fetch(
+const { data: details, refresh } = useLazyAsyncData<Partial<NoteDetails>>(() => $fetch(
   // /api/[note|folder]/[item path without username]
   `/api/${isFolder ? 'folder' : 'note'}/${props.item.path.split('/').slice(2).join('/')}`,
   { query: { details: true }, retry: 2 },
@@ -27,7 +27,7 @@ const mergedDetails = computed(() => {
   return {
     name: props.item.name,
     ...details.value,
-    shares: details.value.shares[0],
+    shares: details.value.shares?.[0],
   };
 });
 
