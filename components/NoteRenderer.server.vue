@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import '~/assets/styles/note-editor.scss';
-
 import sanitizeHtml from 'sanitize-html';
 
 interface Props { content: string }
@@ -32,3 +30,5 @@ const sanitized = sanitizeHtml(props.content, {
     <div class="ProseMirror ProseMirror--renderer" v-html="sanitized" />
   </div>
 </template>
+
+<style src="~/assets/styles/note-editor.scss" />
