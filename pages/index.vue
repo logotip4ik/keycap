@@ -28,7 +28,7 @@ const shortCommitSha = buildInfo.commit;
           In development
         </small>
 
-        <h1 class="index__header__title">
+        <h1 class="index__header__title font-wide">
           Keycap
         </h1>
 
