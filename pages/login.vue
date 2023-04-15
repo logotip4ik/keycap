@@ -37,7 +37,7 @@ watch(user, async (value) => value && await navigateTo(`/@${value.username}`));
     <LazyWorkspaceToasts />
 
     <form class="login-page__form" @submit.prevent="login">
-      <p class="login-page__form__title">
+      <p class="login-page__form__title font-wide">
         Let's sign you in
       </p>
 
@@ -116,7 +116,6 @@ watch(user, async (value) => value && await navigateTo(`/@${value.username}`));
     &__title {
       font-size: 2rem;
       font-weight: 500;
-      font-stretch: 100%;
       text-align: left;
 
       padding-top: 1rem;

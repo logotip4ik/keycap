@@ -33,7 +33,7 @@ watch(error, (error) => {
 <template>
   <div v-if="note" class="note-view">
     <nav class="note-view__nav">
-      <NuxtLink class="note-view__nav__title" to="/">
+      <NuxtLink class="note-view__nav__title font-wide" to="/">
         <img
           src="/favicon-32x32.png"
           alt="purple keycap"
@@ -100,7 +100,6 @@ watch(error, (error) => {
 
       font-size: 1.25rem;
       font-weight: 500;
-      font-stretch: 125%;
       text-decoration: none;
       color: var(--text-color);
 
