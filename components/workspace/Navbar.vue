@@ -1,27 +1,18 @@
 <script setup lang="ts">
 import { blankNoteName } from '~/assets/constants';
-import breakpoints from '~/assets/constants/breakpoints';
 
 interface Emits { (event: 'openSearch'): void }
 defineEmits<Emits>();
 
 const route = useRoute();
 const user = useUser();
-const { isMobileOrTablet } = useDevice();
 const currentNoteState = useCurrentNoteState();
 const isFallbackMode = useFallbackMode();
 
-const canShowBackButton = computed(() => {
-  const isServerSide = process.server;
-  let canShow = true;
+const isNoteNameEmpty = inject(IsNoteNameEmptyKey);
+const isSmallScreen = inject(IsSmallScreenKey);
 
-  if (isServerSide)
-    canShow = isMobileOrTablet;
-  else if (window.innerWidth > breakpoints.tablet)
-    canShow = false;
-
-  return canShow && (route.params.note && route.params.note !== blankNoteName);
-});
+const isShowingBackButton = computed(() => isSmallScreen!.value && !isNoteNameEmpty!.value);
 
 const headingText = computed(() => {
   if (!user.value) return '';
@@ -46,7 +37,7 @@ async function showFolderContents() {
   <nav class="nav">
     <Transition name="nav-back-button">
       <button
-        v-show="canShowBackButton"
+        v-show="isShowingBackButton"
         class="nav__button nav__button--back"
         @click="showFolderContents"
       >
@@ -61,7 +52,7 @@ async function showFolderContents() {
 
     <button
       class="nav__button nav__button--search"
-      :data-show-back-button="canShowBackButton"
+      :data-show-back-button="isShowingBackButton"
       @click="$emit('openSearch')"
     >
       <Icon name="search" class="nav__button__icon" />

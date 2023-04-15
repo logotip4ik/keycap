@@ -86,6 +86,9 @@ onMounted(() => {
     // @ts-expect-error this should not be defined
     window.$createToast = useToast();
 });
+
+provide(IsSmallScreenKey, isSmallScreen);
+provide(IsNoteNameEmptyKey, isNoteNameEmpty);
 </script>
 
 <template>
