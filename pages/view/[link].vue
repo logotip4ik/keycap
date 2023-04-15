@@ -12,7 +12,7 @@ useHead({
   titleTemplate: '%s - Keycap',
 });
 
-const isNoteContentsEmpty = note.value?.content && note.value.content.replace(/<[^>]+>/g, '').trim() === '';
+const isNoteContentsEmpty = (note.value?.content?.replace(/<[^>]+>/g, '').trim() || '') === '';
 
 function formatDate(date: string | Date) {
   date = new Date(date);
