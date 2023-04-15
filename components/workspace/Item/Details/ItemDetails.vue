@@ -263,6 +263,10 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
       outline-offset: 0px;
 
       transition-duration: .1s;
+
+      @media (prefers-color-scheme: dark) {
+        background-color: hsla(var(--selection-bg-color-hsl), 0.175);
+      }
     }
 
     &__icon {
