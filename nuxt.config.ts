@@ -47,6 +47,9 @@ export default defineNuxtConfig({
 
     '/api/**': { headers: getHeaders('api') },
 
+    // cache for five minutes
+    '/view/**': { swr: 5 * 60 },
+
     '/': { prerender: true },
     '/about': { prerender: true },
     '/login': { prerender: true },
