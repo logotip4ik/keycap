@@ -141,12 +141,14 @@ provide(IsNoteNameEmptyKey, isNoteNameEmpty);
 
     <LazyWorkspaceToasts />
 
-    <Transition name="fade">
-      <LazyWorkspaceItemDetails
-        v-if="currentItemForDetails"
-        :item="currentItemForDetails"
-      />
-    </Transition>
+    <Teleport to="body">
+      <Transition name="fade">
+        <LazyWorkspaceItemDetails
+          v-if="currentItemForDetails"
+          :item="currentItemForDetails"
+        />
+      </Transition>
+    </Teleport>
   </div>
 </template>
 
