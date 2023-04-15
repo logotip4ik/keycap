@@ -163,9 +163,11 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
 
             <hr class="item-details__data__row__hr">
 
-            <p class="item-details__data__row__value">
-              {{ data.value }}
-            </p>
+            <Transition name="fade">
+              <p :key="data.value" class="item-details__data__row__value">
+                {{ data.value }}
+              </p>
+            </Transition>
           </div>
         </div>
       </Transition>
