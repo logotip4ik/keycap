@@ -16,22 +16,9 @@ const currentNoteState = useCurrentNoteState();
 const currentItemForDetails = useCurrentItemForDetails();
 
 const isShowingSearch = ref(false);
-const isShowingContents = computed(() => {
-  const noteName = route.params.note;
 
-  const isNoteNameEmpty = !noteName || noteName === blankNoteName;
-
-  if (process.server) {
-    if (isMobileOrTablet) return isNoteNameEmpty;
-
-    return true;
-  }
-
-  if (windowWidth.value < breakpoints.tablet)
-    return isNoteNameEmpty;
-
-  return true;
-});
+const isSmallScreen = computed(() => import.meta.env.SSR ? isMobileOrTablet : windowWidth.value < breakpoints.tablet);
+const isNoteNameEmpty = computed(() => !route.params.note || route.params.note === blankNoteName);
 
 const currentRouteName = computed(() => {
   const folders = route.params.folders;
@@ -110,7 +97,7 @@ onMounted(() => {
 
     <Transition name="fade">
       <aside
-        v-show="isShowingContents"
+        v-show="isSmallScreen ? isNoteNameEmpty : true"
         class="workspace__contents"
       >
         <LazyWorkspaceContents />
@@ -119,7 +106,7 @@ onMounted(() => {
 
     <Transition name="fade">
       <LazyWorkspaceFab
-        v-show="isShowingContents"
+        v-show="isSmallScreen ? isNoteNameEmpty : true"
         @open-search="isShowingSearch = true"
       />
     </Transition>
@@ -127,16 +114,14 @@ onMounted(() => {
     <Transition name="fade">
       <!-- Do not load welcome component on mobile devices -->
       <LazyWorkspaceWelcome
-        v-if="windowWidth > breakpoints.tablet && (!route.params.note || route.params.note === blankNoteName)"
+        v-if="!isSmallScreen && isNoteNameEmpty"
         key="blank-note"
         class="workspace__note"
       />
 
-      <main v-else-if="windowWidth > breakpoints.tablet || !isShowingContents" class="workspace__note">
+      <main v-else-if="isSmallScreen ? !isNoteNameEmpty : true" class="workspace__note">
         <NuxtPage />
       </main>
-
-      <div v-else v-once class="workspace__note" />
     </Transition>
 
     <Teleport to="body">
