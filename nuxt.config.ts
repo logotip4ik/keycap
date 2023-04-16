@@ -31,6 +31,7 @@ export default defineNuxtConfig({
     crossOriginPrefetch: true,
     componentIslands: true,
     renderJsonPayloads: true,
+    parcelWatcher: true,
   },
 
   typescript: {
