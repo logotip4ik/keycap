@@ -65,7 +65,7 @@ export default defineNuxtConfig({
   ],
 
   css: [
-    'normalize.css',
+    'normalize.css/normalize.css',
     '~/assets/styles/global.scss',
     '~/assets/fonts/Mona-Sans/style.css',
   ],
