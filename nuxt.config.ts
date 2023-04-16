@@ -1,4 +1,4 @@
-import { isDevelopment } from 'std-env';
+import { isDevelopment, isProduction } from 'std-env';
 
 import { getHeaders } from './headers.config';
 import breakpoints from './assets/constants/breakpoints';
@@ -48,7 +48,7 @@ export default defineNuxtConfig({
     '/api/**': { headers: getHeaders('api') },
 
     // cache for five minutes
-    '/view/**': { swr: 5 * 60 },
+    '/view/**': { swr: isProduction && 5 * 60 },
 
     '/': { prerender: true },
     '/about': { prerender: true },
