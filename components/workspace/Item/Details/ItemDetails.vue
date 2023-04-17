@@ -204,6 +204,7 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
     width: 100%;
     max-width: unset;
 
+    border: none;
     border-radius: 0;
   }
 
