@@ -19,7 +19,7 @@ function beforeLeaveHook(el: Element) {
   const relativeBottomPos = (toasterElClientRect!.bottom - elClientRect.bottom);
 
   (el as HTMLElement).style.setProperty('--prev-bottom', `${relativeBottomPos}px`);
-  (el as HTMLElement).style.setProperty('--prev-width', `${elClientRect.width}px`);
+  (el as HTMLElement).style.setProperty('--prev-width', `${(el as HTMLElement).offsetWidth}px`);
 }
 
 function handleResize() {
