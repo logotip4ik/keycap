@@ -33,7 +33,10 @@ export default defineEventHandler(async (event) => {
     prisma.share.delete({ where: { id: shareToDelete.id } }),
   ]);
 
+  console.log(cacheKeys);
+
   const keyToDelete = cacheKeys.find((key) => key.includes(friendlyShareLink));
+  console.log(keyToDelete);
 
   if (keyToDelete)
     await storage.removeItem(keyToDelete);
