@@ -2,7 +2,6 @@ import type { ShallowRef } from 'vue';
 
 const toasts = shallowRef<ToastInstance[]>([]);
 
-// eslint-disable-next-line antfu/top-level-function
 export const useToasts = () => toasts;
 
 export function useToast() {
