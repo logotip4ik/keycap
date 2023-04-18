@@ -64,7 +64,7 @@ const { data: fetchedNote, pending, error, refresh } = useLazyAsyncData<Note | n
         if (!loadingToast?.value) {
           loadingToast = createToast('Fetching note. Please wait...', {
             duration: 60 * 1000,
-            delay: firstTimeFetch ? 3500 : 0,
+            delay: firstTimeFetch ? 3500 : 100,
             type: 'loading',
           });
 
