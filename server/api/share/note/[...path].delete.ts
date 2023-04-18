@@ -33,16 +33,11 @@ export default defineEventHandler(async (event) => {
     prisma.share.delete({ where: { id: shareToDelete.id } }),
   ]);
 
-  console.log({ cacheKeys });
-
   const keyToDelete = cacheKeys.find((key) => key.includes(friendlyShareLink));
-  console.log({ keyToDelete });
 
   if (keyToDelete)
     // yeah, Mata, idk why
     await storage.removeItem(keyToDelete, { removeMata: true });
-
-  console.log(await storage.getKeys('cache/nitro'));
 
   timer.end();
 
