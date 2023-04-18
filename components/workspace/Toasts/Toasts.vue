@@ -26,7 +26,9 @@ function handleResize() {
   toasterElClientRect = null;
 }
 
-useEventListener(window, 'resize' , handleResize, { passive: true })
+if (typeof window !== 'undefined') {
+  useEventListener(window, 'resize' , handleResize, { passive: true })
+}
 </script>
 
 <template>
