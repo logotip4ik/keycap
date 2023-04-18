@@ -26,8 +26,7 @@ function handleResize() {
   toasterElClientRect = null;
 }
 
-onMounted(() => window.addEventListener('resize', handleResize, { passive: true }));
-onBeforeUnmount(() => window.removeEventListener('resize', handleResize));
+useEventListener(window, 'resize' , handleResize, { passive: true })
 </script>
 
 <template>

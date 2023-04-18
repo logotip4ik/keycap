@@ -139,13 +139,7 @@ useTinykeys({
   },
 });
 
-onMounted(() => {
-  window.addEventListener('visibilitychange', handleVisibilityChange, { passive: true });
-});
-
-onBeforeUnmount(() => {
-  window.removeEventListener('visibilitychange', handleVisibilityChange);
-});
+useEventListener(window, 'visibilitychange', handleVisibilityChange, { passive: true })
 
 // if user updated current note and switched to another note
 // before debounced function execution, try to save content
