@@ -5,7 +5,8 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "prisma generate && nuxt prepare"
+    "postinstall": "prisma generate && nuxt prepare",
+    "lint": "eslint ."
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.38.5",
