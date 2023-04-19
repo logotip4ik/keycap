@@ -19,15 +19,9 @@ function normalizeShortcut(shortcut: string) {
 <template>
   <div class="welcome">
     <Transition name="fade">
-      <Transition v-if="!currentFolderPath" name="fade">
-        <p v-if="user" class="welcome__title">
-          Welcome, {{ user.username }}
-        </p>
-
-        <p v-else>
-          Welcome
-        </p>
-      </Transition>
+      <p v-if="!currentFolderPath" class="welcome__title">
+        Welcome back
+      </p>
 
       <p v-else class="welcome__title">
         Path: {{ currentFolderPath }}
