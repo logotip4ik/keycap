@@ -1,13 +1,13 @@
 import { withLeadingSlash, withTrailingSlash, withoutLeadingSlash } from 'ufo';
 
 import type { Note } from '@prisma/client';
-import type { RouteLocationNamedRaw } from 'vue-router';
+import type { RouteLocationRaw } from 'vue-router';
 import type { NavigateToOptions } from 'nuxt/dist/app/composables/router';
 
 import { blankNoteName } from '~/assets/constants';
 
 type ItemWithPath = Partial<FolderOrNote> & { path: string };
-export function generateItemRouteParams(item: ItemWithPath): RouteLocationNamedRaw {
+export function generateItemRouteParams(item: ItemWithPath): RouteLocationRaw {
   const isFolder = 'root' in item;
 
   const routeName = isFolder ? blankNoteName : (item as NoteMinimal).name;
@@ -166,7 +166,7 @@ export async function preloadItem(self: FolderOrNote) {
   const pathName = encodeURIComponent(self.name);
   const path = pathPrefix + currentFolderPath + pathName;
 
-  const item = await $fetch(`/api/${path}`).catch(() => null);
+  const item = await $fetch<FolderWithContents | NoteMinimal>(`/api/${path}`).catch(() => null);
 
   if (!item) return;
 
