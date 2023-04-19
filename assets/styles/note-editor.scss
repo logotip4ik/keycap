@@ -181,12 +181,12 @@
       transition: all .3s;
     }
 
-    & > *:is(h1, h2, h3):first-child {
-      padding-top: 0.5rem;
-    }
-
     @media screen and (max-width: $breakpoint-tablet) {
       padding: 1.65rem 1rem 45vh;
+
+      & > *:is(h1, h2, h3):first-child {
+        padding-top: 0.5rem;
+      }
 
       &--renderer {
         padding: 0 0 45vh;
