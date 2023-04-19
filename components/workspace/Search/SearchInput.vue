@@ -13,7 +13,6 @@ function updateModelValue(event: Event) {
 <template>
   <input
     id="workspace-search-input"
-    ref="inputEl"
     type="search"
     required
     name="workspace-search"
