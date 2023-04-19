@@ -26,9 +26,8 @@ function handleResize() {
   toasterElClientRect = null;
 }
 
-if (typeof window !== 'undefined') {
-  useEventListener(window, 'resize' , handleResize, { passive: true })
-}
+if (typeof window !== 'undefined')
+  useEventListener(window, 'resize', handleResize, { passive: true });
 </script>
 
 <template>
@@ -40,9 +39,12 @@ if (typeof window !== 'undefined') {
       name="toast"
       @before-leave="beforeLeaveHook"
     >
-      <template v-for="toast in sortedToasts" :key="toast.id">
-        <WorkspaceToastsItem :toast="toast" :animation-duration="ANIMATION_DURATION" />
-      </template>
+      <WorkspaceToastsItem
+        v-for="toast in sortedToasts"
+        :key="toast.id"
+        :toast="toast"
+        :animation-duration="ANIMATION_DURATION"
+      />
     </TransitionGroup>
   </Teleport>
 </template>
