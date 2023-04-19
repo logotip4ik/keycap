@@ -1,7 +1,6 @@
 <script setup lang="ts">
 const { shortcuts } = useAppConfig();
 const route = useRoute();
-const user = useUser();
 
 const currentFolderPath = computed(() => {
   const folders = Array.isArray(route.params.folders) ? route.params.folders : [];
