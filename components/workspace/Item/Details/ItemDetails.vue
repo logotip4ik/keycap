@@ -184,7 +184,7 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
   width: 90%;
   max-width: $breakpoint-tablet;
 
-  padding: 2rem 1.25rem 1.75rem;
+  padding: 2rem 1.25rem 1.5rem;
 
   border-radius: 0.5rem;
   border: 1px solid hsla(var(--text-color-hsl), 0.125);

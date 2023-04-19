@@ -28,7 +28,7 @@
   align-items: center;
 
   & + & {
-    margin-top: 0.75rem;
+    margin-top: 0.85rem;
   }
 
   &__text,
