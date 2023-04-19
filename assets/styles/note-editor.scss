@@ -17,7 +17,7 @@
 
     font: inherit;
     text-decoration: underline;
-    color: hsla(var(--text-color-hsl), 0.5);
+    color: hsla(var(--text-color-hsl), 0.65);
 
     padding: 0.5rem 0.75rem;
 
@@ -28,8 +28,12 @@
 
     transition: color .3s, text-shadow .3s;
 
+    @media (hover: hover) {
+      color: hsla(var(--text-color-hsl), 0.5);
+    }
+    
     @media screen and (max-width: $breakpoint-tablet) {
-      top: 0;
+      top: 0.15rem;
     }
 
     &:is(:hover, :focus-visible) {
@@ -177,8 +181,12 @@
       transition: all .3s;
     }
 
+    & > *:is(h1, h2, h3):first-child {
+      padding-top: 0.5rem;
+    }
+
     @media screen and (max-width: $breakpoint-tablet) {
-      padding: 1rem 1rem 45vh;
+      padding: 1.65rem 1rem 45vh;
 
       &--renderer {
         padding: 0 0 45vh;
