@@ -127,7 +127,7 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
             {{ mergedDetails.name }}
           </p>
 
-          <div v-if="!isFolder" class="item-details__data__row">
+          <div v-if="!isFolder" class="item-details__data__row item-details__data__row--share">
             <p class="item-details__data__row__title">
               Note share
             </p>
@@ -294,7 +294,11 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
       color: hsla(var(--text-color-hsl), 0.75);
 
       & + & {
-        margin-top: 0.825rem;
+        margin-top: 1.125rem;
+      }
+
+      &--share {
+        margin-bottom: -0.25rem;
       }
 
       &__hr {
@@ -315,13 +319,18 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
       }
 
       &__checkbox {
-        transform: scale(1.5);
+        transform: scale(1.65);
+
+        margin-left: 0.2rem;
+        margin-right: 0.35rem;
 
         cursor: pointer;
         accent-color: var(--task-list-indicator-color);
       }
 
       &__share-link {
+        --base-padding-y: 0.225rem;
+
         font: inherit;
         text-align: center;
         color: hsla(var(--text-color-hsl), 0.95);
@@ -329,7 +338,7 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
         width: 16.75ch;
 
         margin-right: 1rem;
-        padding: 0.275rem 0 0.25rem;
+        padding: var(--base-padding-y) 0 calc(var(--base-padding-y) - 0.075rem);
 
         white-space: nowrap;
 
