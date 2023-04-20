@@ -17,14 +17,14 @@
     "@types/sanitize-html": "^2.9.0",
     "eslint": "^8.38.0",
     "normalize.css": "^8.0.1",
-    "nuxt": "^3.4.1",
+    "nuxt": "^3.4.2",
     "nuxt-icon": "^0.3.3",
     "prisma": "^4.13.0",
     "sass": "^1.62.0",
     "typescript": "^5.0.4"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.4.1",
+    "@nuxt/kit": "^3.4.2",
     "@nuxtjs/device": "^3.1.0",
     "@prisma/client": "^4.13.0",
     "@superhuman/command-score": "^0.5.0",
@@ -59,7 +59,7 @@
     "bcryptjs": "^2.4.3",
     "comlink": "^4.4.1",
     "idb-keyval": "^6.2.0",
-    "jose": "^4.14.0",
+    "jose": "^4.14.1",
     "lambda-rate-limiter": "^3.0.1",
     "lru-cache": "^9.1.0",
     "magic-string": "^0.30.0",
@@ -74,7 +74,6 @@
   },
   "packageManager": "yarn@3.4.1",
   "resolutions": {
-    "@tiptap/core@^2.0.3": "patch:@tiptap/core@npm%3A2.0.0-beta.217#./.yarn/patches/@tiptap-core-npm-2.0.0-beta.217-956b2151ab.patch",
-    "vite": "^4.3.0-beta.6"
+    "@tiptap/core@^2.0.3": "patch:@tiptap/core@npm%3A2.0.0-beta.217#./.yarn/patches/@tiptap-core-npm-2.0.0-beta.217-956b2151ab.patch"
   }
 }
