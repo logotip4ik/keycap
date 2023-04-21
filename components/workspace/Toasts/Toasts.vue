@@ -17,9 +17,10 @@ function beforeLeaveHook(el: Element) {
   toasterElClientRect = toasterElClientRect || toasterEl.value!.$el.getBoundingClientRect();
 
   const relativeBottomPos = (toasterElClientRect!.bottom - elClientRect.bottom);
+  const correctElWidth = Math.max((el as HTMLElement).offsetWidth, elClientRect.width);
 
   (el as HTMLElement).style.setProperty('--prev-bottom', `${relativeBottomPos}px`);
-  (el as HTMLElement).style.setProperty('--prev-width', `${(el as HTMLElement).offsetWidth}px`);
+  (el as HTMLElement).style.setProperty('--prev-width', `${correctElWidth}px`);
 }
 
 function handleResize() {
@@ -37,6 +38,7 @@ if (typeof window !== 'undefined')
       class="toasts"
       tag="section"
       name="toast"
+      :data-toasts-number="sortedToasts.length"
       @before-leave="beforeLeaveHook"
     >
       <WorkspaceToastsItem
@@ -80,17 +82,23 @@ if (typeof window !== 'undefined')
 }
 
 .toast-enter-active {
-  transform-origin: right center;
+  --initial-pos: 0px, -0.75rem;
+
+  z-index: -1;
+
+  transform-origin: bottom center;
 
   transition: transform 0.4s cubic-bezier(0.33, 1, 0.68, 1), opacity 0.3s;
-
-  @media screen and (max-width: $breakpoint-tablet) {
-    transform-origin: left center;
-  }
 
   [data-icon] {
     transition: opacity 0.4s;
   }
+}
+
+[data-toasts-number="1"] .toast-enter-active {
+  --initial-pos: 0px, 0px;
+
+  transform-origin: center center;
 }
 
 .toast-move {
@@ -98,7 +106,7 @@ if (typeof window !== 'undefined')
 }
 
 .toast-enter-from {
-  transform: scale(0.925) translate(0px, 7px) rotate(0deg);
+  transform: scale(0.925) translate(var(--initial-pos)) rotate(0deg);
 }
 
 .toast-enter-from,
@@ -112,6 +120,7 @@ if (typeof window !== 'undefined')
   position: absolute;
   bottom: var(--prev-bottom);
   right: 0;
+  z-index: -1;
 
   width: var(--prev-width);
 
