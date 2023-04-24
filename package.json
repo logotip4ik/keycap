@@ -26,6 +26,7 @@
   "dependencies": {
     "@nuxt/kit": "^3.4.2",
     "@nuxtjs/device": "^3.1.0",
+    "@parcel/watcher": "^2.1.0",
     "@prisma/client": "^4.13.0",
     "@superhuman/command-score": "^0.5.0",
     "@tiptap/core": "^2.0.3",
@@ -75,10 +76,6 @@
   "packageManager": "yarn@3.4.1",
   "resolutions": {
     "@tiptap/core@^2.0.3": "patch:@tiptap/core@npm%3A2.0.0-beta.217#./.yarn/patches/@tiptap-core-npm-2.0.0-beta.217-956b2151ab.patch",
-    "nuxt": "3.4.1",
-    "nuxi": "^3.4.2",
-    "@nuxt/kit": "^3.4.2",
-    "@nuxt/schema": "^3.4.2",
-    "@nuxt/vite-builder": "^3.4.2"
+    "nuxt@^3.4.2": "patch:nuxt@npm%3A3.4.2#./.yarn/patches/nuxt-npm-3.4.2-88b2a74c69.patch"
   }
 }

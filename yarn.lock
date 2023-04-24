@@ -890,7 +890,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxt/kit@npm:^3.4.2":
+"@nuxt/kit@npm:3.4.0":
+  version: 3.4.0
+  resolution: "@nuxt/kit@npm:3.4.0"
+  dependencies:
+    "@nuxt/schema": 3.4.0
+    c12: ^1.2.0
+    consola: ^3.0.1
+    defu: ^6.1.2
+    globby: ^13.1.3
+    hash-sum: ^2.0.0
+    ignore: ^5.2.4
+    jiti: ^1.18.2
+    knitwork: ^1.0.0
+    lodash.template: ^4.5.0
+    mlly: ^1.2.0
+    pathe: ^1.1.0
+    pkg-types: ^1.0.2
+    scule: ^1.0.0
+    semver: ^7.4.0
+    unctx: ^2.2.0
+    unimport: ^3.0.6
+    untyped: ^1.3.2
+  checksum: fcfe366583ae945241d07ef4ac2d11269403a9bb9f92c162e4c9cf1255e2505b9a93b1bc8e4a3152bd589e8a66a30940c2234df39003797dc2842da42390254f
+  languageName: node
+  linkType: hard
+
+"@nuxt/kit@npm:3.4.2, @nuxt/kit@npm:^3.0.0-rc.13, @nuxt/kit@npm:^3.3.1, @nuxt/kit@npm:^3.3.3, @nuxt/kit@npm:^3.4.1, @nuxt/kit@npm:^3.4.2":
   version: 3.4.2
   resolution: "@nuxt/kit@npm:3.4.2"
   dependencies:
@@ -916,7 +942,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxt/schema@npm:^3.4.2":
+"@nuxt/schema@npm:3.4.0":
+  version: 3.4.0
+  resolution: "@nuxt/schema@npm:3.4.0"
+  dependencies:
+    c12: ^1.2.0
+    create-require: ^1.1.1
+    defu: ^6.1.2
+    hookable: ^5.5.3
+    jiti: ^1.18.2
+    pathe: ^1.1.0
+    pkg-types: ^1.0.2
+    postcss-import-resolver: ^2.0.0
+    scule: ^1.0.0
+    std-env: ^3.3.2
+    ufo: ^1.1.1
+    unimport: ^3.0.6
+    untyped: ^1.3.2
+  checksum: c519b3a13d827a88ef613183679376740afe6c9f357ad3cd66ab3d883ac663320622c11427bf7e0672a6e7d3510c295bb4e149d9387aaf86315a458b5204256b
+  languageName: node
+  linkType: hard
+
+"@nuxt/schema@npm:3.4.2":
   version: 3.4.2
   resolution: "@nuxt/schema@npm:3.4.2"
   dependencies:
@@ -970,7 +1017,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxt/vite-builder@npm:^3.4.2":
+"@nuxt/vite-builder@npm:3.4.2":
   version: 3.4.2
   resolution: "@nuxt/vite-builder@npm:3.4.2"
   dependencies:
@@ -1034,6 +1081,19 @@ __metadata:
     pathe: ^1.0.0
     ufo: ^1.0.0
   checksum: bad794a7f9b2158b30e34f9ad9a3b2f28dfc6836f9a8adf8c57cea59f822dbe5f5595de5f0fc66df51c7f9246be9f9c1eaddd871b319637ee9a57c49d0367b3a
+  languageName: node
+  linkType: hard
+
+"@parcel/watcher@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "@parcel/watcher@npm:2.1.0"
+  dependencies:
+    is-glob: ^4.0.3
+    micromatch: ^4.0.5
+    node-addon-api: ^3.2.1
+    node-gyp: latest
+    node-gyp-build: ^4.3.0
+  checksum: 17f512ad6d5dbb40053ceea7091f8af754afc63786b8f050b225b89a8ba24900468aad8bc4edb25c0349b4c0c8d061f50aa19242c0af52cbc30e6ebf50c7bf4c
   languageName: node
   linkType: hard
 
@@ -1848,7 +1908,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@unhead/ssr@npm:^1.1.25":
+"@unhead/ssr@npm:^1.1.26":
   version: 1.1.26
   resolution: "@unhead/ssr@npm:1.1.26"
   dependencies:
@@ -1858,7 +1918,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@unhead/vue@npm:^1.1.25":
+"@unhead/vue@npm:^1.1.26":
   version: 1.1.26
   resolution: "@unhead/vue@npm:1.1.26"
   dependencies:
@@ -2011,7 +2071,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue/reactivity@npm:3.2.47, @vue/reactivity@npm:^3.2.47":
+"@vue/reactivity@npm:3.2.47":
   version: 3.2.47
   resolution: "@vue/reactivity@npm:3.2.47"
   dependencies:
@@ -2189,11 +2249,11 @@ __metadata:
   linkType: hard
 
 "ansi-escapes@npm:^6.0.0":
-  version: 6.1.0
-  resolution: "ansi-escapes@npm:6.1.0"
+  version: 6.2.0
+  resolution: "ansi-escapes@npm:6.2.0"
   dependencies:
     type-fest: ^3.0.0
-  checksum: 7ce5d9cefd3d7345dc00161aea2ea9ad5fb3dd66658d4e8731ea047be838d755100f0823a05523d0e518e8e080746fc0a45d3ea3053099376bdd572efaedc7c1
+  checksum: f0bc667d5f1ededc3ea89b73c34f0cba95473525b07e1290ddfd3fc868c94614e95f3549f5c4fd0c05424af7d3fd298101fb3d9a52a597d3782508b340783bd7
   languageName: node
   linkType: hard
 
@@ -5186,8 +5246,8 @@ __metadata:
   linkType: hard
 
 "inquirer@npm:^9.1.5":
-  version: 9.1.5
-  resolution: "inquirer@npm:9.1.5"
+  version: 9.2.0
+  resolution: "inquirer@npm:9.2.0"
   dependencies:
     ansi-escapes: ^6.0.0
     chalk: ^5.2.0
@@ -5204,7 +5264,7 @@ __metadata:
     strip-ansi: ^7.0.1
     through: ^2.3.6
     wrap-ansi: ^8.1.0
-  checksum: 8491fad532c781041abca63605505ddb4bfeaf6547c8a68aa3e9f5a72dec627e1f222d3dbb082dc741cbb031394c6ae3ca0c3d7d0ffde5087f235939996e63e5
+  checksum: ea795406a654e9eddf9782fbb1f4a4240a78bda825e23ee2cf059ea0723e470cbae8cc9d6c1ae8a58cadd0207d29f8cd8ac20ff7399958a8886dd17ff2f30136
   languageName: node
   linkType: hard
 
@@ -6320,7 +6380,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"micromatch@npm:^4.0.2, micromatch@npm:^4.0.4":
+"micromatch@npm:^4.0.2, micromatch@npm:^4.0.4, micromatch@npm:^4.0.5":
   version: 4.0.5
   resolution: "micromatch@npm:4.0.5"
   dependencies:
@@ -6660,6 +6720,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"node-addon-api@npm:^3.2.1":
+  version: 3.2.1
+  resolution: "node-addon-api@npm:3.2.1"
+  dependencies:
+    node-gyp: latest
+  checksum: 2369986bb0881ccd9ef6bacdf39550e07e089a9c8ede1cbc5fc7712d8e2faa4d50da0e487e333d4125f8c7a616c730131d1091676c9d499af1d74560756b4a18
+  languageName: node
+  linkType: hard
+
 "node-domexception@npm:^1.0.0":
   version: 1.0.0
   resolution: "node-domexception@npm:1.0.0"
@@ -6720,7 +6789,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-gyp-build@npm:^4.2.2":
+"node-gyp-build@npm:^4.2.2, node-gyp-build@npm:^4.3.0":
   version: 4.6.0
   resolution: "node-gyp-build@npm:4.6.0"
   bin:
@@ -6864,7 +6933,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nuxi@npm:^3.4.2":
+"nuxi@npm:3.4.2":
   version: 3.4.2
   resolution: "nuxi@npm:3.4.2"
   dependencies:
@@ -6902,19 +6971,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nuxt@npm:3.4.1":
-  version: 3.4.1
-  resolution: "nuxt@npm:3.4.1"
+"nuxt@npm:3.4.2":
+  version: 3.4.2
+  resolution: "nuxt@npm:3.4.2"
   dependencies:
     "@nuxt/devalue": ^2.0.0
-    "@nuxt/kit": 3.4.1
-    "@nuxt/schema": 3.4.1
+    "@nuxt/kit": 3.4.2
+    "@nuxt/schema": 3.4.2
     "@nuxt/telemetry": ^2.2.0
     "@nuxt/ui-templates": ^1.1.1
-    "@nuxt/vite-builder": 3.4.1
-    "@unhead/ssr": ^1.1.25
-    "@unhead/vue": ^1.1.25
-    "@vue/reactivity": ^3.2.47
+    "@nuxt/vite-builder": 3.4.2
+    "@unhead/ssr": ^1.1.26
+    "@unhead/vue": ^1.1.26
     "@vue/shared": ^3.2.47
     chokidar: ^3.5.3
     cookie-es: ^0.5.0
@@ -6926,26 +6994,26 @@ __metadata:
     fs-extra: ^11.1.1
     globby: ^13.1.4
     h3: ^1.6.4
-    hash-sum: ^2.0.0
     hookable: ^5.5.3
     jiti: ^1.18.2
+    klona: ^2.0.6
     knitwork: ^1.0.0
     local-pkg: ^0.4.3
     magic-string: ^0.30.0
     mlly: ^1.2.0
     nitropack: ^2.3.3
-    nuxi: 3.4.1
+    nuxi: 3.4.2
     nypm: ^0.2.0
     ofetch: ^1.0.1
-    ohash: ^1.0.0
+    ohash: ^1.1.1
     pathe: ^1.1.0
     perfect-debounce: ^0.1.3
     prompts: ^2.4.2
     scule: ^1.0.0
     strip-literal: ^1.0.1
     ufo: ^1.1.1
-    unctx: ^2.2.0
-    unenv: ^1.3.1
+    unctx: ^2.3.0
+    unenv: ^1.4.1
     unimport: ^3.0.6
     unplugin: ^1.3.1
     untyped: ^1.3.2
@@ -6954,11 +7022,78 @@ __metadata:
     vue-devtools-stub: ^0.1.0
     vue-router: ^4.1.6
   peerDependencies:
+    "@parcel/watcher": ^2.1.0
     "@types/node": ^14.18.0 || ^16.10.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  peerDependenciesMeta:
+    "@parcel/watcher":
+      optional: true
   bin:
     nuxi: bin/nuxt.mjs
     nuxt: bin/nuxt.mjs
-  checksum: 785c3967a8e85d5771053a1b273f1e182948a9bf496b3070dcd375e3c23aa62f420d9f5f5fcd5fa00a1e593149610d51129e05a5c81f86b0b7dcdaa328fe603c
+  checksum: e6b62b8ce79a125de546e5c8d4876c2d1e3a3b81bcf4feb77d0126132e3475ff0e6e83549efbeb2aeca05c7e86aea59c81982209f96fe52b2edd0a9ad454ed47
+  languageName: node
+  linkType: hard
+
+"nuxt@patch:nuxt@npm%3A3.4.2#./.yarn/patches/nuxt-npm-3.4.2-88b2a74c69.patch::locator=root-workspace-0b6124%40workspace%3A.":
+  version: 3.4.2
+  resolution: "nuxt@patch:nuxt@npm%3A3.4.2#./.yarn/patches/nuxt-npm-3.4.2-88b2a74c69.patch::version=3.4.2&hash=8e075f&locator=root-workspace-0b6124%40workspace%3A."
+  dependencies:
+    "@nuxt/devalue": ^2.0.0
+    "@nuxt/kit": 3.4.2
+    "@nuxt/schema": 3.4.2
+    "@nuxt/telemetry": ^2.2.0
+    "@nuxt/ui-templates": ^1.1.1
+    "@nuxt/vite-builder": 3.4.2
+    "@unhead/ssr": ^1.1.26
+    "@unhead/vue": ^1.1.26
+    "@vue/shared": ^3.2.47
+    chokidar: ^3.5.3
+    cookie-es: ^0.5.0
+    defu: ^6.1.2
+    destr: ^1.2.2
+    devalue: ^4.3.0
+    escape-string-regexp: ^5.0.0
+    estree-walker: ^3.0.3
+    fs-extra: ^11.1.1
+    globby: ^13.1.4
+    h3: ^1.6.4
+    hookable: ^5.5.3
+    jiti: ^1.18.2
+    klona: ^2.0.6
+    knitwork: ^1.0.0
+    local-pkg: ^0.4.3
+    magic-string: ^0.30.0
+    mlly: ^1.2.0
+    nitropack: ^2.3.3
+    nuxi: 3.4.2
+    nypm: ^0.2.0
+    ofetch: ^1.0.1
+    ohash: ^1.1.1
+    pathe: ^1.1.0
+    perfect-debounce: ^0.1.3
+    prompts: ^2.4.2
+    scule: ^1.0.0
+    strip-literal: ^1.0.1
+    ufo: ^1.1.1
+    unctx: ^2.3.0
+    unenv: ^1.4.1
+    unimport: ^3.0.6
+    unplugin: ^1.3.1
+    untyped: ^1.3.2
+    vue: ^3.2.47
+    vue-bundle-renderer: ^1.0.3
+    vue-devtools-stub: ^0.1.0
+    vue-router: ^4.1.6
+  peerDependencies:
+    "@parcel/watcher": ^2.1.0
+    "@types/node": ^14.18.0 || ^16.10.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  peerDependenciesMeta:
+    "@parcel/watcher":
+      optional: true
+  bin:
+    nuxi: bin/nuxt.mjs
+    nuxt: bin/nuxt.mjs
+  checksum: 92a5a32c6f91fefd1db668ca830b1303ad8dd9de99245553f34b584ba681ca197e17a3e41a64ac02adad7073d01b95a2bc03fd861aee99280054d61b8c32301f
   languageName: node
   linkType: hard
 
@@ -8349,6 +8484,7 @@ __metadata:
     "@nuxt/kit": ^3.4.2
     "@nuxtjs/device": ^3.1.0
     "@nuxtjs/fontaine": ^0.2.5
+    "@parcel/watcher": ^2.1.0
     "@prisma/client": ^4.13.0
     "@superhuman/command-score": ^0.5.0
     "@tiptap/core": ^2.0.3
@@ -9395,7 +9531,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unenv@npm:^1.3.1":
+"unenv@npm:^1.3.1, unenv@npm:^1.4.1":
   version: 1.4.1
   resolution: "unenv@npm:1.4.1"
   dependencies:
