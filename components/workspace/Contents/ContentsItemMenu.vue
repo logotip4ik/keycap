@@ -18,7 +18,7 @@ const popperInstance = shallowRef<null | PopperInstance>(null);
 const menu = ref<null | HTMLElement>(null);
 const currentlyConfirming = ref(-1); // You can confirm one at a time
 
-const confirmDurationInSeconds = 3;
+const confirmDurationInSeconds = 10;
 const virtualElement: VirtualElement = {
   // @ts-expect-error missing toJSON method
   getBoundingClientRect: () => ({
@@ -36,7 +36,9 @@ function withEffects(event: Event, action: MenuAction) {
     return action.handler();
 
   if (event.type === 'pointerdown' && action.needConfirmation) {
+    const targetCancelEvents = ['pointerup', 'pointerleave', 'touchend', 'touchcancel'];
     const target = event.target as HTMLElement;
+
     currentlyConfirming.value = Number(target.dataset.key);
 
     const animation = target.animate([
@@ -49,11 +51,21 @@ function withEffects(event: Event, action: MenuAction) {
       currentlyConfirming.value = -1;
     };
 
-    animation.addEventListener('finish', executeHandler);
-
-    target.addEventListener('pointerup', () => {
+    const cancelAnimation = () => {
       animation.cancel();
       currentlyConfirming.value = -1;
+    };
+
+    animation.addEventListener('finish', executeHandler);
+
+    for (const eventType of targetCancelEvents)
+      target.addEventListener(eventType, cancelAnimation);
+
+    onBeforeUnmount(() => {
+      cancelAnimation();
+
+      for (const eventType of targetCancelEvents)
+        target.removeEventListener(eventType, cancelAnimation);
     });
   }
 }
