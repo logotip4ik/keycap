@@ -73,26 +73,28 @@ function normalizeShortcut(shortcut: string) {
     font-size: min(4.5vw, 2.75rem);
     max-width: 33ch;
 
-    margin-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
   }
 
   &__shortcuts {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1.75rem;
     flex-wrap: wrap;
 
     &__item {
       font-size: min(2.5vw, 1.75rem);
       color: hsla(var(--text-color-hsl), 0.8);
 
+      margin: 0;
+
       &__text {
         max-width: 20ch;
       }
 
       &__shortcut {
-        line-height: 1.75;
+        line-height: 2;
 
         white-space: nowrap;
 
