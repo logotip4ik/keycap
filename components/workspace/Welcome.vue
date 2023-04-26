@@ -72,6 +72,8 @@ function normalizeShortcut(shortcut: string) {
   &__title {
     font-size: min(4.5vw, 2.75rem);
     max-width: 33ch;
+
+    margin-bottom: 0.5rem;
   }
 
   &__shortcuts {
