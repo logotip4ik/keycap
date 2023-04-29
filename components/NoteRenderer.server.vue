@@ -1,26 +1,26 @@
 <script setup lang="ts">
-import sanitizeHtml from 'sanitize-html';
+import sanitizeHTML from 'sanitize-html';
 
 interface Props { content: string }
 const props = defineProps<Props>();
 
-const sanitized = sanitizeHtml(props.content, {
+const sanitized = sanitizeHTML(props.content, {
   allowedTags: [
-    ...sanitizeHtml.defaults.allowedTags,
+    ...sanitizeHTML.defaults.allowedTags,
     'label',
     'input',
   ],
   allowedAttributes: {
-    ...sanitizeHtml.defaults.allowedAttributes,
+    ...sanitizeHTML.defaults.allowedAttributes,
     label: ['contenteditable', 'class'],
-    input: ['type', 'checked'],
+    input: ['type', 'checked', 'readonly'],
     ul: ['data-type'],
     li: ['data-checked'],
     a: ['href', 'name', 'target', 'rel'],
   },
   transformTags: {
     // disabled state modifies accent color :(
-    label: sanitizeHtml.simpleTransform('label', { class: 'readonly' }, true),
+    label: sanitizeHTML.simpleTransform('label', { class: 'readonly' }, true),
   },
 });
 </script>
@@ -30,5 +30,3 @@ const sanitized = sanitizeHtml(props.content, {
     <div class="ProseMirror ProseMirror--renderer" v-html="sanitized" />
   </div>
 </template>
-
-<style src="~/assets/styles/note-editor.scss" />
