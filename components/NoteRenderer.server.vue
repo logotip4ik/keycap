@@ -30,3 +30,5 @@ const sanitized = sanitizeHTML(props.content, {
     <div class="ProseMirror ProseMirror--renderer" v-html="sanitized" />
   </div>
 </template>
+
+<style src="~/assets/styles/note-editor.scss"></style>
