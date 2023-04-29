@@ -99,4 +99,10 @@ export default defineNuxtConfig({
       { family: 'Mona Sans', src: '/fonts/Mona-Sans.woff2' },
     ],
   },
+
+  postcss: {
+    plugins: {
+      'postcss-preset-env': {},
+    },
+  },
 });
