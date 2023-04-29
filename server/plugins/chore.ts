@@ -10,7 +10,7 @@ function toJSON() {
 // eslint-disable-next-line no-extend-native
 Object.defineProperty(
   BigInt.prototype,
-  'at',
+  'toJSON',
   {
     value: toJSON,
     writable: true,
