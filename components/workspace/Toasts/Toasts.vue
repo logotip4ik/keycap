@@ -83,12 +83,13 @@ if (typeof window !== 'undefined')
 
 .toast-enter-active {
   --initial-pos: 0px, -0.75rem, 0px;
+  --ease-out-cubic: cubic-bezier(0.33, 1, 0.68, 1);
 
   z-index: -1;
 
   transform-origin: bottom center;
 
-  transition: transform 0.4s cubic-bezier(0.33, 1, 0.68, 1), opacity 0.3s;
+  transition: transform 0.4s var(--ease-out-cubic), opacity 0.3s;
 
   [data-icon] {
     transition: opacity 0.4s;
