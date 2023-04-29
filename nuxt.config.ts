@@ -28,7 +28,6 @@ export default defineNuxtConfig({
   experimental: {
     writeEarlyHints: true,
     polyfillVueUseHead: false,
-    crossOriginPrefetch: true,
     componentIslands: true,
     renderJsonPayloads: true,
     watcher: 'parcel',
