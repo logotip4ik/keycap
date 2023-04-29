@@ -106,7 +106,7 @@ if (typeof window !== 'undefined')
 }
 
 .toast-enter-from {
-  transform: scale(0.925) translate(var(--initial-pos)) rotate(0deg);
+  transform: scale(0.9) translate(var(--initial-pos)) rotate(0deg);
 }
 
 .toast-enter-from,
