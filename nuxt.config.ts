@@ -74,6 +74,10 @@ export default defineNuxtConfig({
   sourcemap: isDevelopment,
 
   vite: {
+    build: {
+      target: 'esnext',
+    },
+
     optimizeDeps: {
       include: ['@superhuman/command-score'],
     },
