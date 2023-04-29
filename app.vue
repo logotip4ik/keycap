@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import '~/polyfills/array-at';
+
 useHead({
   titleTemplate: (title) => title ? `${title} - Keycap` : 'Keycap - Better notes',
 });
