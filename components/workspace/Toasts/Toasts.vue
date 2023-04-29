@@ -82,7 +82,7 @@ if (typeof window !== 'undefined')
 }
 
 .toast-enter-active {
-  --initial-pos: 0px, -0.75rem;
+  --initial-pos: 0px, -0.75rem, 0px;
 
   z-index: -1;
 
@@ -96,7 +96,7 @@ if (typeof window !== 'undefined')
 }
 
 [data-toasts-number="1"] .toast-enter-active {
-  --initial-pos: 0px, 0px;
+  --initial-pos: 0px, 0px, 0px;
 
   transform-origin: center center;
 }
@@ -106,7 +106,7 @@ if (typeof window !== 'undefined')
 }
 
 .toast-enter-from {
-  transform: scale(0.9) translate(var(--initial-pos)) rotate(0deg);
+  transform: scale(0.9) translate3d(var(--initial-pos));
 }
 
 .toast-enter-from,
