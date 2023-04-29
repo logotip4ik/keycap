@@ -40,11 +40,11 @@ const tippyOptions: Partial<TippyProps> = {
 };
 
 let prevContainerWidth = '';
-function beforeLeaveAnimation(el: HTMLElement) {
+function beforeLeaveAnimation(el: Element) {
   prevContainerWidth = `${el.parentElement?.offsetWidth || 0}px`;
 }
 
-function enterAnimation(el: HTMLElement) {
+function enterAnimation(el: Element) {
   const currentContainerWidth = `${el.parentElement?.offsetWidth || 0}px`;
 
   el.parentElement?.animate(

@@ -33,7 +33,7 @@ const currentRouteName = computed(() => {
   return null;
 });
 
-function focusSearchInput(event: HTMLElement) {
+function focusSearchInput(event: Element) {
   nextTick(() => event.querySelector('input')?.focus());
 }
 
