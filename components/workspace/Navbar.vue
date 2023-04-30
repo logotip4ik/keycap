@@ -192,16 +192,17 @@ async function showFolderContents() {
 .nav-back-button-enter-active,
 .nav-back-button-leave-active {
   transition: opacity, transform, margin-right;
-  transition-duration: 0.3s;
-  transition-timing-function: cubic-bezier(0.33, 1, 0.68, 1);
+  transition-duration: 0.25s;
 }
 
 .nav-back-button-leave-to,
 .nav-back-button-enter-from {
-  margin-right: calc(var(--button-size-basis) * -1);
+  --inverted-size: calc(-1 * var(--button-size-basis));
+
+  margin-right: var(--inverted-size);
 
   opacity: 0;
 
-  transform: translateX(-0.75rem);
+  transform: translate3d(var(--inverted-size), 0px, 0px);
 }
 </style>
