@@ -387,7 +387,7 @@ useTinykeys({
 
 .bubble-menu-fade-enter-active,
 .bubble-menu-fade-leave-active {
-  transition: opacity .4s;
+  transition: opacity .3s .1s;
 }
 
 .bubble-menu-fade-leave-active {
