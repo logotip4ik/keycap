@@ -24,6 +24,8 @@ async function register() {
 
   isLoading.value = true;
 
+  preloadRouteComponents('/@__preload_user_page__');
+
   $fetch('/api/user/register', { method: 'POST', body: data })
     // @ts-expect-error idk, fetch has broken types
     .then((newUser) => user.value = newUser)
