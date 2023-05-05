@@ -278,9 +278,8 @@ useTinykeys({
   --items-spacing: 0.5rem;
 
   &__vr {
+    flex: 0 0 1px;
     align-self: stretch;
-
-    width: 1px;
 
     background-color: hsla(var(--text-color-hsl), 0.1);
   }
