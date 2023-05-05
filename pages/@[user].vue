@@ -77,8 +77,8 @@ onMounted(() => {
     isShowingSearch.value = true;
 
   // request idle callback is polyfilled by nuxt
-  window.requestIdleCallback(
-    () => [preloadDashboardComponents, defineFuzzyWorker, defineOfflineStorage]
+  window.requestIdleCallback(() =>
+    [preloadDashboardComponents, defineFuzzyWorker, defineOfflineStorage]
       .map((cb) => cb()),
   );
 
