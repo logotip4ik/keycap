@@ -36,8 +36,7 @@ export default defineEventHandler(async (event) => {
   const keyToDelete = cacheKeys.find((key) => key.includes(friendlyShareLink));
 
   if (keyToDelete)
-    // yeah, Mata, idk why
-    await storage.removeItem(keyToDelete, { removeMata: true });
+    await storage.removeItem(keyToDelete);
 
   timer.end();
 
