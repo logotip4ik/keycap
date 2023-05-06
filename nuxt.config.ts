@@ -48,7 +48,7 @@ export default defineNuxtConfig({
     '/api/**': { headers: getHeaders('api') },
 
     // https://github.com/unjs/nitro/issues/603#issuecomment-1415826732
-    '/view/**': { cache: { swr: true, maxAge: 1 * 60, staleMaxAge: 5 * 60 } },
+    '/view/**': { isr: 60 },
 
     '/': { prerender: true },
     '/about': { prerender: true },
