@@ -2,6 +2,7 @@ import { isDevelopment } from 'std-env';
 
 import type { HTTPMethod } from 'h3';
 
+export const WEEK_IN_SECONDS = 60 * 60 * 24 * 7;
 export const SIX_MONTH_IN_SECONDS = 60 * 60 * 24 * 31 * 6;
 
 export const CorsOrigin = process.env.SITE_ORIGIN || '*';
