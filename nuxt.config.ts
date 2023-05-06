@@ -43,6 +43,9 @@ export default defineNuxtConfig({
     '/**': { headers: getHeaders('default') },
 
     // Caching only build assets that has build hash in filenames
+    // Actually nuxt caches assets for 1 year by default
+    // https://github.com/nuxt/nuxt/blob/7cb4c69935ba0de874ba3274c42fc1df8bbca3ed/packages/nuxt/src/core/nitro.ts#L102
+    // this setup uses only 6 months and adds another 6 months for stale-while-revalidate cache
     '/_nuxt/**': { headers: getHeaders('assets') },
 
     '/api/**': { headers: getHeaders('api') },
