@@ -317,6 +317,10 @@ useTinykeys({
 
       transition: border-color .1s;
     }
+
+    @media screen and (max-width: $breakpoint-tablet) {
+      max-width: 32ch;
+    }
   }
 
   &__button {
