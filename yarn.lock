@@ -4567,8 +4567,8 @@ __metadata:
   linkType: hard
 
 "eslint-plugin-vue@npm:^9.11.0":
-  version: 9.11.0
-  resolution: "eslint-plugin-vue@npm:9.11.0"
+  version: 9.11.1
+  resolution: "eslint-plugin-vue@npm:9.11.1"
   dependencies:
     "@eslint-community/eslint-utils": ^4.3.0
     natural-compare: ^1.4.0
@@ -4579,21 +4579,21 @@ __metadata:
     xml-name-validator: ^4.0.0
   peerDependencies:
     eslint: ^6.2.0 || ^7.0.0 || ^8.0.0
-  checksum: 1bcb6cf76831419dbb18b9ef7a71831b69325eab1f83137af7a7ffe2800962af2afae30d5eb94210597e70e9503b698d31af210f0d36c0b3fd9cafc77d2a1895
+  checksum: dda3a135b411a0fab6dda06cfcf3dfcaebaff50150cc21860914d6fc2f17b23363e11e1ed96771904d1089f0fc7bdde3ac9fe292ed249c643d6ca9c3f51d4f6f
   languageName: node
   linkType: hard
 
 "eslint-plugin-yml@npm:^1.5.0":
-  version: 1.5.0
-  resolution: "eslint-plugin-yml@npm:1.5.0"
+  version: 1.6.0
+  resolution: "eslint-plugin-yml@npm:1.6.0"
   dependencies:
     debug: ^4.3.2
     lodash: ^4.17.21
     natural-compare: ^1.4.0
-    yaml-eslint-parser: ^1.1.0
+    yaml-eslint-parser: ^1.2.1
   peerDependencies:
     eslint: ">=6.0.0"
-  checksum: f8f61165b765c0b8db7867b5b51156c9341a0a9133398f59d9e91fe5f6d59c397c7b20ca3d640451d220812baf01957c9e12af7fdb2bc40d4382ab4a0461849f
+  checksum: ad12cc008f414eb9694a280800aa2a9e033adbd170e95c479d27b5f30b1ff450e3fb51acce7486f6da58b277f76c1f7f8ed349952c1c1c1b163d8c496e7e901a
   languageName: node
   linkType: hard
 
@@ -7213,9 +7213,9 @@ __metadata:
   linkType: hard
 
 "node-fetch-native@npm:^1.0.2, node-fetch-native@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "node-fetch-native@npm:1.1.0"
-  checksum: 65b85ba8d671f7d4b8a4c8eb70dfd3864b4d04ab771e15aeadc613011cd4e4568c4a0a3f1aebdd37410cd2d75c65ab3e538eedb1732fc6b33ee093167e22bbe0
+  version: 1.1.1
+  resolution: "node-fetch-native@npm:1.1.1"
+  checksum: 41fe59179eb94b6ffb25e657e5ed14b4b50e2ba7f6bf5346622970638c8abbf29653b011141c919c6c081979962edd1eb94424a7621412cd78c47a9cd8be1227
   languageName: node
   linkType: hard
 
@@ -7234,8 +7234,8 @@ __metadata:
   linkType: hard
 
 "node-fetch@npm:^2.6.7":
-  version: 2.6.9
-  resolution: "node-fetch@npm:2.6.9"
+  version: 2.6.10
+  resolution: "node-fetch@npm:2.6.10"
   dependencies:
     whatwg-url: ^5.0.0
   peerDependencies:
@@ -7243,7 +7243,7 @@ __metadata:
   peerDependenciesMeta:
     encoding:
       optional: true
-  checksum: acb04f9ce7224965b2b59e71b33c639794d8991efd73855b0b250921382b38331ffc9d61bce502571f6cc6e11a8905ca9b1b6d4aeb586ab093e2756a1fd190d0
+  checksum: 9250e5266ccb4cc43e0ba5a4e23447d65f207a445d8f968420ef5f135cb9db3f03e527647a3762c1ba06872cbd13640e572d9eea63ba6754e936a6e824ed85a3
   languageName: node
   linkType: hard
 
@@ -10014,8 +10014,8 @@ __metadata:
   linkType: hard
 
 "terser@npm:^5.15.1":
-  version: 5.17.1
-  resolution: "terser@npm:5.17.1"
+  version: 5.17.2
+  resolution: "terser@npm:5.17.2"
   dependencies:
     "@jridgewell/source-map": ^0.3.2
     acorn: ^8.5.0
@@ -10023,7 +10023,7 @@ __metadata:
     source-map-support: ~0.5.20
   bin:
     terser: bin/terser
-  checksum: 69b0e80e3c4084db2819de4d6ae8a2ba79f2fcd7ed6df40fe4b602ec7bfd8e889cc63c7d5268f30990ffecbf6eeda18f857adad9386fe2c2331b398d58ed855c
+  checksum: 20153b0887065ff7d026bbbd9d0df065871406f9b66b0fa83786400c32c10b93b2309bff0df48f42473e7c3559bfd22d3ce593b82797bac9c882a243d008f5b9
   languageName: node
   linkType: hard
 
@@ -10962,14 +10962,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yaml-eslint-parser@npm:^1.1.0, yaml-eslint-parser@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "yaml-eslint-parser@npm:1.2.0"
+"yaml-eslint-parser@npm:^1.2.0, yaml-eslint-parser@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "yaml-eslint-parser@npm:1.2.1"
   dependencies:
     eslint-visitor-keys: ^3.0.0
     lodash: ^4.17.21
     yaml: ^2.0.0
-  checksum: 2e8a84b639991bdd0e4ad9984d96f3b6ae0d39852aa06e4fc594f5bfa2e68a64d7f8f07086e781bb6198310f8df7246354473d70dd294a07358a1d551a5ae9ee
+  checksum: 498238b2c87374a0aa2c562a7d48d4abb11028572f7396421f351954f6f5735356b30191c5fc15b4cff8b44e12dfc1fc881aff266c96e3e0fce34e718b23ed62
   languageName: node
   linkType: hard
 
