@@ -17,7 +17,7 @@ const currentItemForDetails = useCurrentItemForDetails();
 const isShowingSearch = ref(false);
 
 const isSmallScreen = computed(() =>
-  import.meta.env.SSR
+  process.server
     ? parseUA(useRequestHeaders()['user-agent']).isMobileOrTablet
     : windowWidth.value < breakpoints.tablet,
 );
