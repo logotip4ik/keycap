@@ -71,10 +71,12 @@ const { data: fetchedNote, pending, error, refresh } = useLazyAsyncData<Note | n
           firstTimeFetch = false;
         }
       },
-      onResponse: () => {
-        hideLoading();
+      onResponse: (ctx) => {
+        if (ctx.response.ok || ctx.error) {
+          hideLoading();
 
-        loadingToast.value?.remove();
+          loadingToast.value?.remove();
+        }
       },
     });
   },

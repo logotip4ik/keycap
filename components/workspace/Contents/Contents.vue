@@ -59,10 +59,12 @@ const { data: fetchedFolder, error } = useLazyAsyncData<FolderWithContents>(
 
         prevFolderPath = folderPath.value;
       },
-      onResponse: () => {
-        hideLoading();
+      onResponse: (ctx) => {
+        if (ctx.response.ok || ctx.error) {
+          hideLoading();
 
-        loadingToast.value?.remove();
+          loadingToast.value?.remove();
+        }
       },
     });
   },
