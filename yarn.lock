@@ -1345,7 +1345,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxt/kit@npm:3.4.3, @nuxt/kit@npm:^3.0.0-rc.13, @nuxt/kit@npm:^3.3.3, @nuxt/kit@npm:^3.4.2, @nuxt/kit@npm:^3.4.3":
+"@nuxt/kit@npm:3.4.3, @nuxt/kit@npm:^3.3.3, @nuxt/kit@npm:^3.4.2, @nuxt/kit@npm:^3.4.3":
   version: 3.4.3
   resolution: "@nuxt/kit@npm:3.4.3"
   dependencies:
@@ -1487,16 +1487,6 @@ __metadata:
   peerDependencies:
     vue: ^3.2.47
   checksum: bd9456aa293657f65ce782da259a8c398693c26cb14dad65fc542dae7cd9ea65e1accb06f94ad54a162fd0b987eae334c1258b504cca5d32ec5ed8531c291196
-  languageName: node
-  linkType: hard
-
-"@nuxtjs/device@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "@nuxtjs/device@npm:3.1.0"
-  dependencies:
-    "@nuxt/kit": ^3.0.0-rc.13
-    defu: ^6.1.0
-  checksum: 5a45040b5d881c32aefefb6a4d44e1341c4baf0d1699fa3171bfd430c027300dcaa09cdfb3fdc1769a689aff6c53ff5576c8f25bccd75332f5eecdd349a39c36
   languageName: node
   linkType: hard
 
@@ -3892,7 +3882,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"defu@npm:^6.0.0, defu@npm:^6.1.0, defu@npm:^6.1.2":
+"defu@npm:^6.0.0, defu@npm:^6.1.2":
   version: 6.1.2
   resolution: "defu@npm:6.1.2"
   checksum: 2ec0ff8414d5a1ab2b8c7e9a79bbad6d97d23ea7ebf5dcf80c3c7ffd9715c30f84a3cc47b917379ea756b3db0dc4701ce6400e493a1ae1688dffcd0f884233b2
@@ -9258,7 +9248,6 @@ __metadata:
   dependencies:
     "@antfu/eslint-config": ^0.38.6
     "@nuxt/kit": ^3.4.3
-    "@nuxtjs/device": ^3.1.0
     "@nuxtjs/fontaine": ^0.2.5
     "@parcel/watcher": ^2.1.0
     "@prisma/client": ^4.13.0

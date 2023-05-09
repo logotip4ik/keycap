@@ -61,7 +61,6 @@ export default defineNuxtConfig({
 
   modules: [
     '@vueuse/nuxt',
-    '@nuxtjs/device',
     'nuxt-icon',
     '@nuxtjs/fontaine',
     'unplugin-ltsdi/nuxt',
