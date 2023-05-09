@@ -9,7 +9,6 @@ definePageMeta({
 const route = useRoute();
 const user = useUser();
 const { width: windowWidth } = useWindowSize();
-const { isMobileOrTablet } = useDevice();
 const { shortcuts } = useAppConfig();
 
 const currentNoteState = useCurrentNoteState();
@@ -17,7 +16,11 @@ const currentItemForDetails = useCurrentItemForDetails();
 
 const isShowingSearch = ref(false);
 
-const isSmallScreen = computed(() => import.meta.env.SSR ? isMobileOrTablet : windowWidth.value < breakpoints.tablet);
+const isSmallScreen = computed(() =>
+  import.meta.env.SSR
+    ? parseUA(useRequestHeaders()['user-agent']).isMobileOrTablet
+    : windowWidth.value < breakpoints.tablet,
+);
 const isNoteNameEmpty = computed(() => !route.params.note || route.params.note === blankNoteName);
 
 const currentRouteName = computed(() => {
