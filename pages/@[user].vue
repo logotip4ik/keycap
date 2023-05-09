@@ -78,7 +78,7 @@ onMounted(() => {
 
   // request idle callback is polyfilled by nuxt
   window.requestIdleCallback(() =>
-    [preloadDashboardComponents, defineFuzzyWorker, defineOfflineStorage]
+    [preloadDashboardComponents, defineFuzzyWorker]
       .map((cb) => cb()),
   );
 

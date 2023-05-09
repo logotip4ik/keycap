@@ -1,5 +1,6 @@
+import { del, get, set, values } from 'idb-keyval';
+
 import type { LRUCache } from 'lru-cache';
-import type * as IDB from 'idb-keyval';
 import type * as Comlink from 'comlink';
 
 import { blankNoteName } from '~/assets/constants';
@@ -25,18 +26,14 @@ export async function defineFuzzyWorker() {
   fuzzyWorker.value = wrap(worker);
 }
 
-export async function defineOfflineStorage() {
+export function getOfflineStorage() {
   const createToast = useToast();
-  const offlineStorage = useOfflineStorage();
   const isFallbackMode = useFallbackMode();
   const foldersCache = useFoldersCache();
   const notesCache = useNotesCache();
   const mitt = useMitt();
 
-  // @ts-expect-error no yet ts plugin
-  const { set, get, del, values } = await import('idb-keyval?only=set,get,del,values') as typeof IDB;
-
-  offlineStorage.value = {
+  const offlineStorage = {
     setItem: set,
     getItem: get,
     removeItem: del,
@@ -63,4 +60,6 @@ export async function defineOfflineStorage() {
 
     mitt.emit('cache:populated');
   }, { immediate: true });
+
+  return offlineStorage;
 }

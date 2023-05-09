@@ -15,7 +15,7 @@ export const useFoldersCache = () => foldersCache;
 const fuzzyWorker = shallowRef<null | IFuzzyWorker>(null);
 export const useFuzzyWorker = () => fuzzyWorker;
 
-const offlineStorage = shallowRef<null | OfflineStorage>(null);
+const offlineStorage = shallowRef<false | OfflineStorage>(process.client && getOfflineStorage());
 export const useOfflineStorage = () => offlineStorage;
 
 export function deleteNoteFromFolder(noteToDelete: NoteMinimal, parent: FolderWithContents) {
