@@ -8,6 +8,8 @@ export default defineNuxtModule({
     name: 'purge-comments',
   },
   setup() {
+    if (isDevelopment) return;
+
     addVitePlugin({
       name: 'purge-comments',
       enforce: 'pre',
@@ -21,7 +23,7 @@ export default defineNuxtModule({
         if (s.hasChanged()) {
           return {
             code: s.toString(),
-            map: isDevelopment ? s.generateMap({ source: id, includeContent: true }) : null,
+            map: s.generateMap({ source: id, includeContent: true }),
           };
         }
       },
