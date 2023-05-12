@@ -33,6 +33,7 @@ onBeforeUnmount(() => clearTimeout(timeout));
 <style lang="scss">
 .toast {
   --icon-size: 1.4rem;
+  --base-shadow-color: 0, 0, 0;
 
   display: flex;
   justify-content: flex-start;
@@ -51,10 +52,14 @@ onBeforeUnmount(() => clearTimeout(timeout));
   background-color: hsla(var(--text-color-hsl), 0.9);
 
   box-shadow:
-    2px 1.7px 5.3px rgba(0, 0, 0, 0.02),
-    6.7px 5.6px 17.9px rgba(0, 0, 0, 0.03),
-    30px 25px 80px rgba(0, 0, 0, 0.05)
+    2px 1.7px 5.3px rgba(var(--base-shadow-color), 0.02),
+    6.7px 5.6px 17.9px rgba(var(--base-shadow-color), 0.03),
+    30px 25px 80px rgba(var(--base-shadow-color), 0.05)
   ;
+
+  @media (prefers-color-scheme: dark) {
+    --base-shadow-color: 200, 200, 200;
+  }
 
   @supports (backdrop-filter: blur(1px)) {
     color: var(--text-color);
