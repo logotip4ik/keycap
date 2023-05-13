@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { isDevelopment } from 'std-env';
+
 import { withoutLeadingSlash } from 'ufo';
 
 import type { Note } from '@prisma/client';
@@ -38,12 +40,17 @@ const note = shallowRef<Note | null>(
   notesCache.get(notePath.value) || null,
 );
 
+// every 30 seconds send refresh request
+const POLLING_TIME = (isDevelopment ? 10 : 30) * 1000;
+let pollingTimer: NodeJS.Timeout;
 let firstTimeFetch = true;
 let loadingToast: RefToastInstance;
 
 const { data: fetchedNote, pending, error, refresh } = useLazyAsyncData<Note | null>(
   'note',
   async () => {
+    clearTimeout(pollingTimer);
+
     currentNoteState.value = '';
 
     if (!route.params.note || route.params.note === blankNoteName)
@@ -76,6 +83,8 @@ const { data: fetchedNote, pending, error, refresh } = useLazyAsyncData<Note | n
           hideLoading();
 
           loadingToast.value?.remove();
+
+          pollingTimer = setTimeout(refresh, POLLING_TIME);
         }
       },
     });
@@ -188,6 +197,10 @@ watch(fetchedNote, (value) => {
 
   isFallbackMode.value = false;
   offlineStorage.value?.setItem(value.path, toRaw(value));
+});
+
+onBeforeUnmount(() => {
+  clearTimeout(pollingTimer);
 });
 </script>
 

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { isDevelopment } from 'std-env';
 import { withLeadingSlash, withoutTrailingSlash } from 'ufo';
 
 import type { RefToastInstance } from '~/composables/toasts';
@@ -24,12 +25,17 @@ const folder = ref<FolderWithContents | null>(
   foldersCache.get(folderPath.value) || null,
 );
 
+const POLLING_TIME = (isDevelopment ? 10 : 30) * 1000;
+let pollingTimer: NodeJS.Timeout;
 let firstTimeFetch = true;
 let prevFolderPath = folderPath.value;
 let loadingToast: RefToastInstance;
-const { data: fetchedFolder, error } = useLazyAsyncData<FolderWithContents>(
+
+const { data: fetchedFolder, error, refresh } = useLazyAsyncData<FolderWithContents>(
   'folder',
   () => {
+    clearTimeout(pollingTimer);
+
     folder.value = foldersCache.get(folderPath.value) || null;
 
     if (!folder.value) {
@@ -64,6 +70,8 @@ const { data: fetchedFolder, error } = useLazyAsyncData<FolderWithContents>(
           hideLoading();
 
           loadingToast.value?.remove();
+
+          pollingTimer = setTimeout(refresh, POLLING_TIME);
         }
       },
     });
