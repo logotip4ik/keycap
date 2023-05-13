@@ -52,7 +52,7 @@ const { data: fetchedFolder, error, refresh } = useLazyAsyncData<FolderWithConte
     if (!loadingToast?.value) {
       loadingToast = createToast('Fetching folder contents. Please wait...', {
         duration: 60 * 1000,
-        delay: firstTimeFetch ? 3000 : 0,
+        delay: firstTimeFetch ? 3000 : 250,
         type: 'loading',
       });
 
