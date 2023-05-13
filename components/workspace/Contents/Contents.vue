@@ -33,7 +33,7 @@ let loadingToast: RefToastInstance;
 
 const { data: fetchedFolder, error, refresh } = useLazyAsyncData<FolderWithContents>(
   'folder',
-  () => {
+  async () => {
     clearTimeout(pollingTimer);
 
     folder.value = foldersCache.get(folderPath.value) || null;
@@ -45,36 +45,34 @@ const { data: fetchedFolder, error, refresh } = useLazyAsyncData<FolderWithConte
 
     const apiFolderPath = folderPath.value.split('/').slice(2).join('/');
 
-    return $fetch(`/api/folder/${apiFolderPath}`, {
-      retry: 2,
-      onRequest: () => {
-        showLoading();
+    showLoading();
 
-        if (prevFolderPath !== folderPath.value)
-          firstTimeFetch = true;
+    if (prevFolderPath !== folderPath.value)
+      firstTimeFetch = true;
 
-        if (!loadingToast?.value) {
-          loadingToast = createToast('Fetching folder contents. Please wait...', {
-            duration: 60 * 1000,
-            delay: firstTimeFetch ? 3000 : 0,
-            type: 'loading',
-          });
+    if (!loadingToast?.value) {
+      loadingToast = createToast('Fetching folder contents. Please wait...', {
+        duration: 60 * 1000,
+        delay: firstTimeFetch ? 3000 : 0,
+        type: 'loading',
+      });
 
-          firstTimeFetch = false;
-        }
+      firstTimeFetch = false;
+    }
 
-        prevFolderPath = folderPath.value;
-      },
-      onResponse: (ctx) => {
-        if (ctx.response.ok || ctx.error) {
-          hideLoading();
+    prevFolderPath = folderPath.value;
 
-          loadingToast.value?.remove();
+    return await $fetch<FolderWithContents>(
+      `/api/folder/${apiFolderPath}`,
+      { retry: 2 },
+    )
+      .finally(() => {
+        hideLoading();
 
-          pollingTimer = setTimeout(refresh, POLLING_TIME);
-        }
-      },
-    });
+        loadingToast.value?.remove();
+
+        pollingTimer = setTimeout(refresh, POLLING_TIME);
+      });
   },
   { server: false, watch: [folderPath] },
 );
@@ -102,8 +100,6 @@ watch(error, async (error) => {
   // if there was previously error, reset the fallback mode to false
   if (!error)
     return isFallbackMode.value = false;
-
-  loadingToast.value?.remove();
 
   // @ts-expect-error there actually is statusCode
   if (error.statusCode && error.statusCode === 401) {

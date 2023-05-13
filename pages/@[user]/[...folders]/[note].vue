@@ -63,31 +63,29 @@ const { data: fetchedNote, pending, error, refresh } = useLazyAsyncData<Note | n
 
     currentNoteState.value = 'fetching';
 
-    return $fetch(`/api/note/${noteApiPath.value}`, {
-      retry: 2,
-      onRequest: () => {
-        showLoading();
+    showLoading();
 
-        if (!loadingToast?.value) {
-          loadingToast = createToast('Fetching note. Please wait...', {
-            duration: 60 * 1000,
-            delay: firstTimeFetch ? 3500 : 100,
-            type: 'loading',
-          });
+    if (!loadingToast?.value) {
+      loadingToast = createToast('Fetching note. Please wait...', {
+        duration: 60 * 1000,
+        delay: firstTimeFetch ? 3500 : 100,
+        type: 'loading',
+      });
 
-          firstTimeFetch = false;
-        }
-      },
-      onResponse: (ctx) => {
-        if (ctx.response.ok || ctx.error) {
-          hideLoading();
+      firstTimeFetch = false;
+    }
 
-          loadingToast.value?.remove();
+    return await $fetch<Note>(
+      `/api/note/${noteApiPath.value}`,
+      { retry: 2 },
+    )
+      .finally(() => {
+        hideLoading();
 
-          pollingTimer = setTimeout(refresh, POLLING_TIME);
-        }
-      },
-    });
+        loadingToast.value?.remove();
+
+        pollingTimer = setTimeout(refresh, POLLING_TIME);
+      });
   },
   { server: false },
 );
@@ -156,8 +154,6 @@ watch(error, async (error) => {
   // Resetting fallback mode to false is previous error is removed
   if (!error)
     return isFallbackMode.value = false;
-
-  loadingToast.value?.remove();
 
   // @ts-expect-error there actually is statusCode
   if (error.statusCode && error.statusCode === 401) {
