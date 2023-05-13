@@ -32,24 +32,22 @@ function createToast(options: ToastUserOptions & { message?: string; timeout: { 
 
   const toastId = Math.floor(Math.random() * 9999999);
 
-  const toast: RefToastInstance = {
-    value: {
-      id: toastId,
-      message: options.message,
-      priority: options.priority ?? 0,
-      duration: options.duration ?? 6000,
-      type: options.type ?? 'info',
-      el: shallowRef(null),
-      remove: () => {
-        if (options.timeout.value)
-          clearTimeout(options.timeout.value);
-        else
-          toasts.value = toasts.value.filter((toast) => toast.id !== toastId);
+  const toast: RefToastInstance = shallowRef({
+    id: toastId,
+    message: options.message,
+    priority: options.priority ?? 0,
+    duration: options.duration ?? 6000,
+    type: options.type ?? 'info',
+    el: shallowRef(null),
+    remove: () => {
+      if (options.timeout.value)
+        clearTimeout(options.timeout.value);
+      else
+        toasts.value = toasts.value.filter((toast) => toast.id !== toastId);
 
-        toast.value = undefined;
-      },
+      toast.value = undefined;
     },
-  };
+  });
 
   return toast;
 }
@@ -79,6 +77,4 @@ export interface ToastInstance {
   remove: () => void
 }
 
-export interface RefToastInstance {
-  value?: ToastInstance
-}
+export type RefToastInstance = ShallowRef<ToastInstance | null | undefined>;
