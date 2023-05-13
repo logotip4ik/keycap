@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { isDevelopment } from 'std-env';
+import { isProduction } from 'std-env';
 
 import { withoutLeadingSlash } from 'ufo';
 
@@ -41,7 +41,7 @@ const note = shallowRef<Note | null>(
 );
 
 // every 30 seconds send refresh request
-const POLLING_TIME = (isDevelopment ? 10 : 30) * 1000;
+const POLLING_TIME = (isProduction ? 30 : 10) * 1000;
 let pollingTimer: NodeJS.Timeout;
 let firstTimeFetch = true;
 let loadingToast: RefToastInstance;

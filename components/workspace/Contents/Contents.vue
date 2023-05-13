@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { isDevelopment } from 'std-env';
+import { isProduction } from 'std-env';
 import { withLeadingSlash, withoutTrailingSlash } from 'ufo';
 
 import type { RefToastInstance } from '~/composables/toasts';
@@ -25,7 +25,7 @@ const folder = ref<FolderWithContents | null>(
   foldersCache.get(folderPath.value) || null,
 );
 
-const POLLING_TIME = (isDevelopment ? 10 : 30) * 1000;
+const POLLING_TIME = (isProduction ? 30 : 10) * 1000;
 let pollingTimer: NodeJS.Timeout;
 let firstTimeFetch = true;
 let prevFolderPath = folderPath.value;
