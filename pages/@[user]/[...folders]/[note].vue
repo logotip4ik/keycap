@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { isProduction } from 'std-env';
-
 import { withoutLeadingSlash } from 'ufo';
 
 import type { Note } from '@prisma/client';
@@ -40,8 +38,8 @@ const note = shallowRef<Note | null>(
   notesCache.get(notePath.value) || null,
 );
 
-// every 30 seconds send refresh request
-const POLLING_TIME = (isProduction ? 30 : 10) * 1000;
+// every 90 seconds send refresh request
+const POLLING_TIME = 90 * 1000;
 let pollingTimer: NodeJS.Timeout;
 let firstTimeFetch = true;
 let loadingToast: RefToastInstance;
