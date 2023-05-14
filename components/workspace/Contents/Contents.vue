@@ -70,7 +70,8 @@ const { data: fetchedFolder, error, refresh } = useLazyAsyncData<FolderWithConte
 
         loadingToast.value?.remove();
 
-        pollingTimer = setTimeout(refresh, POLLING_TIME);
+        const multiplier = document.visibilityState === 'visible' ? 1 : 2;
+        pollingTimer = setTimeout(refresh, POLLING_TIME * multiplier);
       });
   },
   { server: false, watch: [folderPath] },
