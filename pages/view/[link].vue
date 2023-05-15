@@ -7,6 +7,13 @@ const { data: note, error } = await useAsyncData<Pick<Note, 'name' | 'content' |
   async () => await $fetch(`/api/share/${route.params.link}`),
 );
 
+if (error.value) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: `nothing found with link: ${route.params.link}`,
+  });
+}
+
 useHead({
   title: note.value?.name,
   titleTemplate: '%s - Keycap',
@@ -19,15 +26,6 @@ function formatDate(date: string | Date) {
 
   return Intl.DateTimeFormat(undefined, { dateStyle: 'short' }).format(date);
 }
-
-watch(error, (error) => {
-  if (error) {
-    showError({
-      statusCode: 404,
-      statusMessage: `nothing found with link: ${route.params.link}`,
-    });
-  }
-}, { immediate: true });
 </script>
 
 <template>
