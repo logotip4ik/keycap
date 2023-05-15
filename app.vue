@@ -32,9 +32,9 @@ if (process.server) {
 </script>
 
 <template>
-  <NuxtLayout>
+  <div>
     <NuxtLoadingIndicator color="var(--loading-indicator-color)" />
 
     <NuxtPage />
-  </NuxtLayout>
+  </div>
 </template>
