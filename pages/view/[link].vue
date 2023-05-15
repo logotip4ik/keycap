@@ -4,7 +4,7 @@ import type { Note } from '@prisma/client';
 const route = useRoute();
 
 const { data: note, error } = await useAsyncData<Pick<Note, 'name' | 'content' | 'updatedAt' | 'createdAt'>>(
-  () => $fetch(`/api/share/${route.params.link}`),
+  async () => await $fetch(`/api/share/${route.params.link}`),
 );
 
 useHead({

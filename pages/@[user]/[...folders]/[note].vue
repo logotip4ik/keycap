@@ -44,7 +44,7 @@ let pollingTimer: NodeJS.Timeout;
 let firstTimeFetch = true;
 let loadingToast: RefToastInstance;
 
-const { data: fetchedNote, pending, error, refresh } = useLazyAsyncData<Note | null>(
+const { data: fetchedNote, pending, error, refresh } = await useLazyAsyncData<Note | null>(
   'note',
   async () => {
     clearTimeout(pollingTimer);

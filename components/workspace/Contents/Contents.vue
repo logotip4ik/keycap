@@ -30,7 +30,7 @@ let firstTimeFetch = true;
 let prevFolderPath = folderPath.value;
 let loadingToast: RefToastInstance;
 
-const { data: fetchedFolder, error, refresh } = useLazyAsyncData<FolderWithContents>(
+const { data: fetchedFolder, error, refresh } = await useLazyAsyncData<FolderWithContents>(
   'folder',
   async () => {
     clearTimeout(pollingTimer);
