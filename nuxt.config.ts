@@ -29,7 +29,6 @@ export default defineNuxtConfig({
     writeEarlyHints: true,
     polyfillVueUseHead: false,
     componentIslands: true,
-    renderJsonPayloads: true,
     watcher: 'parcel',
   },
 
