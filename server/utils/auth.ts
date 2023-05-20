@@ -1,7 +1,7 @@
 import { getCookie, setCookie } from 'h3';
 import { SignJWT, jwtVerify } from 'jose';
 import { isDevelopment, isProduction } from 'std-env';
-import bcrypt from 'bcryptjs';
+import * as bcrypt from '@node-rs/bcrypt';
 
 import type { H3Event } from 'h3';
 import type { User } from '@prisma/client';

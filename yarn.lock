@@ -1279,6 +1279,145 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@node-rs/bcrypt-android-arm-eabi@npm:1.7.1":
+  version: 1.7.1
+  resolution: "@node-rs/bcrypt-android-arm-eabi@npm:1.7.1"
+  conditions: os=android & cpu=arm
+  languageName: node
+  linkType: hard
+
+"@node-rs/bcrypt-android-arm64@npm:1.7.1":
+  version: 1.7.1
+  resolution: "@node-rs/bcrypt-android-arm64@npm:1.7.1"
+  conditions: os=android & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@node-rs/bcrypt-darwin-arm64@npm:1.7.1":
+  version: 1.7.1
+  resolution: "@node-rs/bcrypt-darwin-arm64@npm:1.7.1"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@node-rs/bcrypt-darwin-x64@npm:1.7.1":
+  version: 1.7.1
+  resolution: "@node-rs/bcrypt-darwin-x64@npm:1.7.1"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@node-rs/bcrypt-freebsd-x64@npm:1.7.1":
+  version: 1.7.1
+  resolution: "@node-rs/bcrypt-freebsd-x64@npm:1.7.1"
+  conditions: os=freebsd & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@node-rs/bcrypt-linux-arm-gnueabihf@npm:1.7.1":
+  version: 1.7.1
+  resolution: "@node-rs/bcrypt-linux-arm-gnueabihf@npm:1.7.1"
+  conditions: os=linux & cpu=arm
+  languageName: node
+  linkType: hard
+
+"@node-rs/bcrypt-linux-arm64-gnu@npm:1.7.1":
+  version: 1.7.1
+  resolution: "@node-rs/bcrypt-linux-arm64-gnu@npm:1.7.1"
+  conditions: os=linux & cpu=arm64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@node-rs/bcrypt-linux-arm64-musl@npm:1.7.1":
+  version: 1.7.1
+  resolution: "@node-rs/bcrypt-linux-arm64-musl@npm:1.7.1"
+  conditions: os=linux & cpu=arm64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"@node-rs/bcrypt-linux-x64-gnu@npm:1.7.1":
+  version: 1.7.1
+  resolution: "@node-rs/bcrypt-linux-x64-gnu@npm:1.7.1"
+  conditions: os=linux & cpu=x64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@node-rs/bcrypt-linux-x64-musl@npm:1.7.1":
+  version: 1.7.1
+  resolution: "@node-rs/bcrypt-linux-x64-musl@npm:1.7.1"
+  conditions: os=linux & cpu=x64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"@node-rs/bcrypt-win32-arm64-msvc@npm:1.7.1":
+  version: 1.7.1
+  resolution: "@node-rs/bcrypt-win32-arm64-msvc@npm:1.7.1"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@node-rs/bcrypt-win32-ia32-msvc@npm:1.7.1":
+  version: 1.7.1
+  resolution: "@node-rs/bcrypt-win32-ia32-msvc@npm:1.7.1"
+  conditions: os=win32 & cpu=ia32
+  languageName: node
+  linkType: hard
+
+"@node-rs/bcrypt-win32-x64-msvc@npm:1.7.1":
+  version: 1.7.1
+  resolution: "@node-rs/bcrypt-win32-x64-msvc@npm:1.7.1"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@node-rs/bcrypt@npm:^1.7.1":
+  version: 1.7.1
+  resolution: "@node-rs/bcrypt@npm:1.7.1"
+  dependencies:
+    "@node-rs/bcrypt-android-arm-eabi": 1.7.1
+    "@node-rs/bcrypt-android-arm64": 1.7.1
+    "@node-rs/bcrypt-darwin-arm64": 1.7.1
+    "@node-rs/bcrypt-darwin-x64": 1.7.1
+    "@node-rs/bcrypt-freebsd-x64": 1.7.1
+    "@node-rs/bcrypt-linux-arm-gnueabihf": 1.7.1
+    "@node-rs/bcrypt-linux-arm64-gnu": 1.7.1
+    "@node-rs/bcrypt-linux-arm64-musl": 1.7.1
+    "@node-rs/bcrypt-linux-x64-gnu": 1.7.1
+    "@node-rs/bcrypt-linux-x64-musl": 1.7.1
+    "@node-rs/bcrypt-win32-arm64-msvc": 1.7.1
+    "@node-rs/bcrypt-win32-ia32-msvc": 1.7.1
+    "@node-rs/bcrypt-win32-x64-msvc": 1.7.1
+  dependenciesMeta:
+    "@node-rs/bcrypt-android-arm-eabi":
+      optional: true
+    "@node-rs/bcrypt-android-arm64":
+      optional: true
+    "@node-rs/bcrypt-darwin-arm64":
+      optional: true
+    "@node-rs/bcrypt-darwin-x64":
+      optional: true
+    "@node-rs/bcrypt-freebsd-x64":
+      optional: true
+    "@node-rs/bcrypt-linux-arm-gnueabihf":
+      optional: true
+    "@node-rs/bcrypt-linux-arm64-gnu":
+      optional: true
+    "@node-rs/bcrypt-linux-arm64-musl":
+      optional: true
+    "@node-rs/bcrypt-linux-x64-gnu":
+      optional: true
+    "@node-rs/bcrypt-linux-x64-musl":
+      optional: true
+    "@node-rs/bcrypt-win32-arm64-msvc":
+      optional: true
+    "@node-rs/bcrypt-win32-ia32-msvc":
+      optional: true
+    "@node-rs/bcrypt-win32-x64-msvc":
+      optional: true
+  checksum: a31a4a9a4a49543eab0927704f2bb3ca4e0cb924392f205a01e5d1876ce31c2b0fc2764250b5a3af26c3644501ed98c6805631c14ca62cc1d1db3da69654b7a9
+  languageName: node
+  linkType: hard
+
 "@nodelib/fs.scandir@npm:2.1.5":
   version: 2.1.5
   resolution: "@nodelib/fs.scandir@npm:2.1.5"
@@ -2072,13 +2211,6 @@ __metadata:
   version: 0.2.0
   resolution: "@trysound/sax@npm:0.2.0"
   checksum: 11226c39b52b391719a2a92e10183e4260d9651f86edced166da1d95f39a0a1eaa470e44d14ac685ccd6d3df7e2002433782872c0feeb260d61e80f21250e65c
-  languageName: node
-  linkType: hard
-
-"@types/bcryptjs@npm:^2.4.2":
-  version: 2.4.2
-  resolution: "@types/bcryptjs@npm:2.4.2"
-  checksum: 220dade7b0312b41e23ccfb15f2ddde7804eb3c7ef41db41a6c49054be1e19a15eb3dd8c8ef196494f0866307cce22ad6f3f272941387124707d81dc66155bbc
   languageName: node
   linkType: hard
 
@@ -2986,13 +3118,6 @@ __metadata:
   version: 1.5.1
   resolution: "base64-js@npm:1.5.1"
   checksum: 669632eb3745404c2f822a18fc3a0122d2f9a7a13f7fb8b5823ee19d1d2ff9ee5b52c53367176ea4ad093c332fd5ab4bd0ebae5a8e27917a4105a4cfc86b1005
-  languageName: node
-  linkType: hard
-
-"bcryptjs@npm:^2.4.3":
-  version: 2.4.3
-  resolution: "bcryptjs@npm:2.4.3"
-  checksum: 0e80ed852a41f5dfb1853f53ee14a7390b0ef263ce05dba6e2ef3cd919dfad025a7c21ebcfe5bc7fa04b100990edf90c7a877ff7fe623d3e479753253131b629
   languageName: node
   linkType: hard
 
@@ -9284,6 +9409,7 @@ __metadata:
   resolution: "root-workspace-0b6124@workspace:."
   dependencies:
     "@antfu/eslint-config": ^0.39.0
+    "@node-rs/bcrypt": ^1.7.1
     "@nuxt/kit": ^3.5.0
     "@nuxtjs/fontaine": ^0.2.5
     "@parcel/watcher": ^2.1.0
@@ -9315,13 +9441,11 @@ __metadata:
     "@tiptap/pm": ^2.0.3
     "@tiptap/vue-3": ^2.0.3
     "@total-typescript/ts-reset": ^0.4.2
-    "@types/bcryptjs": ^2.4.2
     "@types/lambda-rate-limiter": ^3.0.0
     "@types/node": ^18.13.0
     "@types/sanitize-html": ^2.9.0
     "@vueuse/core": ^10.1.2
     "@vueuse/nuxt": ^10.1.2
-    bcryptjs: ^2.4.3
     comlink: ^4.4.1
     eslint: 8.39.0
     idb-keyval: ^6.2.1
