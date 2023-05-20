@@ -1,6 +1,6 @@
 import { compile, v } from 'suretype';
 
-import getPrisma from '~/prisma';
+import { getPrisma } from '~/prisma';
 
 const noteUpdateSchema = v.object({
   name: v.string().minLength(2),

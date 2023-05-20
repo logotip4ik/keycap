@@ -3,7 +3,7 @@ import { compile, v } from 'suretype';
 
 import type { User } from '@prisma/client';
 
-import getPrisma from '~/prisma';
+import { getPrisma } from '~/prisma';
 
 const loginSchema = v.object({
   email: v.string().format('email').required(),

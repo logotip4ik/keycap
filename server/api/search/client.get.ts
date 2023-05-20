@@ -1,4 +1,4 @@
-import getPrisma from '~/prisma';
+import { getPrisma } from '~/prisma';
 
 export default defineEventHandler(async (event) => {
   const user = event.context.user!;

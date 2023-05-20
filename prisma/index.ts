@@ -5,8 +5,8 @@ declare global {
   var prisma: PrismaClient | undefined;
 }
 
-export default () => {
+export function getPrisma() {
   if (!global.prisma) global.prisma = new PrismaClient();
 
   return global.prisma;
-};
+}

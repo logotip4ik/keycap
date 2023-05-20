@@ -1,7 +1,7 @@
 import { isProduction } from 'std-env';
 import { compile, v } from 'suretype';
 
-import getPrisma from '~/prisma';
+import { getPrisma } from '~/prisma';
 
 const registrationSchema = v.object({
   username: v.string().minLength(4).required(),
