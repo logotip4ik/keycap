@@ -1,4 +1,3 @@
-import { isProduction } from 'std-env';
 import { compile, v } from 'suretype';
 
 import { getPrisma } from '~/prisma';
@@ -22,7 +21,7 @@ export default defineEventHandler(async (event) => {
   if (body.username) body.username = body.username.trim().replace(/\s/g, '_');
   if (body.password) body.password = body.username.trim();
 
-  if (isProduction && !validation.ok) {
+  if (!validation.ok) {
     return createError({
       statusCode: 400,
       statusMessage: `${validation.errors[0].dataPath.split('.').at(-1)} ${validation.errors[0].message}`,
