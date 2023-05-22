@@ -14,9 +14,13 @@ if (error.value) {
   });
 }
 
-useHead({
+useServerSeoMeta({
   title: note.value?.name,
   titleTemplate: '%s - Keycap',
+  ogImage: `https://${process.env.SITE_ORIGIN}/${route.params.link}.webp`,
+  ogImageWidth: 1200,
+  ogImageHeight: 630,
+  ogTitle: note.value?.name,
 });
 
 const isNoteContentsEmpty = (note.value?.content?.replace(/<[^>]+>/g, '').trim() || '') === '';
