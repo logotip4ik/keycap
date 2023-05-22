@@ -76,13 +76,17 @@ export default defineNuxtConfig({
   vite: {
     build: {
       target: 'esnext',
-      minify: process.env.VERCEL ? 'terser' : 'esbuild',
-      terserOptions: {
-        compress: true,
-        mangle: true,
-        safari10: false,
-        ecma: 2020,
-      },
+      ...(typeof process.env.VERCEL !== 'undefined'
+        ? {
+            minify: 'terser',
+            terserOptions: {
+              compress: true,
+              mangle: true,
+              safari10: false,
+              ecma: 2020,
+            },
+          }
+        : {}),
     },
 
     optimizeDeps: {
