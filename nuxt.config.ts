@@ -80,6 +80,7 @@ export default defineNuxtConfig({
       terserOptions: {
         compress: true,
         mangle: true,
+        safari10: false,
         ecma: 2020,
       },
     },
