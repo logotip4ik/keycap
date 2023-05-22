@@ -33,10 +33,10 @@ export default defineEventHandler(async (event) => {
     return sendRedirect(event, '/og-image.webp');
 
   const title = note.name.split(' ').slice(0, 12).join(' ');
-  const lines = title.trim().split(/(.{0,19})(?:\s|$)/g).filter(Boolean);
+  const lines = title.trim().split(/(.{0,23})(?:\s|$)/g).filter(Boolean);
   const data = {
     line1: lines[0],
-    line2: (lines[1] && lines[1].length === 25) ? `${lines[1]}...` : lines[1],
+    line2: (lines[1] && lines[1].length === 23) ? `${lines[1]}...` : lines[1],
   };
 
   type Lines = 'line1' | 'line2';
