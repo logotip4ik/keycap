@@ -17,7 +17,7 @@ if (error.value) {
 useServerSeoMeta({
   title: note.value?.name,
   titleTemplate: '%s - Keycap',
-  ogImage: `https://${process.env.SITE_ORIGIN}/${route.params.link}.webp`,
+  ogImage: `https://${process.env.SITE_ORIGIN}/og/view/${route.params.link}.webp`,
   ogImageWidth: 1200,
   ogImageHeight: 630,
   ogTitle: note.value?.name,
