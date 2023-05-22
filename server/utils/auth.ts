@@ -4,9 +4,10 @@ import { isDevelopment, isProduction } from 'std-env';
 import * as bcrypt from '@node-rs/bcrypt';
 
 import type { H3Event } from 'h3';
-import type { User } from '@prisma/client';
 
 import { toBigInt } from '.';
+
+import type { SafeUser } from '~/types/server';
 
 async function generateAccessToken(object: object): Promise<string> {
   const secret = getJWTSecret();
@@ -39,7 +40,7 @@ function getJWTIssuer(): string {
   return issuer;
 }
 
-export async function setAuthCookies(event: H3Event, user: Pick<User, 'id' | 'username' | 'email'>) {
+export async function setAuthCookies(event: H3Event, user: SafeUser) {
   const accessTokenName = getAccessTokenName();
   const accessToken = await generateAccessToken(user);
 
@@ -58,7 +59,7 @@ export async function removeAuthCookies(_event: H3Event) {
   // noop
 }
 
-export async function getUserFromEvent(event: H3Event): Promise<Pick<User, 'id' | 'username' | 'email'> | null> {
+export async function getUserFromEvent(event: H3Event): Promise<SafeUser | null> {
   const accessTokenName = getAccessTokenName();
   const accessToken = getCookie(event, accessTokenName);
 

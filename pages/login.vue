@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { SafeUser } from '~/types/server';
+
 definePageMeta({
   middleware: ['redirect-dashboard'],
 });
@@ -24,9 +26,8 @@ async function login() {
 
   preloadRouteComponents('/@__preload_user_page__');
 
-  $fetch('/api/user/login', { method: 'POST', body: data })
-    // @ts-expect-error idk, fetch has broken types
-    .then((newUser) => user.value = newUser)
+  $fetch<SafeUser | null>('/api/user/login', { method: 'POST', body: data })
+    .then((newUser) => newUser && (user.value = newUser))
     .catch((e) => createToast(e.statusMessage))
     .finally(() => isLoading.value = false);
 }

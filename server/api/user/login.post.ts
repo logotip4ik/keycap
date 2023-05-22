@@ -1,8 +1,8 @@
 import { compile, v } from 'suretype';
 
-import type { User } from '@prisma/client';
-
 import { getPrisma } from '~/prisma';
+
+import type { SafeUser } from '~/types/server';
 
 const loginSchema = v.object({
   email: v.string().format('email').required(),
@@ -52,7 +52,7 @@ export default defineEventHandler(async (event) => {
     return sendError(event, error);
   }
 
-  const safeUser: Pick<User, 'id' | 'username' | 'email'> = { id: user.id, username: user.username, email: user.email };
+  const safeUser: SafeUser = { id: user.id, username: user.username, email: user.email };
 
   await setAuthCookies(event, safeUser);
 

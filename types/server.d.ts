@@ -1,4 +1,5 @@
 import { createTimer } from '~/server/utils/timers' 
+
 import type { User } from '@prisma/client'
 
 declare global {
@@ -9,9 +10,11 @@ declare global {
   }
 }
 
+export interface SafeUser extends Pick<User, 'id' | 'email' | 'username'> {}
+
 export declare module 'h3' {
   interface H3EventContext {
-    user?: Pick<User, 'id' | 'username' | 'email'> | null
+    user?: SafeUser | null
     timer?: ReturnType<typeof createTimer>
   }
 }

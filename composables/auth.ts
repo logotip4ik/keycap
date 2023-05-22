@@ -1,6 +1,4 @@
-import type { User } from '@prisma/client';
-
-export type SafeUser = Pick<User, 'id' | 'email' | 'username'>;
+import type { SafeUser } from '~/types/server';
 
 export function useUser() {
   return useState<SafeUser | null>('user', () => null);
