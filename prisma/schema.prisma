@@ -42,6 +42,9 @@ model Note {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index(parentId)
+  @@index([path, ownerId])
 }
 
 model Folder {
@@ -62,6 +65,9 @@ model Folder {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index(parentId)
+  @@index([path, ownerId])
 }
 
 model Share {
