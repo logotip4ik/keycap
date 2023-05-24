@@ -92,6 +92,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@antfu/utils@npm:^0.7.2":
+  version: 0.7.2
+  resolution: "@antfu/utils@npm:0.7.2"
+  checksum: ada98dde0a06bc10129ad7bc9d0007c1cf7e36eeb9e8ca93ea5173bc1e1d351afee8511c9e8e182b3105b787ce0ce813afc4ab283b511374f1e56a085f60a2c6
+  languageName: node
+  linkType: hard
+
 "@babel/code-frame@npm:^7.0.0, @babel/code-frame@npm:^7.12.13, @babel/code-frame@npm:^7.21.4":
   version: 7.21.4
   resolution: "@babel/code-frame@npm:7.21.4"
@@ -131,7 +138,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/generator@npm:^7.20.4, @babel/generator@npm:^7.21.5":
+"@babel/generator@npm:^7.20.4, @babel/generator@npm:^7.20.7, @babel/generator@npm:^7.21.5":
   version: 7.21.9
   resolution: "@babel/generator@npm:7.21.9"
   dependencies:
@@ -346,7 +353,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/parser@npm:^7.20.15, @babel/parser@npm:^7.21.3, @babel/parser@npm:^7.21.5, @babel/parser@npm:^7.21.8, @babel/parser@npm:^7.21.9":
+"@babel/parser@npm:^7.20.13, @babel/parser@npm:^7.20.15, @babel/parser@npm:^7.21.3, @babel/parser@npm:^7.21.5, @babel/parser@npm:^7.21.8, @babel/parser@npm:^7.21.9":
   version: 7.21.9
   resolution: "@babel/parser@npm:7.21.9"
   bin:
@@ -2457,6 +2464,23 @@ __metadata:
     "@typescript-eslint/types": 5.59.7
     eslint-visitor-keys: ^3.3.0
   checksum: 4367f2ea68dd96a0520485434ad11e1bd26239eeeb3a2150bee7478a0f1df3c2099a39f96486722932be0456bcb7a47a483b452876d1d30bdeb9b81d354eef3d
+  languageName: node
+  linkType: hard
+
+"@unhead/addons@npm:^1.1.27":
+  version: 1.1.27
+  resolution: "@unhead/addons@npm:1.1.27"
+  dependencies:
+    "@rollup/pluginutils": ^5.0.2
+    "@unhead/schema": 1.1.27
+    "@unhead/shared": 1.1.27
+    magic-string: ^0.30.0
+    mlly: ^1.2.1
+    ufo: ^1.1.2
+    unhead: 1.1.27
+    unplugin: ^1.3.1
+    unplugin-ast: ^0.7.0
+  checksum: 91dacb4058b617a10bd519bc77750b334cabee544ac9e46ff8481dda80c31ae76d5c6b4ef9fe067b9e215752f229d784bba82122ee3059619c230628e8a967ec
   languageName: node
   linkType: hard
 
@@ -7545,7 +7569,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nuxt@npm:^3.4.3, nuxt@npm:^3.5.1":
+"nuxt@npm:3.5.1":
   version: 3.5.1
   resolution: "nuxt@npm:3.5.1"
   dependencies:
@@ -7609,6 +7633,73 @@ __metadata:
     nuxi: bin/nuxt.mjs
     nuxt: bin/nuxt.mjs
   checksum: 137c1425b17394abcc21a6247cd542a70805d29ff7203efe0cb77bb3732ff3938cac709a0d50a6d307aaaaa26eff223767f58d531f582e8e2d73527da5c42e96
+  languageName: node
+  linkType: hard
+
+"nuxt@patch:nuxt@npm%3A3.5.1#./.yarn/patches/nuxt-npm-3.5.1-37f7512905.patch::locator=root-workspace-0b6124%40workspace%3A.":
+  version: 3.5.1
+  resolution: "nuxt@patch:nuxt@npm%3A3.5.1#./.yarn/patches/nuxt-npm-3.5.1-37f7512905.patch::version=3.5.1&hash=a30da1&locator=root-workspace-0b6124%40workspace%3A."
+  dependencies:
+    "@nuxt/devalue": ^2.0.2
+    "@nuxt/kit": 3.5.1
+    "@nuxt/schema": 3.5.1
+    "@nuxt/telemetry": ^2.2.0
+    "@nuxt/ui-templates": ^1.1.1
+    "@nuxt/vite-builder": 3.5.1
+    "@unhead/ssr": ^1.1.27
+    "@unhead/vue": ^1.1.27
+    "@vue/shared": ^3.3.4
+    c12: ^1.4.1
+    chokidar: ^3.5.3
+    cookie-es: ^1.0.0
+    defu: ^6.1.2
+    destr: ^1.2.2
+    devalue: ^4.3.1
+    escape-string-regexp: ^5.0.0
+    estree-walker: ^3.0.3
+    fs-extra: ^11.1.1
+    globby: ^13.1.4
+    h3: ^1.6.6
+    hookable: ^5.5.3
+    jiti: ^1.18.2
+    klona: ^2.0.6
+    knitwork: ^1.0.0
+    local-pkg: ^0.4.3
+    magic-string: ^0.30.0
+    mlly: ^1.2.1
+    nitropack: ^2.4.1
+    nuxi: 3.5.1
+    nypm: ^0.2.0
+    ofetch: ^1.0.1
+    ohash: ^1.1.2
+    pathe: ^1.1.0
+    perfect-debounce: ^1.0.0
+    prompts: ^2.4.2
+    scule: ^1.0.0
+    strip-literal: ^1.0.1
+    ufo: ^1.1.2
+    ultrahtml: ^1.2.0
+    uncrypto: ^0.1.2
+    unctx: ^2.3.0
+    unenv: ^1.4.1
+    unimport: ^3.0.7
+    unplugin: ^1.3.1
+    unplugin-vue-router: ^0.6.4
+    untyped: ^1.3.2
+    vue: ^3.3.4
+    vue-bundle-renderer: ^1.0.3
+    vue-devtools-stub: ^0.1.0
+    vue-router: ^4.2.1
+  peerDependencies:
+    "@parcel/watcher": ^2.1.0
+    "@types/node": ^14.18.0 || >=16.10.0
+  peerDependenciesMeta:
+    "@parcel/watcher":
+      optional: true
+  bin:
+    nuxi: bin/nuxt.mjs
+    nuxt: bin/nuxt.mjs
+  checksum: f4c695a6eb6bf387176b6761790f2bcfa9ae18b4acd8a6078ffba13bbccf9ae6ffd704c1e0276eaf6f2e0ac4f110d69d36b1d6ed4018bcfb650c3fa6da4d84af
   languageName: node
   linkType: hard
 
@@ -9402,6 +9493,7 @@ __metadata:
     "@types/lambda-rate-limiter": ^3.0.0
     "@types/node": ^18.13.0
     "@types/sanitize-html": ^2.9.0
+    "@unhead/addons": ^1.1.27
     "@vueuse/core": ^10.1.2
     "@vueuse/nuxt": ^10.1.2
     comlink: ^4.4.1
@@ -10498,6 +10590,20 @@ __metadata:
   version: 2.0.0
   resolution: "universalify@npm:2.0.0"
   checksum: 2406a4edf4a8830aa6813278bab1f953a8e40f2f63a37873ffa9a3bc8f9745d06cc8e88f3572cb899b7e509013f7f6fcc3e37e8a6d914167a5381d8440518c44
+  languageName: node
+  linkType: hard
+
+"unplugin-ast@npm:^0.7.0":
+  version: 0.7.0
+  resolution: "unplugin-ast@npm:0.7.0"
+  dependencies:
+    "@antfu/utils": ^0.7.2
+    "@babel/generator": ^7.20.7
+    "@babel/parser": ^7.20.13
+    "@rollup/pluginutils": ^5.0.2
+    magic-string: ^0.27.0
+    unplugin: ^1.0.1
+  checksum: 2d9b1e4f1f4084bb53a9107c6110ba0a9cfdaf71206ce75b7d6fcddf9b833f567a33600ceb67026da580c7de50cd85695931b020f1efd484d9be0f410f5bb186
   languageName: node
   linkType: hard
 

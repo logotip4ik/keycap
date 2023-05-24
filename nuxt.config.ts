@@ -1,4 +1,5 @@
 import { isDevelopment } from 'std-env';
+import UnheadVite from '@unhead/addons/vite';
 
 import { getHeaders } from './headers.config';
 import breakpoints from './assets/constants/breakpoints';
@@ -74,6 +75,8 @@ export default defineNuxtConfig({
   sourcemap: isDevelopment,
 
   vite: {
+    plugins: [UnheadVite()],
+
     build: {
       target: 'esnext',
       ...(typeof process.env.VERCEL !== 'undefined'
