@@ -46,7 +46,7 @@ watch(user, async (value) => value && await navigateTo(`/@${value.username}`));
 
       <div class="login-page__form__item">
         <input
-          id="login:email"
+          id="login-email"
           ref="emailInput"
           type="email"
           name="email"
@@ -58,7 +58,7 @@ watch(user, async (value) => value && await navigateTo(`/@${value.username}`));
 
       <div class="login-page__form__item">
         <input
-          id="login:password"
+          id="login-password"
           ref="passwordInput"
           type="password"
           name="password"
