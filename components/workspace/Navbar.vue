@@ -75,6 +75,8 @@ async function showFolderContents() {
 
   padding: 0.25rem 1rem;
 
+  overflow: hidden;
+
   &__heading {
     --indicator-size: 0.5rem;
     --indicator-color: transparent;
