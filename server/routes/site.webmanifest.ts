@@ -1,4 +1,4 @@
-import manifestSchema from '~/assets/constants/webmanifest.json';
+import * as manifestSchema from '~/assets/constants/webmanifest.json';
 import { WEEK_IN_SECONDS } from '~/headers.config';
 
 const ONE_DAY_IN_SECONDS = 60 * 60 * 24;
@@ -9,7 +9,7 @@ export default defineCachedEventHandler((event) => {
   const manifest = { ...manifestSchema } satisfies typeof manifestSchema;
 
   if (user)
-    manifest.start_url += `@${user.username}`;
+    manifest.start_url = `/@${user.username}`;
 
   return manifest;
 }, {
