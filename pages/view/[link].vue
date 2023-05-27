@@ -161,7 +161,7 @@ function formatDate(date: string | Date) {
 
     &__name {
       font-size: clamp(3.5rem, 4vw + 1.125rem, 5rem);
-      line-height: 1.25;
+      line-height: 1.1;
       font-weight: 500;
 
       margin: 0;
