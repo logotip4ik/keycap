@@ -73,6 +73,11 @@ export default defineNuxtConfig({
 
   sourcemap: isDevelopment,
 
+  build: {
+    // https://github.com/nuxt/nuxt/issues/21313#issue-1737864847
+    transpile: ['std-env'],
+  },
+
   vite: {
     plugins: [UnheadVite()],
 
