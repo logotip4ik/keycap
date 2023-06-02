@@ -19,7 +19,7 @@ const menu = ref<null | HTMLElement>(null);
 const currentlyConfirming = ref(-1); // You can confirm one at a time
 const cleanup = ref<null | (() => void)>(null);
 
-const confirmDurationInSeconds = 10;
+const confirmDurationInSeconds = 5;
 const virtualElement: VirtualElement = {
   // @ts-expect-error missing toJSON method
   getBoundingClientRect: () => ({
