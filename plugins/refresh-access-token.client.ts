@@ -7,14 +7,17 @@ export default defineNuxtPlugin(async () => {
 
   const refreshToken = () => {
     const fetcher = () =>
-      $fetch('/api/user/refresh', { method: 'POST', retry: 2 })
+      $fetch('/api/user/refresh', { retry: 2 })
         .catch((error) => error.data);
 
     window.requestIdleCallback(fetcher);
   };
 
   watch(user, (newUser) => {
-    if (!newUser) return clearInterval(prevInterval);
+    clearInterval(prevInterval);
+
+    if (!newUser)
+      return;
 
     refreshToken();
 
