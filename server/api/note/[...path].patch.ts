@@ -53,7 +53,7 @@ export default defineEventHandler(async (event) => {
   timer.end();
 
   if (!updatedNote)
-    return createError({ statusCode: 500 });
+    return createError({ statusCode: 400 });
 
   timer.appendHeader(event);
 

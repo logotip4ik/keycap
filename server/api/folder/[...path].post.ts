@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
   timer.end();
 
   if (!folder)
-    return createError({ statusCode: 500 });
+    return createError({ statusCode: 400 });
 
   timer.appendHeader(event);
 

@@ -34,7 +34,7 @@ export default defineEventHandler(async (event) => {
   ]).catch(() => [null, null]);
 
   if (!cacheKeys || !share)
-    return createError({ statusCode: 500 });
+    return createError({ statusCode: 400 });
 
   const keyToDelete = cacheKeys.find((key) => key.includes(friendlyShareLink));
 

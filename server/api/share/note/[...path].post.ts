@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
   timer.end();
 
   if (!share)
-    return createError({ statusCode: 500 });
+    return createError({ statusCode: 400 });
 
   timer.appendHeader(event);
 
