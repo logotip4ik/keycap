@@ -1,4 +1,7 @@
+// @ts-expect-error specifying * as RateLimiter breaks everything
 import RateLimiter from 'lambda-rate-limiter';
+
+import type { RateLimiter as RateLimiterI } from 'lambda-rate-limiter';
 
 const INTERVAL = 60000; // 1 minute
 const LIMIT = Math.floor((INTERVAL * 2) / 1000); // two per second
@@ -14,7 +17,6 @@ export default defineEventHandler(async (event) => {
 
     const used = await rateLimit(LIMIT, identifier!).catch(() => LIMIT + LIMIT);
 
-    // Too many requests
     if (used > LIMIT) {
       return createError({
         statusCode: 429,
@@ -28,15 +30,17 @@ export default defineEventHandler(async (event) => {
 });
 
 function getRateLimiter() {
-  // @ts-expect-error this should not be there
-  if (!global.rateLimiter) {
-  // @ts-expect-error again, this should not be there
-    global.rateLimiter = RateLimiter({
+  if (!globalThis.rateLimiter) {
+    globalThis.rateLimiter = RateLimiter({
       interval: INTERVAL,
       uniqueTokenPerInterval: LIMIT,
     });
   }
 
-  // @ts-expect-error again, this should not be there
-  return global.rateLimiter.check as RateLimiter.RateLimiter['check'];
+  return globalThis.rateLimiter.check;
+}
+
+declare global {
+  // eslint-disable-next-line vars-on-top, no-var
+  var rateLimiter: RateLimiterI;
 }
