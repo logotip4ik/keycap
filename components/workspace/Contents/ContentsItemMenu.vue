@@ -17,6 +17,7 @@ const emit = defineEmits<Emits>();
 const popperInstance = shallowRef<null | PopperInstance>(null);
 const menu = ref<null | HTMLElement>(null);
 const currentlyConfirming = ref(-1); // You can confirm one at a time
+const cleanup = ref<null | (() => void)>(null);
 
 const confirmDurationInSeconds = 10;
 const virtualElement: VirtualElement = {
@@ -61,12 +62,12 @@ function withEffects(event: Event, action: MenuAction) {
     for (const eventType of targetCancelEvents)
       target.addEventListener(eventType, cancelAnimation);
 
-    onBeforeUnmount(() => {
+    cleanup.value = () => {
       cancelAnimation();
 
       for (const eventType of targetCancelEvents)
         target.removeEventListener(eventType, cancelAnimation);
-    });
+    };
   }
 }
 
@@ -86,6 +87,10 @@ watch([() => props.x, () => props.y], async () => {
 }, { immediate: true });
 
 useClickOutside(menu, () => emit('close'));
+
+onBeforeUnmount(() => {
+  cleanup.value?.();
+});
 </script>
 
 <template>
