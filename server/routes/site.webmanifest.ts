@@ -13,7 +13,6 @@ export default defineCachedEventHandler((event) => {
 
   return manifest;
 }, {
-  name: 'manifest',
   swr: true,
   maxAge: ONE_DAY_IN_SECONDS,
   staleMaxAge: WEEK_IN_SECONDS,
