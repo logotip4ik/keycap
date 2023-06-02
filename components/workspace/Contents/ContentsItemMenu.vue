@@ -88,6 +88,10 @@ watch([() => props.x, () => props.y], async () => {
 
 useClickOutside(menu, () => emit('close'));
 
+useTinykeys({
+  Escape: () => emit('close'),
+});
+
 onBeforeUnmount(() => {
   cleanup.value?.();
 });
