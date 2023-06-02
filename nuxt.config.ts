@@ -109,8 +109,11 @@ export default defineNuxtConfig({
 
   fontMetrics: {
     fonts: [
-      // src is relative to public folder
-      { family: 'Mona Sans', src: '/fonts/Mona-Sans.woff2' },
+      {
+        family: 'Mona Sans',
+        src: '/fonts/Mona-Sans/Mona-Sans.woff2',
+        root: 'assets',
+      },
     ],
   },
 
