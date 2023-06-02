@@ -12,16 +12,19 @@ export default defineEventHandler(async (event) => {
   if (generateRootFolderPath(user.username) === folderPath)
     return {};
 
-  try {
-    timer.start('db');
-    await prisma.folder.delete({ where: { path: folderPath } });
-    timer.end();
+  timer.start('db');
+  const folder = await prisma.folder.delete({
+    where: { path: folderPath },
+    select: { id: true },
+  }).catch(() => null);
+  timer.end();
 
-    timer.appendHeader(event);
-
-    return { ok: true };
-  }
-  catch (error) {
+  if (!folder)
     return createError({ statusCode: 500 });
-  }
+
+  timer.appendHeader(event);
+
+  setResponseStatus(event, 204);
+
+  return { ok: true };
 });

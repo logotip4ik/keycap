@@ -33,28 +33,23 @@ export default defineEventHandler(async (event) => {
     select: { id: true, email: true, username: true, password: true },
   }).catch(() => null);
 
-  if (!user) {
-    const error = createError({ statusCode: 400, statusMessage: 'email or password is incorrect' });
+  if (!user)
+    return createError({ statusCode: 400, statusMessage: 'email or password is incorrect' });
 
-    return sendError(event, error);
-  }
+  const isPasswordValid = await verifyPassword(user.password, body.password)
+    .catch(() => null);
 
-  try {
-    if (!(await verifyPassword(user.password, body.password))) {
-      const error = createError({ statusCode: 400, statusMessage: 'email or password is incorrect' });
+  if (isPasswordValid === null)
+    return createError({ statusCode: 500 });
 
-      return sendError(event, error);
-    }
-  }
-  catch {
-    const error = createError({ statusCode: 500 });
-
-    return sendError(event, error);
-  }
+  if (isPasswordValid === false)
+    return createError({ statusCode: 400, statusMessage: 'email or password is incorrect' });
 
   const safeUser: SafeUser = { id: user.id, username: user.username, email: user.email };
 
   await setAuthCookies(event, safeUser);
+
+  setResponseStatus(event, 201);
 
   return safeUser;
 });

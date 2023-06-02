@@ -30,31 +30,27 @@ export default defineEventHandler(async (event) => {
 
   const prisma = getPrisma();
 
-  try {
-    const user = await prisma.user.create({
-      data: {
-        email: body.email,
-        username: body.username,
-        password: await hashPassword(body.password),
-        folders: {
-          create: {
-            name: `${body.username}'s workspace`,
-            root: true,
-            path: generateRootFolderPath(body.username),
-          },
+  const user = await prisma.user.create({
+    data: {
+      email: body.email,
+      username: body.username,
+      password: await hashPassword(body.password),
+      folders: {
+        create: {
+          name: `${body.username}'s workspace`,
+          root: true,
+          path: generateRootFolderPath(body.username),
         },
       },
+    },
 
-      select: { id: true, email: true, username: true },
-    });
+    select: { id: true, email: true, username: true },
+  }).catch(() => null);
 
-    await setAuthCookies(event, user);
+  if (!user)
+    return createError({ statusCode: 400, statusMessage: 'user with this email or username might already exist' });
 
-    return user;
-  }
-  catch {
-    const error = createError({ statusCode: 400, statusMessage: 'user with this email or username might already exist' });
+  await setAuthCookies(event, user);
 
-    return sendError(event, error);
-  }
+  return user;
 });

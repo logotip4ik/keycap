@@ -16,26 +16,24 @@ export default defineEventHandler(async (event) => {
 
   const selectParams = getNoteSelectParamsFromEvent(event);
 
-  try {
-    timer.start('db');
-    const note = await prisma.note.create({
-      data: {
-        // last route param always should be note name
-        name: noteName,
-        content: '',
-        path: notePath,
-        owner: { connect: { id: user.id } },
-        parent: { connect: { id: toBigInt(body.parentId) } },
-      },
-      select: { ...selectParams },
-    });
-    timer.end();
+  timer.start('db');
+  const note = await prisma.note.create({
+    data: {
+      // last route param always should be note name
+      name: noteName,
+      content: '',
+      path: notePath,
+      owner: { connect: { id: user.id } },
+      parent: { connect: { id: toBigInt(body.parentId) } },
+    },
+    select: { ...selectParams },
+  }).catch(() => null);
+  timer.end();
 
-    timer.appendHeader(event);
+  if (!note)
+    return createError({ statusCode: 500 });
 
-    return note;
-  }
-  catch (error) {
-    return sendError(event, createError({ statusCode: 500 }));
-  }
+  timer.appendHeader(event);
+
+  return note;
 });

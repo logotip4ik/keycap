@@ -9,16 +9,19 @@ export default defineEventHandler(async (event) => {
 
   const prisma = getPrisma();
 
-  try {
-    timer.start('db');
-    await prisma.note.delete({ where: { path: notePath } });
-    timer.end();
+  timer.start('db');
+  const note = await prisma.note.delete({
+    where: { path: notePath },
+    select: { id: true },
+  }).catch(() => null);
+  timer.end();
 
-    timer.appendHeader(event);
-
-    return { ok: true };
-  }
-  catch (error) {
+  if (!note)
     return createError({ statusCode: 500 });
-  }
+
+  timer.appendHeader(event);
+
+  setResponseStatus(event, 204);
+
+  return { ok: true };
 });

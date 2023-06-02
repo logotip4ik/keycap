@@ -11,11 +11,9 @@ export default defineEventHandler(async (event) => {
   let skip = 0;
   let select = 50;
 
-  // @ts-expect-error checking if query param could be param
-  if (query.skip && !isNaN(query.skip))
+  if (query.skip && !Number.isNaN(query.skip))
     skip = Number(query.skip);
-  // @ts-expect-error checking if query param could be param
-  if (query.select && !isNaN(query.select))
+  if (query.select && !Number.isNaN(query.select))
     select = Number(query.select);
 
   const pathToSearch = `/${user.username}`;
@@ -34,8 +32,11 @@ export default defineEventHandler(async (event) => {
       take: Math.floor(select / 2),
       select: { name: true, path: true, root: true },
     }),
-  ]);
+  ]).catch(() => [null, null]);
   timer.end();
+
+  if (!notes || !folders)
+    return createError({ statusCode: 500 });
 
   timer.appendHeader(event);
 

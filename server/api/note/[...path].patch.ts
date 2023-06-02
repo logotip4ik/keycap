@@ -44,23 +44,21 @@ export default defineEventHandler(async (event) => {
 
   const selectParams = getNoteSelectParamsFromEvent(event);
 
-  try {
-    timer.start('db');
-    const updatedNote = await prisma.note.update({
-      data,
-      where: { path: notePath },
-      select: { ...selectParams },
-    });
-    timer.end();
+  timer.start('db');
+  const updatedNote = await prisma.note.update({
+    data,
+    where: { path: notePath },
+    select: { ...selectParams },
+  }).catch(() => null);
+  timer.end();
 
-    timer.appendHeader(event);
+  if (!updatedNote)
+    return createError({ statusCode: 500 });
 
-    if (query.getNote === 'true')
-      return updatedNote;
+  timer.appendHeader(event);
 
-    return { ok: true };
-  }
-  catch {
-    return createError({ statusCode: 400 });
-  }
+  if (query.getNote === 'true')
+    return updatedNote;
+
+  return { ok: true };
 });

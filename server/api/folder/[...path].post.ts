@@ -18,25 +18,25 @@ export default defineEventHandler(async (event) => {
 
   const selectParams = getFolderSelectParamsFromEvent(event);
 
-  try {
-    timer.start('db');
-    const folder = await prisma.folder.create({
-      data: {
-        name: folderName,
-        path: folderPath,
-        owner: { connect: { email: user.email } },
-        parent: { connect: { id: toBigInt(body.parentId) } },
-      },
+  timer.start('db');
+  const folder = await prisma.folder.create({
+    data: {
+      name: folderName,
+      path: folderPath,
+      owner: { connect: { email: user.email } },
+      parent: { connect: { id: toBigInt(body.parentId) } },
+    },
 
-      select: { ...selectParams },
-    });
-    timer.end();
+    select: { ...selectParams },
+  }).catch(() => null);
+  timer.end();
 
-    timer.appendHeader(event);
-
-    return { ...folder, notes: [], subfolders: [] };
-  }
-  catch {
+  if (!folder)
     return createError({ statusCode: 500 });
-  }
+
+  timer.appendHeader(event);
+
+  setResponseStatus(event, 201);
+
+  return { ...folder, notes: [], subfolders: [] };
 });

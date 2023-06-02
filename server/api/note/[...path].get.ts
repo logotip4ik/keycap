@@ -14,13 +14,13 @@ export default defineEventHandler(async (event) => {
   const note = await prisma.note.findFirst({
     where: { path: notePath, ownerId: user.id },
     select: { ...selectParams },
-  });
+  }).catch(() => null);
   timer.end();
-
-  timer.appendHeader(event);
 
   if (!note)
     return createError({ statusCode: 404 });
+
+  timer.appendHeader(event);
 
   return note;
 });

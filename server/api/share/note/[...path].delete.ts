@@ -28,10 +28,13 @@ export default defineEventHandler(async (event) => {
   // how to find correct key https://github.com/unjs/nitro/blob/30675d4353f366395cdc0d53e9512aaa3f7c4bf7/src/runtime/cache.ts#L184
   const friendlyShareLink = shareToDelete.link.replace(/-/g, '');
 
-  const [cacheKeys] = await Promise.all([
+  const [cacheKeys, share] = await Promise.all([
     storage.getKeys('cache/nitro'),
-    prisma.share.delete({ where: { id: shareToDelete.id } }),
-  ]);
+    prisma.share.delete({ where: { id: shareToDelete.id }, select: { id: true } }),
+  ]).catch(() => [null, null]);
+
+  if (!cacheKeys || !share)
+    return createError({ statusCode: 500 });
 
   const keyToDelete = cacheKeys.find((key) => key.includes(friendlyShareLink));
 
@@ -41,6 +44,8 @@ export default defineEventHandler(async (event) => {
   timer.end();
 
   timer.appendHeader(event);
+
+  setResponseStatus(event, 204);
 
   return { ok: true };
 });
