@@ -47,27 +47,22 @@ function withEffects(event: Event, action: MenuAction) {
       { opacity: 1, transform: 'translate(0%, 0%)' },
     ], { duration: confirmDurationInSeconds * 1000, pseudoElement: '::after' });
 
-    const executeHandler = () => {
-      action.handler();
-      currentlyConfirming.value = -1;
-    };
-
-    const cancelAnimation = () => {
-      animation.cancel();
-      currentlyConfirming.value = -1;
-    };
-
-    animation.addEventListener('finish', executeHandler);
-
-    for (const eventType of targetCancelEvents)
-      target.addEventListener(eventType, cancelAnimation);
-
     cleanup.value = () => {
-      cancelAnimation();
+      animation.cancel?.();
+      currentlyConfirming.value = -1;
 
       for (const eventType of targetCancelEvents)
-        target.removeEventListener(eventType, cancelAnimation);
+        target.removeEventListener(eventType, cleanup.value!);
     };
+
+    animation.addEventListener('finish', () => {
+      action.handler();
+
+      cleanup.value!();
+    });
+
+    for (const eventType of targetCancelEvents)
+      target.addEventListener(eventType, cleanup.value);
   }
 }
 
