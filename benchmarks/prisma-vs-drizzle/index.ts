@@ -2,10 +2,10 @@ import { Bench } from 'tinybench';
 
 import { and, eq, like } from 'drizzle-orm';
 
-import { getPrisma } from '../prisma';
-import { getDrizzle } from '../drizzle';
-import { folders } from '../drizzle/schema/folders';
-import { notes } from '../drizzle/schema/notes';
+import { getPrisma } from '../../prisma';
+import { getDrizzle } from '../../drizzle';
+import { folders } from '../../drizzle/schema/folders';
+import { notes } from '../../drizzle/schema/notes';
 
 const bench = new Bench({ time: 1000 });
 
