@@ -28,3 +28,7 @@ After months of usage windows and android phone, i found out that notes aren't s
 - [ ] work without internet (kinda working, if page is still cached, notes and folders will be loaded from local copies)
 - [ ] create landing page
 - [x] create project logo
+
+## Notes
+
+- [prisma vs drizzle (my benchmark)](https://github.com/logotip4ik/keycap/tree/feat/drizzle-orm/benchmarks/prisma-vs-drizzle) tldr: prisma is not far behind (at least on my local machine)
