@@ -31,4 +31,5 @@ After months of usage windows and android phone, i found out that notes aren't s
 
 ## Notes
 
-- [prisma vs drizzle (my benchmark)](https://github.com/logotip4ik/keycap/tree/feat/drizzle-orm/benchmarks/prisma-vs-drizzle) tldr: prisma is not far behind (at least on my local machine)
+- [prisma vs drizzle (my benchmark)](https://github.com/logotip4ik/keycap/tree/feat/drizzle-orm/benchmarks/prisma-vs-drizzle)    
+  tldr: prisma even manages to beat drizzle in some queries (at least on my local machine)
