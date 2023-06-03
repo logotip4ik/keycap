@@ -7,7 +7,7 @@ import { getDrizzle } from '../drizzle';
 import { folders } from '../drizzle/schema/folders';
 import { notes } from '../drizzle/schema/notes';
 
-const bench = new Bench({ iterations: 1000 });
+const bench = new Bench({ iterations: 100 });
 
 const folderPath = '/bogdankostyuk';
 const ownerId = BigInt('852967721740042241');
