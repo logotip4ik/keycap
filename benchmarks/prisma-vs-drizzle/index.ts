@@ -97,6 +97,7 @@ async function main() {
         .select({ id: notes.id, name: notes.name, content: notes.content, path: notes.path })
         .from(notes)
         .where(and(eq(notes.ownerId, ownerId), eq(notes.path, notePath)))
+        .limit(1)
         .execute();
     })
     .add('drizzle orm find folder with notes', async () => {
