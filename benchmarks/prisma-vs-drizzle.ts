@@ -1,23 +1,48 @@
 import { Bench } from 'tinybench';
 
-import { and, eq } from 'drizzle-orm';
+import { and, eq, like } from 'drizzle-orm';
 
 import { getPrisma } from '../prisma';
 import { getDrizzle } from '../drizzle';
 import { folders } from '../drizzle/schema/folders';
 import { notes } from '../drizzle/schema/notes';
 
-const bench = new Bench({ iterations: 100 });
+const bench = new Bench({ time: 1000 });
 
 const folderPath = '/bogdankostyuk';
+const notePath = '/bogdankostuyk/main';
 const ownerId = BigInt('852967721740042241');
 
 async function main() {
   bench
-    .add('prisma find all notes', async () => {
+    .add('prisma find note and folder for search', async () => {
       const prisma = getPrisma();
 
-      await prisma.note.findMany({ where: { ownerId } });
+      const skip = 0;
+      const select = 50;
+
+      await Promise.all([
+        prisma.note.findMany({
+          skip,
+          where: { path: { startsWith: folderPath } },
+          take: Math.floor(select / 2),
+          select: { name: true, path: true },
+        }),
+        prisma.folder.findMany({
+          skip,
+          where: { path: { startsWith: folderPath } },
+          take: Math.floor(select / 2),
+          select: { name: true, path: true, root: true },
+        }),
+      ]);
+    })
+    .add('prisma find note', async () => {
+      const prisma = getPrisma();
+
+      await prisma.note.findMany({
+        where: { path: notePath, ownerId },
+        select: { id: true, name: true, content: true, path: true },
+      });
     })
     .add('prisma find folder with notes', async () => {
       const prisma = getPrisma();
@@ -41,13 +66,37 @@ async function main() {
         await prisma.$disconnect();
       },
     })
-    .add('drizzle orm find all notes', async () => {
+    .add('drizzle find note and folder for search', async () => {
+      const drizzle = getDrizzle();
+
+      const skip = 0;
+      const select = 50;
+
+      await Promise.all([
+        drizzle
+          .select({ name: notes.name, path: notes.path })
+          .from(notes)
+          .where(like(notes.path, `${folderPath}%`))
+          .offset(skip)
+          .limit(Math.floor(select / 2))
+          .execute(),
+
+        drizzle
+          .select({ name: folders.name, path: folders.path, root: folders.root })
+          .from(folders)
+          .where(like(folders.path, `${folderPath}%`))
+          .offset(skip)
+          .limit(Math.floor(select / 2))
+          .execute(),
+      ]);
+    })
+    .add('drizzle orm find note', async () => {
       const drizzle = getDrizzle();
 
       await drizzle
-        .select({ notes })
+        .select({ id: notes.id, name: notes.name, content: notes.content, path: notes.path })
         .from(notes)
-        .where(eq(notes.ownerId, ownerId))
+        .where(and(eq(notes.ownerId, ownerId), eq(notes.path, notePath)))
         .execute();
     })
     .add('drizzle orm find folder with notes', async () => {
