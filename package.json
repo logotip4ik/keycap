@@ -6,7 +6,8 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "prisma generate && nuxt prepare",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "bench:prisma-vs-drizzle": "npx tsx ./benchmarks/prisma-vs-drizzle.ts"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.39.4",
