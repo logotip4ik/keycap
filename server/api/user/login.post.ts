@@ -1,23 +1,14 @@
-import { compile, v } from 'suretype';
-
 import { getPrisma } from '~/prisma';
 
 import type { SafeUser } from '~/types/server';
 
-const loginSchema = v.object({
-  email: v.string().format('email').required(),
-  password: v.string().minLength(8).required(),
-});
-
-const useLoginValidator = compile(loginSchema, { colors: false });
-
 export default defineEventHandler(async (event) => {
   const body = await readBody(event) || {};
 
-  const validation = useLoginValidator(body);
-
   if (body.email) body.email = body.email.trim();
   if (body.password) body.password = body.password.trim();
+
+  const validation = useLoginValidator(body);
 
   if (!validation.ok) {
     return createError({
@@ -48,8 +39,6 @@ export default defineEventHandler(async (event) => {
   const safeUser: SafeUser = { id: user.id, username: user.username, email: user.email };
 
   await setAuthCookies(event, safeUser);
-
-  setResponseStatus(event, 201);
 
   return safeUser;
 });

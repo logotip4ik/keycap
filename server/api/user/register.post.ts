@@ -1,25 +1,15 @@
-import { compile, v } from 'suretype';
-
 import { getPrisma } from '~/prisma';
-
-const registrationSchema = v.object({
-  username: v.string().minLength(4).required(),
-  email: v.string().format('email').required(),
-  password: v.string().minLength(8).required(),
-});
-
-const useRegistrationValidator = compile(registrationSchema, { colors: false });
 
 export default defineEventHandler(async (event) => {
   if (event.context.user) return null;
 
   const body = await readBody(event) || {};
 
-  const validation = useRegistrationValidator(body);
-
   if (body.email) body.email = body.email.trim();
   if (body.username) body.username = body.username.trim().replace(/\s/g, '_');
   if (body.password) body.password = body.username.trim();
+
+  const validation = useRegistrationValidator(body);
 
   if (!validation.ok) {
     return createError({
@@ -51,6 +41,8 @@ export default defineEventHandler(async (event) => {
     return createError({ statusCode: 400, statusMessage: 'user with this email or username might already exist' });
 
   await setAuthCookies(event, user);
+
+  setResponseStatus(event, 201);
 
   return user;
 });

@@ -1,13 +1,4 @@
-import { compile, v } from 'suretype';
-
 import { getPrisma } from '~/prisma';
-
-const noteUpdateSchema = v.object({
-  name: v.string().minLength(2),
-  content: v.string(),
-});
-
-const useNoteUpdateValidator = compile(noteUpdateSchema, { colors: false });
 
 export default defineEventHandler(async (event) => {
   const user = event.context.user!;
