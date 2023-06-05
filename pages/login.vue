@@ -39,7 +39,20 @@ watch(user, async (value) => value && await navigateTo(`/@${value.username}`));
   <main class="login-page">
     <LazyWorkspaceToasts />
 
-    <form class="login-page__form" @submit.prevent="login">
+    <form
+      action="/api/user/login"
+      method="POST"
+      class="login-page__form"
+      @submit.prevent="login"
+    >
+      <input
+        id="browserAction"
+        name="browserAction"
+        type="checkbox"
+        checked
+        class="login-page__form__hidden"
+      >
+
       <p class="login-page__form__title font-wide">
         Let's sign you in
       </p>
@@ -114,6 +127,10 @@ watch(user, async (value) => value && await navigateTo(`/@${value.username}`));
 
     & > * + * {
       margin-top: 1.5rem;
+    }
+
+    &__hidden {
+      display: none;
     }
 
     &__title {

@@ -41,7 +41,20 @@ watch(user, async (value) => value && await navigateTo(`/@${value.username}`));
   <main class="register-page">
     <LazyWorkspaceToasts />
 
-    <form class="register-page__form" @submit.prevent="register">
+    <form
+      action="/api/user/register"
+      method="POST"
+      class="register-page__form"
+      @submit.prevent="register"
+    >
+      <input
+        id="browserAction"
+        name="browserAction"
+        type="checkbox"
+        checked
+        class="register-page__form__hidden"
+      >
+
       <p class="register-page__form__title font-wide">
         We are going to create an account for you
       </p>
@@ -128,6 +141,10 @@ watch(user, async (value) => value && await navigateTo(`/@${value.username}`));
 
     & > * + * {
       margin-top: 2rem;
+    }
+
+    &__hidden {
+      display: none;
     }
 
     &__title {

@@ -3,6 +3,13 @@ import { getPrisma } from '~/prisma';
 import type { SafeUser } from '~/types/server';
 
 export default defineEventHandler(async (event) => {
+  const reqUrl = getRequestURL(event);
+  const origin = getHeader(event, 'origin');
+
+  // https://github.com/sveltejs/kit/blob/21272ee81d915b1049c4ba1ab981427fac232e80/packages/kit/src/runtime/server/respond.js#L56
+  if (reqUrl.origin !== origin)
+    return createError({ statusCode: 403 });
+
   const body = await readBody(event) || {};
 
   if (body.email) body.email = body.email.trim();
@@ -39,6 +46,9 @@ export default defineEventHandler(async (event) => {
   const safeUser: SafeUser = { id: user.id, username: user.username, email: user.email };
 
   await setAuthCookies(event, safeUser);
+
+  if (typeof body.browserAction !== 'undefined')
+    return sendRedirect(event, `/@${safeUser.username}`);
 
   return safeUser;
 });
