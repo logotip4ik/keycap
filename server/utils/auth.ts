@@ -91,3 +91,12 @@ export async function hashPassword(pass: string): Promise<string> {
 export async function verifyPassword(hashedPass: string, pass: string): Promise<boolean> {
   return await bcrypt.compare(pass, hashedPass);
 }
+
+export function checkOrigin(event: H3Event) {
+  const reqUrl = getRequestURL(event);
+  const origin = getHeader(event, 'origin');
+
+  // https://github.com/sveltejs/kit/blob/21272ee81d915b1049c4ba1ab981427fac232e80/packages/kit/src/runtime/server/respond.js#L56
+  if (reqUrl.origin !== origin)
+    return createError({ statusCode: 403 });
+}

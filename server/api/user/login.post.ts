@@ -3,12 +3,10 @@ import { getPrisma } from '~/prisma';
 import type { SafeUser } from '~/types/server';
 
 export default defineEventHandler(async (event) => {
-  const reqUrl = getRequestURL(event);
-  const origin = getHeader(event, 'origin');
+  const originError = checkOrigin(event);
 
-  // https://github.com/sveltejs/kit/blob/21272ee81d915b1049c4ba1ab981427fac232e80/packages/kit/src/runtime/server/respond.js#L56
-  if (reqUrl.origin !== origin)
-    return createError({ statusCode: 403 });
+  if (originError)
+    return originError;
 
   const body = await readBody(event) || {};
 
