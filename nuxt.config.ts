@@ -63,6 +63,7 @@ export default defineNuxtConfig({
     'nuxt-icon',
     '@nuxtjs/fontaine',
     'unplugin-ltsdi/nuxt',
+    '@vite-pwa/nuxt',
   ],
 
   css: [
