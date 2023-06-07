@@ -113,7 +113,13 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
 
 <template>
   <div class="item-details__wrapper fast-fade">
-    <section ref="itemDetailsEl" class="item-details">
+    <div
+      ref="itemDetailsEl"
+      role="dialog"
+      class="item-details"
+      aria-modal="true"
+      aria-labelledby="item-details-dialog-title"
+    >
       <button class="item-details__close-button" @click="unsetCurrentItemForDetails">
         <Icon name="close" class="item-details__close-button__icon" />
       </button>
@@ -123,7 +129,11 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
 
         <!-- TODO: split into smaller components -->
         <div v-else-if="mergedDetails" key="content" class="item-details__data">
-          <p class="item-details__data__title">
+          <p
+            id="item-details-dialog-title"
+            class="item-details__data__title"
+            :aria-label="`Details: ${mergedDetails.name}`"
+          >
             {{ mergedDetails.name }}
           </p>
 
@@ -171,7 +181,7 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
           </div>
         </div>
       </Transition>
-    </section>
+    </div>
   </div>
 </template>
 
