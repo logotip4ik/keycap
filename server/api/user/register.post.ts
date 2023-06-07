@@ -3,10 +3,10 @@ import { getPrisma } from '~/prisma';
 export default defineEventHandler(async (event) => {
   if (event.context.user) return null;
 
-  const originError = checkOrigin(event);
+  const isOriginMismatch = checkOriginForMismatch(event);
 
-  if (originError)
-    return originError;
+  if (isOriginMismatch)
+    return createError({ statusCode: 403 });
 
   const body = await readBody(event) || {};
 
