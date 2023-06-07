@@ -127,4 +127,18 @@ export default defineNuxtConfig({
       'postcss-preset-env': {},
     },
   },
+
+  pwa: {
+    srcDir: 'workers',
+    filename: 'sw.ts',
+    registerType: 'prompt',
+    strategies: 'injectManifest',
+    injectRegister: 'inline',
+    client: {
+      periodicSyncForUpdates: 3600,
+    },
+    devOptions: {
+      enabled: true,
+    },
+  },
 });
