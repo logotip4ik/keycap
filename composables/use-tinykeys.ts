@@ -1,4 +1,4 @@
-import tinykeys from 'tinykeys';
+import { tinykeys } from 'tinykeys';
 
 import type { KeyBindingMap, KeyBindingOptions } from 'tinykeys';
 
