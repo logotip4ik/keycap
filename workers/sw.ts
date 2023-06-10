@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import { cacheNames, clientsClaim } from 'workbox-core';
 import { registerRoute, setCatchHandler, setDefaultHandler } from 'workbox-routing';
 import { cleanupOutdatedCaches } from 'workbox-precaching';
@@ -11,6 +9,8 @@ import type { ManifestEntry } from 'workbox-build';
 declare let self: ServiceWorkerGlobalScope;
 declare type ExtendableEvent = any;
 
+self.__WB_DISABLE_DEV_LOGS = true;
+
 const cacheName = cacheNames.runtime;
 
 const buildStrategy = (): Strategy => {
@@ -20,9 +20,7 @@ const buildStrategy = (): Strategy => {
       const cacheMatchDone: Promise<Response | undefined> = handler.cacheMatch(request);
 
       return new Promise((resolve, reject) => {
-        fetchAndCachePutDone.then(resolve).catch((e) => {
-          console.log(`Cannot fetch resource: ${request.url}`, e);
-        });
+        fetchAndCachePutDone.then(resolve);
         cacheMatchDone.then((response) => response && resolve(response));
 
         // Reject if both network and cache error or find no response.
@@ -51,8 +49,6 @@ const denylist = [
   // exclude webmanifest: has its own cache
   /^\/site.webmanifest$/,
 ];
-
-console.log(manifest);
 
 const cacheEntries: RequestInfo[] = [];
 const manifestURLs: string[] = [];
@@ -95,16 +91,8 @@ self.addEventListener('activate', (event: ExtendableEvent) => {
       // clean up those who are not listed in manifestURLs
       cache.keys().then((keys) => {
         keys.forEach((request) => {
-          console.log(`Checking cache entry to be removed: ${request.url}`);
-
-          if (!manifestURLs.includes(request.url)) {
-            cache.delete(request).then((deleted) => {
-              if (deleted)
-                console.log(`Precached data removed: ${request.url || request}`);
-              else
-                console.log(`No precache found: ${request.url || request}`);
-            });
-          }
+          if (!manifestURLs.includes(request.url))
+            cache.delete(request);
         });
       });
     }),
