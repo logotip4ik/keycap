@@ -6,11 +6,9 @@ export default defineNuxtPlugin(async () => {
   const user = useUser();
 
   const refreshToken = () => {
-    const fetcher = () =>
-      $fetch('/api/user/refresh', { retry: 2 })
-        .catch((error) => error.data);
-
-    window.requestIdleCallback(fetcher);
+    window.requestIdleCallback(() => {
+      $fetch('/api/user/refresh', { retry: 1, ignoreResponseError: true });
+    });
   };
 
   watch(user, (newUser) => {
