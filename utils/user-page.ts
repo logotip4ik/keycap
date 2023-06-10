@@ -63,3 +63,20 @@ export function getOfflineStorage() {
 
   return offlineStorage;
 }
+
+export function updateServiceWorker() {
+  const { $pwa: pwa } = useNuxtApp();
+  const createToast = useToast();
+
+  const stopOfflineReady = watch(() => pwa.offlineReady, (ready) => {
+    if (ready) {
+      createToast('Phewww, now you can work offline');
+      stopOfflineReady();
+    }
+  }, { immediate: true });
+
+  watch(() => pwa.needRefresh, (needRefresh) => {
+    if (needRefresh)
+      createToast('You know that we have new content for you ?');
+  }, { immediate: true });
+}
