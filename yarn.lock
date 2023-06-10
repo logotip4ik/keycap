@@ -1872,12 +1872,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/core@npm:^2.1.0-rc.8":
+"@tiptap/core@npm:2.1.0-rc.8":
   version: 2.1.0-rc.8
   resolution: "@tiptap/core@npm:2.1.0-rc.8"
   peerDependencies:
     "@tiptap/pm": ^2.0.0
   checksum: 7a10f9fca923d47cc7cf2d45de11aa2e49c28b309adc5374bdfbb0554f12dc7fa812453cf25f4e902807cf14aeac30bd8a1ad10e78a580e7a92e46ae24996a43
+  languageName: node
+  linkType: hard
+
+"@tiptap/core@patch:@tiptap/core@npm%3A2.1.0-rc.8#./.yarn/patches/@tiptap-core-npm-2.1.0-rc.8-6143bce536.patch::locator=root-workspace-0b6124%40workspace%3A.":
+  version: 2.1.0-rc.8
+  resolution: "@tiptap/core@patch:@tiptap/core@npm%3A2.1.0-rc.8#./.yarn/patches/@tiptap-core-npm-2.1.0-rc.8-6143bce536.patch::version=2.1.0-rc.8&hash=13b8a2&locator=root-workspace-0b6124%40workspace%3A."
+  peerDependencies:
+    "@tiptap/pm": ^2.0.0
+  checksum: 814f0b0a628f9a202f84eedc8cf0f0198136038fd889b04420df0c16e1e5b93988d2844accad811104cea196ce445c04145b52de5c579e8ebbf39301f8bd68c2
   languageName: node
   linkType: hard
 
@@ -2216,7 +2225,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^18.16.16":
+"@types/node@npm:^18.16.17":
   version: 18.16.17
   resolution: "@types/node@npm:18.16.17"
   checksum: 2f7e3a552d525ef4b7a2620ef5ef59b3fdfb1d8ab20627b537e090732b35c2bd103944933d347a319cc7d478b3866b0d1bc3d629ee5899ca663a4547ca078cee
@@ -9303,7 +9312,7 @@ __metadata:
     "@tiptap/vue-3": ^2.1.0-rc.8
     "@total-typescript/ts-reset": ^0.4.2
     "@types/lambda-rate-limiter": ^3.0.0
-    "@types/node": ^18.16.16
+    "@types/node": ^18.16.17
     "@types/sanitize-html": ^2.9.0
     "@unhead/addons": ^1.1.27
     "@vueuse/core": ^10.1.2
@@ -9323,7 +9332,7 @@ __metadata:
     postcss-preset-env: ^8.4.2
     prisma: ^4.15.0
     sanitize-html: ^2.10.0
-    sass: ^1.63.2
+    sass: ^1.63.3
     simple-git: ^3.19.0
     suretype: ^3.3.1
     terser: ^5.17.7
@@ -9421,7 +9430,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.63.2":
+"sass@npm:^1.63.3":
   version: 1.63.3
   resolution: "sass@npm:1.63.3"
   dependencies:
