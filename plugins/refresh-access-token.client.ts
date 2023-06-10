@@ -7,8 +7,7 @@ export default defineNuxtPlugin(async () => {
 
   const refreshToken = () => {
     const fetcher = () =>
-      $fetch('/api/user/refresh', { retry: 2 })
-        .catch((error) => error.data);
+      $fetch('/api/user/refresh', { retry: 1, ignoreResponseError: true });
 
     window.requestIdleCallback(fetcher);
   };
