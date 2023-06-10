@@ -1,18 +1,14 @@
-/// <reference lib="WebWorker" />
-/// <reference types="vite/client" />
+/* eslint-disable no-console */
 
-import { isDevelopment } from 'std-env';
 import { cacheNames, clientsClaim } from 'workbox-core';
 import { registerRoute, setCatchHandler, setDefaultHandler } from 'workbox-routing';
+import { cleanupOutdatedCaches } from 'workbox-precaching';
+import { NetworkOnly, Strategy } from 'workbox-strategies';
 import type { StrategyHandler } from 'workbox-strategies';
-import {
-  NetworkOnly,
-  Strategy,
-} from 'workbox-strategies';
 import type { ManifestEntry } from 'workbox-build';
 
 // Give TypeScript the correct global.
-declare const self: ServiceWorkerGlobalScope;
+declare let self: ServiceWorkerGlobalScope;
 declare type ExtendableEvent = any;
 
 const cacheName = cacheNames.runtime;
@@ -25,15 +21,14 @@ const buildStrategy = (): Strategy => {
 
       return new Promise((resolve, reject) => {
         fetchAndCachePutDone.then(resolve).catch((e) => {
-          if (isDevelopment)
-            console.log(`Cannot fetch resource: ${request.url}`, e);
+          console.log(`Cannot fetch resource: ${request.url}`, e);
         });
         cacheMatchDone.then((response) => response && resolve(response));
 
         // Reject if both network and cache error or find no response.
         Promise.allSettled([fetchAndCachePutDone, cacheMatchDone]).then((results) => {
           const [fetchAndCachePutResult, cacheMatchResult] = results;
-          if (fetchAndCachePutResult.status === 'rejected' && !cacheMatchResult.value)
+          if (fetchAndCachePutResult.status === 'rejected' && (cacheMatchResult.status === 'rejected' || !cacheMatchResult.value))
             reject(fetchAndCachePutResult.reason);
         });
       });
@@ -44,18 +39,46 @@ const buildStrategy = (): Strategy => {
 };
 
 const manifest = self.__WB_MANIFEST as Array<ManifestEntry>;
+if (import.meta.env.PROD)
+  manifest.push({ revision: Math.random().toString(), url: '/' });
+
+const denylist = [
+  /^\/api\//,
+  /^\/login$/,
+  /^\/register$/,
+  // exclude sw: if the user navigates to it, fallback to index.html
+  /^\/sw.js$/,
+  // exclude webmanifest: has its own cache
+  /^\/site.webmanifest$/,
+];
+
+console.log(manifest);
 
 const cacheEntries: RequestInfo[] = [];
+const manifestURLs: string[] = [];
 
-const manifestURLs = manifest.map(
-  (entry) => {
-    const url = new URL(entry.url, self.location);
-    cacheEntries.push(new Request(url.href, {
-      credentials: 'same-origin' as any,
-    }));
-    return url.href;
-  },
-);
+for (const entry of manifest) {
+  let denyCaching = false;
+
+  for (const deny of denylist) {
+    if (deny.test(entry.url)) {
+      denyCaching = true;
+      break;
+    }
+  }
+
+  if (denyCaching)
+    continue;
+
+  // @ts-expect-error taken from example, and it works
+  const url = new URL(entry.url, self.location);
+
+  cacheEntries.push(new Request(url.href, {
+    credentials: 'same-origin' as any,
+  }));
+
+  manifestURLs.push(url.href);
+}
 
 self.addEventListener('install', (event: ExtendableEvent) => {
   event.waitUntil(
@@ -72,15 +95,14 @@ self.addEventListener('activate', (event: ExtendableEvent) => {
       // clean up those who are not listed in manifestURLs
       cache.keys().then((keys) => {
         keys.forEach((request) => {
-          isDevelopment && console.log(`Checking cache entry to be removed: ${request.url}`);
+          console.log(`Checking cache entry to be removed: ${request.url}`);
+
           if (!manifestURLs.includes(request.url)) {
             cache.delete(request).then((deleted) => {
-              if (isDevelopment) {
-                if (deleted)
-                  console.log(`Precached data removed: ${request.url || request}`);
-                else
-                  console.log(`No precache found: ${request.url || request}`);
-              }
+              if (deleted)
+                console.log(`Precached data removed: ${request.url || request}`);
+              else
+                console.log(`No precache found: ${request.url || request}`);
             });
           }
         });
@@ -98,9 +120,9 @@ setDefaultHandler(new NetworkOnly());
 
 // fallback to app-shell for document request
 setCatchHandler(({ event }): Promise<Response> => {
-  switch (event.request.destination) {
+  switch ((event as any).request.destination) {
     case 'document':
-      return caches.match(fallback).then((r) => {
+      return caches.match('/').then((r) => {
         return r ? Promise.resolve(r) : Promise.resolve(Response.error());
       });
     default:
@@ -111,4 +133,6 @@ setCatchHandler(({ event }): Promise<Response> => {
 // this is necessary, since the new service worker will keep on skipWaiting state
 // and then, caches will not be cleared since it is not activated
 self.skipWaiting();
+
 clientsClaim();
+cleanupOutdatedCaches();
