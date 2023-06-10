@@ -98,7 +98,7 @@ export default defineNuxtConfig({
     },
 
     optimizeDeps: {
-      include: ['@superhuman/command-score'],
+      include: ['@superhuman/command-score', 'workbox-core', 'workbox-routing', 'workbox-strategies', 'workbox-precaching'],
     },
 
     css: {
@@ -133,12 +133,15 @@ export default defineNuxtConfig({
     filename: 'sw.ts',
     registerType: 'prompt',
     strategies: 'injectManifest',
-    injectRegister: 'inline',
+    manifest: false,
     client: {
+      installPrompt: true,
+      registerPlugin: true,
       periodicSyncForUpdates: 3600,
     },
-    devOptions: {
-      enabled: true,
+    injectManifest: {
+      globPatterns: ['**/*.{js,json,css,html,txt,svg,png,ico,webp,woff,woff2,ttf,eot,otf,wasm}'],
+      globIgnores: ['**.webmanifest', 'register', 'login'],
     },
   },
 });
