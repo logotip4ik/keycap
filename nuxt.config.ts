@@ -98,7 +98,15 @@ export default defineNuxtConfig({
     },
 
     optimizeDeps: {
-      include: ['@superhuman/command-score', 'workbox-core', 'workbox-routing', 'workbox-strategies', 'workbox-precaching'],
+      include: [
+        '@superhuman/command-score',
+        'idb-keyval',
+        'comlink',
+        'workbox-core',
+        'workbox-routing',
+        'workbox-strategies',
+        'workbox-precaching',
+      ],
     },
 
     css: {
@@ -135,13 +143,19 @@ export default defineNuxtConfig({
     strategies: 'injectManifest',
     manifest: false,
     client: {
-      installPrompt: true,
+      installPrompt: false,
       registerPlugin: true,
       periodicSyncForUpdates: 3600,
     },
+
     injectManifest: {
       globPatterns: ['**/*.{js,json,css,html,txt,svg,png,ico,webp,woff,woff2,ttf,eot,otf,wasm}'],
       globIgnores: ['**.webmanifest', 'register', 'login'],
+    },
+
+    devOptions: {
+      enabled: true,
+      type: 'module',
     },
   },
 });
