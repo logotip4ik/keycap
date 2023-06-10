@@ -79,7 +79,9 @@ onMounted(() => {
   if (typeof route.query.search !== 'undefined')
     isShowingSearch.value = true;
 
-  [preloadDashboardComponents, defineFuzzyWorker, updateServiceWorker]
+  updateServiceWorker();
+
+  [preloadDashboardComponents, defineFuzzyWorker]
     .map((cb) => window.requestIdleCallback(cb));
 
   if (process.dev)
