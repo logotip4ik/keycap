@@ -147,7 +147,7 @@ export default defineNuxtConfig({
       immediate: true,
       installPrompt: false,
       registerPlugin: true,
-      periodicSyncForUpdates: 3600,
+      periodicSyncForUpdates: 20,
     },
 
     injectManifest: {
