@@ -27,6 +27,15 @@ onBeforeUnmount(() => clearTimeout(timeout));
     <span v-else-if="toast.type === 'loading'" class="toast__icon toast__icon--spinner" aria-hidden="true" data-icon />
 
     <p class="toast__text">{{ toast.message }}</p>
+
+    <button
+      v-for="(button, i) in props.toast.buttons"
+      :key="`${i}-${button.text}`"
+      class="toast__button"
+      @click="button.onClick(props.toast)"
+    >
+      {{ button.text }}
+    </button>
   </output>
 </template>
 
@@ -35,7 +44,8 @@ onBeforeUnmount(() => clearTimeout(timeout));
   --icon-size: 1.4rem;
   --base-shadow-color: 0, 0, 0;
 
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr;
   justify-content: flex-start;
   align-items: flex-start;
 
@@ -94,6 +104,45 @@ onBeforeUnmount(() => clearTimeout(timeout));
       border-left-color: currentColor;
 
       animation: spin 1s infinite linear;
+    }
+  }
+
+  &__button {
+    grid-column: 1 / 3;
+
+    font: inherit;
+    font-size: 1.075rem;
+    color: hsla(var(--text-color-hsl), 0.85);
+
+    width: 100%;
+
+    padding: 0.5rem 1rem;
+    margin-top: 1.25rem;
+
+    appearance: none;
+    border-radius: 0.2rem;
+    background-color: transparent;
+    border: 1px solid hsla(var(--text-color-hsl), 0.25);
+
+    cursor: pointer;
+    pointer-events: all;
+
+    transition: color .3s, border-color .3s, box-shadow .3s;
+
+    & + & {
+      margin-top: 0.6rem;
+    }
+
+    &:is(:hover, :focus-visible) {
+      transition-duration: 0.1s;
+
+      color: hsla(var(--text-color-hsl), 1);
+      border-color: hsla(var(--text-color-hsl), 0.5);
+      box-shadow: inset 0 0 1rem 0 hsla(var(--text-color-hsl), 0.075);
+    }
+
+    @media screen and (max-width: $breakpoint-tablet) {
+      padding-block: 0.65rem;
     }
   }
 }
