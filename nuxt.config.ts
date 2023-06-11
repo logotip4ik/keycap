@@ -142,6 +142,7 @@ export default defineNuxtConfig({
     registerType: 'prompt',
     strategies: 'injectManifest',
     manifest: false,
+    includeManifestIcons: false,
     client: {
       immediate: false,
       installPrompt: false,
