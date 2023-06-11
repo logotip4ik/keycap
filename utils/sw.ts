@@ -18,8 +18,10 @@ export function updateServiceWorker() {
         duration: 25 * 1000, // 25 seconds
         delay: 550,
         buttons: [
-          { text: 'refresh now', onClick: () => pwa.updateServiceWorker() },
-          { text: 'nahh, not now', onClick: (t) => t.remove() },
+          // { text: 'refresh now', onClick: () => pwa.updateServiceWorker() },
+          // { text: 'nahh, not now', onClick: (t) => t.remove() },
+          { text: 'refresh now', onClick: () => console.log('will update') },
+          { text: 'nahh, not now', onClick: (t) => console.log('will remove toast') },
         ],
       });
     }
