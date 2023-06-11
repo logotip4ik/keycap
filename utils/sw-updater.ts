@@ -4,7 +4,7 @@ export function updateServiceWorker() {
 
   const stopOfflineReady = watch(() => pwa.offlineReady, (ready) => {
     if (ready) {
-      createToast('Phewww, now you can work offline');
+      createToast('Phewww, now you can work offline', { delay: 550 });
       stopOfflineReady();
     }
   }, { immediate: true });
@@ -14,6 +14,7 @@ export function updateServiceWorker() {
       createToast('Psss... We have some updates', {
         priority: 10,
         duration: 25 * 1000, // 25 seconds
+        delay: 550,
         buttons: [
           { text: 'refresh now', onClick: () => pwa.updateServiceWorker() },
           { text: 'nahh, not now', onClick: (t) => t.remove() },
