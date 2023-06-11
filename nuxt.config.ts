@@ -143,9 +143,8 @@ export default defineNuxtConfig({
     strategies: 'injectManifest',
     manifest: false,
     client: {
-      // @ts-expect-error available only with patch
       immediate: false,
-      installPrompt: true,
+      installPrompt: false,
       registerPlugin: true,
       periodicSyncForUpdates: 3600,
     },
