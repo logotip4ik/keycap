@@ -89,7 +89,8 @@ const denylist = [
 ];
 
 registerRoute(
-  ({ url }) => !denylist.some((deny) => deny.test(url.pathname)) && manifestURLs.includes(url.href),
+  ({ url }) =>
+    !denylist.some((deny) => deny.test(url.pathname)) && manifestURLs.includes(url.href),
   buildStrategy(),
 );
 
