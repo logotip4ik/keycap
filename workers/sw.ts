@@ -78,8 +78,8 @@ self.addEventListener('activate', (event: ExtendableEvent) => {
 
 const denylist = [
   /^\/$/,
-  /^\/login$/,
-  /^\/register$/,
+  /^\/?login$/,
+  /^\/?register$/,
 
   /^\/api\//,
   // exclude sw: if the user navigates to it, fallback to index.html
