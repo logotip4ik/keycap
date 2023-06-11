@@ -12,6 +12,8 @@ export default defineCachedEventHandler((event) => {
   if (user)
     manifest.start_url = `/@${user.username}`;
 
+  setHeader(event, 'Content-Type', 'application/manifest+json');
+
   return manifest;
 }, {
   swr: true,
