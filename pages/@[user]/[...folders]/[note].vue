@@ -201,25 +201,23 @@ onBeforeUnmount(() => {
 
 <template>
   <Transition name="fade" appear>
-    <template v-if="note">
-      <!-- NOTE: This component should be wrapped inside client only, if note is rendered on server -->
-      <WorkspaceNoteEditor
-        key="content"
-        class="workspace__note-editor"
-        :content="note.content || ''"
-        :editable="!isFallbackMode && !!note"
-        @refresh="refresh"
-        @update="throttledUpdate"
-        @show-details="showDetails"
-      />
-    </template>
+    <!-- NOTE: This component should be wrapped inside client only, if note is rendered on server -->
+    <WorkspaceNoteEditor
+      v-if="note"
+      key="content"
+      class="workspace__note-editor"
+      :content="note.content || ''"
+      :editable="!isFallbackMode && !!note"
+      @refresh="refresh"
+      @update="throttledUpdate"
+      @show-details="showDetails"
+    />
 
-    <template v-else>
-      <WorkspaceNoteEditorSkeleton
-        key="skeleton"
-        class="workspace__note-editor"
-      />
-    </template>
+    <WorkspaceNoteEditorSkeleton
+      v-else
+      key="skeleton"
+      class="workspace__note-editor"
+    />
   </Transition>
 </template>
 

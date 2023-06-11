@@ -1,0 +1,66 @@
+diff --git a/dist/module.d.ts b/dist/module.d.ts
+index 155c5db65bcd320c691821903c74455883701542..072c89122a01212d249401cb9b2f5bafe054a9c2 100644
+--- a/dist/module.d.ts
++++ b/dist/module.d.ts
+@@ -39,6 +39,9 @@ interface ClientOptions {
+      * When set to true, the key used will be `vite-pwa:hide-install`.
+      */
+     installPrompt?: boolean | string;
++
++    // https://vite-pwa-org.netlify.app/guide/auto-update.html#automatic-reload
++    immediate?: boolean
+ }
+ interface ModuleOptions extends Partial<VitePWAOptions> {
+     registerWebManifestInRouteRules?: boolean;
+diff --git a/dist/module.mjs b/dist/module.mjs
+index c7d6c29395922ccc0a6408c7973ddc644ecec10a..b6d2bc2becdb2a93a157efc24472429f2fdc65d0 100644
+--- a/dist/module.mjs
++++ b/dist/module.mjs
+@@ -71,6 +71,7 @@ const module = defineNuxtModule({
+     registerPlugin: true,
+     writePlugin: false,
+     client: {
++      immediate: true,
+       registerPlugin: true,
+       installPrompt: false,
+       periodicSyncForUpdates: 0
+@@ -82,14 +83,15 @@ const module = defineNuxtModule({
+     const resolveVitePluginPWAAPI = () => {
+       return vitePwaClientPlugin?.api;
+     };
+-    const client = options.client ?? { registerPlugin: true, installPrompt: false, periodicSyncForUpdates: 0 };
++    const client = options.client ?? { registerPlugin: true, installPrompt: false, periodicSyncForUpdates: 0, immediate: true };
+     if (client.registerPlugin) {
+       addPluginTemplate({
+         src: resolver.resolve("../templates/pwa.client.ts"),
+         write: nuxt.options.dev || options.writePlugin,
+         options: {
+           periodicSyncForUpdates: typeof client.periodicSyncForUpdates === "number" ? client.periodicSyncForUpdates : 0,
+-          installPrompt: typeof client.installPrompt === "undefined" || client.installPrompt === false ? void 0 : client.installPrompt === true || client.installPrompt.trim() === "" ? "vite-pwa:hide-install" : client.installPrompt.trim()
++          installPrompt: typeof client.installPrompt === "undefined" || client.installPrompt === false ? void 0 : client.installPrompt === true || client.installPrompt.trim() === "" ? "vite-pwa:hide-install" : client.installPrompt.trim(),
++          immediate: client.immediate
+         }
+       });
+     }
+diff --git a/templates/pwa.client.ts b/templates/pwa.client.ts
+index 64620a2149527b08357982d626bbac0afb5f4b94..2db3a4dfdde7a798d3881770a52f7d5101b3c123 100644
+--- a/templates/pwa.client.ts
++++ b/templates/pwa.client.ts
+@@ -4,7 +4,7 @@ import { defineNuxtPlugin } from '#imports'
+ 
+ import { type PwaInjection } from '@vite-pwa/nuxt'
+ 
+-const options: { periodicSyncForUpdates: number; installPrompt?: string } = <%= JSON.stringify(options) %>
++const options: { periodicSyncForUpdates: number; installPrompt?: string; immediate?: boolean } = <%= JSON.stringify(options) %>
+ 
+ export default defineNuxtPlugin(() => {
+   const registrationError = ref(false)
+@@ -43,7 +43,7 @@ export default defineNuxtPlugin(() => {
+   const {
+     offlineReady, needRefresh, updateServiceWorker,
+   } = useRegisterSW({
+-    immediate: true,
++    immediate: options.immediate ?? true,
+     onRegisterError() {
+       registrationError.value = true
+     },

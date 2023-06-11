@@ -6,6 +6,9 @@ definePageMeta({
   middleware: ['auth'],
 });
 
+if (typeof window !== 'undefined')
+  import('~/utils/sw-controller').then((sw) => sw.updateServiceWorker());
+
 const route = useRoute();
 const user = useUser();
 const { width: windowWidth } = useWindowSize();
@@ -79,11 +82,8 @@ onMounted(() => {
   if (typeof route.query.search !== 'undefined')
     isShowingSearch.value = true;
 
-  // request idle callback is polyfilled by nuxt
-  window.requestIdleCallback(() =>
-    [preloadDashboardComponents, defineFuzzyWorker]
-      .map((cb) => cb()),
-  );
+  [preloadDashboardComponents, defineFuzzyWorker]
+    .map((cb) => window.requestIdleCallback(cb));
 
   if (process.dev)
     // @ts-expect-error this should not be defined

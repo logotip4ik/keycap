@@ -24,7 +24,7 @@ const folder = ref<FolderWithContents | null>(
   foldersCache.get(folderPath.value) || null,
 );
 
-const POLLING_TIME = 90 * 1000;
+const POLLING_TIME = 100 * 1000;
 let pollingTimer: NodeJS.Timeout;
 let firstTimeFetch = true;
 let prevFolderPath = folderPath.value;

@@ -63,6 +63,7 @@ export default defineNuxtConfig({
     'nuxt-icon',
     '@nuxtjs/fontaine',
     'unplugin-ltsdi/nuxt',
+    '@vite-pwa/nuxt',
   ],
 
   css: [
@@ -97,7 +98,15 @@ export default defineNuxtConfig({
     },
 
     optimizeDeps: {
-      include: ['@superhuman/command-score'],
+      include: [
+        '@superhuman/command-score',
+        'idb-keyval',
+        'comlink',
+        'workbox-core',
+        'workbox-routing',
+        'workbox-strategies',
+        'workbox-precaching',
+      ],
     },
 
     css: {
@@ -124,6 +133,26 @@ export default defineNuxtConfig({
   postcss: {
     plugins: {
       'postcss-preset-env': {},
+    },
+  },
+
+  pwa: {
+    srcDir: 'workers',
+    filename: 'sw.ts',
+    registerType: 'prompt',
+    strategies: 'injectManifest',
+    manifest: false,
+    includeManifestIcons: false,
+    client: {
+      immediate: true,
+      installPrompt: false,
+      registerPlugin: true,
+      periodicSyncForUpdates: 20,
+    },
+
+    injectManifest: {
+      globPatterns: ['**/*.{js,json,css,html,txt,svg,png,ico,webp,woff,woff2,ttf,eot,otf,wasm}'],
+      globIgnores: ['**.webmanifest', 'register', 'login'],
     },
   },
 });

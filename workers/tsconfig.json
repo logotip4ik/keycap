@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "lib": ["ESNext", "DOM", "WebWorker"],
+    "types": ["vite/client", "service-worker"]
+  },
+  "include": ["./"],
+  "extends": "../.nuxt/tsconfig.json"
+}
