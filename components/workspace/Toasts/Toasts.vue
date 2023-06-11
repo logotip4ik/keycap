@@ -38,14 +38,14 @@ if (typeof window !== 'undefined')
       class="toasts"
       tag="section"
       name="toast"
-      :data-toasts-number="sortedToasts.length"
       @before-leave="beforeLeaveHook"
     >
       <WorkspaceToastsItem
-        v-for="toast in sortedToasts"
+        v-for="(toast, i) in sortedToasts"
         :key="toast.id"
         :toast="toast"
         :animation-duration="ANIMATION_DURATION"
+        :data-has-top-sibling="!!sortedToasts[i - 1]"
       />
     </TransitionGroup>
   </Teleport>
@@ -96,7 +96,7 @@ if (typeof window !== 'undefined')
   }
 }
 
-[data-toasts-number="1"] .toast-enter-active {
+.toast-enter-active[data-has-top-sibling="false"] {
   --initial-pos: 0px, 0px, 0px;
 
   transform-origin: center center;
