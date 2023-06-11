@@ -6,6 +6,9 @@ definePageMeta({
   middleware: ['auth'],
 });
 
+if (typeof window !== 'undefined')
+  import('~/utils/sw-controller').then((sw) => sw.updateServiceWorker());
+
 const route = useRoute();
 const user = useUser();
 const { width: windowWidth } = useWindowSize();
@@ -89,9 +92,6 @@ onMounted(() => {
 
 provide(IsSmallScreenKey, isSmallScreen);
 provide(IsNoteNameEmptyKey, isNoteNameEmpty);
-
-if (typeof window !== 'undefined')
-  import('~/utils/sw').then((sw) => sw.updateServiceWorker());
 </script>
 
 <template>
