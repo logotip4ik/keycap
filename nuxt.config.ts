@@ -143,7 +143,7 @@ export default defineNuxtConfig({
     strategies: 'injectManifest',
     manifest: false,
     client: {
-      installPrompt: false,
+      installPrompt: true,
       registerPlugin: true,
       periodicSyncForUpdates: 3600,
     },
@@ -151,11 +151,6 @@ export default defineNuxtConfig({
     injectManifest: {
       globPatterns: ['**/*.{js,json,css,html,txt,svg,png,ico,webp,woff,woff2,ttf,eot,otf,wasm}'],
       globIgnores: ['**.webmanifest', 'register', 'login'],
-    },
-
-    devOptions: {
-      enabled: true,
-      type: 'module',
     },
   },
 });
