@@ -76,7 +76,15 @@ export function updateServiceWorker() {
   }, { immediate: true });
 
   watch(() => pwa.needRefresh, (needRefresh) => {
-    if (needRefresh)
-      createToast('You know that we have new content for you ?');
+    if (needRefresh) {
+      createToast('Psss... We have some updates', {
+        priority: 10,
+        duration: 25 * 1000, // 25 seconds
+        buttons: [
+          { text: 'refresh now', onClick: () => pwa.updateServiceWorker() },
+          { text: 'nahh, not now', onClick: (t) => t.remove() },
+        ],
+      });
+    }
   }, { immediate: true });
 }
