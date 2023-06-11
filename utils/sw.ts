@@ -9,11 +9,9 @@ export function updateServiceWorker() {
     }
   }, { immediate: true });
 
-  watch(() => pwa, () => {
-    console.log(pwa);
-  }, { immediate: true, deep: true });
-
   watch(() => pwa.needRefresh, (needRefresh) => {
+    console.log({ needRefresh });
+
     if (needRefresh) {
       createToast('Psss... We have some updates', {
         priority: 10,
