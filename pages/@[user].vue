@@ -91,7 +91,7 @@ provide(IsSmallScreenKey, isSmallScreen);
 provide(IsNoteNameEmptyKey, isNoteNameEmpty);
 
 if (typeof window !== 'undefined')
-  import('~/utils/sw-updater').then((sw) => sw.updateServiceWorker());
+  import('~/utils/sw').then((sw) => sw.updateServiceWorker());
 </script>
 
 <template>
