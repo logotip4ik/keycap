@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "lib": ["ESNext", "WebWorker"],
+    "lib": ["ESNext", "DOM", "WebWorker"],
     "types": ["vite/client", "service-worker"]
   },
   "include": ["./"],
