@@ -3580,7 +3580,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vite-pwa/nuxt@npm:^0.1.0":
+"@vite-pwa/nuxt@npm:0.1.0":
   version: 0.1.0
   resolution: "@vite-pwa/nuxt@npm:0.1.0"
   dependencies:
@@ -3590,6 +3590,19 @@ __metadata:
     "@nuxt/kit": ^3.5.3
     vite-plugin-pwa: ">=0.16.3 <1"
   checksum: c53492047b2e007ab85ff54bf3310e90362f909153cffac3c7ea14522470f5e2d484e974b7698be6d792c03bcb406d863c0246f015e89c3c224ffe800e81280b
+  languageName: node
+  linkType: hard
+
+"@vite-pwa/nuxt@patch:@vite-pwa/nuxt@npm%3A0.1.0#./.yarn/patches/@vite-pwa-nuxt-npm-0.1.0-4488726881.patch::locator=root-workspace-0b6124%40workspace%3A.":
+  version: 0.1.0
+  resolution: "@vite-pwa/nuxt@patch:@vite-pwa/nuxt@npm%3A0.1.0#./.yarn/patches/@vite-pwa-nuxt-npm-0.1.0-4488726881.patch::version=0.1.0&hash=5cf6d9&locator=root-workspace-0b6124%40workspace%3A."
+  dependencies:
+    "@nuxt/kit": ^3.5.3
+    vite-plugin-pwa: ">=0.16.3 <1"
+  peerDependencies:
+    "@nuxt/kit": ^3.5.3
+    vite-plugin-pwa: ">=0.16.3 <1"
+  checksum: c324cb0ff4acce4713de86835008c412e1ec3a0a9c99399281c0ed9e7ea1dd9c464231e1698d7a25577d9c3d66ec7a7e88823c4f4cc8998f919cbdab5701a8b4
   languageName: node
   linkType: hard
 
