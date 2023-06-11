@@ -127,7 +127,7 @@ onBeforeUnmount(() => clearTimeout(timeout));
     cursor: pointer;
     pointer-events: all;
 
-    transition: color .3s, border-color .3s, box-shadow .3s;
+    transition: color .3s, background-color .3s;
 
     & + & {
       margin-top: 0.6rem;
@@ -137,8 +137,7 @@ onBeforeUnmount(() => clearTimeout(timeout));
       transition-duration: 0.1s;
 
       color: hsla(var(--text-color-hsl), 1);
-      border-color: hsla(var(--text-color-hsl), 0.5);
-      box-shadow: inset 0 0 1rem 0 hsla(var(--text-color-hsl), 0.075);
+      background-color: hsla(var(--text-color-hsl), 0.075);
     }
 
     @media screen and (max-width: $breakpoint-tablet) {
