@@ -144,7 +144,7 @@ export default defineNuxtConfig({
     manifest: false,
     includeManifestIcons: false,
     client: {
-      immediate: false,
+      immediate: true,
       installPrompt: false,
       registerPlugin: true,
       periodicSyncForUpdates: 3600,
