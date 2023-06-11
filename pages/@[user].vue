@@ -79,8 +79,6 @@ onMounted(() => {
   if (typeof route.query.search !== 'undefined')
     isShowingSearch.value = true;
 
-  updateServiceWorker();
-
   [preloadDashboardComponents, defineFuzzyWorker]
     .map((cb) => window.requestIdleCallback(cb));
 
@@ -91,6 +89,9 @@ onMounted(() => {
 
 provide(IsSmallScreenKey, isSmallScreen);
 provide(IsNoteNameEmptyKey, isNoteNameEmpty);
+
+if (typeof window !== 'undefined')
+  import('~/utils/sw').then((sw) => sw.updateServiceWorker());
 </script>
 
 <template>
