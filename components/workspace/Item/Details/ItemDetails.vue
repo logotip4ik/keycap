@@ -214,6 +214,8 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
     width: 100%;
     max-width: unset;
 
+    padding-block-start: 3rem;
+
     border: none;
     border-radius: 0;
   }
