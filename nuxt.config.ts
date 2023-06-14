@@ -106,6 +106,7 @@ export default defineNuxtConfig({
         'workbox-routing',
         'workbox-strategies',
         'workbox-precaching',
+        'workbox-window',
       ],
     },
 
@@ -146,7 +147,7 @@ export default defineNuxtConfig({
     client: {
       installPrompt: false,
       registerPlugin: true,
-      periodicSyncForUpdates: 20,
+      periodicSyncForUpdates: 60 * 20, // every 20m check if new version is available
     },
 
     injectManifest: {
