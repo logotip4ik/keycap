@@ -24,7 +24,7 @@ const buildStrategy = (): Strategy => {
 
       return new Promise((resolve, reject) => {
         fetchAndCachePutDone.then((response) => response && resolve(response));
-        cacheMatchDone.then((response) => response && wait(250).then(() => resolve(response)));
+        cacheMatchDone.then((response) => response && wait(100).then(() => resolve(response)));
 
         // Reject if both network and cache error or find no response.
         Promise.allSettled([fetchAndCachePutDone, cacheMatchDone]).then((results) => {
