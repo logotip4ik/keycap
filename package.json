@@ -13,14 +13,14 @@
     "@nuxtjs/fontaine": "^0.4.0",
     "@parcel/watcher": "^2.1.0",
     "@types/lambda-rate-limiter": "^3.0.0",
-    "@types/node": "^18.16.17",
+    "@types/node": "^18.16.18",
     "@types/sanitize-html": "^2.9.0",
     "eslint": "8.42.0",
     "normalize.css": "^8.0.1",
     "nuxt": "^3.5.3",
     "nuxt-icon": "^0.4.1",
     "prisma": "^4.15.0",
-    "sass": "^1.63.3",
+    "sass": "^1.63.4",
     "typescript": "^5.1.3"
   },
   "dependencies": {
@@ -66,11 +66,11 @@
     "magic-string": "^0.30.0",
     "mitt": "^3.0.0",
     "nanoid": "^4.0.2",
-    "postcss-preset-env": "^8.4.2",
+    "postcss-preset-env": "^8.5.0",
     "sanitize-html": "^2.10.0",
     "simple-git": "^3.19.0",
     "suretype": "^3.3.1",
-    "terser": "^5.17.7",
+    "terser": "^5.18.0",
     "tinykeys": "^2.0.0",
     "ufo": "^1.1.2",
     "unplugin-ltsdi": "^0.1.0"
@@ -78,7 +78,6 @@
   "packageManager": "yarn@3.4.1",
   "resolutions": {
     "nuxt@^3.5.3": "patch:nuxt@npm%3A3.5.3#./.yarn/patches/nuxt-npm-3.5.1-37f7512905.patch",
-    "@tiptap/core@^2.1.0-rc.8": "patch:@tiptap/core@npm%3A2.1.0-rc.8#./.yarn/patches/@tiptap-core-npm-2.1.0-rc.8-6143bce536.patch",
-    "@vite-pwa/nuxt@^0.1.0": "patch:@vite-pwa/nuxt@npm%3A0.1.0#./.yarn/patches/@vite-pwa-nuxt-npm-0.1.0-4488726881.patch"
+    "@tiptap/core@^2.1.0-rc.8": "patch:@tiptap/core@npm%3A2.1.0-rc.8#./.yarn/patches/@tiptap-core-npm-2.1.0-rc.8-6143bce536.patch"
   }
 }
