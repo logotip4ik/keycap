@@ -134,6 +134,7 @@ async function showFolderContents() {
   &__button {
     --button-size-basis: 3rem;
 
+    flex-shrink: 0;
     display: none;
 
     color: hsla(var(--text-color-hsl), 0.85);
