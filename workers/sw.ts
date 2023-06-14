@@ -2,8 +2,8 @@
 /// <reference types="vite/client" />
 
 import { cacheNames, clientsClaim } from 'workbox-core';
-import { registerRoute, setCatchHandler, setDefaultHandler } from 'workbox-routing';
-import { NetworkOnly, StaleWhileRevalidate, Strategy } from 'workbox-strategies';
+import { registerRoute } from 'workbox-routing';
+import { Strategy } from 'workbox-strategies';
 import { cleanupOutdatedCaches } from 'workbox-precaching';
 import type { StrategyHandler } from 'workbox-strategies';
 import type { ManifestEntry } from 'workbox-build';
@@ -40,7 +40,23 @@ const buildStrategy = (): Strategy => {
   return new CacheNetworkRace();
 };
 
-const manifest = self.__WB_MANIFEST as Array<ManifestEntry>;
+const denylist = [
+  /^\/$/,
+  /^\/?about$/,
+  /^\/?login$/,
+  /^\/?register$/,
+
+  /^\/api\//,
+  // exclude sw: if the user navigates to it, fallback to index.html
+  /^\/sw.js$/,
+  // exclude webmanifest: has its own cache
+  /^\/site.webmanifest$/,
+];
+
+// TODO: somehow add current user page to cache. Like
+// /@test, so it could actually work without internet
+const manifest = (self.__WB_MANIFEST as Array<ManifestEntry>)
+  .filter((entry) => !denylist.some((deny) => deny.test(entry.url)));
 
 const cacheEntries: RequestInfo[] = [];
 
@@ -76,42 +92,15 @@ self.addEventListener('activate', (event: ExtendableEvent) => {
   );
 });
 
-const denylist = [
-  /^\/$/,
-  /^\/?login$/,
-  /^\/?register$/,
-
-  /^\/api\//,
-  // exclude sw: if the user navigates to it, fallback to index.html
-  /^\/sw.js$/,
-  // exclude webmanifest: has its own cache
-  /^\/site.webmanifest$/,
-];
-
 registerRoute(
-  ({ url }) =>
-    !denylist.some((deny) => deny.test(url.pathname)) && manifestURLs.includes(url.href),
+  ({ url, sameOrigin }) =>
+    sameOrigin && (
+      manifestURLs.includes(url.href)
+      || url.pathname.startsWith('/api/search/client',
+      )
+    ),
   buildStrategy(),
 );
-
-registerRoute(
-  ({ sameOrigin, url }) =>
-    sameOrigin && url.pathname.startsWith('/api/search/client'),
-  new StaleWhileRevalidate(),
-);
-
-setDefaultHandler(new NetworkOnly());
-
-setCatchHandler(({ event }): Promise<Response> => {
-  switch ((event as any).request.destination) {
-    case 'document':
-      return caches.match('/').then((r) => {
-        return r ? Promise.resolve(r) : Promise.resolve(Response.error());
-      });
-    default:
-      return Promise.resolve(Response.error());
-  }
-});
 
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING')
