@@ -31,9 +31,12 @@ if (process.server) {
 </script>
 
 <template>
-  <div>
-    <NuxtLoadingIndicator color="var(--loading-indicator-color)" />
+  <Teleport to="body">
+    <LazyNuxtLoadingIndicator
+      color="var(--loading-indicator-color)"
+      :throttle="250"
+    />
+  </Teleport>
 
-    <NuxtPage />
-  </div>
+  <NuxtPage />
 </template>
