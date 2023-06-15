@@ -9,7 +9,6 @@ export default defineEventHandler(async (event) => {
     { path: '/api/note' },
     { path: '/api/folder' },
     { path: '/api/search' },
-    { path: '/api/user/me' },
     { path: '/api/user/refresh' },
     { path: '/api/share/note' },
   ];
