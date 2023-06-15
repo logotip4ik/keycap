@@ -33,6 +33,8 @@ const emit = defineEmits<Emits>();
 
 const mitt = useMitt();
 
+let noteChanged = false;
+
 // TODO: export this whole mess into separate file
 const editor = useEditor({
   autofocus: window.innerWidth > 740 && 'start', // disable auto focus on small screens
@@ -87,7 +89,10 @@ const editor = useEditor({
     }),
   ],
 
-  onUpdate: useDebounceFn(saveEditorContent, 350),
+  onUpdate: useDebounceFn(() => {
+    noteChanged = true;
+    saveEditorContent();
+  }, 350),
 });
 
 function update(content: string) {
@@ -98,13 +103,6 @@ function saveEditorContent() {
   const noteContent = editor.value?.isEmpty ? '' : editor.value?.getHTML();
 
   update(noteContent || '');
-}
-
-function handleVisibilityChange() {
-  if (document.visibilityState === 'visible')
-    emit('refresh');
-  else if (document.visibilityState === 'hidden')
-    saveEditorContent();
 }
 
 function hideBubbleMenu() {
@@ -119,7 +117,8 @@ mitt.on('save:note', saveEditorContent);
 watch(() => props.content, (content) => {
   const editorContent = editor.value?.getHTML();
 
-  if (editorContent !== content) editor.value?.commands.setContent(content);
+  if (editorContent !== content)
+    editor.value?.commands.setContent(content);
 });
 
 watch(() => props.editable, (editable) => {
@@ -139,12 +138,17 @@ useTinykeys({
   },
 });
 
-useEventListener(window, 'visibilitychange', handleVisibilityChange, { passive: true });
+useEventListener(window, 'visibilitychange', () => {
+  if (document.visibilityState === 'visible')
+    emit('refresh');
+  else if (document.visibilityState === 'hidden' && noteChanged)
+    saveEditorContent();
+}, { passive: true });
 
 // if user updated current note and switched to another note
 // before debounced function execution, try to save content
 onBeforeRouteUpdate((from, to) => {
-  if (from.path !== to.path)
+  if (from.path !== to.path && noteChanged)
     saveEditorContent();
 });
 </script>
