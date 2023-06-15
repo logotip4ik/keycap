@@ -1,7 +1,6 @@
 import { toBigInt } from '~/server/utils';
 
-// const NEAR_HOUR = 60 * 60 - 10; // in seconds
-const NEAR_HOUR = 5; // in seconds
+const NEAR_HOUR = 60 * 60 - 10; // in seconds
 
 let setUserOnClient = false;
 let prevInterval: NodeJS.Timer;
