@@ -32,7 +32,7 @@ if (process.server) {
 
 <template>
   <Teleport to="body">
-    <LazyNuxtLoadingIndicator
+    <NuxtLoadingIndicator
       color="var(--loading-indicator-color)"
       :throttle="250"
     />
