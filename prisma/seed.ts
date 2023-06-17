@@ -12,7 +12,7 @@ import { generateFolderPath, generateNotePath, generateRootFolderPath } from '~/
 const prisma = getPrisma();
 
 async function main() {
-  const numberOfUsers = 250;
+  const numberOfUsers = 75;
   const users: Prisma.UserCreateInput[] = [];
 
   const usersFilename = 'users-result';
@@ -78,8 +78,9 @@ async function main() {
 
       const folder: Prisma.FolderCreateInput = {
         name,
+        path: generateFolderPath(owner.username, encodeURIComponent(name)),
         owner: { connect: { username: owner.username } },
-        path: generateFolderPath(owner.username, name),
+        parent: { connect: { path: generateRootFolderPath(owner.username) } },
       };
 
       userFolders[owner.username] ||= [];
