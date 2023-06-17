@@ -258,6 +258,8 @@ function handleContextmenu(event: Event) {
     }
 
     &__folder-icon {
+      flex-shrink: 0;
+
       margin-right: 0.25rem;
 
       opacity: 0.75;
