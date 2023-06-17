@@ -26,7 +26,7 @@ export default defineNuxtPlugin(() => {
 
   function refreshAuth() {
     window.requestIdleCallback(async () => {
-      const newUser = await $fetch('/api/user/refresh', { retry: 1, ignoreResponseError: true })
+      const newUser = await $fetch('/api/user/refresh', { retry: 1 })
         .catch(async (error) => {
           if (error.statusCode === 401 && route.path.includes('/@'))
             await navigateTo('/login', { replace: true });
