@@ -17,7 +17,8 @@ export function generateRootFolderPath(username: string) {
 }
 
 export function toBigInt(string: string): bigint {
-  if (string.at(-1) === 'n') return BigInt(string.substring(0, string.length - 1));
+  if (string.at(-1) === 'n')
+    return BigInt(string.substring(0, string.length - 1));
 
   let res = BigInt(-1);
 
