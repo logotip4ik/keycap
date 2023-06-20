@@ -1,5 +1,6 @@
 import { isDevelopment } from 'std-env';
 import UnheadVite from '@unhead/addons/vite';
+import browserslistToEsbuild from 'browserslist-to-esbuild';
 
 import { getHeaders } from './headers.config';
 import breakpoints from './assets/constants/breakpoints';
@@ -84,6 +85,7 @@ export default defineNuxtConfig({
 
     build: {
       target: 'esnext',
+      cssTarget: browserslistToEsbuild(),
       ...(typeof process.env.VERCEL !== 'undefined'
         ? {
             minify: 'terser',
