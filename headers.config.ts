@@ -47,6 +47,7 @@ export const defaultHeaders = {
   'Referrer-Policy': 'origin-when-cross-origin, strict-origin-when-cross-origin',
   'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
   'Vary': 'Accept-Encoding, Accept, X-Requested-With',
+  'Cache-Control': 'public, max-age=2, stale-while-revalidate=4',
   ...(isDevelopment ? {} : cspHeaders),
 };
 
