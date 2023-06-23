@@ -31,6 +31,10 @@ export const longCacheHeaders = {
   'Cache-Control': `public, immutable, max-age=${SIX_MONTH_IN_SECONDS}, stale-while-revalidate=${SIX_MONTH_IN_SECONDS}`,
 };
 
+export const shortPrivateCache = {
+  'Cache-Control': 'private, max-age=1',
+};
+
 // basically helmet defaults with some customizations
 export const defaultHeaders = {
   'Cross-Origin-Embedder-Policy': 'require-corp',
@@ -65,8 +69,10 @@ export function getHeaders(headersType?: HeadersType) {
   if (headersType === 'assets')
     Object.assign(headers, longCacheHeaders);
 
-  if (headersType === 'api')
+  if (headersType === 'api') {
+    Object.assign(headers, shortPrivateCache);
     Object.assign(headers, corsHeaders);
+  }
 
   return headers;
 }
