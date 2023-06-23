@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import '~/polyfills/array-at';
+import 'requestidlecallback-polyfill';
 
 useHead({
   titleTemplate: (title) => title ? `${title} - Keycap` : 'Keycap - Better notes',
