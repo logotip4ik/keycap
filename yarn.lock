@@ -2644,7 +2644,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxt/kit@npm:3.5.3, @nuxt/kit@npm:^3.3.3, @nuxt/kit@npm:^3.4.2, @nuxt/kit@npm:^3.5.0, @nuxt/kit@npm:^3.5.3":
+"@nuxt/kit@npm:3.5.3":
   version: 3.5.3
   resolution: "@nuxt/kit@npm:3.5.3"
   dependencies:
@@ -2669,6 +2669,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nuxt/kit@npm:3.6.0, @nuxt/kit@npm:^3.3.3, @nuxt/kit@npm:^3.4.2, @nuxt/kit@npm:^3.5.0, @nuxt/kit@npm:^3.5.3, @nuxt/kit@npm:^3.6.0":
+  version: 3.6.0
+  resolution: "@nuxt/kit@npm:3.6.0"
+  dependencies:
+    "@nuxt/schema": 3.6.0
+    c12: ^1.4.2
+    consola: ^3.1.0
+    defu: ^6.1.2
+    globby: ^13.2.0
+    hash-sum: ^2.0.0
+    ignore: ^5.2.4
+    jiti: ^1.18.2
+    knitwork: ^1.0.0
+    mlly: ^1.4.0
+    pathe: ^1.1.1
+    pkg-types: ^1.0.3
+    scule: ^1.0.0
+    semver: ^7.5.3
+    unctx: ^2.3.1
+    unimport: ^3.0.8
+    untyped: ^1.3.2
+  checksum: d10f784f358d795bc2912994605a455d59d8afa217cb955a199f9b0c9c6852f1257a545da85593edd7082167b763454549f2b1958cf525eda808fb8a353e9c1f
+  languageName: node
+  linkType: hard
+
 "@nuxt/schema@npm:3.5.3":
   version: 3.5.3
   resolution: "@nuxt/schema@npm:3.5.3"
@@ -2683,6 +2708,23 @@ __metadata:
     unimport: ^3.0.7
     untyped: ^1.3.2
   checksum: 615f51363a3b6b0877a6f65f53ec42d1c7683e92492fc9d67115517486ae92705abec77b73bcec73e9d5b2630766dba1eb25cdfedd11284700d40ed2c1fd10ab
+  languageName: node
+  linkType: hard
+
+"@nuxt/schema@npm:3.6.0":
+  version: 3.6.0
+  resolution: "@nuxt/schema@npm:3.6.0"
+  dependencies:
+    defu: ^6.1.2
+    hookable: ^5.5.3
+    pathe: ^1.1.1
+    pkg-types: ^1.0.3
+    postcss-import-resolver: ^2.0.0
+    std-env: ^3.3.3
+    ufo: ^1.1.2
+    unimport: ^3.0.8
+    untyped: ^1.3.2
+  checksum: a7ce4749b3710a72c55f776f7f4c29465dbb9aa07a31045547359b953cb79ab206156e7ba32d1d8e6f70d67832939a65038b72a48dd05686e209897d01f80c8f
   languageName: node
   linkType: hard
 
@@ -2716,7 +2758,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxt/ui-templates@npm:^1.1.1":
+"@nuxt/ui-templates@npm:^1.1.1, @nuxt/ui-templates@npm:^1.2.0":
   version: 1.2.0
   resolution: "@nuxt/ui-templates@npm:1.2.0"
   checksum: 1b73bc2293955cb1acebabff417ba1827cfb471195e4250ce833ace76a049796d130779313310e0932d95f1f68f1cd3df0d3ffb1b01970f6fe24a81753e2f03b
@@ -2765,6 +2807,51 @@ __metadata:
   peerDependencies:
     vue: ^3.3.4
   checksum: bc71f52d9ed7548ab579677d8fb9cd7d21bd97605f8d2f8dfda79f8b714637ae9970fcd5d68883c71c877bbe243d91ee3c8f962e8d0fefb60a8902e644cb93e0
+  languageName: node
+  linkType: hard
+
+"@nuxt/vite-builder@npm:3.6.0":
+  version: 3.6.0
+  resolution: "@nuxt/vite-builder@npm:3.6.0"
+  dependencies:
+    "@nuxt/kit": 3.6.0
+    "@rollup/plugin-replace": ^5.0.2
+    "@vitejs/plugin-vue": ^4.2.3
+    "@vitejs/plugin-vue-jsx": ^3.0.1
+    autoprefixer: ^10.4.14
+    clear: ^0.1.0
+    consola: ^3.1.0
+    cssnano: ^6.0.1
+    defu: ^6.1.2
+    esbuild: ^0.18.6
+    escape-string-regexp: ^5.0.0
+    estree-walker: ^3.0.3
+    externality: ^1.0.2
+    fs-extra: ^11.1.1
+    get-port-please: ^3.0.1
+    h3: ^1.7.0
+    knitwork: ^1.0.0
+    magic-string: ^0.30.0
+    mlly: ^1.4.0
+    ohash: ^1.1.2
+    pathe: ^1.1.1
+    perfect-debounce: ^1.0.0
+    pkg-types: ^1.0.3
+    postcss: ^8.4.24
+    postcss-import: ^15.1.0
+    postcss-url: ^10.1.3
+    rollup-plugin-visualizer: ^5.9.2
+    std-env: ^3.3.3
+    strip-literal: ^1.0.1
+    ufo: ^1.1.2
+    unplugin: ^1.3.1
+    vite: ~4.3.9
+    vite-node: ^0.32.2
+    vite-plugin-checker: ^0.6.1
+    vue-bundle-renderer: ^1.0.3
+  peerDependencies:
+    vue: ^3.3.4
+  checksum: 89ca2dbd76e25e8c107204e4ae2a089847e0ad65d87e8b845adc27133e12bfb880699df67a22d05af437261a52026468c85a8a0b1f83e988654f0cb37aac5610
   languageName: node
   linkType: hard
 
@@ -3637,7 +3724,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/typescript-estree@npm:5.60.0":
+"@typescript-eslint/typescript-estree@npm:5.60.0, @typescript-eslint/typescript-estree@npm:^5.60.0":
   version: 5.60.0
   resolution: "@typescript-eslint/typescript-estree@npm:5.60.0"
   dependencies:
@@ -6405,7 +6492,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"externality@npm:^1.0.0":
+"externality@npm:^1.0.0, externality@npm:^1.0.2":
   version: 1.0.2
   resolution: "externality@npm:1.0.2"
   dependencies:
@@ -8799,7 +8886,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nitropack@npm:^2.4.1":
+"nitropack@npm:^2.4.1, nitropack@npm:^2.5.1":
   version: 2.5.1
   resolution: "nitropack@npm:2.5.1"
   dependencies:
@@ -9088,6 +9175,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"nuxi@npm:3.6.0":
+  version: 3.6.0
+  resolution: "nuxi@npm:3.6.0"
+  dependencies:
+    fsevents: ~2.3.2
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  bin:
+    nuxi: bin/nuxi.mjs
+  checksum: 6169c9dd838ca0a062aa2292a6030cb9d8e5011f3e2e6de354eeca65527fbc1888629b81a26f8b70050a736dbd23cf32414b4602527364b7b3119663f8ae53aa
+  languageName: node
+  linkType: hard
+
 "nuxt-icon@npm:^0.4.1":
   version: 0.4.1
   resolution: "nuxt-icon@npm:0.4.1"
@@ -9165,6 +9266,74 @@ __metadata:
   languageName: node
   linkType: hard
 
+"nuxt@npm:^3.6.0":
+  version: 3.6.0
+  resolution: "nuxt@npm:3.6.0"
+  dependencies:
+    "@nuxt/devalue": ^2.0.2
+    "@nuxt/kit": 3.6.0
+    "@nuxt/schema": 3.6.0
+    "@nuxt/telemetry": ^2.2.0
+    "@nuxt/ui-templates": ^1.2.0
+    "@nuxt/vite-builder": 3.6.0
+    "@typescript-eslint/typescript-estree": ^5.60.0
+    "@unhead/ssr": ^1.1.27
+    "@unhead/vue": ^1.1.27
+    "@vue/shared": ^3.3.4
+    c12: ^1.4.2
+    chokidar: ^3.5.3
+    cookie-es: ^1.0.0
+    defu: ^6.1.2
+    destr: ^2.0.0
+    devalue: ^4.3.2
+    escape-string-regexp: ^5.0.0
+    estree-walker: ^3.0.3
+    fs-extra: ^11.1.1
+    globby: ^13.2.0
+    h3: ^1.7.0
+    hookable: ^5.5.3
+    jiti: ^1.18.2
+    klona: ^2.0.6
+    knitwork: ^1.0.0
+    local-pkg: ^0.4.3
+    magic-string: ^0.30.0
+    mlly: ^1.4.0
+    nitropack: ^2.5.1
+    nuxi: 3.6.0
+    nypm: ^0.2.1
+    ofetch: ^1.1.1
+    ohash: ^1.1.2
+    pathe: ^1.1.1
+    perfect-debounce: ^1.0.0
+    prompts: ^2.4.2
+    scule: ^1.0.0
+    strip-literal: ^1.0.1
+    ufo: ^1.1.2
+    ultrahtml: ^1.2.0
+    uncrypto: ^0.1.3
+    unctx: ^2.3.1
+    unenv: ^1.5.1
+    unimport: ^3.0.8
+    unplugin: ^1.3.1
+    unplugin-vue-router: ^0.6.4
+    untyped: ^1.3.2
+    vue: ^3.3.4
+    vue-bundle-renderer: ^1.0.3
+    vue-devtools-stub: ^0.1.0
+    vue-router: ^4.2.2
+  peerDependencies:
+    "@parcel/watcher": ^2.1.0
+    "@types/node": ^14.18.0 || >=16.10.0
+  peerDependenciesMeta:
+    "@parcel/watcher":
+      optional: true
+  bin:
+    nuxi: bin/nuxt.mjs
+    nuxt: bin/nuxt.mjs
+  checksum: 3571c2601750bbcbda98ca5e0c2a3fb5b33112b9d39fc393f435647b040d152b3b496c92a29d43073d30555479d64926459d419d30e256244fb5a1227efdce46
+  languageName: node
+  linkType: hard
+
 "nuxt@patch:nuxt@npm%3A3.5.3#./.yarn/patches/nuxt-npm-3.5.1-37f7512905.patch::locator=root-workspace-0b6124%40workspace%3A.":
   version: 3.5.3
   resolution: "nuxt@patch:nuxt@npm%3A3.5.3#./.yarn/patches/nuxt-npm-3.5.1-37f7512905.patch::version=3.5.3&hash=a30da1&locator=root-workspace-0b6124%40workspace%3A."
@@ -9232,7 +9401,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nypm@npm:^0.2.0":
+"nypm@npm:^0.2.0, nypm@npm:^0.2.1":
   version: 0.2.1
   resolution: "nypm@npm:0.2.1"
   dependencies:
@@ -11068,7 +11237,7 @@ __metadata:
     "@antfu/eslint-config": ^0.39.5
     "@faker-js/faker": ^8.0.2
     "@node-rs/bcrypt": ^1.7.1
-    "@nuxt/kit": ^3.5.3
+    "@nuxt/kit": ^3.6.0
     "@nuxtjs/fontaine": ^0.4.0
     "@parcel/watcher": ^2.1.0
     "@prisma/client": ^4.16.1
@@ -11117,7 +11286,7 @@ __metadata:
     mitt: ^3.0.0
     nanoid: ^4.0.2
     normalize.css: ^8.0.1
-    nuxt: ^3.5.3
+    nuxt: ^3.6.0
     nuxt-icon: ^0.4.1
     postcss-preset-env: ^8.5.1
     prisma: ^4.16.1
@@ -11259,7 +11428,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:^7.0.0, semver@npm:^7.3.4, semver@npm:^7.3.5, semver@npm:^7.3.6, semver@npm:^7.3.7, semver@npm:^7.3.8, semver@npm:^7.5.0, semver@npm:^7.5.1, semver@npm:^7.5.2":
+"semver@npm:^7.0.0, semver@npm:^7.3.4, semver@npm:^7.3.5, semver@npm:^7.3.6, semver@npm:^7.3.7, semver@npm:^7.3.8, semver@npm:^7.5.0, semver@npm:^7.5.1, semver@npm:^7.5.2, semver@npm:^7.5.3":
   version: 7.5.3
   resolution: "semver@npm:7.5.3"
   dependencies:
@@ -12550,7 +12719,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-checker@npm:^0.6.0":
+"vite-node@npm:^0.32.2":
+  version: 0.32.2
+  resolution: "vite-node@npm:0.32.2"
+  dependencies:
+    cac: ^6.7.14
+    debug: ^4.3.4
+    mlly: ^1.2.0
+    pathe: ^1.1.0
+    picocolors: ^1.0.0
+    vite: ^3.0.0 || ^4.0.0
+  bin:
+    vite-node: vite-node.mjs
+  checksum: 9573fe707d56a0e4d4e1b1f5e23c9e0e7712f86561b63908f42d2fcd6a8097716a722127da7483f8ea12505f61f876e4325fd90505be8f54a1f1330836f9cdc6
+  languageName: node
+  linkType: hard
+
+"vite-plugin-checker@npm:^0.6.0, vite-plugin-checker@npm:^0.6.1":
   version: 0.6.1
   resolution: "vite-plugin-checker@npm:0.6.1"
   dependencies:
