@@ -2,7 +2,7 @@ export default defineEventHandler(async (event) => {
   event.context.identifier = getIdentifierFromEvent(event)!;
 
   const timer = createTimer();
-  const logger = createLogger();
+  const logger = await createLogger();
 
   timer.start('user_resolution');
   event.context.user = await getUserFromEvent(event);

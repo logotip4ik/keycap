@@ -1,5 +1,6 @@
 import Pino from 'pino';
 import PinoPretty from 'pino-pretty';
+import Logtail from '@logtail/pino';
 import { isDevelopment } from 'std-env';
 
 import type { Logger } from 'pino';
@@ -9,9 +10,15 @@ declare global {
   var logger: Logger | undefined;
 }
 
-export function createLogger(): Logger {
+export async function createLogger(): Promise<Logger> {
   if (globalThis.logger)
     return globalThis.logger;
+
+  const sourceToken = useRuntimeConfig().logtailSourceToken;
+
+  const stream = isDevelopment
+    ? PinoPretty()
+    : await Logtail({ sourceToken, options: {} });
 
   globalThis.logger = Pino(
     {
@@ -23,7 +30,7 @@ export function createLogger(): Logger {
         return obj;
       },
     },
-    PinoPretty(),
+    stream,
   );
 
   return globalThis.logger;
