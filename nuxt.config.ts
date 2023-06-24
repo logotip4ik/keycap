@@ -96,7 +96,7 @@ export default defineNuxtConfig({
 
   build: {
     // https://github.com/nuxt/nuxt/issues/21313#issue-1737864847
-    transpile: ['std-env', 'tinykeys'],
+    transpile: ['std-env', 'tinykeys', '@logtail/pino'],
   },
 
   vite: {
