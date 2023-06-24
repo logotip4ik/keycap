@@ -1,4 +1,4 @@
-import { isDevelopment, isProduction } from 'std-env';
+import { isDevelopment } from 'std-env';
 import pino from 'pino';
 
 import type { Logger } from 'pino';
@@ -12,23 +12,12 @@ export function createLogger(): Logger {
   if (globalThis.logger)
     return globalThis.logger;
 
-  const token = useRuntimeConfig().logtailSourceToken as string;
-
   const transport = pino.transport({
-    // @ts-expect-error it wants me to put `sourceToken` field in `pino-pretty.options`
-    targets: [
-      isDevelopment && {
-        level: 'trace',
-        target: 'pino-pretty',
-        options: { },
-      },
-
-      isProduction && {
-        level: process.env.PINO_LOG_LEVEL || 'warn',
-        target: '@logtail/pino',
-        options: { sourceToken: token },
-      },
-    ].filter(Boolean),
+    targets: [{
+      level: isDevelopment ? 'trace' : (process.env.LOG_LEVEL || 'warn'),
+      target: 'pino-pretty',
+      options: { },
+    }],
   });
 
   globalThis.logger = pino(transport);
