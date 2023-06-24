@@ -12,13 +12,13 @@ const LIMIT = Math.floor((INTERVAL * 2) / 1000); // two per second
 export default defineEventHandler(async (event) => {
   if (event.path?.startsWith('/api')) {
     const rateLimit = getRateLimiter();
-    const identifier = getHeader(event, 'x-real-ip')
-      || getHeader(event, 'client-ip')
-      || getHeader(event, 'x-forwarded-for');
+    const { identifier } = event.context;
 
-    const used = await rateLimit(LIMIT, identifier!).catch(() => LIMIT + LIMIT);
+    const used = await rateLimit(LIMIT, identifier).catch(() => LIMIT + LIMIT);
 
     if (used > LIMIT) {
+      event.context.logger.warn({ identifier }, 'too many requests');
+
       return createError({
         statusCode: 429,
         statusMessage: 'Too many requests',

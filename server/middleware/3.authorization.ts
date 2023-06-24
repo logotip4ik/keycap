@@ -28,6 +28,8 @@ export default defineEventHandler(async (event) => {
   if (isAuthorizedRoute && !user) {
     await removeAuthCookies(event);
 
+    event.context.logger.warn({ identifier: event.context.identifier }, 'attempt to access authorized route');
+
     return createError({ statusCode: 401 });
   }
 });
