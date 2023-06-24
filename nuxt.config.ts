@@ -5,6 +5,7 @@ import parseDuration from 'parse-duration';
 
 import { getHeaders } from './headers.config';
 import breakpoints from './assets/constants/breakpoints';
+import { ParseDurationTransformPlugin } from './vite/transform-parse-duration';
 
 const ISRDuration = parseDuration('15 minutes', 'second');
 
@@ -90,7 +91,10 @@ export default defineNuxtConfig({
   },
 
   vite: {
-    plugins: [UnheadVite()],
+    plugins: [
+      UnheadVite(),
+      ParseDurationTransformPlugin(),
+    ],
 
     build: {
       target: 'esnext',
