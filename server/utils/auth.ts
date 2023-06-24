@@ -69,20 +69,17 @@ export async function getUserFromEvent(event: H3Event): Promise<SafeUser | null>
   const secret = getJWTSecret();
   const issuer = getJWTIssuer();
 
-  try {
-    const { payload } = await jwtVerify(accessToken, secret, { issuer });
+  const { payload } = await jwtVerify(accessToken, secret, { issuer })
+    .catch((err) => { event.context.logger.warn(err, 'jwt verification failed'); }) || {};
 
-    return {
-      id: toBigInt(payload.id as string),
-      email: payload.email as string,
-      username: payload.username as string,
-    };
-  }
-  catch (error) {
-    removeAuthCookies(event);
-
+  if (!payload)
     return null;
-  }
+
+  return {
+    id: toBigInt(payload.id as string),
+    email: payload.email as string,
+    username: payload.username as string,
+  };
 }
 
 export async function hashPassword(pass: string): Promise<string> {
