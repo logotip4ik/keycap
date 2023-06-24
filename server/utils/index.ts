@@ -87,3 +87,9 @@ export function getFolderSelectParamsFromEvent(event: H3Event): Prisma.FolderSel
 
   return defaultSelects;
 }
+
+export function getIdentifierFromEvent(event: H3Event) {
+  return getHeader(event, 'x-real-ip')
+    || getHeader(event, 'client-ip')
+    || getHeader(event, 'x-forwarded-for');
+}
