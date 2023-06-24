@@ -24,7 +24,7 @@ export function createLogger(): Logger {
       },
 
       isProduction && {
-        level: 'error',
+        level: 'warn',
         target: '@logtail/pino',
         options: { sourceToken: token },
       },
