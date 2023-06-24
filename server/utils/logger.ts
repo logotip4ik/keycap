@@ -1,5 +1,5 @@
-import pino from 'pino';
 import { isProduction } from 'std-env';
+import pino from 'pino';
 
 import type { Logger } from 'pino';
 
@@ -7,6 +7,8 @@ declare global {
   // eslint-disable-next-line vars-on-top, no-var
   var logger: Logger | undefined;
 }
+
+console.log({ isProduction });
 
 export function createLogger(): Logger {
   if (globalThis.logger)
@@ -24,7 +26,7 @@ export function createLogger(): Logger {
       },
 
       isProduction && {
-        level: 'warn',
+        level: process.env.PINO_LOG_LEVEL || 'warn',
         target: '@logtail/pino',
         options: { sourceToken: token },
       },
