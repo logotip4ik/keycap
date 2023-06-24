@@ -17,7 +17,7 @@ export declare module 'h3' {
     identifier: string
     user?: SafeUser | null
     timer?: ReturnType<typeof createTimer>
-    logger: ReturnType<typeof createLogger>
+    logger: Awaited<ReturnType<typeof createLogger>>
   }
 }
 
