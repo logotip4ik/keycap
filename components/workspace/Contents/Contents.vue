@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { withLeadingSlash, withoutTrailingSlash } from 'ufo';
+import parseDuration from 'parse-duration';
 
 import type { RefToastInstance } from '~/composables/toasts';
 
@@ -24,7 +25,7 @@ const folder = ref<FolderWithContents | null>(
   foldersCache.get(folderPath.value) || null,
 );
 
-const POLLING_TIME = 100 * 1000;
+const POLLING_TIME = parseDuration('2.5 minutes')!;
 let pollingTimer: NodeJS.Timeout;
 let firstTimeFetch = true;
 let prevFolderPath = folderPath.value;
@@ -51,7 +52,7 @@ const { data: fetchedFolder, error, refresh } = await useLazyAsyncData<FolderWit
 
     if (!loadingToast?.value) {
       loadingToast = createToast('Fetching folder contents. Please wait...', {
-        duration: 60 * 1000,
+        duration: parseDuration('1 minute'),
         delay: firstTimeFetch ? 3000 : 250,
         type: 'loading',
       });

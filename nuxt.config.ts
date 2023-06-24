@@ -1,11 +1,12 @@
 import { isDevelopment } from 'std-env';
 import UnheadVite from '@unhead/addons/vite';
 import browserslistToEsbuild from 'browserslist-to-esbuild';
+import parseDuration from 'parse-duration';
 
 import { getHeaders } from './headers.config';
 import breakpoints from './assets/constants/breakpoints';
 
-const ISRDuration = 15 * 60;
+const ISRDuration = parseDuration('15 minutes', 'second');
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
@@ -157,7 +158,7 @@ export default defineNuxtConfig({
     client: {
       installPrompt: false,
       registerPlugin: true,
-      periodicSyncForUpdates: 60 * 20, // every 20m check if new version is available
+      periodicSyncForUpdates: parseDuration('20 minutes', 'second'), // every 20m check if new version is available
     },
 
     injectManifest: {

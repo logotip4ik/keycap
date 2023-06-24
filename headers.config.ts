@@ -1,9 +1,10 @@
 import { isDevelopment } from 'std-env';
+import parseDuration from 'parse-duration';
 
 import type { HTTPMethod } from 'h3';
 
-export const WEEK_IN_SECONDS = 60 * 60 * 24 * 7;
-export const SIX_MONTH_IN_SECONDS = 60 * 60 * 24 * 31 * 6;
+export const WEEK_IN_SECONDS = parseDuration('1 week', 'second')!;
+export const SIX_MONTHS_IN_SECONDS = parseDuration('0.5 year ', 'second')!;
 
 export const CorsOrigin = process.env.SITE_ORIGIN || '*';
 export const CorsMethods = ['GET', 'OPTIONS', 'PATCH', 'POST', 'DELETE'] satisfies HTTPMethod[];
@@ -72,8 +73,8 @@ export function getHeaders(headersOptions?: HeadersType | { type: HeadersType; o
     const assetsCacheOptions: CacheControlHeaderOptions = {
       private: false,
       immutable: true,
-      maxAge: SIX_MONTH_IN_SECONDS,
-      staleWhileRevalidate: SIX_MONTH_IN_SECONDS,
+      maxAge: SIX_MONTHS_IN_SECONDS,
+      staleWhileRevalidate: SIX_MONTHS_IN_SECONDS,
     };
 
     Object.assign(headers, makeCacheControlHeader(assetsCacheOptions));

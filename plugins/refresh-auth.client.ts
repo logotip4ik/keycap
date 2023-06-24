@@ -1,6 +1,8 @@
+import parseDuration from 'parse-duration';
+
 import { toBigInt } from '~/server/utils';
 
-const NEAR_HOUR = 60 * 60 - 10; // in seconds
+const NEAR_HOUR = parseDuration('1 hour')! - 10;
 
 let setUserOnClient = false;
 let prevInterval: NodeJS.Timer;
@@ -23,7 +25,7 @@ export default defineNuxtPlugin({
 
       refreshAuth();
 
-      prevInterval = setInterval(refreshAuth, NEAR_HOUR * 1000);
+      prevInterval = setInterval(refreshAuth, NEAR_HOUR);
     }, { immediate: true });
 
     function refreshAuth() {

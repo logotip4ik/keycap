@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { createPopper } from '@popperjs/core';
+import parseDuration from 'parse-duration';
 
 import type { Instance as PopperInstance, VirtualElement } from '@popperjs/core';
 
@@ -19,7 +20,7 @@ const menu = ref<null | HTMLElement>(null);
 const currentlyConfirming = ref(-1); // You can confirm one at a time
 const cleanup = ref<null | (() => void)>(null);
 
-const confirmDurationInSeconds = 5;
+const confirmDuration = parseDuration('5 seconds')!;
 const virtualElement: VirtualElement = {
   // @ts-expect-error missing toJSON method
   getBoundingClientRect: () => ({
@@ -45,7 +46,7 @@ function withEffects(event: Event, action: MenuAction) {
     const animation = target.animate([
       { opacity: 1, transform: 'translate(-100%, 0%)' },
       { opacity: 1, transform: 'translate(0%, 0%)' },
-    ], { duration: confirmDurationInSeconds * 1000, pseudoElement: '::after' });
+    ], { duration: confirmDuration, pseudoElement: '::after' });
 
     cleanup.value = () => {
       animation.cancel?.();

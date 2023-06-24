@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { withoutLeadingSlash } from 'ufo';
+import parseDuration from 'parse-duration';
 
 import type { Note } from '@prisma/client';
 import type { RefToastInstance } from '~/composables/toasts';
@@ -38,8 +39,7 @@ const note = shallowRef<Note | null>(
   notesCache.get(notePath.value) || null,
 );
 
-// every 90 seconds send refresh request
-const POLLING_TIME = 90 * 1000;
+const POLLING_TIME = parseDuration('2 minutes')!;
 let pollingTimer: NodeJS.Timeout;
 let firstTimeFetch = true;
 let loadingToast: RefToastInstance;
@@ -65,7 +65,7 @@ const { data: fetchedNote, pending, error, refresh } = await useLazyAsyncData<No
 
     if (!loadingToast?.value) {
       loadingToast = createToast('Fetching note. Please wait...', {
-        duration: 60 * 1000,
+        duration: parseDuration('1 minute')!,
         delay: firstTimeFetch ? 3500 : 250,
         type: 'loading',
       });

@@ -1,9 +1,10 @@
 // @ts-expect-error specifying * as RateLimiter breaks everything
 import RateLimiter from 'lambda-rate-limiter';
+import parseDuration from 'parse-duration';
 
 import type { RateLimiter as RateLimiterI } from 'lambda-rate-limiter';
 
-const INTERVAL = 60000; // 1 minute
+const INTERVAL = parseDuration('1 minute')!;
 const LIMIT = Math.floor((INTERVAL * 2) / 1000); // two per second
 
 // NOTE: https://lihbr.com/posts/rate-limiting-without-overhead-netlify-or-vercel-functions

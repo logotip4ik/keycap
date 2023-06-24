@@ -13,7 +13,7 @@ export function updateServiceWorker() {
     if (needRefresh) {
       createToast('Psss... We have some updates', {
         priority: 10,
-        duration: 25 * 1000, // 25 seconds
+        duration: parseDuration('25 seconds')!,
         delay: 550,
         buttons: [
           { text: 'refresh now', onClick: () => pwa.updateServiceWorker() },

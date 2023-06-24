@@ -2,6 +2,7 @@ import { getCookie, setCookie } from 'h3';
 import { SignJWT, jwtVerify } from 'jose';
 import { isDevelopment, isProduction } from 'std-env';
 import * as bcrypt from '@node-rs/bcrypt';
+import parseDuration from 'parse-duration';
 
 import type { H3Event } from 'h3';
 
@@ -44,12 +45,12 @@ export async function setAuthCookies(event: H3Event, user: SafeUser) {
   const accessTokenName = getAccessTokenName();
   const accessToken = await generateAccessToken(user);
 
-  const twentyFourHours = 60 * 60 * 24;
+  const oneDay = parseDuration('1day', 'second')!;
 
   setCookie(event, accessTokenName, accessToken, {
     path: '/',
     sameSite: 'lax',
-    maxAge: twentyFourHours,
+    maxAge: oneDay,
     httpOnly: true,
     secure: isProduction,
   });
