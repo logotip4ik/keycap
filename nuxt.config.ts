@@ -63,6 +63,8 @@ export default defineNuxtConfig({
       }),
     },
 
+    '/site.webmanifest': { headers: getHeaders('webmanifest') },
+
     '/': { prerender: true },
     '/about': { prerender: true },
     '/login': { prerender: true },

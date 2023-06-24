@@ -4,7 +4,7 @@ import parseDuration from 'parse-duration';
 import type { HTTPMethod } from 'h3';
 
 export const WEEK_IN_SECONDS = parseDuration('1 week', 'second')!;
-export const SIX_MONTHS_IN_SECONDS = parseDuration('0.5 year ', 'second')!;
+export const SIX_MONTHS_IN_SECONDS = parseDuration('0.5 year', 'second')!;
 
 export const CorsOrigin = process.env.SITE_ORIGIN || '*';
 export const CorsMethods = ['GET', 'OPTIONS', 'PATCH', 'POST', 'DELETE'] satisfies HTTPMethod[];
@@ -55,13 +55,13 @@ export interface NoteViewHeaderOptions {
    */
   staleWhileRevalidate?: number
 }
-export type HeadersType = 'default' | 'assets' | 'api' | 'note-view';
+export type HeadersType = 'default' | 'assets' | 'api' | 'note-view' | 'webmanifest';
 export type HeadersOptions = NoteViewHeaderOptions | {};
 
 export function getHeaders(headersOptions?: HeadersType | { type: HeadersType; opts: HeadersOptions }) {
   const isObject = typeof headersOptions === 'object';
 
-  const type = isObject ? headersOptions.type : (headersOptions ?? 'default');
+  const type: HeadersType = isObject ? headersOptions.type : (headersOptions ?? 'default');
 
   const headers = { };
 
@@ -106,6 +106,15 @@ export function getHeaders(headersOptions?: HeadersType | { type: HeadersType; o
     viewCacheOptions.CDN = true;
 
     Object.assign(headers, makeCacheControlHeader(viewCacheOptions));
+  }
+
+  if (type === 'webmanifest') {
+    const manifestCacheOptions: CacheControlHeaderOptions = {
+      private: true,
+      maxAge: parseDuration('1 day', 'second')!,
+    };
+
+    Object.assign(headers, makeCacheControlHeader(manifestCacheOptions));
   }
 
   return headers;
