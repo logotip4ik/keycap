@@ -1,3 +1,5 @@
+import parseDuration from 'parse-duration';
+
 export function updateServiceWorker() {
   const { $pwa: pwa } = useNuxtApp();
   const createToast = useToast();
