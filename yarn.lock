@@ -2434,6 +2434,62 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@logtail/core@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "@logtail/core@npm:0.4.0"
+  dependencies:
+    "@logtail/tools": ^0.4.0
+    "@logtail/types": ^0.4.0
+  checksum: 866e09decca08ca35640dad6c5e4d307a47bdc14b8a5033daa8f77441c1e46f04256eb401c3477d82c63117818061fe334d8e0242429594e33a4faef833a9a4f
+  languageName: node
+  linkType: hard
+
+"@logtail/node@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "@logtail/node@npm:0.4.0"
+  dependencies:
+    "@logtail/core": ^0.4.0
+    "@logtail/types": ^0.4.0
+    "@msgpack/msgpack": ^2.5.1
+    "@types/stack-trace": ^0.0.29
+    cross-fetch: ^3.0.4
+    minimatch: ^3.0.4
+    stack-trace: ^0.0.10
+  checksum: b1fa11f757b09baccc7b2fffa36887550a1e36e0318d4306b8b3792923ffa9bd1d4940476cddcb598ee68a7d9ef9dfb6efd9c940ef993003f17657bc5b660620
+  languageName: node
+  linkType: hard
+
+"@logtail/pino@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "@logtail/pino@npm:0.4.0"
+  dependencies:
+    "@logtail/node": ^0.4.0
+    "@logtail/types": ^0.4.0
+    pino-abstract-transport: ^1.0.0
+  peerDependencies:
+    pino: ^7.0.0 || ^8.0.0
+  checksum: 1c4267f871ba46ab36b3ed701de9517bc1680fa043845a10f2b629bb561addaea092c792d3dd2439062506a13b6c9603c814539a781787c982cbebbb2d41884c
+  languageName: node
+  linkType: hard
+
+"@logtail/tools@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "@logtail/tools@npm:0.4.0"
+  dependencies:
+    "@logtail/types": ^0.4.0
+  checksum: a69e4def9b6ef3a6590717512e18420641429c6242234070980aaaa9e25ccfaacc399199b74c26a1716d4e6b8f31569b9e0cfbd148e1b4d68b9dd9ee881e92bf
+  languageName: node
+  linkType: hard
+
+"@logtail/types@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "@logtail/types@npm:0.4.0"
+  dependencies:
+    js: ^0.1.0
+  checksum: b21d5a48bd60db0fc8e57f992c6bfcc7191fdb817984a736c13e0fd2afd1b077e631ff455443e1b289782f642c5a27883434347d8b8340bb78e4ff43d84383e0
+  languageName: node
+  linkType: hard
+
 "@mapbox/node-pre-gyp@npm:^1.0.5":
   version: 1.0.10
   resolution: "@mapbox/node-pre-gyp@npm:1.0.10"
@@ -2450,6 +2506,13 @@ __metadata:
   bin:
     node-pre-gyp: bin/node-pre-gyp
   checksum: 1a98db05d955b74dad3814679593df293b9194853698f3f5f1ed00ecd93128cdd4b14fb8767fe44ac6981ef05c23effcfdc88710e7c1de99ccb6f647890597c8
+  languageName: node
+  linkType: hard
+
+"@msgpack/msgpack@npm:^2.5.1":
+  version: 2.8.0
+  resolution: "@msgpack/msgpack@npm:2.8.0"
+  checksum: bead9393f57239007a2fe455df5277cbc03b125f14f310162a652b81471dcf3ab6780eaa24b36e20aa742998910a6840147d08b7267063b8e2de5d40c624360e
   languageName: node
   linkType: hard
 
@@ -3531,6 +3594,13 @@ __metadata:
   version: 7.5.0
   resolution: "@types/semver@npm:7.5.0"
   checksum: 0a64b9b9c7424d9a467658b18dd70d1d781c2d6f033096a6e05762d20ebbad23c1b69b0083b0484722aabf35640b78ccc3de26368bcae1129c87e9df028a22e2
+  languageName: node
+  linkType: hard
+
+"@types/stack-trace@npm:^0.0.29":
+  version: 0.0.29
+  resolution: "@types/stack-trace@npm:0.0.29"
+  checksum: 2dcfdf8f10e250a76e43efe6d3e05a463b4e22ca290dbb423ec14fa21f57f94ef0cc8ba19ed3394c448218d9ddd9f7cd9adea131fb6572aa2d484b1cf7f043aa
   languageName: node
   linkType: hard
 
@@ -4999,6 +5069,15 @@ __metadata:
   version: 8.3.0
   resolution: "commander@npm:8.3.0"
   checksum: 0f82321821fc27b83bd409510bb9deeebcfa799ff0bf5d102128b500b7af22872c0c92cb6a0ebc5a4cf19c6b550fba9cedfa7329d18c6442a625f851377bacf0
+  languageName: node
+  linkType: hard
+
+"commander@npm:~1.1.1":
+  version: 1.1.1
+  resolution: "commander@npm:1.1.1"
+  dependencies:
+    keypress: 0.1.x
+  checksum: a27db3772327d1d8a8abaa7d3834c2b4f14067bc9467a113de96834fd6bfcabd0e3a18ca64aa6b4560804d4923c2424b5471409cc85bd929f2a28f8738760d19
   languageName: node
   linkType: hard
 
@@ -7991,6 +8070,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"js@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "js@npm:0.1.0"
+  dependencies:
+    commander: ~1.1.1
+  bin:
+    js: ./bin/js
+  checksum: c2967be06de24caace5044d7cd6d9571034cdaae3da5a0a19602a2791d0654e9c87c53fed00283ae861a055c1db82ff0bda26ad9381aa915f3f06205c3f91c7c
+  languageName: node
+  linkType: hard
+
 "jsesc@npm:^2.5.1":
   version: 2.5.2
   resolution: "jsesc@npm:2.5.2"
@@ -8134,6 +8224,13 @@ __metadata:
   dependencies:
     json-cst: ^1.2.0
   checksum: 560b286d7e9c11cab9a36282ecb0c8aca5e293bddcf4b6a5a261d6ea1478d7e402935a4d34d0fff7ebbf25331358e50d364b9ec5cfc34daf6ccc9168c2bd51e1
+  languageName: node
+  linkType: hard
+
+"keypress@npm:0.1.x":
+  version: 0.1.0
+  resolution: "keypress@npm:0.1.0"
+  checksum: 3a7e9dc0354dc6e5cfd4a507263dee4d736381d1bf40b59b73ed9972aef9b5e5be3ce6df24ca67d1530c9fe9cf90b913c6d2cc49f610b4077af379933a2968a5
   languageName: node
   linkType: hard
 
@@ -11294,6 +11391,7 @@ __metadata:
   dependencies:
     "@antfu/eslint-config": ^0.39.5
     "@faker-js/faker": ^8.0.2
+    "@logtail/pino": ^0.4.0
     "@node-rs/bcrypt": ^1.7.1
     "@nuxt/kit": ^3.6.0
     "@nuxtjs/fontaine": ^0.4.0
@@ -11800,6 +11898,13 @@ __metadata:
   dependencies:
     minipass: ^5.0.0
   checksum: fb14da9f8a72b04eab163eb13a9dda11d5962cd2317f85457c4e0b575e9a6e0e3a6a87b5bf122c75cb36565830cd5f263fb457571bf6f1587eb5f95d095d6165
+  languageName: node
+  linkType: hard
+
+"stack-trace@npm:^0.0.10":
+  version: 0.0.10
+  resolution: "stack-trace@npm:0.0.10"
+  checksum: 473036ad32f8c00e889613153d6454f9be0536d430eb2358ca51cad6b95cea08a3cc33cc0e34de66b0dad221582b08ed2e61ef8e13f4087ab690f388362d6610
   languageName: node
   linkType: hard
 
