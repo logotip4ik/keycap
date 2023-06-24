@@ -143,6 +143,10 @@ export default defineNuxtConfig({
         },
       },
     },
+
+    rollupOptions: {
+      external: ['pino-pretty'],
+    },
   },
 
   fontMetrics: {
