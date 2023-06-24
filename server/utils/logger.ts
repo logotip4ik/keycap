@@ -8,8 +8,6 @@ declare global {
   var logger: Logger | undefined;
 }
 
-console.log({ isProduction, isDevelopment });
-
 export function createLogger(): Logger {
   if (globalThis.logger)
     return globalThis.logger;
