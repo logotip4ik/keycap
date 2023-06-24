@@ -3,7 +3,7 @@ import { getPrisma } from '~/prisma';
 export default defineEventHandler(async (event) => {
   const link = getRouterParam(event, 'link');
 
-  if (!isShareLinkValid(link))
+  if (!isShareLinkValid(link || ''))
     return createError({ statusCode: 404 });
 
   const prisma = getPrisma();
