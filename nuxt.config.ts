@@ -69,6 +69,12 @@ export default defineNuxtConfig({
     '/register': { prerender: true },
   },
 
+  runtimeConfig: {
+    public: {
+      logtailSourceToken: process.env.LOGTAIL_SOURCE_TOKEN,
+    },
+  },
+
   modules: [
     '@vueuse/nuxt',
     'nuxt-icon',
