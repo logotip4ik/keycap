@@ -70,6 +70,8 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
+    logtailSourceToken: process.env.LOGTAIL_SOURCE_TOKEN,
+
     public: {
       logtailSourceToken: process.env.LOGTAIL_SOURCE_TOKEN,
     },
