@@ -27,14 +27,6 @@ export const cspHeaders = {
   ].join(' '),
 };
 
-export const longCacheHeaders = {
-  'Cache-Control': `public, immutable, max-age=${SIX_MONTH_IN_SECONDS}, stale-while-revalidate=${SIX_MONTH_IN_SECONDS}`,
-};
-
-export const shortPrivateCache = {
-  'Cache-Control': 'private, max-age=1',
-};
-
 // basically helmet defaults with some customizations
 export const defaultHeaders = {
   'Cross-Origin-Embedder-Policy': 'require-corp',
@@ -51,14 +43,24 @@ export const defaultHeaders = {
   'Referrer-Policy': 'origin-when-cross-origin, strict-origin-when-cross-origin',
   'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
   'Vary': 'Accept-Encoding, Accept, X-Requested-With',
-  'Cache-Control': 'public, max-age=2, stale-while-revalidate=4',
+  ...makeCacheControlHeader({ private: false, maxAge: 2, staleWhileRevalidate: 4 }),
   ...(isDevelopment ? {} : cspHeaders),
 };
 
-export type HeadersType = 'default' | 'assets' | 'api';
+export interface NoteViewHeaderOptions {
+  isr: number
+  /**
+   * @default isr
+   */
+  staleWhileRevalidate?: number
+}
+export type HeadersType = 'default' | 'assets' | 'api' | 'note-view';
+export type HeadersOptions = NoteViewHeaderOptions | {};
 
-export function getHeaders(headersType?: HeadersType) {
-  headersType = headersType ?? 'default';
+export function getHeaders(headersOptions?: HeadersType | { type: HeadersType; opts: HeadersOptions }) {
+  const isObject = typeof headersOptions === 'object';
+
+  const type = isObject ? headersOptions.type : (headersOptions ?? 'default');
 
   const headers = { };
 
@@ -66,13 +68,86 @@ export function getHeaders(headersType?: HeadersType) {
 
   Object.assign(headers, defaultHeaders);
 
-  if (headersType === 'assets')
-    Object.assign(headers, longCacheHeaders);
+  if (type === 'assets') {
+    const assetsCacheOptions: CacheControlHeaderOptions = {
+      private: false,
+      immutable: true,
+      maxAge: SIX_MONTH_IN_SECONDS,
+      staleWhileRevalidate: SIX_MONTH_IN_SECONDS,
+    };
 
-  if (headersType === 'api') {
-    Object.assign(headers, shortPrivateCache);
+    Object.assign(headers, makeCacheControlHeader(assetsCacheOptions));
+
+    assetsCacheOptions.CDN = true;
+
+    Object.assign(headers, makeCacheControlHeader(assetsCacheOptions));
+  }
+
+  if (type === 'api') {
     Object.assign(headers, corsHeaders);
+    Object.assign(headers, makeCacheControlHeader({
+      private: true,
+      maxAge: 1,
+    }));
+  }
+
+  if (type === 'note-view') {
+    const options = (isObject ? headersOptions.opts : {}) as NoteViewHeaderOptions;
+
+    const viewCacheOptions: CacheControlHeaderOptions = {
+      private: false,
+      maxAge: options.isr,
+      staleWhileRevalidate: options.isr,
+    };
+
+    Object.assign(headers, makeCacheControlHeader(viewCacheOptions));
+
+    viewCacheOptions.CDN = true;
+
+    Object.assign(headers, makeCacheControlHeader(viewCacheOptions));
   }
 
   return headers;
+}
+
+export interface CacheControlHeaderOptions {
+  private: boolean
+  immutable?: boolean
+  /**
+   * in seconds
+   */
+  maxAge: number
+  /**
+   * in seconds
+   */
+  staleWhileRevalidate?: number
+  CDN?: boolean | 'vc' | 'cf'
+}
+export function makeCacheControlHeader(opts: CacheControlHeaderOptions) {
+  const values: string[] = [];
+
+  values.push(opts.private ? 'private' : 'public');
+
+  if (opts.immutable === true)
+    values.push('immutable');
+
+  values.push(`max-age=${opts.maxAge}`);
+
+  if (opts.staleWhileRevalidate)
+    values.push(`stale-while-revalidate=${opts.staleWhileRevalidate}`);
+
+  const headerName = ['Cache', 'Control'];
+
+  if (opts.CDN)
+    headerName.unshift('CDN');
+
+  if (opts.CDN === 'cf')
+    headerName.unshift('Cloudflare');
+
+  if (opts.CDN === 'vc')
+    headerName.unshift('Vercel');
+
+  return {
+    [headerName.join('-')]: values.join(', '),
+  };
 }
