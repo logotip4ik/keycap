@@ -1,5 +1,6 @@
+import Pino from 'pino';
+import PinoPretty from 'pino-pretty';
 import { isDevelopment } from 'std-env';
-import pino from 'pino';
 
 import type { Logger } from 'pino';
 
@@ -12,15 +13,11 @@ export function createLogger(): Logger {
   if (globalThis.logger)
     return globalThis.logger;
 
-  const transport = pino.transport({
-    targets: [{
-      level: isDevelopment ? 'trace' : (process.env.LOG_LEVEL || 'warn'),
-      target: 'pino-pretty',
-      options: { },
-    }],
-  });
-
-  globalThis.logger = pino(transport);
+  globalThis.logger = Pino(
+    PinoPretty({
+      minimumLevel: isDevelopment ? 'trace' : (process.env.LOG_LEVEL || 'warn') as Pino.Level,
+    }),
+  );
 
   return globalThis.logger;
 }
