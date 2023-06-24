@@ -1,4 +1,4 @@
-import { isProduction } from 'std-env';
+import { isDevelopment, isProduction } from 'std-env';
 import pino from 'pino';
 
 import type { Logger } from 'pino';
@@ -8,7 +8,7 @@ declare global {
   var logger: Logger | undefined;
 }
 
-console.log({ isProduction });
+console.log({ isProduction, isDevelopment });
 
 export function createLogger(): Logger {
   if (globalThis.logger)
@@ -19,7 +19,7 @@ export function createLogger(): Logger {
   const transport = pino.transport({
     // @ts-expect-error it wants me to put `sourceToken` field in `pino-pretty.options`
     targets: [
-      {
+      isDevelopment && {
         level: 'trace',
         target: 'pino-pretty',
         options: { },
