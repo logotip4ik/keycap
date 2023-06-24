@@ -5,6 +5,8 @@ import browserslistToEsbuild from 'browserslist-to-esbuild';
 import { getHeaders } from './headers.config';
 import breakpoints from './assets/constants/breakpoints';
 
+const ISRDuration = 15 * 60;
+
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
   app: {
@@ -51,7 +53,13 @@ export default defineNuxtConfig({
     '/api/**': { headers: getHeaders('api') },
 
     // this would be great https://github.com/unjs/nitro/issues/603#issuecomment-1415826732
-    '/view/**': { isr: 60 * 15 },
+    '/view/**': {
+      isr: ISRDuration,
+      headers: getHeaders({
+        type: 'note-view',
+        opts: { isr: ISRDuration },
+      }),
+    },
 
     '/': { prerender: true },
     '/about': { prerender: true },
