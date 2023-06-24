@@ -40,7 +40,12 @@ export default defineEventHandler(async (event) => {
     },
 
     select: { id: true, email: true, username: true },
-  }).catch(() => null);
+  }).catch((err) => {
+    if (err.message.includes('Unique constraint failed on the fields'))
+      return;
+
+    event.context.logger.error(err, 'user.create failed');
+  });
 
   if (!user)
     return createError({ statusCode: 400, statusMessage: 'user with this email or username might already exist' });

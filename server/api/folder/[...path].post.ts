@@ -28,7 +28,9 @@ export default defineEventHandler(async (event) => {
     },
 
     select: { ...selectParams },
-  }).catch(() => null);
+  }).catch((err) => {
+    event.context.logger.error(err, 'folder.create failed');
+  });
   timer.end();
 
   if (!folder)

@@ -22,5 +22,9 @@ export default defineCachedEventHandler((event) => {
   maxAge: ONE_DAY_IN_SECONDS,
   staleMaxAge: WEEK_IN_SECONDS,
   getKey: (event) => event.context.user ? `${event.context.user.username}:manifest` : 'manifest',
-  shouldInvalidateCache: (event) => typeof getQuery(event).invalidate !== 'undefined',
+  shouldInvalidateCache: (event) => {
+    event.context.logger.info({ identifier: event.context.identifier }, 'cache invalidation triggered');
+
+    return typeof getQuery(event).invalidate !== 'undefined';
+  },
 });

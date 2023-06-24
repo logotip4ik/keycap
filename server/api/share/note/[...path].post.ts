@@ -29,7 +29,9 @@ export default defineEventHandler(async (event) => {
         owner: { connect: { id: user.id } },
       },
     });
-  }).catch(() => null);
+  }).catch((err) => {
+    event.context.logger.error(err, 'share creation transaction failed');
+  });
   timer.end();
 
   if (!share)

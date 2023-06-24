@@ -13,7 +13,9 @@ export default defineEventHandler(async (event) => {
   const note = await prisma.note.delete({
     where: { path: notePath },
     select: { id: true },
-  }).catch(() => null);
+  }).catch((err) => {
+    event.context.logger.error(err, 'note.delete failed');
+  });
   timer.end();
 
   if (!note)
