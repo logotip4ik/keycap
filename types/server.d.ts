@@ -14,8 +14,10 @@ export interface SafeUser extends Pick<User, 'id' | 'email' | 'username'> {}
 
 export declare module 'h3' {
   interface H3EventContext {
+    identifier: string
     user?: SafeUser | null
     timer?: ReturnType<typeof createTimer>
+    logger: ReturnType<typeof createLogger>
   }
 }
 
