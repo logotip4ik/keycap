@@ -14,9 +14,16 @@ export function createLogger(): Logger {
     return globalThis.logger;
 
   globalThis.logger = Pino(
-    PinoPretty({
-      minimumLevel: isDevelopment ? 'trace' : (process.env.LOG_LEVEL || 'warn') as Pino.Level,
-    }),
+    {
+      level: isDevelopment ? 'trace' : (process.env.LOG_LEVEL || 'warn') as Pino.Level,
+      mixin: (obj) => {
+        // @ts-expect-error marking as nitro log
+        obj.nitro = true;
+
+        return obj;
+      },
+    },
+    PinoPretty(),
   );
 
   return globalThis.logger;
