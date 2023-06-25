@@ -22,7 +22,7 @@ export async function createLogger(): Promise<Logger> {
 
   globalThis.logger = Pino(
     {
-      level: isDevelopment ? 'trace' : (process.env.LOG_LEVEL || 'warn') as Pino.Level,
+      level: isDevelopment ? 'trace' : 'warn' as Pino.Level,
       mixin: (obj) => {
         // @ts-expect-error marking as nitro log
         obj.nitro = true;
@@ -32,6 +32,8 @@ export async function createLogger(): Promise<Logger> {
     },
     stream,
   );
+
+  console.log(globalThis.logger);
 
   return globalThis.logger;
 }
