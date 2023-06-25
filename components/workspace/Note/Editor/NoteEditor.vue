@@ -37,8 +37,6 @@ const props = defineProps<Props>();
 
 const mitt = useMitt();
 
-let noteChanged = false;
-
 // TODO: export this whole mess into separate file
 const editor = useEditor({
   autofocus: window.innerWidth > 740 && 'start', // disable auto focus on small screens
@@ -94,7 +92,6 @@ const editor = useEditor({
   ],
 
   onUpdate: useDebounceFn(() => {
-    noteChanged = true;
     saveEditorContent();
   }, 350, { maxWait: 2250 }),
 });
@@ -145,8 +142,6 @@ useTinykeys({
 useEventListener(window, 'visibilitychange', () => {
   if (document.visibilityState === 'visible')
     props.onRefresh();
-  else if (document.visibilityState === 'hidden' && noteChanged)
-    saveEditorContent();
 }, { passive: true });
 </script>
 
