@@ -128,9 +128,6 @@ function updateNote(content: string) {
     signal: abortController.signal,
   })
     .then(() => {
-      if (note.value)
-        notesCache.set(note.value.path, { ...note.value, ...newNote });
-
       // before route update, note will be saved and the indicator will be again reset to saved
       // this checks if route is the same, so this wasn't last save and user is still on the same note
       if (updatingCurrentNote)
