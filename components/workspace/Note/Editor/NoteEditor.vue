@@ -26,10 +26,14 @@ import TextAlign from '@tiptap/extension-text-align';
 import CodeBlock from '@tiptap/extension-code-block';
 import History from '@tiptap/extension-history';
 
-interface Props { content: string; editable: boolean }
-interface Emits { (e: 'update', content: string): void; (e: 'refresh'): void; (e: 'showDetails'): void }
+interface Props {
+  content: string
+  editable: boolean
+  onUpdate: (content: string) => void
+  onRefresh: () => void
+  onShowDetails: () => void
+}
 const props = defineProps<Props>();
-const emit = defineEmits<Emits>();
 
 const mitt = useMitt();
 
@@ -92,11 +96,11 @@ const editor = useEditor({
   onUpdate: useDebounceFn(() => {
     noteChanged = true;
     saveEditorContent();
-  }, 350),
+  }, 350, { maxWait: 2250 }),
 });
 
 function update(content: string) {
-  emit('update', content);
+  props.onUpdate(content);
 }
 
 function saveEditorContent() {
@@ -140,17 +144,10 @@ useTinykeys({
 
 useEventListener(window, 'visibilitychange', () => {
   if (document.visibilityState === 'visible')
-    emit('refresh');
+    props.onRefresh();
   else if (document.visibilityState === 'hidden' && noteChanged)
     saveEditorContent();
 }, { passive: true });
-
-// if user updated current note and switched to another note
-// before debounced function execution, try to save content
-onBeforeRouteUpdate((from, to) => {
-  if (from.path !== to.path && noteChanged)
-    saveEditorContent();
-});
 </script>
 
 <template>
@@ -159,7 +156,7 @@ onBeforeRouteUpdate((from, to) => {
       <LazyWorkspaceNoteEditorBubbleMenu :editor="editor" @hide="hideBubbleMenu" />
     </template>
 
-    <button class="note-editor__details-button" @click="$emit('showDetails')">
+    <button class="note-editor__details-button" @click="props.onShowDetails">
       details
     </button>
 
