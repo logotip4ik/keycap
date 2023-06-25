@@ -162,6 +162,7 @@ function toggleListItem() {
 }
 
 useTinykeys({
+  // NOTE: change this to $mod+Shift+l if main ctrl+l keeps getting in place
   '$mod+l': (event) => {
     const { from, to } = props.editor.state.selection;
 
