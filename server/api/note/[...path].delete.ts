@@ -4,7 +4,11 @@ export default defineEventHandler(async (event) => {
   const user = event.context.user!;
   const timer = event.context.timer!;
 
-  const path = getRouterParam(event, 'path') as string;
+  const path = getRouterParam(event, 'path');
+
+  if (!path)
+    return createError({ statusCode: 400 });
+
   const notePath = generateNotePath(user.username, path);
 
   const prisma = getPrisma();

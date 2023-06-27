@@ -6,7 +6,11 @@ export default defineEventHandler(async (event) => {
 
   const prisma = getPrisma();
 
-  const path = getRouterParam(event, 'path') as string;
+  const path = getRouterParam(event, 'path');
+
+  if (!path)
+    return createError({ statusCode: 400 });
+
   const folderPath = generateFolderPath(user.username, path);
 
   const selectParams = getFolderSelectParamsFromEvent(event);

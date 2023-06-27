@@ -9,7 +9,11 @@ export default defineEventHandler(async (event) => {
   interface CreateFolderProps { name: string; parentId: string }
 
   const body = await readBody<CreateFolderProps>(event);
-  const path = getRouterParam(event, 'path') as string;
+  const path = getRouterParam(event, 'path');
+
+  if (!path)
+    return createError({ statusCode: 400 });
+
   const folderPath = generateFolderPath(user.username, path);
   const folderName = body.name.trim();
 

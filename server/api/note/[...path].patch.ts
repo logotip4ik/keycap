@@ -7,7 +7,11 @@ export default defineEventHandler(async (event) => {
   const prisma = getPrisma();
 
   const query = getQuery(event);
-  const path = getRouterParam(event, 'path') as string;
+  const path = getRouterParam(event, 'path');
+
+  if (!path)
+    return createError({ statusCode: 400 });
+
   const notePath = generateNotePath(user.username, path);
 
   interface UpdatableFields { name?: string; content?: string; path?: string }
