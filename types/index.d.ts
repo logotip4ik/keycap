@@ -14,7 +14,15 @@ export declare global {
   }
 }
 
+export interface PrivateBuildInfo {
+  id: string
+}
+
 export declare module '@nuxt/schema' {
+  interface RuntimeConfig {
+    build: PrivateBuildInfo
+  }
+  
   interface AppConfigInput {
     shortcuts: Shortcuts
 
