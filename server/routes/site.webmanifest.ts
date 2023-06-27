@@ -22,5 +22,10 @@ export default defineCachedEventHandler((event) => {
   maxAge: ONE_DAY_IN_SECONDS,
   staleMaxAge: WEEK_IN_SECONDS,
   getKey: (event) => event.context.user ? `${event.context.user.username}:manifest` : 'manifest',
-  shouldInvalidateCache: (event) => typeof getQuery(event).invalidate !== 'undefined',
+  shouldInvalidateCache: (event) => {
+    const query = getQuery(event);
+    const { build } = useRuntimeConfig();
+
+    return typeof query[build.id] !== 'undefined';
+  },
 });
