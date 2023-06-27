@@ -71,6 +71,12 @@ export default defineNuxtConfig({
     '/register': { prerender: true },
   },
 
+  runtimeConfig: {
+    axiomApiToken: process.env.AXIOM_API_TOKEN,
+    axiomDataset: process.env.AXIOM_DATASET,
+    axiomOrgId: process.env.AXIOM_ORG_ID,
+  },
+
   modules: [
     '@vueuse/nuxt',
     'nuxt-icon',
