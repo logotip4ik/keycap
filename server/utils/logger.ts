@@ -12,7 +12,7 @@ export function createLogger() {
   const { combine, errors, json } = winston.format;
 
   loggerInstance = winston.createLogger({
-    level: 'info',
+    level: process.env.LOG_LEVEL || 'info',
     format: combine(errors({ stack: true }), json()),
     defaultMeta: { service: 'nitro' },
   });

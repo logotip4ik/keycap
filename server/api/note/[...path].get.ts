@@ -18,7 +18,9 @@ export default defineEventHandler(async (event) => {
   const note = await prisma.note.findFirst({
     where: { path: notePath, ownerId: user.id },
     select: { ...selectParams },
-  }).catch(() => null);
+  }).catch((err) => {
+    event.context.logger.log('error', 'note.get failed', err, { path: event.path });
+  });
   timer.end();
 
   if (!note)

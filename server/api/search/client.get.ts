@@ -32,7 +32,11 @@ export default defineEventHandler(async (event) => {
       take: Math.floor(select / 2),
       select: { name: true, path: true, root: true },
     }),
-  ]).catch(() => [null, null]);
+  ]).catch((err) => {
+    event.context.logger.log('error', 'client search failed', err, { path: event.path });
+
+    return [null, null];
+  });
   timer.end();
 
   if (!notes || !folders)

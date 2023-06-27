@@ -20,7 +20,9 @@ export default defineEventHandler(async (event) => {
   const folder = await prisma.folder.delete({
     where: { path: folderPath },
     select: { id: true },
-  }).catch(() => null);
+  }).catch((err) => {
+    event.context.logger.log('error', 'folder.delete failed', err, { path: event.path });
+  });
   timer.end();
 
   if (!folder)

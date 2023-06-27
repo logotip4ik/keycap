@@ -19,6 +19,8 @@ export default defineEventHandler(async (event) => {
     const used = await rateLimit(LIMIT, identifier!).catch(() => LIMIT + LIMIT);
 
     if (used > LIMIT) {
+      event.context.logger.log('warn', 'rate-limit exceeded', { path: event.path, identifier });
+
       return createError({
         statusCode: 429,
         statusMessage: 'Too many requests',

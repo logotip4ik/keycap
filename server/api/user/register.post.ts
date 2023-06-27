@@ -5,8 +5,11 @@ export default defineEventHandler(async (event) => {
 
   const isOriginMismatch = checkOriginForMismatch(event);
 
-  if (isOriginMismatch)
+  if (isOriginMismatch) {
+    event.context.logger.log('warn', 'suspicious origin mismatch', { path: event.path });
+
     return createError({ statusCode: 403 });
+  }
 
   const body = await readBody(event) || {};
 
@@ -40,7 +43,9 @@ export default defineEventHandler(async (event) => {
     },
 
     select: { id: true, email: true, username: true },
-  }).catch(() => null);
+  }).catch((err) => {
+    event.context.logger.log('error', 'user.create failed ', err, { path: event.path });
+  });
 
   if (!user)
     return createError({ statusCode: 400, statusMessage: 'user with this email or username might already exist' });

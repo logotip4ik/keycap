@@ -16,7 +16,9 @@ export default defineEventHandler(async (event) => {
   const folder = await prisma.folder.findFirst({
     where: { path: folderPath, ownerId: user.id },
     select: { ...selectParams },
-  }).catch(() => null);
+  }).catch((err) => {
+    event.context.logger.log('error', 'folder.findFirst failed', err, { path: event.path });
+  });
   timer.end();
 
   if (!folder)

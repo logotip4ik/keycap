@@ -44,7 +44,9 @@ export default defineEventHandler(async (event) => {
     data,
     where: { path: notePath },
     select: { ...selectParams },
-  }).catch(() => null);
+  }).catch((err) => {
+    event.context.logger.log('error', 'note.update failed', err, { path: event.path });
+  });
   timer.end();
 
   if (!updatedNote)

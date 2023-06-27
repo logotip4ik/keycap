@@ -5,8 +5,11 @@ import type { SafeUser } from '~/types/server';
 export default defineEventHandler(async (event) => {
   const isOriginMismatch = checkOriginForMismatch(event);
 
-  if (isOriginMismatch)
+  if (isOriginMismatch) {
+    event.context.logger.log('warn', 'suspicious origin mismatch', { path: event.path });
+
     return createError({ statusCode: 403 });
+  }
 
   const body = await readBody(event) || {};
 
@@ -27,13 +30,17 @@ export default defineEventHandler(async (event) => {
   const user = await prisma.user.findUnique({
     where: { email: body.email },
     select: { id: true, email: true, username: true, password: true },
-  }).catch(() => null);
+  }).catch((err) => {
+    event.context.logger.log('error', 'user.findUnique failed', err, { path: event.path });
+  });
 
   if (!user)
     return createError({ statusCode: 400, statusMessage: 'email or password is incorrect' });
 
   const isPasswordValid = await verifyPassword(user.password, body.password)
-    .catch(() => null);
+    .catch((err) => {
+      event.context.logger.log('error', 'password verification failed', err, { path: event.path });
+    });
 
   if (isPasswordValid === null)
     return createError({ statusCode: 500 });
