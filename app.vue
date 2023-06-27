@@ -15,7 +15,7 @@ if (process.server) {
     robots: { none: true },
     applicationName: 'Keycap',
     author: 'Bogdan Kostyuk',
-  });
+  }, { mode: 'server' });
 
   useHead({
     link: [
