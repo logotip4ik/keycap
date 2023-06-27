@@ -25,8 +25,8 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    appendHeader(event, 'X-RateLimit-Limit', LIMIT.toString());
-    appendHeader(event, 'X-RateLimit-Remaining', (LIMIT - used).toString());
+    setHeader(event, 'X-RateLimit-Limit', LIMIT.toString());
+    setHeader(event, 'X-RateLimit-Remaining', (LIMIT - used).toString());
   }
 });
 
