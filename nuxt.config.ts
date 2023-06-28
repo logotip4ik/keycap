@@ -1,4 +1,4 @@
-import { isDevelopment } from 'std-env';
+import { isDevelopment, provider } from 'std-env';
 import UnheadVite from '@unhead/addons/vite';
 import browserslistToEsbuild from 'browserslist-to-esbuild';
 import parseDuration from 'parse-duration';
@@ -101,7 +101,7 @@ export default defineNuxtConfig({
     build: {
       target: 'esnext',
       cssTarget: browserslistToEsbuild(),
-      ...(typeof process.env.VERCEL !== 'undefined'
+      ...(provider === 'vercel'
         ? {
             minify: 'terser',
             terserOptions: {
