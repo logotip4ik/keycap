@@ -2,7 +2,7 @@ import { defineNuxtModule, useLogger } from '@nuxt/kit';
 import { nanoid } from 'nanoid';
 import Git from 'simple-git';
 
-import type { BuildInfo } from '~/types';
+import type { BuildInfo, PrivateBuildInfo } from '~/types';
 
 const logger = useLogger('build-env');
 
@@ -18,7 +18,7 @@ export default defineNuxtModule({
       commit,
     };
 
-    const privateBuildInfo = {
+    const privateBuildInfo: PrivateBuildInfo = {
       id: nanoid(),
     };
 
