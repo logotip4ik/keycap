@@ -20,6 +20,8 @@ export function createLogger() {
   if (isProduction) {
     const { axiomApiToken, axiomDataset, axiomOrgId } = useRuntimeConfig();
 
+    console.log(axiomApiToken, axiomDataset, axiomOrgId);
+
     const axiom = new AxiomTransport({
       orgId: axiomOrgId,
       token: axiomApiToken,
