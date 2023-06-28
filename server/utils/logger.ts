@@ -1,6 +1,6 @@
 import { isDevelopment, isProduction } from 'std-env';
 
-import * as winston from 'winston';
+import winston from 'winston';
 import { WinstonTransport as AxiomTransport } from '@axiomhq/axiom-node';
 
 let loggerInstance: winston.Logger;
@@ -8,6 +8,8 @@ let loggerInstance: winston.Logger;
 export function createLogger() {
   if (loggerInstance)
     return loggerInstance;
+
+  console.log(winston);
 
   const { combine, errors, json } = winston.format;
 
@@ -36,7 +38,6 @@ export function createLogger() {
     loggerInstance.rejections.handle(axiom);
   }
 
-  // Add the console logger if we're not in production
   if (isDevelopment) {
     loggerInstance.add(
       new winston.transports.Console({
