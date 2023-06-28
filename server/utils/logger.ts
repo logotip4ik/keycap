@@ -21,24 +21,27 @@ export function createLogger() {
   if (isProduction) {
     const { axiomApiToken, axiomDataset, axiomOrgId } = useRuntimeConfig();
 
-    console.log(useRuntimeConfig());
-
     const axiom = new AxiomTransport({
       orgId: axiomOrgId,
       token: axiomApiToken,
       dataset: axiomDataset,
+      handleExceptions: true,
+      handleRejections: true,
     });
 
     loggerInstance.add(axiom);
-    loggerInstance.exceptions.handle(axiom);
-    loggerInstance.rejections.handle(axiom);
+
+    try {
+      console.log(loggerInstance.log('warn', 'test warning'));
+    }
+    catch (error) {
+      console.log(error);
+    }
   }
 
   if (isDevelopment) {
     loggerInstance.add(
-      new winston.transports.Console({
-        format: winston.format.simple(),
-      }),
+      new winston.transports.Console(),
     );
   }
 
