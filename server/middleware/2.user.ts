@@ -5,6 +5,13 @@ export default defineEventHandler(async (event) => {
   event.context.user = await getUserFromEvent(event);
   timer.end();
 
-  if (event.context.user)
+  let authorized: 'yes' | 'no' = 'no';
+
+  if (event.context.user) {
     event.context.timer = timer;
+
+    authorized = 'yes';
+  }
+
+  setHeader(event, 'X-Authorized', authorized);
 });

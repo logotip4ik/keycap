@@ -43,7 +43,7 @@ export const defaultHeaders = {
   'Keep-Alive': '5',
   'Referrer-Policy': 'origin-when-cross-origin, strict-origin-when-cross-origin',
   'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
-  'Vary': 'Accept-Encoding, Accept, X-Requested-With',
+  'Vary': 'Accept-Encoding, Accept, X-Requested-With, X-Authorized',
   ...makeCacheControlHeader({ private: false, maxAge: 2, staleWhileRevalidate: 4 }),
   ...(isDevelopment ? {} : cspHeaders),
 };
