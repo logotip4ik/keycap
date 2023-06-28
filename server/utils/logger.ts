@@ -9,8 +9,6 @@ export function createLogger() {
   if (loggerInstance)
     return loggerInstance;
 
-  console.log(winston);
-
   const { combine, errors, json } = winston.format;
 
   loggerInstance = winston.createLogger({
@@ -21,8 +19,6 @@ export function createLogger() {
 
   if (isProduction) {
     const { axiomApiToken, axiomDataset, axiomOrgId } = useRuntimeConfig();
-
-    console.log(axiomApiToken, axiomDataset, axiomOrgId);
 
     const axiom = new AxiomTransport({
       orgId: axiomOrgId,
