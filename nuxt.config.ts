@@ -72,9 +72,9 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
-    axiomApiToken: process.env.AXIOM_API_TOKEN,
-    axiomDataset: process.env.AXIOM_DATASET,
-    axiomOrgId: process.env.AXIOM_ORG_ID,
+    axiomOrgId: '',
+    axiomDataset: '',
+    axiomApiToken: '',
   },
 
   modules: [
