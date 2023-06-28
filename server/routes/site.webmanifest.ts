@@ -14,6 +14,8 @@ export default defineCachedEventHandler((event) => {
   if (user)
     manifest.start_url = `/@${user.username}`;
 
+  event.context.logger.log('warn', 'test log');
+
   setHeader(event, 'Content-Type', 'application/manifest+json');
 
   return manifest;
