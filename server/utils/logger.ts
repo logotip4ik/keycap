@@ -1,5 +1,6 @@
 import { isDevelopment, isProduction } from 'std-env';
 
+// @ts-expect-error allowSyntheticDefaultImports is actually enabled
 import winston from 'winston';
 import { WinstonTransport as AxiomTransport } from '@axiomhq/axiom-node';
 
@@ -20,17 +21,16 @@ export function createLogger() {
   if (isProduction) {
     const { axiomApiToken, axiomDataset, axiomOrgId } = useRuntimeConfig();
 
+    console.log(useRuntimeConfig());
+
     const axiom = new AxiomTransport({
       orgId: axiomOrgId,
       token: axiomApiToken,
       dataset: axiomDataset,
     });
 
-    // @ts-expect-error eeeeeeeeeeee, idk, hope it will work
     loggerInstance.add(axiom);
-    // @ts-expect-error eeeeeeeeeeee, idk, hope it will work
     loggerInstance.exceptions.handle(axiom);
-    // @ts-expect-error eeeeeeeeeeee, idk, hope it will work
     loggerInstance.rejections.handle(axiom);
   }
 
