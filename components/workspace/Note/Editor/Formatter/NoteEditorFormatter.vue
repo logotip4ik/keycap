@@ -1,45 +1,19 @@
 <script setup lang="ts">
-import 'tippy.js/dist/tippy.css';
-import 'tippy.js/animations/shift-away.css';
-
-import { BubbleMenu } from '@tiptap/vue-3';
-
 import type { ChainedCommands, Editor } from '@tiptap/core';
-import type { Props as TippyProps } from 'tippy.js';
 import type { Level } from '@tiptap/extension-heading';
 
-interface Props { editor: Editor }
-interface Emits { (e: 'hide'): void }
+interface Props { editor: Editor; onHide: () => void }
 
 const props = defineProps<Props>();
-const emit = defineEmits<Emits>();
 
 const isEditingLink = ref(false);
 const editingLink = ref('');
-const { width } = useWindowSize();
-const isPhoneScreen = computed(() => width.value < 740);
 
 let prevListItem: string | undefined;
 let prevHeadingLevel: number | undefined;
 
-const tippyOptions: Partial<TippyProps> = {
-  // this element will never be displayed on server, so this should work
-  appendTo: document.body,
-  zIndex: 9,
-  duration: [50, 150],
-  theme: 'adaptive',
-  animation: 'shift-away',
-  arrow: false,
-  placement: isPhoneScreen.value ? 'bottom' : 'top',
-  offset: isPhoneScreen.value ? [0, 20] : [0, 10], // 10 is default
-  onHidden: () => {
-    isEditingLink.value = false;
-    prevListItem = undefined;
-    prevHeadingLevel = undefined;
-  },
-};
-
 let prevContainerWidth = '';
+
 function beforeLeaveAnimation(el: Element) {
   prevContainerWidth = `${el.parentElement?.offsetWidth || 0}px`;
 }
@@ -85,7 +59,7 @@ function saveEditingLink() {
   isEditingLink.value = false;
 
   if (currentLinkUrl !== editingLink.value)
-    emit('hide');
+    props.onHide();
 }
 
 function toggleHeading() {
@@ -173,109 +147,124 @@ useTinykeys({
     isEditingLink.value = !isEditingLink.value;
   },
 });
+
+// NOTE: this need for correct cycle effect of text formatting
+let prevAnchor: any;
+watch(() => props.editor.state.selection.$anchor, (anchor) => {
+  const currentTextContent = anchor.node(anchor.depth).textContent;
+  const prevTextContent = prevAnchor && prevAnchor.node(prevAnchor.depth).textContent;
+
+  const whitespaceChanged
+    = !!prevAnchor
+    && currentTextContent === ''
+    && prevTextContent === ''
+    && prevAnchor.pos !== anchor.pos;
+
+  if (currentTextContent !== prevTextContent || whitespaceChanged) {
+    isEditingLink.value = false;
+    prevListItem = undefined;
+    prevHeadingLevel = undefined;
+  }
+
+  prevAnchor = anchor;
+});
 </script>
 
 <template>
-  <BubbleMenu
-    :editor="editor"
-    :tippy-options="tippyOptions"
-    class="note-editor__bubble-menu"
-  >
-    <Transition name="bubble-menu-fade" @before-leave="beforeLeaveAnimation" @enter="enterAnimation">
-      <div v-if="!isEditingLink" class="note-editor__bubble-menu__link-wrapper">
-        <button
-          class="note-editor__bubble-menu__button"
-          :class="{
-            'note-editor__bubble-menu__button--active': editor.isActive('heading'),
-          }"
-          @click="toggleHeading"
-        >
-          <Icon v-if="editor.isActive('heading', { level: 1 })" name="lucide:heading-1" />
-          <Icon v-else-if="editor.isActive('heading', { level: 2 })" name="lucide:heading-2" />
-          <Icon v-else-if="editor.isActive('heading', { level: 3 })" name="lucide:heading-3" />
-          <Icon v-else name="lucide:heading-1" />
-        </button>
+  <Transition name="formatter-fade" @before-leave="beforeLeaveAnimation" @enter="enterAnimation">
+    <div v-if="!isEditingLink" class="formatter__contents-wrapper">
+      <button
+        class="formatter__button"
+        :class="{
+          'formatter__button--active': editor.isActive('heading'),
+        }"
+        @click="toggleHeading"
+      >
+        <Icon v-if="editor.isActive('heading', { level: 1 })" name="lucide:heading-1" />
+        <Icon v-else-if="editor.isActive('heading', { level: 2 })" name="lucide:heading-2" />
+        <Icon v-else-if="editor.isActive('heading', { level: 3 })" name="lucide:heading-3" />
+        <Icon v-else name="lucide:heading-1" />
+      </button>
 
-        <button
-          class="note-editor__bubble-menu__button"
-          :class="{
-            'note-editor__bubble-menu__button--active':
-              editor.isActive('taskItem') || editor.isActive('listItem'),
-          }"
-          @click="toggleListItem"
-        >
-          <Icon name="material-symbols:list" />
-        </button>
+      <button
+        class="formatter__button"
+        :class="{
+          'formatter__button--active':
+            editor.isActive('taskItem') || editor.isActive('listItem'),
+        }"
+        @click="toggleListItem"
+      >
+        <Icon name="material-symbols:list" />
+      </button>
 
-        <button
-          class="note-editor__bubble-menu__button"
-          :class="{
-            'note-editor__bubble-menu__button--active': editor.isActive('blockquote'),
-          }"
-          @click="editor.chain().focus().toggleBlockquote().run()"
-        >
-          <Icon name="ri:double-quotes-r" />
-        </button>
+      <button
+        class="formatter__button"
+        :class="{
+          'formatter__button--active': editor.isActive('blockquote'),
+        }"
+        @click="editor.chain().focus().toggleBlockquote().run()"
+      >
+        <Icon name="ri:double-quotes-r" />
+      </button>
 
-        <div class="note-editor__bubble-menu__vr" aria-hidden="true" />
+      <div class="formatter__vr" aria-hidden="true" />
 
-        <button
-          title="CTRL+B"
-          class="note-editor__bubble-menu__button"
-          :class="{ 'note-editor__bubble-menu__button--active': editor.isActive('bold') }"
-          @click="editor!.chain().focus().toggleBold().run()"
-        >
-          <Icon name="ic:baseline-format-bold" />
-        </button>
+      <button
+        title="CTRL+B"
+        class="formatter__button"
+        :class="{ 'formatter__button--active': editor.isActive('bold') }"
+        @click="editor!.chain().focus().toggleBold().run()"
+      >
+        <Icon name="ic:baseline-format-bold" />
+      </button>
 
-        <button
-          title="CTRL+I"
-          class="note-editor__bubble-menu__button"
-          :class="{ 'note-editor__bubble-menu__button--active': editor.isActive('italic') }"
-          @click="editor!.chain().focus().toggleItalic().run()"
-        >
-          <Icon name="ic:baseline-format-italic" />
-        </button>
+      <button
+        title="CTRL+I"
+        class="formatter__button"
+        :class="{ 'formatter__button--active': editor.isActive('italic') }"
+        @click="editor!.chain().focus().toggleItalic().run()"
+      >
+        <Icon name="ic:baseline-format-italic" />
+      </button>
 
-        <button
-          title="CTRL+E"
-          class="note-editor__bubble-menu__button"
-          :class="{ 'note-editor__bubble-menu__button--active': editor.isActive('code') }"
-          @click="editor!.chain().focus().toggleCode().run()"
-        >
-          <Icon name="ic:baseline-code" />
-        </button>
+      <button
+        title="CTRL+E"
+        class="formatter__button"
+        :class="{ 'formatter__button--active': editor.isActive('code') }"
+        @click="editor!.chain().focus().toggleCode().run()"
+      >
+        <Icon name="ic:baseline-code" />
+      </button>
 
-        <button
-          title="CTRL+L"
-          class="note-editor__bubble-menu__button"
-          :class="{ 'note-editor__bubble-menu__button--active': editor.isActive('link') }"
-          @click="(isEditingLink = !isEditingLink)"
-        >
-          <Icon name="ic:baseline-link" />
-        </button>
-      </div>
+      <button
+        title="CTRL+L"
+        class="formatter__button"
+        :class="{ 'formatter__button--active': editor.isActive('link') }"
+        @click="(isEditingLink = !isEditingLink)"
+      >
+        <Icon name="ic:baseline-link" />
+      </button>
+    </div>
 
-      <form v-else class="note-editor__bubble-menu__link-wrapper" @submit.prevent="saveEditingLink">
-        <input
-          v-model="editingLink"
-          type="url"
-          class="note-editor__bubble-menu__input"
-          placeholder="hit enter to remove link"
-          enterkeyhint="done"
-          @keydown.esc="isEditingLink = false"
-        >
+    <form v-else class="formatter__contents-wrapper" @submit.prevent="saveEditingLink">
+      <input
+        v-model="editingLink"
+        type="url"
+        class="formatter__input"
+        placeholder="hit enter to remove link"
+        enterkeyhint="done"
+        @keydown.esc="isEditingLink = false"
+      >
 
-        <button class="note-editor__bubble-menu__button" type="submit">
-          <Icon name="ic:baseline-check" />
-        </button>
-      </form>
-    </Transition>
-  </BubbleMenu>
+      <button class="formatter__button" type="submit">
+        <Icon name="ic:baseline-check" />
+      </button>
+    </form>
+  </Transition>
 </template>
 
 <style lang="scss">
-.note-editor__bubble-menu {
+.formatter {
   --items-spacing: 0.5rem;
 
   &__vr {
@@ -285,7 +274,7 @@ useTinykeys({
     background-color: hsla(var(--text-color-hsl), 0.1);
   }
 
-  &__link-wrapper {
+  &__contents-wrapper {
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -340,6 +329,7 @@ useTinykeys({
     border: 1px solid hsla(var(--text-color-hsl), 0.5);
     border-radius: .25rem;
 
+    scroll-snap-align: start;
     cursor: pointer;
     transition: color .4s, border .4s, background-color .4s;
 
@@ -365,42 +355,34 @@ useTinykeys({
     }
 
     @media screen and (max-width: $breakpoint-tablet) {
-      --size-basis: 2.5rem;
+      --size-basis: 2.85rem;
+    }
+  }
+
+  &.inline-menu {
+    .formatter {
+      &__input {
+        max-width: unset !important;
+      }
+
+      &__wrapper {
+        justify-content: center;
+      }
     }
   }
 }
 
-.tippy-box[data-theme~='adaptive'] {
-  background-color: hsla(var(--surface-color-hsl), 0.95);
-
-  box-shadow:
-    1px 1.7px 5.3px rgba(0, 0, 0, 0.032),
-    3.4px 5.6px 17.9px rgba(0, 0, 0, 0.048),
-    15px 25px 80px rgba(0, 0, 0, 0.08)
-  ;
-
-  @supports (backdrop-filter: blur(1px)) {
-    background-color: hsla(var(--surface-color-hsl), 0.65);
-
-    backdrop-filter: blur(0.4rem);
-  }
-}
-
-.tippy-content {
-  padding: 0.325rem;
-}
-
-.bubble-menu-fade-enter-active,
-.bubble-menu-fade-leave-active {
+.formatter-fade-enter-active,
+.formatter-fade-leave-active {
   transition: opacity .3s .1s;
 }
 
-.bubble-menu-fade-leave-active {
+.formatter-fade-leave-active {
   display: none;
 }
 
-.bubble-menu-fade-enter-from,
-.bubble-menu-fade-leave-to {
+.formatter-fade-enter-from,
+.formatter-fade-leave-to {
   opacity: 0;
 }
 </style>
