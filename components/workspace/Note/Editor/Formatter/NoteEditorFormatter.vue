@@ -354,8 +354,19 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
       }
     }
 
+    svg {
+      display: inline-block;
+
+      width: 75%;
+      height: auto;
+    }
+
     @media screen and (max-width: $breakpoint-tablet) {
-      --size-basis: 2.85rem;
+      --size-basis: 2.95rem;
+
+      svg {
+        width: 55%;
+      }
     }
   }
 
