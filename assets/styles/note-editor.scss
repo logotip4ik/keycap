@@ -31,7 +31,7 @@
     @media (hover: hover) {
       color: hsla(var(--text-color-hsl), 0.5);
     }
-    
+
     @media screen and (max-width: $breakpoint-tablet) {
       top: 0.15rem;
     }
@@ -45,6 +45,8 @@
   }
 
   .ProseMirror {
+    --base-list-left-padding: 0.125rem;
+
     font-size: 105%;
     line-height: 1.35;
     word-break: break-word;
@@ -59,7 +61,8 @@
       padding: 0 0 25vh;
     }
 
-    p, pre {
+    p,
+    pre {
       margin: 0;
 
       padding: 0.5rem 0;
@@ -73,12 +76,15 @@
       }
     }
 
-    ul, ol {
+    ul,
+    ol {
       margin: 0;
       padding: 0.4rem 0;
-      padding-left: 1rem;
+      padding-left: calc(1rem + var(--base-list-left-padding));
 
       &[data-type="taskList"] {
+        padding-left: var(--base-list-left-padding);
+
         list-style: none;
 
         p {
@@ -101,7 +107,7 @@
             }
           }
 
-          > label {
+          >label {
             flex: 0 0 auto;
 
             margin-right: 0.5rem;
@@ -110,7 +116,7 @@
             &.readonly {
               pointer-events: none;
             }
-            
+
             input {
               cursor: pointer;
 
@@ -121,12 +127,12 @@
             }
           }
 
-          > div {
+          >div {
             flex: 1 1 auto;
           }
         }
 
-        li + li {
+        li+li {
           margin-top: 0.175rem;
         }
       }
@@ -144,7 +150,7 @@
     }
 
     li {
-      & > p {
+      &>p {
         padding: 0.125rem 0;
       }
     }
@@ -168,26 +174,28 @@
       box-shadow: 0 0 1rem 0 hsla(var(--selection-bg-color-hsl), 0.075);
     }
 
-    h1, h2, h3 {
+    h1,
+    h2,
+    h3 {
       margin: 0;
       padding: 1rem 0 0.5rem;
-  
+
       &:not(:first-child) {
-        padding-top: 2rem;
+        padding-top: 1.75rem;
       }
     }
-    
+
     * {
       transition: all .3s;
     }
 
-    & > *:is(h1, h2, h3):first-child {
+    &>*:is(h1, h2, h3):first-child {
       padding-top: 0.5rem;
     }
 
     @media screen and (max-width: $breakpoint-tablet) {
       padding: 1.65rem 1rem 45vh;
-  
+
       &--renderer {
         padding: 0 0 45vh;
       }
