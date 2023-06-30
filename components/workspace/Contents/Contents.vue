@@ -84,13 +84,15 @@ const mergedContents = computed(() => {
   return [...folder.value.notes, ...folder.value.subfolders] as FolderOrNote[];
 });
 
-async function goUpFolder() {
+const parentFolderPath = computed(() => {
   const currentFolderPath = folder.value!.path;
   const prevFolderPath = withLeadingSlash(currentFolderPath.split('/').slice(1, -1).join('/'));
 
-  if (!isFallbackMode.value || foldersCache.has(prevFolderPath))
-    await navigateTo(generateItemRouteParams({ ...folder.value!, path: prevFolderPath }));
-}
+  if (isFallbackMode.value && !foldersCache.has(prevFolderPath))
+    return { path: window.location.pathname };
+
+  return generateItemRouteParams({ ...folder.value, path: prevFolderPath });
+});
 
 mitt.on('cache:populated', () => {
   folder.value = foldersCache.get(folderPath.value) || null;
@@ -153,9 +155,9 @@ useTinykeys({
   <Transition name="fade">
     <TransitionGroup v-if="folder" :key="folder.path" tag="ul" name="list" class="workspace__contents__list">
       <li v-if="!folder.root" key="1">
-        <button class="item" @click="goUpFolder">
+        <NuxtLink class="item" :href="parentFolderPath">
           <span class="item__name">cd ..</span>
-        </button>
+        </NuxtLink>
       </li>
 
       <li v-for="item in mergedContents" :key="item.id.toString()">
