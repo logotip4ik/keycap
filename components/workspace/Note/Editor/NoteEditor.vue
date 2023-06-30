@@ -26,6 +26,11 @@ import TextAlign from '@tiptap/extension-text-align';
 import CodeBlock from '@tiptap/extension-code-block';
 import History from '@tiptap/extension-history';
 
+import {
+  LazyWorkspaceNoteEditorFormatterBubbleMenu as LazyBubblePopup,
+  LazyWorkspaceNoteEditorFormatterInlineMenu as LazyInlinePopup,
+} from '#components';
+
 interface Props {
   content: string
   editable: boolean
@@ -37,9 +42,11 @@ const props = defineProps<Props>();
 
 const mitt = useMitt();
 
+const isSmallScreen = inject(IsSmallScreenKey)!;
+
 // TODO: export this whole mess into separate file
 const editor = useEditor({
-  autofocus: window.innerWidth > 740 && 'start', // disable auto focus on small screens
+  autofocus: isSmallScreen.value && 'start', // disable auto focus on small screens
   content: props.content,
   editable: props.editable,
   extensions: [
@@ -147,9 +154,19 @@ useEventListener(window, 'visibilitychange', () => {
 
 <template>
   <div class="note-editor__wrapper">
-    <template v-if="editor">
-      <LazyWorkspaceNoteEditorBubbleMenu :editor="editor" @hide="hideBubbleMenu" />
-    </template>
+    <LazyBubblePopup
+      v-if="editor && !isSmallScreen"
+      :editor="editor"
+    >
+      <WorkspaceNoteEditorFormatter :editor="editor" @hide="hideBubbleMenu" />
+    </LazyBubblePopup>
+
+    <LazyInlinePopup
+      v-else-if="editor && isSmallScreen"
+      :editor="editor"
+    >
+      <WorkspaceNoteEditorFormatter :editor="editor" @hide="() => null" />
+    </LazyInlinePopup>
 
     <button class="note-editor__details-button" @click="props.onShowDetails">
       details
