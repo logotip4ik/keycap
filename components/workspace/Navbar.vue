@@ -27,6 +27,10 @@ const headingText = computed(() => {
 
   return `${user.value.username}'s workspace`;
 });
+
+const folderRootPath = computed(() => {
+  return { ...route, params: { ...route.params, note: blankNoteName } };
+});
 </script>
 
 <template>
@@ -35,7 +39,7 @@ const headingText = computed(() => {
       <NuxtLink
         v-show="isShowingBackButton"
         class="nav__button nav__button--back"
-        :href="{ ...route, params: { ...route.params, note: blankNoteName } }"
+        :href="folderRootPath"
       >
         <Icon name="ic:baseline-arrow-back" class="nav__button__icon" />
       </NuxtLink>
