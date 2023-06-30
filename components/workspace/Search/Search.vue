@@ -15,7 +15,7 @@ const inputEl = ref<HTMLElement | null>(null);
 const searchEl = ref<HTMLElement | null>(null);
 
 const searchInput = ref('');
-const debouncedSearchInput = useDebounce(searchInput, 200);
+const debouncedSearchInput = useDebounce(searchInput, 100);
 
 defineExpose({ input: inputEl });
 
