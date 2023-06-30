@@ -13,11 +13,12 @@ const inlineMenu = ref<HTMLElement | null>(null);
 
 function isOverflown({ clientWidth, scrollWidth }: HTMLElement) {
   const diff = scrollWidth - clientWidth;
+
   return diff > 2;
 }
 
 async function addScrollIfNeeded() {
-  if (inlineMenu.value && isOverflown(inlineMenu.value?.children[0] as HTMLElement))
+  if (inlineMenu.value && isOverflown(inlineMenu.value as HTMLElement))
     inlineMenu.value.classList.add('overflown');
 }
 
