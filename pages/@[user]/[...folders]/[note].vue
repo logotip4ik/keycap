@@ -20,7 +20,7 @@ const user = useUser();
 
 const notePath = computed(() => {
   const paths = Array.isArray(route.params.folders)
-    ? [route.params.folders, route.params.note]
+    ? [...route.params.folders, route.params.note]
     : [route.params.note];
 
   const pathString = withoutLeadingSlash(
