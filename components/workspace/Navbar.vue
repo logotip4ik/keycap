@@ -27,22 +27,18 @@ const headingText = computed(() => {
 
   return `${user.value.username}'s workspace`;
 });
-
-async function showFolderContents() {
-  await navigateTo({ ...route, params: { ...route.params, note: blankNoteName } });
-}
 </script>
 
 <template>
   <nav class="nav">
     <Transition name="nav-back-button">
-      <button
+      <NuxtLink
         v-show="isShowingBackButton"
         class="nav__button nav__button--back"
-        @click="showFolderContents"
+        :href="{ ...route, params: { ...route.params, note: blankNoteName } }"
       >
         <Icon name="ic:baseline-arrow-back" class="nav__button__icon" />
-      </button>
+      </NuxtLink>
     </Transition>
 
     <!-- TODO: tell somehow user that, red indicator means no internet connection -->
@@ -137,6 +133,8 @@ async function showFolderContents() {
     flex-shrink: 0;
 
     display: none;
+    justify-content: center;
+    align-items: center;
 
     color: hsla(var(--text-color-hsl), 0.85);
 
@@ -176,12 +174,12 @@ async function showFolderContents() {
     }
 
     &__icon {
-      height: 70%;
+      height: 65%;
       width: auto;
     }
 
     @media screen and (max-width: $breakpoint-tablet) {
-      display: block;
+      display: flex;
     }
   }
 
