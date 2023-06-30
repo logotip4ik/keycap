@@ -158,14 +158,14 @@ useEventListener(window, 'visibilitychange', () => {
       v-if="editor && !isSmallScreen"
       :editor="editor"
     >
-      <WorkspaceNoteEditorFormatter :editor="editor" @hide="hideBubbleMenu" />
+      <WorkspaceNoteFormatter :editor="editor" @hide="hideBubbleMenu" />
     </LazyBubblePopup>
 
     <LazyInlinePopup
       v-else-if="editor && isSmallScreen"
       :editor="editor"
     >
-      <WorkspaceNoteEditorFormatter :editor="editor" @hide="() => null" />
+      <WorkspaceNoteFormatter :editor="editor" @hide="() => null" />
     </LazyInlinePopup>
 
     <button class="note-editor__details-button" @click="props.onShowDetails">
