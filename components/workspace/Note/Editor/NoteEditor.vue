@@ -46,7 +46,7 @@ const isSmallScreen = inject(IsSmallScreenKey)!;
 
 // TODO: export this whole mess into separate file
 const editor = useEditor({
-  autofocus: isSmallScreen.value && 'start', // disable auto focus on small screens
+  autofocus: !isSmallScreen.value && 'start', // disable auto focus on small screens
   content: props.content,
   editable: props.editable,
   extensions: [
