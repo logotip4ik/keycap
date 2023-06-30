@@ -27,8 +27,8 @@ import CodeBlock from '@tiptap/extension-code-block';
 import History from '@tiptap/extension-history';
 
 import {
-  LazyWorkspaceNoteEditorFormatterBubbleMenu as LazyBubblePopup,
-  LazyWorkspaceNoteEditorFormatterInlineMenu as LazyInlinePopup,
+  LazyWorkspaceNoteFormatterBubbleMenu as LazyBubblePopup,
+  LazyWorkspaceNoteFormatterInlineMenu as LazyInlinePopup,
 } from '#components';
 
 interface Props {
