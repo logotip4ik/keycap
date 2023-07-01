@@ -10,8 +10,6 @@ import type { Props as TippyProps } from 'tippy.js';
 interface Props { editor: Editor }
 defineProps<Props>();
 
-const isPhoneScreen = inject(IsSmallScreenKey)!;
-
 const tippyOptions: Partial<TippyProps> = {
   // this element will never be displayed on server, so this should work
   appendTo: document.body,
@@ -20,8 +18,6 @@ const tippyOptions: Partial<TippyProps> = {
   theme: 'adaptive',
   animation: 'shift-away',
   arrow: false,
-  placement: isPhoneScreen.value ? 'bottom' : 'top',
-  offset: isPhoneScreen.value ? [0, 20] : [0, 10], // 10 is default
 };
 </script>
 
