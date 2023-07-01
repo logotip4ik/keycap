@@ -31,24 +31,24 @@ if (typeof window !== 'undefined')
   useEventListener(window, 'resize', handleResize, { passive: true });
 </script>
 
+<!-- TODO: investigate why hydration mismatch appears with TransitionGroup wrapped in Teleport -->
+
 <template>
-  <Teleport to="body">
-    <TransitionGroup
-      ref="toasterEl"
-      class="toasts"
-      tag="section"
-      name="toast"
-      @before-leave="beforeLeaveHook"
-    >
-      <WorkspaceToastsItem
-        v-for="(toast, i) in sortedToasts"
-        :key="toast.id"
-        :toast="toast"
-        :animation-duration="ANIMATION_DURATION"
-        :data-has-top-sibling="!!sortedToasts[i - 1]"
-      />
-    </TransitionGroup>
-  </Teleport>
+  <TransitionGroup
+    ref="toasterEl"
+    class="toasts"
+    tag="section"
+    name="toast"
+    @before-leave="beforeLeaveHook"
+  >
+    <WorkspaceToastsItem
+      v-for="(toast, i) in sortedToasts"
+      :key="toast.id"
+      :toast="toast"
+      :animation-duration="ANIMATION_DURATION"
+      :data-has-top-sibling="!!sortedToasts[i - 1]"
+    />
+  </TransitionGroup>
 </template>
 
 <style lang="scss">
