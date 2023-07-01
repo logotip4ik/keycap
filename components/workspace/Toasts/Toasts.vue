@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import parseDuration from 'parse-duration';
 import type { ComponentPublicInstance } from 'vue';
 
 const toasts = useToasts();
@@ -10,7 +11,7 @@ const sortedToasts = computed(() =>
 );
 
 let toasterElClientRect: DOMRect | null;
-const ANIMATION_DURATION = 300;
+const ANIMATION_DURATION = parseDuration('0.3s')!;
 function beforeLeaveHook(el: Element) {
   const elClientRect = el.getBoundingClientRect();
 
