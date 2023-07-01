@@ -29,7 +29,7 @@ export default defineNuxtPlugin({
     }, { immediate: true });
 
     function refreshAuth() {
-      window.requestIdleCallback(async () => {
+      requestIdleCallback(async () => {
         const newUser = await $fetch('/api/user/refresh', { retry: 1 })
           .catch(async (error) => {
             if (error.statusCode === 401 && route.path.includes('/@'))

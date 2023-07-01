@@ -80,7 +80,7 @@ onMounted(() => {
     isShowingSearch.value = true;
 
   [preloadDashboardComponents, defineFuzzyWorker]
-    .map((cb) => window.requestIdleCallback(cb));
+    .map((cb) => requestIdleCallback(cb));
 
   if (process.dev)
     // @ts-expect-error this should not be defined

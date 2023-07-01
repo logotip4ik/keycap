@@ -5,7 +5,7 @@ export default defineNuxtPlugin({
   setup() {
     const appConfig = useAppConfig();
 
-    window.requestIdleCallback(() => {
+    requestIdleCallback(() => {
       for (const iconName of appConfig.iconsToPreload || [])
       // iconify stores local copy of icon in localStorage
         if (!iconExists(iconName)) loadIcon(iconName);
