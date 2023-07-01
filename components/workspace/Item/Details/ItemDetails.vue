@@ -92,7 +92,7 @@ async function copyShareLink() {
 }
 
 const debouncedToggleShareLink = useDebounceFn(toggleShareLink, 250);
-function toggleShareLink(needToCreate: boolean) {
+function toggleShareLink(isCreateRequest: boolean) {
   if (isLoadingItemDetails.value)
     return;
 
@@ -101,7 +101,7 @@ function toggleShareLink(needToCreate: boolean) {
   isLoadingItemDetails.value = true;
 
   $fetch(`/api/share/note/${notePath}`, {
-    method: needToCreate ? 'POST' : 'DELETE',
+    method: isCreateRequest ? 'POST' : 'DELETE',
   })
     .then(() => refresh())
     .finally(() => isLoadingItemDetails.value = false);
