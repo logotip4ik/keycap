@@ -148,7 +148,7 @@ useTinykeys({
   },
 });
 
-// NOTE: this need for correct cycle effect of text formatting
+// NOTE: this is needed for correct cycle effect of text formatting
 let prevAnchor: any;
 watch(() => props.editor.state.selection.$anchor, (anchor) => {
   const currentTextContent = anchor.node(anchor.depth).textContent;
@@ -160,6 +160,7 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
     && prevTextContent === ''
     && prevAnchor.pos !== anchor.pos;
 
+  // different node in editor is selected
   if (currentTextContent !== prevTextContent || whitespaceChanged) {
     isEditingLink.value = false;
     prevListItem = undefined;
@@ -357,12 +358,12 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
     svg {
       display: inline-block;
 
-      width: 75%;
+      width: 67.5%;
       height: auto;
     }
 
     @media screen and (max-width: $breakpoint-tablet) {
-      --size-basis: 2.95rem;
+      --size-basis: 2.5rem;
 
       svg {
         width: 55%;
@@ -373,7 +374,7 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
   &.inline-menu {
     .formatter {
       &__input {
-        max-width: unset !important;
+        max-width: min(75vw, $breakpoint-tablet - 75px);
       }
 
       &__wrapper {
