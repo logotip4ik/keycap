@@ -15,7 +15,7 @@ const inputEl = ref<HTMLElement | null>(null);
 const searchEl = ref<HTMLElement | null>(null);
 
 const searchInput = ref('');
-const debouncedSearchInput = useDebounce(searchInput, 100);
+const debouncedSearchInput = useDebounce(searchInput, 125);
 
 defineExpose({ input: inputEl });
 
@@ -71,7 +71,7 @@ function changeSelectedResult(difference: number) {
   selectedResult.value = newSelectedResult < 0 ? results.value.length - 1 : newSelectedResult;
 }
 
-function handleTab() {
+function fillSearchInput() {
   if (typeaheadResult.value)
     searchInput.value = typeaheadResult.value.name;
 }
@@ -82,29 +82,29 @@ const isResultsEmpty = computed(() => {
 
   const inputValue = withoutLeadingSlash(debouncedSearchInput.value);
 
-  return (inputValue || inputValue === '/') && results.value.length === 0;
+  return inputValue && results.value.length === 0;
 });
 
 watch(debouncedSearchInput, handleSearchInput);
 
 let prevHeight = 0;
+let prevAnimation: Animation | null;
 useResizeObserver(searchEl, (entries) => {
   const entry = entries[0];
   const borderBoxSize = entry.borderBoxSize![0];
 
   const currentHeight = borderBoxSize.blockSize;
 
-  const animations = entry.target.getAnimations();
-  const animationIsRunning = animations.some((animation) => animation.playState === 'running');
-
-  if (prevHeight && currentHeight && !animationIsRunning) {
-    entry.target.animate(
+  if (prevHeight && currentHeight && !prevAnimation) {
+    prevAnimation = entry.target.animate(
       [
         { height: `${prevHeight}px` },
         { height: `${currentHeight}px` },
       ],
-      { duration: 250, easing: 'cubic-bezier(0.33, 1, 0.68, 1)' },
+      { duration: 225, easing: 'cubic-bezier(0.33, 1, 0.68, 1)' },
     );
+
+    prevAnimation.addEventListener('finish', () => prevAnimation = null);
   }
 
   prevHeight = currentHeight;
@@ -124,7 +124,7 @@ useTinykeys({ Escape: handleCancel });
           placeholder="Search or enter / for commands"
           @keydown.up.prevent="changeSelectedResult(-1)"
           @keydown.down.prevent="changeSelectedResult(+1)"
-          @keydown.tab.prevent="handleTab"
+          @keydown.tab.prevent="fillSearchInput"
         />
 
         <p v-show="typeaheadResult" class="search__form__typeahead">
