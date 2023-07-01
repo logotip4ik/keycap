@@ -8,7 +8,7 @@ useHead({
   titleTemplate: (title) => title ? `${title} - Keycap` : 'Keycap - Better notes',
 });
 
-if (typeof window !== 'undefined') {
+if (process.client) {
   const UPDATE_WORKER_DELAY = parseDuration('1.5s')!;
 
   setTimeout(() => {
