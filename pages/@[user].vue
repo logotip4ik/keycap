@@ -6,9 +6,6 @@ definePageMeta({
   middleware: ['auth'],
 });
 
-if (typeof window !== 'undefined')
-  import('~/utils/sw-controller').then((sw) => sw.updateServiceWorker());
-
 const route = useRoute();
 const user = useUser();
 const { width: windowWidth } = useWindowSize();
@@ -141,8 +138,6 @@ provide(IsNoteNameEmptyKey, isNoteNameEmpty);
         />
       </Transition>
     </Teleport>
-
-    <LazyWorkspaceToasts />
 
     <Teleport to="body">
       <Transition name="fade">

@@ -2,9 +2,23 @@
 import '~/polyfills/array-at';
 import 'requestidlecallback-polyfill';
 
+import parseDuration from 'parse-duration';
+
 useHead({
   titleTemplate: (title) => title ? `${title} - Keycap` : 'Keycap - Better notes',
 });
+
+if (typeof window !== 'undefined') {
+  const UPDATE_WORKER_DELAY = parseDuration('1.5s')!;
+
+  setTimeout(() => {
+    requestIdleCallback(async () => {
+      const { updateServiceWorker } = await import('~/utils/sw-controller');
+
+      requestIdleCallback(updateServiceWorker);
+    });
+  }, UPDATE_WORKER_DELAY);
+}
 
 if (process.server) {
   useSeoMeta({
@@ -40,4 +54,8 @@ if (process.server) {
   </Teleport>
 
   <NuxtPage />
+
+  <ClientOnly>
+    <LazyWorkspaceToasts />
+  </ClientOnly>
 </template>

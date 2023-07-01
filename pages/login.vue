@@ -37,8 +37,6 @@ watch(user, async (value) => value && await navigateTo(`/@${value.username}`));
 
 <template>
   <main class="login-page">
-    <LazyWorkspaceToasts />
-
     <form
       action="/api/user/login"
       method="POST"
