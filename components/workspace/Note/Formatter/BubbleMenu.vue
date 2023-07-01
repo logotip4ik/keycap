@@ -13,7 +13,7 @@ defineProps<Props>();
 const tippyOptions: Partial<TippyProps> = {
   // this element will never be displayed on server, so this should work
   appendTo: document.body,
-  zIndex: 9,
+  zIndex: 2,
   duration: [50, 150],
   theme: 'adaptive',
   animation: 'shift-away',
@@ -35,7 +35,9 @@ const tippyOptions: Partial<TippyProps> = {
 .tippy-box[data-theme~='adaptive'] {
   background-color: hsla(var(--surface-color-hsl), 0.95);
 
+  border: 1px solid hsla(var(--text-color-hsl), 0.125);
   box-shadow:
+    0 0 1px 0 hsla(var(--text-color-hsl), 0.25),
     1px 1.7px 5.3px rgba(0, 0, 0, 0.032),
     3.4px 5.6px 17.9px rgba(0, 0, 0, 0.048),
     15px 25px 80px rgba(0, 0, 0, 0.08)
