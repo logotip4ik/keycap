@@ -109,3 +109,8 @@ self.addEventListener('message', (event) => {
 
 clientsClaim();
 cleanupOutdatedCaches();
+
+// Currently we do not show popup for refreshing the sw
+// so, if this is the case, just refresh user
+if (!self.location.pathname.startsWith('/@'))
+  self.skipWaiting();
