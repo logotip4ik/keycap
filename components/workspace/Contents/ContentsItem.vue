@@ -52,7 +52,7 @@ function showDetails() {
 
 function _preloadItem() {
   const loadingToast = createToast(`Preloading into cache: "${props.item.name}"`,
-    { duration: Infinity, type: 'loading' },
+    { duration: Number.POSITIVE_INFINITY, type: 'loading' },
   );
 
   preloadItem(props.item)
