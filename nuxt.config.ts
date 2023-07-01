@@ -161,15 +161,17 @@ export default defineNuxtConfig({
     strategies: 'injectManifest',
     manifest: false,
     includeManifestIcons: false,
+    minify: true,
+
     client: {
       installPrompt: false,
       registerPlugin: true,
-      periodicSyncForUpdates: parseDuration('20 minutes', 'second'), // every 20m check if new version is available
+      periodicSyncForUpdates: parseDuration('10 minutes', 'second'),
     },
 
     injectManifest: {
       globPatterns: ['**/*.{js,json,css,html,txt,svg,png,ico,webp,woff,woff2,ttf,eot,otf,wasm}'],
-      globIgnores: ['**.webmanifest', 'register**', 'login**'],
+      globIgnores: ['**.webmanifest', 'register', 'login', 'sw.js', 'index.html'],
     },
   },
 });
