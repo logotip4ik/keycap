@@ -43,6 +43,16 @@ export default defineNuxtConfig({
     },
   },
 
+  nitro: {
+    typescript: {
+      tsConfig: {
+        compilerOptions: {
+          allowSyntheticDefaultImports: true,
+        },
+      },
+    },
+  },
+
   routeRules: {
     '/**': { headers: getHeaders('default') },
 
