@@ -6,6 +6,7 @@ import type { Editor } from '@tiptap/core';
 interface Props { editor: Editor }
 defineProps<Props>();
 
+const isFallbackMode = useFallbackMode();
 const INITIAL_DELAY_TO_APPEAR = parseDuration('0.35s');
 
 const shouldShow = ref(false);
@@ -31,7 +32,7 @@ onMounted(() => {
 
 <template>
   <Transition name="fade" @enter="addScrollIfNeeded">
-    <div v-if="shouldShow" ref="inlineMenu" class="inline-menu formatter">
+    <div v-if="shouldShow && !isFallbackMode" ref="inlineMenu" class="inline-menu formatter">
       <slot />
     </div>
   </Transition>
@@ -52,7 +53,7 @@ onMounted(() => {
 
   width: 100%;
 
-  border-top: 1px solid hsla(var(--text-color-hsl), 0.125);
+  border-top: 1px solid hsla(var(--text-color-hsl), 0.25);
   background-color: hsla(var(--surface-color-hsl), 0.95);
   box-shadow: 0 0 1rem hsla(var(--text-color-hsl), 0.125);
 
