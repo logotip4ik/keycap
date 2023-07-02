@@ -1,4 +1,3 @@
-// @ts-expect-error idk what to do with this error
 import webmanifest from '~/assets/constants/webmanifest.json';
 
 export default defineEventHandler((event) => {

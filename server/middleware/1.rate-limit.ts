@@ -1,4 +1,3 @@
-// @ts-expect-error specifying * as RateLimiter breaks everything
 import RateLimiter from 'lambda-rate-limiter';
 import parseDuration from 'parse-duration';
 
