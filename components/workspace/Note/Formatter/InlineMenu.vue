@@ -49,7 +49,7 @@ onMounted(() => {
   left: 0;
   z-index: 10;
 
-  padding: 0.325rem 1.125rem;
+  padding: 0.325rem;
 
   width: 100%;
 
