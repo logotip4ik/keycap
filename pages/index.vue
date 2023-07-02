@@ -1,8 +1,4 @@
 <script setup lang="ts">
-useSeoMeta({
-  ogDescription: 'Another note taking webapp ❤.Simple, fast and purple.',
-});
-
 const { buildInfo } = useAppConfig();
 
 const lastTimeBuild = Intl.DateTimeFormat('en-UK', { dateStyle: 'medium' }).format(buildInfo.time);
