@@ -177,7 +177,7 @@ export default defineNuxtConfig({
     client: {
       installPrompt: false,
       registerPlugin: true,
-      periodicSyncForUpdates: parseDuration('10 minutes', 'second'),
+      periodicSyncForUpdates: parseDuration('1 hour', 'second'),
     },
 
     injectManifest: {
