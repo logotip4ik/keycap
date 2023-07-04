@@ -2,7 +2,7 @@ import parseDuration from 'parse-duration';
 
 import { toBigInt } from '~/server/utils';
 
-const NEAR_HOUR = parseDuration('1 hour')! - 10;
+const NEAR_HOUR = parseDuration('1 hour')! - parseDuration('10 seconds')!;
 
 let setUserOnClient = false;
 let prevInterval: NodeJS.Timer;
