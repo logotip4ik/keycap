@@ -43,6 +43,8 @@ model Note {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  // add storing (include, covering) when this is merged https://github.com/prisma/prisma/issues/8584
+
   // Cockroach tells me to remove this indexes and add another ones with STORING
   // for example: 
   // CREATE INDEX ON ***."Note" ("parentId") STORING (name, path); 
