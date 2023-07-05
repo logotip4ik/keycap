@@ -7,8 +7,9 @@ export default defineNuxtModule({
   meta: {
     name: 'purge-comments',
   },
-  setup() {
-    if (isDevelopment) return;
+  setup(_options, nuxt) {
+    if (isDevelopment || nuxt.options._prepare)
+      return;
 
     addVitePlugin({
       name: 'purge-comments',

@@ -11,6 +11,9 @@ export default defineNuxtModule({
     name: 'build-env',
   },
   async setup(_options, nuxt) {
+    if (nuxt.options._prepare)
+      return;
+
     const commit = await getCommitSha();
 
     const buildInfo: BuildInfo = {
