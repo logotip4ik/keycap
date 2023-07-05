@@ -3804,73 +3804,73 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@unhead/addons@npm:^1.1.29":
-  version: 1.1.29
-  resolution: "@unhead/addons@npm:1.1.29"
+"@unhead/addons@npm:^1.1.30":
+  version: 1.1.30
+  resolution: "@unhead/addons@npm:1.1.30"
   dependencies:
     "@rollup/pluginutils": ^5.0.2
-    "@unhead/schema": 1.1.29
-    "@unhead/shared": 1.1.29
-    magic-string: ^0.30.0
-    mlly: ^1.3.0
+    "@unhead/schema": 1.1.30
+    "@unhead/shared": 1.1.30
+    magic-string: ^0.30.1
+    mlly: ^1.4.0
     ufo: ^1.1.2
-    unhead: 1.1.29
-    unplugin: ^1.3.1
+    unhead: 1.1.30
+    unplugin: ^1.3.2
     unplugin-ast: ^0.8.0
-  checksum: ab5e983382b91037c2ddf5b71ceed6ddf4d920607522ec724890ae052b30bef52428dde8354473dbc60db4c65299e90a7f7f7614be6cc9d8bd6beb16695da931
+  checksum: 3068efdb4c930b25b69834eb0cc34aa5e30b7db58aebd00e03924e2eb53b5fa177254341eff196c684f837e4f9f8060d8d81e55654d0dabfed3ae0574b9b303f
   languageName: node
   linkType: hard
 
-"@unhead/dom@npm:1.1.29":
-  version: 1.1.29
-  resolution: "@unhead/dom@npm:1.1.29"
+"@unhead/dom@npm:1.1.30":
+  version: 1.1.30
+  resolution: "@unhead/dom@npm:1.1.30"
   dependencies:
-    "@unhead/schema": 1.1.29
-    "@unhead/shared": 1.1.29
-  checksum: 23a0504b691b381d6cac7a098360abcdbc4608d1bdc19bf9687fcb4ab49895ad21a41648bb898400ebbe23a50a7b5786f43f97937398e6eff6328be39bd075f9
+    "@unhead/schema": 1.1.30
+    "@unhead/shared": 1.1.30
+  checksum: 420ba1aa8e5b9532f1d2ca29e8a5af902cb6acfe904866e0d6d4bc374829e27cb964f1586f64eecec067bd5fdfc53c8750f8ab14b0243ae9fd3ad2d8fac22067
   languageName: node
   linkType: hard
 
-"@unhead/schema@npm:1.1.29":
-  version: 1.1.29
-  resolution: "@unhead/schema@npm:1.1.29"
+"@unhead/schema@npm:1.1.30":
+  version: 1.1.30
+  resolution: "@unhead/schema@npm:1.1.30"
   dependencies:
     hookable: ^5.5.3
-    zhead: ^2.0.7
-  checksum: f2837673c9d2a325ca0c4daeff775765110dd0b5d6852beb72acf0eba2bab9ea70a1e18dc753ff8b7499b3cfed3a0eccec487262d4f89568d13096264a0c58a4
+    zhead: ^2.0.9
+  checksum: 2e127cdeaf679aba376074ca5d842583c6494285146fa92eacd80625f3ff4853dd1867046cbe91e23d76d0bbd7a12493ae6e3cd43e3503d29aaff7da6c777db0
   languageName: node
   linkType: hard
 
-"@unhead/shared@npm:1.1.29":
-  version: 1.1.29
-  resolution: "@unhead/shared@npm:1.1.29"
+"@unhead/shared@npm:1.1.30":
+  version: 1.1.30
+  resolution: "@unhead/shared@npm:1.1.30"
   dependencies:
-    "@unhead/schema": 1.1.29
-  checksum: 7fb9ec5949da956da635bf3caad435b37879049a15499c60c85b7bff3fcf10521fbd5669075178c8c305918104e9e12ad9a4d2272d82d865a2f62a99705ab702
+    "@unhead/schema": 1.1.30
+  checksum: 05c52d7a989340afbd2977068f1bdfc35b92e77f89014da1a3e9099ae4fc832d9ec9e4a7287eb3c681285c7493fa843a460711c6e50917c8ce84308b21cc3e66
   languageName: node
   linkType: hard
 
 "@unhead/ssr@npm:^1.1.28":
-  version: 1.1.29
-  resolution: "@unhead/ssr@npm:1.1.29"
+  version: 1.1.30
+  resolution: "@unhead/ssr@npm:1.1.30"
   dependencies:
-    "@unhead/schema": 1.1.29
-    "@unhead/shared": 1.1.29
-  checksum: 6628c53b396ff627752c1c20233d185ab60c0aefbae4c2126e6f4bfce11b9e377db2ead462ea76e34956f0fdcff5baae85e48bda72ce8955d3ec9b2b8c1be64a
+    "@unhead/schema": 1.1.30
+    "@unhead/shared": 1.1.30
+  checksum: 527399ab6bca697bac87c9f2a249ede492c0349b6da56876bdb731511b1f8ca04ba139c7639d87384f5dc2c9818a3abfba51369f17205a761201e5306bab1a6e
   languageName: node
   linkType: hard
 
 "@unhead/vue@npm:^1.1.28":
-  version: 1.1.29
-  resolution: "@unhead/vue@npm:1.1.29"
+  version: 1.1.30
+  resolution: "@unhead/vue@npm:1.1.30"
   dependencies:
-    "@unhead/schema": 1.1.29
-    "@unhead/shared": 1.1.29
+    "@unhead/schema": 1.1.30
+    "@unhead/shared": 1.1.30
     hookable: ^5.5.3
-    unhead: 1.1.29
+    unhead: 1.1.30
   peerDependencies:
     vue: ">=2.7 || >=3"
-  checksum: a16ae4f5c6f8a8f7299fd07e16bed7731ec77afb4f4d3bf2f1997b0f8e587af7d0d31eb87d114e9802c8806064c3c2498538afe858fbbb3e08815b68f0c5e9d0
+  checksum: 48ba33a384d0cc7bd7309145c0823e0e45c5ec971968c4a9aa90ea5e29decd68ffded2f0e220d3be4d6147a9c1a527a984df239025d20b6bbf3923e51cc76003
   languageName: node
   linkType: hard
 
@@ -8229,75 +8229,75 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lightningcss-darwin-arm64@npm:1.21.4":
-  version: 1.21.4
-  resolution: "lightningcss-darwin-arm64@npm:1.21.4"
+"lightningcss-darwin-arm64@npm:1.21.5":
+  version: 1.21.5
+  resolution: "lightningcss-darwin-arm64@npm:1.21.5"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"lightningcss-darwin-x64@npm:1.21.4":
-  version: 1.21.4
-  resolution: "lightningcss-darwin-x64@npm:1.21.4"
+"lightningcss-darwin-x64@npm:1.21.5":
+  version: 1.21.5
+  resolution: "lightningcss-darwin-x64@npm:1.21.5"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"lightningcss-linux-arm-gnueabihf@npm:1.21.4":
-  version: 1.21.4
-  resolution: "lightningcss-linux-arm-gnueabihf@npm:1.21.4"
+"lightningcss-linux-arm-gnueabihf@npm:1.21.5":
+  version: 1.21.5
+  resolution: "lightningcss-linux-arm-gnueabihf@npm:1.21.5"
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
 
-"lightningcss-linux-arm64-gnu@npm:1.21.4":
-  version: 1.21.4
-  resolution: "lightningcss-linux-arm64-gnu@npm:1.21.4"
+"lightningcss-linux-arm64-gnu@npm:1.21.5":
+  version: 1.21.5
+  resolution: "lightningcss-linux-arm64-gnu@npm:1.21.5"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"lightningcss-linux-arm64-musl@npm:1.21.4":
-  version: 1.21.4
-  resolution: "lightningcss-linux-arm64-musl@npm:1.21.4"
+"lightningcss-linux-arm64-musl@npm:1.21.5":
+  version: 1.21.5
+  resolution: "lightningcss-linux-arm64-musl@npm:1.21.5"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"lightningcss-linux-x64-gnu@npm:1.21.4":
-  version: 1.21.4
-  resolution: "lightningcss-linux-x64-gnu@npm:1.21.4"
+"lightningcss-linux-x64-gnu@npm:1.21.5":
+  version: 1.21.5
+  resolution: "lightningcss-linux-x64-gnu@npm:1.21.5"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"lightningcss-linux-x64-musl@npm:1.21.4":
-  version: 1.21.4
-  resolution: "lightningcss-linux-x64-musl@npm:1.21.4"
+"lightningcss-linux-x64-musl@npm:1.21.5":
+  version: 1.21.5
+  resolution: "lightningcss-linux-x64-musl@npm:1.21.5"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"lightningcss-win32-x64-msvc@npm:1.21.4":
-  version: 1.21.4
-  resolution: "lightningcss-win32-x64-msvc@npm:1.21.4"
+"lightningcss-win32-x64-msvc@npm:1.21.5":
+  version: 1.21.5
+  resolution: "lightningcss-win32-x64-msvc@npm:1.21.5"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"lightningcss@npm:^1.21.4":
-  version: 1.21.4
-  resolution: "lightningcss@npm:1.21.4"
+"lightningcss@npm:^1.21.5":
+  version: 1.21.5
+  resolution: "lightningcss@npm:1.21.5"
   dependencies:
     detect-libc: ^1.0.3
-    lightningcss-darwin-arm64: 1.21.4
-    lightningcss-darwin-x64: 1.21.4
-    lightningcss-linux-arm-gnueabihf: 1.21.4
-    lightningcss-linux-arm64-gnu: 1.21.4
-    lightningcss-linux-arm64-musl: 1.21.4
-    lightningcss-linux-x64-gnu: 1.21.4
-    lightningcss-linux-x64-musl: 1.21.4
-    lightningcss-win32-x64-msvc: 1.21.4
+    lightningcss-darwin-arm64: 1.21.5
+    lightningcss-darwin-x64: 1.21.5
+    lightningcss-linux-arm-gnueabihf: 1.21.5
+    lightningcss-linux-arm64-gnu: 1.21.5
+    lightningcss-linux-arm64-musl: 1.21.5
+    lightningcss-linux-x64-gnu: 1.21.5
+    lightningcss-linux-x64-musl: 1.21.5
+    lightningcss-win32-x64-msvc: 1.21.5
   dependenciesMeta:
     lightningcss-darwin-arm64:
       optional: true
@@ -8315,7 +8315,7 @@ __metadata:
       optional: true
     lightningcss-win32-x64-msvc:
       optional: true
-  checksum: 18546bd5f5f1a63ed54139c1bd2f0c87764ba4210e88a613147d55267322682fa4dd13c08b83226d663892ccbf421ed8286c707a64bef5f5c23487fb2e8bfb6c
+  checksum: fcfb80302740c275fea8dc6ebc1a31da681321d92f0ddb33deb71037bb3dee08b8143ee03ddad8cef39c7ba4000447b362c9295d264deec124c9a206a848fef4
   languageName: node
   linkType: hard
 
@@ -11263,8 +11263,8 @@ __metadata:
   linkType: hard
 
 "rollup@npm:^3.25.2, rollup@npm:^3.25.3":
-  version: 3.26.0
-  resolution: "rollup@npm:3.26.0"
+  version: 3.26.1
+  resolution: "rollup@npm:3.26.1"
   dependencies:
     fsevents: ~2.3.2
   dependenciesMeta:
@@ -11272,7 +11272,7 @@ __metadata:
       optional: true
   bin:
     rollup: dist/bin/rollup
-  checksum: 2d00f1ec8f5b3e84b005b7158446aacfbe669b61a55cea26d4cfb7014fed9169d78dffa8f845c8ef2c8cbc596b9de6e9f925597b87e7ef9b7de4c7da21f188ad
+  checksum: 3fd4f88510ec1b54b07309ee63b7b363a1cd4ed6d05e93ec0e883a73df1ffe8bb88169538cb4f2c1ec2d4a7340216f9a8b4b8ce7c2ee054ded725f39d9e3ba36
   languageName: node
   linkType: hard
 
@@ -11317,7 +11317,7 @@ __metadata:
     "@types/lambda-rate-limiter": ^3.0.0
     "@types/node": ^18.16.19
     "@types/sanitize-html": ^2.9.0
-    "@unhead/addons": ^1.1.29
+    "@unhead/addons": ^1.1.30
     "@vite-pwa/nuxt": ^0.1.0
     "@vueuse/core": ^10.2.1
     "@vueuse/nuxt": ^10.2.1
@@ -11327,7 +11327,7 @@ __metadata:
     idb-keyval: ^6.2.1
     jose: ^4.14.4
     lambda-rate-limiter: ^3.0.1
-    lightningcss: ^1.21.4
+    lightningcss: ^1.21.5
     lru-cache: ^10.0.0
     magic-string: ^0.30.1
     mitt: ^3.0.1
@@ -12435,15 +12435,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unhead@npm:1.1.29":
-  version: 1.1.29
-  resolution: "unhead@npm:1.1.29"
+"unhead@npm:1.1.30":
+  version: 1.1.30
+  resolution: "unhead@npm:1.1.30"
   dependencies:
-    "@unhead/dom": 1.1.29
-    "@unhead/schema": 1.1.29
-    "@unhead/shared": 1.1.29
+    "@unhead/dom": 1.1.30
+    "@unhead/schema": 1.1.30
+    "@unhead/shared": 1.1.30
     hookable: ^5.5.3
-  checksum: 4ad2d6203739e19121cf58b6eb5752f808f49d7785dd54cf4b268a9e82af29e60428eed42e4d4cb13459e7e49a9f84c8decc269a5a2963b6f338ec261660e62a
+  checksum: dd023f777f64f5645f764f53b7ec6ea2e7fba9cb8a1b80969e56f99bc615db52a8949e76ffaf5ea2ffdf289d369d818b794e3464c75e3e5fdb84f94dceacd62a
   languageName: node
   linkType: hard
 
@@ -12610,7 +12610,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unplugin@npm:^1.0.0, unplugin@npm:^1.0.1, unplugin@npm:^1.3.1":
+"unplugin@npm:^1.0.0, unplugin@npm:^1.0.1, unplugin@npm:^1.3.1, unplugin@npm:^1.3.2":
   version: 1.3.2
   resolution: "unplugin@npm:1.3.2"
   dependencies:
@@ -13425,10 +13425,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zhead@npm:^2.0.7":
-  version: 2.0.7
-  resolution: "zhead@npm:2.0.7"
-  checksum: dc7932ad2a55135325f3d2a096c096b6145e1e123f17125ebaa9a53ddc176a99c68b59ce50b04f4f5edaaf737e1992d664412f56cc47e3a70bd17269d398a4b2
+"zhead@npm:^2.0.9":
+  version: 2.0.9
+  resolution: "zhead@npm:2.0.9"
+  checksum: ee960a17d164a53c27f05f160949c90bbc212430512c4342eb2c2cd2406e1b5ee929c4c7bf5e6dec50ff9cc9d7475fbf54d55af80747d028ff4c55097ac3e301
   languageName: node
   linkType: hard
 
