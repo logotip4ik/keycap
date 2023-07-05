@@ -31,5 +31,5 @@ jobs:
       with: 
         token: ${{ secrets.GITHUB_TOKEN }}
         # -s - silent, -w - write to package.json -i - install deps
-        update-command: "'rm ./yarn.lock && npx taze@latest -swi'"
+        update-command: "'rm ./yarn.lock && npx taze@latest -swif'"
         on-changes-command: "'yarn build'"
