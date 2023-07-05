@@ -25,9 +25,6 @@ jobs:
         node-version: 18
 
     - name: Run auto dependency update 
-      uses: romoh/dependencies-autoupdate@main
-      with: 
-        token: ${{ secrets.GITHUB_TOKEN }}
-        # -s - silent, -w - write to package.json -i - install deps
-        update-command: "'rm ./yarn.lock && npx taze@latest -swif'"
-        on-changes-command: "'yarn build'"
+      # -s - silent, -w - write to package.json -i - install deps
+      run: ./scripts/update-deps.sh ${{ secrets.GITHUB_TOKEN }} 'rm ./yarn.lock && npx taze@latest -swif' 'yarn build'
+      shell: bash
