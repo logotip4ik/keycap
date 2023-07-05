@@ -2,7 +2,7 @@ name: Auto update go dependencies
 
 on:
   push:
-    
+
   schedule:
     - cron: '0 4 * * *'
   workflow_dispatch:
@@ -12,11 +12,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:    
-    - uses: actions/checkout@v3
+    - name: Checkouting repo
+      uses: actions/checkout@v3
       with:
         persist-credentials: false
 
-    - name: Go setup
+    - name: Node setup
       uses: actions/setup-node@v3
       with:
         node-version: 18
@@ -26,5 +27,5 @@ jobs:
       with: 
         token: ${{ secrets.GITHUB_TOKEN }}
         # -s - silent, -w - write to package.json -i - install deps
-        update-command: "'rm ./yarn.lock && npx taze@latest -swi"
+        update-command: "'npx rimraf yarn.lock && npx taze@latest -swi"
         on-changes-command: "yarn build"
