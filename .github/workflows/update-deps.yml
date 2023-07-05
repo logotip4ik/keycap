@@ -1,8 +1,6 @@
 name: Auto update dependencies
 
 on:
-  push:
-
   schedule:
     - cron: '0 4 * * *'
   workflow_dispatch:
