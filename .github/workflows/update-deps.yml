@@ -26,5 +26,7 @@ jobs:
 
     - name: Run auto dependency update 
       # -s - silent, -w - write to package.json -i - install deps
-      run: ./scripts/update-deps.sh ${{ secrets.GITHUB_TOKEN }} 'rm ./yarn.lock && npx taze@latest -swif' 'yarn build'
+      run: |
+        chmod +x ./scripts/update-deps.sh
+        ./scripts/update-deps.sh ${{ secrets.GITHUB_TOKEN }} 'rm ./yarn.lock && npx taze@latest -swif' 'yarn build'
       shell: bash
