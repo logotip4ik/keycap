@@ -7,10 +7,10 @@ token=$1
 update_command=$2
 on_changes_command=$3
 repo=$GITHUB_REPOSITORY #owner and repository: ie: user/repo
-username=$GITHUB_ACTOR
 branch_name=$GITHUB_REF_NAME
 update_message="chore: update deps"
 
+username=$GITHUB_ACTOR
 email="noreply@github.com"
 
 if [ -z "$token" ]; then
