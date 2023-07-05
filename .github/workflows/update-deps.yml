@@ -1,6 +1,8 @@
 name: Auto update go dependencies
 
 on:
+  push:
+    
   schedule:
     - cron: '0 4 * * *'
   workflow_dispatch:
