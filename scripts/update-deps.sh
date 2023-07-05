@@ -41,11 +41,10 @@ then
     git remote add authenticated "https://$username:$token@github.com/$repo.git"
 
     # execute command to run when changes are deteced, if provided
-    on_changes_command_value=${on_changes_command%?}
-    echo $on_changes_command_value
-    if [ -n "$on_changes_command_value" ]; then
+    if [ -n "$on_changes_command" ]; then
         echo "Run post-update command"
-        eval $on_changes_command_value
+        echo $on_changes_command
+        eval $on_changes_command
     fi
 
     # explicitly add all files including untracked
