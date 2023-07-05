@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  auto-update-go-dependencies:
+  auto-update-dependencies:
     runs-on: ubuntu-latest
 
     steps:    
@@ -27,5 +27,5 @@ jobs:
       with: 
         token: ${{ secrets.GITHUB_TOKEN }}
         # -s - silent, -w - write to package.json -i - install deps
-        update-command: "'rm ./yarn.lock && npx taze@latest -swi"
+        update-command: "'rm ./yarn.lock && npx taze@latest -swi'"
         on-changes-command: "'yarn build'"
