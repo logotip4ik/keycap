@@ -51,7 +51,7 @@ then
     git add -A
 
     # commit the changes to updated files
-    git commit -a -m $update_message --signoff
+    git commit -m "$update_message" --signoff
     
     # push the changes
     git push authenticated
