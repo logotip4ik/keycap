@@ -110,6 +110,9 @@ onBeforeUnmount(() => clearTimeout(timeout));
   &__button {
     grid-column: 1 / 3;
 
+    position: relative;
+    z-index: 1;
+
     font: inherit;
     font-size: 1.075rem;
     color: hsla(var(--text-color-hsl), 0.85);
@@ -127,17 +130,40 @@ onBeforeUnmount(() => clearTimeout(timeout));
     cursor: pointer;
     pointer-events: all;
 
-    transition: color .3s, background-color .3s;
+    transition: color .3s;
 
     & + & {
       margin-top: 0.6rem;
+    }
+
+    &::before {
+      content: "";
+
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+
+      opacity: 0.25;
+      border-radius: inherit;
+      background-image: linear-gradient(
+        to bottom,
+        hsla(var(--text-color-hsl), 0.0),
+        hsla(var(--text-color-hsl), 0.1)
+      );
+
+      transition: background-position .3s, background-size .3s;
     }
 
     &:is(:hover, :focus-visible) {
       transition-duration: 0.1s;
 
       color: hsla(var(--text-color-hsl), 1);
-      background-color: hsla(var(--text-color-hsl), 0.075);
+
+      &::before {
+        transition-duration: 0.1s;
+
+        opacity: 1;
+      }
     }
 
     @media screen and (max-width: $breakpoint-tablet) {
