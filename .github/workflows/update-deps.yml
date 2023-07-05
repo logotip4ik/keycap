@@ -7,6 +7,10 @@ on:
     - cron: '0 4 * * *'
   workflow_dispatch:
 
+env:
+  # allow yarn creating lockfile in CI environment
+  YARN_ENABLE_IMMUTABLE_INSTALLS: false
+
 jobs:
   auto-update-dependencies:
     runs-on: ubuntu-latest
