@@ -164,6 +164,12 @@ export default defineNuxtConfig({
       'postcss-preset-env': {
         features: {
           'custom-properties': false,
+          'is-pseudo-class': false,
+          'clamp': false,
+          'focus-visible-pseudo-class': false,
+          'focus-within-pseudo-class': false,
+          'gap-properties': false,
+          'prefers-color-scheme-query': false,
         },
       },
     },
