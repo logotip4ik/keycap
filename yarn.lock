@@ -99,7 +99,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@antfu/utils@npm:^0.7.4":
+"@antfu/utils@npm:^0.7.5":
   version: 0.7.5
   resolution: "@antfu/utils@npm:0.7.5"
   checksum: df6451ded84b8ea8ad951434a7e146361f160c4a42904853749e45c214c24aedd9cb2e906c699ca32b4f780f2afb6413f8ca753f017c52f30267ff5064b66e31
@@ -136,8 +136,8 @@ __metadata:
   linkType: hard
 
 "@babel/core@npm:^7.11.1, @babel/core@npm:^7.20.2, @babel/core@npm:^7.20.7, @babel/core@npm:^7.21.3":
-  version: 7.22.7
-  resolution: "@babel/core@npm:7.22.7"
+  version: 7.22.8
+  resolution: "@babel/core@npm:7.22.8"
   dependencies:
     "@ampproject/remapping": ^2.2.0
     "@babel/code-frame": ^7.22.5
@@ -147,14 +147,14 @@ __metadata:
     "@babel/helpers": ^7.22.6
     "@babel/parser": ^7.22.7
     "@babel/template": ^7.22.5
-    "@babel/traverse": ^7.22.7
+    "@babel/traverse": ^7.22.8
     "@babel/types": ^7.22.5
     "@nicolo-ribaudo/semver-v6": ^6.3.3
     convert-source-map: ^1.7.0
     debug: ^4.1.0
     gensync: ^1.0.0-beta.2
     json5: ^2.2.2
-  checksum: 158008baafadc4c0b8eadcc3ee62a103ca52d7b84c0f8f7573a0d28d655bcafe1b04f37a020bfa2fb2c38dabb2d2a90f0ec637171a7fb54c180a857a2b9c33ab
+  checksum: 75ed701c14ad17070382ae1dd166f7534b31f2c71e00995a5f261ee2398ee96335b0736573b8ff24ab6e3e6f5814ee2a48fa11ab90fabcd3dfc70ea87c5f30a6
   languageName: node
   linkType: hard
 
@@ -1439,9 +1439,9 @@ __metadata:
   linkType: hard
 
 "@babel/standalone@npm:^7.21.3":
-  version: 7.22.7
-  resolution: "@babel/standalone@npm:7.22.7"
-  checksum: af4230fb19e00d863f68b40270bcb107a211e2e9c57ccd0aacf0b576094e746d00c6e9f4dbacb68a92b961807820fbf84c0229233d364b53d8dceea6b9aafc4b
+  version: 7.22.8
+  resolution: "@babel/standalone@npm:7.22.8"
+  checksum: ffd26eac4664f747f6cbd117dc680fc2e2d10b488f151fb4ae382e026de2ccd8e82f0ecedb6066348955627f13950bb2b26696e80ebe5482d684b95c30af3fe9
   languageName: node
   linkType: hard
 
@@ -1456,9 +1456,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/traverse@npm:^7.20.1, @babel/traverse@npm:^7.22.5, @babel/traverse@npm:^7.22.6, @babel/traverse@npm:^7.22.7":
-  version: 7.22.7
-  resolution: "@babel/traverse@npm:7.22.7"
+"@babel/traverse@npm:^7.20.1, @babel/traverse@npm:^7.22.5, @babel/traverse@npm:^7.22.6, @babel/traverse@npm:^7.22.8":
+  version: 7.22.8
+  resolution: "@babel/traverse@npm:7.22.8"
   dependencies:
     "@babel/code-frame": ^7.22.5
     "@babel/generator": ^7.22.7
@@ -1470,7 +1470,7 @@ __metadata:
     "@babel/types": ^7.22.5
     debug: ^4.1.0
     globals: ^11.1.0
-  checksum: 006942fece99acca13a046f3f91c055314d27831b72c5a03c685248dd94dca41ca2ef77f335cc20c0cecbdc8ff49166a451a20e4b72d0b7a1aad6c58f341f5fa
+  checksum: a381369bc3eedfd13ed5fef7b884657f1c29024ea7388198149f0edc34bd69ce3966e9f40188d15f56490a5e12ba250ccc485f2882b53d41b054fccefb233e33
   languageName: node
   linkType: hard
 
@@ -2713,8 +2713,8 @@ __metadata:
   linkType: hard
 
 "@nuxt/telemetry@npm:^2.3.0":
-  version: 2.3.0
-  resolution: "@nuxt/telemetry@npm:2.3.0"
+  version: 2.3.1
+  resolution: "@nuxt/telemetry@npm:2.3.1"
   dependencies:
     "@nuxt/kit": ^3.6.1
     chalk: ^5.3.0
@@ -2737,7 +2737,7 @@ __metadata:
     std-env: ^3.3.3
   bin:
     nuxt-telemetry: bin/nuxt-telemetry.mjs
-  checksum: a8267b96d8d21fe40c65cfdfd247304bc971facff49073046b52f8e68b2527a6cacc6f5e40d32b783aeee1ce67f277826c575c34c3faffc7fdf88162eeb7da41
+  checksum: 7f8f743323ea5354ea94a1ce896db43a4576b46d4f870f94c73ce829bdb2397fb081027af38df532deaa7a72d4dac37057756acde6af65b06f0f1c5ef7674b28
   languageName: node
   linkType: hard
 
@@ -8638,11 +8638,11 @@ __metadata:
   linkType: hard
 
 "minimatch@npm:^9.0.1":
-  version: 9.0.2
-  resolution: "minimatch@npm:9.0.2"
+  version: 9.0.3
+  resolution: "minimatch@npm:9.0.3"
   dependencies:
     brace-expansion: ^2.0.1
-  checksum: 2eb12e2047a062fdb973fb51b9803f2455e3a00977858c038d66646d303a5a15bbcbc6ed5a2fc403bc869b1309f829ed3acd881d3246faf044ea7a494974b924
+  checksum: 253487976bf485b612f16bf57463520a14f512662e592e95c571afdab1442a6a6864b6c88f248ce6fc4ff0b6de04ac7aa6c8bb51e868e99d1d65eb0658a708b5
   languageName: node
   linkType: hard
 
@@ -10405,13 +10405,13 @@ __metadata:
   linkType: hard
 
 "postcss@npm:^8.1.10, postcss@npm:^8.3.11, postcss@npm:^8.4.24":
-  version: 8.4.24
-  resolution: "postcss@npm:8.4.24"
+  version: 8.4.25
+  resolution: "postcss@npm:8.4.25"
   dependencies:
     nanoid: ^3.3.6
     picocolors: ^1.0.0
     source-map-js: ^1.0.2
-  checksum: 814e2126dacfea313588eda09cc99a9b4c26ec55c059188aa7a916d20d26d483483106dc5ff9e560731b59f45c5bb91b945dfadc670aed875cc90ddbbf4e787d
+  checksum: 9ed3ab8af43ad5210c28f56f916fd9b8c9f94fbeaebbf645dcf579bc28bdd8056c2a7ecc934668d399b81fedb6128f0c4b299f931e50454964bc911c25a3a0a2
   languageName: node
   linkType: hard
 
@@ -11074,8 +11074,8 @@ __metadata:
   linkType: hard
 
 "rollup@npm:^3.25.2, rollup@npm:^3.25.3":
-  version: 3.26.1
-  resolution: "rollup@npm:3.26.1"
+  version: 3.26.2
+  resolution: "rollup@npm:3.26.2"
   dependencies:
     fsevents: ~2.3.2
   dependenciesMeta:
@@ -11083,7 +11083,7 @@ __metadata:
       optional: true
   bin:
     rollup: dist/bin/rollup
-  checksum: 3fd4f88510ec1b54b07309ee63b7b363a1cd4ed6d05e93ec0e883a73df1ffe8bb88169538cb4f2c1ec2d4a7340216f9a8b4b8ce7c2ee054ded725f39d9e3ba36
+  checksum: 7186beeba0e6fd33b37aa33ede7157e77af0a0be4b75d345a51dab4be5962a8e7a1c5ec8868e7c4cd361b456eb1b47bdb75e5db32ab37a546bed383d06b40384
   languageName: node
   linkType: hard
 
@@ -12340,17 +12340,17 @@ __metadata:
   linkType: hard
 
 "unplugin-ast@npm:^0.8.0":
-  version: 0.8.0
-  resolution: "unplugin-ast@npm:0.8.0"
+  version: 0.8.1
+  resolution: "unplugin-ast@npm:0.8.1"
   dependencies:
-    "@antfu/utils": ^0.7.4
+    "@antfu/utils": ^0.7.5
     "@babel/generator": ^7.22.5
     "@babel/parser": ^7.22.5
     "@rollup/pluginutils": ^5.0.2
     ast-kit: ^0.6.5
     magic-string-ast: ^0.1.2
     unplugin: ^1.3.1
-  checksum: edb80b974cd1dc84b7802689d9776fc2953d0af936850f78a5124ba7d368d211c836f8981ff26b8dcc7b2d18e2ffb6e12a0afa7f9249f6168c5388abd888a930
+  checksum: 85634525e036b9d6d8104d9da1068460b1f71f8b1ef34823095b6b8eb3ca0a8ed6d688863ce3b4e32e40204c6b151c82e39c5119c9cec6d06fc87468e037b9bc
   languageName: node
   linkType: hard
 
@@ -12598,9 +12598,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^4.4.0":
-  version: 4.4.0
-  resolution: "vite@npm:4.4.0"
+"vite@npm:^4.4.1":
+  version: 4.4.1
+  resolution: "vite@npm:4.4.1"
   dependencies:
     esbuild: ^0.18.10
     fsevents: ~2.3.2
@@ -12634,7 +12634,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: a0565345836d2bd5471aa784a3769c19c2c7b5f1df05f3b30948ccba691c0a37300ff40bcbb288a7a189aba13063b04b91abbb49dffe9ec45472e95bf4a9ab17
+  checksum: c91d5228cd0b2410e95ea4b17279640a414f1a2d5290a01baec77351af2dda7d5901c240ed6a62de2b465567e328168d386da2aaa262d3a138fde827b289592d
   languageName: node
   linkType: hard
 
@@ -12748,13 +12748,13 @@ __metadata:
   linkType: hard
 
 "vue-router@npm:^4.2.3":
-  version: 4.2.3
-  resolution: "vue-router@npm:4.2.3"
+  version: 4.2.4
+  resolution: "vue-router@npm:4.2.4"
   dependencies:
     "@vue/devtools-api": ^6.5.0
   peerDependencies:
     vue: ^3.2.0
-  checksum: 66cde4a8a49fd3ddeac930771a76359e79ec3f343ecbb0b06f326e46eee00deaacf9859c6d5143e0ece659b15de48df216a7247d2bb0ae2b3505d6383a0f5e63
+  checksum: 9fe1fc11b613c8e020aad5d0850ba5caa971033dfaa4fc117e4595349f2c5f211793a247c30e3c03b0f91c3512b87af929af96b8b20b6b7d4cdccc5af13e5e7f
   languageName: node
   linkType: hard
 
