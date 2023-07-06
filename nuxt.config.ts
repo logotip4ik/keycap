@@ -161,7 +161,11 @@ export default defineNuxtConfig({
 
   postcss: {
     plugins: {
-      'postcss-preset-env': {},
+      'postcss-preset-env': {
+        features: {
+          'custom-properties': { preserve: false },
+        },
+      },
     },
   },
 
