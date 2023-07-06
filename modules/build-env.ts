@@ -1,6 +1,7 @@
 import { defineNuxtModule, useLogger } from '@nuxt/kit';
 import { nanoid } from 'nanoid';
 import Git from 'simple-git';
+import chalk from 'chalk';
 
 import type { BuildInfo, PrivateBuildInfo } from '~/types';
 
@@ -30,7 +31,7 @@ export default defineNuxtModule({
 
     nuxt.options.runtimeConfig.build = privateBuildInfo;
 
-    logger.info(`Unique build id: ${privateBuildInfo.id}`);
+    logger.info(`Unique build id: ${chalk.bold.cyan(privateBuildInfo.id)}`);
   },
 });
 
