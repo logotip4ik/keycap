@@ -1,15 +1,11 @@
 <script setup lang="ts">
-import parseDuration from 'parse-duration';
-
 import type { Editor } from '@tiptap/core';
 
 interface Props { editor: Editor }
 defineProps<Props>();
 
 const isFallbackMode = useFallbackMode();
-const INITIAL_DELAY_TO_APPEAR = parseDuration('0.35s');
 
-const shouldShow = ref(false);
 const inlineMenu = ref<HTMLElement | null>(null);
 
 function isOverflown({ clientWidth, scrollWidth }: HTMLElement) {
@@ -22,17 +18,11 @@ async function addScrollIfNeeded() {
   if (inlineMenu.value && isOverflown(inlineMenu.value as HTMLElement))
     inlineMenu.value.classList.add('overflown');
 }
-
-onMounted(() => {
-  setTimeout(() => {
-    shouldShow.value = true;
-  }, INITIAL_DELAY_TO_APPEAR);
-});
 </script>
 
 <template>
-  <Transition name="fade" @enter="addScrollIfNeeded">
-    <div v-if="shouldShow && !isFallbackMode" ref="inlineMenu" class="inline-menu formatter">
+  <Transition name="fade" :appear="true" @enter="addScrollIfNeeded">
+    <div v-if="!isFallbackMode" ref="inlineMenu" class="inline-menu formatter">
       <slot />
     </div>
   </Transition>
@@ -71,9 +61,14 @@ onMounted(() => {
     scroll-padding-inline: 1.125rem;
 
     scrollbar-width: none;
+
     ::-webkit-scrollbar {
       display: none;
     }
+  }
+
+  &.fade-enter-active {
+    transition-delay: 0.35s;
   }
 }
 </style>
