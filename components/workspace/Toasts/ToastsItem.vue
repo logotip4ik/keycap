@@ -151,7 +151,7 @@ onBeforeUnmount(() => clearTimeout(timeout));
         hsla(var(--text-color-hsl), 0.1)
       );
 
-      transition: background-position .3s, background-size .3s;
+      transition: opacity 0.3s;
     }
 
     &:is(:hover, :focus-visible) {
