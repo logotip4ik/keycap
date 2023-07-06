@@ -30,7 +30,7 @@ export default defineNuxtModule({
 
     nuxt.options.runtimeConfig.build = privateBuildInfo;
 
-    logger.log(`Unique build id: ${privateBuildInfo.id}`);
+    logger.info(`Unique build id: ${privateBuildInfo.id}`);
   },
 });
 
