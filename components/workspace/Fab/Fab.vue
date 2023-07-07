@@ -1,8 +1,8 @@
 <script setup lang="ts">
-interface Emits {
-  (event: 'openSearch'): void
+interface Props {
+  onOpenSearch: () => void
 }
-const emit = defineEmits<Emits>();
+const props = defineProps<Props>();
 
 const isFabUnfolded = ref(false);
 const fabContainer = ref<null | HTMLElement>(null);
@@ -16,7 +16,7 @@ const buttons: FabButton[] = [
   {
     icon: 'search',
     action: () => {
-      emit('openSearch');
+      props.onOpenSearch();
     },
   },
   {

@@ -10,10 +10,8 @@ interface MenuAction {
   handler: () => any | Promise<any>
 }
 
-interface Emits { (event: 'close'): void }
-interface Props { x: number; y: number; actions: MenuAction[] }
+interface Props { x: number; y: number; actions: MenuAction[]; onClose: () => void }
 const props = defineProps<Props>();
-const emit = defineEmits<Emits>();
 
 const popperInstance = shallowRef<null | PopperInstance>(null);
 const menu = ref<null | HTMLElement>(null);
@@ -83,10 +81,10 @@ watch([() => props.x, () => props.y], async () => {
   popperInstance.value?.update();
 }, { immediate: true });
 
-useClickOutside(menu, () => emit('close'));
+useClickOutside(menu, () => props.onClose());
 
 useTinykeys({
-  Escape: () => emit('close'),
+  Escape: () => props.onClose(),
 });
 
 onBeforeUnmount(() => {

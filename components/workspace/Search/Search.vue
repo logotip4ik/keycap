@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { withoutLeadingSlash } from 'ufo';
 
-interface Emits { (e: 'close'): void }
-const emit = defineEmits<Emits>();
+interface Props { onClose: () => void }
+const props = defineProps<Props>();
 
 const fuzzyWorker = useFuzzyWorker();
 
@@ -20,7 +20,7 @@ const debouncedSearchInput = useDebounce(searchInput, 125);
 defineExpose({ input: inputEl });
 
 function handleCancel(_event?: Event) {
-  emit('close');
+  props.onClose();
 
   searchInput.value = '';
   selectedResult.value = 0;
@@ -119,9 +119,10 @@ useTinykeys({ Escape: handleCancel });
       <form class="search__form" @submit.prevent="openResult">
         <WorkspaceSearchInput
           ref="inputEl"
-          v-model="searchInput"
+          :value="searchInput"
           class="search__form__input"
           placeholder="Search or enter / for commands"
+          @update-value="searchInput = $event"
           @keydown.up.prevent="changeSelectedResult(-1)"
           @keydown.down.prevent="changeSelectedResult(+1)"
           @keydown.tab.prevent="fillSearchInput"

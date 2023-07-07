@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { blankNoteName } from '~/assets/constants';
 
-interface Emits { (event: 'openSearch'): void }
-defineEmits<Emits>();
+// see https://github.com/vuejs/core/discussions/8626
+// this actually feels ok, i guess
+// kinda react'y, but it brings better typings
+interface Props { onOpenSearch: () => void }
+defineProps<Props>();
 
 const route = useRoute();
 const user = useUser();
@@ -53,7 +56,7 @@ const folderRootPath = computed(() => {
     <button
       class="nav__button nav__button--search"
       :data-show-back-button="isShowingBackButton"
-      @click="$emit('openSearch')"
+      @click="onOpenSearch"
     >
       <Icon name="search" class="nav__button__icon" />
     </button>
