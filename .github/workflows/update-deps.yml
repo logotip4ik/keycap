@@ -46,3 +46,5 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         message: "chore: update deps"
         branch: ${{ github.ref_name }}
+        author_name: ${{ github.actor }}
+        author_email: "noreply@github.com"
