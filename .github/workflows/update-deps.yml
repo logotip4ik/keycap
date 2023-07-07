@@ -18,15 +18,31 @@ jobs:
       uses: actions/checkout@v3
       with:
         persist-credentials: false
+        fetch-depth: 0
 
     - name: Node setup
       uses: actions/setup-node@v3
       with:
         node-version: 18
 
-    - name: Run auto dependency update 
-      # -s - silent, -w - write to package.json -i - install deps -x - exclude
-      run: |
-        chmod +x ./scripts/update-deps.sh
-        ./scripts/update-deps.sh ${{ secrets.GITHUB_TOKEN }} "rm ./yarn.lock && npx taze@latest latest -x '@types/node' -swif && yarn" "yarn build"
+    - name: Update package versions
+      run: npx taze@latest latest -x '@types/node' -swf
+
+    - name: Update resolution versions
+      run: node ./scripts/update-resolution.cjs
       shell: bash
+
+    - name: Update lock file
+      run: |
+        rm ./yarn.lock
+        yarn
+
+    - name: Test if project still builds
+      run: yarn build
+    
+    - name: Commit changes if needed
+      uses: actions-js/push@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        message: "chore: update deps"
+        branch: ${{ github.ref_name }}
