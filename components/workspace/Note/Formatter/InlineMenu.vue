@@ -8,7 +8,7 @@ const isFallbackMode = useFallbackMode();
 </script>
 
 <template>
-  <Transition name="fade" :appear="true">
+  <Transition name="fade" appear>
     <div v-if="!isFallbackMode" class="inline-menu formatter">
       <slot />
     </div>
