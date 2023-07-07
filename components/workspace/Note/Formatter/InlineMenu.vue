@@ -5,24 +5,11 @@ interface Props { editor: Editor }
 defineProps<Props>();
 
 const isFallbackMode = useFallbackMode();
-
-const inlineMenu = ref<HTMLElement | null>(null);
-
-function isOverflown({ clientWidth, scrollWidth }: HTMLElement) {
-  const diff = scrollWidth - clientWidth;
-
-  return diff > 2;
-}
-
-async function addScrollIfNeeded() {
-  if (inlineMenu.value && isOverflown(inlineMenu.value as HTMLElement))
-    inlineMenu.value.classList.add('overflown');
-}
 </script>
 
 <template>
-  <Transition name="fade" :appear="true" @enter="addScrollIfNeeded">
-    <div v-if="!isFallbackMode" ref="inlineMenu" class="inline-menu formatter">
+  <Transition name="fade" :appear="true">
+    <div v-if="!isFallbackMode" class="inline-menu formatter">
       <slot />
     </div>
   </Transition>
