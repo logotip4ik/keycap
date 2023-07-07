@@ -158,7 +158,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/generator@npm:^7.20.4, @babel/generator@npm:^7.22.5, @babel/generator@npm:^7.22.7":
+"@babel/generator@npm:^7.20.4, @babel/generator@npm:^7.22.7":
   version: 7.22.7
   resolution: "@babel/generator@npm:7.22.7"
   dependencies:
@@ -3938,13 +3938,13 @@ __metadata:
   linkType: hard
 
 "@vue-macros/common@npm:^1.3.1":
-  version: 1.4.0
-  resolution: "@vue-macros/common@npm:1.4.0"
+  version: 1.4.1
+  resolution: "@vue-macros/common@npm:1.4.1"
   dependencies:
-    "@babel/types": ^7.22.4
+    "@babel/types": ^7.22.5
     "@rollup/pluginutils": ^5.0.2
     "@vue/compiler-sfc": ^3.3.4
-    ast-kit: ^0.6.2
+    ast-kit: ^0.6.6
     local-pkg: ^0.4.3
     magic-string-ast: ^0.1.2
   peerDependencies:
@@ -3952,7 +3952,7 @@ __metadata:
   peerDependenciesMeta:
     vue:
       optional: true
-  checksum: 1eb64b39641fc8d3e496f52edbe9c9e57e1c8499c84d44cf971e782dd3e899c4f762a0c7a3dc68bd29f2d0f7fa49d6ec8ad1e2c8f510e775cfcca0de44788e23
+  checksum: c69cc3dab612896171f47277642549f6a5e09964b3a8f8fa97386f6909c13907ee78e3622f26a753e03ee8c5cb012860d09d3bba4e4a5e95cf2475a957271bd4
   languageName: node
   linkType: hard
 
@@ -4426,7 +4426,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ast-kit@npm:^0.6.2, ast-kit@npm:^0.6.5":
+"ast-kit@npm:^0.6.6":
   version: 0.6.6
   resolution: "ast-kit@npm:0.6.6"
   dependencies:
@@ -5655,9 +5655,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.431":
-  version: 1.4.453
-  resolution: "electron-to-chromium@npm:1.4.453"
-  checksum: dcd354388b2b60fb0158a6daf7a3a93796b9f6e0045bc507021bcbbf72790cb94c5bb549f699150e18d090321bca0583d729bc479d2d48a0c94a29b1a2f0165e
+  version: 1.4.454
+  resolution: "electron-to-chromium@npm:1.4.454"
+  checksum: 26a756485b442be04a640b8733c3e0d1ad9630541e56906332b1a5f25ec0027647561ec98d0d2a5069a1aae3875c9751c6d1c6cb9ef400b2beabedc36da14ba1
   languageName: node
   linkType: hard
 
@@ -9140,7 +9140,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nuxt@npm:3.6.2, nuxt@npm:^3.6.1":
+"nuxt@npm:3.6.2":
   version: 3.6.2
   resolution: "nuxt@npm:3.6.2"
   dependencies:
@@ -12347,17 +12347,17 @@ __metadata:
   linkType: hard
 
 "unplugin-ast@npm:^0.8.0":
-  version: 0.8.1
-  resolution: "unplugin-ast@npm:0.8.1"
+  version: 0.8.2
+  resolution: "unplugin-ast@npm:0.8.2"
   dependencies:
     "@antfu/utils": ^0.7.5
-    "@babel/generator": ^7.22.5
-    "@babel/parser": ^7.22.5
+    "@babel/generator": ^7.22.7
+    "@babel/parser": ^7.22.7
     "@rollup/pluginutils": ^5.0.2
-    ast-kit: ^0.6.5
+    ast-kit: ^0.6.6
     magic-string-ast: ^0.1.2
-    unplugin: ^1.3.1
-  checksum: 85634525e036b9d6d8104d9da1068460b1f71f8b1ef34823095b6b8eb3ca0a8ed6d688863ce3b4e32e40204c6b151c82e39c5119c9cec6d06fc87468e037b9bc
+    unplugin: ^1.3.2
+  checksum: f6893be8495ee3b9041089817fae5fc3ca972076a78bc0faecaf23901014634af3a5602cf08975b862a988df78c3c282158b48b6f4b5f4a5398f5921946b2340
   languageName: node
   linkType: hard
 
