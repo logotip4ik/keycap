@@ -2,7 +2,7 @@ name: Auto update dependencies
 
 on:
   schedule:
-    - cron: '0 4 * * *'
+    - cron: '0 2 * * *'
   workflow_dispatch:
 
 env:
@@ -25,8 +25,8 @@ jobs:
         node-version: 18
 
     - name: Run auto dependency update 
-      # -s - silent, -w - write to package.json -i - install deps
+      # -s - silent, -w - write to package.json -i - install deps -x - exclude
       run: |
         chmod +x ./scripts/update-deps.sh
-        ./scripts/update-deps.sh ${{ secrets.GITHUB_TOKEN }} "rm ./yarn.lock && npx taze@latest -swif" "yarn build"
+        ./scripts/update-deps.sh ${{ secrets.GITHUB_TOKEN }} "rm ./yarn.lock && npx taze@latest latest -x '@types/node' -swif && yarn" "yarn build"
       shell: bash
