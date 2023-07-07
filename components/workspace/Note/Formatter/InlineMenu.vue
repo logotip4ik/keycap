@@ -40,20 +40,6 @@ const isFallbackMode = useFallbackMode();
     backdrop-filter: blur(0.75rem);
   }
 
-  &.overflown {
-    justify-content: flex-start;
-
-    overflow: auto;
-    scroll-snap-type: x proximity;
-    scroll-padding-inline: 1.125rem;
-
-    scrollbar-width: none;
-
-    ::-webkit-scrollbar {
-      display: none;
-    }
-  }
-
   &.fade-enter-active {
     transition-delay: 0.35s;
   }
