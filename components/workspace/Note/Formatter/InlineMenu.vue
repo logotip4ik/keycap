@@ -35,9 +35,9 @@ const isFallbackMode = useFallbackMode();
   box-shadow: 0 0 1rem hsla(var(--text-color-hsl), 0.125);
 
   @supports (backdrop-filter: blur(1px)) {
-    background-color: hsla(var(--surface-color-hsl), 0.65);
+    background-color: hsla(var(--surface-color-hsl), 0.25);
 
-    backdrop-filter: blur(0.4rem);
+    backdrop-filter: blur(0.75rem);
   }
 
   &.overflown {

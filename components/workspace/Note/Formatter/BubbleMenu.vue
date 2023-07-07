@@ -22,11 +22,7 @@ const tippyOptions: Partial<TippyProps> = {
 </script>
 
 <template>
-  <BubbleMenu
-    :editor="editor"
-    :tippy-options="tippyOptions"
-    class="formatter"
-  >
+  <BubbleMenu :editor="editor" :tippy-options="tippyOptions" class="formatter">
     <slot />
   </BubbleMenu>
 </template>
@@ -39,13 +35,12 @@ const tippyOptions: Partial<TippyProps> = {
   box-shadow:
     1px 1.7px 5.3px rgba(0, 0, 0, 0.032),
     3.4px 5.6px 17.9px rgba(0, 0, 0, 0.048),
-    15px 25px 80px rgba(0, 0, 0, 0.08)
-  ;
+    15px 25px 80px rgba(0, 0, 0, 0.08);
 
   @supports (backdrop-filter: blur(1px)) {
-    background-color: hsla(var(--surface-color-hsl), 0.65);
+    background-color: hsla(var(--surface-color-hsl), 0.25);
 
-    backdrop-filter: blur(0.4rem);
+    backdrop-filter: blur(0.75rem);
   }
 }
 
