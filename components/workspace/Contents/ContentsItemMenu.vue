@@ -18,7 +18,7 @@ const emit = defineEmits<Emits>();
 const popperInstance = shallowRef<null | PopperInstance>(null);
 const menu = ref<null | HTMLElement>(null);
 const currentlyConfirming = ref(-1); // You can confirm one at a time
-const cleanup = ref<null | (() => void)>(null);
+let cleanup: null | (() => void);
 
 const confirmDuration = parseDuration('5 seconds')!;
 const virtualElement: VirtualElement = {
@@ -48,22 +48,23 @@ function withEffects(event: Event, action: MenuAction) {
       { opacity: 1, transform: 'translate(0%, 0%)' },
     ], { duration: confirmDuration, pseudoElement: '::after' });
 
-    cleanup.value = () => {
+    cleanup = () => {
       animation.cancel?.();
       currentlyConfirming.value = -1;
 
       for (const eventType of targetCancelEvents)
-        target.removeEventListener(eventType, cleanup.value!);
+        target.removeEventListener(eventType, cleanup!);
     };
 
     animation.addEventListener('finish', () => {
       action.handler();
 
-      cleanup.value!();
+      cleanup!();
+      cleanup = null;
     });
 
     for (const eventType of targetCancelEvents)
-      target.addEventListener(eventType, cleanup.value);
+      target.addEventListener(eventType, cleanup);
   }
 }
 
@@ -89,7 +90,8 @@ useTinykeys({
 });
 
 onBeforeUnmount(() => {
-  cleanup.value?.();
+  cleanup?.();
+  cleanup = null;
 });
 </script>
 
