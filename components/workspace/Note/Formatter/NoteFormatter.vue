@@ -363,10 +363,14 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
     }
 
     @media screen and (max-width: $breakpoint-tablet) {
-      --size-basis: 2.5rem;
+      --size-basis: calc(2.25rem + 1.5vw);
 
       svg {
         width: 55%;
+      }
+
+      @media screen and (max-width: 365px) {
+        --size-basis: 2.25rem;
       }
     }
   }
