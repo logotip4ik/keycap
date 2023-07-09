@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
 
   body.path = generateFolderPath(user.username, path);
 
-  const validation = useFolderCreateSchema(body);
+  const validation = useFolderCreateValidation(body);
 
   if (!validation.ok) {
     return createError({

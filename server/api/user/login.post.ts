@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
   if (body.email) body.email = body.email.trim();
   if (body.password) body.password = body.password.trim();
 
-  const validation = useLoginValidator(body);
+  const validation = useLoginValidation(body);
 
   if (!validation.ok) {
     return createError({

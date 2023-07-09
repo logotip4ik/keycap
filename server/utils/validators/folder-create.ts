@@ -6,4 +6,4 @@ export const folderCreateSchema = v.object({
   parentId: v.string().matches(stringifiedBigIntRE).minLength(19).required(),
 });
 
-export const useFolderCreateSchema = compile(folderCreateSchema);
+export const useFolderCreateValidation = compile(folderCreateSchema);

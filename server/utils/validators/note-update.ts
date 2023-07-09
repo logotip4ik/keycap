@@ -5,4 +5,4 @@ export const noteUpdateSchema = v.object({
   content: v.string(),
 });
 
-export const useNoteUpdateValidator = compile(noteUpdateSchema);
+export const useNoteUpdateValidation = compile(noteUpdateSchema);

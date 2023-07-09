@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
 
   body.path = generateNotePath(user.username, path);
 
-  const validation = useNoteCreateSchema(body);
+  const validation = useNoteCreateValidation(body);
 
   if (!validation.ok) {
     return createError({

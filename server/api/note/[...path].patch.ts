@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
   if (data.name) data.name = data.name.trim();
   if (data.content) data.content = data.content.trim();
 
-  const validation = useNoteUpdateValidator(data);
+  const validation = useNoteUpdateValidation(data);
 
   if (!validation.ok) {
     return createError({

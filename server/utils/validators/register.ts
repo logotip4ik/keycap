@@ -6,4 +6,4 @@ export const registerSchema = v.object({
   password: v.string().minLength(8).required(),
 });
 
-export const useRegisterValidator = compile(registerSchema);
+export const useRegisterValidation = compile(registerSchema);
