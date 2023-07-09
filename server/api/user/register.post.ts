@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
   if (body.username) body.username = body.username.trim().replace(/\s/g, '_');
   if (body.password) body.password = body.password.trim();
 
-  const validation = useRegistrationValidator(body);
+  const validation = useRegisterValidator(body);
 
   if (!validation.ok) {
     return createError({
