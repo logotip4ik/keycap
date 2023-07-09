@@ -1,5 +1,3 @@
-
-
 export default defineEventHandler(async (event) => {
   if (event.context.user) return null;
 

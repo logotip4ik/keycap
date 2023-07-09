@@ -1,5 +1,3 @@
-
-
 export default defineEventHandler(async (event) => {
   const link = getRouterParam(event, 'link');
 
