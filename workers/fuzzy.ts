@@ -2,8 +2,9 @@
 import getScore from '@superhuman/command-score';
 import { expose } from 'comlink';
 
-import '~/types/store';
 import { commandActionsMin as commandsCache } from '~/utils/menu';
+
+import type { } from '~/types/store';
 
 const itemsCache = new Map<string, FuzzyItem>();
 
