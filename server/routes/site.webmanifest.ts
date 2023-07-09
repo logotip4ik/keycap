@@ -1,9 +1,14 @@
-import webmanifest from '~/assets/constants/webmanifest.json';
+import type Webmanifest from '~/assets/constants/webmanifest.json';
 
-export default defineEventHandler((event) => {
+export default defineEventHandler(async (event) => {
+  const store = useStorage('assets:server');
+
   const { user } = event.context;
 
-  const manifest = { ...webmanifest } satisfies typeof webmanifest;
+  const manifest: typeof Webmanifest | null = await store.getItem('webmanifest.json');
+
+  if (!manifest)
+    return createError({ statusCode: 500 });
 
   if (user)
     manifest.start_url = `/@${user.username}`;
