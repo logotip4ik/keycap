@@ -19,8 +19,8 @@ export default defineEventHandler(async (event) => {
 
     if (used > LIMIT) {
       return createError({
-        status: 429,
-        statusText: 'Too many requests',
+        statusCode: 429,
+        statusMessage: 'Too many requests',
       });
     }
 

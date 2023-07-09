@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
   const path = getRouterParam(event, 'path');
 
   if (!path)
-    return createError({ status: 400 });
+    return createError({ statusCode: 400 });
 
   const notePath = generateNotePath(user.username, path);
 
@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
   timer.end();
 
   if (!note)
-    return createError({ status: 404 });
+    return createError({ statusCode: 404 });
 
   timer.appendHeader(event);
 

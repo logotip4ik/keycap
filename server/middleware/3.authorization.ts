@@ -28,6 +28,6 @@ export default defineEventHandler(async (event) => {
   if (isAuthorizedRoute && !user) {
     await removeAuthCookies(event);
 
-    return createError({ status: 401 });
+    return createError({ statusCode: 401 });
   }
 });

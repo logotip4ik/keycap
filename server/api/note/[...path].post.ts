@@ -1,5 +1,7 @@
 import type { TypeOf } from 'suretype';
 
+
+
 export default defineEventHandler(async (event) => {
   const user = event.context.user!;
   const timer = event.context.timer!;
@@ -9,7 +11,7 @@ export default defineEventHandler(async (event) => {
   const path = getRouterParam(event, 'path');
 
   if (!path)
-    return createError({ status: 400 });
+    return createError({ statusCode: 400 });
 
   const body = await readBody<TypeOf<typeof noteCreateSchema>>(event) || {};
 
@@ -19,8 +21,8 @@ export default defineEventHandler(async (event) => {
 
   if (!validation.ok) {
     return createError({
-      status: 400,
-      statusText: `${validation.errors[0].dataPath.split('.').at(-1)} ${validation.errors[0].message}`,
+      statusCode: 400,
+      statusMessage: `${validation.errors[0].dataPath.split('.').at(-1)} ${validation.errors[0].message}`,
     });
   }
 
@@ -41,7 +43,7 @@ export default defineEventHandler(async (event) => {
   timer.end();
 
   if (!note)
-    return createError({ status: 400 });
+    return createError({ statusCode: 400 });
 
   timer.appendHeader(event);
 

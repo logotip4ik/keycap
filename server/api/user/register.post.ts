@@ -1,10 +1,12 @@
+
+
 export default defineEventHandler(async (event) => {
   if (event.context.user) return null;
 
   const isOriginMismatch = checkOriginForMismatch(event);
 
   if (isOriginMismatch)
-    return createError({ status: 403 });
+    return createError({ statusCode: 403 });
 
   const body = await readBody(event) || {};
 
@@ -16,8 +18,8 @@ export default defineEventHandler(async (event) => {
 
   if (!validation.ok) {
     return createError({
-      status: 400,
-      statusText: `${validation.errors[0].dataPath.split('.').at(-1)} ${validation.errors[0].message}`,
+      statusCode: 400,
+      statusMessage: `${validation.errors[0].dataPath.split('.').at(-1)} ${validation.errors[0].message}`,
     });
   }
 
@@ -41,7 +43,7 @@ export default defineEventHandler(async (event) => {
   }).catch(() => null);
 
   if (!user)
-    return createError({ status: 400, statusText: 'user with this email or username might already exist' });
+    return createError({ statusCode: 400, statusMessage: 'user with this email or username might already exist' });
 
   await setAuthCookies(event, user);
 

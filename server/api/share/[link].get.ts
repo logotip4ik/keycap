@@ -4,10 +4,10 @@ export default defineEventHandler(async (event) => {
   const link = getRouterParam(event, 'link');
 
   if (!link)
-    return createError({ status: 400 });
+    return createError({ statusCode: 400 });
 
   if (!isShareLinkValid(link))
-    return createError({ status: 404 });
+    return createError({ statusCode: 404 });
 
   const prisma = getPrisma();
 
@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
   }).catch(() => null);
 
   if (!note)
-    return createError({ status: 404 });
+    return createError({ statusCode: 404 });
 
   return note;
 });
