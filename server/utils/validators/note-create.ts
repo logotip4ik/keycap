@@ -6,4 +6,4 @@ export const noteCreateSchema = v.object({
   parentId: v.string().matches(stringifiedBigIntRE).minLength(19).required(),
 });
 
-export const useNoteCreateSchema = compile(noteCreateSchema, { colors: false });
+export const useNoteCreateSchema = compile(noteCreateSchema);

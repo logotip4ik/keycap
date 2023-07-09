@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-invalid-this */
+import { setSuretypeOptions } from 'suretype';
 
 import '~/polyfills/array-at';
 
@@ -18,5 +19,7 @@ Object.defineProperty(
     configurable: true,
   },
 );
+
+setSuretypeOptions({ colors: false, location: false });
 
 export default defineNitroPlugin(() => undefined);

@@ -5,4 +5,4 @@ export const loginSchema = v.object({
   password: v.string().minLength(8).required(),
 });
 
-export const useLoginValidator = compile(loginSchema, { colors: false });
+export const useLoginValidator = compile(loginSchema);
