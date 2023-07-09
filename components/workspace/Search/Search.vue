@@ -60,6 +60,8 @@ async function openResult() {
   }
   else {
     await navigateTo(generateItemRouteParams(resultToOpen as FolderOrNote));
+
+    document.querySelector(`a[title="${resultToOpen.name}"]`)?.scrollIntoView({ behavior: 'smooth' });
   }
 
   handleCancel();
