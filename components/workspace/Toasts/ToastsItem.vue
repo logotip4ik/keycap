@@ -102,14 +102,28 @@ onBeforeUnmount(() => clearTimeout(timeout));
     margin-right: 0.6rem;
 
     &--spinner {
+      position: relative;
+
       width: calc(var(--icon-size) / 1.1);
       height: calc(var(--icon-size) / 1.1);
 
-      border-radius: 50%;
-      border: 2px solid transparent;
-      border-left-color: currentColor;
+      &::after, &::before {
+        content: '';
 
-      animation: spin 1s infinite linear;
+        position: absolute;
+        inset: 0;
+
+        border-radius: 50%;
+        border: 2px solid transparent;
+        border-left-color: currentColor;
+
+        animation: spin 1s infinite linear;
+      }
+
+      &::before {
+        border-left-color: transparent;
+        border-right-color: currentColor;
+      }
     }
   }
 
