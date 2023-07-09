@@ -11,32 +11,32 @@ interface _IFuzzyWorker {
 }
 
 declare global {
-  type NoteMinimal = Pick<Note, 'id' | 'name' | 'path'> & {
+  export type NoteMinimal = Pick<Note, 'id' | 'name' | 'path'> & {
     content?: string
     editing?: boolean
     creating?: boolean
   };
 
-  interface FolderWithContents extends Omit<Folder, 'createdAt' | 'updatedAt'> {
+  export interface FolderWithContents extends Omit<Folder, 'createdAt' | 'updatedAt'> {
     editing?: boolean
     creating?: boolean
     notes: NoteMinimal[]
     subfolders: FolderWithContents[]
   }
 
-  type FolderOrNote = FolderWithContents & NoteMinimal;
+  export type FolderOrNote = FolderWithContents & NoteMinimal;
 
-  interface CommandItem {
+  export interface CommandItem {
     name: string
     key: SearchActionValues
   }
 
-  type FuzzyItem = Pick<FolderOrNote, 'name' | 'path' | 'root'>;
+  export type FuzzyItem = Pick<FolderOrNote, 'name' | 'path' | 'root'>;
 
-  interface IFuzzyWorker extends Remote<_IFuzzyWorker> {
+  export interface IFuzzyWorker extends Remote<_IFuzzyWorker> {
   }
 
-  interface OfflineStorage {
+  export interface OfflineStorage {
     setItem: <T = any>(key: string, value: T) => Promise<void>
     getItem: <T = any>(key: string) => Promise<T | undefined>
     removeItem: (key: string) => Promise<void>
