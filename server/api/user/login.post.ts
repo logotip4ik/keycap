@@ -1,12 +1,10 @@
-
-
 import type { SafeUser } from '~/types/server';
 
 export default defineEventHandler(async (event) => {
   const isOriginMismatch = checkOriginForMismatch(event);
 
   if (isOriginMismatch)
-    return createError({ statusCode: 403 });
+    return createError({ status: 403 });
 
   const body = await readBody(event) || {};
 
@@ -17,8 +15,8 @@ export default defineEventHandler(async (event) => {
 
   if (!validation.ok) {
     return createError({
-      statusCode: 400,
-      statusMessage: `${validation.errors[0].dataPath.split('.').at(-1)} ${validation.errors[0].message}`,
+      status: 400,
+      statusText: `${validation.errors[0].dataPath.split('.').at(-1)} ${validation.errors[0].message}`,
     });
   }
 
@@ -30,16 +28,16 @@ export default defineEventHandler(async (event) => {
   }).catch(() => null);
 
   if (!user)
-    return createError({ statusCode: 400, statusMessage: 'email or password is incorrect' });
+    return createError({ status: 400, statusText: 'email or password is incorrect' });
 
   const isPasswordValid = await verifyPassword(user.password, body.password)
     .catch(() => null);
 
   if (isPasswordValid === null)
-    return createError({ statusCode: 500 });
+    return createError({ status: 500 });
 
   if (isPasswordValid === false)
-    return createError({ statusCode: 400, statusMessage: 'email or password is incorrect' });
+    return createError({ status: 400, statusText: 'email or password is incorrect' });
 
   const safeUser: SafeUser = { id: user.id, username: user.username, email: user.email };
 

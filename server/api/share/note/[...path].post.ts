@@ -1,5 +1,3 @@
-
-
 export default defineEventHandler(async (event) => {
   const user = event.context.user!;
   const timer = event.context.timer!;
@@ -7,7 +5,7 @@ export default defineEventHandler(async (event) => {
   const path = getRouterParam(event, 'path');
 
   if (!path)
-    return createError({ statusCode: 400 });
+    return createError({ status: 400 });
 
   const notePath = generateNotePath(user.username, path);
 
@@ -37,7 +35,7 @@ export default defineEventHandler(async (event) => {
   timer.end();
 
   if (!share)
-    return createError({ statusCode: 400 });
+    return createError({ status: 400 });
 
   timer.appendHeader(event);
 

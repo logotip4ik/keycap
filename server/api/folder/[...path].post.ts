@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
   const path = getRouterParam(event, 'path');
 
   if (!path)
-    return createError({ statusCode: 400 });
+    return createError({ status: 400 });
 
   // NOTE: path is actually is not required param for body
   // just to reuse object and thus improve pref, i think it
@@ -22,8 +22,8 @@ export default defineEventHandler(async (event) => {
 
   if (!validation.ok) {
     return createError({
-      statusCode: 400,
-      statusMessage: `${validation.errors[0].dataPath.split('.').at(-1)} ${validation.errors[0].message}`,
+      status: 400,
+      statusText: `${validation.errors[0].dataPath.split('.').at(-1)} ${validation.errors[0].message}`,
     });
   }
 
@@ -43,7 +43,7 @@ export default defineEventHandler(async (event) => {
   timer.end();
 
   if (!folder)
-    return createError({ statusCode: 400 });
+    return createError({ status: 400 });
 
   timer.appendHeader(event);
 
