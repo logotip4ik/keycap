@@ -97,6 +97,22 @@ if (process.client)
   }
 }
 
+.toast-leave-active {
+  position: absolute;
+  bottom: var(--prev-bottom);
+  right: 0;
+  z-index: -1;
+
+  width: var(--prev-width);
+
+  transition: opacity 0.3s, transform 0.4s;
+
+  @media screen and (max-width: $breakpoint-tablet) {
+    right: unset;
+    left: 0;
+  }
+}
+
 .toast-enter-active[data-has-top-sibling="false"] {
   --initial-pos: 0px, 0px, 0px;
 
@@ -118,19 +134,7 @@ if (process.client)
   filter: blur(2px);
 }
 
-.toast-leave-active {
-  position: absolute;
-  bottom: var(--prev-bottom);
-  right: 0;
-  z-index: -1;
-
-  width: var(--prev-width);
-
-  transition: opacity .3s;
-
-  @media screen and (max-width: $breakpoint-tablet) {
-    right: unset;
-    left: 0;
-  }
+.toast-leave-to {
+  transform: scale(0.9);
 }
 </style>
