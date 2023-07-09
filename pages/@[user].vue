@@ -189,11 +189,26 @@ provide(IsNoteNameEmptyKey, isNoteNameEmpty);
 
     border-right: 1px solid hsla(var(--text-color-hsl), 0.25);
 
+    overflow: auto;
+    scroll-snap-type: y proximity;
+    scrollbar-width: none;
+    ::-webkit-scrollbar {
+      display: none;
+    }
+
     &__list {
-      padding: 0;
+      padding: 0 0 12rem;
       margin: 0;
 
       list-style-type: none;
+
+      & > li {
+        scroll-snap-align: start;
+
+        a {
+          scroll-margin: 2.25rem;
+        }
+      }
     }
 
     @media screen and (max-width: $breakpoint-tablet) {
