@@ -18,17 +18,19 @@ export interface PrivateBuildInfo {
   id: string
 }
 
-export declare module '@nuxt/schema' {
+export declare module 'nuxt/schema' {
   interface RuntimeConfig {
     build: PrivateBuildInfo
   }
-  
+
   interface AppConfigInput {
     shortcuts: Shortcuts
 
-    buildInfo?: BuildInfo
-    
     iconsToPreload?: string[]
+  }
+
+  interface AppConfig {
+    buildInfo: BuildInfo
   }
 }
 
