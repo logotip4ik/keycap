@@ -30,7 +30,7 @@ async function register() {
 
   $fetch<SafeUser | null>('/api/user/register', { method: 'POST', body: data })
     .then((newUser) => newUser && (user.value = newUser))
-    .catch((e) => createToast(e.statusText))
+    .catch((e) => createToast(e.data.statusMessage))
     .finally(() => isLoading.value = false);
 }
 

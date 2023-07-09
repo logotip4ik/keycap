@@ -34,7 +34,7 @@ async function login() {
       console.log(e.statusText);
       console.log(e.data);
 
-      createToast(e.statusText);
+      createToast(e.data.statusMessage);
     })
     .finally(() => isLoading.value = false);
 }
