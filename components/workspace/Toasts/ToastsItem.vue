@@ -42,6 +42,7 @@ onBeforeUnmount(() => clearTimeout(timeout));
 <style lang="scss">
 .toast {
   --icon-size: 1.4rem;
+  --base-color-saturation: 0;
   --base-shadow-color: 0, 0, 0;
 
   display: grid;
@@ -69,12 +70,18 @@ onBeforeUnmount(() => clearTimeout(timeout));
 
   @media (prefers-color-scheme: dark) {
     --base-shadow-color: 200, 200, 200;
+    --base-color-saturation: 0.1;
   }
 
   @supports (backdrop-filter: blur(1px)) {
     color: var(--text-color);
 
-    background-color: hsla(var(--selection-bg-color-hsl), 0.175);
+    background-color: transparent;
+    background-image: linear-gradient(
+      to bottom,
+      hsla(var(--selection-bg-color-hsl), calc(var(--base-color-saturation) + 0.075)),
+      hsla(var(--selection-bg-color-hsl), calc(var(--base-color-saturation) + 0.175)),
+    );
     border: 1px solid hsla(var(--selection-bg-color-hsl), 0.5);
     backdrop-filter: blur(0.75rem);
   }
@@ -84,8 +91,7 @@ onBeforeUnmount(() => clearTimeout(timeout));
     padding-top: 0.1rem;
   }
 
-  &__icon,
-  &__spinner {
+  &__icon {
     flex-shrink: 0;
 
     width: var(--icon-size);
