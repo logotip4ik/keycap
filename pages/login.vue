@@ -28,14 +28,7 @@ async function login() {
 
   $fetch<SafeUser | null>('/api/user/login', { method: 'POST', body: data })
     .then((newUser) => newUser && (user.value = newUser))
-    .catch((e) => {
-      console.log(e.message);
-      console.log(e.statusMessage);
-      console.log(e.statusText);
-      console.log(e.data);
-
-      createToast(e.data.statusMessage);
-    })
+    .catch((e) => createToast(e.data.statusMessage))
     .finally(() => isLoading.value = false);
 }
 
