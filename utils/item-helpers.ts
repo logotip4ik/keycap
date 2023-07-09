@@ -72,7 +72,7 @@ export async function createFolder(folderName: string, self: FolderOrNote, paren
     method: 'POST',
     body: { name: folderName, parentId: parent.id },
   })
-    .catch((err) => { createToast(err.statusMessage); });
+    .catch((err) => { createToast(err.statusText); });
 
   if (!newlyCreatedFolder)
     return;
@@ -100,7 +100,7 @@ export async function createNote(noteName: string, self: FolderOrNote, parent: F
     method: 'POST',
     body: { name: noteName, parentId: parent.id },
   })
-    .catch((err) => { createToast(err.statusMessage); });
+    .catch((err) => { createToast(err.statusText); });
 
   if (!newlyCreatedNote)
     return;
