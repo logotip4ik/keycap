@@ -1,7 +1,5 @@
 import type { TypeOf } from 'suretype';
 
-import { getPrisma } from '~/prisma';
-
 export default defineEventHandler(async (event) => {
   const user = event.context.user!;
   const timer = event.context.timer!;

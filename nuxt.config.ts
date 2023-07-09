@@ -44,6 +44,10 @@ export default defineNuxtConfig({
   },
 
   nitro: {
+    imports: {
+      dirs: ['./prisma'],
+    },
+
     typescript: {
       tsConfig: {
         compilerOptions: {

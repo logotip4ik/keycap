@@ -1,4 +1,4 @@
-import { getPrisma } from '~/prisma';
+
 
 import type { SafeUser } from '~/types/server';
 
