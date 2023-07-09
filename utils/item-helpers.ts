@@ -98,7 +98,7 @@ export async function createNote(noteName: string, self: FolderOrNote, parent: F
 
   const newlyCreatedNote = await $fetch<NoteMinimal>(`/api/note${newNotePath}`, {
     method: 'POST',
-    body: { parentId: parent.id },
+    body: { name: noteName, parentId: parent.id },
   })
     .catch((err) => { createToast(err.statusMessage); });
 
