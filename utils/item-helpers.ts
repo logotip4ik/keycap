@@ -62,6 +62,7 @@ export function getCurrentFolderPath() {
 
 export async function createFolder(folderName: string, self: FolderOrNote, parent: FolderWithContents) {
   const foldersCache = useFoldersCache();
+  const createToast = useToast();
 
   const currentFolderPath = getCurrentFolderPath();
   const newFolderPathName = encodeURIComponent(folderName.trim());
@@ -70,7 +71,11 @@ export async function createFolder(folderName: string, self: FolderOrNote, paren
   const newlyCreatedFolder = await $fetch<FolderWithContents>(`/api/folder${newFolderPath}`, {
     method: 'POST',
     body: { name: folderName, parentId: parent.id },
-  });
+  })
+    .catch((err) => { createToast(err.statusMessage); });
+
+  if (!newlyCreatedFolder)
+    return;
 
   newlyCreatedFolder.notes = newlyCreatedFolder.notes || [];
   newlyCreatedFolder.subfolders = newlyCreatedFolder.subfolders || [];
@@ -85,6 +90,7 @@ export async function createFolder(folderName: string, self: FolderOrNote, paren
 
 export async function createNote(noteName: string, self: FolderOrNote, parent: FolderWithContents) {
   const notesCache = useNotesCache();
+  const createToast = useToast();
 
   const currentFolderPath = getCurrentFolderPath();
   const newNotePathName = encodeURIComponent(noteName.trim());
@@ -93,7 +99,11 @@ export async function createNote(noteName: string, self: FolderOrNote, parent: F
   const newlyCreatedNote = await $fetch<NoteMinimal>(`/api/note${newNotePath}`, {
     method: 'POST',
     body: { parentId: parent.id },
-  });
+  })
+    .catch((err) => { createToast(err.statusMessage); });
+
+  if (!newlyCreatedNote)
+    return;
 
   notesCache.set(newlyCreatedNote.path, newlyCreatedNote as Note);
   updateNoteInFolder(self, { ...newlyCreatedNote, content: '', creating: false }, parent);
