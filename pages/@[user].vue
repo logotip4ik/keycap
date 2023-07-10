@@ -157,6 +157,8 @@ provide(IsNoteNameEmptyKey, isNoteNameEmpty);
   grid-template-rows: auto 1fr;
 
   height: calc(var(--1vh, 1vh) * 100);
+  height: 100svh;
+  max-height: 100svh;
 
   &__navbar {
     grid-column: 1 / 1;
@@ -212,16 +214,10 @@ provide(IsNoteNameEmptyKey, isNoteNameEmpty);
     }
 
     @media screen and (max-width: $breakpoint-tablet) {
-      position: absolute;
-      top: 0;
-      left: 0;
-
       width: 100%;
-      height: 100%;
-
       max-width: 100%;
 
-      padding: 4.5rem 1rem 2rem;
+      padding: 0 1rem 2rem;
     }
   }
 
