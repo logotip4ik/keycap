@@ -127,14 +127,14 @@ if (process.client)
   transform: scale(0.9) translate3d(var(--initial-pos));
 }
 
+.toast-leave-to {
+  transform: scale(0.975);
+}
+
 .toast-enter-from,
 .toast-enter-from [data-icon],
 .toast-leave-to {
   opacity: 0;
   filter: blur(2px);
-}
-
-.toast-leave-to {
-  transform: scale(0.9);
 }
 </style>
