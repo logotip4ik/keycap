@@ -58,6 +58,10 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
+    public: {
+      siteOrigin: '',
+    },
+
     github: {
       clientId: '',
       clientSecret: '',
