@@ -3938,21 +3938,21 @@ __metadata:
   linkType: hard
 
 "@vue-macros/common@npm:^1.3.1":
-  version: 1.4.1
-  resolution: "@vue-macros/common@npm:1.4.1"
+  version: 1.5.0
+  resolution: "@vue-macros/common@npm:1.5.0"
   dependencies:
     "@babel/types": ^7.22.5
     "@rollup/pluginutils": ^5.0.2
     "@vue/compiler-sfc": ^3.3.4
-    ast-kit: ^0.6.6
+    ast-kit: ^0.6.7
     local-pkg: ^0.4.3
-    magic-string-ast: ^0.1.2
+    magic-string-ast: ^0.1.3
   peerDependencies:
     vue: ^2.7.0 || ^3.2.25
   peerDependenciesMeta:
     vue:
       optional: true
-  checksum: c69cc3dab612896171f47277642549f6a5e09964b3a8f8fa97386f6909c13907ee78e3622f26a753e03ee8c5cb012860d09d3bba4e4a5e95cf2475a957271bd4
+  checksum: c6f2b85fbf601088a81c52828c2c93692f6ed4309ca42c46e23326b969d936fb8f92c63db1831fdd9fb28e805ddba4ffd1af108c72ecf3fb7ad8a01f05d870e7
   languageName: node
   linkType: hard
 
@@ -4426,14 +4426,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ast-kit@npm:^0.6.6":
-  version: 0.6.6
-  resolution: "ast-kit@npm:0.6.6"
+"ast-kit@npm:^0.6.6, ast-kit@npm:^0.6.7":
+  version: 0.6.7
+  resolution: "ast-kit@npm:0.6.7"
   dependencies:
     "@babel/parser": ^7.22.7
     "@rollup/pluginutils": ^5.0.2
     pathe: ^1.1.1
-  checksum: 69e228f2403c13cd4ff1161eb7e66e57e6b47586e53d3a93e60f6c4a7d8ba1b5510e1326aba58c20f1b9dda2ae62e74d26bc6217a8d850222a5561790184af28
+  checksum: d040cfc9850204db99695ee3d340e1da59dc142e51767977d04ec827743eb41c3efbe13da6bb38a32e8a1c0963c7a596805cb6821e03550e123125622f453191
   languageName: node
   linkType: hard
 
@@ -4816,9 +4816,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30001464, caniuse-lite@npm:^1.0.30001503":
-  version: 1.0.30001513
-  resolution: "caniuse-lite@npm:1.0.30001513"
-  checksum: 7d783f4f40584e7bdeda3f3abc23ffff21f14c37e1fadf1a6b3d2e299727fe9d5a61096101d9d4e4174f881d4ff4c62204fc41f3bc950f4da1b0edfdea025fa4
+  version: 1.0.30001514
+  resolution: "caniuse-lite@npm:1.0.30001514"
+  checksum: ee2e90fe63cb59fb4a1515eb6b157f1c26d3ccba496b994b0f03088c39c282ee2fb8c160ad7b677ee196b5bb078b23f2f9474c32e4e47724f4d782de92bb8bbe
   languageName: node
   linkType: hard
 
@@ -8396,7 +8396,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"magic-string-ast@npm:^0.1.2":
+"magic-string-ast@npm:^0.1.2, magic-string-ast@npm:^0.1.3":
   version: 0.1.3
   resolution: "magic-string-ast@npm:0.1.3"
   dependencies:
