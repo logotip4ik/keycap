@@ -54,19 +54,24 @@ export default defineEventHandler(async (event) => {
   if (!auth)
     return sendRedirect(event, '/');
 
-  const headers = {
+  const apiAuthHeaders = {
     'Authorization': `${auth.token_type} ${auth.access_token}`,
     'User-Agent': `Keycap${isProduction ? '' : ' Dev'}`,
   };
 
-  const user = await $fetch<GitHubUserRes>('https://api.github.com/user', { headers })
-    .catch(() => null);
+  const user = await $fetch<GitHubUserRes>(
+    'https://api.github.com/user',
+    { headers: apiAuthHeaders },
+  ).catch(() => null);
 
   if (!user)
     return sendRedirect(event, '/');
 
   if (!user.email) {
-    const emails = await $fetch<GitHubUserEmailRes[]>('https://api.github.com/user/emails', { headers }).catch(() => null);
+    const emails = await $fetch<GitHubUserEmailRes[]>(
+      'https://api.github.com/user/emails',
+      { headers: apiAuthHeaders },
+    ).catch(() => null);
 
     if (!emails)
       return sendRedirect(event, '/');
