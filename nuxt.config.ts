@@ -57,6 +57,13 @@ export default defineNuxtConfig({
     },
   },
 
+  runtimeConfig: {
+    github: {
+      clientId: '',
+      clientSecret: '',
+    },
+  },
+
   routeRules: {
     '/**': { headers: getHeaders('default') },
 
