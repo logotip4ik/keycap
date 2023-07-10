@@ -45,12 +45,11 @@ export async function setAuthCookies(event: H3Event, user: SafeUser) {
   const accessTokenName = getAccessTokenName();
   const accessToken = await generateAccessToken(user);
 
-  const oneDay = parseDuration('1day', 'second')!;
-
+  // https://web.dev/first-party-cookie-recipes/#the-good-first-party-cookie-recipe
   setCookie(event, accessTokenName, accessToken, {
     path: '/',
     sameSite: 'lax',
-    maxAge: oneDay,
+    maxAge: parseDuration('1 week', 'second')!,
     httpOnly: true,
     secure: isProduction,
   });
