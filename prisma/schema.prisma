@@ -13,13 +13,26 @@ datasource db {
 model User {
   id BigInt @id @default(autoincrement())
 
-  username String @unique @db.String(50)
-  email    String @unique @db.String(75)
-  password String
+  username String  @unique @db.String(50)
+  email    String  @unique @db.String(75)
+  password String?
 
   notes   Note[]
   folders Folder[]
   shares  Share[]
+  socials OAuth[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model OAuth {
+  id String @id
+
+  type SocialAuth
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId BigInt
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -91,4 +104,9 @@ model Share {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+enum SocialAuth {
+  Goggle
+  GitHub
 }
