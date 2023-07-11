@@ -1,88 +1,68 @@
-import { isProduction } from 'std-env';
-import { withHttps, withQuery } from 'ufo';
-
-interface GitHubAuthRes {
-  access_token: string
-  scope: string
-  token_type: string
-}
-
-interface GitHubUserRes {
-  login: string
-  name: string
-  email: string | null
-}
-
-interface GitHubUserEmailRes {
-  email: string
-  primary: boolean
-  verified: boolean
-  visibility: string
-}
-
 export default defineEventHandler(async (event) => {
-  const { github } = useRuntimeConfig();
   const code = getQuery(event).code;
 
-  if (!code) {
-    let redirectUrl = getRequestURL(event).href;
+  if (!code)
+    return sendGitHubOAuthRedirect(event);
 
-    if (isProduction)
-      redirectUrl = withHttps(redirectUrl);
+  const githubUser = await getGitHubUserWithEvent(event)
+    .catch(() => null);
 
-    return sendRedirect(event,
-      withQuery('https://github.com/login/oauth/authorize', {
-        client_id: github.clientId,
-        redirect_uri: redirectUrl,
-        scope: 'user:email',
-      }),
-    );
-  }
-
-  const auth = await $fetch<GitHubAuthRes>('https://github.com/login/oauth/access_token', {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-    },
-    query: {
-      code,
-      client_id: github.clientId,
-      client_secret: github.clientSecret,
-    },
-  }).catch(() => null);
-
-  if (!auth)
+  if (!githubUser)
     return sendRedirect(event, '/');
 
-  const apiAuthHeaders = {
-    'Authorization': `${auth.token_type} ${auth.access_token}`,
-    'User-Agent': `Keycap${isProduction ? '' : ' Dev'}`,
-  };
+  const prisma = getPrisma();
 
-  const user = await $fetch<GitHubUserRes>(
-    'https://api.github.com/user',
-    { headers: apiAuthHeaders },
-  ).catch(() => null);
+  const user = await prisma.$transaction(async (tx) => {
+    let dbUser = await tx.user.findFirst({
+      where: { email: githubUser.email },
+      select: { id: true, email: true, username: true },
+    });
 
+    const socialId = githubUser.id.toString();
+
+    if (dbUser) {
+      await tx.user.update({
+        where: { id: dbUser.id },
+        data: {
+          socials: {
+            connectOrCreate: {
+              where: { id: socialId },
+              create: { id: socialId, type: 'GitHub' },
+            },
+          },
+        },
+      });
+    }
+    else {
+      dbUser = await prisma.user.create({
+        select: { id: true, email: true, username: true },
+        data: {
+          email: githubUser.email,
+          username: githubUser.login,
+
+          folders: {
+            create: {
+              name: `${githubUser.login}'s workspace`,
+              root: true,
+              path: generateRootFolderPath(githubUser.login),
+            },
+          },
+
+          socials: {
+            create: { id: socialId, type: 'GitHub' },
+          },
+        },
+      });
+    }
+
+    return dbUser;
+  }).catch(() => null);
+
+  // TODO: add better error handling
   if (!user)
     return sendRedirect(event, '/');
 
-  if (!user.email) {
-    const emails = await $fetch<GitHubUserEmailRes[]>(
-      'https://api.github.com/user/emails',
-      { headers: apiAuthHeaders },
-    ).catch(() => null);
+  await setAuthCookies(event, user);
 
-    if (!emails)
-      return sendRedirect(event, '/');
-
-    const primaryEmail = emails.find((email) => email.primary);
-
-    if (!primaryEmail)
-      return sendRedirect(event, '/');
-
-    user.email = primaryEmail.email;
-  }
-
-  return user;
+  return sendRedirect(event, `/@${user.username}`);
 });
