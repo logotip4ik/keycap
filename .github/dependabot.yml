@@ -3,14 +3,14 @@
 version: 2
 updates:
 
-  - package-ecosystem: "github-actions"
-    directory: "/"
+  - package-ecosystem: github-actions
+    directory: /
     commit-message:
       prefix: ci
     groups:
       actions:
         patterns:
-          - "*"
+          - '*'
     schedule:
       # Check for updates to GitHub Actions every month
-      interval: "monthly"
+      interval: monthly

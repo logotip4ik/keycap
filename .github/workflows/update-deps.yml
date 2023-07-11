@@ -3,7 +3,6 @@ name: Auto update dependencies
 on:
   schedule:
     - cron: '0 2 * * *'
-  workflow_dispatch:
 
 env:
   # allow yarn creating lockfile in CI environment
@@ -13,38 +12,38 @@ jobs:
   auto-update-dependencies:
     runs-on: ubuntu-latest
 
-    steps:    
-    - name: Checkouting repo
-      uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
-      with:
-        persist-credentials: false
-        fetch-depth: 0
+    steps:
+      - name: Checkouting repo
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
+        with:
+          persist-credentials: false
+          fetch-depth: 0
 
-    - name: Node setup
-      uses: actions/setup-node@e33196f7422957bea03ed53f6fbb155025ffc7b8
-      with:
-        node-version: 18
+      - name: Node setup
+        uses: actions/setup-node@e33196f7422957bea03ed53f6fbb155025ffc7b8
+        with:
+          node-version: 18
 
-    - name: Update package versions
-      run: npx taze@latest latest -x '@types/node' -swf
+      - name: Update package versions
+        run: npx taze@latest latest -x '@types/node' -swf
 
-    - name: Update resolution versions
-      run: node ./scripts/update-resolution.cjs
-      shell: bash
+      - name: Update resolution versions
+        run: node ./scripts/update-resolution.cjs
+        shell: bash
 
-    - name: Update lock file
-      run: |
-        rm ./yarn.lock
-        yarn
+      - name: Update lock file
+        run: |
+          rm ./yarn.lock
+          yarn
 
-    - name: Test if project still builds
-      run: yarn build
-    
-    - name: Commit changes if needed
-      uses: actions-js/push@156f2b10c3aa000c44dbe75ea7018f32ae999772
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        message: "chore: update deps"
-        branch: ${{ github.ref_name }}
-        author_name: ${{ github.actor }}
-        author_email: "noreply@github.com"
+      - name: Test if project still builds
+        run: yarn build
+
+      - name: Commit changes if needed
+        uses: actions-js/push@156f2b10c3aa000c44dbe75ea7018f32ae999772
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          message: 'chore: update deps'
+          branch: ${{ github.ref_name }}
+          author_name: ${{ github.actor }}
+          author_email: noreply@github.com
