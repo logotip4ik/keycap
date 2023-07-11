@@ -56,7 +56,7 @@ export interface NoteViewHeaderOptions {
   staleWhileRevalidate?: number
 }
 export type HeadersType = 'default' | 'assets' | 'api' | 'note-view' | 'webmanifest';
-export type HeadersOptions = NoteViewHeaderOptions | {};
+export type HeadersOptions = NoteViewHeaderOptions | unknown;
 
 export function getHeaders(headersOptions?: HeadersType | { type: HeadersType; opts: HeadersOptions }) {
   const isObject = typeof headersOptions === 'object';

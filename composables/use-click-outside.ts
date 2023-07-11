@@ -11,7 +11,7 @@ export default (target: Ref<HTMLElement | null>, callback: (e: Event) => any) =>
       callback(event);
   };
 
-  const cleanups: Function[] = [];
+  const cleanups: (() => any)[] = [];
   const cleanup = () => {
     cleanups.forEach((fn) => fn());
     cleanups.length = 0;
