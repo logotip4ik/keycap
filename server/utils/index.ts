@@ -8,7 +8,7 @@ export function getServerUserAgent() {
   const postfix = isProduction ? '' : 'Dev';
   const serverName = process.env.SERVER_NAME || 'Keycap';
 
-  return `${serverName} ${postfix}`;
+  return `${serverName} ${postfix}`.trim();
 }
 
 export function generateFolderPath(username: string, path: string): string {
