@@ -1,7 +1,8 @@
+import { randomUUID } from 'node:crypto';
 import { isProduction } from 'std-env';
+import { withQuery } from 'ufo';
 
 import type { H3Event } from 'h3';
-import { withQuery } from 'ufo';
 
 export interface GitHubAuthRes {
   access_token: string
@@ -26,10 +27,14 @@ export interface GitHubUserEmailRes {
 export function sendGitHubOAuthRedirect(event: H3Event) {
   const { github, public: config } = useRuntimeConfig();
 
+  const state = randomUUID();
   const protocol = isProduction ? 'https://' : 'http://';
+
+  setCookie(event, 'state', state);
 
   return sendRedirect(event,
     withQuery('https://github.com/login/oauth/authorize', {
+      state,
       client_id: github.clientId,
       redirect_uri: `${protocol}${config.siteOrigin}/api/oauth/github`,
       scope: 'user:email',

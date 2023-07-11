@@ -1,3 +1,4 @@
+import { randomUUID } from 'node:crypto';
 import { isProduction } from 'std-env';
 import { withQuery } from 'ufo';
 
@@ -26,10 +27,14 @@ export interface GoogleUserRes {
 export function sendGoogleOAuthRedirect(event: H3Event) {
   const { google, public: config } = useRuntimeConfig();
 
+  const state = randomUUID();
   const protocol = isProduction ? 'https://' : 'http://';
+
+  setCookie(event, 'state', state);
 
   return sendRedirect(event,
     withQuery('https://accounts.google.com/o/oauth2/v2/auth', {
+      state,
       client_id: google.clientId,
       redirect_uri: `${protocol}${config.siteOrigin}/api/oauth/google`,
       response_type: 'code',

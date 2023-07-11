@@ -1,8 +1,11 @@
 export default defineEventHandler(async (event) => {
-  const code = getQuery(event).code;
+  const { code, state } = getQuery(event);
 
-  if (!code)
+  if (!code || !state)
     return sendGoogleOAuthRedirect(event);
+
+  if (state !== getCookie(event, 'state'))
+    return createError({ statusCode: 422 });
 
   const googleUser = await getGoogleUserWithEvent(event)
     .catch(() => null);
