@@ -2,7 +2,7 @@ export default defineEventHandler(async (event) => {
   const { code, state } = getQuery(event);
 
   if (!code || !state)
-    return sendGitHubOAuthRedirect(event);
+    return sendOAuthRedirect(event, OAuthProvider.GitHub);
 
   if (state !== getCookie(event, 'state'))
     return createError({ statusCode: 422 });

@@ -2,7 +2,7 @@ export default defineEventHandler(async (event) => {
   const { code, state } = getQuery(event);
 
   if (!code || !state)
-    return sendGoogleOAuthRedirect(event);
+    return sendOAuthRedirect(event, OAuthProvider.Google);
 
   if (state !== getCookie(event, 'state'))
     return createError({ statusCode: 422 });
