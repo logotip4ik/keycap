@@ -1,7 +1,15 @@
+import { isProduction } from 'std-env';
 import { withLeadingSlash, withoutTrailingSlash } from 'ufo';
 
 import type { H3Event } from 'h3';
 import type { Prisma } from '@prisma/client';
+
+export function getServerUserAgent() {
+  const postfix = isProduction ? '' : 'Dev';
+  const serverName = process.env.SERVER_NAME || 'Keycap';
+
+  return `${serverName} ${postfix}`;
+}
 
 export function generateFolderPath(username: string, path: string): string {
   // prepending leading slash to username + leading slash path + remove trailing slash

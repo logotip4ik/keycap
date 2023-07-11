@@ -1,5 +1,3 @@
-import { isProduction } from 'std-env';
-
 import type { H3Event } from 'h3';
 
 import type { NormalizedSocialUser } from '~/types/server';
@@ -35,7 +33,9 @@ export async function getGitHubUserWithEvent(event: H3Event) {
 
   const apiAuthHeaders = {
     'Authorization': `${auth.token_type} ${auth.access_token}`,
-    'User-Agent': `Keycap${isProduction ? '' : ' Dev'}`,
+    'X-GitHub-Api-Version': '2022-11-28',
+    'Accept': 'application/vnd.github+json',
+    'User-Agent': getServerUserAgent(),
   };
 
   const user = await $fetch<GitHubUserRes>(
