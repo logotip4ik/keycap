@@ -47,7 +47,7 @@ async function main() {
   if (existsSync(resultsPath))
     await fsp.writeFile(resultsPath, '');
 
-  const hashedPasswords = await Promise.all(users.map((user) => hashPassword(user.password)));
+  const hashedPasswords = await Promise.all(users.map((user) => hashPassword(user.password!)));
 
   const dbUsers = await Promise.all(users.map((user, i) =>
     prisma.user.create({
