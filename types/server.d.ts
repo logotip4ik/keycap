@@ -1,4 +1,5 @@
 import { createTimer } from '~/server/utils/timers' 
+import { OAuthProvider } from '~/server/utils/oauth'
 
 import type { User } from '@prisma/client'
 
@@ -18,5 +19,15 @@ export declare module 'h3' {
     timer?: ReturnType<typeof createTimer>
   }
 }
+
+export interface NormalizedSocialUser {
+  id: string
+  email: string
+  username: string
+  type: OAuthProvider
+}
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export type OAuthProvider = (typeof OAuthProvider)[keyof typeof OAuthProvider];
 
 export { }

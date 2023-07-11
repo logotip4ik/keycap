@@ -6,20 +6,11 @@ import { withQuery } from 'ufo';
 import type { Prisma } from '@prisma/client';
 import type { H3Event } from 'h3';
 
-import type { SafeUser } from '../../../types/server';
-
-export interface NormalizedSocialUser {
-  id: string
-  email: string
-  username: string
-  type: OAuthProvider
-}
+import type { NormalizedSocialUser, OAuthProvider as OAuthProviderType, SafeUser } from '~/types/server';
 
 export const OAuthProvider = SocialAuth;
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-export type OAuthProvider = (typeof OAuthProvider)[keyof typeof OAuthProvider];
 
-export function sendOAuthRedirect(event: H3Event, provider: OAuthProvider) {
+export function sendOAuthRedirect(event: H3Event, provider: OAuthProviderType) {
   const { google, github, public: config } = useRuntimeConfig();
 
   const state = randomUUID();

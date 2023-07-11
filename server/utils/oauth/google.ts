@@ -4,27 +4,8 @@ import { withQuery } from 'ufo';
 
 import type { H3Event } from 'h3';
 
-import type { NormalizedSocialUser } from './index';
-
-export interface GoogleAuthRes {
-  access_token: string
-  expires_in: number
-  refresh_token: string
-  scope: string
-  token_type: string
-  id_token: string
-}
-
-export interface GoogleUserRes {
-  id: string
-  email: string
-  verified_email: boolean
-  name: string
-  given_name: string
-  family_name: string
-  picture: string
-  locale: string
-}
+import type { NormalizedSocialUser } from '~/types/server';
+import type { GoogleAuthRes, GoogleUserRes } from '~/types/server-google';
 
 export function normalizeGoogleUser(googleUser: GoogleUserRes): NormalizedSocialUser {
   return {
