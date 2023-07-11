@@ -19,7 +19,7 @@ export function sendOAuthRedirect(event: H3Event, provider: OAuthProviderType) {
   setCookie(event, 'state', state);
 
   let url: string;
-  const baseOptions: any = {
+  const oauthOptions: any = {
     state,
     client_id: '',
     scope: '',
@@ -30,26 +30,26 @@ export function sendOAuthRedirect(event: H3Event, provider: OAuthProviderType) {
     url = 'https://github.com/login/oauth/authorize';
 
     // https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps#1-request-a-users-github-identity
-    baseOptions.client_id = github.clientId;
-    baseOptions.scope = 'user:email';
+    oauthOptions.client_id = github.clientId;
+    oauthOptions.scope = 'user:email';
   }
   else if (provider === SocialAuth.Google) {
     url = 'https://accounts.google.com/o/oauth2/v2/auth';
 
     // https://developers.google.com/identity/protocols/oauth2/web-server#creatingclient
-    baseOptions.client_id = google.clientId;
-    baseOptions.scope = 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile';
+    oauthOptions.client_id = google.clientId;
+    oauthOptions.scope = 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile';
 
-    baseOptions.response_type = 'code';
-    baseOptions.access_type = 'online';
-    baseOptions.prompt = 'select_account';
+    oauthOptions.response_type = 'code';
+    oauthOptions.access_type = 'online';
+    oauthOptions.prompt = 'select_account';
   }
   else {
     throw new Error(`incorrect provider option: ${provider}`);
   }
 
   return sendRedirect(event,
-    withQuery(url, baseOptions),
+    withQuery(url, oauthOptions),
   );
 }
 
