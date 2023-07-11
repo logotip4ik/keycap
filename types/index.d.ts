@@ -23,14 +23,14 @@ export declare module 'nuxt/schema' {
     build: PrivateBuildInfo
   }
 
+  interface PublicRuntimeConfig {
+    build: BuildInfo
+  }
+
   interface AppConfigInput {
     shortcuts: Shortcuts
 
     iconsToPreload?: string[]
-  }
-
-  interface AppConfig {
-    buildInfo: BuildInfo
   }
 }
 

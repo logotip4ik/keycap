@@ -1,8 +1,8 @@
 <script setup lang="ts">
-const { buildInfo } = useAppConfig();
+const { build } = useRuntimeConfig().public;
 
-const lastTimeBuild = Intl.DateTimeFormat('en-UK', { dateStyle: 'medium' }).format(buildInfo.time);
-const shortCommitSha = buildInfo.commit;
+const lastTimeBuild = Intl.DateTimeFormat('en-UK', { dateStyle: 'medium' }).format(build.time);
+const shortCommitSha = build.commit;
 </script>
 
 <template>
