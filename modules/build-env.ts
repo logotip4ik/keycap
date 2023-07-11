@@ -26,10 +26,8 @@ export default defineNuxtModule({
       id: nanoid(),
     };
 
-    nuxt.options.appConfig = nuxt.options.appConfig || {};
-    nuxt.options.appConfig.buildInfo = buildInfo;
-
     nuxt.options.runtimeConfig.build = privateBuildInfo;
+    nuxt.options.runtimeConfig.public.build = buildInfo;
 
     logger.info(`Unique build id: ${colors.bold(colors.cyan(privateBuildInfo.id))}`);
   },
