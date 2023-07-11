@@ -13,7 +13,9 @@ export default defineEventHandler(async (event) => {
   if (!githubUser)
     return sendRedirect(event, '/');
 
-  const user = await getOrCreateUserFromSocialAuth(githubUser)
+  const user = await getOrCreateUserFromSocialAuth(
+    normalizeGitHubUser(githubUser),
+  )
     .catch(() => null);
 
   // TODO: better error handling

@@ -14,7 +14,9 @@ export default defineEventHandler(async (event) => {
   if (!googleUser)
     return sendRedirect(event, '');
 
-  const user = await getOrCreateUserFromSocialAuth(googleUser)
+  const user = await getOrCreateUserFromSocialAuth(
+    normalizeGoogleUser(googleUser),
+  )
     .catch(() => null);
 
   // TODO: better error handling

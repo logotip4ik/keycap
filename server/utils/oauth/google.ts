@@ -4,6 +4,8 @@ import { withQuery } from 'ufo';
 
 import type { H3Event } from 'h3';
 
+import type { NormalizedSocialUser } from './index';
+
 export interface GoogleAuthRes {
   access_token: string
   expires_in: number
@@ -22,6 +24,15 @@ export interface GoogleUserRes {
   family_name: string
   picture: string
   locale: string
+}
+
+export function normalizeGoogleUser(googleUser: GoogleUserRes): NormalizedSocialUser {
+  return {
+    id: googleUser.id,
+    username: googleUser.email.split('@')[0],
+    email: googleUser.email,
+    type: OAuthProvider.Google,
+  };
 }
 
 export function sendGoogleOAuthRedirect(event: H3Event) {

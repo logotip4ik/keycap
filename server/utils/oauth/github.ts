@@ -4,6 +4,8 @@ import { withQuery } from 'ufo';
 
 import type { H3Event } from 'h3';
 
+import type { NormalizedSocialUser } from './index';
+
 export interface GitHubAuthRes {
   access_token: string
   scope: string
@@ -22,6 +24,15 @@ export interface GitHubUserEmailRes {
   primary: boolean
   verified: boolean
   visibility: string
+}
+
+export function normalizeGitHubUser(githubUser: GitHubUserRes): NormalizedSocialUser {
+  return {
+    id: githubUser.id.toString(),
+    username: githubUser.login,
+    email: githubUser.email,
+    type: OAuthProvider.GitHub,
+  };
 }
 
 export function sendGitHubOAuthRedirect(event: H3Event) {

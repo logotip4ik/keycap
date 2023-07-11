@@ -7,12 +7,12 @@ import type { Prisma } from '@prisma/client';
 import type { H3Event } from 'h3';
 
 import type { SafeUser } from '../../../types/server';
-import type { GitHubUserRes } from './github';
-import type { GoogleUserRes } from './google';
 
-export interface NormalizedUser {
+export interface NormalizedSocialUser {
+  id: string
   email: string
   username: string
+  type: OAuthProvider
 }
 
 export const OAuthProvider = SocialAuth;
@@ -62,22 +62,13 @@ export function sendOAuthRedirect(event: H3Event, provider: OAuthProvider) {
   );
 }
 
-export async function getOrCreateUserFromSocialAuth(socialAuth: GitHubUserRes | GoogleUserRes) {
+export async function getOrCreateUserFromSocialAuth(normalizedUser: NormalizedSocialUser) {
   const prisma = getPrisma();
 
-  const socialId = socialAuth.id.toString();
-  const socialType = typeof (socialAuth as GitHubUserRes).login === 'undefined'
-    ? SocialAuth.Google
-    : SocialAuth.GitHub;
-
   const social: Prisma.OAuthCreateWithoutUserInput = {
-    id: socialId,
-    type: socialType,
+    id: normalizedUser.id,
+    type: normalizedUser.type,
   };
-
-  const normalizedUser = socialType === SocialAuth.GitHub
-    ? transformGitHubUser(socialAuth as GitHubUserRes)
-    : transformGoogleUser(socialAuth as GoogleUserRes);
 
   const defaultUserSelect: Prisma.UserSelect = { id: true, email: true, username: true };
 
@@ -94,7 +85,7 @@ export async function getOrCreateUserFromSocialAuth(socialAuth: GitHubUserRes | 
         data: {
           socials: {
             connectOrCreate: {
-              where: { id: socialId },
+              where: { id: normalizedUser.id },
               create: social,
             },
           },
@@ -125,18 +116,4 @@ export async function getOrCreateUserFromSocialAuth(socialAuth: GitHubUserRes | 
   });
 
   return user as SafeUser;
-}
-
-export function transformGoogleUser(googleUser: GoogleUserRes): NormalizedUser {
-  return {
-    username: googleUser.email.split('@')[0],
-    email: googleUser.email,
-  };
-}
-
-export function transformGitHubUser(githubUser: GitHubUserRes): NormalizedUser {
-  return {
-    username: githubUser.login,
-    email: githubUser.email,
-  };
 }
