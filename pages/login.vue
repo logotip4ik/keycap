@@ -36,11 +36,11 @@ watch(user, async (value) => value && await navigateTo(`/@${value.username}`));
 </script>
 
 <template>
-  <main class="login-page">
+  <main class="auth-page">
     <form
       action="/api/user/login"
       method="POST"
-      class="login-page__form"
+      class="auth-page__form"
       @submit.prevent="login"
     >
       <input
@@ -48,55 +48,55 @@ watch(user, async (value) => value && await navigateTo(`/@${value.username}`));
         name="browserAction"
         type="checkbox"
         checked
-        class="login-page__form__hidden"
+        class="auth-page__form__hidden"
       >
 
-      <p class="login-page__form__title font-wide">
+      <p class="auth-page__form__title font-wide">
         Let's sign you in
       </p>
 
-      <div class="login-page__form__item">
+      <div class="auth-page__form__item">
         <input
           id="login-email"
           ref="emailInput"
           type="email"
           name="email"
-          class="login-page__form__item__input"
+          class="auth-page__form__item__input"
           placeholder="email"
           autocomplete="email"
         >
       </div>
 
-      <div class="login-page__form__item">
+      <div class="auth-page__form__item">
         <input
           id="login-password"
           ref="passwordInput"
           type="password"
           name="password"
-          class="login-page__form__item__input"
+          class="auth-page__form__item__input"
           placeholder="password"
           autocomplete="current-password"
         >
       </div>
 
-      <div class="login-page__form__item login-page__form__item--actions">
-        <small class="login-page__form__item__note">
+      <div class="auth-page__form__item auth-page__form__item--actions">
+        <small class="auth-page__form__item__note">
           Don't have an account?
           <NuxtLink to="/register">Register</NuxtLink>
         </small>
 
         <button
           type="submit"
-          class="login-page__form__item__button"
-          :class="{ 'login-page__form__item__button--loading': isLoading }"
+          class="auth-page__form__item__button"
+          :class="{ 'auth-page__form__item__button--loading': isLoading }"
         >
           Sign in
         </button>
 
-        <hr class="login-page__form__hr">
+        <hr class="auth-page__form__hr">
 
         <a
-          class="login-page__form__item__button login-page__form__item__button--oauth login-page__form__item__button--github"
+          class="auth-page__form__item__button auth-page__form__item__button--oauth auth-page__form__item__button--github"
           href="/api/oauth/github"
         >
           <svg width="98" height="96" viewBox="0 0 98 96" xmlns="http://www.w3.org/2000/svg">
@@ -107,7 +107,7 @@ watch(user, async (value) => value && await navigateTo(`/@${value.username}`));
         </a>
 
         <a
-          class="login-page__form__item__button login-page__form__item__button--oauth login-page__form__item__button--google"
+          class="auth-page__form__item__button auth-page__form__item__button--oauth auth-page__form__item__button--google"
           href="/api/oauth/google"
         >
           <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
@@ -124,278 +124,4 @@ watch(user, async (value) => value && await navigateTo(`/@${value.username}`));
   </main>
 </template>
 
-<style lang="scss">
-.login-page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  min-height: 100vh;
-
-  padding: 2rem 1rem;
-
-  &__form {
-    width: 95%;
-    max-width: 450px;
-
-    padding: clamp(1rem, 2vw, 2rem);
-    padding-top: min(12.5%, 9rem);
-
-    border-radius: 0.25rem;
-
-    &:focus-within {
-      .login-page__form__item__label {
-        opacity: 1;
-
-        transition: opacity .1s;
-      }
-    }
-
-    & > * + * {
-      margin-top: 1.5rem;
-    }
-
-    &__hidden {
-      display: none;
-    }
-
-    &__title {
-      font-size: 2rem;
-      font-weight: 500;
-      text-align: left;
-
-      padding-top: 1rem;
-      margin: 0 0 2.5rem 0;
-    }
-
-    &__item {
-      position: relative;
-      z-index: 1;
-
-      width: 100%;
-
-      &--actions {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        flex-direction: column;
-
-        text-align: center;
-
-        margin-top: 3.5rem;
-      }
-
-      &__label {
-        display: block;
-
-        font-size: 0.95rem;
-        font-weight: 500;
-
-        opacity: 0.75;
-
-        margin-bottom: 0.25rem;
-
-        transition: opacity 0.3s;
-      }
-
-      &__input {
-        font: inherit;
-        font-size: 1rem;
-        line-height: 1.75;
-        color: currentColor;
-
-        width: 100%;
-
-        padding: 0.75rem 0.75rem;
-
-        appearance: none;
-        border-radius: 0.5rem;
-        border: 1px solid rgba($color: grey, $alpha: 0.5);
-        background-color: transparent;
-
-        transition: border-color 0.3s;
-
-        &:is(:focus-visible, :hover) {
-          outline: none;
-
-          border-color: grey;
-
-          transition: border-color 0.1s;
-        }
-      }
-
-      &__note {
-        display: inline-block;
-
-        position: absolute;
-        bottom: calc(100% + 0.5rem);
-        left: 50%;
-        width: 100%;
-
-        max-width: 33ch;
-
-        opacity: 0.85;
-
-        transform: translateX(-50%)
-      }
-
-      &__button {
-        position: relative;
-        z-index: 1;
-
-        font: inherit;
-        font-size: 0.9rem;
-        font-weight: 600;
-        color: var(--surface-color);
-        text-decoration: none;
-        white-space: nowrap;
-
-        width: 90%;
-        max-width: 330px;
-
-        padding: 1rem 2rem;
-
-        border: none;
-        border-radius: 0.5rem;
-        outline: 1px solid transparent;
-        outline-offset: -1px;
-        background-color: var(--text-color);
-
-        cursor: pointer;
-        transition: outline .3s, outline-offset .3s;
-
-        &:focus {
-          outline-style: solid;
-        }
-
-        &:is(:hover, :focus-visible) {
-          outline-color: var(--text-color);
-          outline-offset: 0.3rem;
-
-          transition: outline-color 0.1s, outline-offset 0s;
-        }
-
-        &::after,
-        &::before {
-          content: '';
-
-          position: absolute;
-
-          opacity: 0;
-          transition: opacity .2s;
-        }
-
-        &::after {
-          inset: 0;
-          z-index: 1;
-
-          border-radius: inherit;
-          background-color: hsla(var(--text-color-hsl), 0.95);
-
-          @supports (backdrop-filter: blur(1px)) {
-            backdrop-filter: blur(2px);
-            background-color: hsla(var(--text-color-hsl), 0.5);
-          }
-        }
-
-        &::before {
-          --size: 1.5rem;
-
-          top: calc(50% - var(--size) / 2);
-          left: calc(50% - var(--size) / 2);
-          z-index: 2;
-
-          width: var(--size);
-          height: var(--size);
-
-          border-radius: 50%;
-          border: 2px solid transparent;
-          border-left-color: var(--surface-color);
-
-          animation: spin 1s infinite linear;
-        }
-
-        & + & {
-          margin-top: 1rem;
-        }
-
-        &--oauth {
-          // overwrites hover outline color
-          --text-color: hsl(var(--base-color));
-
-          display: flex;
-          justify-content: center;
-          align-items: center;
-
-          padding-block: 0.75rem;
-
-          color: var(--base-text-color, var(--text-color));
-          background-color: hsl(var(--base-color));
-          box-shadow: 0 0 1rem hsla(var(--base-color), 0.25);
-
-          svg {
-            --w: calc(1.45rem + 0.25vw);
-
-            flex-shrink: 0;
-
-            display: block;
-
-            width: 100%;
-            height: auto;
-
-            max-width: var(--w);
-
-            margin-right: calc(var(--w) / 2);
-          }
-        }
-
-        &--github {
-          --base-color: 215, 15%, 16%;
-          --base-text-color: white;
-        }
-
-        &--google {
-          --base-color: 240, 5%, 92%;
-          --base-text-color: hsl(0, 0%, 7%);
-
-          @media (prefers-color-scheme: light) {
-            --base-color: 240, 5%, 97%;
-          }
-        }
-
-        &--loading {
-          &::after,
-          &::before {
-            opacity: 1;
-          }
-
-          outline-offset: -1px !important;
-          pointer-events: none;
-        }
-      }
-    }
-
-    &__hr {
-      display: block;
-
-      height: 1px;
-      width: 92.5%;
-
-      margin: 1.5rem auto;
-
-      border: none;
-      background-color: hsla(var(--text-color-hsl), 0.5);
-      box-shadow: 0 0 0.5rem 0 hsla(var(--text-color-hsl), 0.125);
-    }
-  }
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-</style>
+<style src="~/assets/styles/auth-page.scss"></style>

@@ -38,11 +38,11 @@ watch(user, async (value) => value && await navigateTo(`/@${value.username}`));
 </script>
 
 <template>
-  <main class="register-page">
+  <main class="auth-page">
     <form
       action="/api/user/register"
       method="POST"
-      class="register-page__form"
+      class="auth-page__form"
       @submit.prevent="register"
     >
       <input
@@ -50,59 +50,59 @@ watch(user, async (value) => value && await navigateTo(`/@${value.username}`));
         name="browserAction"
         type="checkbox"
         checked
-        class="register-page__form__hidden"
+        class="auth-page__form__hidden"
       >
 
-      <p class="register-page__form__title font-wide">
+      <p class="auth-page__form__title font-wide">
         We are going to create an account for you
       </p>
 
-      <div class="register-page__form__item">
+      <div class="auth-page__form__item">
         <input
           id="register-username"
           ref="usernameInput"
           type="text"
           name="username"
-          class="register-page__form__item__input"
+          class="auth-page__form__item__input"
           placeholder="username, no spaces allowed"
           autocomplete="username"
         >
 
-        <small class="register-page__form__item__note">
+        <small class="auth-page__form__item__note auth-page__form__item__note--bottom">
           &nbsp; * this will be used as path to your notes
         </small>
       </div>
 
-      <div class="register-page__form__item">
+      <div class="auth-page__form__item">
         <input
           id="register-email"
           ref="emailInput"
           type="email"
           name="email"
-          class="register-page__form__item__input"
+          class="auth-page__form__item__input"
           placeholder="email"
           autocomplete="email"
         >
       </div>
 
-      <div class="register-page__form__item">
+      <div class="auth-page__form__item">
         <input
           id="register-password"
           ref="passwordInput"
           type="password"
           name="password"
-          class="register-page__form__item__input"
+          class="auth-page__form__item__input"
           placeholder="password"
           autocomplete="new-password"
         >
       </div>
 
-      <div class="register-page__form__item register-page__form__item--actions">
+      <div class="auth-page__form__item auth-page__form__item--actions">
         <button
           type="submit"
-          class="register-page__form__item__submit-button"
+          class="auth-page__form__item__button"
           :disabled="isLoading"
-          :class="{ 'register-page__form__item__submit-button--loading': isLoading }"
+          :class="{ 'auth-page__form__item__button--loading': isLoading }"
         >
           register
         </button>
