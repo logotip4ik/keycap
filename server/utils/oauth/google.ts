@@ -1,6 +1,4 @@
-import { randomUUID } from 'node:crypto';
 import { isProduction } from 'std-env';
-import { withQuery } from 'ufo';
 
 import type { H3Event } from 'h3';
 
@@ -14,27 +12,6 @@ export function normalizeGoogleUser(googleUser: GoogleUserRes): NormalizedSocial
     email: googleUser.email,
     type: OAuthProvider.Google,
   };
-}
-
-export function sendGoogleOAuthRedirect(event: H3Event) {
-  const { google, public: config } = useRuntimeConfig();
-
-  const state = randomUUID();
-  const protocol = isProduction ? 'https://' : 'http://';
-
-  setCookie(event, 'state', state);
-
-  return sendRedirect(event,
-    withQuery('https://accounts.google.com/o/oauth2/v2/auth', {
-      state,
-      client_id: google.clientId,
-      redirect_uri: `${protocol}${config.siteOrigin}/api/oauth/google`,
-      response_type: 'code',
-      access_type: 'online',
-      prompt: 'select_account',
-      scope: 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile',
-    }),
-  );
 }
 
 export async function getGoogleUserWithEvent(event: H3Event) {
