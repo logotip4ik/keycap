@@ -30,6 +30,9 @@ export default defineEventHandler(async (event) => {
   if (!user)
     return createError({ statusCode: 400, statusMessage: 'email or password is incorrect' });
 
+  if (!user.password)
+    return createError({ statusCode: 400, statusMessage: 'this account uses social auth' });
+
   const isPasswordValid = await verifyPassword(user.password, body.password)
     .catch(() => null);
 
