@@ -45,12 +45,14 @@ if (process.client) {
 }
 
 if (process.server) {
+  const { siteOrigin } = useRuntimeConfig().public;
+
   useSeoMeta({
     ogDescription: 'Another note taking webapp ❤. Simple, fast and purple.',
-    ogImage: `https://${process.env.SITE_ORIGIN}/og-image.webp`,
+    ogImage: `https://${siteOrigin}/og-image.webp`,
     ogImageWidth: 1200,
     ogImageHeight: 630,
-    ogUrl: `https://${process.env.SITE_ORIGIN}`,
+    ogUrl: `https://${siteOrigin}`,
     robots: { none: true },
     applicationName: 'Keycap',
     author: 'Bogdan Kostyuk',
