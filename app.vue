@@ -46,7 +46,7 @@ if (process.client) {
 
 if (process.server) {
   useSeoMeta({
-    ogDescription: 'Another note taking webapp ❤.Simple, fast and purple.',
+    ogDescription: 'Another note taking webapp ❤. Simple, fast and purple.',
     ogImage: `https://${process.env.SITE_ORIGIN}/og-image.webp`,
     ogImageWidth: 1200,
     ogImageHeight: 630,
