@@ -1,4 +1,9 @@
 export default defineEventHandler(async (event) => {
+  let user = event.context.user;
+
+  if (user)
+    return sendRedirect(event, `/@${user.username}`);
+
   const { code, state } = getQuery(event);
 
   if (!code || !state)
@@ -13,7 +18,7 @@ export default defineEventHandler(async (event) => {
   if (!githubUser)
     return sendRedirect(event, '/');
 
-  const user = await getOrCreateUserFromSocialAuth(
+  user = await getOrCreateUserFromSocialAuth(
     normalizeGitHubUser(githubUser),
   )
     .catch(() => null);
