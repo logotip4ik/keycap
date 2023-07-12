@@ -12,7 +12,7 @@
     max-width: 450px;
 
     padding: clamp(1rem, 2vw, 2rem);
-    padding-top: min(12.5%, 9rem);
+    padding-top: min(15%, 9rem);
 
     border-radius: 0.25rem;
 
@@ -55,7 +55,7 @@
 
         text-align: center;
 
-        margin-top: 3.5rem;
+        margin-top: 2.5rem;
       }
 
       &__label {
@@ -146,6 +146,7 @@
         outline: 1px solid transparent;
         outline-offset: -1px;
         background-color: var(--text-color);
+        box-shadow: 0 0 1rem hsla(var(--text-color-hsl), 0.125);
 
         cursor: pointer;
         transition: outline .3s, outline-offset .3s;
@@ -156,7 +157,7 @@
 
         &:is(:hover, :focus-visible) {
           outline-color: var(--text-color);
-          outline-offset: 0.3rem;
+          outline-offset: 0.25rem;
 
           transition: outline-color 0.1s, outline-offset 0s;
         }
@@ -217,7 +218,6 @@
 
           color: var(--base-text-color, var(--text-color));
           background-color: hsl(var(--base-color));
-          box-shadow: 0 0 1rem hsla(var(--base-color), 0.25);
 
           svg {
             --w: calc(1.45rem + 0.25vw);
@@ -245,7 +245,7 @@
           --base-text-color: hsl(0, 0%, 7%);
 
           @media (prefers-color-scheme: light) {
-            --base-color: 240, 5%, 97%;
+            --base-color: 240, 5%, 99%;
           }
         }
 
@@ -270,7 +270,7 @@
       margin: 1.5rem auto;
 
       border: none;
-      background-color: hsla(var(--text-color-hsl), 0.5);
+      background-color: hsla(var(--text-color-hsl), 0.25);
       box-shadow: 0 0 0.5rem 0 hsla(var(--text-color-hsl), 0.125);
     }
   }
