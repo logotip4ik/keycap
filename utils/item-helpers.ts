@@ -8,8 +8,12 @@ import { blankNoteName } from '~/assets/constants';
 
 type ItemWithPath = Partial<FolderOrNote> & { path: string };
 export function generateItemRouteParams(item: ItemWithPath): RouteLocationRaw {
+  const user = useUser();
+  const route = useRoute();
+
   const isFolder = 'root' in item;
 
+  const username = user.value?.username || route.params.user;
   const routeName = isFolder ? blankNoteName : (item as NoteMinimal).name;
   const routeFolders = withoutLeadingSlash(item.path)
     .split('/')
@@ -20,7 +24,7 @@ export function generateItemRouteParams(item: ItemWithPath): RouteLocationRaw {
 
   return {
     name: '@user-folders-note',
-    params: { folders: routeFolders, note: routeName },
+    params: { user: username, folders: routeFolders, note: routeName },
   };
 }
 
