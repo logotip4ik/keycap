@@ -150,8 +150,6 @@ provide(IsNoteNameEmptyKey, isNoteNameEmpty);
   grid-template-rows: auto 1fr;
 
   height: calc(var(--1vh, 1vh) * 100);
-  height: 100svh;
-  max-height: 100svh;
 
   &__navbar {
     grid-column: 1 / 1;
