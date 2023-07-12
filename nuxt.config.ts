@@ -60,6 +60,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       siteOrigin: '',
+
+      oauthEnabled: false,
     },
 
     github: {

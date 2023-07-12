@@ -2,6 +2,8 @@ import type { HTTPMethod } from 'h3';
 
 // NOTE: avg time to check auth is 0.01-0.02ms
 export default defineEventHandler(async (event) => {
+  const { oauthEnabled } = useRuntimeConfig().public;
+
   const path = event.path;
   const user = event.context.user;
 
@@ -24,6 +26,9 @@ export default defineEventHandler(async (event) => {
     if (isAuthorizedRoute)
       break;
   }
+
+  if (!oauthEnabled && path.startsWith('/api/oauth'))
+    return createError({ statusCode: 404 });
 
   if (isAuthorizedRoute && !user) {
     await removeAuthCookies(event);
