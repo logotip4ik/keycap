@@ -14,10 +14,12 @@ export default defineCachedEventHandler((event) => {
 }, {
   swr: true,
   maxAge: parseDuration('24hours', 'second'),
-  getKey: () => {
-    const { build, public: _public } = useRuntimeConfig();
+  getKey: (event) => {
+    const { build } = useRuntimeConfig();
 
-    return _public.build.commit + build.id;
+    const prefix = typeof getQuery(event)[build.id] === 'undefined' ? '' : 'guarded-';
+
+    return `${prefix}api-info`;
   },
   shouldInvalidateCache: (event) => {
     const { build } = useRuntimeConfig();
