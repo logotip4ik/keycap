@@ -23,7 +23,9 @@ export default defineCachedEventHandler((event) => {
   },
   shouldInvalidateCache: (event) => {
     const { build } = useRuntimeConfig();
+    const query = getQuery(event);
 
-    return typeof getQuery(event)[build.id] !== 'undefined';
+    return typeof query[build.id] !== 'undefined'
+      && typeof query.invalidateCache !== 'undefined';
   },
 });
