@@ -18,6 +18,11 @@ export interface PrivateBuildInfo {
   id: string
 }
 
+export interface DeviceInfo {
+  isMobileOrTablet: boolean
+  isFirefox: boolean
+}
+
 export declare module 'nuxt/schema' {
   interface RuntimeConfig {
     build: PrivateBuildInfo
