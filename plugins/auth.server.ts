@@ -7,5 +7,6 @@ export default defineNuxtPlugin({
     const user = useUser();
 
     user.value = await getUserFromEvent(event);
+    user.value.id = `${user.value.id.toString()}n`;
   },
 });
