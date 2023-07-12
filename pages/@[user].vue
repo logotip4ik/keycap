@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { blankNoteName } from '~/assets/constants';
-import breakpoints from '~/assets/constants/breakpoints';
 
 definePageMeta({
   middleware: ['auth'],
@@ -8,7 +7,6 @@ definePageMeta({
 
 const route = useRoute();
 const user = useUser();
-const { width: windowWidth } = useWindowSize();
 const { shortcuts } = useAppConfig();
 
 const currentNoteState = useCurrentNoteState();
@@ -16,11 +14,7 @@ const currentItemForDetails = useCurrentItemForDetails();
 
 const isShowingSearch = ref(false);
 
-const isSmallScreen = computed(() =>
-  process.server
-    ? parseUA(useRequestHeaders()['user-agent']).isMobileOrTablet
-    : windowWidth.value < breakpoints.tablet,
-);
+const isSmallScreen = inject(IsSmallScreenKey);
 const isNoteNameEmpty = computed(() => !route.params.note || route.params.note === blankNoteName);
 
 const currentRouteName = computed(() => {
@@ -87,7 +81,6 @@ onMounted(() => {
     window.$createToast = useToast();
 });
 
-provide(IsSmallScreenKey, isSmallScreen);
 provide(IsNoteNameEmptyKey, isNoteNameEmpty);
 </script>
 
