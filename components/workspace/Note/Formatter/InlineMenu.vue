@@ -5,11 +5,39 @@ interface Props { editor: Editor }
 defineProps<Props>();
 
 const isFallbackMode = useFallbackMode();
+const inlineMenu = ref<HTMLElement | null>(null);
+
+let prevFormatterPosition: number;
+function handleKeyboardAppear() {
+  const viewport = window.visualViewport;
+
+  if (!inlineMenu.value || !viewport)
+    return;
+
+  const formatterPosition = window.innerHeight
+      - viewport.offsetTop
+      - viewport.height;
+
+  if (formatterPosition < 1 && prevFormatterPosition < 1)
+    return;
+
+  prevFormatterPosition = formatterPosition;
+
+  inlineMenu.value.style.setProperty('--btm', `${formatterPosition.toFixed(2)}px`);
+}
+
+onMounted(() => {
+  window.visualViewport?.addEventListener('resize', handleKeyboardAppear);
+
+  onBeforeUnmount(() => {
+    window.visualViewport?.removeEventListener('resize', handleKeyboardAppear);
+  });
+});
 </script>
 
 <template>
   <Transition name="fade" appear>
-    <div v-if="!isFallbackMode" class="inline-menu formatter">
+    <div v-if="!isFallbackMode" ref="inlineMenu" class="inline-menu formatter">
       <slot />
     </div>
   </Transition>
@@ -24,7 +52,7 @@ const isFallbackMode = useFallbackMode();
   align-items: center;
 
   position: fixed;
-  bottom: 0;
+  bottom: var(--btm, 0px);
   left: 0;
   z-index: 10;
 
