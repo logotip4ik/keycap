@@ -4,8 +4,32 @@ import 'requestidlecallback-polyfill';
 
 import parseDuration from 'parse-duration';
 
+import breakpoints from 'assets/constants/breakpoints';
+
+const { width: windowWidth } = useWindowSize();
+
+// NOTE: should be removed from client bundle
+const device = process.server ? parseUA(useRequestHeaders()['user-agent']) : undefined;
+
+const isFirefox = process.server
+  ? device!.isFirefox
+  : checkIsFirefox(navigator.userAgent);
+
+const isSmallScreen = computed(() =>
+  process.server
+    ? device!.isMobileOrTablet
+    : windowWidth.value < breakpoints.tablet,
+);
+provide(IsSmallScreenKey, isSmallScreen);
+
 useHead({
   titleTemplate: (title) => title ? `${title} - Keycap` : 'Keycap - Better notes',
+  htmlAttrs: {
+    class: {
+      'firefox': isFirefox,
+      'phone-or-tablet': isSmallScreen.value,
+    },
+  },
 });
 
 if (process.client) {
