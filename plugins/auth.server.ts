@@ -7,6 +7,11 @@ export default defineNuxtPlugin({
     const user = useUser();
 
     user.value = await getUserFromEvent(event);
+
+    if (!user.value)
+      return;
+
+    // @ts-expect-error devaule still will stringify this + i hope it will not break entire production
     user.value.id = `${user.value.id.toString()}n`;
   },
 });
