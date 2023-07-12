@@ -29,7 +29,7 @@ export default defineNuxtModule({
     nuxt.options.runtimeConfig.build = privateBuildInfo;
     nuxt.options.runtimeConfig.public.build = buildInfo;
 
-    logger.info(`Unique build id: ${colors.bold(colors.cyan(privateBuildInfo.id))}`);
+    logger.info(`Unique build.id: ${colors.bold(colors.cyan(privateBuildInfo.id))}`);
   },
 });
 
