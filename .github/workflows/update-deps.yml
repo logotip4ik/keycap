@@ -2,7 +2,7 @@ name: Auto update dependencies
 
 on:
   schedule:
-    - cron: '0 2 * * *'
+    - cron: '0 2 * * 3,6'
 
 env:
   # allow yarn creating lockfile in CI environment
