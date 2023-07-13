@@ -5,13 +5,12 @@ import type { GitHubAuthRes, GitHubUserEmailRes, GitHubUserRes } from '~/types/s
 
 interface NormalizationParams { username: string }
 export function normalizeGitHubUser(githubUser: GitHubUserRes, params: NormalizationParams): NormalizedSocialUser {
-  const normalizedUser: NormalizedSocialUser = githubUser as any;
-
-  normalizedUser.id = normalizedUser.id.toString();
-  normalizedUser.username = params.username;
-  normalizedUser.type = OAuthProvider.GitHub;
-
-  return normalizedUser;
+  return {
+    id: githubUser.id.toString(),
+    email: githubUser.email,
+    username: params.username,
+    type: OAuthProvider.GitHub,
+  };
 }
 
 export async function getGitHubUserWithEvent(event: H3Event) {

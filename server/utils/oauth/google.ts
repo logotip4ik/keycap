@@ -7,12 +7,12 @@ import type { GoogleAuthRes, GoogleUserRes } from '~/types/server-google';
 
 interface NormalizationParams { username: string }
 export function normalizeGoogleUser(googleUser: GoogleUserRes, params: NormalizationParams): NormalizedSocialUser {
-  const normalizedUser: NormalizedSocialUser = googleUser as any;
-
-  normalizedUser.username = params.username;
-  normalizedUser.type = OAuthProvider.Google;
-
-  return normalizedUser;
+  return {
+    id: googleUser.id,
+    email: googleUser.email,
+    username: params.username,
+    type: OAuthProvider.Google,
+  };
 }
 
 export async function getGoogleUserWithEvent(event: H3Event) {
