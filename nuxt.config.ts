@@ -99,8 +99,8 @@ export default defineNuxtConfig({
 
     '/': { prerender: true },
     '/about': { prerender: true },
-    // '/login': { prerender: true },
-    // '/register': { prerender: true },
+
+    '/oauth/ask-username': { experimentalNoScripts: true },
   },
 
   modules: [
