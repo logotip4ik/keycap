@@ -39,13 +39,14 @@ export default defineEventHandler(async (event) => {
   }
 
   const username = query.username?.toString().trim();
+
   const isUsernameValid = username && username.length > 3 && !(await checkIfUsernameTaken(username));
 
-  // TODO: notify user that username is already taken
   if (!isUsernameValid) {
     query.provider = OAuthProvider.GitHub.toLowerCase();
     query.username = undefined;
     query.socialUser = githubUser;
+    query.usernameTaken = `${await checkIfUsernameTaken(username)}`;
 
     return sendRedirect(event,
       withQuery('/oauth/ask-username', query),
