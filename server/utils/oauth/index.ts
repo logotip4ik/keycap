@@ -38,7 +38,7 @@ export function sendOAuthRedirect(event: H3Event, provider: OAuthProviderType) {
 
     // https://developers.google.com/identity/protocols/oauth2/web-server#creatingclient
     oauthOptions.client_id = google.clientId;
-    oauthOptions.scope = 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile';
+    oauthOptions.scope = 'email';
 
     oauthOptions.response_type = 'code';
     oauthOptions.access_type = 'online';
