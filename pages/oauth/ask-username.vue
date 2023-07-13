@@ -50,6 +50,8 @@ if (!query.code || !query.provider)
           class="username-page__form__item__input"
           placeholder="username, no spaces allowed"
           autocomplete="username"
+          minlength="3"
+          required
         >
 
         <small class="username-page__form__item__note username-page__form__item__note--bottom">
