@@ -1,4 +1,7 @@
+import { destr } from 'destr';
 import { withQuery } from 'ufo';
+
+import type { GitHubUserRes } from '~/types/server-github';
 
 export default defineEventHandler(async (event) => {
   let user = event.context.user;
@@ -7,32 +10,47 @@ export default defineEventHandler(async (event) => {
     return sendRedirect(event, `/@${user.username}`);
 
   const query = getQuery(event);
+  const prisma = getPrisma();
 
-  if (!query.code || !query.state)
+  if (!query.code)
     return sendOAuthRedirect(event, OAuthProvider.GitHub);
 
   if (query.state !== getCookie(event, 'state'))
     return createError({ statusCode: 422 });
 
+  const githubUser = destr<GitHubUserRes>(query.socialUser)
+    || await getGitHubUserWithEvent(event).catch(() => null);
+
+  // TODO: better error handling
+  if (!githubUser || !githubUser.id || !githubUser.email)
+    return sendRedirect(event, '/');
+
+  if (!query.socialUser) {
+    user = await prisma.user.findFirst({
+      where: { email: githubUser.email },
+      select: { id: true, email: true, username: true },
+    });
+
+    if (user) {
+      await setAuthCookies(event, user);
+
+      return sendRedirect(event, `/@${user.username}`);
+    }
+  }
+
   const username = query.username?.toString().trim();
 
   if (!username || username.length < 3) {
-    query.provider = OAuthProvider.Google.toLowerCase();
+    query.provider = OAuthProvider.GitHub.toLowerCase();
     query.username = undefined;
+    query.socialUser = githubUser;
 
     return sendRedirect(event,
       withQuery('/oauth/ask-username', query),
     );
   }
 
-  const githubUser = await getGitHubUserWithEvent(event)
-    .catch(() => null);
-
-  // TODO: better error handling
-  if (!githubUser)
-    return sendRedirect(event, '/');
-
-  user = await getOrCreateUserFromSocialAuth(
+  user = await updateOrCreateUserFromSocialAuth(
     normalizeGitHubUser(githubUser, { username }),
   )
     .catch(() => null);
