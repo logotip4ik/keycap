@@ -1,6 +1,9 @@
 import parseDuration from 'parse-duration';
 
 export const checkIfUsernameTaken = cachedFunction(async (username: string) => {
+  if (!username)
+    return false;
+
   username = username.trim();
 
   const prisma = getPrisma();
@@ -13,5 +16,5 @@ export const checkIfUsernameTaken = cachedFunction(async (username: string) => {
   swr: true,
   maxAge: parseDuration('1 day', 'second'),
   staleMaxAge: parseDuration('2 weeks', 'second'),
-  getKey: (username: string) => `${username.trim()}-taken`,
+  getKey: (username: string) => `${username?.trim()}-taken`,
 });
