@@ -5,11 +5,12 @@ import type { H3Event } from 'h3';
 import type { NormalizedSocialUser } from '~/types/server';
 import type { GoogleAuthRes, GoogleUserRes } from '~/types/server-google';
 
-export function normalizeGoogleUser(googleUser: GoogleUserRes): NormalizedSocialUser {
+interface NormalizationParams { username: string }
+export function normalizeGoogleUser(googleUser: GoogleUserRes, params: NormalizationParams): NormalizedSocialUser {
   return {
     id: googleUser.id,
-    username: googleUser.email.split('@')[0],
     email: googleUser.email,
+    username: params.username,
     type: OAuthProvider.Google,
   };
 }
