@@ -12,6 +12,9 @@ export default defineEventHandler(async (event) => {
   const query = getQuery(event);
   const prisma = getPrisma();
 
+  if (query.error)
+    return sendRedirect(event, '/');
+
   if (!query.code)
     return sendOAuthRedirect(event, OAuthProvider.GitHub);
 
