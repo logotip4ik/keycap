@@ -53,7 +53,7 @@ export function sendOAuthRedirect(event: H3Event, provider: OAuthProviderType) {
   );
 }
 
-export async function getOrCreateUserFromSocialAuth(normalizedUser: NormalizedSocialUser) {
+export async function updateOrCreateUserFromSocialAuth(normalizedUser: NormalizedSocialUser) {
   const prisma = getPrisma();
 
   const social: Prisma.OAuthCreateWithoutUserInput = {
