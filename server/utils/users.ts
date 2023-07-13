@@ -10,6 +10,8 @@ export const checkIfUsernameTaken = cachedFunction(async (username: string) => {
 
   return !!user?.username;
 }, {
-  maxAge: parseDuration('15 minutes', 'second'),
+  swr: true,
+  maxAge: parseDuration('1 day', 'second'),
+  staleMaxAge: parseDuration('2 weeks', 'second'),
   getKey: (username: string) => `${username.trim()}-taken`,
 });
