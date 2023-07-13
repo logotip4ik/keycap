@@ -62,8 +62,8 @@ model Note {
   // for example: 
   // CREATE INDEX ON ***."Note" ("parentId") STORING (name, path); 
   // DROP INDEX ***."Note"@"Note_parentId_idx";
-  // @@index(parentId)
-  // @@index([path, ownerId])
+  @@index(parentId)
+  @@index([path, ownerId])
 }
 
 model Folder {
