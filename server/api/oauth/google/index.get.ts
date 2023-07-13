@@ -49,7 +49,7 @@ export default defineEventHandler(async (event) => {
     query.provider = OAuthProvider.Google.toLowerCase();
     query.username = undefined;
     query.socialUser = googleUser;
-    query.usernameTaken = `${await checkIfUsernameTaken(username)}`;
+    query.usernameTaken = await checkIfUsernameTaken(username) ? username : '';
 
     return sendRedirect(event,
       withQuery('/oauth/ask-username', query),

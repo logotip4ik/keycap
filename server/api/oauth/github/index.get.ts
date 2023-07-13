@@ -46,7 +46,7 @@ export default defineEventHandler(async (event) => {
     query.provider = OAuthProvider.GitHub.toLowerCase();
     query.username = undefined;
     query.socialUser = githubUser;
-    query.usernameTaken = `${await checkIfUsernameTaken(username)}`;
+    query.usernameTaken = await checkIfUsernameTaken(username) ? username : '';
 
     return sendRedirect(event,
       withQuery('/oauth/ask-username', query),
