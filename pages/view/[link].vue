@@ -3,8 +3,10 @@ import type { Note } from '@prisma/client';
 
 const route = useRoute();
 
-const { data: note, error } = await useAsyncData<Pick<Note, 'name' | 'content' | 'updatedAt' | 'createdAt'>>(
-  async () => await $fetch(`/api/share/${route.params.link}`),
+type SharedNote = Pick<Note, 'name' | 'content' | 'updatedAt' | 'createdAt'>;
+
+const { data: note, error } = await useAsyncData(
+  async () => await $fetch<SharedNote>(`/api/share/${route.params.link}`),
 );
 
 if (error.value) {
