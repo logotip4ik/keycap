@@ -55,7 +55,13 @@ if (!query.code || !query.provider)
         >
 
         <small class="username-page__form__item__note username-page__form__item__note--bottom">
-          &nbsp; * this will be used as path to your notes
+          <template v-if="!query.usernameTaken">
+            &nbsp; * this will be used as path to your notes
+          </template>
+
+          <template v-else>
+            &nbsp; "{{ query.usernameTaken }}" username is already taken
+          </template>
         </small>
       </div>
 
