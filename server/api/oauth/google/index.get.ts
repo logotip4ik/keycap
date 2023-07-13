@@ -43,8 +43,10 @@ export default defineEventHandler(async (event) => {
   }
 
   const username = query.username?.toString().trim();
+  const isUsernameValid = username && username.length > 3 && !(await checkIfUsernameTaken(username));
 
-  if (!username || username.length < 3) {
+  // TODO: notify user that username is already taken
+  if (!isUsernameValid) {
     query.provider = OAuthProvider.Google.toLowerCase();
     query.username = undefined;
     query.socialUser = googleUser;
@@ -63,7 +65,10 @@ export default defineEventHandler(async (event) => {
   if (!user)
     return sendRedirect(event, '/');
 
-  await setAuthCookies(event, user);
+  await Promise.all([
+    setAuthCookies(event, user),
+    removeFunctionCache(`${username}-taken`),
+  ]);
 
   return sendRedirect(event, `/@${user.username}`);
 });
