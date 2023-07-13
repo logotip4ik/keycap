@@ -3,13 +3,15 @@ import type { H3Event } from 'h3';
 import type { NormalizedSocialUser } from '~/types/server';
 import type { GitHubAuthRes, GitHubUserEmailRes, GitHubUserRes } from '~/types/server-github';
 
-export function normalizeGitHubUser(githubUser: GitHubUserRes): NormalizedSocialUser {
-  return {
-    id: githubUser.id.toString(),
-    username: githubUser.login,
-    email: githubUser.email,
-    type: OAuthProvider.GitHub,
-  };
+interface NormalizationParams { username: string }
+export function normalizeGitHubUser(githubUser: GitHubUserRes, params: NormalizationParams): NormalizedSocialUser {
+  const normalizedUser: NormalizedSocialUser = githubUser as any;
+
+  normalizedUser.id = normalizedUser.id.toString();
+  normalizedUser.username = params.username;
+  normalizedUser.type = OAuthProvider.GitHub;
+
+  return normalizedUser;
 }
 
 export async function getGitHubUserWithEvent(event: H3Event) {
