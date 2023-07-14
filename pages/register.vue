@@ -44,6 +44,8 @@ async function register() {
 </script>
 
 <template>
+  <NavSimple />
+
   <main class="register">
     <Form
       action="/api/user/register"

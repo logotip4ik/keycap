@@ -42,6 +42,8 @@ async function login() {
 </script>
 
 <template>
+  <NavSimple />
+
   <main class="login">
     <Form
       action="/api/user/login"

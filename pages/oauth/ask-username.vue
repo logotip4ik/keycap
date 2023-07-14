@@ -7,22 +7,9 @@ if (!query.code || !query.provider)
 </script>
 
 <template>
-  <div class="username-page">
-    <nav class="username-page__nav">
-      <NuxtLink class="username-page__nav__title font-wide" to="/">
-        <img
-          src="/favicon-32x32.png"
-          alt="purple keycap"
-          class="username-page__nav__title__img"
-          fetchpriority="high"
-          decoding="async"
-          width="32"
-          height="32"
-        >
-        Keycap
-      </NuxtLink>
-    </nav>
+  <NavSimple />
 
+  <div class="username-page">
     <form
       class="username-page__form"
       :action="`/api/oauth/${query.provider}`"
@@ -90,53 +77,6 @@ if (!query.code || !query.provider)
 
   padding: 27vh 0 0;
   margin: 0 auto;
-
-  &__nav {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: calc(3vh + 1vw);
-
-    width: 100%;
-
-    &__title {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-
-      font-size: 1.25rem;
-      font-weight: 500;
-      text-decoration: none;
-      color: var(--text-color);
-
-      margin: 0;
-
-      opacity: 0.8;
-
-      transition: opacity .3s, filter .3s;
-
-      &__img {
-        display: block;
-
-        width: 2rem;
-        height: auto;
-
-        margin-right: 0.5rem;
-        margin-bottom: 0.125rem;
-      }
-
-      &:is(:hover, :focus-visible) {
-        transition-duration: .1s;
-
-        opacity: 1;
-        filter: drop-shadow(0px 0px 0.5rem hsla(var(--text-color-hsl), 0.175));
-      }
-    }
-  }
 
   &__form {
     display: flex;

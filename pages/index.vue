@@ -9,13 +9,7 @@ const shortCommitSha = build.commit;
   <main class="index">
     <!-- TODO: actually craft landing page -->
 
-    <nav class="index__nav">
-      <div class="container">
-        <NuxtLink href="/login" class="index__nav__link">
-          Have an account ?
-        </NuxtLink>
-      </div>
-    </nav>
+    <NavLogin />
 
     <div class="container">
       <header class="index__header">
@@ -65,46 +59,9 @@ const shortCommitSha = build.commit;
     margin: 0 auto;
   }
 
-  &__nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 2;
-    isolation: isolate;
-
-    width: 100%;
-
-    padding: 2rem 1rem;
-
-    .container {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-    }
-
-    &__link {
-      font-size: max(1vw, 1rem);
-      color: hsla(var(--text-color-hsl), 1);
-      text-decoration: underline dashed 1px hsla(var(--selection-bg-color-hsl), 1);
-      text-underline-offset: 3px;
-
-      padding: 1rem 0;
-
-      transition: color .3s;
-
-      @media (hover: hover) {
-        color: hsla(var(--text-color-hsl), 0.9);
-
-        &:hover {
-          color: hsla(var(--text-color-hsl), 1);
-        }
-      }
-    }
-  }
-
   &__header {
     position: relative;
-    z-index: 1;
+    z-index: 0;
     isolation: isolate;
 
     width: 100%;
