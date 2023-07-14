@@ -41,12 +41,6 @@ async function register() {
     .catch((e) => createToast(e.data.statusMessage))
     .finally(() => isLoading.value = false);
 }
-
-function loadProviderIcon(provider: string) {
-  return defineAsyncComponent(() =>
-    import(`~/assets/svg/${provider.toLowerCase()}.svg?component`),
-  );
-}
 </script>
 
 <template>
@@ -121,8 +115,6 @@ function loadProviderIcon(provider: string) {
             :key="provider"
             :provider="provider"
           >
-            <component :is="loadProviderIcon(provider)" />
-
             Continue with {{ provider }}
           </FormButtonSocial>
         </template>

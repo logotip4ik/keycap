@@ -8,6 +8,12 @@ interface Props {
 const props = defineProps<Props>();
 
 const normalizedProvider = computed(() => props.provider.toLowerCase());
+
+const ProviderIcon = defineAsyncComponent(
+  // This works, but throws errors ¯\_(ツ)_/¯
+  // () => import(`~/assets/svg/${props.provider.toLowerCase()}.svg?component`),
+  () => import(`../../../assets/svg/${props.provider.toLowerCase()}.svg?component`),
+);
 </script>
 
 <template>
@@ -16,6 +22,8 @@ const normalizedProvider = computed(() => props.provider.toLowerCase());
     :class="[`form__button--${normalizedProvider}`]"
     :href="`/api/oauth/${normalizedProvider}`"
   >
+    <ProviderIcon />
+
     <slot />
   </a>
 </template>
