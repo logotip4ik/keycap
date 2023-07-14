@@ -73,7 +73,6 @@ const shortCommitSha = build.commit;
 
     &::after {
       --appear-animation: appear 2s 1.5s ease-out forwards;
-
       --size: 20vmin;
       --blur-divider: 1.75;
 
