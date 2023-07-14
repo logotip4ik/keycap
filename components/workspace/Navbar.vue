@@ -37,34 +37,34 @@ const folderRootPath = computed(() => {
 </script>
 
 <template>
-  <nav class="nav">
-    <Transition name="nav-back-button">
+  <nav class="navbar">
+    <Transition name="navbar-back-button">
       <NuxtLink
         v-show="isShowingBackButton"
-        class="nav__button nav__button--back"
+        class="navbar__button navbar__button--back"
         :href="folderRootPath"
       >
-        <Icon name="ic:baseline-arrow-back" class="nav__button__icon" />
+        <Icon name="ic:baseline-arrow-back" class="navbar__button__icon" />
       </NuxtLink>
     </Transition>
 
     <!-- TODO: tell somehow user that, red indicator means no internet connection -->
-    <p class="nav__heading" :data-note-state="currentNoteState" :data-network-connection="!isFallbackMode">
+    <p class="navbar__heading" :data-note-state="currentNoteState" :data-network-connection="!isFallbackMode">
       {{ headingText }}
     </p>
 
     <button
-      class="nav__button nav__button--search"
+      class="navbar__button navbar__button--search"
       :data-show-back-button="isShowingBackButton"
       @click="onOpenSearch"
     >
-      <Icon name="search" class="nav__button__icon" />
+      <Icon name="search" class="navbar__button__icon" />
     </button>
   </nav>
 </template>
 
 <style lang="scss">
-.nav {
+.navbar {
   display: flex;
   justify-content: flex-between;
   align-items: center;
@@ -198,14 +198,14 @@ const folderRootPath = computed(() => {
   }
 }
 
-.nav-back-button-enter-active,
-.nav-back-button-leave-active {
+.navbar-back-button-enter-active,
+.navbar-back-button-leave-active {
   transition: opacity, transform, margin-right;
   transition-duration: 0.25s;
 }
 
-.nav-back-button-leave-to,
-.nav-back-button-enter-from {
+.navbar-back-button-leave-to,
+.navbar-back-button-enter-from {
   --inverted-size: calc(-1 * var(--button-size-basis));
 
   margin-right: var(--inverted-size);
