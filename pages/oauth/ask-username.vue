@@ -43,11 +43,11 @@ if (!query.code || !query.provider)
 
         <small class="username-page__form__item__note username-page__form__item__note--bottom">
           <template v-if="!query.usernameTaken">
-            &nbsp; * this will be used as path to your notes
+            &nbsp;* this will be used as path to your notes
           </template>
 
           <template v-else>
-            &nbsp; "{{ query.usernameTaken }}" username is already taken
+            &nbsp;"{{ query.usernameTaken }}" username is already taken
           </template>
         </small>
       </div>
@@ -210,6 +210,7 @@ if (!query.code || !query.provider)
   }
 
   &::after {
+    --appear-animation: appear 2s 1.5s ease-out forwards;
     --size: 20vmin;
     --blur-divider: 1.75;
 
@@ -226,16 +227,26 @@ if (!query.code || !query.provider)
     border-radius: 50%;
     background-color: var(--loading-indicator-color);
 
+    animation: var(--appear-animation);
     filter: blur(calc(var(--size) / var(--blur-divider)));
 
     @media (prefers-reduced-motion: no-preference) {
-      animation: blob-anim 20s infinite linear alternate;
+      animation: var(--appear-animation), blob-anim 20s infinite linear alternate;
     }
 
     @media screen and (max-width: $breakpoint-tablet) {
       --size: 30vmin;
       --blur-divider: 2;
     }
+  }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
