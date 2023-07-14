@@ -10,7 +10,7 @@
 
   color: hsla(var(--text-color-hsl), 0.75);
 
-  max-width: 33ch;
+  max-width: 37ch;
 
   margin-block: 0.25rem;
 }
