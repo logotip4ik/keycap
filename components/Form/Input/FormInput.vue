@@ -8,13 +8,11 @@ interface Props {
   minlength: string | number
   pattern?: string
   required?: boolean
-  hiddenToggle?: boolean
   value?: string
   onUpdateValue?: (text: string) => any
 }
 
 withDefaults(defineProps<Props>(), {
-  hiddenToggle: false,
   required: true,
 });
 </script>
