@@ -7,22 +7,22 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const normalizedProvider = computed(() => props.provider.toLowerCase());
+const providerIcons: Record<OAuthProvider, ReturnType<typeof defineAsyncComponent>> = {
+  GitHub: defineAsyncComponent(() => import('~/assets/svg/github.svg?component')),
+  Google: defineAsyncComponent(() => import('~/assets/svg/google.svg?component')),
+};
 
-const ProviderIcon = defineAsyncComponent(
-  // This works, but throws errors ¯\_(ツ)_/¯
-  // () => import(`~/assets/svg/${props.provider.toLowerCase()}.svg?component`),
-  () => import(`../../../assets/svg/${props.provider.toLowerCase()}.svg?component`),
-);
+const providerIcon = computed(() => providerIcons[props.provider]);
+const lowercaseProvider = computed(() => props.provider.toLowerCase());
 </script>
 
 <template>
   <a
     class="form__button form__button--social"
-    :class="[`form__button--${normalizedProvider}`]"
-    :href="`/api/oauth/${normalizedProvider}`"
+    :class="[`form__button--${lowercaseProvider}`]"
+    :href="`/api/oauth/${lowercaseProvider}`"
   >
-    <ProviderIcon />
+    <component :is="providerIcon" />
 
     <slot />
   </a>
