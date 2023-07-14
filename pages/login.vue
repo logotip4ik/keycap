@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import GithubIcon from '~/assets/svg/github.svg';
-import GoogleIcon from '~/assets/svg/google.svg';
-
-import type { SafeUser } from '~/types/server';
+import type { OAuthProvider, SafeUser } from '~/types/server';
 
 definePageMeta({
   middleware: ['redirect-dashboard'],
@@ -12,15 +9,21 @@ const { oauthEnabled } = useRuntimeConfig().public;
 const user = useUser();
 const createToast = useToast();
 
-const emailInput = ref<HTMLInputElement | null>(null);
-const passwordInput = ref<HTMLInputElement | null>(null);
+const email = ref<string>('');
+const password = ref<string>('');
 
 const isLoading = ref(false);
 
+const providers: OAuthProvider[] = ['GitHub', 'Google'];
+
+watch(user, async (value) =>
+  value && await navigateTo(`/@${value.username}`),
+);
+
 async function login() {
   const data = {
-    email: emailInput.value!.value,
-    password: passwordInput.value!.value,
+    email: email.value,
+    password: password.value,
   };
 
   if (!data.email || !data.password)
@@ -36,91 +39,92 @@ async function login() {
     .finally(() => isLoading.value = false);
 }
 
-watch(user, async (value) => value && await navigateTo(`/@${value.username}`));
+function loadProviderIcon(provider: string) {
+  return defineAsyncComponent(() =>
+    import(`~/assets/svg/${provider.toLowerCase()}.svg?component`),
+  );
+}
 </script>
 
 <template>
-  <main class="auth-page">
-    <form
+  <main class="login">
+    <Form
       action="/api/user/login"
       method="POST"
-      class="auth-page__form"
       @submit.prevent="login"
     >
-      <input
+      <FormHiddenValue
         id="browserAction"
         name="browserAction"
         type="checkbox"
-        checked
-        class="auth-page__form__hidden"
-      >
+        :value="true"
+      />
 
-      <p class="auth-page__form__title font-wide">
+      <FormTitle>
         Let's sign you in
-      </p>
+      </FormTitle>
 
-      <div class="auth-page__form__item">
-        <input
-          id="login-email"
-          ref="emailInput"
+      <FormItem>
+        <FormInput
+          id="email"
           type="email"
           name="email"
-          class="auth-page__form__item__input"
           placeholder="email"
           autocomplete="email"
-        >
-      </div>
+          minlength="5"
+          :value="email"
+          @update-value="email = $event"
+        />
+      </FormItem>
 
-      <div class="auth-page__form__item">
-        <input
-          id="login-password"
-          ref="passwordInput"
+      <FormItem>
+        <FormInput
+          id="password"
           type="password"
           name="password"
-          class="auth-page__form__item__input"
           placeholder="password"
           autocomplete="current-password"
-        >
-      </div>
+          minlength="8"
+          :value="password"
+          @update-value="password = $event"
+        />
+      </FormItem>
 
-      <div class="auth-page__form__item auth-page__form__item--actions">
-        <small class="auth-page__form__item__note">
+      <FormItem actions>
+        <FormInputNote>
           Don't have an account?
-          <NuxtLink to="/register">Register</NuxtLink>
-        </small>
+          <NuxtLink to="/register">
+            Register
+          </NuxtLink>
+        </FormInputNote>
 
-        <button
+        <FormButton
           type="submit"
-          class="auth-page__form__item__button"
-          :class="{ 'auth-page__form__item__button--loading': isLoading }"
+          :loading="isLoading"
         >
           Sign in
-        </button>
+        </FormButton>
 
         <template v-if="oauthEnabled">
-          <hr class="auth-page__form__hr">
+          <FormHr />
 
-          <a
-            class="auth-page__form__item__button auth-page__form__item__button--oauth auth-page__form__item__button--github"
-            href="/api/oauth/github"
+          <FormButtonSocial
+            v-for="provider in providers"
+            :key="provider"
+            :provider="provider"
           >
-            <GithubIcon />
+            <component :is="loadProviderIcon(provider)" />
 
-            Continue with GitHub
-          </a>
-
-          <a
-            class="auth-page__form__item__button auth-page__form__item__button--oauth auth-page__form__item__button--google"
-            href="/api/oauth/google"
-          >
-            <GoogleIcon />
-
-            Continue with Google
-          </a>
+            Continue with {{ provider }}
+          </FormButtonSocial>
         </template>
-      </div>
-    </form>
+      </FormItem>
+    </Form>
   </main>
 </template>
 
-<style src="~/assets/styles/auth-page.scss"></style>
+<style>
+.login {
+  padding-top: 22.5vh;
+}
+</style>
