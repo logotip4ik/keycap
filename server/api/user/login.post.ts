@@ -4,7 +4,7 @@ export default defineEventHandler(async (event) => {
   const isOriginMismatch = checkOriginForMismatch(event);
 
   if (isOriginMismatch)
-    return createError({ statusCode: 403 });
+    throw createError({ statusCode: 403 });
 
   const body = await readBody(event) || {};
 
@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
   const validation = useLoginValidation(body);
 
   if (!validation.ok) {
-    return createError({
+    throw createError({
       statusCode: 400,
       statusMessage: `${validation.errors[0].dataPath.split('.').at(-1)} ${validation.errors[0].message}`,
     });
@@ -28,19 +28,19 @@ export default defineEventHandler(async (event) => {
   }).catch(() => null);
 
   if (!user)
-    return createError({ statusCode: 400, statusMessage: 'email or password is incorrect' });
+    throw createError({ statusCode: 400, statusMessage: 'email or password is incorrect' });
 
   if (!user.password)
-    return createError({ statusCode: 400, statusMessage: 'this account uses social auth' });
+    throw createError({ statusCode: 400, statusMessage: 'this account uses social auth' });
 
   const isPasswordValid = await verifyPassword(user.password, body.password)
     .catch(() => null);
 
   if (isPasswordValid === null)
-    return createError({ statusCode: 500 });
+    throw createError({ statusCode: 500 });
 
   if (isPasswordValid === false)
-    return createError({ statusCode: 400, statusMessage: 'email or password is incorrect' });
+    throw createError({ statusCode: 400, statusMessage: 'email or password is incorrect' });
 
   const safeUser: SafeUser = { id: user.id, username: user.username, email: user.email };
 

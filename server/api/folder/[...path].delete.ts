@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
   const path = getRouterParam(event, 'path');
 
   if (!path)
-    return createError({ statusCode: 400 });
+    throw createError({ statusCode: 400 });
 
   const folderPath = generateFolderPath(user.username, path);
 
@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
   timer.end();
 
   if (!folder)
-    return createError({ statusCode: 400 });
+    throw createError({ statusCode: 400 });
 
   timer.appendHeader(event);
 

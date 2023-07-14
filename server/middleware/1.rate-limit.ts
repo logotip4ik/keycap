@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
     const used = await rateLimit(LIMIT, identifier!).catch(() => LIMIT + LIMIT);
 
     if (used > LIMIT) {
-      return createError({
+      throw createError({
         statusCode: 429,
         statusMessage: 'Too many requests',
       });

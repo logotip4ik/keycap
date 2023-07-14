@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
     return sendOAuthRedirect(event, OAuthProvider.Google);
 
   if (query.state !== getCookie(event, 'state'))
-    return createError({ statusCode: 422 });
+    throw createError({ statusCode: 422 });
 
   const googleUser = destr<GoogleUserRes>(query.socialUser)
       || await getGoogleUserWithEvent(event).catch(() => null);

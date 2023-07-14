@@ -34,7 +34,7 @@ export default defineEventHandler(async (event) => {
   timer.end();
 
   if (!notes || !folders)
-    return createError({ statusCode: 400 });
+    throw createError({ statusCode: 400 });
 
   timer.appendHeader(event);
 

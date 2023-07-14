@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
   timer.end();
 
   if (!folder)
-    return createError({ statusCode: 404 });
+    throw createError({ statusCode: 404 });
 
   timer.appendHeader(event);
 

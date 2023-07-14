@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
   const path = getRouterParam(event, 'path');
 
   if (!path)
-    return createError({ statusCode: 400 });
+    throw createError({ statusCode: 400 });
 
   const body = await readBody<TypeOf<typeof noteCreateSchema>>(event) || {};
 
@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
   const validation = useNoteCreateValidation(body);
 
   if (!validation.ok) {
-    return createError({
+    throw createError({
       statusCode: 400,
       statusMessage: `${validation.errors[0].dataPath.split('.').at(-1)} ${validation.errors[0].message}`,
     });
@@ -41,7 +41,7 @@ export default defineEventHandler(async (event) => {
   timer.end();
 
   if (!note)
-    return createError({ statusCode: 400 });
+    throw createError({ statusCode: 400 });
 
   timer.appendHeader(event);
 
