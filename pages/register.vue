@@ -125,6 +125,6 @@ async function register() {
 
 <style>
 .register {
-  padding-top: 15vh;
+  padding-top: 17.5vh;
 }
 </style>
