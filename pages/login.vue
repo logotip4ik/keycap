@@ -24,7 +24,7 @@ watch(user, async (value) =>
 async function login() {
   const data = {
     email: emailComponent.value?.$el.value,
-    password: emailComponent.value?.$el.value,
+    password: passwordComponent.value?.$el.value,
   };
 
   if (!data.email || !data.password)
