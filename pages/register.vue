@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { ComponentPublicInstance } from 'vue';
 import type { OAuthProvider, SafeUser } from '~/types/server';
 
 definePageMeta({
@@ -9,9 +10,9 @@ const { oauthEnabled } = useRuntimeConfig().public;
 const user = useUser();
 const createToast = useToast();
 
-const username = ref<string>('');
-const email = ref<string>('');
-const password = ref<string>('');
+const usernameComponent = ref<ComponentPublicInstance<HTMLInputElement> | null>(null);
+const emailComponent = ref<ComponentPublicInstance<HTMLInputElement> | null>(null);
+const passwordComponent = ref<ComponentPublicInstance<HTMLInputElement> | null>(null);
 
 const isLoading = ref(false);
 
@@ -23,9 +24,9 @@ watch(user, async (value) =>
 
 async function register() {
   const data = {
-    username: username.value,
-    email: email.value,
-    password: password.value,
+    username: usernameComponent.value?.$el.value,
+    email: emailComponent.value?.$el.value,
+    password: passwordComponent.value?.$el.value,
   };
 
   if (!data.username || !data.email || !data.password)
@@ -69,14 +70,13 @@ function loadProviderIcon(provider: string) {
       <FormItem>
         <FormInput
           id="username"
+          ref="usernameComponent"
           type="text"
           name="username"
           placeholder="username (no spaces allowed)"
           autocomplete="username"
           minlength="3"
           pattern="[\w,.-]+?"
-          :value="username"
-          @update-value="username = $event"
         />
 
         <FormInputNote>
@@ -87,26 +87,24 @@ function loadProviderIcon(provider: string) {
       <FormItem>
         <FormInput
           id="email"
+          ref="emailComponent"
           type="email"
           name="email"
           placeholder="email"
           autocomplete="email"
           minlength="5"
-          :value="email"
-          @update-value="email = $event"
         />
       </FormItem>
 
       <FormItem>
         <FormInput
           id="password"
+          ref="passwordComponent"
           type="password"
           name="password"
           placeholder="password"
           autocomplete="new-password"
           minlength="8"
-          :value="password"
-          @update-value="password = $event"
         />
       </FormItem>
 

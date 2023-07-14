@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { ComponentPublicInstance } from 'vue';
 import type { OAuthProvider, SafeUser } from '~/types/server';
 
 definePageMeta({
@@ -9,8 +10,8 @@ const { oauthEnabled } = useRuntimeConfig().public;
 const user = useUser();
 const createToast = useToast();
 
-const email = ref<string>('');
-const password = ref<string>('');
+const emailComponent = ref<ComponentPublicInstance<HTMLInputElement> | null>(null);
+const passwordComponent = ref<ComponentPublicInstance<HTMLInputElement> | null>(null);
 
 const isLoading = ref(false);
 
@@ -22,9 +23,8 @@ watch(user, async (value) =>
 
 async function login() {
   const data = {
-    // TODO: check if firefox autocomplete still works
-    email: email.value,
-    password: password.value,
+    email: emailComponent.value?.$el.value,
+    password: emailComponent.value?.$el.value,
   };
 
   if (!data.email || !data.password)
@@ -68,26 +68,24 @@ function loadProviderIcon(provider: string) {
       <FormItem>
         <FormInput
           id="email"
+          ref="emailComponent"
           type="email"
           name="email"
           placeholder="email"
           autocomplete="email"
           minlength="5"
-          :value="email"
-          @update-value="email = $event"
         />
       </FormItem>
 
       <FormItem>
         <FormInput
           id="password"
+          ref="passwordComponent"
           type="password"
           name="password"
           placeholder="password"
           autocomplete="current-password"
           minlength="8"
-          :value="password"
-          @update-value="password = $event"
         />
       </FormItem>
 
