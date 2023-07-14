@@ -15,7 +15,7 @@
   
   --surface-color-hsl: var(--hsl-primary-color), 10%, 99%;
   --text-color-hsl: var(--hsl-primary-color), 5%, 13%;
-  --selection-bg-color-hsl: var(--hsl-primary-color), 65%, 75%; // NOTE: maybe change color
+  --selection-bg-color-hsl: var(--hsl-primary-color), 65%, 85%; // NOTE: maybe change color
   
   --surface-color: hsl(var(--surface-color-hsl));
   --text-color: hsl(var(--text-color-hsl));
@@ -27,7 +27,7 @@
     
     --surface-color-hsl: var(--hsl-primary-color), 7%, 7%;
     --text-color-hsl: var(--hsl-primary-color), 5%, 92%;
-    --selection-bg-color-hsl: var(--hsl-primary-color), 35%, 40%;
+    --selection-bg-color-hsl: var(--hsl-primary-color), 35%, 35%;
   }
 }
 
