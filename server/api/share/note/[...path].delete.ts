@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
 
   // NOTE: there is no point from removing cached page because website is hosted on vercel
 
-  const error = await prisma.$transaction(async (tx) => {
+  await prisma.$transaction(async (tx) => {
     const shareToDelete = await tx.share.findFirst({
       where: {
         owner: { id: user.id },
@@ -35,9 +35,6 @@ export default defineEventHandler(async (event) => {
     if (!deletedShare)
       throw createError({ statusCode: 400 });
   });
-
-  if (error)
-    return error;
 
   timer.end();
 
