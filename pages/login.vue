@@ -22,6 +22,7 @@ watch(user, async (value) =>
 
 async function login() {
   const data = {
+    // TODO: check if firefox autocomplete still works
     email: email.value,
     password: password.value,
   };
