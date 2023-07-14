@@ -1,16 +1,20 @@
 <script setup lang="ts">
+import type { OAuthProvider } from 'types/server';
+
 interface Props {
-  provider: 'github' | 'google'
+  provider: OAuthProvider
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
+
+const normalizedProvider = computed(() => props.provider.toLowerCase());
 </script>
 
 <template>
   <a
     class="form__button form__button--social"
-    :class="[`form__button--${provider}`]"
-    :href="`/api/oauth/${provider}`"
+    :class="[`form__button--${normalizedProvider}`]"
+    :href="`/api/oauth/${normalizedProvider}`"
   >
     <slot />
   </a>
