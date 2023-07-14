@@ -6,7 +6,7 @@
 
 <style lang="scss">
 .form__title {
-  font-size: calc(1.25rem + 1vw);
+  font-size: min(calc(1.5rem + 0.75vw), 2rem);
   font-weight: 500;
   text-align: left;
 
