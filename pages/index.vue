@@ -12,22 +12,24 @@ const shortCommitSha = build.commit;
     <NavLogin />
 
     <div class="container">
-      <header class="index__header">
-        <small class="index__header__alert">
-          <Icon name="mi:warning" class="index__header__alert__icon" />
-          In development
-        </small>
+      <WithBlob v-slot="props">
+        <header class="index__header" v-bind="props">
+          <small class="index__header__alert">
+            <Icon name="mi:warning" class="index__header__alert__icon" />
+            In development
+          </small>
 
-        <h1 class="index__header__title font-wide">
-          Keycap
-        </h1>
+          <h1 class="index__header__title font-wide">
+            Keycap
+          </h1>
 
-        <p class="index__header__subtitle">
-          Another note taking webapp ❤.
-          <br>
-          Simple, fast and purple.
-        </p>
-      </header>
+          <p class="index__header__subtitle">
+            Another note taking webapp ❤.
+            <br>
+            Simple, fast and purple.
+          </p>
+        </header>
+      </WithBlob>
     </div>
 
     <p class="index__build-info">
@@ -70,38 +72,6 @@ const shortCommitSha = build.commit;
     margin: 0 auto;
     padding-top: 30vh;
     padding-top: 30svh;
-
-    &::after {
-      --appear-animation: appear 2s 1.5s ease-out forwards;
-      --size: 20vmin;
-      --blur-divider: 1.75;
-
-      content: "";
-
-      position: absolute;
-      top: 75%;
-      right: 7.5%;
-      z-index: -1;
-
-      width: var(--size);
-      height: var(--size);
-
-      border-radius: 50%;
-      background-color: var(--loading-indicator-color);
-
-      opacity: 0;
-      animation: var(--appear-animation);
-      filter: blur(calc(var(--size) / var(--blur-divider)));
-
-      @media (prefers-reduced-motion: no-preference) {
-        animation:  var(--appear-animation), blob-anim 20s infinite linear alternate;
-      }
-
-      @media screen and (max-width: $breakpoint-tablet) {
-        --size: 30vmin;
-        --blur-divider: 2;
-      }
-    }
 
     &__alert {
       display: inline-block;
@@ -167,52 +137,6 @@ const shortCommitSha = build.commit;
       border-radius: 0.25rem;
       background-color: hsla(var(--selection-bg-color-hsl), 0.25)
     }
-  }
-}
-
-@keyframes appear {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes blob-anim {
-  0% {
-    width: 20vmin;
-    height: 20vmin;
-
-    transform: translate(0px, 0px) rotate(0deg);
-  }
-
-  25% {
-    width: 25vmin;
-    height: 20vmin;
-
-    transform: translate(1vmax, 0px) rotate(0deg);
-  }
-
-  50% {
-    width: 25vmin;
-    height: 30vmin;
-
-    transform: translate(0.5vmax -1vmax) rotate(0deg);
-  }
-
-  75% {
-    width: 20vmin;
-    height: 22.5vmin;
-
-    transform: translate(-1vmax, 1vmax) rotate(0deg);
-  }
-
-  100% {
-    width: 25vmin;
-    height: 21.5vmin;
-
-    transform: translate(-0.5vmax, 0.25vmax) rotate(0deg);
   }
 }
 </style>
