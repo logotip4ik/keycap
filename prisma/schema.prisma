@@ -5,6 +5,17 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// generator kysely {
+//   provider = "prisma-kysely"
+
+//   // Optionally provide a destination directory for the generated file
+//   // and a filename of your choice
+//   output = "../kysely"
+//   // Optionally generate runtime enums to a separate file
+//   enumFileName = "enums.ts"
+//   camelCase = true
+// }
+
 datasource db {
   provider = "cockroachdb"
   url      = env("DATABASE_URL")
