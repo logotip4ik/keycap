@@ -8,7 +8,12 @@ withDefaults(defineProps<Props>(), { loading: false });
 </script>
 
 <template>
-  <button :type="type" class="form__button" :class="{ 'form__button--loading': loading }">
+  <button
+    class="form__button"
+    :type="type"
+    :class="{ 'form__button--loading': loading }"
+    :disabled="loading"
+  >
     <slot />
   </button>
 </template>
