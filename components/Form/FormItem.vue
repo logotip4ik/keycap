@@ -19,6 +19,10 @@ withDefaults(defineProps<Props>(), { actions: false });
 
   width: 100%;
 
+  & + & {
+    margin-top: 1.25rem;
+  }
+
   &--actions {
     display: flex;
     justify-content: flex-start;
@@ -27,11 +31,7 @@ withDefaults(defineProps<Props>(), { actions: false });
 
     text-align: center;
 
-    margin-top: 2.5rem;
-  }
-
-  & + & {
-    margin-top: 1.25rem;
+    margin-top: 2.5rem !important;
   }
 
   &:focus-within {
