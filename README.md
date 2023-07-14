@@ -31,8 +31,8 @@ After months of usage windows and android phone, i found out that notes aren't s
 
 ## Notes
 
-- [prisma vs drizzle (my benchmark)](https://github.com/logotip4ik/keycap/tree/feat/drizzle-orm/benchmarks/prisma-vs-drizzle)    
+- [prisma vs drizzle (my benchmark)](./benchmarks/prisma-vs-drizzle/README.md)    
   tldr: prisma even manages to beat drizzle in some queries (at least on my local machine)
 
-- [prisma vs kysely (my benchmark)](https://github.com/logotip4ik/keycap/tree/feat/kysely/benchmarks/prisma-vs-kysely)    
+- [prisma vs kysely (my benchmark)](./benchmarks/prisma-vs-kysely/README.md)    
   tldr: in queries without joins prisma is not that far, but in larger queries, kysely has usually more than 100 ops/s difference
