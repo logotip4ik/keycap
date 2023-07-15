@@ -176,9 +176,7 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
     <div v-if="!isEditingLink" class="formatter__contents-wrapper">
       <button
         class="formatter__button"
-        :class="{
-          'formatter__button--active': editor.isActive('heading'),
-        }"
+        :class="{ 'formatter__button--active': editor.isActive('heading') }"
         @click="toggleHeading"
       >
         <IconHeading1 v-if="editor.isActive('heading', { level: 1 })" />
