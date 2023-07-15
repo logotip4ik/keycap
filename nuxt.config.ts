@@ -12,6 +12,12 @@ const ISRDuration = parseDuration('15 minutes', 'second');
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
+  $development: {
+    modules: [
+      '@nuxtjs/html-validator',
+    ],
+  },
+
   app: {
     head: {
       htmlAttrs: { translate: 'no', lang: 'en' },
@@ -105,11 +111,11 @@ export default defineNuxtConfig({
   },
 
   modules: [
-    '@vueuse/nuxt',
     'nuxt-icon',
+    '@vueuse/nuxt',
+    '@vite-pwa/nuxt',
     '@nuxtjs/fontaine',
     'unplugin-ltsdi/nuxt',
-    '@vite-pwa/nuxt',
   ],
 
   css: [
@@ -216,6 +222,20 @@ export default defineNuxtConfig({
     injectManifest: {
       globPatterns: ['**/*.{js,json,css,html,txt,svg,png,ico,webp,woff,woff2,ttf,eot,otf,wasm}'],
       globIgnores: ['**.webmanifest', 'register', 'login', 'sw.js', 'index.html'],
+    },
+  },
+
+  // @ts-expect-error dev only
+  htmlValidator: {
+    logLevel: 'error',
+    failOnError: true,
+    options: {
+      rules: {
+        'wcag/h37': 'warn',
+        'element-permitted-content': 'warn',
+        'element-required-attributes': 'warn',
+        'attribute-empty-style': 'off',
+      },
     },
   },
 });
