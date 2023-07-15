@@ -57,6 +57,7 @@ if (process.server) {
     robots: { none: true },
     applicationName: 'Keycap',
     author: 'Bogdan Kostyuk',
+    twitterCard: 'summary',
   }, { mode: 'server' });
 
   useHead({
