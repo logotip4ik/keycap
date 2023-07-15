@@ -139,8 +139,9 @@ onBeforeUnmount(() => {
     0px 30px 80px rgba(0, 0, 0, 0.05);
 
   @supports (backdrop-filter: blur(1px)) {
-    background-color: hsla(var(--selection-bg-color-hsl), 0.15);
-    backdrop-filter: blur(6px);
+    background-color: hsla(var(--selection-bg-color-hsl), 0.25);
+
+    backdrop-filter: blur(0.75rem);
   }
 
   &__item {
