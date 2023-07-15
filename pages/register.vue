@@ -64,6 +64,10 @@ async function register() {
       </FormTitle>
 
       <FormItem>
+        <FormLabel target="username">
+          Username
+        </FormLabel>
+
         <FormInput
           id="username"
           ref="usernameComponent"
@@ -81,6 +85,10 @@ async function register() {
       </FormItem>
 
       <FormItem>
+        <FormLabel target="email">
+          Email
+        </FormLabel>
+
         <FormInput
           id="email"
           ref="emailComponent"
@@ -93,6 +101,10 @@ async function register() {
       </FormItem>
 
       <FormItem>
+        <FormLabel target="password">
+          Password
+        </FormLabel>
+
         <FormInput
           id="password"
           ref="passwordComponent"

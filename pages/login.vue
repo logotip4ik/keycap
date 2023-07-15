@@ -62,6 +62,10 @@ async function login() {
       </FormTitle>
 
       <FormItem>
+        <FormLabel target="email">
+          Email
+        </FormLabel>
+
         <FormInput
           id="email"
           ref="emailComponent"
@@ -74,6 +78,10 @@ async function login() {
       </FormItem>
 
       <FormItem>
+        <FormLabel target="password">
+          Password
+        </FormLabel>
+
         <FormInput
           id="password"
           ref="passwordComponent"

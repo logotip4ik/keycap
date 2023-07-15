@@ -35,6 +35,10 @@ const notEmptyQuery = Object.fromEntries(
         </FormTitle>
 
         <FormItem>
+          <FormLabel target="username">
+            Username
+          </FormLabel>
+
           <FormInput
             id="username"
             ref="usernameInput"
@@ -57,7 +61,7 @@ const notEmptyQuery = Object.fromEntries(
           </FormInputNote>
         </FormItem>
 
-        <FormItem class="form__actions" actions>
+        <FormItem actions>
           <FormButton type="submit">
             Submit
           </FormButton>
