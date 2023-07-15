@@ -21,6 +21,7 @@ const isSmallScreen = computed(() =>
     : windowWidth.value < breakpoints.tablet,
 );
 provide(IsSmallScreenKey, isSmallScreen);
+provide(IsFirefoxKey, isFirefox);
 
 useHead({
   titleTemplate: (title) => title ? `${title} - Keycap` : 'Keycap - Better notes',
