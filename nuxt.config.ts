@@ -225,7 +225,6 @@ export default defineNuxtConfig({
     },
   },
 
-  // @ts-expect-error dev only
   htmlValidator: {
     logLevel: 'error',
     failOnError: true,
