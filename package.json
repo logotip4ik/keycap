@@ -17,9 +17,9 @@
     "@types/lambda-rate-limiter": "^3.0.0",
     "@types/node": "^18.16.19",
     "@types/sanitize-html": "^2.9.0",
-    "eslint": "8.44.0",
+    "eslint": "8.45.0",
     "normalize.css": "^8.0.1",
-    "nuxt": "^3.6.2",
+    "nuxt": "^3.6.3",
     "nuxt-icon": "^0.4.2",
     "prisma": "^5.0.0",
     "sass": "^1.63.6",
@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@node-rs/bcrypt": "^1.7.1",
-    "@nuxt/kit": "^3.6.2",
+    "@nuxt/kit": "^3.6.3",
     "@prisma/client": "^5.0.0",
     "@superhuman/command-score": "^0.5.0",
     "@tiptap/core": "^2.1.0-rc.11",
@@ -85,7 +85,7 @@
   "packageManager": "yarn@3.6.1",
   "resolutions": {
     "vite": "^4.4.1",
-    "nuxt": "patch:nuxt@npm%3A3.6.2#./.yarn/patches/nuxt-npm-3.5.1-37f7512905.patch",
+    "nuxt": "patch:nuxt@npm%3A3.6.3#./.yarn/patches/nuxt-npm-3.5.1-37f7512905.patch",
     "@tiptap/core": "patch:@tiptap/core@npm%3A2.1.0-rc.11#./.yarn/patches/@tiptap-core-npm-2.1.0-rc.8-6143bce536.patch",
     "requestidlecallback-polyfill": "patch:requestidlecallback-polyfill@npm%3A1.0.2#./.yarn/patches/requestidlecallback-polyfill-npm-1.0.2-4af034bcd4.patch"
   },
