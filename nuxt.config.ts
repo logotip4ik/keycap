@@ -184,6 +184,7 @@ export default defineNuxtConfig({
         family: 'Mona Sans',
         src: '/fonts/Mona-Sans/Mona-Sans.woff2',
         root: 'assets',
+        fallbacks: ['Arial'],
       },
     ],
   },
