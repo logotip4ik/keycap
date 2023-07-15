@@ -167,10 +167,6 @@ provide(IsNoteNameEmptyKey, isNoteNameEmpty);
   &__contents {
     grid-area: 2 / 1;
 
-    position: relative;
-    z-index: 1;
-    isolation: isolate;
-
     height: 100%;
     width: 20vw;
 
