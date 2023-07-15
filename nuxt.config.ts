@@ -50,6 +50,12 @@ export default defineNuxtConfig({
     },
   },
 
+  imports: {
+    imports: [
+      { from: 'rad-event-listener', name: 'on' },
+    ],
+  },
+
   nitro: {
     imports: {
       dirs: ['./prisma'],
