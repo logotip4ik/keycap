@@ -49,8 +49,8 @@ onMounted(() => {
     return;
 
   let cleanups = [
-    on(window.visualViewport, 'resize', handleKeyboardAppear),
-    on(window.visualViewport, 'scroll', handleMobileScroll),
+    on(window.visualViewport!, 'resize', handleKeyboardAppear),
+    on(window.visualViewport!, 'scroll', handleMobileScroll),
     on(window, 'scroll', handleMobileScroll),
   ];
   const cleanup = () => {
