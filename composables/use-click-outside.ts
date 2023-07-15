@@ -1,7 +1,7 @@
 import type { Ref } from 'vue';
 
 export default (target: Ref<HTMLElement | null>, callback: (e: Event) => any) => {
-  const listener = (event: PointerEvent) => {
+  const listener = (event: MouseEvent) => {
     if (!target.value?.contains(event.target as HTMLElement))
       callback(event);
   };
