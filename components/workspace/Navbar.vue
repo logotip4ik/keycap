@@ -43,6 +43,7 @@ const folderRootPath = computed(() => {
         v-show="isShowingBackButton"
         class="navbar__button navbar__button--back"
         :href="folderRootPath"
+        aria-label="go up to folder root"
       >
         <Icon name="ic:baseline-arrow-back" class="navbar__button__icon" />
       </NuxtLink>
@@ -56,6 +57,7 @@ const folderRootPath = computed(() => {
     <button
       class="navbar__button navbar__button--search"
       :data-show-back-button="isShowingBackButton"
+      aria-label="open quick search"
       @click="onOpenSearch"
     >
       <Icon name="search" class="navbar__button__icon" />

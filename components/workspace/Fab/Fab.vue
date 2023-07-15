@@ -9,18 +9,21 @@ const fabContainer = ref<null | HTMLElement>(null);
 
 interface FabButton {
   icon: string
+  label: string
   action: () => any
 }
 
 const buttons: FabButton[] = [
   {
     icon: 'search',
+    label: 'open quick search',
     action: () => {
       props.onOpenSearch();
     },
   },
   {
     icon: 'ic:outline-add',
+    label: 'create new note or folder',
     action: () => {
       const { data: folder } = useNuxtData('folder');
 
@@ -46,6 +49,7 @@ useClickOutside(fabContainer, () => isFabUnfolded.value = false);
           v-for="(button, key) in buttons"
           :key="key"
           class="fab"
+          :aria-label="button.label"
           @click="withFoldCallback(button.action)"
         >
           <Icon :name="button.icon" class="fab__icon" />
@@ -56,6 +60,7 @@ useClickOutside(fabContainer, () => isFabUnfolded.value = false);
     <button
       class="fab fab--main"
       :class="{ 'fab--active': isFabUnfolded }"
+      :aria-label="isFabUnfolded ? 'hide actions' : 'show more actions'"
       @click="isFabUnfolded = !isFabUnfolded"
     >
       <Transition name="fade" mode="out-in">

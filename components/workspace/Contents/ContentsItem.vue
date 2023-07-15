@@ -129,10 +129,15 @@ function handleContextmenu(event: Event) {
         @submit.prevent="handleFormSubmit"
         @reset.prevent="handleFormCancel"
       >
+        <label class="item__input__label" for="itemInput">
+          Item name (enter "/" at the end to create folder)
+        </label>
         <input
+          id="itemInput"
           v-model="newItemName"
           class="item__input"
           enterkeyhint="done"
+          type="text"
           @blur="handleFormCancel"
           @keydown.esc="handleFormCancel"
         >
@@ -144,6 +149,7 @@ function handleContextmenu(event: Event) {
         class="item__name"
         :to="generateItemRouteParams(item)"
         :title="item.name"
+        :aria-label="`open ${isFolder ? 'folder' : 'note'} '${decodeURIComponent(item.name)}'`"
         @contextmenu.prevent="handleContextmenu"
       >
         <template v-if="isFolder">
@@ -153,8 +159,8 @@ function handleContextmenu(event: Event) {
         <span class="item__name__text">{{ decodeURIComponent(item.name) }}</span>
       </NuxtLink>
 
-      <button class="item__edit" @click="handleContextmenu">
-        <Icon name="ic:baseline-more-vert" class="item__delete__icon" />
+      <button class="item__edit" aria-label="show item actions" @click="handleContextmenu">
+        <Icon name="ic:baseline-more-vert" class="item__edit__icon" />
       </button>
     </template>
   </div>
@@ -218,6 +224,17 @@ function handleContextmenu(event: Event) {
 
     appearance: none;
 
+    &__label {
+      display: block;
+
+      color: transparent;
+
+      width: 0;
+      height: 0;
+
+      overflow: hidden;
+    }
+
     &__wrapper {
       width: calc(100% - 0.5rem);
     }
@@ -273,11 +290,12 @@ function handleContextmenu(event: Event) {
     }
   }
 
-  &__delete,
   &__edit {
     --button-size-basis: 3vw;
     --button-size-max: 2rem;
     --button-size-min: 1.9rem;
+
+    display: none;
 
     color: hsla(var(--text-color-hsl), 0.45);
 
@@ -310,26 +328,12 @@ function handleContextmenu(event: Event) {
     }
 
     &:is(:hover, :focus-visible) {
-      color: #f05545;
-
-      background-color: hsla(var(--text-color-hsl), 0.1);
-
-      transition: color .1s, background-color .1s;
-    }
-
-    @media screen and (max-width: $breakpoint-tablet) {
-      --button-size-min: 2.5rem;
-    }
-  }
-
-  &__edit {
-    display: none;
-
-    &:is(:hover, :focus-visible) {
       color: var(--text-color);
     }
 
     @media screen and (max-width: $breakpoint-tablet) {
+      --button-size-min: 2.5rem;
+
       display: block;
     }
   }

@@ -1,6 +1,6 @@
 <template>
   <div class="skeleton">
-    <h2 class="skeleton__heading skeleton-loading-bg" />
+    <p class="skeleton__heading skeleton-loading-bg" />
 
     <p class="skeleton__text skeleton-loading-bg" />
     <p class="skeleton__text skeleton-loading-bg" />
