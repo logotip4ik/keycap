@@ -153,14 +153,14 @@ function handleContextmenu(event: Event) {
         @contextmenu.prevent="handleContextmenu"
       >
         <template v-if="isFolder">
-          <Icon name="ic:outline-folder" class="item__name__folder-icon" />
+          <IconOutlineFolder class="item__name__folder-icon" />
         </template>
 
         <span class="item__name__text">{{ decodeURIComponent(item.name) }}</span>
       </NuxtLink>
 
       <button class="item__edit" aria-label="show item actions" @click="handleContextmenu">
-        <Icon name="ic:baseline-more-vert" class="item__edit__icon" />
+        <IconBaselineMoreVert class="item__edit__icon" />
       </button>
     </template>
   </div>
@@ -276,6 +276,9 @@ function handleContextmenu(event: Event) {
 
     &__folder-icon {
       flex-shrink: 0;
+
+      width: 1.25rem;
+      height: auto;
 
       margin-right: 0.25rem;
 

@@ -45,7 +45,7 @@ const folderRootPath = computed(() => {
         :href="folderRootPath"
         aria-label="go up to folder root"
       >
-        <Icon name="ic:baseline-arrow-back" class="navbar__button__icon" />
+        <IconBaselineArrowBack class="navbar__button__icon" />
       </NuxtLink>
     </Transition>
 
@@ -60,7 +60,7 @@ const folderRootPath = computed(() => {
       aria-label="open quick search"
       @click="onOpenSearch"
     >
-      <Icon name="search" class="navbar__button__icon" />
+      <IconSearchRounded class="navbar__button__icon" />
     </button>
   </nav>
 </template>
