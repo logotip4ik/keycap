@@ -119,7 +119,6 @@ export default defineNuxtConfig({
   },
 
   modules: [
-    'nuxt-icon',
     '@vueuse/nuxt',
     '@vite-pwa/nuxt',
     '@nuxtjs/fontaine',
