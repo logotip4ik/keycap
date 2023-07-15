@@ -121,6 +121,9 @@ onBeforeUnmount(() => {
 
 <style lang="scss">
 .item-context-menu {
+  --base-color-saturation: 0.0;
+  --base-shadow-color: 0, 0, 0;
+
   z-index: 2;
 
   color: hsla(var(--text-color-hsl), 0.7);
@@ -134,15 +137,24 @@ onBeforeUnmount(() => {
   border-radius: 0.25rem;
   background-color: hsla(var(--surface-color-hsl), 0.9);
   box-shadow:
-    0px 2px 5.3px rgba(0, 0, 0, 0.02),
-    0px 6.7px 17.9px rgba(0, 0, 0, 0.03),
-    0px 30px 80px rgba(0, 0, 0, 0.05);
+    0px 2px 5.3px rgba(var(--base-shadow-color), 0.02),
+    0px 6.7px 17.9px rgba(var(--base-shadow-color), 0.03),
+    0px 30px 80px rgba(var(--base-shadow-color), 0.05);
+
+  @media (prefers-color-scheme: dark) {
+    --base-shadow-color: 200, 200, 200;
+    --base-color-saturation: 0.1;
+  }
 
   @supports (backdrop-filter: blur(1px)) {
-    background-color: hsla(var(--selection-bg-color-hsl), 0.25);
-
-    backdrop-filter: blur(0.75rem);
-  }
+    background-color: transparent;
+    background-image: linear-gradient(
+      to bottom,
+      hsla(var(--selection-bg-color-hsl), calc(var(--base-color-saturation) + 0.075)),
+      hsla(var(--selection-bg-color-hsl), calc(var(--base-color-saturation) + 0.175)),
+    );
+    border: 1px solid hsla(var(--selection-bg-color-hsl), 0.5);
+    backdrop-filter: blur(0.75rem);  }
 
   &__item {
     &__button {
