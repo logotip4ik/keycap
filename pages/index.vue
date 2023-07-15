@@ -15,7 +15,7 @@ const shortCommitSha = build.commit;
       <WithBlob v-slot="props">
         <header class="index__header" v-bind="props">
           <small class="index__header__alert">
-            <Icon name="mi:warning" class="index__header__alert__icon" />
+            <IconWarning class="index__header__alert__icon" />
             In development
           </small>
 
