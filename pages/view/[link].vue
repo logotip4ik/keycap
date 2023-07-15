@@ -36,7 +36,7 @@ function formatDate(date: string | Date) {
 
     <header class="note-view__header">
       <small v-if="isNoteContentsEmpty" class="note-view__header__alert">
-        <IconOutlineInfo name="ic:outline-info" class="note-view__header__alert__icon" />
+        <IconOutlineInfo v-once class="note-view__header__alert__icon" />
         Note is empty
       </small>
 

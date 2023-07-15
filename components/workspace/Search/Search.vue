@@ -147,7 +147,7 @@ useTinykeys({ Escape: handleCancel });
           class="search__form__cancel"
           @click="handleCancel"
         >
-          <IconCloseRounded class="search__form__cancel__icon" />
+          <IconCloseRounded v-once class="search__form__cancel__icon" />
         </button>
       </form>
 

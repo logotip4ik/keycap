@@ -123,7 +123,7 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
       aria-labelledby="item-details-dialog-title"
     >
       <button class="item-details__close-button" @click="unsetCurrentItemForDetails">
-        <IconCloseRounded class="item-details__close-button__icon" />
+        <IconCloseRounded v-once class="item-details__close-button__icon" />
       </button>
 
       <Transition name="fade" appear @before-leave="storePopupHeight" @enter="transitionHeight">

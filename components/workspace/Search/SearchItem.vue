@@ -25,13 +25,13 @@ const itemHref = (() => {
 <template>
   <button v-if="isCommand" class="search-item" :data-selected="selected">
     <span class="search-item__name">{{ item.name }}</span>
-    <IconRoundKeyboardReturn class="search-item__enter-icon" />
+    <IconRoundKeyboardReturn v-once class="search-item__enter-icon" />
   </button>
 
   <NuxtLink v-else :href="itemHref" class="search-item" :data-selected="selected">
     <span v-if="itemPath !== ''" class="search-item__path">{{ itemPath }}/</span>
     <span class="search-item__name">{{ item.name }}</span>
-    <IconRoundKeyboardReturn class="search-item__enter-icon" />
+    <IconRoundKeyboardReturn v-once class="search-item__enter-icon" />
   </NuxtLink>
 </template>
 
