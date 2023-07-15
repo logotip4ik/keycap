@@ -42,9 +42,9 @@ async function login() {
 </script>
 
 <template>
-  <NavSimple />
+  <NavSimple v-once />
 
-  <main class="login">
+  <main v-once class="login">
     <Form
       action="/api/user/login"
       method="POST"

@@ -6,7 +6,7 @@ const shortCommitSha = build.commit;
 </script>
 
 <template>
-  <main class="index">
+  <main v-once class="index">
     <!-- TODO: actually craft landing page -->
 
     <NavLogin />

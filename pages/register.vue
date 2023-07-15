@@ -44,9 +44,9 @@ async function register() {
 </script>
 
 <template>
-  <NavSimple />
+  <NavSimple v-once />
 
-  <main class="register">
+  <main v-once class="register">
     <Form
       action="/api/user/register"
       method="POST"

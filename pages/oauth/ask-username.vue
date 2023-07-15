@@ -13,9 +13,9 @@ const notEmptyQuery = Object.fromEntries(
 </script>
 
 <template>
-  <NavSimple />
+  <NavSimple v-once />
 
-  <WithBlob v-slot="props" top="45%">
+  <WithBlob v-once v-slot="props" top="45%">
     <div class="username-page" v-bind="props">
       <Form
         :action="`/api/oauth/${query.provider}`"

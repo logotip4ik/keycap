@@ -31,7 +31,7 @@ function formatDate(date: string | Date) {
 </script>
 
 <template>
-  <div v-if="note" class="note-view">
+  <div v-if="note" v-once class="note-view">
     <NavSimple />
 
     <header class="note-view__header">
