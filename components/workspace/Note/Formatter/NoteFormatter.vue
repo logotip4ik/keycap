@@ -181,10 +181,10 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
         }"
         @click="toggleHeading"
       >
-        <IconHeading1 v-if="editor.isActive('heading', { level: 1 })" v-once />
-        <IconHeading2 v-else-if="editor.isActive('heading', { level: 2 })" v-once />
-        <IconHeading3 v-else-if="editor.isActive('heading', { level: 3 })" v-once />
-        <IconHeading1 v-else v-once />
+        <IconHeading1 v-if="editor.isActive('heading', { level: 1 })" />
+        <IconHeading2 v-else-if="editor.isActive('heading', { level: 2 })" />
+        <IconHeading3 v-else-if="editor.isActive('heading', { level: 3 })" />
+        <IconHeading1 v-else />
       </button>
 
       <button
