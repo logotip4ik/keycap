@@ -50,6 +50,7 @@ useClickOutside(fabContainer, () => isFabUnfolded.value = false);
       <div v-show="isFabUnfolded" class="fab__buttons">
         <button
           v-for="(button, key) in buttons"
+          v-once
           :key="key"
           class="fab"
           :aria-label="button.label"

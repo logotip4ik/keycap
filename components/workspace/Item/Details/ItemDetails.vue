@@ -132,6 +132,7 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
         <!-- TODO: split into smaller components -->
         <div v-else-if="mergedDetails" key="content" class="item-details__data">
           <p
+            v-once
             id="item-details-dialog-title"
             class="item-details__data__title"
             :aria-label="`Details: ${mergedDetails.name}`"

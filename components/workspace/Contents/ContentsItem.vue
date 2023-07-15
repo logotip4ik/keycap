@@ -129,7 +129,7 @@ function handleContextmenu(event: Event) {
         @submit.prevent="handleFormSubmit"
         @reset.prevent="handleFormCancel"
       >
-        <label class="item__input__label" for="itemInput">
+        <label v-once class="item__input__label" for="itemInput">
           Item name (enter "/" at the end to create folder)
         </label>
         <input
@@ -154,10 +154,10 @@ function handleContextmenu(event: Event) {
       >
         <IconOutlineFolder v-if="isFolder" v-once class="item__name__folder-icon" />
 
-        <span class="item__name__text">{{ decodeURIComponent(item.name) }}</span>
+        <span v-once class="item__name__text">{{ decodeURIComponent(item.name) }}</span>
       </NuxtLink>
 
-      <button class="item__edit" aria-label="show item actions" @click="handleContextmenu">
+      <button class="item__edit" :aria-label="`show ${isFolder ? 'folder' : 'note'} actions`" @click="handleContextmenu">
         <IconBaselineMoreVert v-once class="item__edit__icon" />
       </button>
     </template>
