@@ -12,6 +12,8 @@ const ISRDuration = parseDuration('15 minutes', 'second');
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
+  devtools: { enabled: true },
+
   $development: {
     modules: [
       '@nuxtjs/html-validator',
