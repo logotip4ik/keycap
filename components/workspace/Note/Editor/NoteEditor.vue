@@ -146,10 +146,14 @@ useTinykeys({
   },
 });
 
-useEventListener(window, 'visibilitychange', () => {
-  if (document.visibilityState === 'visible')
-    props.onRefresh();
-}, { passive: true });
+onMounted(() => {
+  const clear = on(document, 'visibilitychange', () => {
+    if (document.visibilityState === 'visible')
+      props.onRefresh();
+  });
+
+  onBeforeUnmount(() => clear());
+});
 </script>
 
 <template>

@@ -28,8 +28,11 @@ function handleResize() {
   toasterElClientRect = null;
 }
 
-if (process.client)
-  useEventListener(window, 'resize', handleResize, { passive: true });
+onMounted(() => {
+  const clear = on(window, 'resize', handleResize);
+
+  onBeforeUnmount(() => clear());
+});
 </script>
 
 <template>
