@@ -69,11 +69,11 @@ useClickOutside(fabContainer, () => isFabUnfolded.value = false);
     >
       <Transition name="fade" mode="out-in">
         <span v-if="isFabUnfolded" :key="1">
-          <IconCloseRounded v-once class="fab__icon" />
+          <IconCloseRounded class="fab__icon" />
         </span>
 
         <span v-else :key="2">
-          <IconBaselineMoreVert v-once class="fab__icon" />
+          <IconBaselineMoreVert class="fab__icon" />
         </span>
       </Transition>
     </button>
