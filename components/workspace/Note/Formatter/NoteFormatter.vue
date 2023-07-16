@@ -193,7 +193,7 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
         }"
         @click="toggleListItem"
       >
-        <IconList v-once />
+        <IconList />
       </button>
 
       <button
@@ -203,7 +203,7 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
         }"
         @click="editor.chain().focus().toggleBlockquote().run()"
       >
-        <IconDoubleQuotesR v-once />
+        <IconDoubleQuotesR />
       </button>
 
       <div class="formatter__vr" aria-hidden="true" />
@@ -214,7 +214,7 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
         :class="{ 'formatter__button--active': editor.isActive('bold') }"
         @click="editor!.chain().focus().toggleBold().run()"
       >
-        <IconBaselineFormatBold v-once />
+        <IconBaselineFormatBold />
       </button>
 
       <button
@@ -223,7 +223,7 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
         :class="{ 'formatter__button--active': editor.isActive('italic') }"
         @click="editor!.chain().focus().toggleItalic().run()"
       >
-        <IconBaselineFormatItalic v-once />
+        <IconBaselineFormatItalic />
       </button>
 
       <button
@@ -232,7 +232,7 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
         :class="{ 'formatter__button--active': editor.isActive('code') }"
         @click="editor!.chain().focus().toggleCode().run()"
       >
-        <IconBaselineCode v-once />
+        <IconBaselineCode />
       </button>
 
       <button
@@ -241,7 +241,7 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
         :class="{ 'formatter__button--active': editor.isActive('link') }"
         @click="(isEditingLink = !isEditingLink)"
       >
-        <IconBaselineLink v-once />
+        <IconBaselineLink />
       </button>
     </div>
 
@@ -256,7 +256,7 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
       >
 
       <button class="formatter__button" type="submit">
-        <IconBaselineCheck v-once />
+        <IconBaselineCheck />
       </button>
     </form>
   </Transition>
