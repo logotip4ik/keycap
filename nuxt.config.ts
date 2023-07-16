@@ -146,7 +146,7 @@ export default defineNuxtConfig({
 
     build: {
       target: 'esnext',
-      cssMinify: 'lightningcss',
+      // cssMinify: 'lightningcss',
       cssTarget: browserslistToEsbuild(),
       ...(provider === 'vercel'
         ? {
