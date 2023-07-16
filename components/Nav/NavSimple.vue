@@ -2,13 +2,14 @@
   <Nav>
     <NavLink class="nav__link--title font-wide" to="/">
       <img
-        src="/favicon-32x32.png"
+        src="/logo.webp"
         alt="purple keycap"
         class="nav__link__img"
-        fetchpriority="high"
         decoding="async"
-        width="32"
-        height="32"
+        width="48"
+        height="48"
+        fetchpriority="low"
+        loading="lazy"
       >
       Keycap
     </NavLink>
