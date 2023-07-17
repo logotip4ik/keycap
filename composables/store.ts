@@ -1,4 +1,6 @@
-import { LRUCache } from 'lru-cache';
+// import { LRUCache } from 'lru-cache';
+// NOTE: keep an eye on this package
+import LRUCache from '@tinkoff/lru-cache-nano';
 
 import type { Note } from '@prisma/client';
 
