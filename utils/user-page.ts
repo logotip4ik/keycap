@@ -1,9 +1,7 @@
 import { del, get, set, values } from 'idb-keyval';
 
-import type { LRUCache } from 'lru-cache';
+import type LRUCache from '@tinkoff/lru-cache-nano';
 import type * as Comlink from 'comlink';
-
-import { blankNoteName } from '~/assets/constants';
 
 export function preloadDashboardComponents() {
   const user = useUser();

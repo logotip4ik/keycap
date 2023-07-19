@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { blankNoteName } from '~/assets/constants';
-
 definePageMeta({
   middleware: ['auth'],
 });

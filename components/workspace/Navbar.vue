@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { blankNoteName } from '~/assets/constants';
-
 // see https://github.com/vuejs/core/discussions/8626
 // this actually feels ok, i guess
 // kinda react'y, but it brings better typings

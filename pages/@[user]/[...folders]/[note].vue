@@ -5,8 +5,6 @@ import parseDuration from 'parse-duration';
 import type { Note } from '@prisma/client';
 import type { RefToastInstance } from '~/composables/toasts';
 
-import { blankNoteName } from '~/assets/constants';
-
 const route = useRoute();
 const isFallbackMode = useFallbackMode();
 const notesCache = useNotesCache();
