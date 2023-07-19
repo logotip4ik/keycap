@@ -55,6 +55,7 @@ export default defineNuxtConfig({
   imports: {
     imports: [
       { from: 'rad-event-listener', name: 'on' },
+      { from: '~/assets/constants/index.ts', name: 'blankNoteName' },
     ],
   },
 
