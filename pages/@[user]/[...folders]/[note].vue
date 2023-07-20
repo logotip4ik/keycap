@@ -41,8 +41,9 @@ const POLLING_TIME = parseDuration('2 minutes')!;
 let pollingTimer: NodeJS.Timeout;
 let firstTimeFetch = true;
 let loadingToast: RefToastInstance;
+let abortControllerGet: AbortController | null;
 
-const { data: fetchedNote, pending, error, refresh } = await useLazyAsyncData<Note | null>(
+const { data: fetchedNote, pending, error, refresh } = useLazyAsyncData<Note | null>(
   'note',
   async () => {
     clearTimeout(pollingTimer);
@@ -71,9 +72,11 @@ const { data: fetchedNote, pending, error, refresh } = await useLazyAsyncData<No
       firstTimeFetch = false;
     }
 
+    abortControllerGet = new AbortController();
+
     return await $fetch<Note>(
       `/api/note/${noteApiPath.value}`,
-      { retry: 2 },
+      { retry: 2, signal: abortControllerGet.signal },
     )
       .finally(() => {
         hideLoading();
@@ -87,7 +90,7 @@ const { data: fetchedNote, pending, error, refresh } = await useLazyAsyncData<No
   { server: false },
 );
 
-let abortController: AbortController | null;
+let abortControllerUpdate: AbortController | null;
 const throttledUpdate = useThrottleFn(updateNote, 1000, true, false); // enable trailing call and disable leading
 function updateNote(content: string) {
   const updatingCurrentNote = notePath.value.replace('/', '/@') === window.location.pathname;
@@ -116,14 +119,14 @@ function updateNote(content: string) {
   if (updatingCurrentNote)
     currentNoteState.value = 'updating';
 
-  abortController?.abort();
-  abortController = new AbortController();
+  abortControllerUpdate?.abort();
+  abortControllerUpdate = new AbortController();
 
   $fetch<QuickResponse>(`/api/note/${noteApiPath.value}`, {
     method: 'PATCH',
     body: newNote,
     retry: 2,
-    signal: abortController.signal,
+    signal: abortControllerUpdate.signal,
   })
     .then(() => {
       // before route update, note will be saved and the indicator will be again reset to saved
@@ -191,6 +194,7 @@ watch(fetchedNote, (value) => {
 
 onBeforeUnmount(() => {
   clearTimeout(pollingTimer);
+  abortControllerGet?.abort();
 });
 </script>
 
