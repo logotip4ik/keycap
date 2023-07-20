@@ -9,14 +9,14 @@ import breakpoints from '~/constants/breakpoints';
 const { width: windowWidth } = useWindowSize();
 
 // NOTE: should be removed from client bundle
-const device = process.server ? parseUA(useRequestHeaders()['user-agent']) : undefined;
+const device = import.meta.env.SSR ? parseUA(useRequestHeaders()['user-agent']) : undefined;
 
-const isFirefox = process.server
+const isFirefox = import.meta.env.SSR
   ? device!.isFirefox
   : checkIsFirefox(navigator.userAgent);
 
 const isSmallScreen = computed(() =>
-  process.server
+  import.meta.env.SSR
     ? device!.isMobileOrTablet
     : windowWidth.value < breakpoints.tablet,
 );
@@ -33,7 +33,7 @@ useHead({
   },
 });
 
-if (process.client) {
+if (!import.meta.env.SSR) {
   const UPDATE_WORKER_DELAY = parseDuration('1.5s')!;
 
   setTimeout(() => {
@@ -45,7 +45,7 @@ if (process.client) {
   }, UPDATE_WORKER_DELAY);
 }
 
-if (process.server) {
+if (import.meta.env.SSR) {
   const { siteOrigin } = useRuntimeConfig().public;
 
   useSeoMeta({

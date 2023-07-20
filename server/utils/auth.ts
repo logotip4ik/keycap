@@ -1,3 +1,4 @@
+import process from 'node:process';
 import { getCookie, setCookie } from 'h3';
 import { SignJWT, jwtVerify } from 'jose';
 import { isDevelopment, isProduction } from 'std-env';
