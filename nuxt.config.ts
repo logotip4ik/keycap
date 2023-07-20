@@ -5,7 +5,7 @@ import browserslistToEsbuild from 'browserslist-to-esbuild';
 import parseDuration from 'parse-duration';
 
 import { getHeaders } from './headers.config';
-import breakpoints from './assets/constants/breakpoints';
+import breakpoints from './constants/breakpoints';
 import { ParseDurationTransformPlugin } from './vite/transform-parse-duration';
 
 const ISRDuration = parseDuration('15 minutes', 'second');
@@ -55,7 +55,7 @@ export default defineNuxtConfig({
   imports: {
     imports: [
       { from: 'rad-event-listener', name: 'on' },
-      { from: '~/assets/constants/index.ts', name: 'blankNoteName' },
+      { from: '~/constants/index.ts', name: 'blankNoteName' },
     ],
   },
 

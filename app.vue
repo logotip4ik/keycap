@@ -4,7 +4,7 @@ import 'requestidlecallback-polyfill';
 
 import parseDuration from 'parse-duration';
 
-import breakpoints from 'assets/constants/breakpoints';
+import breakpoints from '~/constants/breakpoints';
 
 const { width: windowWidth } = useWindowSize();
 
