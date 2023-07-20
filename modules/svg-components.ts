@@ -1,7 +1,7 @@
 import { readdir } from 'node:fs/promises';
 import { addComponent, addTemplate, defineNuxtModule } from '@nuxt/kit';
 import { resolve } from 'pathe';
-import { camelCase, kebabCase } from 'scule';
+import { camelCase } from 'scule';
 
 export default defineNuxtModule({
   meta: {
@@ -25,7 +25,7 @@ export default defineAsyncComponent(() => import("${resolve(svgDir, svg)}?compon
 
       addComponent({
         name: camelCase(name),
-        kebabName: kebabCase(name),
+        kebabName: name,
         filePath: dst,
       });
     }
