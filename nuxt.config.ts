@@ -48,7 +48,7 @@ export default defineNuxtConfig({
 
   typescript: {
     tsConfig: {
-      exclude: ['../data'],
+      exclude: ['../data', '../benchmarks'],
     },
   },
 
