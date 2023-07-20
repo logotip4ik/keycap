@@ -8,9 +8,6 @@ export default defineNuxtModule({
     name: 'svg-icons',
   },
   async setup(_options, nuxt) {
-    if (nuxt.options._prepare)
-      return;
-
     const prefix = 'icon';
     const svgDir = resolve(nuxt.options.srcDir, './assets/svg');
     const svgs = await readdir(svgDir);
