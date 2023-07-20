@@ -111,10 +111,10 @@ function updateNote(content: string) {
   if (!note.value || !notesCache.get(notePath.value))
     return;
 
-  const newNote: Partial<Note> = { content };
+  const newNote: Note = { ...toRaw(note.value), content };
 
   // enables optimistic ui
-  notesCache.set(note.value.path, { ...note.value, ...newNote });
+  notesCache.set(note.value.path, newNote);
 
   if (updatingCurrentNote)
     currentNoteState.value = 'updating';
@@ -124,11 +124,14 @@ function updateNote(content: string) {
 
   $fetch<QuickResponse>(`/api/note/${noteApiPath.value}`, {
     method: 'PATCH',
-    body: newNote,
+    body: { content },
     retry: 2,
     signal: abortControllerUpdate.signal,
   })
     .then(() => {
+      if (note.value)
+        offlineStorage.value?.setItem(note.value.path, newNote);
+
       // before route update, note will be saved and the indicator will be again reset to saved
       // this checks if route is the same, so this wasn't last save and user is still on the same note
       if (updatingCurrentNote)
