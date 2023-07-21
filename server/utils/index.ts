@@ -25,20 +25,20 @@ export function generateRootFolderPath(username: string) {
   return `/${username}`;
 }
 
-export const stringifiedBigIntRE = /[0-9]{18}n/;
+export const stringifiedBigIntRE = /([0-9]{18})n/;
 
 export function toBigInt(string: string): bigint {
-  if (string.at(-1) === 'n')
-    return BigInt(string.substring(0, string.length - 1));
+  const match = string.match(stringifiedBigIntRE);
 
-  let res = BigInt(-1);
+  if (match)
+    return BigInt(match[1]);
 
   try {
-    res = BigInt(string);
+    return BigInt(string);
   }
-  catch { }
-
-  return res;
+  catch {
+    return BigInt(-1);
+  }
 }
 
 export function getNoteSelectParamsFromEvent(event: H3Event): Prisma.NoteSelect {
