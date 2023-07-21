@@ -17,7 +17,6 @@ import HorizontalRule from '@tiptap/extension-horizontal-rule';
 import ListItem from '@tiptap/extension-list-item';
 import OrderedList from '@tiptap/extension-ordered-list';
 import Code from '@tiptap/extension-code';
-import Link from '@tiptap/extension-link';
 import Placeholder from '@tiptap/extension-placeholder';
 import TaskList from '@tiptap/extension-task-list';
 import TaskItem from '@tiptap/extension-task-item';
@@ -64,7 +63,7 @@ const editor = useEditor({
     Italic,
     Strike,
     History,
-    Link,
+    BetterLink,
     TaskList,
     TaskItem,
     BubbleMenuPlugin,
