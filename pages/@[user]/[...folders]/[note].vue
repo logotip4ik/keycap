@@ -50,7 +50,7 @@ const { data: fetchedNote, pending, error, refresh } = useLazyAsyncData<Note | n
 
     currentNoteState.value = '';
 
-    if (!route.params.note || route.params.note === blankNoteName)
+    if (!route.params.note || route.params.note === BLANK_NOTE_NAME)
       return null;
 
     if (!note.value) {
@@ -176,7 +176,7 @@ watch(error, async (error) => {
   if (!offlineNote) {
     createToast('No offline copy found');
 
-    await navigateTo({ ...route, params: { note: blankNoteName } });
+    await navigateTo({ ...route, params: { note: BLANK_NOTE_NAME } });
 
     return;
   }

@@ -1,1 +1,1 @@
-export const blankNoteName = '_blank';
+export const BLANK_NOTE_NAME = '_blank';

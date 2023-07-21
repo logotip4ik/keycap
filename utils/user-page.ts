@@ -8,7 +8,7 @@ export function preloadDashboardComponents() {
 
   prefetchComponents('WorkspaceSearch');
 
-  const blankNotePath = `/@${user.value!.username}/${blankNoteName}`;
+  const blankNotePath = `/@${user.value!.username}/${BLANK_NOTE_NAME}`;
   preloadRouteComponents(blankNotePath);
 }
 

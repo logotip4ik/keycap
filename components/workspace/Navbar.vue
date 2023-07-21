@@ -18,7 +18,7 @@ const isShowingBackButton = computed(() => isSmallScreen!.value && !isNoteNameEm
 const headingText = computed(() => {
   if (!user.value) return '';
 
-  if (route.params.note && route.params.note !== blankNoteName)
+  if (route.params.note && route.params.note !== BLANK_NOTE_NAME)
     return decodeURIComponent(route.params.note as string);
 
   if (route.params.folders && route.params.folders.length !== 0) {
@@ -30,7 +30,7 @@ const headingText = computed(() => {
 });
 
 const folderRootPath = computed(() => {
-  return { ...route, params: { ...route.params, note: blankNoteName } };
+  return { ...route, params: { ...route.params, note: BLANK_NOTE_NAME } };
 });
 </script>
 

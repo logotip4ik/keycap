@@ -13,16 +13,16 @@ const currentItemForDetails = useCurrentItemForDetails();
 const isShowingSearch = ref(false);
 
 const isSmallScreen = inject(IsSmallScreenKey);
-const isNoteNameEmpty = computed(() => !route.params.note || route.params.note === blankNoteName);
+const isNoteNameEmpty = computed(() => !route.params.note || route.params.note === BLANK_NOTE_NAME);
 
 const currentRouteName = computed(() => {
   const folders = route.params.folders;
   const currentFolder = Array.isArray(folders) ? folders.at(-1) : folders as string;
 
-  if (currentFolder && (!route.params.folders || route.params.note === blankNoteName))
+  if (currentFolder && (!route.params.folders || route.params.note === BLANK_NOTE_NAME))
     return decodeURIComponent(currentFolder);
 
-  if (route.params.note && route.params.note !== blankNoteName)
+  if (route.params.note && route.params.note !== BLANK_NOTE_NAME)
     return decodeURIComponent(route.params.note as string);
 
   return null;
@@ -33,7 +33,7 @@ function focusSearchInput(event: Element) {
 }
 
 watch(() => route.params.note, (noteName) => {
-  const isEmptyNoteName = !noteName || noteName === blankNoteName;
+  const isEmptyNoteName = !noteName || noteName === BLANK_NOTE_NAME;
 
   if (isEmptyNoteName) currentNoteState.value = '';
 });

@@ -12,7 +12,7 @@ export function generateItemRouteParams(item: ItemWithPath): RouteLocationRaw {
   const isFolder = 'root' in item;
 
   const username = user.value?.username || route.params.user;
-  const routeName = isFolder ? blankNoteName : (item as NoteMinimal).name;
+  const routeName = isFolder ? BLANK_NOTE_NAME : (item as NoteMinimal).name;
   const routeFolders = withoutLeadingSlash(item.path)
     .split('/')
     .slice(1)
