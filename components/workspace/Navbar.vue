@@ -156,6 +156,8 @@ const folderRootPath = computed(() => {
     transition: color .3s, background-color .3s, opacity .3s;
 
     &--back {
+      will-change: transform, margin-right, opacity;
+
       margin-right: 1rem;
 
       background-color: hsla(var(--text-color-hsl), 0.1);
