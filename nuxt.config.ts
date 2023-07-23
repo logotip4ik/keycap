@@ -20,8 +20,8 @@ export default defineNuxtConfig({
       meta: [
         { name: 'description', content: 'Better then just notes. Synced between your devices' },
         { name: 'mobile-web-app-capable', content: 'yes' },
-        { key: 'theme-color-light', name: 'theme-color', content: '#f2f1f3', media: '(prefers-color-scheme: light)' },
-        { key: 'theme-color-dark', name: 'theme-color', content: '#1b1a1e', media: '(prefers-color-scheme: dark)' },
+        { key: 'theme-color-light', name: 'theme-color', content: '#FCFCFD', media: '(prefers-color-scheme: light)' },
+        { key: 'theme-color-dark', name: 'theme-color', content: '#111113', media: '(prefers-color-scheme: dark)' },
         { key: 'status-bar-light', name: 'apple-mobile-web-app-status-bar-style', content: 'default', media: '(prefers-color-scheme: light)' },
         { key: 'status-bar-dark', name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent', media: '(prefers-color-scheme: dark)' },
       ],
