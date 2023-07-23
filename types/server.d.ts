@@ -1,8 +1,6 @@
 import { createTimer } from '~/server/utils/timers' 
 import { OAuthProvider } from '~/server/utils/oauth'
 
-import type { User } from '@prisma/client'
-
 declare global {
   // @link https://github.com/unjs/ofetch#%EF%B8%8F-handling-errors
   // ofetch bundled with nuxt will automatically throw error on ok:false
@@ -11,7 +9,7 @@ declare global {
   }
 }
 
-export interface SafeUser extends Pick<User, 'id' | 'email' | 'username'> {}
+export interface SafeUser { id: string, email: string, username: string }
 
 export declare module 'h3' {
   interface H3EventContext {
