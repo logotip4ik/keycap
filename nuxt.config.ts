@@ -3,6 +3,7 @@ import UnheadVite from '@unhead/addons/vite';
 import SvgLoadedPlugin from 'vite-svg-loader';
 import browserslistToEsbuild from 'browserslist-to-esbuild';
 import parseDuration from 'parse-duration';
+import path from 'pathe';
 
 import { getHeaders } from './headers.config';
 import breakpoints from './constants/breakpoints';
@@ -59,6 +60,10 @@ export default defineNuxtConfig({
   nitro: {
     imports: {
       dirs: ['./prisma'],
+
+      imports: [
+        { from: path.resolve('./kysely/main.ts'), name: 'getKysely' },
+      ],
     },
 
     typescript: {
@@ -132,7 +137,7 @@ export default defineNuxtConfig({
   sourcemap: isDevelopment,
 
   build: {
-    transpile: ['tinykeys'],
+    transpile: ['tinykeys', 'pg'],
   },
 
   vite: {
