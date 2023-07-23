@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { Note, Prisma } from '@prisma/client';
-
 interface Props { item: NoteMinimal }
 const props = defineProps<Props>();
 
@@ -10,11 +8,16 @@ const isLoadingItemDetails = ref(false);
 
 const isFolder = 'root' in props.item;
 
-type NoteDetails = Note & Prisma.NoteGetPayload<{ select: { shares: { select: { link: true; updatedAt: true; createdAt: true } } } }>;
+// TODO: import from server types
+interface ItemDetails {
+  updatedAt: Date
+  createdAt: Date
+  share?: { link: string; updatedAt: Date; createdAt: Date }
+}
 
 // NOTE(perf improvement): client bundle size reduced by using only useAsyncData or useFetch
 const { data: details, refresh } = await useLazyAsyncData(async () => {
-  return await $fetch<Partial<NoteDetails>>(
+  return await $fetch<ItemDetails>(
     // /api/[note|folder]/[item path without username]
     `/api/${isFolder ? 'folder' : 'note'}/${props.item.path.split('/').slice(2).join('/')}`,
     { query: { details: true }, retry: 2 },
@@ -29,7 +32,6 @@ const mergedDetails = computed(() => {
   return {
     name: props.item.name,
     ...details.value,
-    shares: details.value.shares?.[0],
   };
 });
 
@@ -83,10 +85,10 @@ function formatDate(dateString?: Date | string) {
 }
 
 async function copyShareLink() {
-  if (!mergedDetails.value?.shares) return;
+  if (!mergedDetails.value?.share) return;
 
   const { protocol, host } = window.location;
-  const link = mergedDetails.value?.shares.link;
+  const link = mergedDetails.value?.share.link;
 
   await navigator.clipboard.writeText(`${protocol}//${host}/view/${link}`);
 
@@ -149,23 +151,23 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
 
             <button
               class="item-details__data__row__share-link"
-              :disabled="!mergedDetails.shares || isLoadingItemDetails"
+              :disabled="!mergedDetails.share || isLoadingItemDetails"
               @click="copyShareLink"
             >
               <Transition name="fade">
                 <!-- NOTE: skeleton class add appear delay -->
                 <span v-if="isLoadingItemDetails" class="skeleton">Loading...</span>
-                <span v-else-if="mergedDetails.shares">{{ mergedDetails.shares.link }}</span>
+                <span v-else-if="mergedDetails.share">{{ mergedDetails.share.link }}</span>
                 <span v-else>Disabled</span>
               </Transition>
             </button>
 
             <input
-              :checked="!!mergedDetails.shares"
+              :checked="!!mergedDetails.share"
               :readonly="isLoadingItemDetails"
               type="checkbox"
               class="item-details__data__row__checkbox"
-              @input="debouncedToggleShareLink(!mergedDetails?.shares)"
+              @input="debouncedToggleShareLink(!mergedDetails?.share)"
             >
           </div>
 
