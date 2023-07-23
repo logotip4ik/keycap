@@ -19,7 +19,7 @@ export function getKysely() {
   if (!globalThis.__kysely) {
     globalThis.__kysely = new Kysely({
       dialect,
-      // plugins: [new DeduplicateJoinsPlugin()],
+      log: ['error'],
     });
   }
 
