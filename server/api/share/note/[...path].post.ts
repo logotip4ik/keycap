@@ -9,29 +9,45 @@ export default defineEventHandler(async (event) => {
 
   const notePath = generateNotePath(user.username, path);
 
-  const prisma = getPrisma();
+  const kysely = getKysely();
 
   const link = generateShareLink();
 
   timer.start('db');
-  const share = await prisma.$transaction(async (tx) => {
-    const note = await tx.note.findFirst({
-      where: { path: notePath, ownerId: user.id },
-      select: { shares: { select: { id: true } } },
-    });
 
-    if (note?.shares && note?.shares.length > 0)
-      return note.shares[0];
+  const share = await kysely
+    .transaction()
+    .execute(async (tx) => {
+      const note = await tx
+        .selectFrom('Note')
+        .where(({ and, eb }) => and([
+          eb('Note.path', '=', notePath),
+          eb('Note.ownerId', '=', user.id),
+        ]))
+        .leftJoin('Share', 'Share.noteId', 'Note.id')
+        .select(['Note.id', 'Share.id as shareId'])
+        .executeTakeFirst();
 
-    return await tx.share.create({
-      select: { id: true },
-      data: {
-        link,
-        note: { connect: { path: notePath } },
-        owner: { connect: { id: user.id } },
-      },
-    });
-  }).catch(() => null);
+      if (!note)
+        throw new Error('no note was found');
+
+      if (note && note.shareId)
+        return note.shareId;
+
+      await tx
+        .insertInto('Share')
+        .values({
+          link,
+          noteId: note.id,
+          ownerId: user.id,
+          updatedAt: new Date(),
+        })
+        .execute();
+
+      return true;
+    })
+    .catch(() => null);
+
   timer.end();
 
   if (!share)

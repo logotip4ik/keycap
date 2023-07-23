@@ -2,8 +2,6 @@ export default defineEventHandler(async (event) => {
   const user = event.context.user!;
   const timer = event.context.timer!;
 
-  const prisma = getPrisma();
-
   const path = getRouterParam(event, 'path');
 
   if (!path)
@@ -12,16 +10,22 @@ export default defineEventHandler(async (event) => {
   const folderPath = generateFolderPath(user.username, path);
 
   if (generateRootFolderPath(user.username) === folderPath)
-    return {};
+    return null;
+
+  const kysely = getKysely();
 
   timer.start('db');
-  const folder = await prisma.folder.delete({
-    where: { path: folderPath },
-    select: { id: true },
-  }).catch(() => null);
+  const folder = await kysely
+    .deleteFrom('Folder')
+    .where(({ and, eb }) => and([
+      eb('path', '=', folderPath),
+      eb('ownerId', '=', user.id),
+    ]))
+    .executeTakeFirst()
+    .catch(() => null);
   timer.end();
 
-  if (!folder)
+  if (!folder || folder.numDeletedRows < 1)
     throw createError({ statusCode: 400 });
 
   timer.appendHeader(event);

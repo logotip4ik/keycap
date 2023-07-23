@@ -4,8 +4,6 @@ export default defineEventHandler(async (event) => {
   const user = event.context.user!;
   const timer = event.context.timer!;
 
-  const prisma = getPrisma();
-
   const path = getRouterParam(event, 'path');
 
   if (!path)
@@ -27,19 +25,21 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const selectParams = getFolderSelectParamsFromEvent(event);
+  const kysely = getKysely();
 
   timer.start('db');
-  const folder = await prisma.folder.create({
-    data: {
+  const folder = await kysely
+    .insertInto('Folder')
+    .values({
       name: body.name,
       path: body.path,
-      owner: { connect: { email: user.email } },
-      parent: { connect: { id: toBigInt(body.parentId) } },
-    },
-
-    select: { ...selectParams },
-  }).catch(() => null);
+      ownerId: user.id,
+      parentId: body.parentId,
+      updatedAt: new Date(),
+    })
+    .returning('id')
+    .executeTakeFirst()
+    .catch(() => null);
   timer.end();
 
   if (!folder)
@@ -49,5 +49,12 @@ export default defineEventHandler(async (event) => {
 
   setResponseStatus(event, 201);
 
-  return { ...folder, notes: [], subfolders: [] };
+  return {
+    id: folder.id,
+    name: body.name,
+    path: body.path,
+    root: false,
+    notes: [],
+    subfolders: [],
+  };
 });

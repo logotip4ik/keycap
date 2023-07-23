@@ -2,35 +2,54 @@ export default defineEventHandler(async (event) => {
   const user = event.context.user!;
   const timer = event.context.timer!;
 
-  const prisma = getPrisma();
-
   const query = getQuery(event) || {};
 
-  let skip = 0;
-  let select = 75;
+  const skip = { folders: 0, notes: 0 };
+  const limit = { folders: 20, notes: 55 };
 
-  if (query.skip && !Number.isNaN(query.skip))
-    skip = Number(query.skip);
-  if (query.select && !Number.isNaN(query.select))
-    select = Number(query.select);
+  if (query.skipNotes && !Number.isNaN(query.skipNotes))
+    skip.notes = Number(query.skipNotes);
+  if (query.skipFolders && !Number.isNaN(query.skipFolders))
+    skip.folders = Number(query.skipFolders);
 
-  const pathToSearch = `/${user.username}`;
+  if (query.limitNotes && !Number.isNaN(query.limitNotes))
+    limit.notes = Number(query.limitNotes);
+  if (query.limitFolders && !Number.isNaN(query.limitFolders))
+    limit.folders = Number(query.limitFolders);
+
+  const pathToSearch = generateRootFolderPath(user.username);
+
+  const kysely = getKysely();
 
   timer.start('db');
-  const [notes, folders] = await Promise.all([
-    prisma.note.findMany({
-      skip,
-      where: { path: { startsWith: pathToSearch } },
-      take: Math.floor(select / 2),
-      select: { name: true, path: true },
-    }),
-    prisma.folder.findMany({
-      skip,
-      where: { path: { startsWith: pathToSearch } },
-      take: Math.floor(select / 2),
-      select: { name: true, path: true, root: true },
-    }),
-  ]).catch(() => [null, null]);
+  const [notes, folders] = await kysely
+    .connection()
+    .execute(async (db) => {
+      return await Promise.all([
+        db
+          .selectFrom('Note')
+          .select(['name', 'path'])
+          .where(({ and, eb }) => and([
+            eb('path', 'like', `${pathToSearch}%`),
+            eb('ownerId', '=', user.id),
+          ]))
+          .offset(skip.notes)
+          .limit(limit.notes)
+          .execute(),
+
+        db
+          .selectFrom('Folder')
+          .select(['name', 'path', 'root'])
+          .where(({ and, eb }) => and([
+            eb('path', 'like', `${pathToSearch}%`),
+            eb('ownerId', '=', user.id),
+          ]))
+          .offset(skip.folders)
+          .limit(limit.folders)
+          .execute(),
+      ]);
+    })
+    .catch(() => [null, null]);
   timer.end();
 
   if (!notes || !folders)

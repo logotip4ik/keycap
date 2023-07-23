@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
     return sendRedirect(event, `/@${user.username}`);
 
   const query = getQuery(event);
-  const prisma = getPrisma();
+  const kysely = getKysely();
 
   if (query.error)
     return sendRedirect(event, '/');
@@ -33,10 +33,11 @@ export default defineEventHandler(async (event) => {
     return sendRedirect(event, '/');
 
   if (!query.socialUser) {
-    user = await prisma.user.findFirst({
-      where: { email: googleUser.email },
-      select: { id: true, email: true, username: true },
-    });
+    user = await kysely
+      .selectFrom('User')
+      .where('User.email', '=', googleUser.email)
+      .select(['User.id', 'User.email', 'User.username'])
+      .executeTakeFirst();
 
     if (user) {
       await setAuthCookies(event, user);

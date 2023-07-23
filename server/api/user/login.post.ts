@@ -20,12 +20,15 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const prisma = getPrisma();
+  // prisma: first query time - 79ms, then 3-4-5ms
+  // kysely: first query time - 23ms, then 3-4ms
+  const kysely = getKysely();
 
-  const user = await prisma.user.findUnique({
-    where: { email: body.email },
-    select: { id: true, email: true, username: true, password: true },
-  }).catch(() => null);
+  const user = await kysely
+    .selectFrom('User')
+    .select(['id', 'email', 'username', 'password'])
+    .where('email', '=', body.email)
+    .executeTakeFirst();
 
   if (!user)
     throw createError({ statusCode: 400, statusMessage: 'email or password is incorrect' });
@@ -42,7 +45,11 @@ export default defineEventHandler(async (event) => {
   if (isPasswordValid === false)
     throw createError({ statusCode: 400, statusMessage: 'email or password is incorrect' });
 
-  const safeUser: SafeUser = { id: user.id, username: user.username, email: user.email };
+  const safeUser: SafeUser = {
+    id: user.id,
+    username: user.username,
+    email: user.email,
+  };
 
   await setAuthCookies(event, safeUser);
 

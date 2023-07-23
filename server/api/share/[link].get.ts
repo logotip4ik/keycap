@@ -7,12 +7,14 @@ export default defineEventHandler(async (event) => {
   if (!isShareLinkValid(link))
     throw createError({ statusCode: 404 });
 
-  const prisma = getPrisma();
+  const kysely = getKysely();
 
-  const note = await prisma.note.findFirst({
-    select: { name: true, content: true, updatedAt: true, createdAt: true },
-    where: { shares: { some: { link } } },
-  }).catch(() => null);
+  const note = await kysely
+    .selectFrom('Note')
+    .leftJoin('Share', 'Share.noteId', 'Note.id')
+    .select(['Note.name', 'Note.content', 'Note.updatedAt', 'Note.createdAt'])
+    .where('Share.link', '=', link)
+    .executeTakeFirst();
 
   if (!note)
     throw createError({ statusCode: 404 });

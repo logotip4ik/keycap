@@ -9,32 +9,34 @@ export default defineEventHandler(async (event) => {
 
   const notePath = generateNotePath(user.username, path);
 
-  const prisma = getPrisma();
-
-  timer.start('db');
+  // const prisma = getPrisma();
+  const kysely = getKysely();
 
   // NOTE: there is no point from removing cached page because website is hosted on vercel
 
-  await prisma.$transaction(async (tx) => {
-    const shareToDelete = await tx.share.findFirst({
-      where: {
-        owner: { id: user.id },
-        note: { path: notePath },
-      },
-      select: { id: true, link: true },
-    }).catch(() => null);
+  timer.start('db');
 
-    if (!shareToDelete)
-      throw createError({ statusCode: 400 });
+  await kysely
+    .transaction()
+    .execute(async (tx) => {
+      const shareToDelete = await tx
+        .selectFrom('Share')
+        .leftJoin('Note', 'Note.id', 'Share.noteId')
+        .where(({ and, eb }) => and([
+          eb('Share.ownerId', '=', user.id),
+          eb('Note.path', '=', notePath),
+        ]))
+        .select('Share.id')
+        .executeTakeFirst();
 
-    const deletedShare = await tx.share.delete({
-      where: { id: shareToDelete.id },
-      select: { id: true },
-    }).catch(() => null);
+      if (!shareToDelete || !shareToDelete.id)
+        throw createError({ statusCode: 400 });
 
-    if (!deletedShare)
-      throw createError({ statusCode: 400 });
-  });
+      await tx
+        .deleteFrom('Share')
+        .where('Share.id', '=', shareToDelete.id)
+        .execute();
+    });
 
   timer.end();
 

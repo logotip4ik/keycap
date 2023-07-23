@@ -2,8 +2,6 @@ export default defineEventHandler(async (event) => {
   const user = event.context.user!;
   const timer = event.context.timer!;
 
-  const prisma = getPrisma();
-
   const query = getQuery(event);
   const path = getRouterParam(event, 'path');
 
@@ -35,17 +33,21 @@ export default defineEventHandler(async (event) => {
     data.path = generateNotePath(user.username, newNotePath);
   }
 
-  const selectParams = getNoteSelectParamsFromEvent(event);
+  const kysely = getKysely();
 
   timer.start('db');
-  const updatedNote = await prisma.note.update({
-    data,
-    where: { path: notePath },
-    select: { ...selectParams },
-  }).catch(() => null);
+  const updatedNote = await kysely
+    .updateTable('Note')
+    .set(data)
+    .where(({ and, eb }) => and([
+      eb('path', '=', notePath),
+      eb('ownerId', '=', user.id),
+    ]))
+    .executeTakeFirst()
+    .catch(() => null);
   timer.end();
 
-  if (!updatedNote)
+  if (!updatedNote || updatedNote.numUpdatedRows < 1)
     throw createError({ statusCode: 400 });
 
   timer.appendHeader(event);

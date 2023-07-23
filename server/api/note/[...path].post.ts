@@ -4,8 +4,6 @@ export default defineEventHandler(async (event) => {
   const user = event.context.user!;
   const timer = event.context.timer!;
 
-  const prisma = getPrisma();
-
   const path = getRouterParam(event, 'path');
 
   if (!path)
@@ -24,20 +22,21 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const selectParams = getNoteSelectParamsFromEvent(event);
+  const kysely = getKysely();
 
   timer.start('db');
-  const note = await prisma.note.create({
-    data: {
-      // last route param always should be note name
+  const note = await kysely
+    .insertInto('Note')
+    .values({
       name: body.name,
-      content: '',
       path: body.path,
-      owner: { connect: { id: user.id } },
-      parent: { connect: { id: toBigInt(body.parentId) } },
-    },
-    select: { ...selectParams },
-  }).catch(() => null);
+      content: '',
+      ownerId: user.id,
+      parentId: body.parentId,
+      updatedAt: new Date(),
+    })
+    .returning(['id', 'name', 'content', 'path'])
+    .executeTakeFirst();
   timer.end();
 
   if (!note)

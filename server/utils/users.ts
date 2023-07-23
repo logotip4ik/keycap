@@ -6,10 +6,13 @@ export const checkIfUsernameTaken = cachedFunction(async (username: string) => {
 
   username = username.trim();
 
-  const prisma = getPrisma();
+  const kysely = getKysely();
 
-  const user = await prisma.user.findFirst({ where: { username }, select: { username: true } })
-    .catch(() => null);
+  const user = await kysely
+    .selectFrom('User')
+    .select('username')
+    .where('username', '=', username)
+    .executeTakeFirst();
 
   return !!user?.username;
 }, {
