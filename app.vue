@@ -4,8 +4,6 @@ import 'requestidlecallback-polyfill';
 
 import parseDuration from 'parse-duration';
 
-import breakpoints from '~/constants/breakpoints';
-
 const { width: windowWidth } = useWindowSize();
 
 // NOTE: should be removed from client bundle
