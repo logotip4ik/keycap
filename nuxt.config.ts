@@ -18,7 +18,7 @@ export default defineNuxtConfig({
     head: {
       htmlAttrs: { translate: 'no', lang: 'en' },
       meta: [
-        { name: 'description', content: 'Better then just notes. Synced between your devices' },
+        { name: 'description', content: 'Better then just notes ❤. Synced between your devices, simple, fast and purple.' },
         { name: 'mobile-web-app-capable', content: 'yes' },
         { key: 'theme-color-light', name: 'theme-color', content: '#FCFCFD', media: '(prefers-color-scheme: light)' },
         { key: 'theme-color-dark', name: 'theme-color', content: '#111113', media: '(prefers-color-scheme: dark)' },

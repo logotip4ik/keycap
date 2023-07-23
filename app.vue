@@ -49,7 +49,7 @@ if (import.meta.env.SSR) {
   const { siteOrigin } = useRuntimeConfig().public;
 
   useSeoMeta({
-    ogDescription: 'Another note taking webapp ❤. Simple, fast and purple.',
+    ogDescription: 'Better then just notes ❤. Synced between your devices, simple, fast and purple.',
     ogImage: `https://${siteOrigin}/og-image.webp`,
     ogImageWidth: 1200,
     ogImageHeight: 630,
