@@ -1,3 +1,4 @@
+import process from 'node:process';
 import { Kysely, PostgresDialect } from 'kysely';
 import { Pool } from 'pg';
 
