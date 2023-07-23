@@ -1,11 +1,9 @@
-/* eslint-disable @typescript-eslint/no-invalid-this */
 import { setSuretypeOptions } from 'suretype';
 
 import '~/polyfills/array-at';
 
-function toJSON() {
-  // @ts-expect-error this should work ಠ_ಠ
-  return `${this.toString()}n`;
+function toJSON(this: bigint) {
+  return this.toString();
 }
 
 // eslint-disable-next-line no-extend-native
@@ -22,4 +20,10 @@ Object.defineProperty(
 
 setSuretypeOptions({ colors: false, location: false });
 
-export default defineNitroPlugin(() => undefined);
+export default defineNitroPlugin((nitro) => {
+  nitro.hooks.hookOnce('close', () => {
+    const kysely = getKysely();
+
+    kysely.destroy();
+  });
+});
