@@ -1,7 +1,5 @@
 import parseDuration from 'parse-duration';
 
-import { toBigInt } from '~/server/utils';
-
 const NEAR_HOUR = parseDuration('0.9hour')!;
 
 let prevInterval: NodeJS.Timer;
@@ -42,7 +40,7 @@ export default defineNuxtPlugin({
         if (!newUser || isSameUser)
           return;
 
-        user.value = { ...newUser, id: toBigInt(newUser.id) };
+        user.value = { ...newUser, id: newUser.id };
       });
     }
   },

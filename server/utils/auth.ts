@@ -7,8 +7,6 @@ import parseDuration from 'parse-duration';
 
 import type { H3Event } from 'h3';
 
-import { toBigInt } from '.';
-
 import type { SafeUser } from '~/types/server';
 
 const AUTH_EXPIRATiON = parseDuration('4 days', 'second')!;
@@ -74,11 +72,13 @@ export async function getUserFromEvent(event: H3Event): Promise<SafeUser | null>
 
   const { payload } = await jwtVerify(accessToken, secret, { issuer }).catch(() => null) || {};
 
+  // TODO: write suretype validator
+
   if (!payload)
     return null;
 
   return {
-    id: toBigInt(payload.id as string),
+    id: payload.id as string,
     email: payload.email as string,
     username: payload.username as string,
   };
