@@ -4,8 +4,11 @@ export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
   : ColumnType<T, T | undefined, T>;
 export type Timestamp = ColumnType<Date, Date | string, Date | string>;
 
-import type { SocialAuth } from "./enums";
-
+export const SocialAuth = {
+    Google: "Google",
+    GitHub: "GitHub"
+} as const;
+export type SocialAuth = (typeof SocialAuth)[keyof typeof SocialAuth];
 export type Folder = {
     id: Generated<string>;
     name: string;
