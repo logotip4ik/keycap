@@ -10,6 +10,9 @@ defineProps<Props>();
 </script>
 
 <template>
+  <FormLabel :target="id">
+    Server related content
+  </FormLabel>
   <input
     :id="id"
     :name="name"
@@ -24,6 +27,7 @@ defineProps<Props>();
 .form__input {
   &--hidden {
     display: none;
+    visibility: hidden;
   }
 }
 </style>

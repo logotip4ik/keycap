@@ -5,8 +5,6 @@ import parseDuration from 'parse-duration';
 import type { Note } from '@prisma/client';
 import type { RefToastInstance } from '~/composables/toasts';
 
-import { blankNoteName } from '~/assets/constants';
-
 const route = useRoute();
 const isFallbackMode = useFallbackMode();
 const notesCache = useNotesCache();
@@ -43,15 +41,16 @@ const POLLING_TIME = parseDuration('2 minutes')!;
 let pollingTimer: NodeJS.Timeout;
 let firstTimeFetch = true;
 let loadingToast: RefToastInstance;
+let abortControllerGet: AbortController | null;
 
-const { data: fetchedNote, pending, error, refresh } = await useLazyAsyncData<Note | null>(
+const { data: fetchedNote, pending, error, refresh } = useLazyAsyncData<Note | null>(
   'note',
   async () => {
     clearTimeout(pollingTimer);
 
     currentNoteState.value = '';
 
-    if (!route.params.note || route.params.note === blankNoteName)
+    if (!route.params.note || route.params.note === BLANK_NOTE_NAME)
       return null;
 
     if (!note.value) {
@@ -73,9 +72,11 @@ const { data: fetchedNote, pending, error, refresh } = await useLazyAsyncData<No
       firstTimeFetch = false;
     }
 
+    abortControllerGet = new AbortController();
+
     return await $fetch<Note>(
       `/api/note/${noteApiPath.value}`,
-      { retry: 2 },
+      { retry: 2, signal: abortControllerGet.signal },
     )
       .finally(() => {
         hideLoading();
@@ -89,7 +90,7 @@ const { data: fetchedNote, pending, error, refresh } = await useLazyAsyncData<No
   { server: false },
 );
 
-let abortController: AbortController | null;
+let abortControllerUpdate: AbortController | null;
 const throttledUpdate = useThrottleFn(updateNote, 1000, true, false); // enable trailing call and disable leading
 function updateNote(content: string) {
   const updatingCurrentNote = notePath.value.replace('/', '/@') === window.location.pathname;
@@ -110,24 +111,27 @@ function updateNote(content: string) {
   if (!note.value || !notesCache.get(notePath.value))
     return;
 
-  const newNote: Partial<Note> = { content };
+  const newNote: Note = { ...toRaw(note.value), content };
 
   // enables optimistic ui
-  notesCache.set(note.value.path, { ...note.value, ...newNote });
+  notesCache.set(note.value.path, newNote);
 
   if (updatingCurrentNote)
     currentNoteState.value = 'updating';
 
-  abortController?.abort();
-  abortController = new AbortController();
+  abortControllerUpdate?.abort();
+  abortControllerUpdate = new AbortController();
 
   $fetch<QuickResponse>(`/api/note/${noteApiPath.value}`, {
     method: 'PATCH',
-    body: newNote,
+    body: { content },
     retry: 2,
-    signal: abortController.signal,
+    signal: abortControllerUpdate.signal,
   })
     .then(() => {
+      if (note.value)
+        offlineStorage.value?.setItem(note.value.path, newNote);
+
       // before route update, note will be saved and the indicator will be again reset to saved
       // this checks if route is the same, so this wasn't last save and user is still on the same note
       if (updatingCurrentNote)
@@ -172,7 +176,7 @@ watch(error, async (error) => {
   if (!offlineNote) {
     createToast('No offline copy found');
 
-    await navigateTo({ ...route, params: { note: blankNoteName } });
+    await navigateTo({ ...route, params: { note: BLANK_NOTE_NAME } });
 
     return;
   }
@@ -193,6 +197,7 @@ watch(fetchedNote, (value) => {
 
 onBeforeUnmount(() => {
   clearTimeout(pollingTimer);
+  abortControllerGet?.abort();
 });
 </script>
 

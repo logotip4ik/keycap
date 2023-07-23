@@ -2,6 +2,7 @@
 
 const fsp = require('node:fs/promises');
 const path = require('node:path');
+const process = require('node:process');
 
 const pkgDir = path.join(process.cwd(), 'package.json');
 

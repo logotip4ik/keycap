@@ -31,12 +31,12 @@ function formatDate(date: string | Date) {
 </script>
 
 <template>
-  <div v-if="note" class="note-view">
+  <div v-if="note" v-once class="note-view">
     <NavSimple />
 
     <header class="note-view__header">
       <small v-if="isNoteContentsEmpty" class="note-view__header__alert">
-        <Icon name="ic:outline-info" class="note-view__header__alert__icon" />
+        <IconOutlineInfo v-once class="note-view__header__alert__icon" />
         Note is empty
       </small>
 

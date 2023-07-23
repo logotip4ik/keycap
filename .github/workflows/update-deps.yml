@@ -10,6 +10,7 @@ env:
 
 jobs:
   auto-update-dependencies:
+    timeout-minutes: 4
     runs-on: ubuntu-latest
 
     steps:

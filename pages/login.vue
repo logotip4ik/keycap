@@ -42,9 +42,9 @@ async function login() {
 </script>
 
 <template>
-  <NavSimple />
+  <NavSimple v-once />
 
-  <main class="login">
+  <main v-once class="login">
     <Form
       action="/api/user/login"
       method="POST"
@@ -62,6 +62,10 @@ async function login() {
       </FormTitle>
 
       <FormItem>
+        <FormLabel target="email">
+          Email
+        </FormLabel>
+
         <FormInput
           id="email"
           ref="emailComponent"
@@ -74,6 +78,10 @@ async function login() {
       </FormItem>
 
       <FormItem>
+        <FormLabel target="password">
+          Password
+        </FormLabel>
+
         <FormInput
           id="password"
           ref="passwordComponent"

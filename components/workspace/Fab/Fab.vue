@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import type { Component } from 'vue';
+import { IconOutlineAdd, IconSearchRounded } from '#components';
+
 interface Props {
   onOpenSearch: () => void
 }
@@ -8,19 +11,22 @@ const isFabUnfolded = ref(false);
 const fabContainer = ref<null | HTMLElement>(null);
 
 interface FabButton {
-  icon: string
+  icon: Component
+  label: string
   action: () => any
 }
 
 const buttons: FabButton[] = [
   {
-    icon: 'search',
+    icon: IconSearchRounded,
+    label: 'open quick search',
     action: () => {
       props.onOpenSearch();
     },
   },
   {
-    icon: 'ic:outline-add',
+    icon: IconOutlineAdd,
+    label: 'create new note or folder',
     action: () => {
       const { data: folder } = useNuxtData('folder');
 
@@ -44,11 +50,13 @@ useClickOutside(fabContainer, () => isFabUnfolded.value = false);
       <div v-show="isFabUnfolded" class="fab__buttons">
         <button
           v-for="(button, key) in buttons"
+          v-once
           :key="key"
           class="fab"
+          :aria-label="button.label"
           @click="withFoldCallback(button.action)"
         >
-          <Icon :name="button.icon" class="fab__icon" />
+          <component :is="button.icon" class="fab__icon" />
         </button>
       </div>
     </Transition>
@@ -56,21 +64,16 @@ useClickOutside(fabContainer, () => isFabUnfolded.value = false);
     <button
       class="fab fab--main"
       :class="{ 'fab--active': isFabUnfolded }"
+      :aria-label="isFabUnfolded ? 'hide actions' : 'show more actions'"
       @click="isFabUnfolded = !isFabUnfolded"
     >
       <Transition name="fade" mode="out-in">
         <span v-if="isFabUnfolded" :key="1">
-          <Icon
-            name="close"
-            class="fab__icon"
-          />
+          <IconCloseRounded class="fab__icon" />
         </span>
 
         <span v-else :key="2">
-          <Icon
-            name="material-symbols:more-vert"
-            class="fab__icon"
-          />
+          <IconBaselineMoreVert class="fab__icon" />
         </span>
       </Transition>
     </button>

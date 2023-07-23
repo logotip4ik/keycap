@@ -1,6 +1,6 @@
 <template>
   <div class="skeleton">
-    <h2 class="skeleton__heading skeleton-loading-bg" />
+    <p class="skeleton__heading skeleton-loading-bg" />
 
     <p class="skeleton__text skeleton-loading-bg" />
     <p class="skeleton__text skeleton-loading-bg" />
@@ -39,7 +39,8 @@
       margin-top: 1rem;
     }
 
-    @for $i from 1 to $numberOfItems + 1 {
+    // Skip first element
+    @for $i from 2 to $numberOfItems + 2 {
       &:nth-of-type(#{$i}) {
         width: (random(74) + 24)+#{'%'};
 

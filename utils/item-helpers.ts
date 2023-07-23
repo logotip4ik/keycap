@@ -4,8 +4,6 @@ import type { Note } from '@prisma/client';
 import type { RouteLocationRaw } from 'vue-router';
 import type { NavigateToOptions } from 'nuxt/dist/app/composables/router';
 
-import { blankNoteName } from '~/assets/constants';
-
 type ItemWithPath = Partial<FolderOrNote> & { path: string };
 export function generateItemRouteParams(item: ItemWithPath): RouteLocationRaw {
   const user = useUser();
@@ -14,7 +12,7 @@ export function generateItemRouteParams(item: ItemWithPath): RouteLocationRaw {
   const isFolder = 'root' in item;
 
   const username = user.value?.username || route.params.user;
-  const routeName = isFolder ? blankNoteName : (item as NoteMinimal).name;
+  const routeName = isFolder ? BLANK_NOTE_NAME : (item as NoteMinimal).name;
   const routeFolders = withoutLeadingSlash(item.path)
     .split('/')
     .slice(1)

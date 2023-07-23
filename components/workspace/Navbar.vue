@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { blankNoteName } from '~/assets/constants';
-
 // see https://github.com/vuejs/core/discussions/8626
 // this actually feels ok, i guess
 // kinda react'y, but it brings better typings
@@ -20,7 +18,7 @@ const isShowingBackButton = computed(() => isSmallScreen!.value && !isNoteNameEm
 const headingText = computed(() => {
   if (!user.value) return '';
 
-  if (route.params.note && route.params.note !== blankNoteName)
+  if (route.params.note && route.params.note !== BLANK_NOTE_NAME)
     return decodeURIComponent(route.params.note as string);
 
   if (route.params.folders && route.params.folders.length !== 0) {
@@ -32,7 +30,7 @@ const headingText = computed(() => {
 });
 
 const folderRootPath = computed(() => {
-  return { ...route, params: { ...route.params, note: blankNoteName } };
+  return { ...route, params: { ...route.params, note: BLANK_NOTE_NAME } };
 });
 </script>
 
@@ -43,8 +41,9 @@ const folderRootPath = computed(() => {
         v-show="isShowingBackButton"
         class="navbar__button navbar__button--back"
         :href="folderRootPath"
+        aria-label="go up to folder root"
       >
-        <Icon name="ic:baseline-arrow-back" class="navbar__button__icon" />
+        <IconBaselineArrowBack v-once class="navbar__button__icon" />
       </NuxtLink>
     </Transition>
 
@@ -56,9 +55,10 @@ const folderRootPath = computed(() => {
     <button
       class="navbar__button navbar__button--search"
       :data-show-back-button="isShowingBackButton"
+      aria-label="open quick search"
       @click="onOpenSearch"
     >
-      <Icon name="search" class="navbar__button__icon" />
+      <IconSearchRounded v-once class="navbar__button__icon" />
     </button>
   </nav>
 </template>
@@ -156,6 +156,8 @@ const folderRootPath = computed(() => {
     transition: color .3s, background-color .3s, opacity .3s;
 
     &--back {
+      will-change: transform, margin-right, opacity;
+
       margin-right: 1rem;
 
       background-color: hsla(var(--text-color-hsl), 0.1);

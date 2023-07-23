@@ -13,9 +13,9 @@ const notEmptyQuery = Object.fromEntries(
 </script>
 
 <template>
-  <NavSimple />
+  <NavSimple v-once />
 
-  <WithBlob v-slot="props" top="45%">
+  <WithBlob v-once v-slot="props" top="45%">
     <div class="username-page" v-bind="props">
       <Form
         :action="`/api/oauth/${query.provider}`"
@@ -35,6 +35,10 @@ const notEmptyQuery = Object.fromEntries(
         </FormTitle>
 
         <FormItem>
+          <FormLabel target="username">
+            Username
+          </FormLabel>
+
           <FormInput
             id="username"
             ref="usernameInput"
@@ -57,7 +61,7 @@ const notEmptyQuery = Object.fromEntries(
           </FormInputNote>
         </FormItem>
 
-        <FormItem class="form__actions" actions>
+        <FormItem actions>
           <FormButton type="submit">
             Submit
           </FormButton>

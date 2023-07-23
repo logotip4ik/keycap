@@ -17,7 +17,6 @@ import HorizontalRule from '@tiptap/extension-horizontal-rule';
 import ListItem from '@tiptap/extension-list-item';
 import OrderedList from '@tiptap/extension-ordered-list';
 import Code from '@tiptap/extension-code';
-import Link from '@tiptap/extension-link';
 import Placeholder from '@tiptap/extension-placeholder';
 import TaskList from '@tiptap/extension-task-list';
 import TaskItem from '@tiptap/extension-task-item';
@@ -64,7 +63,7 @@ const editor = useEditor({
     Italic,
     Strike,
     History,
-    Link,
+    BetterLink,
     TaskList,
     TaskItem,
     BubbleMenuPlugin,
@@ -146,10 +145,14 @@ useTinykeys({
   },
 });
 
-useEventListener(window, 'visibilitychange', () => {
-  if (document.visibilityState === 'visible')
-    props.onRefresh();
-}, { passive: true });
+onMounted(() => {
+  const clear = on(document, 'visibilitychange', () => {
+    if (document.visibilityState === 'visible')
+      props.onRefresh();
+  });
+
+  onBeforeUnmount(() => clear());
+});
 </script>
 
 <template>
@@ -175,3 +178,40 @@ useEventListener(window, 'visibilitychange', () => {
     <EditorContent class="note-editor" :editor="editor" />
   </div>
 </template>
+
+<style lang="scss">
+.note-editor__details-button {
+  position: absolute;
+  top: 1rem;
+  right: 0;
+  z-index: 2;
+
+  font: inherit;
+  text-decoration: underline;
+  color: hsla(var(--text-color-hsl), 0.65);
+
+  padding: 0.5rem 0.75rem;
+
+  border: none;
+  outline-color: transparent;
+  background: transparent;
+  cursor: pointer;
+
+  transition: color .3s, text-shadow .3s;
+
+  @media (hover: hover) {
+    color: hsla(var(--text-color-hsl), 0.5);
+  }
+
+  @media screen and (max-width: $breakpoint-tablet) {
+    top: 0.15rem;
+  }
+
+  &:is(:hover, :focus-visible) {
+    color: hsla(var(--text-color-hsl), 1);
+    text-shadow: 0 0 2rem hsla(var(--text-color-hsl), 1);
+
+    transition-duration: .05s;
+  }
+}
+</style>

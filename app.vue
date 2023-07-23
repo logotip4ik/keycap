@@ -4,23 +4,24 @@ import 'requestidlecallback-polyfill';
 
 import parseDuration from 'parse-duration';
 
-import breakpoints from 'assets/constants/breakpoints';
+import breakpoints from '~/constants/breakpoints';
 
 const { width: windowWidth } = useWindowSize();
 
 // NOTE: should be removed from client bundle
-const device = process.server ? parseUA(useRequestHeaders()['user-agent']) : undefined;
+const device = import.meta.env.SSR ? parseUA(useRequestHeaders()['user-agent']) : undefined;
 
-const isFirefox = process.server
+const isFirefox = import.meta.env.SSR
   ? device!.isFirefox
   : checkIsFirefox(navigator.userAgent);
 
 const isSmallScreen = computed(() =>
-  process.server
+  import.meta.env.SSR
     ? device!.isMobileOrTablet
     : windowWidth.value < breakpoints.tablet,
 );
 provide(IsSmallScreenKey, isSmallScreen);
+provide(IsFirefoxKey, isFirefox);
 
 useHead({
   titleTemplate: (title) => title ? `${title} - Keycap` : 'Keycap - Better notes',
@@ -32,7 +33,7 @@ useHead({
   },
 });
 
-if (process.client) {
+if (!import.meta.env.SSR) {
   const UPDATE_WORKER_DELAY = parseDuration('1.5s')!;
 
   setTimeout(() => {
@@ -44,7 +45,7 @@ if (process.client) {
   }, UPDATE_WORKER_DELAY);
 }
 
-if (process.server) {
+if (import.meta.env.SSR) {
   const { siteOrigin } = useRuntimeConfig().public;
 
   useSeoMeta({
@@ -56,6 +57,7 @@ if (process.server) {
     robots: { none: true },
     applicationName: 'Keycap',
     author: 'Bogdan Kostyuk',
+    twitterCard: 'summary',
   }, { mode: 'server' });
 
   useHead({

@@ -5,13 +5,15 @@ import browserslistToEsbuild from 'browserslist-to-esbuild';
 import parseDuration from 'parse-duration';
 
 import { getHeaders } from './headers.config';
-import breakpoints from './assets/constants/breakpoints';
+import breakpoints from './constants/breakpoints';
 import { ParseDurationTransformPlugin } from './vite/transform-parse-duration';
 
 const ISRDuration = parseDuration('15 minutes', 'second');
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
+  devtools: { enabled: true },
+
   app: {
     head: {
       htmlAttrs: { translate: 'no', lang: 'en' },
@@ -40,8 +42,18 @@ export default defineNuxtConfig({
 
   typescript: {
     tsConfig: {
-      exclude: ['../data'],
+      exclude: ['../data', '../benchmarks'],
     },
+  },
+
+  imports: {
+    dirs: [
+      './utils/tiptap',
+      './constants',
+    ],
+    imports: [
+      { from: 'rad-event-listener', name: 'on' },
+    ],
   },
 
   nitro: {
@@ -106,10 +118,9 @@ export default defineNuxtConfig({
 
   modules: [
     '@vueuse/nuxt',
-    'nuxt-icon',
+    '@vite-pwa/nuxt',
     '@nuxtjs/fontaine',
     'unplugin-ltsdi/nuxt',
-    '@vite-pwa/nuxt',
   ],
 
   css: [
@@ -133,7 +144,7 @@ export default defineNuxtConfig({
 
     build: {
       target: 'esnext',
-      cssMinify: 'lightningcss',
+      // cssMinify: 'lightningcss',
       cssTarget: browserslistToEsbuild(),
       ...(provider === 'vercel'
         ? {
@@ -178,6 +189,7 @@ export default defineNuxtConfig({
         family: 'Mona Sans',
         src: '/fonts/Mona-Sans/Mona-Sans.woff2',
         root: 'assets',
+        fallbacks: ['Arial'],
       },
     ],
   },

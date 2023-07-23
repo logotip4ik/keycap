@@ -5,9 +5,13 @@ interface Props { editor: Editor }
 defineProps<Props>();
 
 const isFallbackMode = useFallbackMode();
+const isFirefox = inject(IsFirefoxKey);
 const inlineMenu = ref<HTMLElement | null>(null);
 
+const hiddenClass = 'inline-menu__hidden';
+
 let prevFormatterPosition: number;
+let prevAnimation: Animation | null;
 function handleKeyboardAppear() {
   const viewport = window.visualViewport;
 
@@ -18,20 +22,43 @@ function handleKeyboardAppear() {
       - viewport.offsetTop
       - viewport.height;
 
-  if (formatterPosition < 1 && prevFormatterPosition < 1)
+  if (prevAnimation || (formatterPosition < 1 && prevFormatterPosition < 1))
     return;
 
-  prevFormatterPosition = formatterPosition;
+  prevAnimation = inlineMenu.value.animate([
+    { transform: `translate3d(0,${-1 * prevFormatterPosition}px,0)` },
+    { transform: `translate3d(0,${-1 * formatterPosition}px,0)` },
+  ], { fill: 'forwards', duration: 175, easing: 'cubic-bezier(0.33, 1, 0.68, 1)' });
 
-  inlineMenu.value.style.setProperty('--btm', `${formatterPosition.toFixed(2)}px`);
+  prevAnimation.addEventListener('finish', () => {
+    inlineMenu.value?.classList.remove(hiddenClass);
+    prevAnimation = null;
+  });
+}
+
+const debouncedMouseAppear = useDebounceFn(handleKeyboardAppear, 75);
+
+function handleMobileScroll() {
+  inlineMenu.value?.classList.add(hiddenClass);
+
+  debouncedMouseAppear();
 }
 
 onMounted(() => {
-  window.visualViewport?.addEventListener('resize', handleKeyboardAppear);
+  if (isFirefox)
+    return;
 
-  onBeforeUnmount(() => {
-    window.visualViewport?.removeEventListener('resize', handleKeyboardAppear);
-  });
+  let cleanups = [
+    on(window.visualViewport!, 'resize', handleKeyboardAppear),
+    on(window.visualViewport!, 'scroll', handleMobileScroll),
+    on(window, 'scroll', handleMobileScroll),
+  ];
+  const cleanup = () => {
+    cleanups.forEach((cb) => cb());
+    cleanups = [];
+  };
+
+  onBeforeUnmount(cleanup);
 });
 </script>
 
@@ -52,7 +79,7 @@ onMounted(() => {
   align-items: center;
 
   position: fixed;
-  bottom: var(--btm, 0px);
+  bottom: 0px;
   left: 0;
   z-index: 10;
 
@@ -68,6 +95,8 @@ onMounted(() => {
     15px 25px 80px rgba(var(--base-shadow-color), 0.08)
   ;
 
+  transition: opacity .3s;
+
   @media (prefers-color-scheme: dark) {
     --base-shadow-color: 200, 200, 200;
   }
@@ -76,6 +105,13 @@ onMounted(() => {
     background-color: hsla(var(--surface-color-hsl), 0.25);
 
     backdrop-filter: blur(0.75rem);
+  }
+
+  &__hidden {
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity .1s;
   }
 
   &.fade-enter-active {

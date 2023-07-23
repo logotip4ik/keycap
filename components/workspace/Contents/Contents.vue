@@ -16,7 +16,8 @@ const user = useUser();
 
 const folderPath = computed(() => {
   const folders = (Array.isArray(route.params.folders) ? route.params.folders : [route.params.folders])
-    .filter((str) => !!str);
+    .filter((str) => !!str)
+    .map(encodeURIComponent);
 
   return withoutTrailingSlash(`/${route.params.user}/${folders.join('/')}`);
 });
