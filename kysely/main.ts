@@ -7,12 +7,24 @@ import type { DB } from './types';
 declare global {
   // eslint-disable-next-line vars-on-top, no-var
   var __kysely: Kysely<DB> | undefined;
+  // eslint-disable-next-line vars-on-top, no-var
+  var __pg: Pool | undefined;
+}
+
+async function getPgPool() {
+  if (!globalThis.__pg) {
+    globalThis.__pg = new Pool({
+      connectionString: process.env.DATABASE_URL,
+      max: 1,
+      allowExitOnIdle: true,
+    });
+  }
+
+  return globalThis.__pg;
 }
 
 const dialect = new PostgresDialect({
-  pool: async () => new Pool({
-    connectionString: process.env.DATABASE_URL,
-  }),
+  pool: getPgPool,
 });
 
 export function getKysely() {
