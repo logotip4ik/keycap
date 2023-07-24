@@ -10,11 +10,12 @@ export default defineEventHandler(async (event) => {
 
   const notePath = generateNotePath(user.username, path);
 
-  interface UpdatableFields { name?: string; content?: string; path?: string }
+  interface UpdatableFields { name?: string; content?: string; path?: string; updatedAt: Date }
   const data = await readBody<UpdatableFields>(event) || {};
 
   if (data.name) data.name = data.name.trim();
   if (data.content) data.content = data.content.trim();
+  data.updatedAt = new Date();
 
   const validation = useNoteUpdateValidation(data);
 
