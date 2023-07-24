@@ -19,7 +19,9 @@ export async function defineFuzzyWorker() {
   const fuzzyWorker = useFuzzyWorker();
 
   // https://vitejs.dev/guide/features.html#web-workers
-  const worker = new Worker(new URL('../workers/fuzzy.ts', import.meta.url));
+  const worker = import.meta.env.PROD
+    ? new Worker(new URL('../workers/fuzzy.ts', import.meta.url))
+    : new Worker(new URL('../workers/fuzzy.ts', import.meta.url), { type: 'module' });
 
   fuzzyWorker.value = wrap(worker);
 }
