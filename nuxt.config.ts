@@ -138,7 +138,7 @@ export default defineNuxtConfig({
   sourcemap: isDevelopment,
 
   build: {
-    transpile: ['tinykeys', 'pg'],
+    transpile: ['tinykeys'],
   },
 
   vite: {
