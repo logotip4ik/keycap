@@ -36,3 +36,7 @@ After months of usage windows and android phone, i found out that notes aren't s
 
 - [prisma vs kysely (my benchmark)](./benchmarks/prisma-vs-kysely/README.md)    
   tldr: in queries without joins prisma is not that far, but in larger queries, kysely has usually more than 100 ops/s difference
+
+[Rewrite with kysely](https://github.com/logotip4ik/keycap/tree/feat/kysely). Kysely is slightly faster in development environment,
+though `node-postgres` isn't well suited for serverless. So to see kysely outperforms prisma you will needed much more traffic then 
+few visitors in a week.
