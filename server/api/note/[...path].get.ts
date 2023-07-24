@@ -1,3 +1,5 @@
+import type { NoteDefault, NoteDetails } from '~/types/note';
+
 export default defineEventHandler(async (event) => {
   const user = event.context.user!;
   const timer = event.context.timer!;
@@ -48,11 +50,6 @@ export default defineEventHandler(async (event) => {
   return note;
 });
 
-export interface NoteDetails {
-  updatedAt: Date
-  createdAt: Date
-  share?: { link: string; updatedAt: Date; createdAt: Date }
-}
 function makeDetailsNote(note: any): NoteDetails {
   const transformedNote: NoteDetails = {
     updatedAt: note.updatedAt,
@@ -70,6 +67,6 @@ function makeDetailsNote(note: any): NoteDetails {
   return transformedNote;
 }
 
-function makeNormalNote(note: any): { id: string; name: string; content?: string; path: string } {
+function makeNormalNote(note: any): NoteDefault {
   return note;
 }
