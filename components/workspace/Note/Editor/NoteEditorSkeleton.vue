@@ -1,12 +1,11 @@
 <template>
   <div class="skeleton">
-    <p class="skeleton__heading skeleton-loading-bg" />
+    <p class="skeleton__heading skeleton-bg" />
 
-    <p class="skeleton__text skeleton-loading-bg" />
-    <p class="skeleton__text skeleton-loading-bg" />
-    <p class="skeleton__text skeleton-loading-bg" />
-    <p class="skeleton__text skeleton-loading-bg" />
-    <p class="skeleton__text skeleton-loading-bg" />
+    <p class="skeleton__text skeleton-bg" />
+    <p class="skeleton__text skeleton-bg" />
+    <p class="skeleton__text skeleton-bg" />
+    <p class="skeleton__text skeleton-bg" />
   </div>
 </template>
 
@@ -20,18 +19,18 @@
   &__text {
     margin: 0;
 
-    border-radius: 0.25rem;
+    border-radius: 0.15rem;
   }
 
   &__heading {
-    width: (random(74) + 24)+#{'%'};
+    width: (random(54) + 24)+#{'%'};
     height: 2rem;
 
     margin-bottom: 2rem;
   }
 
   &__text {
-    $numberOfItems: 5;
+    $numberOfItems: 4;
 
     height: 1.25rem;
 
@@ -42,7 +41,7 @@
     // Skip first element
     @for $i from 2 to $numberOfItems + 2 {
       &:nth-of-type(#{$i}) {
-        width: (random(74) + 24)+#{'%'};
+        width: (random(54) + 24)+#{'%'};
 
         opacity: math.div(1, $i);
       }
