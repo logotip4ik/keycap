@@ -8,7 +8,8 @@
     "postinstall": "prisma generate && nuxt prepare",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "typecheck": "npx -p vue-tsc@latest -p typescript@latest vue-tsc --noEmit"
+    "typecheck": "npx -p vue-tsc@latest -p typescript@latest vue-tsc --noEmit",
+    "size": "size-limit"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.39.8",
@@ -30,6 +31,7 @@
     "@node-rs/bcrypt": "^1.7.3",
     "@nuxt/kit": "^3.6.5",
     "@prisma/client": "^5.0.0",
+    "@size-limit/file": "^8.2.6",
     "@superhuman/command-score": "^0.5.0",
     "@tinkoff/lru-cache-nano": "^7.8.1",
     "@tiptap/core": "^2.1.0-rc.12",
@@ -78,6 +80,7 @@
     "requestidlecallback-polyfill": "^1.0.2",
     "sanitize-html": "^2.11.0",
     "simple-git": "^3.19.1",
+    "size-limit": "^8.2.6",
     "suretype": "^3.3.1",
     "terser": "^5.19.2",
     "tinykeys": "^2.1.0",
@@ -96,5 +99,19 @@
   },
   "prisma": {
     "seed": "npx tsx prisma/seed.ts"
-  }
+  },
+  "size-limit": [
+    {
+      "name": "entry",
+      "path": ".output/public/_nuxt/entry.*.js"
+    },
+    {
+      "name": "tiptap",
+      "path": ".output/public/_nuxt/_note_.*.js"
+    },
+    {
+      "name": "all",
+      "path": ".output/public/_nuxt/*.js"
+    }
+  ]
 }

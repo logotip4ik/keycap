@@ -3393,6 +3393,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@size-limit/file@npm:^8.2.6":
+  version: 8.2.6
+  resolution: "@size-limit/file@npm:8.2.6"
+  dependencies:
+    semver: 7.5.3
+  peerDependencies:
+    size-limit: 8.2.6
+  checksum: bfff3d28e21752eabb64b94bb1d5741fe0293a1a639e6c027051a1e839b4cb67a14fa9d3d4c01ffee69eeb7fdfafbf94f8f08647363e9c2370fdfed785e2b099
+  languageName: node
+  linkType: hard
+
 "@superhuman/command-score@npm:^0.5.0":
   version: 0.5.0
   resolution: "@superhuman/command-score@npm:0.5.0"
@@ -5120,6 +5131,13 @@ __metadata:
   dependencies:
     streamsearch: ^1.1.0
   checksum: 32801e2c0164e12106bf236291a00795c3c4e4b709ae02132883fe8478ba2ae23743b11c5735a0aae8afe65ac4b6ca4568b91f0d9fed1fdbc32ede824a73746e
+  languageName: node
+  linkType: hard
+
+"bytes-iec@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "bytes-iec@npm:3.1.1"
+  checksum: 092a90897e938c8d28acf2b6383e5b91abc97c5d4251d9b6ebe331eb55b6064a331dcc78520efb98f90d554cfe9c7309e9138306f58d133dc0dcfa1edf38fc0a
   languageName: node
   linkType: hard
 
@@ -9645,6 +9663,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"nanospinner@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "nanospinner@npm:1.1.0"
+  dependencies:
+    picocolors: ^1.0.0
+  checksum: 797f0a7c8b053d6fb5188d73e63bab44dec97ff0e7b67ac3d55e9356c6fe002f5af691a9d1232ca086e1fb19301d11c979dc5b0c56e6700004a96c19dfded8f0
+  languageName: node
+  linkType: hard
+
 "natural-compare-lite@npm:^1.4.0":
   version: 1.4.0
   resolution: "natural-compare-lite@npm:1.4.0"
@@ -12130,6 +12157,7 @@ __metadata:
     "@nuxtjs/fontaine": ^0.4.0
     "@parcel/watcher": ^2.2.0
     "@prisma/client": ^5.0.0
+    "@size-limit/file": ^8.2.6
     "@superhuman/command-score": ^0.5.0
     "@tinkoff/lru-cache-nano": ^7.8.1
     "@tiptap/core": ^2.1.0-rc.12
@@ -12186,6 +12214,7 @@ __metadata:
     sanitize-html: ^2.11.0
     sass: ^1.64.1
     simple-git: ^3.19.1
+    size-limit: ^8.2.6
     suretype: ^3.3.1
     terser: ^5.19.2
     tinykeys: ^2.1.0
@@ -12326,6 +12355,17 @@ __metadata:
   bin:
     semver: bin/semver
   checksum: fb4ab5e0dd1c22ce0c937ea390b4a822147a9c53dbd2a9a0132f12fe382902beef4fbf12cf51bb955248d8d15874ce8cd89532569756384f994309825f10b686
+  languageName: node
+  linkType: hard
+
+"semver@npm:7.5.3":
+  version: 7.5.3
+  resolution: "semver@npm:7.5.3"
+  dependencies:
+    lru-cache: ^6.0.0
+  bin:
+    semver: bin/semver.js
+  checksum: 9d58db16525e9f749ad0a696a1f27deabaa51f66e91d2fa2b0db3de3e9644e8677de3b7d7a03f4c15bc81521e0c3916d7369e0572dbde250d9bedf5194e2a8a7
   languageName: node
   linkType: hard
 
@@ -12511,6 +12551,22 @@ __metadata:
   version: 1.0.5
   resolution: "sisteransi@npm:1.0.5"
   checksum: aba6438f46d2bfcef94cf112c835ab395172c75f67453fe05c340c770d3c402363018ae1ab4172a1026a90c47eaccf3af7b6ff6fa749a680c2929bd7fa2b37a4
+  languageName: node
+  linkType: hard
+
+"size-limit@npm:^8.2.6":
+  version: 8.2.6
+  resolution: "size-limit@npm:8.2.6"
+  dependencies:
+    bytes-iec: ^3.1.1
+    chokidar: ^3.5.3
+    globby: ^11.1.0
+    lilconfig: ^2.1.0
+    nanospinner: ^1.1.0
+    picocolors: ^1.0.0
+  bin:
+    size-limit: bin.js
+  checksum: 8b28e87f5cbfabd5ccbcf3f09152542477a9de9ac138761168aa1c720d28c66941aaa0d61bff64510fd291c5d419ced294766f41bfd827fb1428f2122fb0beb7
   languageName: node
   linkType: hard
 
