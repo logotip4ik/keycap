@@ -13,7 +13,7 @@ const isFolder = 'root' in props.item;
 type NoteDetails = Note & Prisma.NoteGetPayload<{ select: { shares: { select: { link: true; updatedAt: true; createdAt: true } } } }>;
 
 // NOTE(perf improvement): client bundle size reduced by using only useAsyncData or useFetch
-const { data: details, refresh } = await useLazyAsyncData(async () => {
+const { data: details, refresh } = useLazyAsyncData(async () => {
   return await $fetch<Partial<NoteDetails>>(
     // /api/[note|folder]/[item path without username]
     `/api/${isFolder ? 'folder' : 'note'}/${props.item.path.split('/').slice(2).join('/')}`,
