@@ -1,6 +1,6 @@
 import process from 'node:process';
 import { Kysely, PostgresDialect } from 'kysely';
-import { Pool } from 'pg';
+import pg from 'pg';
 
 import type { DB } from './types';
 
@@ -8,15 +8,15 @@ declare global {
   // eslint-disable-next-line vars-on-top, no-var
   var __kysely: Kysely<DB> | undefined;
   // eslint-disable-next-line vars-on-top, no-var
-  var __pg: Pool | undefined;
+  var __pg: pg.Pool | undefined;
 }
 
 async function getPgPool() {
   if (!globalThis.__pg) {
-    globalThis.__pg = new Pool({
+    globalThis.__pg = new pg.Pool({
       connectionString: process.env.DATABASE_URL,
-      max: 1,
-      allowExitOnIdle: true,
+      max: 2,
+      keepAlive: true,
     });
   }
 
