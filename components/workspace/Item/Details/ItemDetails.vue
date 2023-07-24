@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { NoteDetails as ItemDetails } from '~/types/note';
+
 interface Props { item: NoteMinimal }
 const props = defineProps<Props>();
 
@@ -7,13 +9,6 @@ const createToast = useToast();
 const isLoadingItemDetails = ref(false);
 
 const isFolder = 'root' in props.item;
-
-// TODO: import from server types
-interface ItemDetails {
-  updatedAt: Date
-  createdAt: Date
-  share?: { link: string; updatedAt: Date; createdAt: Date }
-}
 
 // NOTE(perf improvement): client bundle size reduced by using only useAsyncData or useFetch
 const { data: details, refresh } = await useLazyAsyncData(async () => {
