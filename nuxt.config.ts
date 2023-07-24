@@ -39,6 +39,7 @@ export default defineNuxtConfig({
     writeEarlyHints: true,
     componentIslands: true,
     watcher: 'parcel',
+    typescriptBundlerResolution: true,
   },
 
   typescript: {
