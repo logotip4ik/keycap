@@ -150,7 +150,7 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
               @click="copyShareLink"
             >
               <Transition name="fade">
-                <!-- NOTE: skeleton class add appear delay -->
+                <!-- NOTE: skeleton class adds appear delay -->
                 <span v-if="isLoadingItemDetails" class="skeleton">Loading...</span>
                 <span v-else-if="mergedDetails.share">{{ mergedDetails.share.link }}</span>
                 <span v-else>Disabled</span>
