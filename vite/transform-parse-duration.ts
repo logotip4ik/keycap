@@ -40,7 +40,7 @@ export function ParseDurationTransformPlugin(): Plugin {
 
       const s = new MagicString(code);
 
-      walk(this.parse(code), {
+      walk(this.parse(code) as any, {
         enter(_node) {
           if (_node.type !== 'CallExpression') return;
 
