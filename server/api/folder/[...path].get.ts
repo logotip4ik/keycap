@@ -32,45 +32,64 @@ export default defineEventHandler(async (event) => {
     folder = await kysely
       .connection()
       .execute(async (db) => {
-        // @ts-expect-error notes and subfolders will be added later
-        const folder: NormalFolder | undefined = await db
+        const notes = await db
           .selectFrom('Folder')
           .where(({ and, eb }) => and([
-            eb('path', '=', folderPath),
-            eb('ownerId', '=', user.id),
+            eb('Folder.path', '=', folderPath),
+            eb('Folder.ownerId', '=', user.id),
           ]))
-          .select(['id', 'name', 'path', 'root'])
-          .executeTakeFirst();
+          .leftJoin('Note', 'Note.parentId', 'Folder.id')
+          .select([
+            'Folder.id', 'Folder.name', 'Folder.path', 'Folder.root',
+            'Note.id as note_id', 'Note.name as note_name', 'Note.path as note_path',
+          ])
+          .orderBy('Note.name', 'asc')
+          .limit(100)
+          .execute();
 
-        if (!folder)
+        if (!notes || notes.length < 1)
           throw createError({ statusCode: 404 });
 
-        const [notes, subfolders] = await Promise.all([
-          db
-            .selectFrom('Note')
-            .where(({ and, eb }) => and([
-              eb('parentId', '=', folder.id),
-              eb('ownerId', '=', user.id),
-            ]))
-            .select(['id', 'name', 'path'])
-            .orderBy('name', 'asc')
-            .limit(100)
-            .execute(),
+        const folder: FolderDefault = {
+          id: notes[0].id!,
+          name: notes[0].name!,
+          path: notes[0].path!,
+          root: notes[0].root!,
 
-          db
-            .selectFrom('Folder')
-            .where(({ and, eb }) => and([
-              eb('parentId', '=', folder.id),
-              eb('ownerId', '=', user.id),
-            ]))
-            .select(['id', 'name', 'path', 'root'])
-            .orderBy('name', 'asc')
-            .limit(100)
-            .execute(),
-        ]);
+          notes: [],
+          subfolders: [],
+        };
 
-        folder.notes = notes || [];
-        folder.subfolders = subfolders || [];
+        const folders = kysely
+          .selectFrom('Folder')
+          .where(({ and, eb }) => and([
+            eb('parentId', '=', folder.id),
+            eb('ownerId', '=', user.id),
+          ]))
+          .select(['id', 'name', 'path'])
+          .orderBy('name', 'asc')
+          .limit(100)
+          .execute();
+
+        // should complete first loop before promise resolves
+        for (const item of notes) {
+          if (item.note_id && item.note_name && item.note_path) {
+            folder.notes.push({
+              id: item.note_id,
+              name: item.note_name,
+              path: item.note_path,
+            });
+          }
+        }
+
+        for (const item of await folders) {
+          folder.subfolders.push({
+            id: item.id,
+            name: item.name,
+            path: item.path,
+            root: false,
+          });
+        }
 
         return folder;
       });
