@@ -2,7 +2,7 @@ import { withLeadingSlash, withTrailingSlash, withoutLeadingSlash } from 'ufo';
 
 import type { Note } from '@prisma/client';
 import type { RouteLocationRaw } from 'vue-router';
-import type { NavigateToOptions } from 'nuxt/dist/app/composables/router';
+import type { NavigateToOptions } from '#app/composables/router';
 
 type ItemWithPath = Partial<FolderOrNote> & { path: string };
 export function generateItemRouteParams(item: ItemWithPath): RouteLocationRaw {
