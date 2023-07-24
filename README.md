@@ -40,3 +40,52 @@ After months of usage windows and android phone, i found out that notes aren't s
 [Rewrite with kysely](https://github.com/logotip4ik/keycap/tree/feat/kysely). Kysely is slightly faster in development environment,
 though `node-postgres` isn't well suited for serverless. So to see kysely outperforms prisma you will needed much more traffic then 
 few visitors in a week.
+
+
+### Load testing with Bombardier 
+
+test command: 
+
+```sh
+bombardier http://localhost:3000/api/note/main -l -d 60s -c 300
+```
+
+<details>
+<summary>kysely</summary>
+
+```sh
+Statistics        Avg      Stdev        Max
+  Reqs/sec       601.55      90.08     841.85
+  Latency      497.61ms    32.88ms      0.89s
+  Latency Distribution
+     50%   503.24ms
+     75%   515.54ms
+     90%   526.89ms
+     95%   535.99ms
+     99%   625.21ms
+  HTTP codes:
+    1xx - 0, 2xx - 36322, 3xx - 0, 4xx - 0, 5xx - 0
+    others - 0
+  Throughput:    34.97MB/s
+```
+</details>
+
+<details>
+<summary>prisma</summary>
+
+```sh
+Statistics        Avg      Stdev        Max
+  Reqs/sec       587.57     161.55    4091.91
+  Latency      512.14ms    46.99ms      0.99s
+  Latency Distribution
+     50%   504.01ms
+     75%   524.79ms
+     90%   586.09ms
+     95%   615.20ms
+     99%   682.54ms
+  HTTP codes:
+    1xx - 0, 2xx - 35320, 3xx - 0, 4xx - 0, 5xx - 0
+    others - 0
+  Throughput:    33.94MB/s
+```
+</details>
