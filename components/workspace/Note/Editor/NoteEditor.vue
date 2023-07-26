@@ -24,6 +24,7 @@ import BubbleMenuPlugin from '@tiptap/extension-bubble-menu';
 import TextAlign from '@tiptap/extension-text-align';
 import CodeBlock from '@tiptap/extension-code-block';
 import History from '@tiptap/extension-history';
+import Link from '@tiptap/extension-link';
 
 import {
   LazyWorkspaceNoteFormatterBubbleMenu as LazyBubblePopup,
@@ -63,7 +64,7 @@ const editor = useEditor({
     Italic,
     Strike,
     History,
-    BetterLink,
+    Link,
     TaskList,
     TaskItem,
     BubbleMenuPlugin,
