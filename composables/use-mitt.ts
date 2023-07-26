@@ -9,7 +9,7 @@ type Events = {
 
 const emitter = mitt<Events>();
 
-export default (): Emitter<Events> => {
+export function useMitt(): Emitter<Events> {
   return {
     ...emitter,
     // eslint-disable-next-line @typescript-eslint/prefer-ts-expect-error
