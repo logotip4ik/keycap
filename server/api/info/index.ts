@@ -1,16 +1,41 @@
 import parseDuration from 'parse-duration';
 
-export default defineCachedEventHandler((event) => {
-  const { build, public: _public } = useRuntimeConfig();
+interface Info {
+  commit: string
+  // TODO: enum ?
+  version: string
+  build_time: string
+
+  /** @private */
+  users?: number
+  /** @private */
+  notes?: number
+}
+
+export default defineCachedEventHandler(async (event) => {
+  const { build, public: config } = useRuntimeConfig();
+
+  const info: Info = {
+    commit: config.build.commit,
+    version: 'v1',
+    build_time: new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(config.build.time),
+  };
 
   if (typeof getQuery(event)[build.id] !== 'undefined') {
-    // TODO: add more info to response ?
+    const prisma = getPrisma();
+
+    const [users, notes] = await Promise.all([
+      prisma.user.count({ select: { id: true } }),
+      prisma.note.count({ select: { id: true } }),
+    ]).catch(() => [null, null]);
+
+    if (users)
+      info.users = users.id;
+    if (notes)
+      info.notes = notes.id;
   }
 
-  return {
-    ..._public.build,
-    time: new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(_public.build.time),
-  };
+  return info;
 }, {
   swr: true,
   maxAge: parseDuration('24hours', 'second'),
