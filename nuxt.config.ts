@@ -9,6 +9,7 @@ import breakpoints from './constants/breakpoints';
 import { ParseDurationTransformPlugin } from './vite/transform-parse-duration';
 
 const ISRDuration = parseDuration('15 minutes', 'second');
+const tsExcludes = ['../data', '../benchmarks', '../scripts'];
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
@@ -43,9 +44,7 @@ export default defineNuxtConfig({
   },
 
   typescript: {
-    tsConfig: {
-      exclude: ['../data', '../benchmarks'],
-    },
+    tsConfig: { exclude: tsExcludes },
   },
 
   imports: {
@@ -68,6 +67,7 @@ export default defineNuxtConfig({
         compilerOptions: {
           allowSyntheticDefaultImports: true,
         },
+        exclude: tsExcludes,
       },
     },
   },
