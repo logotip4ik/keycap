@@ -1,50 +1,116 @@
 import type { H3Event } from 'h3';
 
+interface TimerPoint { name: string; desc?: string; start: number }
+
+class Timer {
+  #timersStack: TimerPoint[] = [];
+  #results = '';
+
+  start(name: string, desc?: string) {
+    name = name.replace(/\s/g, '-');
+
+    this.#timersStack.push({
+      name,
+      desc,
+      start: performance.now(),
+    });
+  }
+
+  end(name?: string) {
+    let timer: TimerPoint;
+
+    if (name) {
+      name = name.replace(/\s/g, '-');
+
+      const timerIdx = this.#timersStack.findIndex((timer) => timer.name === name);
+
+      if (timerIdx === -1)
+        return;
+
+      timer = this.#timersStack.splice(timerIdx, 1)[0];
+    }
+    else {
+      if (this.#timersStack.length === 0)
+        return;
+
+      timer = this.#timersStack.pop()!;
+    }
+
+    const result = [
+      timer.name,
+      timer.desc && `desc="${timer.desc}"`,
+      `dur=${performance.now() - timer.start}`,
+    ].filter(Boolean);
+
+    if (this.#results.length !== 0)
+      this.#results += ',';
+
+    this.#results += result.join(';');
+  }
+
+  getResults() {
+    return this.#results;
+  }
+
+  appendHeader(event: H3Event) {
+    appendHeader(event, 'Server-Timing', this.getResults());
+
+    this.#timersStack = [];
+    this.#results = '';
+  }
+}
+
 export function createTimer() {
-  let timers: Record<string, number> = {};
-  const timersStack: string[] = [];
+  return new Timer();
+}
 
-  interface Result { name: string; desc?: string; duration: number }
-  let results: Result[] = [];
+if (import.meta.vitest) {
+  const { describe, it, expect } = import.meta.vitest;
 
-  return {
-    start: (name: string) => {
-      timersStack.push(name);
-      timers[name] = performance.now();
-    },
+  describe('server timers', () => {
+    it('starts and ends named timers', () => {
+      const timer = createTimer();
 
-    end: (name?: string, desc?: string) => {
-      let timerName: string | undefined;
+      timer.start('first');
+      timer.start('second');
 
-      if (name) {
-        const timerIdx = timersStack.findIndex((timerName) => timerName === name);
+      timer.end('first');
 
-        if (timerIdx < 0) return;
+      let results = timer.getResults();
 
-        timerName = timersStack.splice(timerIdx, 1)[0];
-      }
-      else {
-        timerName = timersStack.pop();
-      }
+      expect(results).include('first');
+      expect(results).not.include('second');
+      expect(results).not.include(',');
 
-      if (!timerName) return;
+      timer.end('second');
 
-      const diff = performance.now() - timers[timerName];
+      results = timer.getResults();
 
-      results.push({ name: timerName, desc, duration: diff });
-    },
+      expect(results).include('first');
+      expect(results).include('second');
+      expect(results).include(',');
+    });
 
-    appendHeader: (event: H3Event) => {
-      const headerValue = results.map(({ name, desc, duration }) =>
-        desc
-          ? `${name};desc="${desc}";dur=${duration}`
-          : `${name};dur=${duration}`)
-        .join(', ');
+    it('stack behavior', () => {
+      const timer = createTimer();
 
-      appendHeader(event, 'Server-Timing', headerValue);
+      timer.start('first');
+      timer.start('second');
 
-      timers = {};
-      results = [];
-    },
-  };
+      timer.end();
+
+      let results = timer.getResults();
+      expect(results).not.include('first');
+      expect(results).include('second');
+      expect(results).not.include(',');
+
+      timer.end();
+
+      results = timer.getResults();
+
+      expect(results).include('first');
+      expect(results).include('second');
+      expect(results).include(',');
+    });
+  });
 }
