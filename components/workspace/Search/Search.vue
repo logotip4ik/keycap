@@ -191,7 +191,7 @@ useTinykeys({ Escape: handleCancel });
   margin: 0 auto;
   padding: 0.5rem;
 
-  border: 1px solid hsla(var(--text-color-hsl), 0.125);
+  border: 1px solid hsla(var(--text-color-hsl), 0.2);
   border-radius: 0.5rem;
   background-color: var(--surface-color);
   box-shadow:

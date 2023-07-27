@@ -200,7 +200,7 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
   padding: 2rem 1.25rem 1.5rem;
 
   border-radius: 0.5rem;
-  border: 1px solid hsla(var(--text-color-hsl), 0.125);
+  border: 1px solid hsla(var(--text-color-hsl), 0.2);
   background-color: rgba(var(--surface-color-hsl), 0.98);
   box-shadow:
     inset -1px -1px 0.1rem rgba($color: #000000, $alpha: 0.025),
