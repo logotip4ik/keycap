@@ -150,6 +150,11 @@ mitt.on('cache:populated', () => {
     note.value = notesCache.get(notePath.value) || null;
 });
 
+mitt.on('details:show', () => {
+  if (note.value)
+    showDetails();
+});
+
 watch(error, async (error) => {
   // Resetting fallback mode to false is previous error is removed
   if (!error)

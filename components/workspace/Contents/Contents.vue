@@ -9,6 +9,7 @@ const isFallbackMode = useFallbackMode();
 const foldersCache = useFoldersCache();
 const createToast = useToast();
 const offlineStorage = useOfflineStorage();
+const currentItemForDetails = useCurrentItemForDetails();
 const { shortcuts } = useAppConfig();
 const { showLoading, hideLoading } = useLoadingIndicator();
 const mitt = useMitt();
@@ -97,6 +98,13 @@ const parentFolderPath = computed(() => {
 
 mitt.on('cache:populated', () => {
   folder.value = foldersCache.get(folderPath.value) || null;
+});
+
+mitt.on('details:show', () => {
+  const noNote = !route.params.note || route.params.note === BLANK_NOTE_NAME;
+
+  if (folder.value && noNote)
+    currentItemForDetails.value = folder.value;
 });
 
 // TODO:Create wrapper function for fetch that will handle showing loading and error toast
