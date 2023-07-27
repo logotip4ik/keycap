@@ -63,6 +63,9 @@ useTinykeys({
   [shortcuts.search]: (event) => {
     event.preventDefault();
 
+    if (currentItemForDetails.value)
+      currentItemForDetails.value = null;
+
     isShowingSearch.value = !isShowingSearch.value;
   },
 });
