@@ -172,7 +172,7 @@ onMounted(() => {
       <WorkspaceNoteFormatter :editor="editor" @hide="() => null" />
     </LazyInlinePopup>
 
-    <button class="note-editor__details-button" @click="props.onShowDetails">
+    <button class="note-editor__details-button" @click="onShowDetails">
       details
     </button>
 
