@@ -2,30 +2,30 @@ import { createContext, runInContext } from 'node:vm';
 import { pathToFileURL } from 'node:url';
 
 import type { Context } from 'node:vm';
+import type { Plugin } from 'vite';
+import type { SimpleCallExpression } from 'estree';
 
 import MagicString from 'magic-string';
+import parseDuration from 'parse-duration';
 import { walk } from 'estree-walker';
 import { parseQuery, parseURL } from 'ufo';
 import { findStaticImports, parseStaticImport } from 'mlly';
 
-import type { Plugin } from 'vite';
-import type { SimpleCallExpression } from 'estree';
-
-import parseDuration from 'parse-duration';
+const parseDurationSpecifier = 'parse-duration';
 
 export function ParseDurationTransformPlugin(): Plugin {
   return {
     name: 'ParseDurationTransformPlugin',
     transform(code, id) {
-      if (!isVueOrJs(id) || !code.includes('parse-duration'))
+      if (!isVueOrJs(id) || !code.includes(parseDurationSpecifier))
         return;
 
       const statements = findStaticImports(code)
-        .filter((i) => i.specifier === 'parse-duration');
+        .filter((i) => i.specifier === parseDurationSpecifier);
 
       if (!statements.length) return;
 
-      const contextMap: Context = { ...parseDuration };
+      const contextMap: Context = {};
       const functionNames: string[] = [];
 
       for (const i of statements.flatMap((i) => parseStaticImport(i))) {
@@ -53,6 +53,7 @@ export function ParseDurationTransformPlugin(): Plugin {
 
           try {
             const value = runInContext(code.slice(start, end), context);
+
             s.overwrite(start, end, value.toString());
           }
           catch {}
