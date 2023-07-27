@@ -36,12 +36,12 @@ function handleKeyboardAppear() {
   });
 }
 
-const debouncedMouseAppear = useDebounceFn(handleKeyboardAppear, 75);
+const debouncedKeyboardAppear = useDebounceFn(handleKeyboardAppear, 75);
 
 function handleMobileScroll() {
   inlineMenu.value?.classList.add(hiddenClass);
 
-  debouncedMouseAppear();
+  debouncedKeyboardAppear();
 }
 
 onMounted(() => {
