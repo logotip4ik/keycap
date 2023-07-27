@@ -27,6 +27,7 @@ export function generateRootFolderPath(username: string) {
 
 export const stringifiedBigIntRE = /([0-9]{18})n/;
 
+// TODO: tests
 export function toBigInt(string: string): bigint {
   const match = string.match(stringifiedBigIntRE);
 
@@ -97,4 +98,13 @@ export function getFolderSelectParamsFromEvent(event: H3Event): Prisma.FolderSel
   }
 
   return defaultSelects;
+}
+
+if (import.meta.vitest) {
+  const { it, expect } = import.meta.vitest;
+
+  it('toBigInt', () => {
+    expect(toBigInt('77777777777777777n')).to.equal(BigInt(-1));
+    expect(toBigInt('777777777777777777n')).to.not.equal(BigInt(-1));
+  });
 }
