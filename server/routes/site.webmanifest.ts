@@ -1,11 +1,11 @@
 import type Webmanifest from '~/server/assets/webmanifest.json';
 
 export default defineEventHandler(async (event) => {
-  const store = useStorage('assets:server');
+  const storage = useStorage('assets:server');
 
   const { user } = event.context;
 
-  const manifest: typeof Webmanifest | null = await store.getItem('webmanifest.json');
+  const manifest: typeof Webmanifest | null = await storage.getItem('webmanifest.json');
 
   if (!manifest)
     throw createError({ statusCode: 500 });
