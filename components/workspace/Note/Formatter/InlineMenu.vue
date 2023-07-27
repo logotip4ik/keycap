@@ -36,7 +36,7 @@ function handleKeyboardAppear() {
   });
 }
 
-const debouncedKeyboardAppear = useDebounceFn(handleKeyboardAppear, 75);
+const debouncedKeyboardAppear = useDebounceFn(handleKeyboardAppear, 175);
 
 function handleMobileScroll() {
   inlineMenu.value?.classList.add(hiddenClass);
@@ -49,7 +49,7 @@ onMounted(() => {
     return;
 
   let cleanups = [
-    on(window.visualViewport!, 'resize', handleKeyboardAppear),
+    on(window.visualViewport!, 'resize', debouncedKeyboardAppear),
     on(window.visualViewport!, 'scroll', handleMobileScroll),
     on(window, 'scroll', handleMobileScroll),
   ];
