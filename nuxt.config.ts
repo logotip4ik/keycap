@@ -44,7 +44,12 @@ export default defineNuxtConfig({
   },
 
   typescript: {
-    tsConfig: { exclude: tsExcludes },
+    tsConfig: {
+      exclude: tsExcludes,
+      compilerOptions: {
+        types: ['vitest/importMeta'],
+      },
+    },
   },
 
   imports: {
@@ -66,6 +71,7 @@ export default defineNuxtConfig({
       tsConfig: {
         compilerOptions: {
           allowSyntheticDefaultImports: true,
+          types: ['vitest/importMeta'],
         },
         exclude: tsExcludes,
       },
@@ -138,6 +144,14 @@ export default defineNuxtConfig({
   },
 
   vite: {
+    define: {
+      'import.meta.vitest': 'undefined',
+    },
+
+    test: {
+      includeSource: ['server/**/*.{js,ts}'],
+    },
+
     plugins: [
       UnheadVite(),
       SvgLoadedPlugin(),
