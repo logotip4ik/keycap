@@ -277,13 +277,14 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
       color: hsla(var(--text-color-hsl), 1);
       background-color: hsla(var(--selection-bg-color-hsl), 0.075);
 
-      outline-color: hsla(var(--selection-bg-color-hsl), 0.35);
+      outline: 1px solid hsla(var(--selection-bg-color-hsl), 0.45);
       outline-offset: 0px;
 
       transition-duration: .1s;
 
       @media (prefers-color-scheme: dark) {
         background-color: hsla(var(--selection-bg-color-hsl), 0.175);
+        outline-color: hsla(var(--selection-bg-color-hsl), 0.65);
       }
     }
 
@@ -373,6 +374,14 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
           cursor: default;
 
           transition-duration: .4s;
+        }
+
+        &:focus-visible {
+          outline: 1px solid hsla(var(--text-color-hsl), 0.25);
+          box-shadow:
+            0 0 0 5px hsla(var(--selection-bg-color-hsl), 0.75),
+            0 0 0 10px hsla(var(--selection-bg-color-hsl), 0.25);
+          transition-duration: 0s;
         }
 
         &:active:not(:disabled) {
