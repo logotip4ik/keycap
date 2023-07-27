@@ -1,10 +1,8 @@
-/* eslint-disable @typescript-eslint/no-invalid-this */
 import { setSuretypeOptions } from 'suretype';
 
 import '~/polyfills/array-at';
 
-function toJSON() {
-  // @ts-expect-error this should work ಠ_ಠ
+function toJSON(this: bigint) {
   return `${this.toString()}n`;
 }
 
