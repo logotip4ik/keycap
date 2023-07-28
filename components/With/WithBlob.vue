@@ -43,7 +43,7 @@ const bindings = computed(() => {
   filter: blur(calc(var(--size) / var(--blur-divider)));
 
   @media (prefers-reduced-motion: no-preference) {
-    animation:  var(--appear-animation), blob-anim 20s infinite linear alternate;
+    animation: var(--appear-animation), blob-anim 20s infinite linear alternate;
   }
 
   @media screen and (max-width: $breakpoint-tablet) {
@@ -56,6 +56,7 @@ const bindings = computed(() => {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
