@@ -30,19 +30,21 @@ function handleError() {
   <div class="error-page">
     <NavSimple v-once />
 
-    <WithBlob v-slot="attrs" top="55%">
-      <Form v-bind="attrs" class="error-page__form" action="/" @submit.prevent="handleError">
-        <FormTitle class="error-page__form__title">
-          <span v-html="message" />
-        </FormTitle>
+    <p :aria-label="`${error.statusCode} error`" class="error-page__status-code">
+      {{ error.statusCode }}
+    </p>
 
-        <FormItem class="error-page__form__actions" actions>
-          <FormButton>
-            Try to fix everything
-          </FormButton>
-        </FormItem>
-      </Form>
-    </WithBlob>
+    <Form class="error-page__form" action="/" @submit.prevent="handleError">
+      <FormTitle class="error-page__form__title">
+        <span v-html="message" />
+      </FormTitle>
+
+      <FormItem class="error-page__form__actions" actions>
+        <FormButton>
+          Try to fix everything
+        </FormButton>
+      </FormItem>
+    </Form>
   </div>
 </template>
 
@@ -55,15 +57,31 @@ function handleError() {
   height: 100vh;
   height: 100svh;
 
+  &__status-code {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: -1;
+
+    font-variant-numeric: tabular-nums;
+    font-size: min(calc(2rem + 45vw), 30rem);
+    font-weight: 800;
+    color: transparent;
+
+    margin: 0;
+
+    background: radial-gradient(92% 100% at 50.00% 115.00%, hsla(var(--selection-bg-color-hsl), 0.65) 0%, hsla(var(--selection-bg-color-hsl), 0.0) 110%);
+    background-clip: text;
+
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
   &__form {
     max-width: 650px;
 
     &__title {
       text-align: center;
-    }
-
-    &__actions {
-      margin-top: 4rem !important;
     }
   }
 }
