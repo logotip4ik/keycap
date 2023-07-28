@@ -76,6 +76,12 @@ export default defineNuxtConfig({
         exclude: tsExcludes,
       },
     },
+
+    esbuild: {
+      options: {
+        target: 'esnext',
+      },
+    },
   },
 
   runtimeConfig: {
