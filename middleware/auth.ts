@@ -5,5 +5,5 @@ export default defineNuxtRouteMiddleware((from) => {
     return navigateTo('/login');
 
   if (decodeURIComponent(user.value.username) !== decodeURIComponent(from.params.user as string))
-    return abortNavigation({ statusCode: 401, statusMessage: 'You are not authorized to access this page' });
+    return abortNavigation({ statusCode: 401 });
 });
