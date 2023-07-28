@@ -1,6 +1,6 @@
 import { isDevelopment, provider } from 'std-env';
 import UnheadVite from '@unhead/addons/vite';
-import SvgLoadedPlugin from 'vite-svg-loader';
+import SvgLoaderPlugin from 'vite-svg-loader';
 import browserslistToEsbuild from 'browserslist-to-esbuild';
 import parseDuration from 'parse-duration';
 
@@ -161,8 +161,14 @@ export default defineNuxtConfig({
 
     plugins: [
       UnheadVite(),
-      SvgLoadedPlugin(),
       ParseDurationTransformPlugin(),
+      SvgLoaderPlugin({
+        svgo: true,
+        svgoConfig: {
+          multipass: true,
+          floatPrecision: 2,
+        },
+      }),
     ],
 
     build: {
