@@ -1,10 +1,13 @@
 {
   "extends": [
     "plugin:regexp/recommended",
+    "plugin:github/browser",
+    "plugin:github/typescript",
     "@antfu"
   ],
   "plugins": [
-    "regexp"
+    "regexp",
+    "github"
   ],
   "rules": {
     "quotes": ["error", "single"],
@@ -12,6 +15,7 @@
     "arrow-parens": ["error", "always"],
     "curly": ["error", "multi-or-nest", "consistent"],
     "antfu/if-newline": "off",
-    "antfu/top-level-function": "off"
+    "import/no-nodejs-modules": "off",
+    "@typescript-eslint/no-shadow": "off"
   }
 }
