@@ -53,13 +53,11 @@ export function preCreateItem(folderToAppend: FolderWithContents, initialValues?
 export function getCurrentFolderPath() {
   const route = useRoute();
 
-  const path = withLeadingSlash(withTrailingSlash(
+  return withLeadingSlash(withTrailingSlash(
     (Array.isArray(route.params.folders)
       ? route.params.folders.map(encodeURIComponent).join('/')
       : encodeURIComponent(route.params.folders || '')),
   ));
-
-  return path;
 }
 
 export async function createFolder(folderName: string, self: FolderOrNote, parent: FolderWithContents) {

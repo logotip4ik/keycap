@@ -41,9 +41,7 @@ export async function getGoogleUserWithEvent(event: H3Event) {
     'User-Agent': getServerUserAgent(),
   };
 
-  const user = await $fetch<GoogleUserRes>('https://www.googleapis.com/oauth2/v2/userinfo', {
+  return await $fetch<GoogleUserRes>('https://www.googleapis.com/oauth2/v2/userinfo', {
     headers: apiAuthHeaders,
   });
-
-  return user;
 }

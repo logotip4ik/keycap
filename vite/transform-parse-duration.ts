@@ -79,8 +79,5 @@ function isVueOrJs(id: string) {
     return true;
 
   // js files
-  if (pathname.match(/\.((c|m)?j|t)sx?$/g))
-    return true;
-
-  return false;
+  return pathname.match(/\.((c|m)?j|t)sx?$/g);
 }

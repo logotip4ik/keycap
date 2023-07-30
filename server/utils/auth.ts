@@ -40,9 +40,7 @@ function getJWTSecret(): Uint8Array {
 }
 
 function getJWTIssuer(): string {
-  const issuer = process.env.JWT_ISSUER || 'test:keycap';
-
-  return issuer;
+  return process.env.JWT_ISSUER || 'test:keycap';
 }
 
 export async function setAuthCookies(event: H3Event, user: SafeUser) {

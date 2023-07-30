@@ -25,10 +25,6 @@ export default defineEventHandler(async (event) => {
       || await getGoogleUserWithEvent(event).catch(() => null);
 
   // TODO: better error handling
-  if (!googleUser)
-    return sendRedirect(event, '/');
-
-  // TODO: better error handling
   if (!googleUser || !googleUser.id || !googleUser.email)
     return sendRedirect(event, '/');
 
