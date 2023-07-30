@@ -1,0 +1,20 @@
+name: Trigger release
+
+on:
+  workflow_run:
+    workflows: ["Bump package version"]
+    types:
+      - completed
+
+jobs:
+  trigger-release:
+    timeout-minutes: 1
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger deployment
+        env:
+          TRIGGER_DEPLOYMENT: ${{ secrets.TRIGGER_DEPLOYMENT }}
+        shell: bash
+        run: curl -X POST $TRIGGER_DEPLOYMENT
+
