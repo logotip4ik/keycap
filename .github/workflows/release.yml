@@ -74,15 +74,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Commit and push if there are changes
-        uses: actions-js/push@156f2b10c3aa000c44dbe75ea7018f32ae999772
-        with:
-          tags: true
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          message: 'chore: update deps'
-          branch: ${{ github.ref_name }}
-          author_name: ${{ github.actor }}
-          author_email: noreply@github.com
+      - name: Commit changes
+        shell: bash
+        run: git push
 
   trigger-release:
     needs: [build-lint-test, bump-package-version]
