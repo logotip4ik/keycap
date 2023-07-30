@@ -1,5 +1,11 @@
 {
-  "extends": "@antfu",
+  "extends": [
+    "plugin:regexp/recommended",
+    "@antfu"
+  ],
+  "plugins": [
+    "regexp"
+  ],
   "rules": {
     "quotes": ["error", "single"],
     "@typescript-eslint/semi": ["error", "always"],
