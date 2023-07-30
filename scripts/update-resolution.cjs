@@ -10,7 +10,7 @@ const pkg = require(pkgDir);
 
 const deps = Object.entries(pkg.dependencies).concat(Object.entries(pkg.devDependencies));
 
-const patchVersion_RE = /[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}(-\w{1,5}\.[0-9]{1,3})?/;
+const patchVersion_RE = /\d{1,3}\.\d{1,3}\.\d{1,3}(-\w{1,5}\.\d{1,3})?/;
 
 async function updatePatches() {
   for (const [resolutionName, patch] of Object.entries(pkg.resolutions)) {

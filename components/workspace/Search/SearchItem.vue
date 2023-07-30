@@ -7,11 +7,12 @@ const isCommand = 'key' in props.item;
 const itemPath = (() => {
   if (isCommand) return '';
 
+  // TODO: rewrite item path resolution ?
   const path = (props.item as FuzzyItem).path
     // removing account name
-    .replace(/\/\w+\//i, '')
+    .replace(/\/\w+\//, '')
     // the last one string from path
-    .replace(/\/?[\w\%]+$/i, '');
+    .replace(/\/?[\w%]+$/, '');
 
   return decodeURIComponent(path);
 })();

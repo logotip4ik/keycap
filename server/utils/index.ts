@@ -25,7 +25,7 @@ export function generateRootFolderPath(username: string) {
   return `/${username}`;
 }
 
-export const stringifiedBigIntRE = /([0-9]{18})n/;
+export const stringifiedBigIntRE = /(\d{18})n/;
 
 // TODO: tests
 export function toBigInt(string: string): bigint {
