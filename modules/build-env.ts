@@ -3,6 +3,8 @@ import { nanoid } from 'nanoid';
 import Git from 'simple-git';
 import colors from 'picocolors';
 
+import { version } from '../package.json';
+
 import type { BuildInfo, PrivateBuildInfo } from '~/types';
 
 const logger = useLogger('build-env');
@@ -20,6 +22,7 @@ export default defineNuxtModule({
     const buildInfo: BuildInfo = {
       time: +Date.now(),
       commit,
+      version: `v${version}`,
     };
 
     const privateBuildInfo: PrivateBuildInfo = {

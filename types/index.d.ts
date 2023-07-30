@@ -6,6 +6,7 @@ interface Shortcuts {
 export interface BuildInfo {
   time: number
   commit: string
+  version: string
 }
 
 export declare global {
