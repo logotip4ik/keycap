@@ -39,7 +39,7 @@ function withEffects(event: Event, action: MenuAction) {
     const targetCancelEvents = ['pointerup', 'pointerleave', 'touchend', 'touchcancel'];
     const target = event.target as HTMLElement;
 
-    currentlyConfirming.value = Number(target.dataset.key);
+    currentlyConfirming.value = Number(target.getAttribute('data-key'));
 
     const animation = target.animate([
       { opacity: 1, transform: 'translate(-100%, 0%)' },

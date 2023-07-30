@@ -6,7 +6,7 @@ const props = defineProps<Props>();
 
 const fuzzyWorker = useFuzzyWorker();
 
-const results = shallowRef<(FuzzyItem | CommandItem)[]>([]);
+const results = shallowRef<Array<FuzzyItem | CommandItem>>([]);
 const isLoadingResults = ref(false);
 const selectedResult = ref(0);
 const typeaheadResult = computed<FuzzyItem | CommandItem | null>(() => results.value[selectedResult.value] || null);
@@ -36,7 +36,7 @@ function handleSearchInput(value: string) {
   isLoadingResults.value = true;
 
   fuzzyWorker.value.searchWithQuery(value)
-    .then((entries: (FuzzyItem | CommandItem)[]) => {
+    .then((entries: Array<FuzzyItem | CommandItem>) => {
       results.value = entries;
     })
     .finally(() => {

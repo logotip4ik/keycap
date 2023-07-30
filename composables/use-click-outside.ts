@@ -6,7 +6,7 @@ export function useClickOutside(target: Ref<HTMLElement | null>, callback: (e: E
       callback(event);
   };
 
-  const cleanups: (() => any)[] = [];
+  const cleanups: Array<() => any> = [];
   const cleanup = () => {
     cleanups.forEach((fn) => fn());
     cleanups.length = 0;

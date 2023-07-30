@@ -16,7 +16,7 @@ const cacheName = cacheNames.runtime;
 
 const wait = (t: number) => new Promise((resolve) => setTimeout(resolve, t));
 
-const buildStrategy = (): Strategy => {
+function buildStrategy(): Strategy {
   class CacheNetworkRace extends Strategy {
     _handle(request: Request, handler: StrategyHandler): Promise<Response | undefined> {
       const fetchAndCachePutDone: Promise<Response> = handler.fetchAndCachePut(request);
@@ -38,7 +38,7 @@ const buildStrategy = (): Strategy => {
   }
 
   return new CacheNetworkRace();
-};
+}
 
 const denylist = [
   /^\/$/,
@@ -55,7 +55,7 @@ const denylist = [
 
 // TODO: somehow add current user page to cache. Like
 // /@test, so it could actually work without internet
-const manifest = (self.__WB_MANIFEST as Array<ManifestEntry>)
+const manifest = (self.__WB_MANIFEST as ManifestEntry[])
   .filter((entry) => !denylist.some((deny) => deny.test(entry.url)));
 
 const cacheEntries: RequestInfo[] = [];
