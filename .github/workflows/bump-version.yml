@@ -27,6 +27,6 @@ jobs:
           cache: yarn
 
       - name: Bump versions
-        run: npx changelogithub@47cc49e72d2500a0a0ab4b64753d0063a8a5d245
+        run: npx changelogithub@latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
