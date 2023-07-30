@@ -16,7 +16,7 @@ const shortCommitSha = build.commit;
         <header class="index__header" v-bind="props">
           <small class="index__header__alert">
             <IconWarning v-once class="index__header__alert__icon" />
-            In development
+            {{ build.version }} (in development)
           </small>
 
           <h1 class="index__header__title font-wide">
