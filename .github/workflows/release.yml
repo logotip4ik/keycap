@@ -63,7 +63,11 @@ jobs:
           cache: yarn
 
       - name: Bump versions
-        run: npx changelogen@latest --release
+        run: |
+          git config --local user.email noreply@github.com
+          git config --local user.name ${{ github.actor }}
+
+          npx changelogen@latest --release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
