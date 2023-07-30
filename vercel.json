@@ -1,5 +1,12 @@
 {
+    "git": {
+        "deploymentEnabled": {
+            "master": false
+        }
+    },
+    
     "github": {
-        "silent": true
+        "silent": true,
+        "autoJobCancelation": true
     }
 }
