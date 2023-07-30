@@ -1,5 +1,8 @@
 name: Build lint test
 
+permissions:
+  contents: write
+
 on:
   push:
     branches:
