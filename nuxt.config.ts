@@ -156,7 +156,10 @@ export default defineNuxtConfig({
     },
 
     test: {
-      includeSource: ['server/**/*.{js,ts}'],
+      includeSource: [
+        'server/**/*.{js,ts}',
+        'utils/**/*.{js,ts}',
+      ],
     },
 
     plugins: [
