@@ -74,12 +74,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Push changes
-      uses: ad-m/github-push-action@40bf560936a8022e68a3c00e7d2abefaf01305a6
-      with:
-        force: true
-        tags: true
-        branch: ${{ github.ref }}
+      - name: Push changes
+        uses: ad-m/github-push-action@40bf560936a8022e68a3c00e7d2abefaf01305a6
+        with:
+          force: true
+          tags: true
+          branch: ${{ github.ref }}
 
   trigger-release:
     needs: [build-lint-test, bump-package-version]
