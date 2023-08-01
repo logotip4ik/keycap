@@ -1,6 +1,27 @@
 # Changelog
 
 
+## v1.0.2
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v1.0.1...v1.0.2)
+
+### 🩹 Fixes
+
+- Add more specificity for social button styles ([1fabdc0](https://github.com/logotip4ik/keycap/commit/1fabdc0))
+
+### 💅 Refactors
+
+- Set version in build info ([20be151](https://github.com/logotip4ik/keycap/commit/20be151))
+- Mention website version in index page ([a2051bc](https://github.com/logotip4ik/keycap/commit/a2051bc))
+
+### 🎨 Styles
+
+- Yarn added new line ([91c2cfc](https://github.com/logotip4ik/keycap/commit/91c2cfc))
+
+### ❤️  Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+
 ## v1.0.1
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v0.1.0...v1.0.1)
