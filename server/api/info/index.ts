@@ -17,7 +17,7 @@ export default defineCachedEventHandler(async (event) => {
 
   const info: Info = {
     commit: config.build.commit,
-    version: 'v1',
+    version: config.build.version,
     build_time: new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(config.build.time),
   };
 
