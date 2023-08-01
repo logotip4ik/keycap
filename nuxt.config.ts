@@ -1,5 +1,5 @@
 import process from 'node:process';
-import { isDevelopment, provider } from 'std-env';
+import { isCI, isDevelopment } from 'std-env';
 import UnheadVite from '@unhead/addons/vite';
 import SvgLoaderPlugin from 'vite-svg-loader';
 import browserslistToEsbuild from 'browserslist-to-esbuild';
@@ -157,7 +157,7 @@ export default defineNuxtConfig({
       target: 'esnext',
       // cssMinify: 'lightningcss',
       cssTarget: browserslistToEsbuild(),
-      ...(provider === 'vercel'
+      ...(isCI
         ? {
             minify: 'terser',
             terserOptions: {
