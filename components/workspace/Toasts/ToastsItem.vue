@@ -23,7 +23,7 @@ onBeforeUnmount(() => clearTimeout(timeout));
     role="status"
     aria-live="polite"
   >
-    <IconOutlineInfo v-if="toast.type === 'info'" v-once class="toast__icon" aria-hidden="true" data-icon />
+    <LazyIconOutlineInfo v-if="toast.type === 'info'" v-once class="toast__icon" aria-hidden="true" data-icon />
     <span v-else-if="toast.type === 'loading'" class="toast__icon toast__icon--spinner" aria-hidden="true" data-icon />
 
     <p class="toast__text">{{ toast.message }}</p>

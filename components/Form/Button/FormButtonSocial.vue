@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { OAuthProvider } from 'types/server';
 
-import { IconGithub, IconGoogle } from '#components';
+import { LazyIconGithub, LazyIconGoogle } from '#components';
 
 interface Props {
   provider: OAuthProvider
@@ -10,8 +10,8 @@ interface Props {
 const props = defineProps<Props>();
 
 const providerIcons: Record<OAuthProvider, ReturnType<typeof defineAsyncComponent>> = {
-  GitHub: IconGithub,
-  Google: IconGoogle,
+  GitHub: LazyIconGithub,
+  Google: LazyIconGoogle,
 };
 
 const providerIcon = computed(() => providerIcons[props.provider]);

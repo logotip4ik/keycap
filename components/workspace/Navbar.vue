@@ -43,7 +43,7 @@ const folderRootPath = computed(() => {
         :href="folderRootPath"
         aria-label="go up to folder root"
       >
-        <IconBaselineArrowBack v-once class="navbar__button__icon" />
+        <LazyIconBaselineArrowBack v-once class="navbar__button__icon" />
       </NuxtLink>
     </Transition>
 
@@ -58,7 +58,7 @@ const folderRootPath = computed(() => {
       aria-label="open quick search"
       @click="onOpenSearch"
     >
-      <IconSearchRounded v-once class="navbar__button__icon" />
+      <LazyIconSearchRounded v-once class="navbar__button__icon" />
     </button>
   </nav>
 </template>

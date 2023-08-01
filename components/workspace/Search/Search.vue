@@ -147,7 +147,7 @@ useTinykeys({ Escape: handleCancel });
           class="search__form__cancel"
           @click="handleCancel"
         >
-          <IconCloseRounded v-once class="search__form__cancel__icon" />
+          <LazyIconCloseRounded class="search__form__cancel__icon" />
         </button>
       </form>
 

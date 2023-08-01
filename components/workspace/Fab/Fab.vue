@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Component } from 'vue';
-import { IconOutlineAdd, IconSearchRounded } from '#components';
+import { LazyIconOutlineAdd, LazyIconSearchRounded } from '#components';
 
 interface Props {
   onOpenSearch: () => void
@@ -18,14 +18,14 @@ interface FabButton {
 
 const buttons: FabButton[] = [
   {
-    icon: IconSearchRounded,
+    icon: LazyIconSearchRounded,
     label: 'open quick search',
     action: () => {
       props.onOpenSearch();
     },
   },
   {
-    icon: IconOutlineAdd,
+    icon: LazyIconOutlineAdd,
     label: 'create new note or folder',
     action: () => {
       const { data: folder } = useNuxtData('folder');

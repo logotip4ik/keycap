@@ -179,10 +179,10 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
         :class="{ 'formatter__button--active': editor.isActive('heading') }"
         @click="toggleHeading"
       >
-        <IconHeading1 v-if="editor.isActive('heading', { level: 1 })" />
-        <IconHeading2 v-else-if="editor.isActive('heading', { level: 2 })" />
-        <IconHeading3 v-else-if="editor.isActive('heading', { level: 3 })" />
-        <IconHeading1 v-else />
+        <LazyIconHeading1 v-if="editor.isActive('heading', { level: 1 })" />
+        <LazyIconHeading2 v-else-if="editor.isActive('heading', { level: 2 })" />
+        <LazyIconHeading3 v-else-if="editor.isActive('heading', { level: 3 })" />
+        <LazyIconHeading1 v-else />
       </button>
 
       <button
@@ -193,7 +193,7 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
         }"
         @click="toggleListItem"
       >
-        <IconList />
+        <LazyIconList />
       </button>
 
       <button
@@ -203,7 +203,7 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
         }"
         @click="editor.chain().focus().toggleBlockquote().run()"
       >
-        <IconDoubleQuotesR />
+        <LazyIconDoubleQuotesR />
       </button>
 
       <div class="formatter__vr" aria-hidden="true" />
@@ -214,7 +214,7 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
         :class="{ 'formatter__button--active': editor.isActive('bold') }"
         @click="editor!.chain().focus().toggleBold().run()"
       >
-        <IconBaselineFormatBold />
+        <LazyIconBaselineFormatBold />
       </button>
 
       <button
@@ -223,7 +223,7 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
         :class="{ 'formatter__button--active': editor.isActive('italic') }"
         @click="editor!.chain().focus().toggleItalic().run()"
       >
-        <IconBaselineFormatItalic />
+        <LazyIconBaselineFormatItalic />
       </button>
 
       <button
@@ -232,7 +232,7 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
         :class="{ 'formatter__button--active': editor.isActive('code') }"
         @click="editor!.chain().focus().toggleCode().run()"
       >
-        <IconBaselineCode />
+        <LazyIconBaselineCode />
       </button>
 
       <button
@@ -241,7 +241,7 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
         :class="{ 'formatter__button--active': editor.isActive('link') }"
         @click="(isEditingLink = !isEditingLink)"
       >
-        <IconBaselineLink />
+        <LazyIconBaselineLink />
       </button>
     </div>
 
@@ -256,7 +256,7 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
       >
 
       <button class="formatter__button" type="submit">
-        <IconBaselineCheck />
+        <LazyIconBaselineCheck />
       </button>
     </form>
   </Transition>

@@ -152,13 +152,13 @@ function handleContextmenu(event: Event) {
         :aria-label="`open ${isFolder ? 'folder' : 'note'} '${decodeURIComponent(item.name)}'`"
         @contextmenu.prevent="handleContextmenu"
       >
-        <IconOutlineFolder v-if="isFolder" v-once class="item__name__folder-icon" />
+        <LazyIconOutlineFolder v-if="isFolder" v-once class="item__name__folder-icon" />
 
         <span class="item__name__text">{{ decodeURIComponent(item.name) }}</span>
       </NuxtLink>
 
       <button class="item__edit" :aria-label="`show ${isFolder ? 'folder' : 'note'} actions`" @click="handleContextmenu">
-        <IconBaselineMoreVert v-once class="item__edit__icon" />
+        <LazyIconBaselineMoreVert v-once class="item__edit__icon" />
       </button>
     </template>
   </div>
