@@ -12,7 +12,7 @@ function addItem(item: FuzzyItem) {
   itemsCache.set(item.path, item);
 }
 
-function addItems(items: FuzzyItem[]) {
+function addItems(items: Array<FuzzyItem>) {
   for (const item of items)
     itemsCache.set(item.path, item);
 }
@@ -44,7 +44,7 @@ function search(query: string, maxLength = 4): Array<FuzzyItem | CommandItem> {
 
 async function populateItemsCache() {
   const res = await fetch('/api/search/client');
-  const items = await res.json() as FuzzyItem[];
+  const items = await res.json() as Array<FuzzyItem>;
 
   itemsCache.clear();
 

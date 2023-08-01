@@ -45,7 +45,7 @@ export async function getGitHubUserWithEvent(event: H3Event) {
   );
 
   if (!user.email) {
-    const emails = await $fetch<GitHubUserEmailRes[]>(
+    const emails = await $fetch<Array<GitHubUserEmailRes>>(
       'https://api.github.com/user/emails',
       { headers: apiAuthHeaders },
     );

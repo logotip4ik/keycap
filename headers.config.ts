@@ -8,7 +8,7 @@ export const WEEK_IN_SECONDS = parseDuration('1 week', 'second')!;
 export const SIX_MONTHS_IN_SECONDS = parseDuration('0.5 year', 'second')!;
 
 export const CorsOrigin = process.env.NUXT_PUBLIC_SITE_ORIGIN || '*';
-export const CorsMethods = ['GET', 'OPTIONS', 'PATCH', 'POST', 'DELETE'] satisfies HTTPMethod[];
+export const CorsMethods = ['GET', 'OPTIONS', 'PATCH', 'POST', 'DELETE'] satisfies Array<HTTPMethod>;
 export const CorsHeaders = ['Origin', 'Content-Type', 'Accept'];
 
 export const corsHeaders = {
@@ -136,7 +136,7 @@ export interface CacheControlHeaderOptions {
   CDN?: boolean | 'vc' | 'cf'
 }
 export function makeCacheControlHeader(opts: CacheControlHeaderOptions) {
-  const values: string[] = [];
+  const values: Array<string> = [];
 
   values.push(opts.private ? 'private' : 'public');
 

@@ -26,7 +26,7 @@ export function ParseDurationTransformPlugin(): Plugin {
       if (!statements.length) return;
 
       const contextMap: Context = {};
-      const functionNames: string[] = [];
+      const functionNames: Array<string> = [];
 
       for (const i of statements.flatMap((i) => parseStaticImport(i))) {
         if (i.defaultImport) {

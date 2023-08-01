@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
   const path = event.path;
   const user = event.context.user;
 
-  const authorizedRoutes: Array<{ path: string; onlyMethods?: HTTPMethod[] }> = [
+  const authorizedRoutes: Array<{ path: string; onlyMethods?: Array<HTTPMethod> }> = [
     { path: '/api/note' },
     { path: '/api/folder' },
     { path: '/api/search' },

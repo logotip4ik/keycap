@@ -15,7 +15,7 @@ const prisma = getPrisma();
 // eslint-disable-next-line sonarjs/cognitive-complexity
 async function main() {
   const numberOfUsers = 75;
-  const users: Prisma.UserCreateInput[] = [];
+  const users: Array<Prisma.UserCreateInput> = [];
 
   const usersFilename = 'users-result';
   const resultsPath = `./prisma/${usersFilename}.csv`;

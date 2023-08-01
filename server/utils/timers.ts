@@ -3,7 +3,7 @@ import type { H3Event } from 'h3';
 interface TimerPoint { name: string; desc?: string; start: number }
 
 class Timer {
-  #timersStack: TimerPoint[] = [];
+  #timersStack: Array<TimerPoint> = [];
   #results = '';
 
   start(name: string, desc?: string) {

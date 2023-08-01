@@ -16,7 +16,7 @@ interface FabButton {
   action: () => any
 }
 
-const buttons: FabButton[] = [
+const buttons: Array<FabButton> = [
   {
     icon: LazyIconSearchRounded,
     label: 'open quick search',

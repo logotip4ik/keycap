@@ -5,7 +5,7 @@ import type { SearchActionValues } from '~/types/common';
 interface Command {
   key: SearchActionValues
   name: string
-  handler: (args?: string[]) => any
+  handler: (args?: Array<string>) => any
 }
 
 export const commandActions: Record<Command['key'], Command['handler']> = {

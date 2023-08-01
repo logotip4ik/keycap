@@ -10,7 +10,7 @@ interface MenuAction {
   handler: () => any | Promise<any>
 }
 
-interface Props { x: number; y: number; actions: MenuAction[]; onClose: () => void }
+interface Props { x: number; y: number; actions: Array<MenuAction>; onClose: () => void }
 const props = defineProps<Props>();
 
 const popperInstance = shallowRef<null | PopperInstance>(null);

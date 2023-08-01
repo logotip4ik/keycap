@@ -55,10 +55,10 @@ const denylist = [
 
 // TODO: somehow add current user page to cache. Like
 // /@test, so it could actually work without internet
-const manifest = (self.__WB_MANIFEST as ManifestEntry[])
+const manifest = (self.__WB_MANIFEST as Array<ManifestEntry>)
   .filter((entry) => !denylist.some((deny) => deny.test(entry.url)));
 
-const cacheEntries: RequestInfo[] = [];
+const cacheEntries: Array<RequestInfo> = [];
 
 const manifestURLs = manifest.map(
   (entry) => {

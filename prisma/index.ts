@@ -10,7 +10,7 @@ declare global {
 
 export function getPrisma() {
   if (!globalThis.prisma) {
-    const log: Prisma.LogLevel[] = isDevelopment
+    const log: Array<Prisma.LogLevel> = isDevelopment
       ? ['info', 'error', 'warn']
       : ['info', 'error'];
 

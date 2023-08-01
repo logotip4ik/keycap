@@ -38,5 +38,5 @@ export default defineEventHandler(async (event) => {
 
   timer.appendHeader(event);
 
-  return [...notes, ...folders] as FuzzyItem[];
+  return [...notes, ...folders] as Array<FuzzyItem>;
 });

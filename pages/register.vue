@@ -16,7 +16,7 @@ const passwordComponent = ref<ComponentPublicInstance<HTMLInputElement> | null>(
 
 const isLoading = ref(false);
 
-const providers: OAuthProvider[] = ['GitHub', 'Google'];
+const providers: Array<OAuthProvider> = ['GitHub', 'Google'];
 
 watch(user, async (value) =>
   value && await navigateTo(`/@${value.username}`),
