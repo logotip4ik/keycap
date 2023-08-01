@@ -1,6 +1,47 @@
 # Changelog
 
 
+## v1.1.0
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v1.0.2...v1.1.0)
+
+### 🚀 Enhancements
+
+- Production cache driver ([2407cc5](https://github.com/logotip4ik/keycap/commit/2407cc5))
+
+### 🔥 Performance
+
+- Remove pointer events from pseudo elements ([872af23](https://github.com/logotip4ik/keycap/commit/872af23))
+
+### 🩹 Fixes
+
+- Add back postinstall script ([7c56edf](https://github.com/logotip4ik/keycap/commit/7c56edf))
+- Always write icon definitions ([da4fe6a](https://github.com/logotip4ik/keycap/commit/da4fe6a))
+
+### 💅 Refactors
+
+- Use more generic `isCI` check for terser ([647ecfe](https://github.com/logotip4ik/keycap/commit/647ecfe))
+- Import oauth providers from `#components` ([025ba2e](https://github.com/logotip4ik/keycap/commit/025ba2e))
+- Build custom nuxt loader to make icons from svgs ([859dcce](https://github.com/logotip4ik/keycap/commit/859dcce))
+- Use lazy icons ([71ab559](https://github.com/logotip4ik/keycap/commit/71ab559))
+- Show website version in `api/info` route ([6af6591](https://github.com/logotip4ik/keycap/commit/6af6591))
+
+### 🏡 Chore
+
+- Remove postinstall script ([2a97665](https://github.com/logotip4ik/keycap/commit/2a97665))
+
+### 🎨 Styles
+
+- Move nitro options closer to vite's ([232febe](https://github.com/logotip4ik/keycap/commit/232febe))
+
+### 🤖 CI
+
+- More appropriate name for job ([6da1a78](https://github.com/logotip4ik/keycap/commit/6da1a78))
+
+### ❤️  Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+
 ## v1.0.2
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v1.0.1...v1.0.2)
