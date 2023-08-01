@@ -35,7 +35,10 @@ function enterAnimation(el: Element) {
   editingLink.value = activeUrl;
 
   nextTick(() => {
-    el.querySelector('input')?.focus();
+    const input = el.querySelector('input');
+
+    input?.focus();
+    input?.select();
   });
 }
 
