@@ -30,7 +30,7 @@ const lowercaseProvider = computed(() => props.provider.toLowerCase());
 
 <style lang="scss">
 .form__button {
-  &--social {
+  &.form__button--social {
     // Each social button should provide
     // --base-color
     // --base-text-color
