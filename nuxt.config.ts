@@ -64,35 +64,6 @@ export default defineNuxtConfig({
     ],
   },
 
-  nitro: {
-    imports: {
-      dirs: ['./prisma'],
-    },
-
-    typescript: {
-      tsConfig: {
-        compilerOptions: {
-          allowSyntheticDefaultImports: true,
-          types: ['vitest/importMeta'],
-        },
-        exclude: tsExcludes,
-      },
-    },
-
-    esbuild: {
-      options: {
-        target: 'esnext',
-      },
-    },
-
-    storage: {
-      cache: {
-        driver: 'redis',
-        url: process.env.REDIS_URL,
-      },
-    },
-  },
-
   runtimeConfig: {
     public: {
       siteOrigin: '',
@@ -219,6 +190,35 @@ export default defineNuxtConfig({
             Object.entries(breakpoints).map(([key, value]) => `$breakpoint-${key}: ${value}px;`).join('\n'),
           ].join('\n'),
         },
+      },
+    },
+  },
+
+  nitro: {
+    imports: {
+      dirs: ['./prisma'],
+    },
+
+    typescript: {
+      tsConfig: {
+        compilerOptions: {
+          allowSyntheticDefaultImports: true,
+          types: ['vitest/importMeta'],
+        },
+        exclude: tsExcludes,
+      },
+    },
+
+    esbuild: {
+      options: {
+        target: 'esnext',
+      },
+    },
+
+    storage: {
+      cache: {
+        driver: 'redis',
+        url: process.env.REDIS_URL,
       },
     },
   },
