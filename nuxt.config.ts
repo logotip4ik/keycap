@@ -211,6 +211,7 @@ export default defineNuxtConfig({
       cache: {
         driver: 'redis',
         url: process.env.REDIS_URL,
+        tls: true,
       },
     },
   },
