@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v1.1.1
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v1.1.0...v1.1.1)
+
+### 💅 Refactors
+
+- Force array type to be generic by default ([b333b46](https://github.com/logotip4ik/keycap/commit/b333b46))
+- Select input contents on link input ([9b86df6](https://github.com/logotip4ik/keycap/commit/9b86df6))
+
+### 🎨 Styles
+
+- Run lint:fix ([56c3e01](https://github.com/logotip4ik/keycap/commit/56c3e01))
+
+### ❤️  Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+
 ## v1.1.0
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v1.0.2...v1.1.0)
