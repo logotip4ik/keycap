@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.1.2
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v1.1.1...v1.1.2)
+
+### 🩹 Fixes
+
+- Enable tls for redis driver ([3832251](https://github.com/logotip4ik/keycap/commit/3832251))
+
+### ❤️  Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+
 ## v1.1.1
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v1.1.0...v1.1.1)
