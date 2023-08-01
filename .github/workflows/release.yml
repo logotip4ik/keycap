@@ -9,7 +9,7 @@ on:
       - master
 
 jobs:
-  build-lint-test:
+  test-lint-build:
     timeout-minutes: 3
     runs-on: ubuntu-latest
 
@@ -48,7 +48,7 @@ jobs:
           author_email: noreply@github.com
 
   bump-package-version:
-    needs: build-lint-test
+    needs: test-lint-build
     timeout-minutes: 4
     runs-on: ubuntu-latest
 
@@ -83,7 +83,7 @@ jobs:
           tags: true
 
   trigger-release:
-    needs: [build-lint-test, bump-package-version]
+    needs: [test-lint-build, bump-package-version]
     timeout-minutes: 1
     runs-on: ubuntu-latest
 
