@@ -18,6 +18,7 @@
     "curly": ["error", "multi-or-nest", "consistent"],
     "antfu/if-newline": "off",
     "import/no-nodejs-modules": "off",
+    "@typescript-eslint/array-type": ["error", { "default": "generic" }],
     "@typescript-eslint/no-shadow": "off"
   }
 }
