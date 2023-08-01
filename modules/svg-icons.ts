@@ -1,7 +1,6 @@
 import { readFile, readdir } from 'node:fs/promises';
 import { addComponent, addTemplate, defineNuxtModule } from '@nuxt/kit';
 import { resolve } from 'pathe';
-import { isDevelopment } from 'std-env';
 import { camelCase, pascalCase } from 'scule';
 import { optimize as optimizeSvg } from 'svgo';
 import { compileTemplate } from 'vue/compiler-sfc';
@@ -27,7 +26,7 @@ export default defineNuxtModule({
       };
 
       const { dst } = addTemplate({
-        write: isDevelopment,
+        write: true,
         filename: `${icon.kebabCaseName}.mjs`,
         getContents: async () =>
           await generateIconFileDefinition({ name: icon.pascalCase, path: icon.path }),
