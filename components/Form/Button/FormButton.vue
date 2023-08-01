@@ -68,6 +68,8 @@ withDefaults(defineProps<Props>(), { loading: false });
     border-radius: inherit;
     background-color: hsla(var(--text-color-hsl), 0.95);
 
+    pointer-events: none;
+
     @supports (backdrop-filter: blur(1px)) {
       backdrop-filter: blur(2px);
       background-color: hsla(var(--text-color-hsl), 0.5);
@@ -88,6 +90,7 @@ withDefaults(defineProps<Props>(), { loading: false });
     border: 2px solid transparent;
     border-left-color: var(--surface-color);
 
+    pointer-events: none;
     animation: spin 1s infinite linear;
   }
 
