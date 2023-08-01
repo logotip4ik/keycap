@@ -1,3 +1,4 @@
+import process from 'node:process';
 import { isDevelopment, provider } from 'std-env';
 import UnheadVite from '@unhead/addons/vite';
 import SvgLoaderPlugin from 'vite-svg-loader';
@@ -81,6 +82,13 @@ export default defineNuxtConfig({
     esbuild: {
       options: {
         target: 'esnext',
+      },
+    },
+
+    storage: {
+      cache: {
+        driver: 'redis',
+        url: process.env.REDIS_URL,
       },
     },
   },
