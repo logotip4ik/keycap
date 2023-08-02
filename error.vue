@@ -9,12 +9,20 @@ const props = defineProps<Props>();
 
 const user = useUser();
 
-const defaultMessage = 'Keycap has broken into pieces<br><small>I mean, something went completely wrong</small>';
+const notes = [
+  'Keycap has broken into pieces.<br>',
+  'There is no Esc, no Ctrl, no Space.<br>',
+  'God bless IBM model M.<br>',
+];
+
+const randomNote = notes[Math.floor(Math.random() * notes.length)];
+
 const errorMessages: Record<number, string> = {
-  404: 'There is no Esc, no Ctrl, no Space.<br><small>Just kidding.</small><br>Your page is not found thou...',
-  401: 'God bless IBM model M<br>Btw, that route is not public',
+  404: 'Your page is not found thou...',
+  401: 'Btw, that route is not public',
+  500: 'I mean, something went completely wrong',
 };
-const message = errorMessages[props.error.statusCode] || defaultMessage;
+const message = errorMessages[props.error.statusCode] || 'That was unexpected 🙃';
 
 if (!import.meta.env.PROD)
   console.error(props.error);
@@ -36,6 +44,7 @@ function handleError() {
 
     <Form class="error-page__form" action="/" @submit.prevent="handleError">
       <FormTitle class="error-page__form__title">
+        <small v-html="randomNote" />
         <span v-html="message" />
       </FormTitle>
 
@@ -70,7 +79,11 @@ function handleError() {
 
     margin: 0;
 
-    background: radial-gradient(92% 100% at 50.00% 115.00%, hsla(var(--selection-bg-color-hsl), 0.65) 0%, hsla(var(--selection-bg-color-hsl), 0.0) 110%);
+    background: radial-gradient(
+      92% 100% at 50.00% 115.00%,
+      hsla(var(--selection-bg-color-hsl), 0.65) 0%,
+      hsla(var(--selection-bg-color-hsl), 0.0) 110%
+    );
     background-clip: text;
 
     transform: translate(-50%, -50%);
