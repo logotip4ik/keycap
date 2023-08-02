@@ -8,6 +8,9 @@ env:
   # allow yarn creating lockfile in CI environment
   YARN_ENABLE_IMMUTABLE_INSTALLS: false
 
+permissions:
+  contents: write
+
 jobs:
   auto-update-dependencies:
     timeout-minutes: 4
@@ -17,7 +20,7 @@ jobs:
       - name: Checkouting repo
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
         with:
-          persist-credentials: false
+          token: ${{ secrets.ACTIONS_PAT }}
           fetch-depth: 0
 
       - name: Node setup
