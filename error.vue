@@ -22,7 +22,7 @@ const errorMessages: Record<number, string> = {
   401: 'Btw, that route is not public',
   500: 'I mean, something went completely wrong',
 };
-const message = errorMessages[props.error.statusCode] || 'That was unexpected 🙃';
+const message = errorMessages[props.error.statusCode] || 'That was unexpected (⊙_⊙;)';
 
 if (!import.meta.env.PROD)
   console.error(props.error);
@@ -95,6 +95,12 @@ function handleError() {
 
     &__title {
       text-align: center;
+
+      small {
+        font-weight: 400;
+        color: hsla(var(--text-color-hsl), 0.75);
+        line-height: 1.25;
+      }
     }
   }
 }
