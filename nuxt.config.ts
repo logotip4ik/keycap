@@ -8,7 +8,6 @@ import { getHeaders } from './headers.config';
 import breakpoints from './constants/breakpoints';
 import { ParseDurationTransformPlugin } from './vite/transform-parse-duration';
 
-const ISRDuration = parseDuration('15 minutes', 'second');
 const tsExcludes = ['../data', '../benchmarks', '../scripts'];
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
@@ -94,10 +93,10 @@ export default defineNuxtConfig({
 
     // this would be great https://github.com/unjs/nitro/issues/603#issuecomment-1415826732
     '/view/**': {
-      isr: ISRDuration,
+      isr: parseDuration('15 minutes', 'second'),
       headers: getHeaders({
         type: 'note-view',
-        opts: { isr: ISRDuration },
+        opts: { isr: parseDuration('15 minutes', 'second') },
       }),
     },
 
