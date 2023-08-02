@@ -21,8 +21,6 @@ useHead({
   titleTemplate: '%s - Keycap',
 });
 
-const isNoteContentsEmpty = (note.value?.content?.replace(/<[^>]+>/g, '').trim() || '') === '';
-
 function formatDate(date: string | Date) {
   date = new Date(date);
 
@@ -35,11 +33,6 @@ function formatDate(date: string | Date) {
     <NavSimple />
 
     <header class="note-view__header">
-      <small v-if="isNoteContentsEmpty" class="note-view__header__alert">
-        <LazyIconOutlineInfo v-once class="note-view__header__alert__icon" />
-        Note is empty
-      </small>
-
       <p class="note-view__header__name">
         {{ note.name }}
       </p>

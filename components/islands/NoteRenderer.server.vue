@@ -26,9 +26,33 @@ const sanitized = sanitizeHTML(props.content, {
 </script>
 
 <template>
-  <div class="note-editor">
+  <div v-if="sanitized.length > 0" class="note-editor">
     <div class="ProseMirror ProseMirror--renderer" v-html="sanitized" />
+  </div>
+
+  <div v-else class="note-editor">
+    <p class="note-editor__empty">
+      <span class="font-wide">Sadly note is empty :&lpar;</span>
+      <br>
+      <small>No yet keycaps was pressed</small>
+    </p>
   </div>
 </template>
 
 <style src="~/assets/styles/note-editor.scss"></style>
+
+<style lang="scss">
+.note-editor__empty {
+  display: block;
+
+  font-size: calc(1.5rem + 1.5vw);
+  text-align: center;
+
+  margin-top: 15vh;
+
+  small {
+    font-weight: 300;
+    color: hsla(var(--text-color-hsl), 0.75);
+  }
+}
+</style>
