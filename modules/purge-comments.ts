@@ -1,8 +1,7 @@
 import { addVitePlugin, defineNuxtModule } from '@nuxt/kit';
-import MagicString from 'magic-string';
 import { isDevelopment } from 'std-env';
-
-const COMMENTS_RE = /<!--.*?-->/gs;
+import MagicString from 'magic-string';
+import decomment from 'decomment';
 
 // NOTE: taken from - https://github.com/elk-zone/elk/blob/main/modules/purge-comments.ts
 export default defineNuxtModule({
@@ -20,13 +19,17 @@ export default defineNuxtModule({
         if (!id.endsWith('.vue') || !code.includes('<!--'))
           return;
 
-        const s = new MagicString(code);
-        s.replace(COMMENTS_RE, '');
+        const decommented = decomment(code);
 
-        if (s.hasChanged()) {
+        if (decommented !== code) {
+          const s = new MagicString(decommented);
+
           return {
             code: s.toString(),
-            map: s.generateMap({ source: id, includeContent: true }),
+            map: s.generateMap({
+              source: id,
+              hires: true,
+            }),
           };
         }
       },

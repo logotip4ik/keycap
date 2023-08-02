@@ -3765,6 +3765,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/decomment@npm:^0.9.3":
+  version: 0.9.3
+  resolution: "@types/decomment@npm:0.9.3"
+  checksum: a2a15973fb84ebaa1ab9928845513054b21fed7c181aba1d3f122a98ffc21a85c305e7a7b697bc5a21ca730a4de8444357963894e7a9c41fe0cc7504cb6745f6
+  languageName: node
+  linkType: hard
+
 "@types/estree@npm:*, @types/estree@npm:^1.0.0":
   version: 1.0.1
   resolution: "@types/estree@npm:1.0.1"
@@ -6125,6 +6132,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"decomment@npm:^0.9.5":
+  version: 0.9.5
+  resolution: "decomment@npm:0.9.5"
+  dependencies:
+    esprima: 4.0.1
+  checksum: cfa9eb48f6703c1bf90dbc1817e2a9a747d631274065cacc5e529b9316038dfa06d3bccc731ab3c28055a7cf7c4ed236ef3cb746cdaa7c7f5dda3088396fd21d
+  languageName: node
+  linkType: hard
+
 "decompress-tar@npm:^4.0.0, decompress-tar@npm:^4.1.0, decompress-tar@npm:^4.1.1":
   version: 4.1.1
   resolution: "decompress-tar@npm:4.1.1"
@@ -7395,7 +7411,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esprima@npm:~4.0.0":
+"esprima@npm:4.0.1, esprima@npm:~4.0.0":
   version: 4.0.1
   resolution: "esprima@npm:4.0.1"
   bin:
@@ -9409,6 +9425,7 @@ __metadata:
     "@tiptap/pm": ^2.1.0-rc.12
     "@tiptap/vue-3": ^2.1.0-rc.12
     "@total-typescript/ts-reset": ^0.4.2
+    "@types/decomment": ^0.9.3
     "@types/lambda-rate-limiter": ^3.0.0
     "@types/node": ^18.16.19
     "@types/sanitize-html": ^2.9.0
@@ -9418,6 +9435,7 @@ __metadata:
     "@vueuse/nuxt": ^10.3.0
     browserslist-to-esbuild: ^1.2.0
     comlink: ^4.4.1
+    decomment: ^0.9.5
     eslint: 8.46.0
     eslint-plugin-github: ^4.9.2
     eslint-plugin-regexp: ^1.15.0
