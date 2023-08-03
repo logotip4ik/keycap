@@ -5,12 +5,11 @@ interface Props { editor: Editor }
 defineProps<Props>();
 
 const isFallbackMode = useFallbackMode();
-const isFirefox = inject(IsFirefoxKey);
 const inlineMenu = ref<HTMLElement | null>(null);
 
 const hiddenClass = 'inline-menu__hidden';
 
-let prevFormatterPosition: number;
+let prevFormatterPosition: number = 0;
 let prevAnimation: Animation | null;
 function handleKeyboardAppear() {
   const viewport = window.visualViewport;
@@ -22,21 +21,22 @@ function handleKeyboardAppear() {
       - viewport.offsetTop
       - viewport.height;
 
-  if (prevAnimation || (formatterPosition < 1 && prevFormatterPosition < 1))
+  if (prevAnimation)
     return;
 
   prevAnimation = inlineMenu.value.animate([
     { transform: `translate3d(0,${-1 * prevFormatterPosition}px,0)` },
     { transform: `translate3d(0,${-1 * formatterPosition}px,0)` },
-  ], { fill: 'forwards', duration: 175, easing: 'cubic-bezier(0.33, 1, 0.68, 1)' });
+  ], { fill: 'forwards', duration: 100, easing: 'cubic-bezier(0.33, 1, 0.68, 1)' });
 
   prevAnimation.addEventListener('finish', () => {
     inlineMenu.value?.classList.remove(hiddenClass);
     prevAnimation = null;
+    prevFormatterPosition = formatterPosition;
   });
 }
 
-const debouncedKeyboardAppear = useDebounceFn(handleKeyboardAppear, 175);
+const debouncedKeyboardAppear = useDebounceFn(handleKeyboardAppear, 75);
 
 function handleMobileScroll() {
   inlineMenu.value?.classList.add(hiddenClass);
@@ -45,13 +45,9 @@ function handleMobileScroll() {
 }
 
 onMounted(() => {
-  if (isFirefox)
-    return;
-
   let cleanups = [
     on(window.visualViewport!, 'resize', debouncedKeyboardAppear),
     on(window.visualViewport!, 'scroll', handleMobileScroll),
-    on(window, 'scroll', handleMobileScroll),
   ];
   const cleanup = () => {
     cleanups.forEach((cb) => cb());
