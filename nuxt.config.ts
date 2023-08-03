@@ -18,6 +18,7 @@ export default defineNuxtConfig({
     head: {
       htmlAttrs: { translate: 'no', lang: 'en' },
       meta: [
+        { name: 'viewport', content: 'width=device-width, initial-scale=1, interactive-widget=resizes-visual' },
         { name: 'description', content: 'Better then just notes ❤. Synced between your devices, simple, fast and purple.' },
         { name: 'mobile-web-app-capable', content: 'yes' },
         { name: 'theme-color', content: '#FCFCFD', media: '(prefers-color-scheme: light)', key: 'theme-color-light' },
