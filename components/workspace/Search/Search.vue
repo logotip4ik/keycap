@@ -26,6 +26,7 @@ function handleCancel(_event?: Event) {
   selectedResult.value = 0;
 }
 
+let afterSearchCallback: ((...args: Array<any>) => any) | null;
 function handleSearchInput(value: string) {
   value = value.trim();
   selectedResult.value = 0;
@@ -36,18 +37,27 @@ function handleSearchInput(value: string) {
   isLoadingResults.value = true;
 
   fuzzyWorker.value.searchWithQuery(value)
-    .then((entries: Array<FuzzyItem | CommandItem>) => {
+    .then(async (entries: Array<FuzzyItem | CommandItem>) => {
       results.value = entries;
+
+      afterSearchCallback && afterSearchCallback();
     })
     .finally(() => {
       isLoadingResults.value = false;
+
+      afterSearchCallback = null;
     });
 }
 
 async function openResult() {
   const resultToOpen = results.value[selectedResult.value];
 
-  if (!resultToOpen) return;
+  if (!resultToOpen) {
+    if (!afterSearchCallback)
+      afterSearchCallback = openResult;
+
+    return;
+  };
 
   const isCommand = 'key' in resultToOpen;
 
