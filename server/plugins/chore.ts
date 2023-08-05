@@ -24,4 +24,8 @@ export default defineNitroPlugin((nitro) => {
   nitro.hooks.hookOnce('close', () => {
     globalThis._logger?.flush();
   });
+
+  nitro.hooks.hook('render:response', () => {
+    globalThis._logger?.flush();
+  });
 });
