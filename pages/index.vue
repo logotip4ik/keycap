@@ -1,43 +1,35 @@
 <script setup lang="ts">
-useSeoMeta({
-  ogDescription: 'Another note taking webapp ❤.Simple, fast and purple.',
-});
+const { build } = useRuntimeConfig().public;
 
-const { buildInfo } = useAppConfig();
-
-const lastTimeBuild = Intl.DateTimeFormat('en-UK', { dateStyle: 'medium' }).format(buildInfo.time);
-const shortCommitSha = buildInfo.commit;
+const lastTimeBuild = Intl.DateTimeFormat('en-UK', { dateStyle: 'medium' }).format(build.time);
+const shortCommitSha = build.commit;
 </script>
 
 <template>
-  <main class="index">
+  <main v-once class="index">
     <!-- TODO: actually craft landing page -->
 
-    <nav class="index__nav">
-      <div class="container">
-        <NuxtLink href="/login" class="index__nav__link">
-          Have an account ?
-        </NuxtLink>
-      </div>
-    </nav>
+    <NavLogin />
 
     <div class="container">
-      <header class="index__header">
-        <small class="index__header__alert">
-          <Icon name="mi:warning" class="index__header__alert__icon" />
-          In development
-        </small>
+      <WithBlob v-slot="props">
+        <header class="index__header" v-bind="props">
+          <small class="index__header__alert">
+            <LazyIconWarning v-once class="index__header__alert__icon" />
+            {{ build.version }} (in development)
+          </small>
 
-        <h1 class="index__header__title font-wide">
-          Keycap
-        </h1>
+          <h1 class="index__header__title font-wide">
+            Keycap
+          </h1>
 
-        <p class="index__header__subtitle">
-          Another note taking webapp ❤.
-          <br>
-          Simple, fast and purple.
-        </p>
-      </header>
+          <p class="index__header__subtitle">
+            Another note taking webapp ❤.
+            <br>
+            Simple, fast and purple.
+          </p>
+        </header>
+      </WithBlob>
     </div>
 
     <p class="index__build-info">
@@ -69,46 +61,9 @@ const shortCommitSha = buildInfo.commit;
     margin: 0 auto;
   }
 
-  &__nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 2;
-    isolation: isolate;
-
-    width: 100%;
-
-    padding: 2rem 1rem;
-
-    .container {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-    }
-
-    &__link {
-      font-size: max(1vw, 1rem);
-      color: hsla(var(--text-color-hsl), 1);
-      text-decoration: underline dashed 1px hsla(var(--selection-bg-color-hsl), 1);
-      text-underline-offset: 3px;
-
-      padding: 1rem 0;
-
-      transition: color .3s;
-
-      @media (hover: hover) {
-        color: hsla(var(--text-color-hsl), 0.9);
-
-        &:hover {
-          color: hsla(var(--text-color-hsl), 1);
-        }
-      }
-    }
-  }
-
   &__header {
     position: relative;
-    z-index: 1;
+    z-index: 0;
     isolation: isolate;
 
     width: 100%;
@@ -117,35 +72,6 @@ const shortCommitSha = buildInfo.commit;
     margin: 0 auto;
     padding-top: 30vh;
     padding-top: 30svh;
-
-    &::after {
-      --size: 20vmin;
-      --blur-divider: 1.75;
-
-      content: "";
-
-      position: absolute;
-      top: 75%;
-      right: 7.5%;
-      z-index: -1;
-
-      width: var(--size);
-      height: var(--size);
-
-      border-radius: 50%;
-      background-color: var(--loading-indicator-color);
-
-      filter: blur(calc(var(--size) / var(--blur-divider)));
-
-      @media (prefers-reduced-motion: no-preference) {
-        animation: blob-anim 20s infinite linear alternate;
-      }
-
-      @media screen and (max-width: $breakpoint-tablet) {
-        --size: 30vmin;
-        --blur-divider: 2;
-      }
-    }
 
     &__alert {
       display: inline-block;
@@ -211,43 +137,6 @@ const shortCommitSha = buildInfo.commit;
       border-radius: 0.25rem;
       background-color: hsla(var(--selection-bg-color-hsl), 0.25)
     }
-  }
-}
-
-@keyframes blob-anim {
-  0% {
-    width: 20vmin;
-    height: 20vmin;
-
-    transform: translate(0px, 0px) rotate(0deg);
-  }
-
-  25% {
-    width: 25vmin;
-    height: 20vmin;
-
-    transform: translate(1vmax, 0px) rotate(0deg);
-  }
-
-  50% {
-    width: 25vmin;
-    height: 30vmin;
-
-    transform: translate(0.5vmax -1vmax) rotate(0deg);
-  }
-
-  75% {
-    width: 20vmin;
-    height: 22.5vmin;
-
-    transform: translate(-1vmax, 1vmax) rotate(0deg);
-  }
-
-  100% {
-    width: 25vmin;
-    height: 21.5vmin;
-
-    transform: translate(-0.5vmax, 0.25vmax) rotate(0deg);
   }
 }
 </style>

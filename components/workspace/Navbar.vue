@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { blankNoteName } from '~/assets/constants';
-
-interface Emits { (event: 'openSearch'): void }
-defineEmits<Emits>();
+// see https://github.com/vuejs/core/discussions/8626
+// this actually feels ok, i guess
+// kinda react'y, but it brings better typings
+interface Props { onOpenSearch: () => void }
+defineProps<Props>();
 
 const route = useRoute();
 const user = useUser();
@@ -17,7 +18,7 @@ const isShowingBackButton = computed(() => isSmallScreen!.value && !isNoteNameEm
 const headingText = computed(() => {
   if (!user.value) return '';
 
-  if (route.params.note && route.params.note !== blankNoteName)
+  if (route.params.note && route.params.note !== BLANK_NOTE_NAME)
     return decodeURIComponent(route.params.note as string);
 
   if (route.params.folders && route.params.folders.length !== 0) {
@@ -28,40 +29,42 @@ const headingText = computed(() => {
   return `${user.value.username}'s workspace`;
 });
 
-async function showFolderContents() {
-  await navigateTo({ ...route, params: { ...route.params, note: blankNoteName } });
-}
+const folderRootPath = computed(() => {
+  return { ...route, params: { ...route.params, note: BLANK_NOTE_NAME } };
+});
 </script>
 
 <template>
-  <nav class="nav">
-    <Transition name="nav-back-button">
-      <button
+  <nav class="navbar">
+    <Transition name="navbar-back-button">
+      <NuxtLink
         v-show="isShowingBackButton"
-        class="nav__button nav__button--back"
-        @click="showFolderContents"
+        class="navbar__button navbar__button--back"
+        :href="folderRootPath"
+        aria-label="go up to folder root"
       >
-        <Icon name="ic:baseline-arrow-back" class="nav__button__icon" />
-      </button>
+        <LazyIconBaselineArrowBack v-once class="navbar__button__icon" />
+      </NuxtLink>
     </Transition>
 
     <!-- TODO: tell somehow user that, red indicator means no internet connection -->
-    <p class="nav__heading" :data-note-state="currentNoteState" :data-network-connection="!isFallbackMode">
+    <p class="navbar__heading" :data-note-state="currentNoteState" :data-network-connection="!isFallbackMode">
       {{ headingText }}
     </p>
 
     <button
-      class="nav__button nav__button--search"
+      class="navbar__button navbar__button--search"
       :data-show-back-button="isShowingBackButton"
-      @click="$emit('openSearch')"
+      aria-label="open quick search"
+      @click="onOpenSearch"
     >
-      <Icon name="search" class="nav__button__icon" />
+      <LazyIconSearchRounded v-once class="navbar__button__icon" />
     </button>
   </nav>
 </template>
 
 <style lang="scss">
-.nav {
+.navbar {
   display: flex;
   justify-content: flex-between;
   align-items: center;
@@ -137,6 +140,8 @@ async function showFolderContents() {
     flex-shrink: 0;
 
     display: none;
+    justify-content: center;
+    align-items: center;
 
     color: hsla(var(--text-color-hsl), 0.85);
 
@@ -151,6 +156,8 @@ async function showFolderContents() {
     transition: color .3s, background-color .3s, opacity .3s;
 
     &--back {
+      will-change: transform, margin-right, opacity;
+
       margin-right: 1rem;
 
       background-color: hsla(var(--text-color-hsl), 0.1);
@@ -176,12 +183,12 @@ async function showFolderContents() {
     }
 
     &__icon {
-      height: 70%;
+      height: 65%;
       width: auto;
     }
 
     @media screen and (max-width: $breakpoint-tablet) {
-      display: block;
+      display: flex;
     }
   }
 
@@ -193,14 +200,14 @@ async function showFolderContents() {
   }
 }
 
-.nav-back-button-enter-active,
-.nav-back-button-leave-active {
+.navbar-back-button-enter-active,
+.navbar-back-button-leave-active {
   transition: opacity, transform, margin-right;
   transition-duration: 0.25s;
 }
 
-.nav-back-button-leave-to,
-.nav-back-button-enter-from {
+.navbar-back-button-leave-to,
+.navbar-back-button-enter-from {
   --inverted-size: calc(-1 * var(--button-size-basis));
 
   margin-right: var(--inverted-size);

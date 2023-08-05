@@ -1,7 +1,7 @@
 import type { MaybeRefOrGetter } from '@vueuse/core';
 import type { ShallowRef } from 'vue';
 
-const toasts = shallowRef<ToastInstance[]>([]);
+const toasts = shallowRef<Array<ToastInstance>>([]);
 
 export const useToasts = () => toasts;
 
@@ -78,7 +78,7 @@ export interface ToastInstance {
   duration: number
   type: ToastType
   el: ShallowRef<HTMLOutputElement | null>
-  buttons: ToastButton[]
+  buttons: Array<ToastButton>
   remove: () => void
 }
 

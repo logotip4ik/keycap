@@ -1,5 +1,3 @@
-import { getPrisma } from '~/prisma';
-
 import type { SafeUser } from '~/types/server';
 
 export default defineEventHandler(async (event) => {
@@ -8,7 +6,7 @@ export default defineEventHandler(async (event) => {
   if (isOriginMismatch) {
     event.context.logger.log('warn', 'suspicious origin mismatch', { path: event.path });
 
-    return createError({ statusCode: 403 });
+    throw createError({ statusCode: 403 });
   }
 
   const body = await readBody(event) || {};
@@ -16,10 +14,10 @@ export default defineEventHandler(async (event) => {
   if (body.email) body.email = body.email.trim();
   if (body.password) body.password = body.password.trim();
 
-  const validation = useLoginValidator(body);
+  const validation = useLoginValidation(body);
 
   if (!validation.ok) {
-    return createError({
+    throw createError({
       statusCode: 400,
       statusMessage: `${validation.errors[0].dataPath.split('.').at(-1)} ${validation.errors[0].message}`,
     });
@@ -35,7 +33,10 @@ export default defineEventHandler(async (event) => {
   });
 
   if (!user)
-    return createError({ statusCode: 400, statusMessage: 'email or password is incorrect' });
+    throw createError({ statusCode: 400, statusMessage: 'email or password is incorrect' });
+
+  if (!user.password)
+    throw createError({ statusCode: 400, statusMessage: 'this account uses social auth' });
 
   const isPasswordValid = await verifyPassword(user.password, body.password)
     .catch((err) => {
@@ -43,10 +44,10 @@ export default defineEventHandler(async (event) => {
     });
 
   if (isPasswordValid === null)
-    return createError({ statusCode: 500 });
+    throw createError({ statusCode: 500 });
 
   if (isPasswordValid === false)
-    return createError({ statusCode: 400, statusMessage: 'email or password is incorrect' });
+    throw createError({ statusCode: 400, statusMessage: 'email or password is incorrect' });
 
   const safeUser: SafeUser = { id: user.id, username: user.username, email: user.email };
 

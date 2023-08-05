@@ -10,15 +10,13 @@ interface MenuAction {
   handler: () => any | Promise<any>
 }
 
-interface Emits { (event: 'close'): void }
-interface Props { x: number; y: number; actions: MenuAction[] }
+interface Props { x: number; y: number; actions: Array<MenuAction>; onClose: () => void }
 const props = defineProps<Props>();
-const emit = defineEmits<Emits>();
 
 const popperInstance = shallowRef<null | PopperInstance>(null);
 const menu = ref<null | HTMLElement>(null);
 const currentlyConfirming = ref(-1); // You can confirm one at a time
-const cleanup = ref<null | (() => void)>(null);
+let cleanup: null | (() => void);
 
 const confirmDuration = parseDuration('5 seconds')!;
 const virtualElement: VirtualElement = {
@@ -41,29 +39,30 @@ function withEffects(event: Event, action: MenuAction) {
     const targetCancelEvents = ['pointerup', 'pointerleave', 'touchend', 'touchcancel'];
     const target = event.target as HTMLElement;
 
-    currentlyConfirming.value = Number(target.dataset.key);
+    currentlyConfirming.value = Number(target.getAttribute('data-key'));
 
     const animation = target.animate([
       { opacity: 1, transform: 'translate(-100%, 0%)' },
       { opacity: 1, transform: 'translate(0%, 0%)' },
     ], { duration: confirmDuration, pseudoElement: '::after' });
 
-    cleanup.value = () => {
+    cleanup = () => {
       animation.cancel?.();
       currentlyConfirming.value = -1;
 
       for (const eventType of targetCancelEvents)
-        target.removeEventListener(eventType, cleanup.value!);
+        target.removeEventListener(eventType, cleanup!);
     };
 
     animation.addEventListener('finish', () => {
       action.handler();
 
-      cleanup.value!();
+      cleanup!();
+      cleanup = null;
     });
 
     for (const eventType of targetCancelEvents)
-      target.addEventListener(eventType, cleanup.value);
+      target.addEventListener(eventType, cleanup);
   }
 }
 
@@ -82,14 +81,15 @@ watch([() => props.x, () => props.y], async () => {
   popperInstance.value?.update();
 }, { immediate: true });
 
-useClickOutside(menu, () => emit('close'));
+useClickOutside(menu, () => props.onClose());
 
 useTinykeys({
-  Escape: () => emit('close'),
+  Escape: () => props.onClose(),
 });
 
 onBeforeUnmount(() => {
-  cleanup.value?.();
+  cleanup?.();
+  cleanup = null;
 });
 </script>
 
@@ -121,6 +121,9 @@ onBeforeUnmount(() => {
 
 <style lang="scss">
 .item-context-menu {
+  --base-color-saturation: 0.0;
+  --base-shadow-color: 0, 0, 0;
+
   z-index: 2;
 
   color: hsla(var(--text-color-hsl), 0.7);
@@ -134,14 +137,24 @@ onBeforeUnmount(() => {
   border-radius: 0.25rem;
   background-color: hsla(var(--surface-color-hsl), 0.9);
   box-shadow:
-    0px 2px 5.3px rgba(0, 0, 0, 0.02),
-    0px 6.7px 17.9px rgba(0, 0, 0, 0.03),
-    0px 30px 80px rgba(0, 0, 0, 0.05);
+    0px 2px 5.3px rgba(var(--base-shadow-color), 0.02),
+    0px 6.7px 17.9px rgba(var(--base-shadow-color), 0.03),
+    0px 30px 80px rgba(var(--base-shadow-color), 0.05);
+
+  @media (prefers-color-scheme: dark) {
+    --base-shadow-color: 200, 200, 200;
+    --base-color-saturation: 0.1;
+  }
 
   @supports (backdrop-filter: blur(1px)) {
-    background-color: hsla(var(--selection-bg-color-hsl), 0.15);
-    backdrop-filter: blur(6px);
-  }
+    background-color: transparent;
+    background-image: linear-gradient(
+      to bottom,
+      hsla(var(--selection-bg-color-hsl), calc(var(--base-color-saturation) + 0.075)),
+      hsla(var(--selection-bg-color-hsl), calc(var(--base-color-saturation) + 0.175)),
+    );
+    border: 1px solid hsla(var(--selection-bg-color-hsl), 0.5);
+    backdrop-filter: blur(0.75rem);  }
 
   &__item {
     &__button {

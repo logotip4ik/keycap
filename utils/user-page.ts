@@ -1,16 +1,14 @@
 import { del, get, set, values } from 'idb-keyval';
 
-import type { LRUCache } from 'lru-cache';
+import type LRUCache from '@tinkoff/lru-cache-nano';
 import type * as Comlink from 'comlink';
-
-import { blankNoteName } from '~/assets/constants';
 
 export function preloadDashboardComponents() {
   const user = useUser();
 
   prefetchComponents('WorkspaceSearch');
 
-  const blankNotePath = `/@${user.value!.username}/${blankNoteName}`;
+  const blankNotePath = `/@${user.value!.username}/${BLANK_NOTE_NAME}`;
   preloadRouteComponents(blankNotePath);
 }
 
@@ -21,7 +19,9 @@ export async function defineFuzzyWorker() {
   const fuzzyWorker = useFuzzyWorker();
 
   // https://vitejs.dev/guide/features.html#web-workers
-  const worker = new Worker(new URL('../workers/fuzzy.ts', import.meta.url));
+  const worker = import.meta.env.PROD
+    ? new Worker(new URL('../workers/fuzzy.ts', import.meta.url))
+    : new Worker(new URL('../workers/fuzzy.ts', import.meta.url), { type: 'module' });
 
   fuzzyWorker.value = wrap(worker);
 }

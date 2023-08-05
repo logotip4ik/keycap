@@ -4,12 +4,14 @@ import mitt from 'mitt';
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 type Events = {
   'save:note'?: Partial<{ force: boolean }>
-  'cache:populated'?: Partial<{ }>
+  'cache:populated'?: Partial<object>
+  // will open note if there is one and folder otherwise
+  'details:show'?: Partial<object>
 };
 
 const emitter = mitt<Events>();
 
-export default (): Emitter<Events> => {
+export function useMitt(): Emitter<Events> {
   return {
     ...emitter,
     // eslint-disable-next-line @typescript-eslint/prefer-ts-expect-error

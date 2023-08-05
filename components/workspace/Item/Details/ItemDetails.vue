@@ -13,11 +13,13 @@ const isFolder = 'root' in props.item;
 type NoteDetails = Note & Prisma.NoteGetPayload<{ select: { shares: { select: { link: true; updatedAt: true; createdAt: true } } } }>;
 
 // NOTE(perf improvement): client bundle size reduced by using only useAsyncData or useFetch
-const { data: details, refresh } = await useLazyAsyncData<Partial<NoteDetails>>(async () => await $fetch(
-  // /api/[note|folder]/[item path without username]
-  `/api/${isFolder ? 'folder' : 'note'}/${props.item.path.split('/').slice(2).join('/')}`,
-  { query: { details: true }, retry: 2 },
-));
+const { data: details, refresh } = useLazyAsyncData(async () => {
+  return await $fetch<Partial<NoteDetails>>(
+    // /api/[note|folder]/[item path without username]
+    `/api/${isFolder ? 'folder' : 'note'}/${props.item.path.split('/').slice(2).join('/')}`,
+    { query: { details: true }, retry: 2 },
+  );
+});
 
 const itemDetailsEl = ref<HTMLElement | null>(null);
 
@@ -92,7 +94,7 @@ async function copyShareLink() {
 }
 
 const debouncedToggleShareLink = useDebounceFn(toggleShareLink, 250);
-function toggleShareLink(needToCreate: boolean) {
+function toggleShareLink(isCreateRequest: boolean) {
   if (isLoadingItemDetails.value)
     return;
 
@@ -101,7 +103,7 @@ function toggleShareLink(needToCreate: boolean) {
   isLoadingItemDetails.value = true;
 
   $fetch(`/api/share/note/${notePath}`, {
-    method: needToCreate ? 'POST' : 'DELETE',
+    method: isCreateRequest ? 'POST' : 'DELETE',
   })
     .then(() => refresh())
     .finally(() => isLoadingItemDetails.value = false);
@@ -121,7 +123,7 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
       aria-labelledby="item-details-dialog-title"
     >
       <button class="item-details__close-button" @click="unsetCurrentItemForDetails">
-        <Icon name="close" class="item-details__close-button__icon" />
+        <LazyIconCloseRounded v-once class="item-details__close-button__icon" />
       </button>
 
       <Transition name="fade" appear @before-leave="storePopupHeight" @enter="transitionHeight">
@@ -130,6 +132,7 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
         <!-- TODO: split into smaller components -->
         <div v-else-if="mergedDetails" key="content" class="item-details__data">
           <p
+            v-once
             id="item-details-dialog-title"
             class="item-details__data__title"
             :aria-label="`Details: ${mergedDetails.name}`"
@@ -197,7 +200,7 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
   padding: 2rem 1.25rem 1.5rem;
 
   border-radius: 0.5rem;
-  border: 1px solid hsla(var(--text-color-hsl), 0.125);
+  border: 1px solid hsla(var(--text-color-hsl), 0.2);
   background-color: rgba(var(--surface-color-hsl), 0.98);
   box-shadow:
     inset -1px -1px 0.1rem rgba($color: #000000, $alpha: 0.025),
@@ -274,13 +277,14 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
       color: hsla(var(--text-color-hsl), 1);
       background-color: hsla(var(--selection-bg-color-hsl), 0.075);
 
-      outline-color: hsla(var(--selection-bg-color-hsl), 0.35);
+      outline: 1px solid hsla(var(--selection-bg-color-hsl), 0.45);
       outline-offset: 0px;
 
       transition-duration: .1s;
 
       @media (prefers-color-scheme: dark) {
         background-color: hsla(var(--selection-bg-color-hsl), 0.175);
+        outline-color: hsla(var(--selection-bg-color-hsl), 0.65);
       }
     }
 
@@ -370,6 +374,14 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
           cursor: default;
 
           transition-duration: .4s;
+        }
+
+        &:focus-visible {
+          outline: 1px solid hsla(var(--text-color-hsl), 0.25);
+          box-shadow:
+            0 0 0 5px hsla(var(--selection-bg-color-hsl), 0.75),
+            0 0 0 10px hsla(var(--selection-bg-color-hsl), 0.25);
+          transition-duration: 0s;
         }
 
         &:active:not(:disabled) {

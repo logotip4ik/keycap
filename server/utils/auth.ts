@@ -1,3 +1,4 @@
+import process from 'node:process';
 import { getCookie, setCookie } from 'h3';
 import { SignJWT, jwtVerify } from 'jose';
 import { isDevelopment, isProduction } from 'std-env';
@@ -10,15 +11,18 @@ import { toBigInt } from '.';
 
 import type { SafeUser } from '~/types/server';
 
-async function generateAccessToken(object: object): Promise<string> {
+const AUTH_EXPIRATiON = parseDuration('4 days', 'second')!;
+
+async function generateAccessToken(object: Record<string, any>): Promise<string> {
   const secret = getJWTSecret();
   const issuer = getJWTIssuer();
+  const now = Math.floor(new Date().getTime() / 1000);
 
-  return await new SignJWT({ ...object })
+  return await new SignJWT(object)
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
     .setIssuer(issuer)
-    .setExpirationTime('24h')
+    .setExpirationTime(now + AUTH_EXPIRATiON)
     .sign(secret);
 }
 
@@ -36,23 +40,20 @@ function getJWTSecret(): Uint8Array {
 }
 
 function getJWTIssuer(): string {
-  const issuer = process.env.JWT_ISSUER || 'test:keycap';
-
-  return issuer;
+  return process.env.JWT_ISSUER || 'test:keycap';
 }
 
 export async function setAuthCookies(event: H3Event, user: SafeUser) {
   const accessTokenName = getAccessTokenName();
   const accessToken = await generateAccessToken(user);
 
-  const oneDay = parseDuration('1day', 'second')!;
-
+  // https://web.dev/first-party-cookie-recipes/#the-good-first-party-cookie-recipe
   setCookie(event, accessTokenName, accessToken, {
     path: '/',
     sameSite: 'lax',
-    maxAge: oneDay,
     httpOnly: true,
     secure: isProduction,
+    maxAge: AUTH_EXPIRATiON,
   });
 }
 

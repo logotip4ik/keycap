@@ -1,0 +1,96 @@
+name: Release
+
+permissions:
+  actions: write
+  contents: write
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  test-lint-build:
+    timeout-minutes: 3
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkouting repo
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Node setup
+        uses: actions/setup-node@e33196f7422957bea03ed53f6fbb155025ffc7b8
+        with:
+          node-version: 18
+          cache: yarn
+
+      - name: Install deps
+        run: yarn install
+
+      - name: Run tests
+        run: yarn run test
+
+      - name: Run lint:fix
+        run: yarn run lint:fix
+
+      - name: Run Build
+        run: yarn run build
+
+      - name: Commit and push if there are changes
+        uses: actions-js/push@156f2b10c3aa000c44dbe75ea7018f32ae999772
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          message: 'chore: update deps'
+          branch: ${{ github.ref_name }}
+          author_name: ${{ github.actor }}
+          author_email: noreply@github.com
+
+  bump-package-version:
+    needs: test-lint-build
+    timeout-minutes: 4
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkouting repo
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Node setup
+        uses: actions/setup-node@e33196f7422957bea03ed53f6fbb155025ffc7b8
+        with:
+          node-version: 18
+          cache: yarn
+
+      - name: Bump versions
+        run: |
+          git config --local user.email noreply@github.com
+          git config --local user.name ${{ github.actor }}
+
+          npx changelogen@latest --release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push changes
+        uses: ad-m/github-push-action@40bf560936a8022e68a3c00e7d2abefaf01305a6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+          force: true
+          tags: true
+
+  trigger-release:
+    needs: [test-lint-build, bump-package-version]
+    timeout-minutes: 1
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger deployment
+        env:
+          TRIGGER_DEPLOYMENT: ${{ secrets.TRIGGER_DEPLOYMENT }}
+        shell: bash
+        run: curl -X POST $TRIGGER_DEPLOYMENT

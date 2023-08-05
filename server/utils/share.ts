@@ -7,7 +7,7 @@ const partLength = 4;
 const DEFAULT_LINK_LENGTH = partsNumber * partLength;
 
 const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', DEFAULT_LINK_LENGTH);
-const regexToSplitLink = new RegExp(`[A-Z0-9]{${partLength}}`, 'g');
+const regexToSplitLink = new RegExp(`[A-Z\\d]{${partLength}}`, 'g');
 
 export function generateShareLink() {
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace#specifying_a_string_as_the_replacement
@@ -21,4 +21,16 @@ export function isShareLinkValid(link: string): boolean {
     return false;
 
   return linkParts.every((part) => part.length === partLength);
+}
+
+if (import.meta.vitest) {
+  const { describe, it, expect } = import.meta.vitest;
+
+  describe('Share links', () => {
+    it('correctly generates share link', () => {
+      const link = generateShareLink();
+
+      expect(isShareLinkValid(link)).toBe(true);
+    });
+  });
 }

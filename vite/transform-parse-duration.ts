@@ -2,31 +2,31 @@ import { createContext, runInContext } from 'node:vm';
 import { pathToFileURL } from 'node:url';
 
 import type { Context } from 'node:vm';
+import type { Plugin } from 'vite';
+import type { SimpleCallExpression } from 'estree';
 
 import MagicString from 'magic-string';
+import parseDuration from 'parse-duration';
 import { walk } from 'estree-walker';
 import { parseQuery, parseURL } from 'ufo';
 import { findStaticImports, parseStaticImport } from 'mlly';
 
-import type { Plugin } from 'vite';
-import type { SimpleCallExpression } from 'estree';
-
-import parseDuration from 'parse-duration';
+const parseDurationSpecifier = 'parse-duration';
 
 export function ParseDurationTransformPlugin(): Plugin {
   return {
     name: 'ParseDurationTransformPlugin',
     transform(code, id) {
-      if (!isVueOrJs(id) || !code.includes('parse-duration'))
+      if (!isVueOrJs(id) || !code.includes(parseDurationSpecifier))
         return;
 
       const statements = findStaticImports(code)
-        .filter((i) => i.specifier === 'parse-duration');
+        .filter((i) => i.specifier === parseDurationSpecifier);
 
       if (!statements.length) return;
 
-      const contextMap: Context = { ...parseDuration };
-      const functionNames: string[] = [];
+      const contextMap: Context = {};
+      const functionNames: Array<string> = [];
 
       for (const i of statements.flatMap((i) => parseStaticImport(i))) {
         if (i.defaultImport) {
@@ -40,7 +40,7 @@ export function ParseDurationTransformPlugin(): Plugin {
 
       const s = new MagicString(code);
 
-      walk(this.parse(code), {
+      walk(this.parse(code) as any, {
         enter(_node) {
           if (_node.type !== 'CallExpression') return;
 
@@ -53,6 +53,7 @@ export function ParseDurationTransformPlugin(): Plugin {
 
           try {
             const value = runInContext(code.slice(start, end), context);
+
             s.overwrite(start, end, value.toString());
           }
           catch {}
@@ -78,8 +79,5 @@ function isVueOrJs(id: string) {
     return true;
 
   // js files
-  if (pathname.match(/\.((c|m)?j|t)sx?$/g))
-    return true;
-
-  return false;
+  return pathname.match(/\.((c|m)?j|t)sx?$/g);
 }

@@ -1,26 +1,32 @@
-import { isDevelopment } from 'std-env';
+import process from 'node:process';
+import { isCI, isDevelopment } from 'std-env';
 import UnheadVite from '@unhead/addons/vite';
 import browserslistToEsbuild from 'browserslist-to-esbuild';
 import parseDuration from 'parse-duration';
 
 import { getHeaders } from './headers.config';
-import breakpoints from './assets/constants/breakpoints';
+import breakpoints from './constants/breakpoints';
 import { ParseDurationTransformPlugin } from './vite/transform-parse-duration';
 
-const ISRDuration = parseDuration('15 minutes', 'second');
+const tsExcludes = ['../data', '../benchmarks', '../scripts'];
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
+  devtools: { enabled: true },
+
   app: {
     head: {
       htmlAttrs: { translate: 'no', lang: 'en' },
       meta: [
-        { name: 'description', content: 'Better then just notes. Synced between your devices' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1, interactive-widget=resizes-visual' },
+        { name: 'description', content: 'Better then just notes ❤. Synced between your devices, simple, fast and purple.' },
         { name: 'mobile-web-app-capable', content: 'yes' },
-        { key: 'theme-color-light', name: 'theme-color', content: '#f2f1f3', media: '(prefers-color-scheme: light)' },
-        { key: 'theme-color-dark', name: 'theme-color', content: '#1b1a1e', media: '(prefers-color-scheme: dark)' },
-        { key: 'status-bar-light', name: 'apple-mobile-web-app-status-bar-style', content: 'default', media: '(prefers-color-scheme: light)' },
-        { key: 'status-bar-dark', name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent', media: '(prefers-color-scheme: dark)' },
+        { name: 'theme-color', content: '#FCFCFD', media: '(prefers-color-scheme: light)', key: 'theme-color-light' },
+        { name: 'theme-color', content: '#111113', media: '(prefers-color-scheme: dark)', key: 'theme-color-dark' },
+        { name: 'apple-mobile-web-app-status-bar-style', content: 'default', media: '(prefers-color-scheme: light)', key: 'status-bar-light' },
+        { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent', media: '(prefers-color-scheme: dark)', key: 'status-bar-dark' },
+        { name: 'apple-mobile-web-app-capable', content: 'yes' },
+        { name: 'robots', content: 'none' },
       ],
       link: [
         { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
@@ -35,11 +41,43 @@ export default defineNuxtConfig({
     writeEarlyHints: true,
     componentIslands: true,
     watcher: 'parcel',
+    typescriptBundlerResolution: true,
   },
 
   typescript: {
     tsConfig: {
-      exclude: ['../data'],
+      exclude: tsExcludes,
+      compilerOptions: {
+        types: ['vitest/importMeta'],
+      },
+    },
+  },
+
+  imports: {
+    dirs: [
+      './utils/tiptap',
+      './constants',
+    ],
+    imports: [
+      { from: 'rad-event-listener', name: 'on' },
+    ],
+  },
+
+  runtimeConfig: {
+    public: {
+      siteOrigin: '',
+
+      oauthEnabled: false,
+    },
+
+    github: {
+      clientId: '',
+      clientSecret: '',
+    },
+
+    google: {
+      clientId: '',
+      clientSecret: '',
     },
   },
 
@@ -56,10 +94,10 @@ export default defineNuxtConfig({
 
     // this would be great https://github.com/unjs/nitro/issues/603#issuecomment-1415826732
     '/view/**': {
-      isr: ISRDuration,
+      isr: parseDuration('15 minutes', 'second'),
       headers: getHeaders({
         type: 'note-view',
-        opts: { isr: ISRDuration },
+        opts: { isr: parseDuration('15 minutes', 'second') },
       }),
     },
 
@@ -67,8 +105,8 @@ export default defineNuxtConfig({
 
     '/': { prerender: true },
     '/about': { prerender: true },
-    '/login': { prerender: true },
-    '/register': { prerender: true },
+
+    '/oauth/ask-username': { experimentalNoScripts: true },
   },
 
   runtimeConfig: {
@@ -79,10 +117,9 @@ export default defineNuxtConfig({
 
   modules: [
     '@vueuse/nuxt',
-    'nuxt-icon',
+    '@vite-pwa/nuxt',
     '@nuxtjs/fontaine',
     'unplugin-ltsdi/nuxt',
-    '@vite-pwa/nuxt',
   ],
 
   css: [
@@ -94,11 +131,21 @@ export default defineNuxtConfig({
   sourcemap: isDevelopment,
 
   build: {
-    // https://github.com/nuxt/nuxt/issues/21313#issue-1737864847
-    transpile: ['std-env', 'tinykeys'],
+    transpile: ['tinykeys'],
   },
 
   vite: {
+    define: {
+      'import.meta.vitest': 'undefined',
+    },
+
+    test: {
+      includeSource: [
+        'server/**/*.{js,ts}',
+        'utils/**/*.{js,ts}',
+      ],
+    },
+
     plugins: [
       UnheadVite(),
       ParseDurationTransformPlugin(),
@@ -106,8 +153,9 @@ export default defineNuxtConfig({
 
     build: {
       target: 'esnext',
+      // cssMinify: 'lightningcss',
       cssTarget: browserslistToEsbuild(),
-      ...(typeof process.env.VERCEL !== 'undefined'
+      ...(isCI
         ? {
             minify: 'terser',
             terserOptions: {
@@ -144,19 +192,60 @@ export default defineNuxtConfig({
     },
   },
 
+  nitro: {
+    imports: {
+      dirs: ['./prisma'],
+    },
+
+    typescript: {
+      tsConfig: {
+        compilerOptions: {
+          allowSyntheticDefaultImports: true,
+          types: ['vitest/importMeta'],
+        },
+        exclude: tsExcludes,
+      },
+    },
+
+    esbuild: {
+      options: {
+        target: 'esnext',
+      },
+    },
+
+    storage: {
+      cache: {
+        driver: 'redis',
+        url: process.env.REDIS_URL,
+        tls: true,
+      },
+    },
+  },
+
   fontMetrics: {
     fonts: [
       {
         family: 'Mona Sans',
         src: '/fonts/Mona-Sans/Mona-Sans.woff2',
         root: 'assets',
+        fallbacks: ['Arial'],
       },
     ],
   },
 
   postcss: {
     plugins: {
-      'postcss-preset-env': {},
+      'postcss-preset-env': {
+        features: {
+          'custom-properties': false,
+          'is-pseudo-class': false,
+          'clamp': false,
+          'focus-visible-pseudo-class': false,
+          'focus-within-pseudo-class': false,
+          'gap-properties': false,
+          'prefers-color-scheme-query': false,
+        },
+      },
     },
   },
 
@@ -167,15 +256,17 @@ export default defineNuxtConfig({
     strategies: 'injectManifest',
     manifest: false,
     includeManifestIcons: false,
+    minify: true,
+
     client: {
       installPrompt: false,
       registerPlugin: true,
-      periodicSyncForUpdates: parseDuration('20 minutes', 'second'), // every 20m check if new version is available
+      periodicSyncForUpdates: parseDuration('1 hour', 'second'),
     },
 
     injectManifest: {
       globPatterns: ['**/*.{js,json,css,html,txt,svg,png,ico,webp,woff,woff2,ttf,eot,otf,wasm}'],
-      globIgnores: ['**.webmanifest', 'register**', 'login**'],
+      globIgnores: ['**.webmanifest', 'register', 'login', 'sw.js', 'index.html'],
     },
   },
 });

@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { withoutLeadingSlash } from 'ufo';
 
-interface Emits { (e: 'close'): void }
-const emit = defineEmits<Emits>();
+interface Props { onClose: () => void }
+const props = defineProps<Props>();
 
 const fuzzyWorker = useFuzzyWorker();
 
-const results = shallowRef<(FuzzyItem | CommandItem)[]>([]);
+const results = shallowRef<Array<FuzzyItem | CommandItem>>([]);
 const isLoadingResults = ref(false);
 const selectedResult = ref(0);
 const typeaheadResult = computed<FuzzyItem | CommandItem | null>(() => results.value[selectedResult.value] || null);
@@ -15,17 +15,18 @@ const inputEl = ref<HTMLElement | null>(null);
 const searchEl = ref<HTMLElement | null>(null);
 
 const searchInput = ref('');
-const debouncedSearchInput = useDebounce(searchInput, 200);
+const debouncedSearchInput = useDebounce(searchInput, 125);
 
 defineExpose({ input: inputEl });
 
 function handleCancel(_event?: Event) {
-  emit('close');
+  props.onClose();
 
   searchInput.value = '';
   selectedResult.value = 0;
 }
 
+let afterSearchCallback: ((...args: Array<any>) => any) | null;
 function handleSearchInput(value: string) {
   value = value.trim();
   selectedResult.value = 0;
@@ -36,18 +37,27 @@ function handleSearchInput(value: string) {
   isLoadingResults.value = true;
 
   fuzzyWorker.value.searchWithQuery(value)
-    .then((entries: (FuzzyItem | CommandItem)[]) => {
+    .then(async (entries: Array<FuzzyItem | CommandItem>) => {
       results.value = entries;
+
+      afterSearchCallback && afterSearchCallback();
     })
     .finally(() => {
       isLoadingResults.value = false;
+
+      afterSearchCallback = null;
     });
 }
 
 async function openResult() {
   const resultToOpen = results.value[selectedResult.value];
 
-  if (!resultToOpen) return;
+  if (!resultToOpen) {
+    if (!afterSearchCallback)
+      afterSearchCallback = openResult;
+
+    return;
+  };
 
   const isCommand = 'key' in resultToOpen;
 
@@ -60,6 +70,8 @@ async function openResult() {
   }
   else {
     await navigateTo(generateItemRouteParams(resultToOpen as FolderOrNote));
+
+    document.querySelector(`a[title="${resultToOpen.name}"]`)?.scrollIntoView({ behavior: 'smooth' });
   }
 
   handleCancel();
@@ -71,7 +83,7 @@ function changeSelectedResult(difference: number) {
   selectedResult.value = newSelectedResult < 0 ? results.value.length - 1 : newSelectedResult;
 }
 
-function handleTab() {
+function fillSearchInput() {
   if (typeaheadResult.value)
     searchInput.value = typeaheadResult.value.name;
 }
@@ -82,29 +94,29 @@ const isResultsEmpty = computed(() => {
 
   const inputValue = withoutLeadingSlash(debouncedSearchInput.value);
 
-  return (inputValue || inputValue === '/') && results.value.length === 0;
+  return inputValue && results.value.length === 0;
 });
 
 watch(debouncedSearchInput, handleSearchInput);
 
 let prevHeight = 0;
+let prevAnimation: Animation | null;
 useResizeObserver(searchEl, (entries) => {
   const entry = entries[0];
   const borderBoxSize = entry.borderBoxSize![0];
 
   const currentHeight = borderBoxSize.blockSize;
 
-  const animations = entry.target.getAnimations();
-  const animationIsRunning = animations.some((animation) => animation.playState === 'running');
-
-  if (prevHeight && currentHeight && !animationIsRunning) {
-    entry.target.animate(
+  if (prevHeight && currentHeight && !prevAnimation) {
+    prevAnimation = entry.target.animate(
       [
         { height: `${prevHeight}px` },
         { height: `${currentHeight}px` },
       ],
-      { duration: 250, easing: 'cubic-bezier(0.33, 1, 0.68, 1)' },
+      { duration: 225, easing: 'cubic-bezier(0.33, 1, 0.68, 1)' },
     );
+
+    prevAnimation.addEventListener('finish', () => prevAnimation = null);
   }
 
   prevHeight = currentHeight;
@@ -119,12 +131,13 @@ useTinykeys({ Escape: handleCancel });
       <form class="search__form" @submit.prevent="openResult">
         <WorkspaceSearchInput
           ref="inputEl"
-          v-model="searchInput"
+          :value="searchInput"
           class="search__form__input"
           placeholder="Search or enter / for commands"
+          @update-value="searchInput = $event"
           @keydown.up.prevent="changeSelectedResult(-1)"
           @keydown.down.prevent="changeSelectedResult(+1)"
-          @keydown.tab.prevent="handleTab"
+          @keydown.tab.prevent="fillSearchInput"
         />
 
         <p v-show="typeaheadResult" class="search__form__typeahead">
@@ -144,7 +157,7 @@ useTinykeys({ Escape: handleCancel });
           class="search__form__cancel"
           @click="handleCancel"
         >
-          <Icon name="close" class="search__form__cancel__icon" />
+          <LazyIconCloseRounded class="search__form__cancel__icon" />
         </button>
       </form>
 
@@ -188,7 +201,7 @@ useTinykeys({ Escape: handleCancel });
   margin: 0 auto;
   padding: 0.5rem;
 
-  border: 1px solid hsla(var(--text-color-hsl), 0.125);
+  border: 1px solid hsla(var(--text-color-hsl), 0.2);
   border-radius: 0.5rem;
   background-color: var(--surface-color);
   box-shadow:
@@ -215,10 +228,7 @@ useTinykeys({ Escape: handleCancel });
 
   &-wrapper {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset:0;
     z-index: 10;
 
     padding-top: 33vh;

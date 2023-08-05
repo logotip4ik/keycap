@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import parseDuration from 'parse-duration';
 import type { ComponentPublicInstance } from 'vue';
 
 const toasts = useToasts();
@@ -10,7 +11,7 @@ const sortedToasts = computed(() =>
 );
 
 let toasterElClientRect: DOMRect | null;
-const ANIMATION_DURATION = 300;
+const ANIMATION_DURATION = parseDuration('0.3s')!;
 function beforeLeaveHook(el: Element) {
   const elClientRect = el.getBoundingClientRect();
 
@@ -27,8 +28,11 @@ function handleResize() {
   toasterElClientRect = null;
 }
 
-if (typeof window !== 'undefined')
-  useEventListener(window, 'resize', handleResize, { passive: true });
+onMounted(() => {
+  const clear = on(window, 'resize', handleResize);
+
+  onBeforeUnmount(() => clear());
+});
 </script>
 
 <template>
@@ -96,6 +100,22 @@ if (typeof window !== 'undefined')
   }
 }
 
+.toast-leave-active {
+  position: absolute;
+  bottom: var(--prev-bottom);
+  right: 0;
+  z-index: -1;
+
+  width: var(--prev-width);
+
+  transition: opacity 0.3s, transform 0.4s;
+
+  @media screen and (max-width: $breakpoint-tablet) {
+    right: unset;
+    left: 0;
+  }
+}
+
 .toast-enter-active[data-has-top-sibling="false"] {
   --initial-pos: 0px, 0px, 0px;
 
@@ -110,26 +130,14 @@ if (typeof window !== 'undefined')
   transform: scale(0.9) translate3d(var(--initial-pos));
 }
 
+.toast-leave-to {
+  transform: scale(0.975);
+}
+
 .toast-enter-from,
 .toast-enter-from [data-icon],
 .toast-leave-to {
   opacity: 0;
   filter: blur(2px);
-}
-
-.toast-leave-active {
-  position: absolute;
-  bottom: var(--prev-bottom);
-  right: 0;
-  z-index: -1;
-
-  width: var(--prev-width);
-
-  transition: opacity .3s;
-
-  @media screen and (max-width: $breakpoint-tablet) {
-    right: unset;
-    left: 0;
-  }
 }
 </style>

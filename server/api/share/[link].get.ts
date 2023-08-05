@@ -1,13 +1,11 @@
-import { getPrisma } from '~/prisma';
-
 export default defineEventHandler(async (event) => {
   const link = getRouterParam(event, 'link');
 
   if (!link)
-    return createError({ statusCode: 400 });
+    throw createError({ statusCode: 400 });
 
   if (!isShareLinkValid(link))
-    return createError({ statusCode: 404 });
+    throw createError({ statusCode: 404 });
 
   const prisma = getPrisma();
 
@@ -19,7 +17,7 @@ export default defineEventHandler(async (event) => {
   });
 
   if (!note)
-    return createError({ statusCode: 404 });
+    throw createError({ statusCode: 404 });
 
   return note;
 });

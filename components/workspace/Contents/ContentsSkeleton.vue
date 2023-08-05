@@ -1,11 +1,11 @@
 <template>
   <div class="skeleton">
-    <p class="skeleton__item skeleton-loading-bg" />
-    <p class="skeleton__item skeleton-loading-bg" />
-    <p class="skeleton__item skeleton-loading-bg" />
-    <p class="skeleton__item skeleton-loading-bg" />
-    <p class="skeleton__item skeleton-loading-bg" />
-    <p class="skeleton__item skeleton-loading-bg" />
+    <p class="skeleton__item skeleton-bg" />
+    <p class="skeleton__item skeleton-bg" />
+    <p class="skeleton__item skeleton-bg" />
+    <p class="skeleton__item skeleton-bg" />
+    <p class="skeleton__item skeleton-bg" />
+    <p class="skeleton__item skeleton-bg" />
   </div>
 </template>
 

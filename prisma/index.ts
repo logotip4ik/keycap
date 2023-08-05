@@ -1,4 +1,7 @@
 import { PrismaClient } from '@prisma/client';
+import { isDevelopment } from 'std-env';
+
+import type { Prisma } from '@prisma/client';
 
 declare global {
   // eslint-disable-next-line vars-on-top, no-var
@@ -6,7 +9,13 @@ declare global {
 }
 
 export function getPrisma() {
-  if (!globalThis.prisma) globalThis.prisma = new PrismaClient();
+  if (!globalThis.prisma) {
+    const log: Array<Prisma.LogLevel> = isDevelopment
+      ? ['info', 'error', 'warn']
+      : ['info', 'error'];
+
+    globalThis.prisma = new PrismaClient({ log });
+  }
 
   return globalThis.prisma;
 }

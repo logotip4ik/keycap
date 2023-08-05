@@ -9,6 +9,7 @@ const isFallbackMode = useFallbackMode();
 const foldersCache = useFoldersCache();
 const createToast = useToast();
 const offlineStorage = useOfflineStorage();
+const currentItemForDetails = useCurrentItemForDetails();
 const { shortcuts } = useAppConfig();
 const { showLoading, hideLoading } = useLoadingIndicator();
 const mitt = useMitt();
@@ -16,7 +17,8 @@ const user = useUser();
 
 const folderPath = computed(() => {
   const folders = (Array.isArray(route.params.folders) ? route.params.folders : [route.params.folders])
-    .filter((str) => !!str);
+    .filter((str) => !!str)
+    .map(encodeURIComponent);
 
   return withoutTrailingSlash(`/${route.params.user}/${folders.join('/')}`);
 });
@@ -81,19 +83,28 @@ const { data: fetchedFolder, error, refresh } = await useLazyAsyncData<FolderWit
 const mergedContents = computed(() => {
   if (!folder.value) return [];
 
-  return [...folder.value.notes, ...folder.value.subfolders] as FolderOrNote[];
+  return [...folder.value.notes, ...folder.value.subfolders] as Array<FolderOrNote>;
 });
 
-async function goUpFolder() {
+const parentFolderPath = computed(() => {
   const currentFolderPath = folder.value!.path;
   const prevFolderPath = withLeadingSlash(currentFolderPath.split('/').slice(1, -1).join('/'));
 
-  if (!isFallbackMode.value || foldersCache.has(prevFolderPath))
-    await navigateTo(generateItemRouteParams({ ...folder.value!, path: prevFolderPath }));
-}
+  if (isFallbackMode.value && !foldersCache.has(prevFolderPath))
+    return { path: window.location.pathname };
+
+  return generateItemRouteParams({ ...folder.value, path: prevFolderPath });
+});
 
 mitt.on('cache:populated', () => {
   folder.value = foldersCache.get(folderPath.value) || null;
+});
+
+mitt.on('details:show', () => {
+  const noNote = !route.params.note || route.params.note === BLANK_NOTE_NAME;
+
+  if (folder.value && noNote)
+    currentItemForDetails.value = folder.value;
 });
 
 // TODO:Create wrapper function for fetch that will handle showing loading and error toast
@@ -153,9 +164,9 @@ useTinykeys({
   <Transition name="fade">
     <TransitionGroup v-if="folder" :key="folder.path" tag="ul" name="list" class="workspace__contents__list">
       <li v-if="!folder.root" key="1">
-        <button class="item" @click="goUpFolder">
+        <NuxtLink class="item" :href="parentFolderPath">
           <span class="item__name">cd ..</span>
-        </button>
+        </NuxtLink>
       </li>
 
       <li v-for="item in mergedContents" :key="item.id.toString()">

@@ -1,4 +1,4 @@
-import { getPrisma } from '~/prisma';
+import type { TypeOf } from 'suretype';
 
 export default defineEventHandler(async (event) => {
   const user = event.context.user!;
@@ -6,27 +6,34 @@ export default defineEventHandler(async (event) => {
 
   const prisma = getPrisma();
 
-  interface CreateFolderProps { name: string; parentId: string }
-
-  const body = await readBody<CreateFolderProps>(event);
   const path = getRouterParam(event, 'path');
 
   if (!path)
-    return createError({ statusCode: 400 });
+    throw createError({ statusCode: 400 });
 
-  const folderPath = generateFolderPath(user.username, path);
-  const folderName = body.name.trim();
+  // NOTE: path is actually is not required param for body
+  // just to reuse object and thus improve pref, i think it
+  // is better to type body as create schema and later set path
+  const body = await readBody<TypeOf<typeof folderCreateSchema>>(event) || {};
 
-  if (folderName.length < 2 || !body.parentId || !path)
-    return createError({ statusCode: 400 });
+  body.path = generateFolderPath(user.username, path);
+
+  const validation = useFolderCreateValidation(body);
+
+  if (!validation.ok) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: `${validation.errors[0].dataPath.split('.').at(-1)} ${validation.errors[0].message}`,
+    });
+  }
 
   const selectParams = getFolderSelectParamsFromEvent(event);
 
   timer.start('db');
   const folder = await prisma.folder.create({
     data: {
-      name: folderName,
-      path: folderPath,
+      name: body.name,
+      path: body.path,
       owner: { connect: { email: user.email } },
       parent: { connect: { id: toBigInt(body.parentId) } },
     },
@@ -38,7 +45,7 @@ export default defineEventHandler(async (event) => {
   timer.end();
 
   if (!folder)
-    return createError({ statusCode: 400 });
+    throw createError({ statusCode: 400 });
 
   timer.appendHeader(event);
 

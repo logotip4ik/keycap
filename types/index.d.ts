@@ -6,6 +6,7 @@ interface Shortcuts {
 export interface BuildInfo {
   time: number
   commit: string
+  version: string
 }
 
 export declare global {
@@ -14,12 +15,27 @@ export declare global {
   }
 }
 
-export declare module '@nuxt/schema' {
+export interface PrivateBuildInfo {
+  id: string
+}
+
+export interface DeviceInfo {
+  isMobileOrTablet: boolean
+  isFirefox: boolean
+}
+
+export declare module 'nuxt/schema' {
+  interface RuntimeConfig {
+    build: PrivateBuildInfo
+  }
+
+  interface PublicRuntimeConfig {
+    build: BuildInfo
+  }
+
   interface AppConfigInput {
     shortcuts: Shortcuts
 
-    buildInfo?: BuildInfo
-    
     iconsToPreload?: string[]
   }
 }

@@ -1,7 +1,16 @@
+import process from 'node:process';
+import { isProduction } from 'std-env';
 import { withLeadingSlash, withoutTrailingSlash } from 'ufo';
 
 import type { H3Event } from 'h3';
 import type { Prisma } from '@prisma/client';
+
+export function getServerUserAgent() {
+  const postfix = isProduction ? '' : 'Dev';
+  const serverName = process.env.SERVER_NAME || 'Keycap';
+
+  return `${serverName} ${postfix}`.trim();
+}
 
 export function generateFolderPath(username: string, path: string): string {
   // prepending leading slash to username + leading slash path + remove trailing slash
@@ -16,18 +25,21 @@ export function generateRootFolderPath(username: string) {
   return `/${username}`;
 }
 
-export function toBigInt(string: string): bigint {
-  if (string.at(-1) === 'n')
-    return BigInt(string.substring(0, string.length - 1));
+export const stringifiedBigIntRE = /(\d{18})n/;
 
-  let res = BigInt(-1);
+// TODO: tests
+export function toBigInt(string: string): bigint {
+  const match = string.match(stringifiedBigIntRE);
+
+  if (match)
+    return BigInt(match[1]);
 
   try {
-    res = BigInt(string);
+    return BigInt(string);
   }
-  catch { }
-
-  return res;
+  catch {
+    return BigInt(-1);
+  }
 }
 
 export function getNoteSelectParamsFromEvent(event: H3Event): Prisma.NoteSelect {
@@ -86,4 +98,13 @@ export function getFolderSelectParamsFromEvent(event: H3Event): Prisma.FolderSel
   }
 
   return defaultSelects;
+}
+
+if (import.meta.vitest) {
+  const { it, expect } = import.meta.vitest;
+
+  it('toBigInt', () => {
+    expect(toBigInt('77777777777777777n')).to.equal(BigInt(-1));
+    expect(toBigInt('777777777777777777n')).to.not.equal(BigInt(-1));
+  });
 }

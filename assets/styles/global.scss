@@ -14,8 +14,8 @@
   --task-list-indicator-color: hsl(var(--hsl-primary-color), 70%, 70%);
   
   --surface-color-hsl: var(--hsl-primary-color), 10%, 99%;
-  --text-color-hsl: var(--hsl-primary-color), 5%, 13%;
-  --selection-bg-color-hsl: var(--hsl-primary-color), 65%, 75%; // NOTE: maybe change color
+  --text-color-hsl: var(--hsl-primary-color), 5%, 17%;
+  --selection-bg-color-hsl: var(--hsl-primary-color), 65%, 85%; // NOTE: maybe change color
   
   --surface-color: hsl(var(--surface-color-hsl));
   --text-color: hsl(var(--text-color-hsl));
@@ -26,8 +26,8 @@
     --task-list-indicator-color: hsl(var(--hsl-primary-color), 40%, 40%);
     
     --surface-color-hsl: var(--hsl-primary-color), 7%, 7%;
-    --text-color-hsl: var(--hsl-primary-color), 5%, 96%;
-    --selection-bg-color-hsl: var(--hsl-primary-color), 35%, 40%;
+    --text-color-hsl: var(--hsl-primary-color), 5%, 92%;
+    --selection-bg-color-hsl: var(--hsl-primary-color), 35%, 35%;
   }
 }
 
@@ -36,7 +36,13 @@
 }
 
 html {
-  text-size-adjust: none;
+  font-size: 100%;
+
+  &:not(.firefox).phone-or-tablet {
+    // Noticed that chrome had much bigger font size than firefox, but only on smartphone
+    // p.s. i am using android
+    font-size: 87.5%;
+  }
 }
 
 body {
@@ -86,8 +92,13 @@ kbd {
   border-radius: 0.25rem;
 }
 
+.icon {
+  display: inline-block;
+  vertical-align: middle;
+}
+
 // @see https: //github.com/elk-zone/elk/blob/main/styles/global.css
-.skeleton-loading-bg {
+.skeleton-bg {
   background: linear-gradient(to right,
       hsla(var(--text-color-hsl), 0.2) 25%,
       hsla(var(--text-color-hsl), 0.24) 37%,
@@ -153,10 +164,7 @@ kbd {
   content: '';
 
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset:0;
   z-index: -1;
   
   background: inherit;

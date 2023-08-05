@@ -16,7 +16,7 @@ const cacheName = cacheNames.runtime;
 
 const wait = (t: number) => new Promise((resolve) => setTimeout(resolve, t));
 
-const buildStrategy = (): Strategy => {
+function buildStrategy(): Strategy {
   class CacheNetworkRace extends Strategy {
     _handle(request: Request, handler: StrategyHandler): Promise<Response | undefined> {
       const fetchAndCachePutDone: Promise<Response> = handler.fetchAndCachePut(request);
@@ -38,7 +38,7 @@ const buildStrategy = (): Strategy => {
   }
 
   return new CacheNetworkRace();
-};
+}
 
 const denylist = [
   /^\/$/,
@@ -58,7 +58,7 @@ const denylist = [
 const manifest = (self.__WB_MANIFEST as Array<ManifestEntry>)
   .filter((entry) => !denylist.some((deny) => deny.test(entry.url)));
 
-const cacheEntries: RequestInfo[] = [];
+const cacheEntries: Array<RequestInfo> = [];
 
 const manifestURLs = manifest.map(
   (entry) => {

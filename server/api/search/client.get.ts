@@ -1,5 +1,3 @@
-import { getPrisma } from '~/prisma';
-
 export default defineEventHandler(async (event) => {
   const user = event.context.user!;
   const timer = event.context.timer!;
@@ -9,7 +7,7 @@ export default defineEventHandler(async (event) => {
   const query = getQuery(event) || {};
 
   let skip = 0;
-  let select = 50;
+  let select = 75;
 
   if (query.skip && !Number.isNaN(query.skip))
     skip = Number(query.skip);
@@ -40,9 +38,9 @@ export default defineEventHandler(async (event) => {
   timer.end();
 
   if (!notes || !folders)
-    return createError({ statusCode: 400 });
+    throw createError({ statusCode: 400 });
 
   timer.appendHeader(event);
 
-  return [...notes, ...folders] as FuzzyItem[];
+  return [...notes, ...folders] as Array<FuzzyItem>;
 });

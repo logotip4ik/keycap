@@ -4,18 +4,20 @@ import { expose } from 'comlink';
 
 import { commandActionsMin as commandsCache } from '~/utils/menu';
 
+import type { } from '~/types/store';
+
 const itemsCache = new Map<string, FuzzyItem>();
 
 function addItem(item: FuzzyItem) {
   itemsCache.set(item.path, item);
 }
 
-function addItems(items: FuzzyItem[]) {
+function addItems(items: Array<FuzzyItem>) {
   for (const item of items)
     itemsCache.set(item.path, item);
 }
 
-function search(query: string, maxLength = 4): (FuzzyItem | CommandItem)[] {
+function search(query: string, maxLength = 4): Array<FuzzyItem | CommandItem> {
   // See https://stackblitz.com/edit/node-ezlzug?file=index.js&view=editor and run `node index.js`
   // but in `real world`? fuzzaldrin was a bit slower plus had much more bigger bundle footprint
 
@@ -42,7 +44,7 @@ function search(query: string, maxLength = 4): (FuzzyItem | CommandItem)[] {
 
 async function populateItemsCache() {
   const res = await fetch('/api/search/client');
-  const items = await res.json() as FuzzyItem[];
+  const items = await res.json() as Array<FuzzyItem>;
 
   itemsCache.clear();
 

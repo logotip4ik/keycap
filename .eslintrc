@@ -1,11 +1,24 @@
 {
-  "extends": "@antfu",
+  "extends": [
+    "plugin:regexp/recommended",
+    "plugin:github/browser",
+    "plugin:github/typescript",
+    "plugin:sonarjs/recommended",
+    "@antfu"
+  ],
+  "plugins": [
+    "regexp",
+    "github",
+    "sonarjs"
+  ],
   "rules": {
     "quotes": ["error", "single"],
     "@typescript-eslint/semi": ["error", "always"],
     "arrow-parens": ["error", "always"],
     "curly": ["error", "multi-or-nest", "consistent"],
     "antfu/if-newline": "off",
-    "antfu/top-level-function": "off"
+    "import/no-nodejs-modules": "off",
+    "@typescript-eslint/array-type": ["error", { "default": "generic" }],
+    "@typescript-eslint/no-shadow": "off"
   }
 }

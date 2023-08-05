@@ -11,10 +11,24 @@
       "src": "/android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "any"
     }
   ],
   "display": "standalone",
   "orientation": "portrait-primary",
   "scope": "/",
-  "start_url": "/"
+  "start_url": "/",
+  "theme_color": "#111113",
+  "background_color": "#111113",
+  "description": "Another note taking webapp ❤.  Simple, fast and purple.",
+  "dir": "ltr",
+  "lang": "en",
+  "categories": [
+    "lifestyle",
+    "productivity"
+  ]
 }

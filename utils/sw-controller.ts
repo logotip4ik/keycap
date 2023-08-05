@@ -4,11 +4,9 @@ export function updateServiceWorker() {
   const { $pwa: pwa } = useNuxtApp();
   const createToast = useToast();
 
-  const stopOfflineReady = watch(() => pwa.offlineReady, (ready) => {
-    if (ready) {
+  watch(() => pwa.offlineReady, (ready) => {
+    if (ready)
       createToast('Phewww, now you can work offline', { delay: 550 });
-      stopOfflineReady();
-    }
   }, { immediate: true });
 
   watch(() => pwa.needRefresh, (needRefresh) => {

@@ -9,42 +9,9 @@
     height: 100%;
   }
 
-  &__details-button {
-    position: absolute;
-    top: 1rem;
-    right: 0;
-    z-index: 2;
-
-    font: inherit;
-    text-decoration: underline;
-    color: hsla(var(--text-color-hsl), 0.65);
-
-    padding: 0.5rem 0.75rem;
-
-    border: none;
-    outline-color: transparent;
-    background: transparent;
-    cursor: pointer;
-
-    transition: color .3s, text-shadow .3s;
-
-    @media (hover: hover) {
-      color: hsla(var(--text-color-hsl), 0.5);
-    }
-    
-    @media screen and (max-width: $breakpoint-tablet) {
-      top: 0.15rem;
-    }
-
-    &:is(:hover, :focus-visible) {
-      color: hsla(var(--text-color-hsl), 1);
-      text-shadow: 0 0 2rem hsla(var(--text-color-hsl), 1);
-
-      transition-duration: .05s;
-    }
-  }
-
   .ProseMirror {
+    --base-list-left-padding: 0.125rem;
+
     font-size: 105%;
     line-height: 1.35;
     word-break: break-word;
@@ -59,7 +26,8 @@
       padding: 0 0 25vh;
     }
 
-    p, pre {
+    p,
+    pre {
       margin: 0;
 
       padding: 0.5rem 0;
@@ -73,12 +41,15 @@
       }
     }
 
-    ul, ol {
+    ul,
+    ol {
       margin: 0;
       padding: 0.4rem 0;
-      padding-left: 1rem;
+      padding-left: calc(1rem + var(--base-list-left-padding));
 
       &[data-type="taskList"] {
+        padding-left: var(--base-list-left-padding);
+
         list-style: none;
 
         p {
@@ -101,7 +72,7 @@
             }
           }
 
-          > label {
+          >label {
             flex: 0 0 auto;
 
             margin-right: 0.5rem;
@@ -110,7 +81,7 @@
             &.readonly {
               pointer-events: none;
             }
-            
+
             input {
               cursor: pointer;
 
@@ -121,12 +92,12 @@
             }
           }
 
-          > div {
+          >div {
             flex: 1 1 auto;
           }
         }
 
-        li + li {
+        li+li {
           margin-top: 0.175rem;
         }
       }
@@ -136,15 +107,16 @@
       font-size: 0.9rem;
       color: var(--text-color);
 
-      padding: 0.175rem 0.25rem;
+      padding: 0.1rem 0.25rem;
 
       border-radius: 0.25rem;
       background-color: hsla(var(--text-color-hsl), 0.1);
+      box-shadow: 0 0 0.25rem 0 hsla(var(--text-color-hsl), 0.05);
       box-decoration-break: clone;
     }
 
     li {
-      & > p {
+      &>p {
         padding: 0.125rem 0;
       }
     }
@@ -160,7 +132,7 @@
     }
 
     blockquote {
-      margin-left: 1.25rem;
+      margin-inline: 0.5rem;
       padding-left: 0.75rem;
 
       border-left: 2px solid var(--loading-indicator-color);
@@ -168,29 +140,35 @@
       box-shadow: 0 0 1rem 0 hsla(var(--selection-bg-color-hsl), 0.075);
     }
 
-    h1, h2, h3 {
+    h1,
+    h2,
+    h3 {
       margin: 0;
       padding: 1rem 0 0.5rem;
-  
+
       &:not(:first-child) {
-        padding-top: 2rem;
+        padding-top: 1.5rem;
       }
     }
-    
+
     * {
       transition: all .3s;
     }
 
-    & > *:is(h1, h2, h3):first-child {
+    &>*:is(h1, h2, h3):first-child {
       padding-top: 0.5rem;
     }
 
     @media screen and (max-width: $breakpoint-tablet) {
       padding: 1.65rem 1rem 45vh;
-  
+
       &--renderer {
         padding: 0 0 45vh;
       }
     }
   }
+}
+
+.firefox.phone-or-tablet .ProseMirror label input[type="checkbox"] {
+  transform: scale(1.4);
 }

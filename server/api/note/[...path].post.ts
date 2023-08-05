@@ -1,4 +1,4 @@
-import { getPrisma } from '~/prisma';
+import type { TypeOf } from 'suretype';
 
 export default defineEventHandler(async (event) => {
   const user = event.context.user!;
@@ -6,17 +6,23 @@ export default defineEventHandler(async (event) => {
 
   const prisma = getPrisma();
 
-  const body = await readBody<{ parentId?: string }>(event) || {};
   const path = getRouterParam(event, 'path');
 
   if (!path)
-    return createError({ statusCode: 400 });
+    throw createError({ statusCode: 400 });
 
-  const notePath = generateNotePath(user.username, path);
-  const noteName = decodeURIComponent(notePath.split('/').at(-1)!).trim();
+  const body = await readBody<TypeOf<typeof noteCreateSchema>>(event) || {};
 
-  if (!body.parentId || !path || noteName.length < 2)
-    return createError({ statusCode: 400 });
+  body.path = generateNotePath(user.username, path);
+
+  const validation = useNoteCreateValidation(body);
+
+  if (!validation.ok) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: `${validation.errors[0].dataPath.split('.').at(-1)} ${validation.errors[0].message}`,
+    });
+  }
 
   const selectParams = getNoteSelectParamsFromEvent(event);
 
@@ -24,9 +30,9 @@ export default defineEventHandler(async (event) => {
   const note = await prisma.note.create({
     data: {
       // last route param always should be note name
-      name: noteName,
+      name: body.name,
       content: '',
-      path: notePath,
+      path: body.path,
       owner: { connect: { id: user.id } },
       parent: { connect: { id: toBigInt(body.parentId) } },
     },
@@ -37,7 +43,7 @@ export default defineEventHandler(async (event) => {
   timer.end();
 
   if (!note)
-    return createError({ statusCode: 400 });
+    throw createError({ statusCode: 400 });
 
   timer.appendHeader(event);
 

@@ -4,7 +4,7 @@ import type { HookKeys } from 'hookable';
 const isShowingLoading = { v: false };
 
 // https://github.com/nuxt/nuxt/issues/14221#issuecomment-1397723845
-export default () => {
+export function useLoadingIndicator() {
   return {
     showLoading: createToggle('page:start', true, () => isShowingLoading.v),
     hideLoading: createToggle('page:finish', false, () => !isShowingLoading.v),

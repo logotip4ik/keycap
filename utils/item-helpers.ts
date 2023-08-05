@@ -2,15 +2,17 @@ import { withLeadingSlash, withTrailingSlash, withoutLeadingSlash } from 'ufo';
 
 import type { Note } from '@prisma/client';
 import type { RouteLocationRaw } from 'vue-router';
-import type { NavigateToOptions } from 'nuxt/dist/app/composables/router';
-
-import { blankNoteName } from '~/assets/constants';
+import type { NavigateToOptions } from '#app/composables/router';
 
 type ItemWithPath = Partial<FolderOrNote> & { path: string };
 export function generateItemRouteParams(item: ItemWithPath): RouteLocationRaw {
+  const user = useUser();
+  const route = useRoute();
+
   const isFolder = 'root' in item;
 
-  const routeName = isFolder ? blankNoteName : (item as NoteMinimal).name;
+  const username = user.value?.username || route.params.user;
+  const routeName = isFolder ? BLANK_NOTE_NAME : (item as NoteMinimal).name;
   const routeFolders = withoutLeadingSlash(item.path)
     .split('/')
     .slice(1)
@@ -20,7 +22,7 @@ export function generateItemRouteParams(item: ItemWithPath): RouteLocationRaw {
 
   return {
     name: '@user-folders-note',
-    params: { folders: routeFolders, note: routeName },
+    params: { user: username, folders: routeFolders, note: routeName },
   };
 }
 
@@ -51,17 +53,16 @@ export function preCreateItem(folderToAppend: FolderWithContents, initialValues?
 export function getCurrentFolderPath() {
   const route = useRoute();
 
-  const path = withLeadingSlash(withTrailingSlash(
+  return withLeadingSlash(withTrailingSlash(
     (Array.isArray(route.params.folders)
       ? route.params.folders.map(encodeURIComponent).join('/')
       : encodeURIComponent(route.params.folders || '')),
   ));
-
-  return path;
 }
 
 export async function createFolder(folderName: string, self: FolderOrNote, parent: FolderWithContents) {
   const foldersCache = useFoldersCache();
+  const createToast = useToast();
 
   const currentFolderPath = getCurrentFolderPath();
   const newFolderPathName = encodeURIComponent(folderName.trim());
@@ -70,7 +71,11 @@ export async function createFolder(folderName: string, self: FolderOrNote, paren
   const newlyCreatedFolder = await $fetch<FolderWithContents>(`/api/folder${newFolderPath}`, {
     method: 'POST',
     body: { name: folderName, parentId: parent.id },
-  });
+  })
+    .catch((err) => { createToast(err.data.statusMessage); });
+
+  if (!newlyCreatedFolder)
+    return;
 
   newlyCreatedFolder.notes = newlyCreatedFolder.notes || [];
   newlyCreatedFolder.subfolders = newlyCreatedFolder.subfolders || [];
@@ -85,6 +90,7 @@ export async function createFolder(folderName: string, self: FolderOrNote, paren
 
 export async function createNote(noteName: string, self: FolderOrNote, parent: FolderWithContents) {
   const notesCache = useNotesCache();
+  const createToast = useToast();
 
   const currentFolderPath = getCurrentFolderPath();
   const newNotePathName = encodeURIComponent(noteName.trim());
@@ -92,8 +98,12 @@ export async function createNote(noteName: string, self: FolderOrNote, parent: F
 
   const newlyCreatedNote = await $fetch<NoteMinimal>(`/api/note${newNotePath}`, {
     method: 'POST',
-    body: { parentId: parent.id },
-  });
+    body: { name: noteName, parentId: parent.id },
+  })
+    .catch((err) => { createToast(err.data.statusMessage); });
+
+  if (!newlyCreatedNote)
+    return;
 
   notesCache.set(newlyCreatedNote.path, newlyCreatedNote as Note);
   updateNoteInFolder(self, { ...newlyCreatedNote, content: '', creating: false }, parent);

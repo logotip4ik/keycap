@@ -1,5 +1,3 @@
-import { getPrisma } from '~/prisma';
-
 export default defineEventHandler(async (event) => {
   if (event.context.user) return null;
 
@@ -8,7 +6,7 @@ export default defineEventHandler(async (event) => {
   if (isOriginMismatch) {
     event.context.logger.log('warn', 'suspicious origin mismatch', { path: event.path });
 
-    return createError({ statusCode: 403 });
+    throw createError({ statusCode: 403 });
   }
 
   const body = await readBody(event) || {};
@@ -17,10 +15,10 @@ export default defineEventHandler(async (event) => {
   if (body.username) body.username = body.username.trim().replace(/\s/g, '_');
   if (body.password) body.password = body.password.trim();
 
-  const validation = useRegistrationValidator(body);
+  const validation = useRegisterValidation(body);
 
   if (!validation.ok) {
-    return createError({
+    throw createError({
       statusCode: 400,
       statusMessage: `${validation.errors[0].dataPath.split('.').at(-1)} ${validation.errors[0].message}`,
     });
@@ -48,7 +46,7 @@ export default defineEventHandler(async (event) => {
   });
 
   if (!user)
-    return createError({ statusCode: 400, statusMessage: 'user with this email or username might already exist' });
+    throw createError({ statusCode: 400, statusMessage: 'user with this email or username might already exist' });
 
   await setAuthCookies(event, user);
 

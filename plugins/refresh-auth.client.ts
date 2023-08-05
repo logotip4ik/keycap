@@ -2,9 +2,8 @@ import parseDuration from 'parse-duration';
 
 import { toBigInt } from '~/server/utils';
 
-const NEAR_HOUR = parseDuration('1 hour')! - 10;
+const NEAR_HOUR = parseDuration('0.9hour')!;
 
-let setUserOnClient = false;
 let prevInterval: NodeJS.Timer;
 
 export default defineNuxtPlugin({
@@ -15,31 +14,33 @@ export default defineNuxtPlugin({
 
     // TODO: clear interval and setUserOnClient if user logged out
 
-    const stop = watch(user, (newUser) => {
-      clearInterval(prevInterval);
-
-      if (newUser && setUserOnClient)
+    watch(user, (newUser, oldUser) => {
+      // prevents scenario when initially user is not defined
+      // then fetches one, and refetches again because user changed
+      // from null to { ...user }
+      if (newUser && !oldUser)
         return;
 
-      setUserOnClient = process.client;
+      clearInterval(prevInterval);
 
       refreshAuth();
 
-      prevInterval = setInterval(refreshAuth, NEAR_HOUR);
+      if (newUser)
+        prevInterval = setInterval(refreshAuth, NEAR_HOUR);
     }, { immediate: true });
 
     function refreshAuth() {
-      window.requestIdleCallback(async () => {
+      requestIdleCallback(async () => {
         const newUser = await $fetch('/api/user/refresh', { retry: 1 })
           .catch(async (error) => {
             if (error.statusCode === 401 && route.path.includes('/@'))
               await navigateTo('/login', { replace: true });
           });
 
-        if (!newUser)
-          return;
+        const isSameUser = newUser && newUser.username === user.value?.username;
 
-        stop();
+        if (!newUser || isSameUser)
+          return;
 
         user.value = { ...newUser, id: toBigInt(newUser.id) };
       });

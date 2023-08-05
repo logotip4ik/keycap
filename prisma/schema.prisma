@@ -13,13 +13,26 @@ datasource db {
 model User {
   id BigInt @id @default(autoincrement())
 
-  username String @unique @db.String(50)
-  email    String @unique @db.String(75)
-  password String
+  username String  @unique @db.String(50)
+  email    String  @unique @db.String(75)
+  password String?
 
   notes   Note[]
   folders Folder[]
   shares  Share[]
+  socials OAuth[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model OAuth {
+  id String @id
+
+  type SocialAuth
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId BigInt
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -43,6 +56,12 @@ model Note {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  // add storing (include, covering) when this is merged https://github.com/prisma/prisma/issues/8584
+
+  // Cockroach tells me to remove this indexes and add another ones with STORING
+  // for example: 
+  // CREATE INDEX ON ***."Note" ("parentId") STORING (name, path); 
+  // DROP INDEX ***."Note"@"Note_parentId_idx";
   @@index(parentId)
   @@index([path, ownerId])
 }
@@ -66,8 +85,9 @@ model Folder {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index(parentId)
-  @@index([path, ownerId])
+  // Same appies here, it just does not like indexes without STORING
+  // @@index(parentId)
+  // @@index([path, ownerId])
 }
 
 model Share {
@@ -84,4 +104,9 @@ model Share {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+enum SocialAuth {
+  Google
+  GitHub
 }

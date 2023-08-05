@@ -1,4 +1,3 @@
-// @ts-expect-error specifying * as RateLimiter breaks everything
 import RateLimiter from 'lambda-rate-limiter';
 import parseDuration from 'parse-duration';
 
@@ -21,7 +20,7 @@ export default defineEventHandler(async (event) => {
     if (used > LIMIT) {
       event.context.logger.log('warn', 'rate limit exceeded', { path: event.path, identifier });
 
-      return createError({
+      throw createError({
         statusCode: 429,
         statusMessage: 'Too many requests',
       });

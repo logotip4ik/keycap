@@ -1,15 +1,14 @@
-import parseDuration from 'parse-duration';
+import type Webmanifest from '~/server/assets/webmanifest.json';
 
-// @ts-expect-error idk what to do with this error
-import webmanifest from '~/assets/constants/webmanifest.json';
-import { WEEK_IN_SECONDS } from '~/headers.config';
+export default defineEventHandler(async (event) => {
+  const storage = useStorage('assets:server');
 
-const ONE_DAY_IN_SECONDS = parseDuration('1 day', 'second');
-
-export default defineCachedEventHandler((event) => {
   const { user } = event.context;
 
-  const manifest = { ...webmanifest } satisfies typeof webmanifest;
+  const manifest: typeof Webmanifest | null = await storage.getItem('webmanifest.json');
+
+  if (!manifest)
+    throw createError({ statusCode: 500 });
 
   if (user)
     manifest.start_url = `/@${user.username}`;
@@ -19,10 +18,4 @@ export default defineCachedEventHandler((event) => {
   setHeader(event, 'Content-Type', 'application/manifest+json');
 
   return manifest;
-}, {
-  swr: true,
-  maxAge: ONE_DAY_IN_SECONDS,
-  staleMaxAge: WEEK_IN_SECONDS,
-  getKey: (event) => event.context.user ? `${event.context.user.username}:manifest` : 'manifest',
-  shouldInvalidateCache: (event) => typeof getQuery(event).invalidate !== 'undefined',
 });

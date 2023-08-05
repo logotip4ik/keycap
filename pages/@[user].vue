@@ -1,17 +1,10 @@
 <script setup lang="ts">
-import { blankNoteName } from '~/assets/constants';
-import breakpoints from '~/assets/constants/breakpoints';
-
 definePageMeta({
   middleware: ['auth'],
 });
 
-if (typeof window !== 'undefined')
-  import('~/utils/sw-controller').then((sw) => sw.updateServiceWorker());
-
 const route = useRoute();
 const user = useUser();
-const { width: windowWidth } = useWindowSize();
 const { shortcuts } = useAppConfig();
 
 const currentNoteState = useCurrentNoteState();
@@ -19,21 +12,17 @@ const currentItemForDetails = useCurrentItemForDetails();
 
 const isShowingSearch = ref(false);
 
-const isSmallScreen = computed(() =>
-  process.server
-    ? parseUA(useRequestHeaders()['user-agent']).isMobileOrTablet
-    : windowWidth.value < breakpoints.tablet,
-);
-const isNoteNameEmpty = computed(() => !route.params.note || route.params.note === blankNoteName);
+const isSmallScreen = inject(IsSmallScreenKey);
+const isNoteNameEmpty = computed(() => !route.params.note || route.params.note === BLANK_NOTE_NAME);
 
 const currentRouteName = computed(() => {
   const folders = route.params.folders;
   const currentFolder = Array.isArray(folders) ? folders.at(-1) : folders as string;
 
-  if (currentFolder && (!route.params.folders || route.params.note === blankNoteName))
+  if (currentFolder && (!route.params.folders || route.params.note === BLANK_NOTE_NAME))
     return decodeURIComponent(currentFolder);
 
-  if (route.params.note && route.params.note !== blankNoteName)
+  if (route.params.note && route.params.note !== BLANK_NOTE_NAME)
     return decodeURIComponent(route.params.note as string);
 
   return null;
@@ -44,7 +33,7 @@ function focusSearchInput(event: Element) {
 }
 
 watch(() => route.params.note, (noteName) => {
-  const isEmptyNoteName = !noteName || noteName === blankNoteName;
+  const isEmptyNoteName = !noteName || noteName === BLANK_NOTE_NAME;
 
   if (isEmptyNoteName) currentNoteState.value = '';
 });
@@ -74,6 +63,9 @@ useTinykeys({
   [shortcuts.search]: (event) => {
     event.preventDefault();
 
+    if (currentItemForDetails.value)
+      currentItemForDetails.value = null;
+
     isShowingSearch.value = !isShowingSearch.value;
   },
 });
@@ -83,14 +75,13 @@ onMounted(() => {
     isShowingSearch.value = true;
 
   [preloadDashboardComponents, defineFuzzyWorker]
-    .map((cb) => window.requestIdleCallback(cb));
+    .map((cb) => requestIdleCallback(cb));
 
-  if (process.dev)
+  if (import.meta.env.DEV)
     // @ts-expect-error this should not be defined
     window.$createToast = useToast();
 });
 
-provide(IsSmallScreenKey, isSmallScreen);
 provide(IsNoteNameEmptyKey, isNoteNameEmpty);
 </script>
 
@@ -142,8 +133,6 @@ provide(IsNoteNameEmptyKey, isNoteNameEmpty);
       </Transition>
     </Teleport>
 
-    <LazyWorkspaceToasts />
-
     <Teleport to="body">
       <Transition name="fade">
         <LazyWorkspaceItemDetails
@@ -179,10 +168,6 @@ provide(IsNoteNameEmptyKey, isNoteNameEmpty);
   &__contents {
     grid-area: 2 / 1;
 
-    position: relative;
-    z-index: 1;
-    isolation: isolate;
-
     height: 100%;
     width: 20vw;
 
@@ -194,24 +179,33 @@ provide(IsNoteNameEmptyKey, isNoteNameEmpty);
 
     border-right: 1px solid hsla(var(--text-color-hsl), 0.25);
 
+    overflow: auto;
+    scroll-snap-type: y proximity;
+    scrollbar-width: none;
+    ::-webkit-scrollbar {
+      display: none;
+    }
+
     &__list {
-      padding: 0;
+      padding: 0 0 12rem;
       margin: 0;
 
       list-style-type: none;
+
+      & > li {
+        scroll-snap-align: start;
+
+        a {
+          scroll-margin: 2.25rem;
+        }
+      }
     }
 
     @media screen and (max-width: $breakpoint-tablet) {
-      position: absolute;
-      top: 0;
-      left: 0;
-
       width: 100%;
-      height: 100%;
-
       max-width: 100%;
 
-      padding: 4.5rem 1rem 2rem;
+      padding: 0 1rem 2rem;
     }
   }
 
@@ -241,16 +235,28 @@ provide(IsNoteNameEmptyKey, isNoteNameEmpty);
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
-.search-fade-enter-active {
-  display: none;
-}
-
 .search-fade-enter-from,
 .search-fade-leave-to {
   opacity: 0;
 
   .search {
     transform: scale(0.95);
+  }
+}
+
+@media (width <= $breakpoint-tablet) {
+  .search-fade-enter-active {
+    transition: opacity 0.25s ease;
+  }
+
+  .search-fade-leave-active {
+    transition-duration: 0s;
+  }
+
+  .search-fade-leave-to {
+    .search {
+      transform: none;
+    }
   }
 }
 </style>

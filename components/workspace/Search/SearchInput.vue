@@ -1,12 +1,10 @@
 <script setup lang="ts">
-interface Props { modelValue: string }
-interface Emits { (event: 'update:modelValue', content: string): void }
+interface Props { value: string; onUpdateValue: (v: string) => void }
 
-defineProps<Props>();
-const emit = defineEmits<Emits>();
+const props = defineProps<Props>();
 
 function updateModelValue(event: Event) {
-  emit('update:modelValue', (event.target as HTMLInputElement).value);
+  props.onUpdateValue((event.target as HTMLInputElement).value);
 }
 </script>
 
@@ -26,7 +24,7 @@ function updateModelValue(event: Event) {
     autofocus="true"
     placeholder="Search or enter / for commands"
     maxlength="64"
-    :value="modelValue"
+    :value="value"
     @input="updateModelValue"
   >
 </template>

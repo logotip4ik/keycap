@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import fsp from 'node:fs/promises';
+import process from 'node:process';
 import { existsSync } from 'node:fs';
 import { faker } from '@faker-js/faker';
 
@@ -11,9 +12,10 @@ import { generateFolderPath, generateNotePath, generateRootFolderPath } from '~/
 
 const prisma = getPrisma();
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 async function main() {
   const numberOfUsers = 75;
-  const users: Prisma.UserCreateInput[] = [];
+  const users: Array<Prisma.UserCreateInput> = [];
 
   const usersFilename = 'users-result';
   const resultsPath = `./prisma/${usersFilename}.csv`;
@@ -47,7 +49,7 @@ async function main() {
   if (existsSync(resultsPath))
     await fsp.writeFile(resultsPath, '');
 
-  const hashedPasswords = await Promise.all(users.map((user) => hashPassword(user.password)));
+  const hashedPasswords = await Promise.all(users.map((user) => hashPassword(user.password!)));
 
   const dbUsers = await Promise.all(users.map((user, i) =>
     prisma.user.create({
@@ -62,8 +64,8 @@ async function main() {
   ].join('\n'));
 
   const totalNumberOfNotes = 1000;
-  const userFolders: Record<string, { name: string; path: string }[]> = {};
-  const notesPromises: Promise<any>[] = [];
+  const userFolders: Record<string, Array<{ name: string; path: string }>> = {};
+  const notesPromises: Array<Promise<any>> = [];
 
   for (let i = 0; i < totalNumberOfNotes; i++) {
     const ownerIdx = faker.number.int({ min: 0, max: dbUsers.length - 1 });

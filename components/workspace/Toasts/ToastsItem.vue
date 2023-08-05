@@ -9,7 +9,7 @@ let timeout: NodeJS.Timeout;
 onMounted(() => {
   const totalTime = props.animationDuration + props.toast.duration;
 
-  if (props.toast.duration < Infinity)
+  if (props.toast.duration < Number.POSITIVE_INFINITY)
     timeout = setTimeout(() => props.toast.remove(), totalTime);
 });
 
@@ -23,7 +23,7 @@ onBeforeUnmount(() => clearTimeout(timeout));
     role="status"
     aria-live="polite"
   >
-    <Icon v-if="toast.type === 'info'" name="ic:outline-info" class="toast__icon" aria-hidden="true" data-icon />
+    <LazyIconOutlineInfo v-if="toast.type === 'info'" v-once class="toast__icon" aria-hidden="true" data-icon />
     <span v-else-if="toast.type === 'loading'" class="toast__icon toast__icon--spinner" aria-hidden="true" data-icon />
 
     <p class="toast__text">{{ toast.message }}</p>
@@ -42,6 +42,7 @@ onBeforeUnmount(() => clearTimeout(timeout));
 <style lang="scss">
 .toast {
   --icon-size: 1.4rem;
+  --base-color-saturation: 0;
   --base-shadow-color: 0, 0, 0;
 
   display: grid;
@@ -69,14 +70,20 @@ onBeforeUnmount(() => clearTimeout(timeout));
 
   @media (prefers-color-scheme: dark) {
     --base-shadow-color: 200, 200, 200;
+    --base-color-saturation: 0.1;
   }
 
   @supports (backdrop-filter: blur(1px)) {
     color: var(--text-color);
 
-    background-color: hsla(var(--selection-bg-color-hsl), 0.1);
+    background-color: transparent;
+    background-image: linear-gradient(
+      to bottom,
+      hsla(var(--selection-bg-color-hsl), calc(var(--base-color-saturation) + 0.075)),
+      hsla(var(--selection-bg-color-hsl), calc(var(--base-color-saturation) + 0.175)),
+    );
     border: 1px solid hsla(var(--selection-bg-color-hsl), 0.5);
-    backdrop-filter: blur(9px);
+    backdrop-filter: blur(0.75rem);
   }
 
   &__text {
@@ -84,8 +91,7 @@ onBeforeUnmount(() => clearTimeout(timeout));
     padding-top: 0.1rem;
   }
 
-  &__icon,
-  &__spinner {
+  &__icon {
     flex-shrink: 0;
 
     width: var(--icon-size);
@@ -96,19 +102,36 @@ onBeforeUnmount(() => clearTimeout(timeout));
     margin-right: 0.6rem;
 
     &--spinner {
+      position: relative;
+
       width: calc(var(--icon-size) / 1.1);
       height: calc(var(--icon-size) / 1.1);
 
-      border-radius: 50%;
-      border: 2px solid transparent;
-      border-left-color: currentColor;
+      &::after, &::before {
+        content: '';
 
-      animation: spin 1s infinite linear;
+        position: absolute;
+        inset: 0;
+
+        border-radius: 50%;
+        border: 2px solid transparent;
+        border-left-color: currentColor;
+
+        animation: spin 1s infinite linear;
+      }
+
+      &::before {
+        border-left-color: transparent;
+        border-right-color: currentColor;
+      }
     }
   }
 
   &__button {
     grid-column: 1 / 3;
+
+    position: relative;
+    z-index: 1;
 
     font: inherit;
     font-size: 1.075rem;
@@ -127,17 +150,40 @@ onBeforeUnmount(() => clearTimeout(timeout));
     cursor: pointer;
     pointer-events: all;
 
-    transition: color .3s, background-color .3s;
+    transition: color .3s;
 
     & + & {
       margin-top: 0.6rem;
+    }
+
+    &::before {
+      content: "";
+
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+
+      opacity: 0.25;
+      border-radius: inherit;
+      background-image: linear-gradient(
+        to bottom,
+        hsla(var(--text-color-hsl), 0.0),
+        hsla(var(--text-color-hsl), 0.1)
+      );
+
+      transition: opacity 0.3s;
     }
 
     &:is(:hover, :focus-visible) {
       transition-duration: 0.1s;
 
       color: hsla(var(--text-color-hsl), 1);
-      background-color: hsla(var(--text-color-hsl), 0.075);
+
+      &::before {
+        transition-duration: 0.1s;
+
+        opacity: 1;
+      }
     }
 
     @media screen and (max-width: $breakpoint-tablet) {

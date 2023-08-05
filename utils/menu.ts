@@ -5,7 +5,7 @@ import type { SearchActionValues } from '~/types/common';
 interface Command {
   key: SearchActionValues
   name: string
-  handler: (args?: string[]) => any
+  handler: (args?: Array<string>) => any
 }
 
 export const commandActions: Record<Command['key'], Command['handler']> = {
@@ -28,6 +28,9 @@ export const commandActions: Record<Command['key'], Command['handler']> = {
   [SearchAction.SaveNote]: () => {
     useMitt().emit('save:note');
   },
+  [SearchAction.Details]: () => {
+    useMitt().emit('details:show');
+  },
 };
 
 export const commandActionsMin: Map<Command['key'], Pick<Command, 'key' | 'name'>> = new Map([
@@ -36,4 +39,5 @@ export const commandActionsMin: Map<Command['key'], Pick<Command, 'key' | 'name'
   [SearchAction.RefreshNote, { name: 'refresh-note', key: SearchAction.RefreshNote }],
   [SearchAction.RefreshFolder, { name: 'refresh-folder', key: SearchAction.RefreshFolder }],
   [SearchAction.SaveNote, { name: 'save-note', key: SearchAction.SaveNote }],
+  [SearchAction.Details, { name: 'details', key: SearchAction.Details }],
 ]);

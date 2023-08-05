@@ -1,18 +1,18 @@
 <template>
   <div class="skeleton">
-    <h3 class="skeleton__heading skeleton-loading-bg" />
+    <h3 class="skeleton__heading skeleton-bg" />
 
     <div class="skeleton__row">
-      <p class="skeleton__row__text skeleton-loading-bg" />
-      <p class="skeleton__row__date skeleton-loading-bg" />
+      <p class="skeleton__row__text skeleton-bg" />
+      <p class="skeleton__row__date skeleton-bg" />
     </div>
     <div class="skeleton__row">
-      <p class="skeleton__row__text skeleton-loading-bg" />
-      <p class="skeleton__row__date skeleton-loading-bg" />
+      <p class="skeleton__row__text skeleton-bg" />
+      <p class="skeleton__row__date skeleton-bg" />
     </div>
     <div class="skeleton__row">
-      <p class="skeleton__row__text skeleton-loading-bg" />
-      <p class="skeleton__row__date skeleton-loading-bg" />
+      <p class="skeleton__row__text skeleton-bg" />
+      <p class="skeleton__row__date skeleton-bg" />
     </div>
   </div>
 </template>

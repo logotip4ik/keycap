@@ -7,11 +7,12 @@ const isCommand = 'key' in props.item;
 const itemPath = (() => {
   if (isCommand) return '';
 
+  // TODO: rewrite item path resolution ?
   const path = (props.item as FuzzyItem).path
     // removing account name
-    .replace(/\/\w+\//i, '')
+    .replace(/\/\w+\//, '')
     // the last one string from path
-    .replace(/\/?[\w\%]+$/i, '');
+    .replace(/\/?[\w%]+$/, '');
 
   return decodeURIComponent(path);
 })();
@@ -25,13 +26,13 @@ const itemHref = (() => {
 <template>
   <button v-if="isCommand" class="search-item" :data-selected="selected">
     <span class="search-item__name">{{ item.name }}</span>
-    <Icon name="ic:round-keyboard-return" class="search-item__enter-icon" />
+    <LazyIconRoundKeyboardReturn v-once class="search-item__enter-icon" />
   </button>
 
   <NuxtLink v-else :href="itemHref" class="search-item" :data-selected="selected">
     <span v-if="itemPath !== ''" class="search-item__path">{{ itemPath }}/</span>
     <span class="search-item__name">{{ item.name }}</span>
-    <Icon name="ic:round-keyboard-return" class="search-item__enter-icon" />
+    <LazyIconRoundKeyboardReturn v-once class="search-item__enter-icon" />
   </NuxtLink>
 </template>
 
