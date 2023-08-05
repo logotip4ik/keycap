@@ -1,6 +1,6 @@
+import process from 'node:process';
 import { isDevelopment, isProduction } from 'std-env';
 
-// @ts-expect-error allowSyntheticDefaultImports is actually enabled
 import winston from 'winston';
 import { WinstonTransport as AxiomTransport } from '@axiomhq/axiom-node';
 
@@ -30,13 +30,6 @@ export function createLogger() {
     });
 
     loggerInstance.add(axiom);
-
-    try {
-      console.log(loggerInstance.log('warn', 'test warning'));
-    }
-    catch (error) {
-      console.log(error);
-    }
   }
 
   if (isDevelopment) {
