@@ -83,7 +83,6 @@ export default defineNuxtConfig({
     },
 
     axiom: {
-      orgId: '',
       dataset: '',
       apiToken: '',
     },
