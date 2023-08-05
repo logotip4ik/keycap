@@ -1,4 +1,6 @@
-import pino from 'pino';
+import Pino from 'pino';
+import PinoAxiom from '@axiomhq/pino';
+import PinoPretty from 'pino-pretty';
 import { isProduction } from 'std-env';
 
 import type { Logger } from 'pino';
@@ -14,12 +16,12 @@ export function createLogger() {
 
   const { axiom } = useRuntimeConfig();
 
-  globalThis._logger = pino({
+  globalThis._logger = Pino({
     mixin() {
       return { nitro: true };
     },
     transport: {
-      level: isProduction ? 'info' : 'trace',
+      level: isProduction ? PinoAxiom : PinoPretty,
       target: isProduction ? '@axiomhq/pino' : 'pino-pretty',
       // eslint-disable-next-line github/no-dataset
       options: { token: axiom.apiToken, dataset: axiom.dataset },
