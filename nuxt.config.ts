@@ -70,14 +70,22 @@ export default defineNuxtConfig({
       oauthEnabled: false,
     },
 
+    // TODO: merge into oauth object ?
     github: {
       clientId: '',
       clientSecret: '',
     },
 
+    // TODO: merge into oauth object ?
     google: {
       clientId: '',
       clientSecret: '',
+    },
+
+    axiom: {
+      orgId: '',
+      dataset: '',
+      apiToken: '',
     },
   },
 
@@ -107,12 +115,6 @@ export default defineNuxtConfig({
     '/about': { prerender: true },
 
     '/oauth/ask-username': { experimentalNoScripts: true },
-  },
-
-  runtimeConfig: {
-    axiomOrgId: '',
-    axiomDataset: '',
-    axiomApiToken: '',
   },
 
   modules: [
