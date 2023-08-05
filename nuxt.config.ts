@@ -55,7 +55,6 @@ export default defineNuxtConfig({
 
   imports: {
     dirs: [
-      './utils/tiptap',
       './constants',
     ],
     imports: [
