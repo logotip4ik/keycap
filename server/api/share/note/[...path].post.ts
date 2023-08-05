@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
       },
     });
   }).catch((err) => {
-    event.context.logger.log('error', 'share.create failed', err, { path: event.path });
+    event.context.logger.error('share.create failed', err, { path: event.path });
   });
   timer.end();
 

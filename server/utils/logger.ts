@@ -1,42 +1,30 @@
-import process from 'node:process';
-import { isDevelopment, isProduction } from 'std-env';
+import pino from 'pino';
+import { isProduction } from 'std-env';
 
-import winston from 'winston';
-import { WinstonTransport as AxiomTransport } from '@axiomhq/axiom-node';
+import type { Logger } from 'pino';
 
-let loggerInstance: winston.Logger;
+declare global {
+  // eslint-disable-next-line vars-on-top, no-var
+  var _logger: Logger | undefined;
+}
 
 export function createLogger() {
-  if (loggerInstance)
-    return loggerInstance;
+  if (globalThis._logger)
+    return globalThis._logger;
 
-  const { combine, errors, json } = winston.format;
+  const { axiom } = useRuntimeConfig();
 
-  loggerInstance = winston.createLogger({
-    level: process.env.LOG_LEVEL || 'info',
-    format: combine(errors({ stack: true }), json()),
-    defaultMeta: { service: 'nitro' },
+  globalThis._logger = pino({
+    mixin() {
+      return { nitro: true };
+    },
+    transport: {
+      level: isProduction ? 'info' : 'trace',
+      target: isProduction ? '@axiomhq/pino' : 'pino-pretty',
+      // eslint-disable-next-line github/no-dataset
+      options: { token: axiom.apiToken, dataset: axiom.dataset },
+    },
   });
 
-  if (isProduction) {
-    const { axiomApiToken, axiomDataset, axiomOrgId } = useRuntimeConfig();
-
-    const axiom = new AxiomTransport({
-      orgId: axiomOrgId,
-      token: axiomApiToken,
-      dataset: axiomDataset,
-      handleExceptions: true,
-      handleRejections: true,
-    });
-
-    loggerInstance.add(axiom);
-  }
-
-  if (isDevelopment) {
-    loggerInstance.add(
-      new winston.transports.Console(),
-    );
-  }
-
-  return loggerInstance;
+  return globalThis._logger;
 }

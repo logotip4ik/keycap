@@ -12,26 +12,40 @@ export default defineEventHandler(async (event) => {
   const query = getQuery(event);
   const prisma = getPrisma();
 
-  if (query.error)
+  if (query.error) {
+    event.context.logger.error({ err: 'github oauth error' }, query.error.toString());
+
     return sendRedirect(event, '/');
+  }
 
   if (!query.code)
     return sendOAuthRedirect(event, OAuthProvider.GitHub);
 
-  if (query.state !== getCookie(event, 'state'))
+  if (query.state !== getCookie(event, 'state')) {
+    event.context.logger.error({ err: 'oauth state mismatch' });
+
     throw createError({ statusCode: 422 });
+  }
 
   const githubUser = destr<GitHubUserRes>(query.socialUser)
-    || await getGitHubUserWithEvent(event).catch(() => null);
+    || await getGitHubUserWithEvent(event).catch((err) => {
+      event.context.logger.error({ err }, 'failed to get github user from event');
+    });
 
-  // TODO: better error handling
-  if (!githubUser || !githubUser.id || !githubUser.email)
+  if (!githubUser || !githubUser.id || !githubUser.email) {
+    event.context.logger.error({ err: 'github user missing required properties', user: githubUser || null });
+
     return sendRedirect(event, '/');
+  }
 
   if (!query.socialUser) {
     user = await prisma.user.findFirst({
       where: { email: githubUser.email },
       select: { id: true, email: true, username: true },
+    }).catch((err) => {
+      event.context.logger.error({ err }, 'user.findFirst failed');
+
+      return null;
     });
 
     if (user) {
@@ -59,9 +73,12 @@ export default defineEventHandler(async (event) => {
   user = await updateOrCreateUserFromSocialAuth(
     normalizeGitHubUser(githubUser, { username }),
   )
-    .catch(() => null);
+    .catch((err) => {
+      event.context.logger.error({ err }, 'failed updating or creating with github user');
 
-  // TODO: better error handling
+      return null;
+    });
+
   if (!user)
     return sendRedirect(event, '/');
 

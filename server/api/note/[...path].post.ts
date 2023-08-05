@@ -38,7 +38,7 @@ export default defineEventHandler(async (event) => {
     },
     select: { ...selectParams },
   }).catch((err) => {
-    event.context.logger.log('error', 'note.create failed', err, { path: event.path });
+    event.context.logger.error({ err }, 'note.create failed');
   });
   timer.end();
 

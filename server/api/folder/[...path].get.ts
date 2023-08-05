@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
     where: { path: folderPath, ownerId: user.id },
     select: { ...selectParams },
   }).catch((err) => {
-    event.context.logger.log('error', 'folder.findFirst failed', err, { path: event.path });
+    event.context.logger.error({ err }, 'folder.findFirst failed');
   });
   timer.end();
 

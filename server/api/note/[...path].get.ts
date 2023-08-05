@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
     where: { path: notePath, ownerId: user.id },
     select: { ...selectParams },
   }).catch((err) => {
-    event.context.logger.log('error', 'note.get failed', err, { path: event.path });
+    event.context.logger.error({ err }, 'note.get failed');
   });
   timer.end();
 

@@ -72,7 +72,7 @@ export async function getUserFromEvent(event: H3Event): Promise<SafeUser | null>
 
   const { payload } = await jwtVerify(accessToken, secret, { issuer })
     .catch((err) => {
-      event.context.logger.log('warn', 'jwt validation failed', err, { path: event.path });
+      event.context.logger.warn({ path: event.path }, 'jwt validation failed', err);
     }) || {};
 
   if (!payload)

@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
       select: { name: true, path: true, root: true },
     }),
   ]).catch((err) => {
-    event.context.logger.log('error', 'client search failed', err, { path: event.path });
+    event.context.logger.error({ err }, 'client search failed');
 
     return [null, null];
   });

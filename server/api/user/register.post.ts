@@ -4,7 +4,7 @@ export default defineEventHandler(async (event) => {
   const isOriginMismatch = checkOriginForMismatch(event);
 
   if (isOriginMismatch) {
-    event.context.logger.log('warn', 'suspicious origin mismatch', { path: event.path });
+    event.context.logger.warn('suspicious origin mismatch');
 
     throw createError({ statusCode: 403 });
   }
@@ -42,7 +42,7 @@ export default defineEventHandler(async (event) => {
 
     select: { id: true, email: true, username: true },
   }).catch((err) => {
-    event.context.logger.log('error', 'user.create failed ', err, { path: event.path });
+    event.context.logger.error({ err }, 'user.create failed ');
   });
 
   if (!user)

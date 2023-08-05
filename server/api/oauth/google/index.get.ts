@@ -12,26 +12,41 @@ export default defineEventHandler(async (event) => {
   const query = getQuery(event);
   const prisma = getPrisma();
 
-  if (query.error)
+  if (query.error) {
+    event.context.logger.error({ err: 'google oauth error' }, query.error.toString());
+
     return sendRedirect(event, '/');
+  }
 
   if (!query.code)
     return sendOAuthRedirect(event, OAuthProvider.Google);
 
-  if (query.state !== getCookie(event, 'state'))
+  if (query.state !== getCookie(event, 'state')) {
+    event.context.logger.error({ err: 'oauth state mismatch' });
+
     throw createError({ statusCode: 422 });
+  }
 
   const googleUser = destr<GoogleUserRes>(query.socialUser)
-      || await getGoogleUserWithEvent(event).catch(() => null);
+      || await getGoogleUserWithEvent(event).catch((err) => {
+        event.context.logger.error({ err }, 'failed to get google user from event');
+      });
 
   // TODO: better error handling
-  if (!googleUser || !googleUser.id || !googleUser.email)
+  if (!googleUser || !googleUser.id || !googleUser.email) {
+    event.context.logger.error({ err: 'google user missing required properties', user: googleUser || null });
+
     return sendRedirect(event, '/');
+  }
 
   if (!query.socialUser) {
     user = await prisma.user.findFirst({
       where: { email: googleUser.email },
       select: { id: true, email: true, username: true },
+    }).catch((err) => {
+      event.context.logger.error({ err }, 'user.findFirst failed');
+
+      return null;
     });
 
     if (user) {
@@ -57,10 +72,12 @@ export default defineEventHandler(async (event) => {
 
   user = await updateOrCreateUserFromSocialAuth(
     normalizeGoogleUser(googleUser, { username }),
-  )
-    .catch(() => null);
+  ).catch((err) => {
+    event.context.logger.error({ err }, 'failed updating or creating with google user');
 
-  // TODO: better error handling
+    return null;
+  });
+
   if (!user)
     return sendRedirect(event, '/');
 

@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
       },
       select: { id: true, link: true },
     }).catch((err) => {
-      event.context.logger.log('error', 'share.findFirst failed ', err, { path: event.path });
+      event.context.logger.error('share.findFirst failed ', err, { path: event.path });
     });
 
     if (!shareToDelete)
@@ -33,7 +33,7 @@ export default defineEventHandler(async (event) => {
       where: { id: shareToDelete.id },
       select: { id: true },
     }).catch((err) => {
-      event.context.logger.log('error', 'share.delete failed', err, { path: event.path });
+      event.context.logger.error('share.delete failed', err, { path: event.path });
     });
 
     if (!deletedShare)

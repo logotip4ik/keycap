@@ -4,7 +4,7 @@ export default defineEventHandler(async (event) => {
   const isOriginMismatch = checkOriginForMismatch(event);
 
   if (isOriginMismatch) {
-    event.context.logger.log('warn', 'suspicious origin mismatch', { path: event.path });
+    event.context.logger.warn('suspicious origin mismatch');
 
     throw createError({ statusCode: 403 });
   }
@@ -29,7 +29,7 @@ export default defineEventHandler(async (event) => {
     where: { email: body.email },
     select: { id: true, email: true, username: true, password: true },
   }).catch((err) => {
-    event.context.logger.log('error', 'user.findUnique failed', err, { path: event.path });
+    event.context.logger.error({ err }, 'user.findUnique failed');
   });
 
   if (!user)
@@ -40,7 +40,8 @@ export default defineEventHandler(async (event) => {
 
   const isPasswordValid = await verifyPassword(user.password, body.password)
     .catch((err) => {
-      event.context.logger.log('error', 'password verification failed', err, { path: event.path });
+      event.context.logger.error({ err }, 'password verification failed');
+      return null;
     });
 
   if (isPasswordValid === null)

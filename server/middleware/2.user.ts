@@ -2,11 +2,14 @@ export default defineEventHandler(async (event) => {
   const timer = createTimer();
   const logger = createLogger();
 
-  event.context.logger = logger;
-
   timer.start('user_resolution');
   event.context.user = await getUserFromEvent(event);
   timer.end();
+
+  event.context.logger = logger.child({
+    path: event.path,
+    user: event.context.user?.username,
+  });
 
   let authorized: 'yes' | 'no' = 'no';
 

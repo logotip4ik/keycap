@@ -40,7 +40,7 @@ export default defineEventHandler(async (event) => {
 
     select: { ...selectParams },
   }).catch((err) => {
-    event.context.logger.log('error', 'folder.create failed', err, { path: event.path });
+    event.context.logger.error({ err }, 'folder.create failed');
   });
   timer.end();
 

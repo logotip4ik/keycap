@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
     where: { path: notePath },
     select: { id: true },
   }).catch((err) => {
-    event.context.logger.log('error', 'note.delete failed', err, { path: event.path });
+    event.context.logger.error({ err }, 'note.delete failed');
   });
   timer.end();
 

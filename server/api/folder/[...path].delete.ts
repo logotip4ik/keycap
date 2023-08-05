@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
     where: { path: folderPath },
     select: { id: true },
   }).catch((err) => {
-    event.context.logger.log('error', 'folder.delete failed', err, { path: event.path });
+    event.context.logger.error({ err }, 'folder.delete failed');
   });
   timer.end();
 

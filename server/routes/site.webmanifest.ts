@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
   if (user)
     manifest.start_url = `/@${user.username}`;
 
-  event.context.logger.log('warn', 'test log');
+  event.context.logger.warn('test log');
 
   setHeader(event, 'Content-Type', 'application/manifest+json');
 
