@@ -20,4 +20,8 @@ Object.defineProperty(
 
 setSuretypeOptions({ colors: false, location: false });
 
-export default defineNitroPlugin(() => undefined);
+export default defineNitroPlugin((nitro) => {
+  nitro.hooks.hookOnce('close', () => {
+    globalThis._logger?.flush();
+  });
+});
