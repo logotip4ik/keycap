@@ -14,6 +14,7 @@ export default defineEventHandler(async (event) => {
     manifest.start_url = `/@${user.username}`;
 
   event.context.logger.warn('test log');
+  event.context.logger.flush();
 
   setHeader(event, 'Content-Type', 'application/manifest+json');
 
