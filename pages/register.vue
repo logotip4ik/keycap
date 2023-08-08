@@ -76,7 +76,7 @@ async function register() {
           placeholder="username (no spaces allowed)"
           autocomplete="username"
           minlength="3"
-          pattern="[\w,.-]+?"
+          pattern="[\w.\-]+?"
         />
 
         <FormInputNote>
