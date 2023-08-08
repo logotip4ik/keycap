@@ -16,10 +16,7 @@ export default defineEventHandler(async (event) => {
   if (!query.code)
     return sendOAuthRedirect(event, OAuthProvider.GitHub);
 
-  const error = checkOAuthEventForErrors(event);
-
-  if (error)
-    throw error;
+  assertNoOAuthErrors(event);
 
   const githubUser = destr<GitHubUserRes>(query.socialUser)
     || await getGitHubUserWithEvent(event).catch(() => null);

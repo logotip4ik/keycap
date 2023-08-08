@@ -14,10 +14,7 @@ export default defineEventHandler(async (event) => {
   if (!query.code)
     return sendOAuthRedirect(event, OAuthProvider.Google);
 
-  const error = checkOAuthEventForErrors(event);
-
-  if (error)
-    throw error;
+  assertNoOAuthErrors(event);
 
   const googleUser = destr<GoogleUserRes>(query.socialUser)
       || await getGoogleUserWithEvent(event).catch(() => null);
