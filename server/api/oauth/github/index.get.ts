@@ -10,23 +10,27 @@ export default defineEventHandler(async (event) => {
     return sendRedirect(event, `/@${user.username}`);
 
   const query = getQuery(event);
-  const prisma = getPrisma();
 
-  if (query.error)
-    return sendRedirect(event, '/');
-
+  // This means that user was redirected here to actually sign in
+  // with social accout, so this technically is not an error
   if (!query.code)
     return sendOAuthRedirect(event, OAuthProvider.GitHub);
 
-  if (query.state !== getCookie(event, 'state'))
-    throw createError({ statusCode: 422 });
+  const error = checkOAuthEventForErrors(event);
+
+  if (error)
+    throw error;
 
   const githubUser = destr<GitHubUserRes>(query.socialUser)
     || await getGitHubUserWithEvent(event).catch(() => null);
 
-  // TODO: better error handling
-  if (!githubUser || !githubUser.id || !githubUser.email)
+  const userValidation = useSocialUserValidator(githubUser);
+
+  // TODO: better error logging
+  if (!userValidation.ok)
     return sendRedirect(event, '/');
+
+  const prisma = getPrisma();
 
   if (!query.socialUser) {
     user = await prisma.user.findFirst({
@@ -42,14 +46,14 @@ export default defineEventHandler(async (event) => {
   }
 
   const username = query.username?.toString().trim();
-
-  const isUsernameValid = username && username.length > 3 && !(await checkIfUsernameTaken(username));
+  const isUsernameValid = useUsernameValidator(username).ok
+                        && !(await checkIfUsernameTaken(username!));
 
   if (!isUsernameValid) {
     query.provider = OAuthProvider.GitHub.toLowerCase();
     query.username = undefined;
     query.socialUser = githubUser;
-    query.usernameTaken = await checkIfUsernameTaken(username) ? username : '';
+    query.usernameTaken = await checkIfUsernameTaken(username!) ? username : '';
 
     return sendRedirect(event,
       withQuery('/oauth/ask-username', query),
@@ -57,7 +61,7 @@ export default defineEventHandler(async (event) => {
   }
 
   user = await updateOrCreateUserFromSocialAuth(
-    normalizeGitHubUser(githubUser, { username }),
+    normalizeGitHubUser(githubUser, { username: username! }),
   )
     .catch(() => null);
 

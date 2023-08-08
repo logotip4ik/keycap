@@ -10,23 +10,25 @@ export default defineEventHandler(async (event) => {
     return sendRedirect(event, `/@${user.username}`);
 
   const query = getQuery(event);
-  const prisma = getPrisma();
-
-  if (query.error)
-    return sendRedirect(event, '/');
 
   if (!query.code)
     return sendOAuthRedirect(event, OAuthProvider.Google);
 
-  if (query.state !== getCookie(event, 'state'))
-    throw createError({ statusCode: 422 });
+  const error = checkOAuthEventForErrors(event);
+
+  if (error)
+    throw error;
 
   const googleUser = destr<GoogleUserRes>(query.socialUser)
       || await getGoogleUserWithEvent(event).catch(() => null);
 
-  // TODO: better error handling
-  if (!googleUser || !googleUser.id || !googleUser.email)
+  const userValidation = useSocialUserValidator(googleUser);
+
+  // TODO: better error logging
+  if (!userValidation.ok)
     return sendRedirect(event, '/');
+
+  const prisma = getPrisma();
 
   if (!query.socialUser) {
     user = await prisma.user.findFirst({
@@ -42,13 +44,14 @@ export default defineEventHandler(async (event) => {
   }
 
   const username = query.username?.toString().trim();
-  const isUsernameValid = username && username.length > 3 && !(await checkIfUsernameTaken(username));
+  const isUsernameValid = useUsernameValidator(username).ok
+                        && !(await checkIfUsernameTaken(username!));
 
   if (!isUsernameValid) {
     query.provider = OAuthProvider.Google.toLowerCase();
     query.username = undefined;
     query.socialUser = googleUser;
-    query.usernameTaken = await checkIfUsernameTaken(username) ? username : '';
+    query.usernameTaken = await checkIfUsernameTaken(username!) ? username : '';
 
     return sendRedirect(event,
       withQuery('/oauth/ask-username', query),
@@ -56,7 +59,7 @@ export default defineEventHandler(async (event) => {
   }
 
   user = await updateOrCreateUserFromSocialAuth(
-    normalizeGoogleUser(googleUser, { username }),
+    normalizeGoogleUser(googleUser, { username: username! }),
   )
     .catch(() => null);
 
