@@ -1,6 +1,6 @@
 import parseDuration from 'parse-duration';
 
-export const checkIfUsernameTaken = cachedFunction(async (username: string) => {
+export async function checkIfUsernameTaken(username: string) {
   if (!username)
     return false;
 
@@ -12,9 +12,17 @@ export const checkIfUsernameTaken = cachedFunction(async (username: string) => {
     .catch(() => null);
 
   return !!user?.username;
-}, {
+}
+
+export function getUsernameTakenKey(username: string) {
+  if (!username)
+    throw new Error('unexpected empty username');
+
+  return `${username.trim()}-taken`;
+}
+
+export const checkIfUsernameTakenCached = cachedFunction(checkIfUsernameTaken, {
   swr: true,
-  maxAge: parseDuration('1 day', 'second'),
-  staleMaxAge: parseDuration('2 weeks', 'second'),
-  getKey: (username: string) => `${username?.trim()}-taken`,
+  maxAge: parseDuration('6 months', 'second'),
+  getKey: getUsernameTakenKey,
 });
