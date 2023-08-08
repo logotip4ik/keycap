@@ -2,7 +2,7 @@
 import type { ComponentPublicInstance } from 'vue';
 import type { OAuthProvider, SafeUser } from '~/types/server';
 
-import { usernameRE } from '~/server/utils/validators/user';
+import { usernameRE } from '~/server/utils';
 
 definePageMeta({
   middleware: ['redirect-dashboard'],

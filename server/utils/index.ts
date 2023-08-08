@@ -5,6 +5,9 @@ import { withLeadingSlash, withoutTrailingSlash } from 'ufo';
 import type { H3Event } from 'h3';
 import type { Prisma } from '@prisma/client';
 
+export const stringifiedBigIntRE = /(\d{18})n/;
+export const usernameRE = /^[\w.\-]{3,16}$/;
+
 export function getServerUserAgent() {
   const postfix = isProduction ? '' : 'Dev';
   const serverName = process.env.SERVER_NAME || 'Keycap';
@@ -24,8 +27,6 @@ export function generateNotePath(username: string, path: string): string {
 export function generateRootFolderPath(username: string) {
   return `/${username}`;
 }
-
-export const stringifiedBigIntRE = /(\d{18})n/;
 
 // TODO: tests
 export function toBigInt(string: string): bigint {

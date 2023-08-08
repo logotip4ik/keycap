@@ -1,6 +1,6 @@
 import { compile, v } from 'suretype';
 
-export const usernameRE = /^[\w.\-]{3,16}$/;
+import { usernameRE } from '~/server/utils';
 
 export const usernameSchema = v
   .string()
