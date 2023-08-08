@@ -4,13 +4,13 @@ import { isProduction } from 'std-env';
 import { withQuery } from 'ufo';
 
 import type { Prisma } from '@prisma/client';
-import type { H3Error, H3Event } from 'h3';
+import type { H3Event } from 'h3';
 
 import type { NormalizedSocialUser, OAuthProvider as OAuthProviderType, SafeUser } from '~/types/server';
 
 export const OAuthProvider = SocialAuth;
 
-export function checkOAuthEventForErrors(event: H3Event): H3Error | undefined {
+export function assertNoOAuthErrors(event: H3Event) {
   const proviersMap = {
     '/oauth/github': OAuthProvider.GitHub,
     '/oauth/google': OAuthProvider.Google,
@@ -19,16 +19,16 @@ export function checkOAuthEventForErrors(event: H3Event): H3Error | undefined {
   const provider = proviersMap[event.path as keyof typeof proviersMap];
 
   if (!provider)
-    return createError({ statusCode: 418, statusMessage: 'i a coffeepot' });
+    throw createError({ statusCode: 418, statusMessage: 'i a coffeepot' });
 
   const query = getQuery(event);
 
   // TODO: better error logging
   if (query.error)
-    return createError({ statusCode: 404, statusMessage: decodeURIComponent(query.error.toString()) });
+    throw createError({ statusCode: 404, statusMessage: decodeURIComponent(query.error.toString()) });
 
   if (query.state !== getCookie(event, 'state'))
-    return createError({ statusCode: 422 });
+    throw createError({ statusCode: 422 });
 }
 
 export function sendOAuthRedirect(event: H3Event, provider: OAuthProviderType) {
