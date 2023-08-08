@@ -12,7 +12,6 @@ import { generateFolderPath, generateNotePath, generateRootFolderPath } from '~/
 
 const prisma = getPrisma();
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 async function main() {
   const numberOfUsers = 75;
   const users: Array<Prisma.UserCreateInput> = [];
