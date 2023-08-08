@@ -18,7 +18,7 @@ if (import.meta.vitest) {
     it('disallows spaces', () => {
       const username = 'userna me';
 
-      const validation = useUsernameValidation(username);
+      const validation = useUsernameValidator(username);
 
       expect(validation.ok).toBe(false);
     });
@@ -26,7 +26,7 @@ if (import.meta.vitest) {
     it('should be valid case', () => {
       const username = 'something';
 
-      const validation = useUsernameValidation(username);
+      const validation = useUsernameValidator(username);
 
       expect(validation.ok).toBe(true);
     });
@@ -34,7 +34,7 @@ if (import.meta.vitest) {
     it('allows alphanumeric values', () => {
       const username = 'li.34t-h3s';
 
-      const validation = useUsernameValidation(username);
+      const validation = useUsernameValidator(username);
 
       expect(validation.ok).toBe(true);
     });
@@ -42,7 +42,7 @@ if (import.meta.vitest) {
     it('disallows empty values', () => {
       const username = '';
 
-      const validation = useUsernameValidation(username);
+      const validation = useUsernameValidator(username);
 
       expect(validation.ok).toBe(false);
     });
