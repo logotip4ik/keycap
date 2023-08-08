@@ -2,6 +2,8 @@
 import type { ComponentPublicInstance } from 'vue';
 import type { OAuthProvider, SafeUser } from '~/types/server';
 
+import { usernameRE } from '~/server/utils/validators/user';
+
 definePageMeta({
   middleware: ['redirect-dashboard'],
 });
@@ -76,7 +78,7 @@ async function register() {
           placeholder="username (no spaces allowed)"
           autocomplete="username"
           minlength="3"
-          pattern="[\w.\-]+?"
+          :pattern="usernameRE.source"
         />
 
         <FormInputNote>
