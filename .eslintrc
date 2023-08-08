@@ -3,13 +3,11 @@
     "plugin:regexp/recommended",
     "plugin:github/browser",
     "plugin:github/typescript",
-    "plugin:sonarjs/recommended",
     "@antfu"
   ],
   "plugins": [
     "regexp",
-    "github",
-    "sonarjs"
+    "github"
   ],
   "rules": {
     "quotes": ["error", "single"],
