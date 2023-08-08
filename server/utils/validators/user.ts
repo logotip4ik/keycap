@@ -9,7 +9,7 @@ export const usernameSchema = v
   .maxLength(16)
   .required();
 
-export const useUsernameValidation = compile(usernameSchema);
+export const useUsernameValidator = compile(usernameSchema);
 
 if (import.meta.vitest) {
   const { describe, it, expect } = import.meta.vitest;
