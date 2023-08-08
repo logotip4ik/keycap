@@ -164,13 +164,6 @@ export default defineNuxtConfig({
     optimizeDeps: {
       include: [
         '@superhuman/command-score',
-        'idb-keyval',
-        'comlink',
-        'workbox-core',
-        'workbox-routing',
-        'workbox-strategies',
-        'workbox-precaching',
-        'workbox-window',
       ],
     },
 
