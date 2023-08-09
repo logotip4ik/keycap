@@ -15,5 +15,7 @@ export default defineEventHandler(async (event) => {
 
   setHeader(event, 'Content-Type', 'application/manifest+json');
 
+  event.context.logger.info('thats an info');
+
   return manifest;
 });
