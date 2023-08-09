@@ -10,7 +10,7 @@ import type { NormalizedSocialUser, OAuthProvider as OAuthProviderType, SafeUser
 
 export const OAuthProvider = SocialAuth;
 
-export function assertNoOAuthErrors(event: H3Event) {
+export async function assertNoOAuthErrors(event: H3Event) {
   const proviersMap = {
     '/api/oauth/github': OAuthProvider.GitHub,
     '/api/oauth/google': OAuthProvider.Google,
@@ -20,17 +20,31 @@ export function assertNoOAuthErrors(event: H3Event) {
 
   const provider = proviersMap[pathWithoutQuery as keyof typeof proviersMap];
 
-  if (!provider)
+  if (!provider) {
+    // path is set by logger
+    await event.context.logger.error({ msg: 'undefined provider' });
+
     throw createError({ statusCode: 418, statusMessage: 'i a coffeepot' });
+  }
 
   const query = getQuery(event);
 
   // TODO: better error logging
-  if (query.error)
-    throw createError({ statusCode: 404, statusMessage: decodeURIComponent(query.error.toString()) });
+  if (query.error) {
+    await event.context.logger.error({ err: query.error, msg: 'oauth failed' });
 
-  if (query.state !== getCookie(event, 'state'))
+    throw createError({ statusCode: 418, statusMessage: decodeURIComponent(query.error.toString()) });
+  }
+
+  if (query.state !== getCookie(event, 'state')) {
+    const identifier = getHeader(event, 'x-real-ip')
+      || getHeader(event, 'client-ip')
+      || getHeader(event, 'x-forwarded-for');
+
+    await event.context.logger.error({ msg: 'someone is messing with authentication', identifier });
+
     throw createError({ statusCode: 422 });
+  }
 }
 
 export function sendOAuthRedirect(event: H3Event, provider: OAuthProviderType) {

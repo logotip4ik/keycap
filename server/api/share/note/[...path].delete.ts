@@ -22,7 +22,9 @@ export default defineEventHandler(async (event) => {
         note: { path: notePath },
       },
       select: { id: true, link: true },
-    }).catch(() => null);
+    }).catch(async (err) => {
+      await event.context.logger.error({ err, msg: 'share.findFirst failed' });
+    });
 
     if (!shareToDelete)
       throw createError({ statusCode: 400 });
@@ -30,7 +32,9 @@ export default defineEventHandler(async (event) => {
     const deletedShare = await tx.share.delete({
       where: { id: shareToDelete.id },
       select: { id: true },
-    }).catch(() => null);
+    }).catch(async (err) => {
+      await event.context.logger.error({ err, msg: 'share.delete failed' });
+    });
 
     if (!deletedShare)
       throw createError({ statusCode: 400 });

@@ -25,7 +25,9 @@ export default defineEventHandler(async (event) => {
   const user = await prisma.user.findUnique({
     where: { email: body.email },
     select: { id: true, email: true, username: true, password: true },
-  }).catch(() => null);
+  }).catch(async (err) => {
+    await event.context.logger.error({ err, msg: 'user.findUnique failed' });
+  });
 
   if (!user)
     throw createError({ statusCode: 400, statusMessage: 'email or password is incorrect' });
@@ -34,9 +36,11 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'this account uses social auth' });
 
   const isPasswordValid = await verifyPassword(user.password, body.password)
-    .catch(() => null);
+    .catch(async (err) => {
+      await event.context.logger.error({ err, msg: 'password verification failed' });
+    });
 
-  if (isPasswordValid === null)
+  if (isPasswordValid === undefined)
     throw createError({ statusCode: 500 });
 
   if (isPasswordValid === false)

@@ -16,16 +16,20 @@ export default defineEventHandler(async (event) => {
   if (!query.code)
     return sendOAuthRedirect(event, OAuthProvider.GitHub);
 
-  assertNoOAuthErrors(event);
+  await assertNoOAuthErrors(event);
 
-  const githubUser = destr<GitHubUserRes>(query.socialUser)
-    || await getGitHubUserWithEvent(event).catch(() => null);
+  const githubUser = destr<GitHubUserRes>(query.socialUser) || await getGitHubUserWithEvent(event)
+    .catch(async (err) => {
+      await event.context.logger.error({ err, msg: 'getGitHubUserWithEvent failed' });
+    });
 
   const userValidation = useSocialUserValidator(githubUser);
 
-  // TODO: better error logging
-  if (!userValidation.ok)
+  if (!userValidation.ok) {
+    await event.context.logger.error({ err: userValidation.errors, msg: 'social user validation failed' });
+
     return sendRedirect(event, '/');
+  }
 
   const prisma = getPrisma();
 
@@ -33,6 +37,10 @@ export default defineEventHandler(async (event) => {
     user = await prisma.user.findFirst({
       where: { email: githubUser.email },
       select: { id: true, email: true, username: true },
+    }).catch(async (err) => {
+      await event.context.logger.error({ err, msg: 'user.findFirst failed' });
+
+      return null;
     });
 
     if (user) {
@@ -60,9 +68,12 @@ export default defineEventHandler(async (event) => {
   user = await updateOrCreateUserFromSocialAuth(
     normalizeGitHubUser(githubUser, { username: username! }),
   )
-    .catch(() => null);
+    .catch(async (err) => {
+      await event.context.logger.error({ err, msg: 'updateOrCreateUserFromSocialAuth failed' });
 
-  // TODO: better error handling
+      return null;
+    });
+
   if (!user)
     return sendRedirect(event, '/');
 

@@ -38,7 +38,9 @@ export default defineEventHandler(async (event) => {
     },
 
     select: { id: true, email: true, username: true },
-  }).catch(() => null);
+  }).catch(async (err) => {
+    await event.context.logger.error({ err, msg: 'user.create failed' });
+  });
 
   if (!user)
     throw createError({ statusCode: 400, statusMessage: 'user with this email or username might already exist' });

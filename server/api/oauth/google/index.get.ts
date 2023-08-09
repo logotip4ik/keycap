@@ -14,16 +14,20 @@ export default defineEventHandler(async (event) => {
   if (!query.code)
     return sendOAuthRedirect(event, OAuthProvider.Google);
 
-  assertNoOAuthErrors(event);
+  await assertNoOAuthErrors(event);
 
-  const googleUser = destr<GoogleUserRes>(query.socialUser)
-      || await getGoogleUserWithEvent(event).catch(() => null);
+  const googleUser = destr<GoogleUserRes>(query.socialUser) || await getGoogleUserWithEvent(event)
+    .catch(async (err) => {
+      await event.context.logger.error({ err, msg: 'getGoogleUserWithEvent failed' });
+    });
 
   const userValidation = useSocialUserValidator(googleUser);
 
-  // TODO: better error logging
-  if (!userValidation.ok)
+  if (!userValidation.ok) {
+    await event.context.logger.error({ err: userValidation.errors, msg: 'social user validation failed' });
+
     return sendRedirect(event, '/');
+  }
 
   const prisma = getPrisma();
 
@@ -31,6 +35,10 @@ export default defineEventHandler(async (event) => {
     user = await prisma.user.findFirst({
       where: { email: googleUser.email },
       select: { id: true, email: true, username: true },
+    }).catch(async (err) => {
+      await event.context.logger.error({ err, msg: 'user.findFirst failed' });
+
+      return null;
     });
 
     if (user) {
@@ -58,9 +66,12 @@ export default defineEventHandler(async (event) => {
   user = await updateOrCreateUserFromSocialAuth(
     normalizeGoogleUser(googleUser, { username: username! }),
   )
-    .catch(() => null);
+    .catch(async (err) => {
+      await event.context.logger.error({ err, msg: 'updateOrCreateUserFromSocialAuth failed' });
 
-  // TODO: better error handling
+      return null;
+    });
+
   if (!user)
     return sendRedirect(event, '/');
 

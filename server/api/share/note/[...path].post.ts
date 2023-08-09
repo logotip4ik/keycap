@@ -31,7 +31,9 @@ export default defineEventHandler(async (event) => {
         owner: { connect: { id: user.id } },
       },
     });
-  }).catch(() => null);
+  }).catch(async (err) => {
+    await event.context.logger.error({ err, msg: 'cannot create share' });
+  });
   timer.end();
 
   if (!share)

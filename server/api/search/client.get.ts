@@ -30,7 +30,11 @@ export default defineEventHandler(async (event) => {
       take: Math.floor(select / 2),
       select: { name: true, path: true, root: true },
     }),
-  ]).catch(() => [null, null]);
+  ]).catch(async (err) => {
+    await event.context.logger.error({ err, msg: '(note|folder).findMany failed' });
+
+    return [null, null];
+  });
   timer.end();
 
   if (!notes || !folders)
