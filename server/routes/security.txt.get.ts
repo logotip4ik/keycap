@@ -1,6 +1,6 @@
 import parseDuration from 'parse-duration';
 
-export default defineEventHandler((event) => {
+export default defineCachedEventHandler((event) => {
   setHeader(event, 'Content-Type', 'text/plain');
 
   const nextYear = new Date(Date.now() + parseDuration('1 year')!);
@@ -10,4 +10,8 @@ Contact: mailto:contact@bogdankostyuk.xyz
 Contact: https://t.me/bogdankostyuk
 Expires: ${nextYear.toISOString()}
 Preferred-Languages: en, ua`;
+}, {
+  swr: true,
+  maxAge: parseDuration('1 week', 'second'),
+  staleMaxAge: parseDuration('6 months', 'second'),
 });
