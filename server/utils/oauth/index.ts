@@ -29,7 +29,6 @@ export async function assertNoOAuthErrors(event: H3Event) {
 
   const query = getQuery(event);
 
-  // TODO: better error logging
   if (query.error) {
     await event.context.logger.error({ err: query.error, msg: 'oauth failed' });
 

@@ -28,7 +28,6 @@ export function generateRootFolderPath(username: string) {
   return `/${username}`;
 }
 
-// TODO: tests
 export function toBigInt(string: string): bigint {
   const match = string.match(stringifiedBigIntRE);
 
