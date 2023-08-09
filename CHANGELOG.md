@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.2.1
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v1.2.0...v1.2.1)
+
+### 🩹 Fixes
+
+- Move `usernameRE` to `utils/index` to drop bundle size ([2a16d91](https://github.com/logotip4ik/keycap/commit/2a16d91))
+
+### ❤️  Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+
 ## v1.2.0
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v1.1.2...v1.2.0)
