@@ -13,6 +13,7 @@ withDefaults(defineProps<Props>(), { loading: false });
     :type="type"
     :class="{ 'form__button--loading': loading }"
     :disabled="loading"
+    :aria-busy="loading"
   >
     <slot />
   </button>
