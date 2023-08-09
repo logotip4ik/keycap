@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v1.2.2
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v1.2.1...v1.2.2)
+
+### 🏡 Chore
+
+- Update deps ([b6bf221](https://github.com/logotip4ik/keycap/commit/b6bf221))
+- Allow empty values for yaml values ([815a6b8](https://github.com/logotip4ik/keycap/commit/815a6b8))
+
+### 🤖 CI
+
+- Use personal access token also for commiting changes ([9195069](https://github.com/logotip4ik/keycap/commit/9195069))
+
+### ❤️  Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+
 ## v1.2.1
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v1.2.0...v1.2.1)
