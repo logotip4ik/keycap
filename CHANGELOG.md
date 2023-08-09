@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v2.0.0
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v1.2.3...v2.0.0)
+
+### 🩹 Fixes
+
+- ⚠️  Cannot get provider from path ([f585ced](https://github.com/logotip4ik/keycap/commit/f585ced))
+
+#### ⚠️  Breaking Changes
+
+- ⚠️  Cannot get provider from path ([f585ced](https://github.com/logotip4ik/keycap/commit/f585ced))
+
+### ❤️  Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+
 ## v1.2.3
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v1.2.2...v1.2.3)
