@@ -119,7 +119,10 @@ async function register() {
       </FormItem>
 
       <FormItem actions>
-        <FormButton type="submit" :loading="isLoading">
+        <FormButton
+          type="submit"
+          :loading="isLoading"
+        >
           Register
         </FormButton>
 
