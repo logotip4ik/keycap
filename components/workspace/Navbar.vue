@@ -35,36 +35,43 @@ const folderRootPath = computed(() => {
 </script>
 
 <template>
-  <nav class="navbar">
-    <Transition name="navbar-back-button">
+  <header class="header" aria-labelledby="_current-page">
+    <Transition name="header-back-button">
       <NuxtLink
         v-show="isShowingBackButton"
-        class="navbar__button navbar__button--back"
+        class="header__button header__button--back"
         :href="folderRootPath"
         aria-label="go up to folder root"
+        :aria-hidden="!isShowingBackButton"
       >
-        <LazyIconBaselineArrowBack v-once class="navbar__button__icon" />
+        <LazyIconBaselineArrowBack v-once class="header__button__icon" />
       </NuxtLink>
     </Transition>
 
     <!-- TODO: tell somehow user that, red indicator means no internet connection -->
-    <p class="navbar__heading" :data-note-state="currentNoteState" :data-network-connection="!isFallbackMode">
+    <p
+      id="_current-page"
+      class="header__title"
+      :aria-label="`${isNoteNameEmpty ? 'folder' : 'note'} '${headingText}'`"
+      :data-note-state="currentNoteState"
+      :data-network-connection="!isFallbackMode"
+    >
       {{ headingText }}
     </p>
 
     <button
-      class="navbar__button navbar__button--search"
+      class="header__button header__button--search"
       :data-show-back-button="isShowingBackButton"
       aria-label="open quick search"
       @click="onOpenSearch"
     >
-      <LazyIconSearchRounded v-once class="navbar__button__icon" />
+      <LazyIconSearchRounded v-once class="header__button__icon" />
     </button>
-  </nav>
+  </header>
 </template>
 
 <style lang="scss">
-.navbar {
+.header {
   display: flex;
   justify-content: flex-between;
   align-items: center;
@@ -80,7 +87,7 @@ const folderRootPath = computed(() => {
 
   overflow: hidden;
 
-  &__heading {
+  &__title {
     --indicator-size: 0.5rem;
     --indicator-color: transparent;
 
@@ -200,14 +207,14 @@ const folderRootPath = computed(() => {
   }
 }
 
-.navbar-back-button-enter-active,
-.navbar-back-button-leave-active {
+.header-back-button-enter-active,
+.header-back-button-leave-active {
   transition: opacity, transform, margin-right;
   transition-duration: 0.25s;
 }
 
-.navbar-back-button-leave-to,
-.navbar-back-button-enter-from {
+.header-back-button-leave-to,
+.header-back-button-enter-from {
   --inverted-size: calc(-1 * var(--button-size-basis));
 
   margin-right: var(--inverted-size);
