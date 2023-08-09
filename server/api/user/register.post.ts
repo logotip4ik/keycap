@@ -23,11 +23,19 @@ export default defineEventHandler(async (event) => {
 
   const prisma = getPrisma();
 
+  const hashedPassword = await hashPassword(body.password)
+    .catch(async (err) => {
+      await event.context.logger.error({ err, msg: 'password hashing failed' });
+    });
+
+  if (!hashedPassword)
+    throw createError({ statusCode: 500 });
+
   const user = await prisma.user.create({
     data: {
       email: body.email,
       username: body.username,
-      password: await hashPassword(body.password),
+      password: hashedPassword,
       folders: {
         create: {
           name: `${body.username}'s workspace`,
