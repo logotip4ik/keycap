@@ -1,4 +1,5 @@
 import { createTimer } from '~/server/utils/timers' 
+import { createLogger } from '~/server/utils/logger' 
 import { OAuthProvider } from '~/server/utils/oauth'
 
 import type { User } from '@prisma/client'
@@ -17,6 +18,7 @@ export declare module 'h3' {
   interface H3EventContext {
     user?: SafeUser | null
     timer?: ReturnType<typeof createTimer>
+    logger: ReturnType<typeof createLogger>
   }
 }
 
