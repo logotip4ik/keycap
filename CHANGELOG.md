@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v1.2.3
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v1.2.2...v1.2.3)
+
+### 💅 Refactors
+
+- Set `aria-busy` when loading ([08945c3](https://github.com/logotip4ik/keycap/commit/08945c3))
+- Add more accessibility ([10d2f04](https://github.com/logotip4ik/keycap/commit/10d2f04))
+- Move fab up in tab order ([697e97c](https://github.com/logotip4ik/keycap/commit/697e97c))
+- Better a11y for header ([54e4065](https://github.com/logotip4ik/keycap/commit/54e4065))
+- A bit better seo ([81ad10f](https://github.com/logotip4ik/keycap/commit/81ad10f))
+
+### 🎨 Styles
+
+- Put attributes on new lines ([30c0eef](https://github.com/logotip4ik/keycap/commit/30c0eef))
+
+### ❤️  Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+
 ## v1.2.2
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v1.2.1...v1.2.2)
