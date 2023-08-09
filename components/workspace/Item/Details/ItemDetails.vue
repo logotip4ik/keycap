@@ -116,11 +116,13 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
 <template>
   <div class="item-details__wrapper fast-fade">
     <div
+      id="item-details"
       ref="itemDetailsEl"
       role="dialog"
       class="item-details"
       aria-modal="true"
       aria-labelledby="item-details-dialog-title"
+      tabindex="-1"
     >
       <button class="item-details__close-button" @click="unsetCurrentItemForDetails">
         <LazyIconCloseRounded v-once class="item-details__close-button__icon" />

@@ -180,6 +180,8 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
       <button
         class="formatter__button"
         :class="{ 'formatter__button--active': editor.isActive('heading') }"
+        :aria-pressed="editor.isActive('heading')"
+        aria-label="cycle heading"
         @click="toggleHeading"
       >
         <LazyIconHeading1 v-if="editor.isActive('heading', { level: 1 })" />
@@ -194,6 +196,8 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
           'formatter__button--active':
             editor.isActive('taskItem') || editor.isActive('listItem'),
         }"
+        :aria-pressed="editor.isActive('taskItem') || editor.isActive('listItem')"
+        aria-label="cycle list"
         @click="toggleListItem"
       >
         <LazyIconList />
@@ -204,6 +208,8 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
         :class="{
           'formatter__button--active': editor.isActive('blockquote'),
         }"
+        :aria-pressed="editor.isActive('blockquote')"
+        aria-label="toggle blockquote"
         @click="editor.chain().focus().toggleBlockquote().run()"
       >
         <LazyIconDoubleQuotesR />
@@ -215,6 +221,8 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
         title="CTRL+B"
         class="formatter__button"
         :class="{ 'formatter__button--active': editor.isActive('bold') }"
+        :aria-pressed="editor.isActive('bold')"
+        aria-label="toggle bold"
         @click="editor!.chain().focus().toggleBold().run()"
       >
         <LazyIconBaselineFormatBold />
@@ -224,6 +232,8 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
         title="CTRL+I"
         class="formatter__button"
         :class="{ 'formatter__button--active': editor.isActive('italic') }"
+        :aria-pressed="editor.isActive('italic')"
+        aria-label="toggle italic"
         @click="editor!.chain().focus().toggleItalic().run()"
       >
         <LazyIconBaselineFormatItalic />
@@ -233,6 +243,8 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
         title="CTRL+E"
         class="formatter__button"
         :class="{ 'formatter__button--active': editor.isActive('code') }"
+        :aria-pressed="editor.isActive('code')"
+        aria-label="toggle code"
         @click="editor!.chain().focus().toggleCode().run()"
       >
         <LazyIconBaselineCode />
@@ -242,6 +254,8 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
         title="CTRL+L"
         class="formatter__button"
         :class="{ 'formatter__button--active': editor.isActive('link') }"
+        :aria-pressed="editor.isActive('link')"
+        aria-label="toggle link"
         @click="(isEditingLink = !isEditingLink)"
       >
         <LazyIconBaselineLink />

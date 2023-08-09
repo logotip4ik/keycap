@@ -43,6 +43,7 @@ const props = defineProps<Props>();
 const mitt = useMitt();
 
 const isSmallScreen = inject(IsSmallScreenKey)!;
+const detailsItem = useCurrentItemForDetails();
 
 // TODO: export this whole mess into separate file
 const editor = useEditor({
@@ -172,7 +173,14 @@ onMounted(() => {
       <WorkspaceNoteFormatter :editor="editor" @hide="() => null" />
     </LazyInlinePopup>
 
-    <button class="note-editor__details-button" @click="onShowDetails">
+    <button
+      class="note-editor__details-button"
+      aria-haspopup="dialog"
+      aria-controls="item-details"
+      aria-label="current note details"
+      :aria-expanded="!!detailsItem"
+      @click="onShowDetails"
+    >
       details
     </button>
 

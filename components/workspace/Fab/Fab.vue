@@ -47,7 +47,14 @@ useClickOutside(fabContainer, () => isFabUnfolded.value = false);
 <template>
   <div ref="fabContainer" class="fab-container">
     <Transition name="fade">
-      <div v-show="isFabUnfolded" class="fab__buttons">
+      <div
+        v-show="isFabUnfolded"
+        id="fab-buttons"
+        class="fab__buttons"
+        role="menu"
+        aria-orientation="vertical"
+        tabindex="-1"
+      >
         <button
           v-for="(button, key) in buttons"
           v-once
@@ -65,6 +72,9 @@ useClickOutside(fabContainer, () => isFabUnfolded.value = false);
       class="fab fab--main"
       :class="{ 'fab--active': isFabUnfolded }"
       :aria-label="isFabUnfolded ? 'hide actions' : 'show more actions'"
+      :aria-expanded="isFabUnfolded"
+      aria-haspopup="menu"
+      aria-controls="fab-buttons"
       @click="isFabUnfolded = !isFabUnfolded"
     >
       <Transition name="fade" mode="out-in">

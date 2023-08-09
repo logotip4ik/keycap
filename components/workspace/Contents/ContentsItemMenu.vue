@@ -94,7 +94,13 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <ul ref="menu" class="item-context-menu">
+  <ul
+    ref="menu"
+    role="menu"
+    class="item-context-menu"
+    aria-orientation="vertical"
+    tabindex="-1"
+  >
     <li
       v-for="(action, key) in actions"
       :key="key"
