@@ -1,6 +1,7 @@
 name: Auto update dependencies
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: '0 2 * * 3,6'
 
@@ -47,7 +48,7 @@ jobs:
       - name: Commit changes if needed
         uses: actions-js/push@156f2b10c3aa000c44dbe75ea7018f32ae999772
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.ACTIONS_PAT }}
           message: 'chore: update deps'
           branch: ${{ github.ref_name }}
           author_name: ${{ github.actor }}
