@@ -90,6 +90,8 @@ export function createLogger(event: H3Event) {
   const [path, query] = event.path.split('?');
 
   const additionalData: LoggerData = {
+    nitro: true,
+
     path,
     query,
     username: event.context.user?.username,
