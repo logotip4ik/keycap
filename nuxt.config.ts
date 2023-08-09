@@ -3,12 +3,15 @@ import { isCI, isDevelopment } from 'std-env';
 import UnheadVite from '@unhead/addons/vite';
 import browserslistToEsbuild from 'browserslist-to-esbuild';
 import parseDuration from 'parse-duration';
+import { resolve } from 'pathe';
 
 import { getHeaders } from './headers.config';
 import breakpoints from './constants/breakpoints';
 import { ParseDurationTransformPlugin } from './vite/transform-parse-duration';
 
 const tsExcludes = ['../data', '../benchmarks', '../scripts'];
+
+console.log(resolve('./server/routes/security.txt.get.ts'));
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
@@ -234,6 +237,14 @@ export default defineNuxtConfig({
       },
     },
   },
+
+  serverHandlers: [
+    {
+      route: '/.well-known/security.txt',
+      handler: resolve('./server/routes/security.txt.get'),
+      lazy: true,
+    },
+  ],
 
   pwa: {
     srcDir: 'workers',
