@@ -79,6 +79,12 @@ export default defineNuxtConfig({
       clientId: '',
       clientSecret: '',
     },
+
+    axiom: {
+      token: '',
+      orgId: '',
+      dataset: '',
+    },
   },
 
   routeRules: {
