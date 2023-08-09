@@ -93,19 +93,19 @@ provide(IsNoteNameEmptyKey, isNoteNameEmpty);
     />
 
     <Transition name="fade">
+      <LazyWorkspaceFab
+        v-show="isSmallScreen ? isNoteNameEmpty : true"
+        @open-search="isShowingSearch = true"
+      />
+    </Transition>
+
+    <Transition name="fade">
       <aside
         v-show="isSmallScreen ? isNoteNameEmpty : true"
         class="workspace__contents"
       >
         <LazyWorkspaceContents />
       </aside>
-    </Transition>
-
-    <Transition name="fade">
-      <LazyWorkspaceFab
-        v-show="isSmallScreen ? isNoteNameEmpty : true"
-        @open-search="isShowingSearch = true"
-      />
     </Transition>
 
     <Transition name="fade">
