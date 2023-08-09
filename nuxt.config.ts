@@ -11,8 +11,6 @@ import { ParseDurationTransformPlugin } from './vite/transform-parse-duration';
 
 const tsExcludes = ['../data', '../benchmarks', '../scripts'];
 
-console.log(resolve('./server/routes/security.txt.get.ts'));
-
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
   devtools: { enabled: true },
