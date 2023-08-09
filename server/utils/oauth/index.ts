@@ -12,11 +12,13 @@ export const OAuthProvider = SocialAuth;
 
 export function assertNoOAuthErrors(event: H3Event) {
   const proviersMap = {
-    '/oauth/github': OAuthProvider.GitHub,
-    '/oauth/google': OAuthProvider.Google,
+    '/api/oauth/github': OAuthProvider.GitHub,
+    '/api/oauth/google': OAuthProvider.Google,
   };
 
-  const provider = proviersMap[event.path as keyof typeof proviersMap];
+  const pathWithoutQuery = event.path.split('?')[0];
+
+  const provider = proviersMap[pathWithoutQuery as keyof typeof proviersMap];
 
   if (!provider)
     throw createError({ statusCode: 418, statusMessage: 'i a coffeepot' });
