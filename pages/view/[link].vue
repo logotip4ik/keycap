@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { getRequestURL } from 'h3';
+
 import type { Note } from '@prisma/client';
 
 const route = useRoute();
@@ -9,17 +11,24 @@ const { data: note, error } = await useAsyncData(
   async () => await $fetch<SharedNote>(`/api/share/${route.params.link}`),
 );
 
-if (error.value) {
+if (error.value || !note.value) {
   throw createError({
     statusCode: 404,
     statusMessage: `nothing found with link: ${route.params.link}`,
   });
 }
 
-useHead({
-  title: note.value?.name,
-  titleTemplate: '%s - Keycap',
-});
+if (import.meta.env.SSR) {
+  const url = getRequestURL(useRequestEvent());
+
+  useSeoMeta({
+    titleTemplate: '%s - Keycap',
+    title: note.value.name,
+    ogTitle: note.value.name,
+    ogDescription: `View contents of '${note.value.name}'`,
+    ogUrl: url.toString(),
+  }, { mode: 'server' });
+}
 
 function formatDate(date: string | Date) {
   date = new Date(date);
