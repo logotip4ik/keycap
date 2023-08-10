@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
 
   timer.start('db');
 
-  // NOTE: there is no point from removing cached page because website is hosted on vercel
+  // TODO: remove cached page
 
   await prisma.$transaction(async (tx) => {
     const shareToDelete = await tx.share.findFirst({

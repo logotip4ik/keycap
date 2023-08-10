@@ -52,7 +52,7 @@ export default defineEventHandler(async (event) => {
 
   const username = query.username?.toString().trim();
   const isUsernameValid = useUsernameValidator(username).ok
-                        && !(await checkIfUsernameTaken(username!));
+    && !(await checkIfUsernameTaken(username!));
 
   if (!isUsernameValid) {
     query.provider = OAuthProvider.GitHub.toLowerCase();

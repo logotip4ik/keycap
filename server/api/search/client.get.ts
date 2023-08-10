@@ -21,6 +21,7 @@ export default defineEventHandler(async (event) => {
     prisma.note.findMany({
       skip,
       where: { path: { startsWith: pathToSearch } },
+      // TODO: probably should increase notes number and decrease folders
       take: Math.floor(select / 2),
       select: { name: true, path: true },
     }),
@@ -42,5 +43,6 @@ export default defineEventHandler(async (event) => {
 
   timer.appendHeader(event);
 
+  // TODO: use `.concat`
   return [...notes, ...folders] as Array<FuzzyItem>;
 });

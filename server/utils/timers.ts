@@ -55,6 +55,7 @@ class Timer {
   appendHeader(event: H3Event) {
     appendHeader(event, 'Server-Timing', this.getResults());
 
+    // TODO: set length to 0 instead of reassigning variable
     this.#timersStack = [];
     this.#results = '';
   }

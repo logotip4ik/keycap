@@ -29,6 +29,7 @@ export default defineEventHandler(async (event) => {
 
   // if user updates note name we also need to update its path
   if (data.name) {
+    // TODO: consider rewriting to `.replace` with regex
     // replacing last string after `/` with new note name
     const newNotePath = path.split('/').slice(0, -1).concat(encodeURIComponent(data.name)).join('/');
 
@@ -52,6 +53,7 @@ export default defineEventHandler(async (event) => {
 
   timer.appendHeader(event);
 
+  // TODO: check if this is actually used
   if (query.getNote === 'true')
     return updatedNote;
 

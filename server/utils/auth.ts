@@ -16,6 +16,7 @@ const AUTH_EXPIRATiON = parseDuration('4 days', 'second')!;
 async function generateAccessToken(object: Record<string, any>): Promise<string> {
   const secret = getJWTSecret();
   const issuer = getJWTIssuer();
+  // TODO: use Date.now()
   const now = Math.floor(new Date().getTime() / 1000);
 
   return await new SignJWT(object)

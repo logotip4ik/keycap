@@ -20,4 +20,5 @@ Object.defineProperty(
 
 setSuretypeOptions({ colors: false, location: false });
 
+// TODO: test if prisma.$connect and $disconnect improves performance
 export default defineNitroPlugin(() => undefined);

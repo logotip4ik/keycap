@@ -11,6 +11,7 @@ export default defineEventHandler(async (event) => {
 
   const query = getQuery(event);
 
+  // TODO: check this in `assertNoOAuthErrors` because code may not be present with error response
   if (!query.code)
     return sendOAuthRedirect(event, OAuthProvider.Google);
 
@@ -50,7 +51,7 @@ export default defineEventHandler(async (event) => {
 
   const username = query.username?.toString().trim();
   const isUsernameValid = useUsernameValidator(username).ok
-                        && !(await checkIfUsernameTaken(username!));
+    && !(await checkIfUsernameTaken(username!));
 
   if (!isUsernameValid) {
     query.provider = OAuthProvider.Google.toLowerCase();
