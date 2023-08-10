@@ -1,7 +1,11 @@
 export default defineEventHandler(async (event) => {
   await roulette()
     .catch(async () => {
+      const now = performance.now();
       await event.context.logger.info('roulette was not successfull, but test was');
+      const duration = performance.now() - now;
+
+      await event.context.logger.info({ time: duration }, `log time: ${duration}`);
     });
 
   return {
