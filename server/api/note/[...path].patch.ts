@@ -8,7 +8,6 @@ export default defineEventHandler(async (event) => {
 
   const prisma = getPrisma();
 
-  const query = getQuery(event);
   const path = getRouterParam(event, 'path');
 
   if (!path)
