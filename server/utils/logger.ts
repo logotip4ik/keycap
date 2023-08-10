@@ -50,6 +50,7 @@ class Logger {
     // eslint-disable-next-line github/no-dataset
     const datasetURL = `${this.#datasetEndpoint}/${this.#config.dataset}/ingest`;
 
+    // avg log is 369.543ms pretty long :(
     await this.#client(datasetURL, { body: data })
       .catch((err) => {
         // eslint-disable-next-line no-console
