@@ -153,7 +153,11 @@ onMounted(() => {
       props.onRefresh();
   });
 
-  onBeforeUnmount(() => clear());
+  onBeforeUnmount(() => {
+    clear();
+
+    editor.value?.destroy();
+  });
 });
 </script>
 
