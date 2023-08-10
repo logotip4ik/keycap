@@ -21,7 +21,6 @@ import Placeholder from '@tiptap/extension-placeholder';
 import TaskList from '@tiptap/extension-task-list';
 import TaskItem from '@tiptap/extension-task-item';
 import BubbleMenuPlugin from '@tiptap/extension-bubble-menu';
-import TextAlign from '@tiptap/extension-text-align';
 import CodeBlock from '@tiptap/extension-code-block';
 import History from '@tiptap/extension-history';
 import Link from '@tiptap/extension-link';
@@ -88,10 +87,6 @@ const editor = useEditor({
           spellcheck: { default: 'false' },
         };
       },
-    }),
-    TextAlign.configure({
-      types: ['heading', 'paragraph'],
-      alignments: ['left', 'center', 'right'],
     }),
     Placeholder.configure({
       placeholder: ({ editor }) =>
