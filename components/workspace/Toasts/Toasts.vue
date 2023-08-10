@@ -42,6 +42,7 @@ onMounted(() => {
       class="toasts"
       tag="section"
       name="toast"
+      aria-label="Notifications"
       @before-leave="beforeLeaveHook"
     >
       <WorkspaceToastsItem
