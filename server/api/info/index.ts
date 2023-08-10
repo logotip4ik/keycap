@@ -2,7 +2,6 @@ import parseDuration from 'parse-duration';
 
 interface Info {
   commit: string
-  // TODO: enum ?
   version: string
   build_time: string
 
