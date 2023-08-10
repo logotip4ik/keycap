@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
 
   timer.start('db');
 
-  // TODO: remove cached page
+  // NOTE: maybe we should store view page in our's cache rather then vercel's isr ?
 
   await prisma.$transaction(async (tx) => {
     const shareToDelete = await tx.share.findFirst({
@@ -34,10 +34,9 @@ export default defineEventHandler(async (event) => {
       select: { id: true },
     }).catch(async (err) => {
       await event.context.logger.error({ err, msg: 'share.delete failed' });
-    });
 
-    if (!deletedShare)
       throw createError({ statusCode: 400 });
+    });
   });
 
   timer.end();
