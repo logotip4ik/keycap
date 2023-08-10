@@ -21,14 +21,13 @@ export default defineEventHandler(async (event) => {
     prisma.note.findMany({
       skip,
       where: { path: { startsWith: pathToSearch } },
-      // TODO: probably should increase notes number and decrease folders
-      take: Math.floor(select / 2),
+      take: Math.round(select * 0.75),
       select: { name: true, path: true },
     }),
     prisma.folder.findMany({
       skip,
       where: { path: { startsWith: pathToSearch } },
-      take: Math.floor(select / 2),
+      take: Math.round(select * 0.25),
       select: { name: true, path: true, root: true },
     }),
   ]).catch(async (err) => {
