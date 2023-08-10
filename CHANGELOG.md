@@ -1,6 +1,69 @@
 # Changelog
 
 
+## v2.1.0
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v2.0.0...v2.1.0)
+
+### 🚀 Enhancements
+
+- Add security txt ([8d1c950](https://github.com/logotip4ik/keycap/commit/8d1c950))
+- Custom `axiom` logger ([d373158](https://github.com/logotip4ik/keycap/commit/d373158))
+- Better error logging ([590f164](https://github.com/logotip4ik/keycap/commit/590f164))
+
+### 🔥 Performance
+
+- Use replace with regex to update note path ([7e17f06](https://github.com/logotip4ik/keycap/commit/7e17f06))
+
+### 🩹 Fixes
+
+- Add nitro stubs ([b2c0b79](https://github.com/logotip4ik/keycap/commit/b2c0b79))
+- Use username validation from user schema file ([7ca59f7](https://github.com/logotip4ik/keycap/commit/7ca59f7))
+
+### 💅 Refactors
+
+- Move to top level `security.txt` and add alias to `.well-known` ([a10db7e](https://github.com/logotip4ik/keycap/commit/a10db7e))
+- Remove `console.log` ([c6fa567](https://github.com/logotip4ik/keycap/commit/c6fa567))
+- Use cached event handler for `security.txt` ([a435e01](https://github.com/logotip4ik/keycap/commit/a435e01))
+- Set logger on each request ([9cd369c](https://github.com/logotip4ik/keycap/commit/9cd369c))
+- Set info log in site webmanifest route ([6c6830b](https://github.com/logotip4ik/keycap/commit/6c6830b))
+- Try to await log ([d1e492e](https://github.com/logotip4ik/keycap/commit/d1e492e))
+- Add `nitro` flag to logger data ([5a5fc23](https://github.com/logotip4ik/keycap/commit/5a5fc23))
+- Remove not needed prod testing ([762f056](https://github.com/logotip4ik/keycap/commit/762f056))
+- Better error handling for password hashing ([8fe1a0c](https://github.com/logotip4ik/keycap/commit/8fe1a0c))
+- Add test route for logging ([2160add](https://github.com/logotip4ik/keycap/commit/2160add))
+- Check how long it takes to log something ([6d151fd](https://github.com/logotip4ik/keycap/commit/6d151fd))
+- Also log error ([bc6bf84](https://github.com/logotip4ik/keycap/commit/bc6bf84))
+- Set logging env ([e24bafd](https://github.com/logotip4ik/keycap/commit/e24bafd))
+- Remove not needed test route ([ceb54fb](https://github.com/logotip4ik/keycap/commit/ceb54fb))
+- Add `nuxt-vitest` to nuxt modules ([c68db0a](https://github.com/logotip4ik/keycap/commit/c68db0a))
+- Remove not used query param ([c61742e](https://github.com/logotip4ik/keycap/commit/c61742e))
+- Select more notes then folders ([b91fe8d](https://github.com/logotip4ik/keycap/commit/b91fe8d))
+- Use `.concat` ([5af9ca9](https://github.com/logotip4ik/keycap/commit/5af9ca9))
+- Use `400` code if share link is not valid ([a2bcd91](https://github.com/logotip4ik/keycap/commit/a2bcd91))
+- Use `Date.now()` rather then `.getTime()` ([6e4c792](https://github.com/logotip4ik/keycap/commit/6e4c792))
+- Reset `timersStack` via setting array length ([dfef229](https://github.com/logotip4ik/keycap/commit/dfef229))
+- Check for oauth errors before `code` param ([297141a](https://github.com/logotip4ik/keycap/commit/297141a))
+
+### 🏡 Chore
+
+- Yarn add new line ([5f07397](https://github.com/logotip4ik/keycap/commit/5f07397))
+- Add axiom runtime config ([455e694](https://github.com/logotip4ik/keycap/commit/455e694))
+- Add side note ([817a628](https://github.com/logotip4ik/keycap/commit/817a628))
+- Remove TODO's ([ed1042f](https://github.com/logotip4ik/keycap/commit/ed1042f))
+- Add todos ([ea01160](https://github.com/logotip4ik/keycap/commit/ea01160))
+- Add side note ([6c154c7](https://github.com/logotip4ik/keycap/commit/6c154c7))
+- Remove todo ([55fc4cd](https://github.com/logotip4ik/keycap/commit/55fc4cd))
+- Add note and a bit change code style ([eb15fb1](https://github.com/logotip4ik/keycap/commit/eb15fb1))
+
+### ✅ Tests
+
+- Use `setupFiles` instead of `globalSetup` ([6cec234](https://github.com/logotip4ik/keycap/commit/6cec234))
+
+### ❤️  Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+
 ## v2.0.0
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v1.2.3...v2.0.0)
