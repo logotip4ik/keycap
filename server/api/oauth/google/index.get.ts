@@ -11,11 +11,10 @@ export default defineEventHandler(async (event) => {
 
   const query = getQuery(event);
 
-  // TODO: check this in `assertNoOAuthErrors` because code may not be present with error response
+  await assertNoOAuthErrors(event);
+
   if (!query.code)
     return sendOAuthRedirect(event, OAuthProvider.Google);
-
-  await assertNoOAuthErrors(event);
 
   const googleUser = destr<GoogleUserRes>(query.socialUser) || await getGoogleUserWithEvent(event)
     .catch(async (err) => {
