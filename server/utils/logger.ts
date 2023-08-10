@@ -1,3 +1,5 @@
+import process from 'node:process';
+
 import type { H3Event } from 'h3';
 import type { RuntimeConfig } from 'nuxt/schema';
 
@@ -91,6 +93,7 @@ export function createLogger(event: H3Event) {
 
   const additionalData: LoggerData = {
     nitro: true,
+    env: process.env.VERCEL_ENV || 'development',
 
     path,
     query,
