@@ -45,7 +45,6 @@ export function toBigInt(string: string): bigint {
 export function getNoteSelectParamsFromEvent(event: H3Event): Prisma.NoteSelect {
   const query = getQuery(event);
 
-  const isGetNoteQuery = typeof query.getNote !== 'undefined';
   const isDetailsRequest = typeof query.details !== 'undefined';
 
   const defaultSelects = { id: true, name: true, content: true, path: true };
@@ -59,12 +58,8 @@ export function getNoteSelectParamsFromEvent(event: H3Event): Prisma.NoteSelect 
     };
   }
 
-  if (isMethod(event, 'PATCH')) {
-    if (isGetNoteQuery)
-      return defaultSelects;
-    else
-      return { id: true };
-  }
+  if (isMethod(event, 'PATCH'))
+    return { id: true };
 
   return defaultSelects;
 }

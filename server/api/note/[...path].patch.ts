@@ -51,10 +51,6 @@ export default defineEventHandler(async (event) => {
 
   timer.appendHeader(event);
 
-  // TODO: check if this is actually used
-  if (query.getNote === 'true')
-    return updatedNote;
-
   return { ok: true };
 });
 
