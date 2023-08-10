@@ -116,6 +116,7 @@ export default defineNuxtConfig({
   },
 
   modules: [
+    'nuxt-vitest',
     '@vueuse/nuxt',
     '@vite-pwa/nuxt',
     '@nuxtjs/fontaine',
