@@ -47,7 +47,6 @@ class Logger {
     data.level = level;
     data._time = new Date().toISOString();
 
-    // eslint-disable-next-line github/no-dataset
     const datasetURL = `${this.#datasetEndpoint}/${this.#config.dataset}/ingest`;
 
     // avg log is 369.543ms pretty long :(
