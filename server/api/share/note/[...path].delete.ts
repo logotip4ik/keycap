@@ -29,7 +29,7 @@ export default defineEventHandler(async (event) => {
     if (!shareToDelete)
       throw createError({ statusCode: 400 });
 
-    const deletedShare = await tx.share.delete({
+    await tx.share.delete({
       where: { id: shareToDelete.id },
       select: { id: true },
     }).catch(async (err) => {
