@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400 });
 
   if (!isShareLinkValid(link))
-    throw createError({ statusCode: 404 }); // TODO: use 400 code
+    throw createError({ statusCode: 400 });
 
   const prisma = getPrisma();
 
