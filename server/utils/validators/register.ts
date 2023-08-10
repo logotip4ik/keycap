@@ -1,8 +1,9 @@
 import { compile, v } from 'suretype';
 
+import { usernameSchema } from '~/server/utils/validators/user';
+
 export const registerSchema = v.object({
-  // TODO: sync with oauth username check
-  username: v.string().minLength(4).required(),
+  username: usernameSchema,
   email: v.string().format('email').required(),
   password: v.string().minLength(8).required(),
 });
