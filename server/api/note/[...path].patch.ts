@@ -1,3 +1,7 @@
+import type { TypeOf } from 'suretype';
+
+type UpdatableFields = Partial<TypeOf<typeof noteUpdateSchema> & { path: string }>;
+
 export default defineEventHandler(async (event) => {
   const user = event.context.user!;
   const timer = event.context.timer!;
@@ -12,7 +16,6 @@ export default defineEventHandler(async (event) => {
 
   const notePath = generateNotePath(user.username, path);
 
-  interface UpdatableFields { name?: string; content?: string; path?: string }
   const data = await readBody<UpdatableFields>(event) || {};
 
   if (data.name) data.name = data.name.trim();
@@ -28,13 +31,8 @@ export default defineEventHandler(async (event) => {
   }
 
   // if user updates note name we also need to update its path
-  if (data.name) {
-    // TODO: consider rewriting to `.replace` with regex
-    // replacing last string after `/` with new note name
-    const newNotePath = path.split('/').slice(0, -1).concat(encodeURIComponent(data.name)).join('/');
-
-    data.path = generateNotePath(user.username, newNotePath);
-  }
+  if (data.name)
+    data.path = makeNewNotePath(path, data.name);
 
   const selectParams = getNoteSelectParamsFromEvent(event);
 
@@ -59,3 +57,24 @@ export default defineEventHandler(async (event) => {
 
   return { ok: true };
 });
+
+const currentNoteNameRE = /[\w%]+$/;
+function makeNewNotePath(currentPath: string, newName: string): string {
+  return currentPath.replace(currentNoteNameRE, encodeURIComponent(newName));
+}
+
+if (import.meta.vitest) {
+  const { describe, it, expect } = import.meta.vitest;
+
+  describe('note.patch route', () => {
+    it('correctly generated new note path', () => {
+      const currentPath = '/with%20note';
+      const newPath = makeNewNotePath(currentPath, 'new name');
+      expect(newPath).toEqual('/new%20name');
+
+      const currentInFolderPath = '/folder/with%20note';
+      const newInFolderPath = makeNewNotePath(currentInFolderPath, 'new name');
+      expect(newInFolderPath).toEqual('/folder/new%20name');
+    });
+  });
+}
