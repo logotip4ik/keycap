@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import parseDuration from 'parse-duration';
 import { withoutLeadingSlash, withoutTrailingSlash } from 'ufo';
 
 interface Props { item: FolderOrNote; parent: FolderWithContents }
@@ -51,9 +52,11 @@ function showDetails() {
 }
 
 function _preloadItem() {
-  const loadingToast = createToast(`Preloading into cache: "${props.item.name}"`,
-    { duration: Number.POSITIVE_INFINITY, type: 'loading' },
-  );
+  const loadingToast = createToast(`Preloading into cache: "${props.item.name}"`, {
+    delay: 250,
+    duration: parseDuration('0.5 minute'),
+    type: 'loading',
+  });
 
   preloadItem(props.item)
     .finally(() => loadingToast.value?.remove());
