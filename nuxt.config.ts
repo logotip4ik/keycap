@@ -245,8 +245,8 @@ export default defineNuxtConfig({
 
   serverHandlers: [
     {
-      route: '/.well-known/security.txt',
-      handler: resolve('./server/routes/security.txt.get'),
+      route: '/security.txt',
+      handler: resolve('./server/routes/.well-known/security.txt.get.ts'),
       lazy: true,
     },
   ],
