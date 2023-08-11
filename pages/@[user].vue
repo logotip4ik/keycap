@@ -182,7 +182,7 @@ provide(IsNoteNameEmptyKey, isNoteNameEmpty);
     overflow: auto;
     scroll-snap-type: y proximity;
     scrollbar-width: none;
-    ::-webkit-scrollbar {
+    &::-webkit-scrollbar {
       display: none;
     }
 
