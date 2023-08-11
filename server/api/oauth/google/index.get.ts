@@ -32,39 +32,40 @@ export default defineEventHandler(async (event) => {
   const prisma = getPrisma();
 
   if (!query.socialUser) {
-    user = await prisma.user.findFirst({
-      where: { email: googleUser.email },
-      select: { id: true, email: true, username: true },
-    }).catch(async (err) => {
-      await event.context.logger.error({ err, msg: 'user.findFirst failed' });
-
-      return null;
+    const oauth = await prisma.oAuth.findFirst({
+      where: { id: googleUser.id },
+      select: {
+        user: { select: { id: true, email: true, username: true } },
+      },
     });
 
-    if (user) {
-      await setAuthCookies(event, user);
-
-      return sendRedirect(event, `/@${user.username}`);
-    }
+    user = oauth?.user || null;
   }
 
-  const username = query.username?.toString().trim();
-  const isUsernameValid = useUsernameValidator(username).ok
-    && !(await checkIfUsernameTaken(username!));
+  let username: string;
 
-  if (!isUsernameValid) {
-    query.provider = OAuthProvider.Google.toLowerCase();
-    query.username = undefined;
-    query.socialUser = googleUser;
-    query.usernameTaken = await checkIfUsernameTaken(username!) ? username : '';
+  if (!user) {
+    username = query.username?.toString().trim() || '';
+    const isUsernameValid = useUsernameValidator(username).ok
+      && !(await checkIfUsernameTaken(username!));
 
-    return sendRedirect(event,
-      withQuery('/oauth/ask-username', query),
-    );
+    if (!isUsernameValid) {
+      query.provider = OAuthProvider.Google.toLowerCase();
+      query.username = undefined;
+      query.socialUser = googleUser;
+      query.usernameTaken = await checkIfUsernameTaken(username!) ? username : '';
+
+      return sendRedirect(event,
+        withQuery('/oauth/ask-username', query),
+      );
+    }
+  }
+  else {
+    username = user.username;
   }
 
   user = await updateOrCreateUserFromSocialAuth(
-    normalizeGoogleUser(googleUser, { username: username! }),
+    normalizeGoogleUser(googleUser, { username }),
   )
     .catch(async (err) => {
       await event.context.logger.error({ err, msg: 'updateOrCreateUserFromSocialAuth failed' });
