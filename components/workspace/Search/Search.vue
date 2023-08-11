@@ -71,7 +71,9 @@ async function openResult() {
   else {
     await navigateTo(generateItemRouteParams(resultToOpen as FolderOrNote));
 
-    document.querySelector(`a[title="${resultToOpen.name}"]`)?.scrollIntoView({ behavior: 'smooth' });
+    document
+      .querySelector(`a[title="${resultToOpen.name}"]`)
+      ?.scrollIntoView({ behavior: 'smooth' }); // TODO: this do not work on chrome ?
   }
 
   handleCancel();
