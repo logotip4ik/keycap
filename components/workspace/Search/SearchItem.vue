@@ -69,6 +69,8 @@ const itemHref = (() => {
   }
 
   &__path {
+    white-space: nowrap;
+
     opacity: 0.25;
   }
 
