@@ -34,14 +34,21 @@ export default defineEventHandler(async (event) => {
   const prisma = getPrisma();
 
   if (!query.socialUser) {
-    const oauth = await prisma.oAuth.findFirst({
-      where: { id: githubUser.id.toString() },
-      select: {
-        user: { select: { id: true, email: true, username: true } },
-      },
-    });
+    const userSelect = { id: true, email: true, username: true };
 
-    user = oauth?.user || null;
+    const [oauth, dbUser] = await Promise.all([
+      prisma.oAuth.findFirst({
+        where: { id: githubUser.id.toString() },
+        select: { user: { select: userSelect } },
+      }),
+
+      prisma.user.findFirst({
+        where: { email: githubUser.email },
+        select: userSelect,
+      }),
+    ]);
+
+    user = oauth?.user || dbUser || null;
   }
 
   let username: string;
@@ -52,7 +59,7 @@ export default defineEventHandler(async (event) => {
       && !(await checkIfUsernameTaken(username!));
 
     if (!isUsernameValid) {
-      query.provider = OAuthProvider.GitHub.toLowerCase();
+      query.provider = OAuthProvider.GitHub;
       query.username = undefined;
       query.socialUser = githubUser;
       query.usernameTaken = await checkIfUsernameTaken(username!) ? username : '';
