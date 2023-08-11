@@ -52,7 +52,11 @@ export function sendOAuthRedirect(event: H3Event, provider: OAuthProviderType) {
   const state = randomUUID();
   const protocol = isProduction ? 'https://' : 'http://';
 
-  setCookie(event, 'state', state);
+  setCookie(event, 'state', state, {
+    secure: true,
+    httpOnly: true,
+    sameSite: 'lax',
+  });
 
   let url: string;
   const oauthOptions: any = {
