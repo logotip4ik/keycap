@@ -18,7 +18,7 @@ if (user.value)
   await navigateTo(`/@${user.value.username}`);
 
 if (!query.code || !query.provider) {
-  await event.context.logger.warn({ query, msg: 'oauth ask username failed' });
+  await event.context.logger.error({ query, msg: 'not enough data for proceding with username' });
 
   throw createError({
     statusCode: 400,
