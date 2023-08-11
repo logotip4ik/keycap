@@ -1,6 +1,11 @@
 <script setup lang="ts">
-const usernameInput = ref<HTMLInputElement | null>(null);
+const user = useUser();
 const { query } = useRoute();
+
+const usernameInput = ref<HTMLInputElement | null>(null);
+
+if (user.value)
+  await navigateTo(`/@${user.value.username}`);
 
 if (!query.code || !query.provider)
   await navigateTo('/');
