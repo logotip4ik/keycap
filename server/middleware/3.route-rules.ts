@@ -33,14 +33,12 @@ function withUserOnly(event: H3Event) {
 }
 
 export default defineEventHandler(async (event) => {
-  const handler = rules
-    .find((rule) => event.path.startsWith(rule.path))
-    ?.handler;
+  const rule = rules.find((rule) => event.path.startsWith(rule.path));
 
-  if (!handler)
+  if (!rule)
     return;
 
-  const shouldPass = await handler(event);
+  const shouldPass = await rule.handler(event);
 
   if (event.handled)
     return;
