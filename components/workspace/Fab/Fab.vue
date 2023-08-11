@@ -99,7 +99,7 @@ useClickOutside(fabContainer, () => isFabUnfolded.value = false);
   position: fixed;
   bottom: calc(var(--button-size-max) / 3);
   left: calc(var(--button-size-max) / 3);
-  z-index: 1;
+  z-index: 2;
 
   @media screen and (max-width: $breakpoint-tablet) {
     right: calc(var(--button-size-max) / 3);
