@@ -213,10 +213,21 @@ provide(IsNoteNameEmptyKey, isNoteNameEmpty);
     grid-row: 1 / end;
     grid-column: 2;
 
+    height: 100%;
+
     overflow-y: auto;
 
-    &:not(.welcome) > div {
-      height: 100%;
+    scrollbar-color: hsla(var(--selection-bg-color-hsl), 0.5) var(--surface-color);
+    &::-webkit-scrollbar {
+      width: 0.75rem;
+
+      background: var(--surface-color);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      width: 0.75rem;
+
+      background-color: hsla(var(--selection-bg-color-hsl), 0.5);
     }
 
     @media screen and (max-width: $breakpoint-tablet) {
