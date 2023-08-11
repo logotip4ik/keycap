@@ -16,7 +16,7 @@ export function normalizeGoogleUser(googleUser: GoogleUserRes, params: Normaliza
 }
 
 export async function getGoogleUserWithEvent(event: H3Event) {
-  const { google, public: config } = useRuntimeConfig();
+  const { google, public: config } = useRuntimeConfig(event);
   const code = getQuery(event).code;
 
   if (!code)
