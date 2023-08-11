@@ -27,12 +27,16 @@ export default defineEventHandler(async (event) => {
       break;
   }
 
-  if (!oauthEnabled && path.startsWith('/api/oauth'))
-    throw createError({ statusCode: 404 });
-
   if (isAuthorizedRoute && !user) {
     await removeAuthCookies(event);
 
     throw createError({ statusCode: 401 });
   }
+
+  const isOAuthRoute = path.startsWith('/api/oauth');
+
+  if (!oauthEnabled && isOAuthRoute)
+    throw createError({ statusCode: 404 });
+  else if (!!user && isOAuthRoute)
+    return sendRedirect(event, `/@${user.username}`);
 });

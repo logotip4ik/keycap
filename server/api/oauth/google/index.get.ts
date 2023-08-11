@@ -6,9 +6,6 @@ import type { GoogleUserRes } from '~/types/server-google';
 export default defineEventHandler(async (event) => {
   let user = event.context.user;
 
-  if (user)
-    return sendRedirect(event, `/@${user.username}`);
-
   const query = getQuery(event);
 
   await assertNoOAuthErrors(event);

@@ -6,9 +6,6 @@ import type { GitHubUserRes } from '~/types/server-github';
 export default defineEventHandler(async (event) => {
   let user = event.context.user;
 
-  if (user)
-    return sendRedirect(event, `/@${user.username}`);
-
   const query = getQuery(event);
 
   await assertNoOAuthErrors(event);
