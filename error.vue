@@ -10,9 +10,9 @@ const props = defineProps<Props>();
 const user = useUser();
 
 const notes = [
-  'Keycap has broken into pieces.<br>',
-  'There is no Esc, no Ctrl, no Space.<br>',
-  'God bless IBM model M.<br>',
+  'Keycap has broken into pieces.',
+  'There is no Esc, no Ctrl, no Space.',
+  'God bless IBM model M.',
 ];
 
 const randomNote = notes[Math.floor(Math.random() * notes.length)];
@@ -22,6 +22,7 @@ const errorMessages: Record<number, string> = {
   401: 'Btw, that route is not public',
   500: 'I mean, something went completely wrong',
 };
+
 const message = errorMessages[props.error.statusCode] || 'That was unexpected (⊙_⊙;)';
 
 if (!import.meta.env.PROD)
@@ -45,6 +46,7 @@ function handleError() {
     <Form class="error-page__form" action="/" @submit.prevent="handleError">
       <FormTitle class="error-page__form__title">
         <small v-html="randomNote" />
+        <br>
         <span v-html="message" />
       </FormTitle>
 
