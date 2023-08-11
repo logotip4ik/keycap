@@ -5,10 +5,21 @@ const { query } = useRoute();
 if (!query.code || !query.provider)
   await navigateTo('/');
 
+const normalizedProvider = Array.isArray(query.provider)
+  ? query.provider[0]?.toLowerCase()
+  : query.provider?.toLowerCase();
+
+const queryFlags = [
+  'code',
+  'state',
+  'error',
+  'socialUser',
+];
+
 const notEmptyQuery = Object.fromEntries(
   Object
     .entries(query)
-    .filter(([_, value]) => !!value),
+    .filter(([key, value]) => !!value && queryFlags.includes(key)),
 );
 </script>
 
@@ -18,7 +29,7 @@ const notEmptyQuery = Object.fromEntries(
   <WithBlob v-once v-slot="props" top="45%">
     <div class="username-page" v-bind="props">
       <Form
-        :action="`/api/oauth/${query.provider}`"
+        :action="`/api/oauth/${normalizedProvider}`"
       >
         <!-- Preserves original oauth query -->
         <FormHiddenValue
