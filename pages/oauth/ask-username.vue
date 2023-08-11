@@ -1,5 +1,15 @@
 <script setup lang="ts">
+import { OAuthProvider } from '~/server/utils/oauth';
+
+if (!import.meta.env.SSR) {
+  throw createError({
+    statusCode: 418,
+    statusMessage: 'this page should not run on client',
+  });
+}
+
 const user = useUser();
+const event = useRequestEvent();
 const { query } = useRoute();
 
 const usernameInput = ref<HTMLInputElement | null>(null);
@@ -7,12 +17,29 @@ const usernameInput = ref<HTMLInputElement | null>(null);
 if (user.value)
   await navigateTo(`/@${user.value.username}`);
 
-if (!query.code || !query.provider)
-  await navigateTo('/');
+if (!query.code || !query.provider) {
+  await event.context.logger.warn({ query, msg: 'oauth ask username failed' });
 
-const normalizedProvider = Array.isArray(query.provider)
-  ? query.provider[0]?.toLowerCase()
-  : query.provider?.toLowerCase();
+  throw createError({
+    statusCode: 400,
+    statusMessage: 'not enough data',
+  });
+}
+
+const provider = Array.isArray(query.provider)
+  ? (query.provider[0] || '')
+  : query.provider;
+
+const normalizedProvider = OAuthProvider[provider as keyof typeof OAuthProvider || ''];
+
+if (!normalizedProvider) {
+  await event.context.logger.warn('someone is messing with oauth');
+
+  throw createError({
+    statusCode: 400,
+    statusMessage: 'Go home. Please.',
+  });
+}
 
 const queryFlags = [
   'code',
@@ -34,7 +61,7 @@ const notEmptyQuery = Object.fromEntries(
   <WithBlob v-once v-slot="props" top="45%">
     <div class="username-page" v-bind="props">
       <Form
-        :action="`/api/oauth/${normalizedProvider}`"
+        :action="`/api/oauth/${normalizedProvider.toLowerCase()}`"
       >
         <!-- Preserves original oauth query -->
         <FormHiddenValue
