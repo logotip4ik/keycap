@@ -14,6 +14,24 @@ const rules: Array<Rule> = [
   { path: '/api/oauth', handler: withoutUser },
 ];
 
+function withoutUser(event: H3Event) {
+  const { oauthEnabled } = useRuntimeConfig(event).public;
+
+  if (!oauthEnabled)
+    throw createError({ statusCode: 404 });
+
+  const user = event.context.user;
+
+  if (!user)
+    return true;
+
+  return sendRedirect(event, `/@${user.username}`);
+}
+
+function withUserOnly(event: H3Event) {
+  return !!event.context.user;
+}
+
 export default defineEventHandler(async (event) => {
   let handler: RuleFunction | undefined;
 
@@ -36,21 +54,3 @@ export default defineEventHandler(async (event) => {
   if (shouldPass === false)
     throw createError({ statusCode: 401 });
 });
-
-function withoutUser(event: H3Event) {
-  const { oauthEnabled } = useRuntimeConfig(event).public;
-
-  if (!oauthEnabled)
-    throw createError({ statusCode: 404 });
-
-  const user = event.context.user;
-
-  if (!user)
-    return true;
-
-  return sendRedirect(event, `/@${user.username}`);
-}
-
-function withUserOnly(event: H3Event) {
-  return !!event.context.user;
-}
