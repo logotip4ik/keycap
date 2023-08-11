@@ -1,14 +1,13 @@
 import { randomUUID } from 'node:crypto';
-import { SocialAuth } from '@prisma/client';
 import { isProduction } from 'std-env';
 import { withQuery } from 'ufo';
 
 import type { Prisma } from '@prisma/client';
 import type { H3Event } from 'h3';
 
-import type { NormalizedSocialUser, OAuthProvider as OAuthProviderType, SafeUser } from '~/types/server';
+import { OAuthProvider } from '~/server/utils';
 
-export const OAuthProvider = SocialAuth;
+import type { NormalizedSocialUser, OAuthProvider as OAuthProviderType, SafeUser } from '~/types/server';
 
 export async function assertNoOAuthErrors(event: H3Event) {
   const proviersMap = {
@@ -66,14 +65,14 @@ export function sendOAuthRedirect(event: H3Event, provider: OAuthProviderType) {
     redirect_uri: `${protocol}${config.siteOrigin}/api/oauth/${provider.toLowerCase()}`,
   };
 
-  if (provider === SocialAuth.GitHub) {
+  if (provider === OAuthProvider.GitHub) {
     url = 'https://github.com/login/oauth/authorize';
 
     // https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps#1-request-a-users-github-identity
     oauthOptions.client_id = github.clientId;
     oauthOptions.scope = 'user:email';
   }
-  else if (provider === SocialAuth.Google) {
+  else if (provider === OAuthProvider.Google) {
     url = 'https://accounts.google.com/o/oauth2/v2/auth';
 
     // https://developers.google.com/identity/protocols/oauth2/web-server#creatingclient

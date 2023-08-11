@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { OAuthProvider } from '~/server/utils/oauth';
+import { OAuthProvider } from '~/server/utils';
 
 if (!import.meta.env.SSR) {
   throw createError({

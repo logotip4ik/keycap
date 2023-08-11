@@ -1,5 +1,6 @@
 import process from 'node:process';
 import { isProduction } from 'std-env';
+import { SocialAuth } from '@prisma/client';
 import { withLeadingSlash, withoutTrailingSlash } from 'ufo';
 
 import type { H3Event } from 'h3';
@@ -7,6 +8,7 @@ import type { Prisma } from '@prisma/client';
 
 export const stringifiedBigIntRE = /(\d{18})n/;
 export const usernameRE = /^[\w.\-]{3,16}$/;
+export const OAuthProvider = SocialAuth;
 
 export function getServerUserAgent() {
   const postfix = isProduction ? '' : 'Dev';
