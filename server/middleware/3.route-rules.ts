@@ -33,15 +33,9 @@ function withUserOnly(event: H3Event) {
 }
 
 export default defineEventHandler(async (event) => {
-  let handler: RuleFunction | undefined;
-
-  for (const rule of rules) {
-    if (event.path.startsWith(rule.path)) {
-      handler = rule.handler;
-
-      break;
-    }
-  }
+  const handler = rules
+    .find((rule) => event.path.startsWith(rule.path))
+    ?.handler;
 
   if (!handler)
     return;
