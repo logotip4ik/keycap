@@ -3421,12 +3421,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/core@npm:^2.1.0-rc.14":
+"@tiptap/core@npm:2.1.0-rc.14":
   version: 2.1.0-rc.14
   resolution: "@tiptap/core@npm:2.1.0-rc.14"
   peerDependencies:
     "@tiptap/pm": ^2.0.0
   checksum: d5a569bd655cc05b7746cd6c471f7afd29424a4db678e5a42ee420b3e5778ecab5e7acbd2b185a4c84ab0fb0092c1da7538b13b98880dfee4f491fefc9202a9d
+  languageName: node
+  linkType: hard
+
+"@tiptap/core@patch:@tiptap/core@npm%3A2.1.0-rc.14#./.yarn/patches/@tiptap-core-npm-2.1.0-rc.14-6413b0599c.patch::locator=keycap%40workspace%3A.":
+  version: 2.1.0-rc.14
+  resolution: "@tiptap/core@patch:@tiptap/core@npm%3A2.1.0-rc.14#./.yarn/patches/@tiptap-core-npm-2.1.0-rc.14-6413b0599c.patch::version=2.1.0-rc.14&hash=b5f574&locator=keycap%40workspace%3A."
+  peerDependencies:
+    "@tiptap/pm": ^2.0.0
+  checksum: 66fd6371c5c1fc0b965ae73a4353727c3b52012b554bacc8a3496148e628e7b5dbf059ff450a1ab7ecd699d28a8d517274ac94a117211b36f1673cf9d337884f
   languageName: node
   linkType: hard
 
