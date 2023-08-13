@@ -1,6 +1,40 @@
 # Changelog
 
 
+## v2.2.1
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v2.2.0...v2.2.1)
+
+### 💅 Refactors
+
+- Repatch tiptap with minified css ([3c38a42](https://github.com/logotip4ik/keycap/commit/3c38a42))
+- Patch tiptap core with minified styles ([354a77f](https://github.com/logotip4ik/keycap/commit/354a77f))
+- Patch link extension to remove linkifyjs from build ([1572f90](https://github.com/logotip4ik/keycap/commit/1572f90))
+- Better scrollbars for chrome and firefox ([785cb97](https://github.com/logotip4ik/keycap/commit/785cb97))
+- Append bubble menu to editor rather then body ([2676f85](https://github.com/logotip4ik/keycap/commit/2676f85))
+- Remove nuxt loading indicator ([5c8e0e7](https://github.com/logotip4ik/keycap/commit/5c8e0e7))
+
+### 🏡 Chore
+
+- Update deps ([34a1c73](https://github.com/logotip4ik/keycap/commit/34a1c73))
+- Do not use `rc` releases for tiptap editor ([380a844](https://github.com/logotip4ik/keycap/commit/380a844))
+- Update deps ([46a9ba3](https://github.com/logotip4ik/keycap/commit/46a9ba3))
+
+### 🎨 Styles
+
+- **ci:** Move `permissions` above `on` ([2669d2d](https://github.com/logotip4ik/keycap/commit/2669d2d))
+
+### 🤖 CI
+
+- Use different action to push changes ([2d51f82](https://github.com/logotip4ik/keycap/commit/2d51f82))
+- Update push action version ([ceeb969](https://github.com/logotip4ik/keycap/commit/ceeb969))
+- Do not fail if nothing to update ([aca85ea](https://github.com/logotip4ik/keycap/commit/aca85ea))
+- Do not push tags ([ec6691a](https://github.com/logotip4ik/keycap/commit/ec6691a))
+
+### ❤️  Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+
 ## v2.2.0
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v2.1.0...v2.2.0)
