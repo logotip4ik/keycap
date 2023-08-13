@@ -210,6 +210,9 @@ provide(IsNoteNameEmptyKey, isNoteNameEmpty);
   }
 
   &__note {
+    --scrollbar-thumb-color: hsla(var(--text-color-hsl), 0.175);
+    --scrollbar-background: var(--surface-color);
+
     grid-row: 1 / end;
     grid-column: 2;
 
@@ -217,17 +220,18 @@ provide(IsNoteNameEmptyKey, isNoteNameEmpty);
 
     overflow-y: auto;
 
-    scrollbar-color: hsla(var(--selection-bg-color-hsl), 0.5) var(--surface-color);
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-background);
     &::-webkit-scrollbar {
       width: 0.75rem;
 
-      background: var(--surface-color);
+      background: var(--scrollbar-background);
     }
 
     &::-webkit-scrollbar-thumb {
       width: 0.75rem;
 
-      background-color: hsla(var(--selection-bg-color-hsl), 0.5);
+      background-color: var(--scrollbar-thumb-color);
     }
 
     @media screen and (max-width: $breakpoint-tablet) {
