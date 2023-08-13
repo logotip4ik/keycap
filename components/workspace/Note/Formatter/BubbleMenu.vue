@@ -11,8 +11,8 @@ interface Props { editor: Editor }
 defineProps<Props>();
 
 const tippyOptions: Partial<TippyProps> = {
-  // this element will never be displayed on server, so this should work
-  appendTo: () => document.body,
+  // NOTE: appending to body add scroll to page if tooltip
+  // stays at be bottom of the editor and user scrolls up to top
   zIndex: 2,
   duration: [50, 150],
   theme: 'adaptive',
