@@ -39,14 +39,17 @@ jobs:
       - name: Run Build
         run: yarn run build
 
-      - name: Commit and push if there are changes
-        uses: actions-js/push@156f2b10c3aa000c44dbe75ea7018f32ae999772
+      - name: Commit changes
+        run: |
+          git config --local user.email "noreply@github.com"
+          git config --local user.name "${{ github.actor }}"
+          git commit -a -m "chore: update deps"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@40bf560936a8022e68a3c00e7d2abefaf01305a6 # v0.6.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          message: 'chore: update deps'
-          branch: ${{ github.ref_name }}
-          author_name: ${{ github.actor }}
-          author_email: noreply@github.com
+          branch: ${{ github.ref }}
 
   bump-package-version:
     needs: test-lint-build
@@ -76,11 +79,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Push changes
-        uses: ad-m/github-push-action@40bf560936a8022e68a3c00e7d2abefaf01305a6
+        uses: ad-m/github-push-action@40bf560936a8022e68a3c00e7d2abefaf01305a6 # v0.6.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
-          force: true
           tags: true
 
   trigger-release:
