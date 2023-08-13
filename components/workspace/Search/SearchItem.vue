@@ -56,10 +56,11 @@ const itemHref = (() => {
 
   overflow: hidden;
 
-  border: 0;
+  border: 1px solid hsla(var(--text-color-hsl), 0.075);
   outline: 0;
   background-color: hsla(var(--text-color-hsl), 0.01);
 
+  backdrop-filter: blur(2px);
   transition: background-color .4s;
 
   &__name {
@@ -86,7 +87,7 @@ const itemHref = (() => {
   }
 
   &:is(:hover, :focus-visible, [data-selected="true"]) {
-    background-color: hsla(var(--hsl-primary-color), 35%, 50% ,0.1);
+    background-color: hsla(var(--selection-bg-color-hsl), 0.175);
     outline: none;
 
     transition: background-color .1s;
