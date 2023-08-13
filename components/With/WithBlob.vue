@@ -36,7 +36,7 @@ const bindings = computed(() => {
   height: var(--size);
 
   border-radius: 50%;
-  background-color: var(--loading-indicator-color);
+  background-color: var(--task-list-indicator-color);
 
   opacity: 0;
   animation: var(--appear-animation);

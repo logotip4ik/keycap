@@ -261,7 +261,7 @@ useTinykeys({ Escape: handleCancel });
     padding: 0.75rem 1.25rem;
 
     border-radius: 0.25rem;
-    border: 1px solid var(--loading-indicator-color);
+    border: 1px solid var(--task-list-indicator-color);
 
     &:is(:hover, :focus-within) {
       outline: none;

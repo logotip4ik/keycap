@@ -10,7 +10,6 @@
 :root {
   --hsl-primary-color: 253;
 
-  --loading-indicator-color: hsl(var(--hsl-primary-color), 65%, 75%);
   --task-list-indicator-color: hsl(var(--hsl-primary-color), 70%, 70%);
   
   --surface-color-hsl: var(--hsl-primary-color), 10%, 99%;
@@ -22,7 +21,6 @@
   --selection-bg-color: hsl(var(--selection-bg-color-hsl));
 
   @media (prefers-color-scheme: dark) {
-    --loading-indicator-color: hsl(var(--hsl-primary-color), 35%, 40%);
     --task-list-indicator-color: hsl(var(--hsl-primary-color), 40%, 40%);
     
     --surface-color-hsl: var(--hsl-primary-color), 7%, 7%;
