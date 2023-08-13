@@ -12,7 +12,6 @@ const currentNoteState = useCurrentNoteState();
 const createToast = useToast();
 const offlineStorage = useOfflineStorage();
 const currentItemForDetails = useCurrentItemForDetails();
-const { showLoading, hideLoading } = useLoadingIndicator();
 const mitt = useMitt();
 const user = useUser();
 
@@ -60,8 +59,6 @@ const { data: fetchedNote, pending, error, refresh } = useLazyAsyncData<Note | n
 
     currentNoteState.value = 'fetching';
 
-    showLoading();
-
     if (!loadingToast?.value) {
       loadingToast = createToast('Fetching note. Please wait...', {
         duration: parseDuration('1 minute')!,
@@ -79,8 +76,6 @@ const { data: fetchedNote, pending, error, refresh } = useLazyAsyncData<Note | n
       { retry: 2, signal: abortControllerGet.signal },
     )
       .finally(() => {
-        hideLoading();
-
         loadingToast.value?.remove();
 
         const multiplier = document.visibilityState === 'visible' ? 1 : 2;

@@ -76,13 +76,6 @@ if (import.meta.env.SSR) {
 </script>
 
 <template>
-  <Teleport to="body">
-    <NuxtLoadingIndicator
-      color="var(--loading-indicator-color)"
-      :throttle="250"
-    />
-  </Teleport>
-
   <NuxtPage />
 
   <ClientOnly>

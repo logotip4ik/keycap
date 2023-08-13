@@ -11,7 +11,6 @@ const createToast = useToast();
 const offlineStorage = useOfflineStorage();
 const currentItemForDetails = useCurrentItemForDetails();
 const { shortcuts } = useAppConfig();
-const { showLoading, hideLoading } = useLoadingIndicator();
 const mitt = useMitt();
 const user = useUser();
 
@@ -47,8 +46,6 @@ const { data: fetchedFolder, error, refresh } = await useLazyAsyncData<FolderWit
 
     const apiFolderPath = folderPath.value.split('/').slice(2).join('/');
 
-    showLoading();
-
     if (prevFolderPath !== folderPath.value)
       firstTimeFetch = true;
 
@@ -69,8 +66,6 @@ const { data: fetchedFolder, error, refresh } = await useLazyAsyncData<FolderWit
       { retry: 2 },
     )
       .finally(() => {
-        hideLoading();
-
         loadingToast.value?.remove();
 
         const multiplier = document.visibilityState === 'visible' ? 1 : 2;
