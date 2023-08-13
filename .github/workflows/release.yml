@@ -44,6 +44,7 @@ jobs:
           git config --local user.email "noreply@github.com"
           git config --local user.name "${{ github.actor }}"
           git commit -a -m "chore: update deps" || echo "nothing to update"
+          git pull
 
       - name: Push changes
         uses: ad-m/github-push-action@9a2e3c14aaecf56d5816dc3a54514f82050820b2
