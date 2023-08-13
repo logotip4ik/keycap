@@ -119,6 +119,13 @@ async function register() {
       </FormItem>
 
       <FormItem actions>
+        <FormInputNote>
+          Have an account?
+          <NuxtLink to="/login">
+            Login
+          </NuxtLink>
+        </FormInputNote>
+
         <FormButton
           type="submit"
           :loading="isLoading"
