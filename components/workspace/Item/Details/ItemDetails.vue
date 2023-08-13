@@ -246,7 +246,7 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
 
     @supports (backdrop-filter: blur(1px)) {
       background-color: hsla(var(--surface-color-hsl), 0.25);
-      backdrop-filter: blur(0.35rem);
+      backdrop-filter: blur(8px);
     }
   }
 

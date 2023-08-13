@@ -160,7 +160,8 @@ onBeforeUnmount(() => {
       hsla(var(--selection-bg-color-hsl), calc(var(--base-color-saturation) + 0.175)),
     );
     border: 1px solid hsla(var(--selection-bg-color-hsl), 0.5);
-    backdrop-filter: blur(0.75rem);  }
+    backdrop-filter: blur(12px);
+  }
 
   &__item {
     &__button {

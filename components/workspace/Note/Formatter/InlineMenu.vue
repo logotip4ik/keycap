@@ -100,7 +100,7 @@ onMounted(() => {
   @supports (backdrop-filter: blur(1px)) {
     background-color: hsla(var(--surface-color-hsl), 0.25);
 
-    backdrop-filter: blur(0.75rem);
+    backdrop-filter: blur(12px);
   }
 
   &__hidden {
