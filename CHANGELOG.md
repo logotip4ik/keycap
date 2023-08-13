@@ -1,6 +1,63 @@
 # Changelog
 
 
+## v2.2.0
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v2.1.0...v2.2.0)
+
+### 🚀 Enhancements
+
+- More accessible toast container ([61f2d3f](https://github.com/logotip4ik/keycap/commit/61f2d3f))
+- Rework authorization middleware into more generic route rules ([52b9300](https://github.com/logotip4ik/keycap/commit/52b9300))
+
+### 🩹 Fixes
+
+- Bump z index for fab ([a4ac543](https://github.com/logotip4ik/keycap/commit/a4ac543))
+- Correctly remove scrollbar from contents ([d59b89c](https://github.com/logotip4ik/keycap/commit/d59b89c))
+
+### 💅 Refactors
+
+- Disable `no-dataset` rule ([5d7179f](https://github.com/logotip4ik/keycap/commit/5d7179f))
+- Remove not used rule supression ([08b897e](https://github.com/logotip4ik/keycap/commit/08b897e))
+- Remove not used query variable ([a48947f](https://github.com/logotip4ik/keycap/commit/a48947f))
+- Remove not used variable declaration ([393e74c](https://github.com/logotip4ik/keycap/commit/393e74c))
+- Try to destroy the editor on before unmount ([8f4d1ca](https://github.com/logotip4ik/keycap/commit/8f4d1ca))
+- Bump a bit list paddings ([17f41b9](https://github.com/logotip4ik/keycap/commit/17f41b9))
+- Remove text align plugin ([7108b06](https://github.com/logotip4ik/keycap/commit/7108b06))
+- Use oauth id's to query user ([069d997](https://github.com/logotip4ik/keycap/commit/069d997))
+- Use more secure cookie for state check ([852620a](https://github.com/logotip4ik/keycap/commit/852620a))
+- Try get user with email as well as oauth id ([4b44031](https://github.com/logotip4ik/keycap/commit/4b44031))
+- Allow only whitelisted flags to be set in form ([c1b977d](https://github.com/logotip4ik/keycap/commit/c1b977d))
+- Redirect to dashboard with authenticated user ([6e5194c](https://github.com/logotip4ik/keycap/commit/6e5194c))
+- Add more security ([b87ceef](https://github.com/logotip4ik/keycap/commit/b87ceef))
+- Change warn to error and change message ([1f76460](https://github.com/logotip4ik/keycap/commit/1f76460))
+- Use `useRuntimeConfig` with event param ([dc10fb6](https://github.com/logotip4ik/keycap/commit/dc10fb6))
+- Move user check to middleware ([f3a0a94](https://github.com/logotip4ik/keycap/commit/f3a0a94))
+- Use `rules.find` instead `for of` ([41b3b4f](https://github.com/logotip4ik/keycap/commit/41b3b4f))
+- Do not use `?.` ([19dc74e](https://github.com/logotip4ik/keycap/commit/19dc74e))
+- Move `OAuthProvider` type to `utils/index` ([ced172e](https://github.com/logotip4ik/keycap/commit/ced172e))
+- Specify `get` method for webmanfest ([465bf37](https://github.com/logotip4ik/keycap/commit/465bf37))
+- Move `security.txt` under `.well-known` and add alias to top level ([4a61470](https://github.com/logotip4ik/keycap/commit/4a61470))
+- Set `caret-color` same as text color ([29dbd99](https://github.com/logotip4ik/keycap/commit/29dbd99))
+- Set `tab-size` to 4 ([2f8f566](https://github.com/logotip4ik/keycap/commit/2f8f566))
+- Better scrollbars ([2290f98](https://github.com/logotip4ik/keycap/commit/2290f98))
+- Calculate icon size relative to button size ([256cac5](https://github.com/logotip4ik/keycap/commit/256cac5))
+- Prevent whitespace wrapping on item path ([039ca97](https://github.com/logotip4ik/keycap/commit/039ca97))
+- Set initial delay for preload toasts ([c556d71](https://github.com/logotip4ik/keycap/commit/c556d71))
+
+### 🏡 Chore
+
+- Add todo ([b41a1a2](https://github.com/logotip4ik/keycap/commit/b41a1a2))
+
+### 🎨 Styles
+
+- New lines and put br's into html ([964449b](https://github.com/logotip4ik/keycap/commit/964449b))
+- Move rule functions about event handler ([e850141](https://github.com/logotip4ik/keycap/commit/e850141))
+
+### ❤️  Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+
 ## v2.1.0
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v2.0.0...v2.1.0)
