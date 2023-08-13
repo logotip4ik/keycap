@@ -164,11 +164,49 @@ useTinykeys({
         </NuxtLink>
       </li>
 
-      <li v-for="item in mergedContents" :key="item.id.toString()">
-        <WorkspaceContentsItem :item="item" :parent="folder" />
-      </li>
+      <template v-if="mergedContents.length > 0">
+        <li v-for="item in mergedContents" :key="item.id.toString()">
+          <WorkspaceContentsItem :item="item" :parent="folder" />
+        </li>
+      </template>
+
+      <template v-else-if="folder.root && mergedContents.length === 0">
+        <li class="item item--empty">
+          <p class="item__name">
+            <span>Start by clicking</span>
+
+            &nbsp;
+
+            <kbd>
+              <LazyIconBaselineMoreVert width="1rem" />
+            </kbd>
+          </p>
+        </li>
+      </template>
     </TransitionGroup>
 
     <WorkspaceContentsSkeleton v-else />
   </Transition>
 </template>
+
+<style lang="scss">
+.item {
+  &--empty {
+    pointer-events: none;
+
+    .item__name {
+      margin: 0;
+
+      @media screen and (max-width: $breakpoint-tablet) {
+        justify-content: center;
+      }
+    }
+
+    kbd {
+      margin-left: 0.5rem;
+      padding-left: 0.35rem;
+      padding-right: 0.35rem;
+    }
+  }
+}
+</style>
