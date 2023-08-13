@@ -78,7 +78,7 @@ const { data: fetchedFolder, error, refresh } = await useLazyAsyncData<FolderWit
 const mergedContents = computed(() => {
   if (!folder.value) return [];
 
-  return [...folder.value.notes, ...folder.value.subfolders] as Array<FolderOrNote>;
+  return folder.value.notes.concat(folder.value.subfolders) as Array<FolderOrNote>;
 });
 
 const parentFolderPath = computed(() => {
