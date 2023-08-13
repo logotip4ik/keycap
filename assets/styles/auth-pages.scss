@@ -1,0 +1,14 @@
+.login a,
+.register a {
+  color: var(--text-color);
+  text-decoration: underline dashed 1px hsla(var(--selection-bg-color-hsl), 1);
+  text-underline-offset: 3px;
+}
+
+.login {
+  padding-top: 22.5vh;
+}
+
+.register {
+  padding-top: 17.5vh;
+}

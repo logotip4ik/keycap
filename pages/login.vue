@@ -124,8 +124,4 @@ async function login() {
   </main>
 </template>
 
-<style>
-.login {
-  padding-top: 22.5vh;
-}
-</style>
+<style src="~/assets/styles/auth-pages.scss"></style>

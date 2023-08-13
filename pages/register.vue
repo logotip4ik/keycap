@@ -149,8 +149,4 @@ async function register() {
   </main>
 </template>
 
-<style>
-.register {
-  padding-top: 17.5vh;
-}
-</style>
+<style src="~/assets/styles/auth-pages.scss"></style>
