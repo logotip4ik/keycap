@@ -1,5 +1,8 @@
 name: Auto update dependencies
 
+permissions:
+  contents: write
+
 on:
   workflow_dispatch:
   schedule:
@@ -8,9 +11,6 @@ on:
 env:
   # allow yarn creating lockfile in CI environment
   YARN_ENABLE_IMMUTABLE_INSTALLS: false
-
-permissions:
-  contents: write
 
 jobs:
   auto-update-dependencies:
