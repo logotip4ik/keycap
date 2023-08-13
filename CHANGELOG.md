@@ -1,6 +1,34 @@
 # Changelog
 
 
+## v2.2.2
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v2.2.1...v2.2.2)
+
+### 💅 Refactors
+
+- Add back link to login page ([4d9bf1a](https://github.com/logotip4ik/keycap/commit/4d9bf1a))
+- Remove not needed color variable ([3d826c6](https://github.com/logotip4ik/keycap/commit/3d826c6))
+- Merge login and register styles into one file ([7b54109](https://github.com/logotip4ik/keycap/commit/7b54109))
+- Add outline for search item and background blur ([8ab3e27](https://github.com/logotip4ik/keycap/commit/8ab3e27))
+- Do not use `rem's` in `blur` function ([e75ef02](https://github.com/logotip4ik/keycap/commit/e75ef02))
+- Reuse existing array instead of creating another one ([d6ce95b](https://github.com/logotip4ik/keycap/commit/d6ce95b))
+- Add note for new users how to create notes ([7923acf](https://github.com/logotip4ik/keycap/commit/7923acf))
+
+### 🏡 Chore
+
+- **release:** V2.2.1 ([091567b](https://github.com/logotip4ik/keycap/commit/091567b))
+- Update deps ([6d201a3](https://github.com/logotip4ik/keycap/commit/6d201a3))
+
+### 🤖 CI
+
+- Run `git pull` before pushing back to origin ([f97b673](https://github.com/logotip4ik/keycap/commit/f97b673))
+
+### ❤️  Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+- Logotip4ik ([@betterqualityassuranceuser](http://github.com/betterqualityassuranceuser))
+
 ## v2.2.1
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v2.2.0...v2.2.1)
