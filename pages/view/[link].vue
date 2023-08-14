@@ -70,6 +70,13 @@ function formatDate(date: string | Date) {
   padding: 25vh 0 0;
   margin: 0 auto;
 
+  .nav {
+    width: 100%;
+
+    padding-left: 0;
+    padding-right: 0;
+  }
+
   &__header {
     display: flex;
     flex-direction: column;
