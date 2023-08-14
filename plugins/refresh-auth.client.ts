@@ -10,7 +10,6 @@ export default defineNuxtPlugin({
   parallel: true,
   setup() {
     const user = useUser();
-    const route = useRoute();
 
     refreshAuth();
     // TODO: clear interval and setUserOnClient if user logged out
