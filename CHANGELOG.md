@@ -1,6 +1,33 @@
 # Changelog
 
 
+## v2.2.3
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v2.2.2...v2.2.3)
+
+### 🩹 Fixes
+
+- **ci:** Correct commit message ([f5de334](https://github.com/logotip4ik/keycap/commit/f5de334))
+- **ci:** Pull before creating changelog ([498003b](https://github.com/logotip4ik/keycap/commit/498003b))
+
+### 💅 Refactors
+
+- Remove padding from nav on `view` route ([a5ae1f6](https://github.com/logotip4ik/keycap/commit/a5ae1f6))
+- Use page validation instead of middleware ([d065c1b](https://github.com/logotip4ik/keycap/commit/d065c1b))
+- Lower auth expiration ([30a9da8](https://github.com/logotip4ik/keycap/commit/30a9da8))
+- Simply auth refresh plugin ([8db51d7](https://github.com/logotip4ik/keycap/commit/8db51d7))
+- Remove unused constant ([a1626fe](https://github.com/logotip4ik/keycap/commit/a1626fe))
+
+### 🏡 Chore
+
+- **release:** V2.2.2 ([3254f51](https://github.com/logotip4ik/keycap/commit/3254f51))
+- Update deps ([a7fc36f](https://github.com/logotip4ik/keycap/commit/a7fc36f))
+
+### ❤️  Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+- Logotip4ik ([@betterqualityassuranceuser](http://github.com/betterqualityassuranceuser))
+
 ## v2.2.2
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v2.2.1...v2.2.2)
