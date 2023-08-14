@@ -11,7 +11,7 @@ import { toBigInt } from '.';
 
 import type { SafeUser } from '~/types/server';
 
-const AUTH_EXPIRATiON = parseDuration('4 days', 'second')!;
+const AUTH_EXPIRATiON = parseDuration('3 days', 'second')!;
 
 async function generateAccessToken(object: Record<string, any>): Promise<string> {
   const secret = getJWTSecret();
