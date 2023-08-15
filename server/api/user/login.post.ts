@@ -47,8 +47,8 @@ export default defineEventHandler(async (event) => {
   if (isPasswordValid === false)
     throw createError({ statusCode: 400, statusMessage: 'email or password is incorrect' });
 
-  // $2y - bcrypt
-  if (user.password.startsWith('$2y')) {
+  // $2 - bcrypt
+  if (user.password.startsWith('$2')) {
     const rehashedPassword = await hashPassword(body.password);
 
     await prisma.user.update({ where: { id: user.id }, data: { password: rehashedPassword } });
