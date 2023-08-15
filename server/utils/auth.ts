@@ -1,4 +1,5 @@
 import process from 'node:process';
+import { randomUUID } from 'node:crypto';
 import { getCookie, setCookie } from 'h3';
 import { SignJWT, jwtVerify } from 'jose';
 import { isDevelopment, isProduction } from 'std-env';
@@ -20,6 +21,7 @@ async function generateAccessToken(object: Record<string, any>): Promise<string>
 
   return await new SignJWT(object)
     .setProtectedHeader({ alg: 'HS256' })
+    .setJti(randomUUID())
     .setIssuedAt()
     .setIssuer(issuer)
     .setExpirationTime(now + AUTH_EXPIRATiON)
