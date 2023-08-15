@@ -1,6 +1,33 @@
 # Changelog
 
 
+## v2.2.4
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v2.2.3...v2.2.4)
+
+### 🩹 Fixes
+
+- Use payload subject as id for deserialization ([aba4a9d](https://github.com/logotip4ik/keycap/commit/aba4a9d))
+
+### 💅 Refactors
+
+- Set jti in jwt ([8a6347a](https://github.com/logotip4ik/keycap/commit/8a6347a))
+- Bump hash rounds ([dc4c9d7](https://github.com/logotip4ik/keycap/commit/dc4c9d7))
+- Use argon2 for password hashing and verification ([b401934](https://github.com/logotip4ik/keycap/commit/b401934))
+- Ensure that user password is hashed with argon2 ([0be2184](https://github.com/logotip4ik/keycap/commit/0be2184))
+- Set jwt subject as `object.id` ([ce3e1e7](https://github.com/logotip4ik/keycap/commit/ce3e1e7))
+
+### 🏡 Chore
+
+- **release:** V2.2.3 ([b9b4344](https://github.com/logotip4ik/keycap/commit/b9b4344))
+- Add note ([5172bbe](https://github.com/logotip4ik/keycap/commit/5172bbe))
+- Install argon2 ([053a141](https://github.com/logotip4ik/keycap/commit/053a141))
+
+### ❤️  Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+- Logotip4ik ([@betterqualityassuranceuser](http://github.com/betterqualityassuranceuser))
+
 ## v2.2.3
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v2.2.2...v2.2.3)
