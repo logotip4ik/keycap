@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v2.2.5
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v2.2.4...v2.2.5)
+
+### 💅 Refactors
+
+- More generic bcrypt hash detection ([c25eff3](https://github.com/logotip4ik/keycap/commit/c25eff3))
+
+### 🏡 Chore
+
+- **release:** V2.2.4 ([fef3c3d](https://github.com/logotip4ik/keycap/commit/fef3c3d))
+- Apply fixes ([b37215c](https://github.com/logotip4ik/keycap/commit/b37215c))
+
+### ❤️  Contributors
+
+- Logotip4ik ([@betterqualityassuranceuser](http://github.com/betterqualityassuranceuser))
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+
 ## v2.2.4
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v2.2.3...v2.2.4)
