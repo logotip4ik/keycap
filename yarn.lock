@@ -6671,6 +6671,72 @@ __metadata:
   languageName: node
   linkType: hard
 
+"drizzle-orm@npm:^0.28.2":
+  version: 0.28.2
+  resolution: "drizzle-orm@npm:0.28.2"
+  peerDependencies:
+    "@aws-sdk/client-rds-data": ">=3"
+    "@cloudflare/workers-types": ">=3"
+    "@libsql/client": "*"
+    "@neondatabase/serverless": ">=0.1"
+    "@opentelemetry/api": ^1.4.1
+    "@planetscale/database": ">=1"
+    "@types/better-sqlite3": "*"
+    "@types/pg": "*"
+    "@types/sql.js": "*"
+    "@vercel/postgres": "*"
+    better-sqlite3: ">=7"
+    bun-types: "*"
+    knex: "*"
+    kysely: "*"
+    mysql2: ">=2"
+    pg: ">=8"
+    postgres: ">=3"
+    sql.js: ">=1"
+    sqlite3: ">=5"
+  peerDependenciesMeta:
+    "@aws-sdk/client-rds-data":
+      optional: true
+    "@cloudflare/workers-types":
+      optional: true
+    "@libsql/client":
+      optional: true
+    "@neondatabase/serverless":
+      optional: true
+    "@opentelemetry/api":
+      optional: true
+    "@planetscale/database":
+      optional: true
+    "@types/better-sqlite3":
+      optional: true
+    "@types/pg":
+      optional: true
+    "@types/sql.js":
+      optional: true
+    "@vercel/postgres":
+      optional: true
+    better-sqlite3:
+      optional: true
+    bun-types:
+      optional: true
+    knex:
+      optional: true
+    kysely:
+      optional: true
+    mysql2:
+      optional: true
+    pg:
+      optional: true
+    postgres:
+      optional: true
+    sql.js:
+      optional: true
+    sqlite3:
+      optional: true
+  checksum: 557df571daeef20f27f13b4d3d9a14a6a479f2032834e139e7f22f98f869f378b5efd551ecec07c89e28f2ded382101fedf17bc06cac354e9fca586cb828deb7
+  languageName: node
+  linkType: hard
+
 "duplexer@npm:^0.1.2":
   version: 0.1.2
   resolution: "duplexer@npm:0.1.2"
@@ -9780,6 +9846,7 @@ __metadata:
     comlink: ^4.4.1
     decomment: ^0.9.5
     drizzle-kit: ^0.19.12
+    drizzle-orm: ^0.28.2
     eslint: 8.47.0
     eslint-plugin-github: ^4.9.2
     eslint-plugin-regexp: ^1.15.0
@@ -9796,6 +9863,7 @@ __metadata:
     nuxt-vitest: ^0.10.2
     parse-duration: ^1.1.0
     postcss-preset-env: ^9.1.1
+    postgres: ^3.3.5
     prisma: ^5.1.1
     rad-event-listener: ^0.2.4
     requestidlecallback-polyfill: ^1.0.2
@@ -12570,6 +12638,13 @@ __metadata:
     picocolors: ^1.0.0
     source-map-js: ^1.0.2
   checksum: 1cdd0c298849df6cd65f7e646a3ba36870a37b65f55fd59d1a165539c263e9b4872a402bf4ed1ca1bc31f58b68b2835545e33ea1a23b161a1f8aa6d5ded81e78
+  languageName: node
+  linkType: hard
+
+"postgres@npm:^3.3.5":
+  version: 3.3.5
+  resolution: "postgres@npm:3.3.5"
+  checksum: 6c7f0503b5756b72d7024daf2fa583caedddc5b8dc3523418782db5353a2c164f80b05de4adf732d17a50992b27df0f9aecfaa97eea6dccd9300c22447d84c4f
   languageName: node
   linkType: hard
 
