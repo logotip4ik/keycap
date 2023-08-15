@@ -3,7 +3,8 @@ import { randomUUID } from 'node:crypto';
 import { getCookie, setCookie } from 'h3';
 import { SignJWT, jwtVerify } from 'jose';
 import { isDevelopment, isProduction } from 'std-env';
-import * as bcrypt from '@node-rs/bcrypt';
+import bcrypt from '@node-rs/bcrypt';
+import argon2 from '@node-rs/argon2';
 import parseDuration from 'parse-duration';
 
 import type { H3Event } from 'h3';
@@ -43,6 +44,14 @@ function getJWTSecret(): Uint8Array {
 
 function getJWTIssuer(): string {
   return process.env.JWT_ISSUER || 'test:keycap';
+}
+
+function getArgon2Options(): argon2.Options {
+  // https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html#introduction
+  return {
+    timeCost: 2,
+    memoryCost: 32768, // 32mb
+  };
 }
 
 export async function setAuthCookies(event: H3Event, user: SafeUser) {
@@ -90,11 +99,13 @@ export async function getUserFromEvent(event: H3Event): Promise<SafeUser | null>
 }
 
 export async function hashPassword(pass: string): Promise<string> {
-  // NOTE: Idk how i ended up with bcrypt, but probably should have used argon2 instead
-  return await bcrypt.hash(pass, 12);
+  return await argon2.hash(pass, getArgon2Options());
 }
 
 export async function verifyPassword(hashedPass: string, pass: string): Promise<boolean> {
+  if (hashedPass.startsWith('$argon2'))
+    return await argon2.verify(hashedPass, pass, getArgon2Options());
+
   return await bcrypt.compare(pass, hashedPass);
 }
 
