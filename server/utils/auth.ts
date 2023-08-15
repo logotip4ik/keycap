@@ -20,9 +20,12 @@ async function generateAccessToken(object: Record<string, any>): Promise<string>
   const issuer = getJWTIssuer();
   const now = Math.floor(Date.now() / 1000);
 
-  return await new SignJWT(object)
+  const { id, ...rest } = object;
+
+  return await new SignJWT(rest)
     .setProtectedHeader({ alg: 'HS256' })
     .setJti(randomUUID())
+    .setSubject(id)
     .setIssuedAt()
     .setIssuer(issuer)
     .setExpirationTime(now + AUTH_EXPIRATiON)
