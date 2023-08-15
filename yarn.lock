@@ -2409,6 +2409,145 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@node-rs/argon2-android-arm-eabi@npm:1.5.2":
+  version: 1.5.2
+  resolution: "@node-rs/argon2-android-arm-eabi@npm:1.5.2"
+  conditions: os=android & cpu=arm
+  languageName: node
+  linkType: hard
+
+"@node-rs/argon2-android-arm64@npm:1.5.2":
+  version: 1.5.2
+  resolution: "@node-rs/argon2-android-arm64@npm:1.5.2"
+  conditions: os=android & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@node-rs/argon2-darwin-arm64@npm:1.5.2":
+  version: 1.5.2
+  resolution: "@node-rs/argon2-darwin-arm64@npm:1.5.2"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@node-rs/argon2-darwin-x64@npm:1.5.2":
+  version: 1.5.2
+  resolution: "@node-rs/argon2-darwin-x64@npm:1.5.2"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@node-rs/argon2-freebsd-x64@npm:1.5.2":
+  version: 1.5.2
+  resolution: "@node-rs/argon2-freebsd-x64@npm:1.5.2"
+  conditions: os=freebsd & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@node-rs/argon2-linux-arm-gnueabihf@npm:1.5.2":
+  version: 1.5.2
+  resolution: "@node-rs/argon2-linux-arm-gnueabihf@npm:1.5.2"
+  conditions: os=linux & cpu=arm
+  languageName: node
+  linkType: hard
+
+"@node-rs/argon2-linux-arm64-gnu@npm:1.5.2":
+  version: 1.5.2
+  resolution: "@node-rs/argon2-linux-arm64-gnu@npm:1.5.2"
+  conditions: os=linux & cpu=arm64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@node-rs/argon2-linux-arm64-musl@npm:1.5.2":
+  version: 1.5.2
+  resolution: "@node-rs/argon2-linux-arm64-musl@npm:1.5.2"
+  conditions: os=linux & cpu=arm64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"@node-rs/argon2-linux-x64-gnu@npm:1.5.2":
+  version: 1.5.2
+  resolution: "@node-rs/argon2-linux-x64-gnu@npm:1.5.2"
+  conditions: os=linux & cpu=x64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@node-rs/argon2-linux-x64-musl@npm:1.5.2":
+  version: 1.5.2
+  resolution: "@node-rs/argon2-linux-x64-musl@npm:1.5.2"
+  conditions: os=linux & cpu=x64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"@node-rs/argon2-win32-arm64-msvc@npm:1.5.2":
+  version: 1.5.2
+  resolution: "@node-rs/argon2-win32-arm64-msvc@npm:1.5.2"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@node-rs/argon2-win32-ia32-msvc@npm:1.5.2":
+  version: 1.5.2
+  resolution: "@node-rs/argon2-win32-ia32-msvc@npm:1.5.2"
+  conditions: os=win32 & cpu=ia32
+  languageName: node
+  linkType: hard
+
+"@node-rs/argon2-win32-x64-msvc@npm:1.5.2":
+  version: 1.5.2
+  resolution: "@node-rs/argon2-win32-x64-msvc@npm:1.5.2"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@node-rs/argon2@npm:^1.5.2":
+  version: 1.5.2
+  resolution: "@node-rs/argon2@npm:1.5.2"
+  dependencies:
+    "@node-rs/argon2-android-arm-eabi": 1.5.2
+    "@node-rs/argon2-android-arm64": 1.5.2
+    "@node-rs/argon2-darwin-arm64": 1.5.2
+    "@node-rs/argon2-darwin-x64": 1.5.2
+    "@node-rs/argon2-freebsd-x64": 1.5.2
+    "@node-rs/argon2-linux-arm-gnueabihf": 1.5.2
+    "@node-rs/argon2-linux-arm64-gnu": 1.5.2
+    "@node-rs/argon2-linux-arm64-musl": 1.5.2
+    "@node-rs/argon2-linux-x64-gnu": 1.5.2
+    "@node-rs/argon2-linux-x64-musl": 1.5.2
+    "@node-rs/argon2-win32-arm64-msvc": 1.5.2
+    "@node-rs/argon2-win32-ia32-msvc": 1.5.2
+    "@node-rs/argon2-win32-x64-msvc": 1.5.2
+  dependenciesMeta:
+    "@node-rs/argon2-android-arm-eabi":
+      optional: true
+    "@node-rs/argon2-android-arm64":
+      optional: true
+    "@node-rs/argon2-darwin-arm64":
+      optional: true
+    "@node-rs/argon2-darwin-x64":
+      optional: true
+    "@node-rs/argon2-freebsd-x64":
+      optional: true
+    "@node-rs/argon2-linux-arm-gnueabihf":
+      optional: true
+    "@node-rs/argon2-linux-arm64-gnu":
+      optional: true
+    "@node-rs/argon2-linux-arm64-musl":
+      optional: true
+    "@node-rs/argon2-linux-x64-gnu":
+      optional: true
+    "@node-rs/argon2-linux-x64-musl":
+      optional: true
+    "@node-rs/argon2-win32-arm64-msvc":
+      optional: true
+    "@node-rs/argon2-win32-ia32-msvc":
+      optional: true
+    "@node-rs/argon2-win32-x64-msvc":
+      optional: true
+  checksum: d657d7647ea7ed7fc0c621553578a55b959bcbf565dcf0a6c979bcd65374e428c674538170b708df989b1b4133afeec380c73c8ff4d5f0c108e83374f259694f
+  languageName: node
+  linkType: hard
+
 "@node-rs/bcrypt-android-arm-eabi@npm:1.7.3":
   version: 1.7.3
   resolution: "@node-rs/bcrypt-android-arm-eabi@npm:1.7.3"
@@ -9405,6 +9544,7 @@ __metadata:
   dependencies:
     "@antfu/eslint-config": ^0.40.2
     "@faker-js/faker": ^8.0.2
+    "@node-rs/argon2": ^1.5.2
     "@node-rs/bcrypt": ^1.7.3
     "@nuxt/devtools": ^0.8.0
     "@nuxt/kit": ^3.6.5
