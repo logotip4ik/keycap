@@ -189,6 +189,11 @@ export default defineNuxtConfig({
   nitro: {
     imports: {
       dirs: ['./prisma'],
+
+      imports: [
+        { from: resolve('./drizzle/index.ts'), name: 'getDrizzle' },
+        { from: resolve('./drizzle/schema/index.ts'), name: '*', as: 'schema' },
+      ],
     },
 
     typescript: {
