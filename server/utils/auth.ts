@@ -90,6 +90,7 @@ export async function getUserFromEvent(event: H3Event): Promise<SafeUser | null>
 }
 
 export async function hashPassword(pass: string): Promise<string> {
+  // NOTE: Idk how i ended up with bcrypt, but probably should have used argon2 instead
   return await bcrypt.hash(pass, 10);
 }
 
