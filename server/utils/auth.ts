@@ -95,7 +95,7 @@ export async function getUserFromEvent(event: H3Event): Promise<SafeUser | null>
     return null;
 
   return {
-    id: toBigInt(payload.id as string),
+    id: toBigInt(payload.sub as string),
     email: payload.email as string,
     username: payload.username as string,
   };
