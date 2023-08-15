@@ -1,3 +1,4 @@
+import type { TypeOf } from 'suretype';
 import type { SafeUser } from '~/types/server';
 
 export default defineEventHandler(async (event) => {
@@ -6,7 +7,7 @@ export default defineEventHandler(async (event) => {
   if (isOriginMismatch)
     throw createError({ statusCode: 403 });
 
-  const body = await readBody(event) || {};
+  const body = await readBody<TypeOf<typeof loginSchema> & { browserAction?: unknown }>(event) || {};
 
   if (body.email) body.email = body.email.trim();
   if (body.password) body.password = body.password.trim();
@@ -45,6 +46,13 @@ export default defineEventHandler(async (event) => {
 
   if (isPasswordValid === false)
     throw createError({ statusCode: 400, statusMessage: 'email or password is incorrect' });
+
+  // $2y - bcrypt
+  if (user.password.startsWith('$2y')) {
+    const rehashedPassword = await hashPassword(body.password);
+
+    await prisma.user.update({ where: { id: user.id }, data: { password: rehashedPassword } });
+  }
 
   const safeUser: SafeUser = { id: user.id, username: user.username, email: user.email };
 
