@@ -11,6 +11,8 @@ export default defineEventHandler(async (event) => {
 
   const body = await readBody<TypeOf<typeof noteCreateSchema>>(event) || {};
 
+  if (body.name) body.name = body.name.trim();
+
   body.path = generateNotePath(user.username, path);
 
   const validation = useNoteCreateValidation(body);

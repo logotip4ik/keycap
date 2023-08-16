@@ -9,8 +9,6 @@ export default defineEventHandler(async (event) => {
 
   const folderPath = generateFolderPath(user.username, path);
 
-  const selectParams = getFolderSelectParamsFromEvent(event);
-
   const drizzle = getDrizzle();
   const isDetailsRequest = typeof query.details !== 'undefined';
 

@@ -33,7 +33,6 @@ export default defineEventHandler(async (event) => {
     data.path = makeNewNotePath(path, data.name);
 
   const drizzle = getDrizzle();
-  const selectParams = getNoteSelectParamsFromEvent(event);
 
   timer.start('db');
   const updatedNote = await drizzle
@@ -49,10 +48,6 @@ export default defineEventHandler(async (event) => {
       eq(schema.note.ownerId, user.id),
     ))
     .execute();
-  // const updatedNote = await prisma.note.update({
-  //   data,
-  //   where: { path: notePath },
-  //   select: { ...selectParams },
   // }).catch(async (err) => {
   //   await event.context.logger.error({ err, msg: 'note.update failed' });
   // });
