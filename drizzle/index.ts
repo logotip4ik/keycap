@@ -1,5 +1,6 @@
 import process from 'node:process';
 import postgres from 'postgres';
+import { isProduction } from 'std-env';
 import { drizzle } from 'drizzle-orm/postgres-js';
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js';
 
@@ -12,7 +13,9 @@ declare global {
 
 export function getDrizzle() {
   if (!globalThis.__drizzle) {
-    const queryClient = postgres(process.env.DATABASE_URL!);
+    const queryClient = postgres(process.env.DATABASE_URL!, {
+      max: isProduction ? 1 : undefined,
+    });
 
     globalThis.__drizzle = drizzle(queryClient, { schema });
   }
