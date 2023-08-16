@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v2.2.7
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v2.2.6...v2.2.7)
+
+### 🩹 Fixes
+
+- Use correct path for note renaming ([68a73a3](https://github.com/logotip4ik/keycap/commit/68a73a3))
+
+### 🏡 Chore
+
+- **release:** V2.2.6 ([6ff44c5](https://github.com/logotip4ik/keycap/commit/6ff44c5))
+- Apply fixes ([4b815e3](https://github.com/logotip4ik/keycap/commit/4b815e3))
+
+### ❤️  Contributors
+
+- Logotip4ik ([@betterqualityassuranceuser](http://github.com/betterqualityassuranceuser))
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+
 ## v2.2.6
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v2.2.5...v2.2.6)
