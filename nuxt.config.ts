@@ -1,4 +1,3 @@
-import process from 'node:process';
 import { isCI, isDevelopment } from 'std-env';
 import UnheadVite from '@unhead/addons/vite';
 import browserslistToEsbuild from 'browserslist-to-esbuild';

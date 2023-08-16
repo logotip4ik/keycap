@@ -1,4 +1,3 @@
-import process from 'node:process';
 import { randomUUID } from 'node:crypto';
 import { getCookie, setCookie } from 'h3';
 import { SignJWT, jwtVerify } from 'jose';

@@ -1,4 +1,3 @@
-import process from 'node:process';
 import { isDevelopment } from 'std-env';
 import parseDuration from 'parse-duration';
 

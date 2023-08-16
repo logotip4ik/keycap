@@ -1,4 +1,3 @@
-import process from 'node:process';
 import { isProduction } from 'std-env';
 import { SocialAuth } from '@prisma/client';
 import { withLeadingSlash, withoutTrailingSlash } from 'ufo';

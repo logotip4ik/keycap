@@ -1,5 +1,3 @@
-import process from 'node:process';
-
 import type { H3Event } from 'h3';
 import type { RuntimeConfig } from 'nuxt/schema';
 

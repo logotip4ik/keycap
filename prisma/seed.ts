@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 import fsp from 'node:fs/promises';
-import process from 'node:process';
 import { existsSync } from 'node:fs';
 import { faker } from '@faker-js/faker';
 
