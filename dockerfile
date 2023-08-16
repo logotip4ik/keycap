@@ -1,6 +1,6 @@
 FROM node:20-slim AS builder
 
-WORKDIR /app/source
+WORKDIR /source
 
 RUN apt update -y
 RUN apt install git -y
@@ -18,7 +18,7 @@ FROM node:20-slim AS release
 
 WORKDIR /app
 
-COPY --from=builder /app/source/.output ./
+COPY --from=builder /source/.output ./
 
 # dont forget to set env's
 
