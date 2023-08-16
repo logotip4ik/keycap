@@ -29,7 +29,7 @@ export default defineEventHandler(async (event) => {
       offset: skip,
       limit: Math.round(select * 0.25),
       columns: { name: true, path: true, root: true },
-      where: like(schema.note.path, pathToSearch),
+      where: like(schema.folder.path, pathToSearch),
     }),
   ]).catch(async (err) => {
     await event.context.logger.error({ err, msg: '(note|folder).findMany failed' });
