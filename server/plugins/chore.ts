@@ -21,4 +21,11 @@ Object.defineProperty(
 setSuretypeOptions({ colors: false, location: false });
 
 // TODO: test if prisma.$connect and $disconnect improves performance
-export default defineNitroPlugin(() => undefined);
+export default defineNitroPlugin((nitro) => {
+  nitro.hooks.hookOnce('close', async () => {
+    const drizzle = getDrizzle();
+
+    // @ts-expect-error inner functions ?
+    await drizzle.session.client.close();
+  });
+});
