@@ -1,10 +1,10 @@
 import { randomUUID } from 'node:crypto';
 import { isProduction } from 'std-env';
 import { withQuery } from 'ufo';
+import { eq } from 'drizzle-orm';
 
 import type { H3Event } from 'h3';
 
-import { eq } from 'drizzle-orm';
 import { OAuthProvider } from '~/server/utils';
 
 import type { NormalizedSocialUser, OAuthProvider as OAuthProviderType, SafeUser } from '~/types/server';
@@ -54,7 +54,6 @@ export function sendOAuthRedirect(event: H3Event, provider: OAuthProviderType) {
   setCookie(event, 'state', state, {
     secure: true,
     httpOnly: true,
-    sameSite: 'lax',
   });
 
   let url: string;
