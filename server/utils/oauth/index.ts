@@ -2,7 +2,6 @@ import { randomUUID } from 'node:crypto';
 import { isProduction } from 'std-env';
 import { withQuery } from 'ufo';
 
-import type { Prisma } from '@prisma/client';
 import type { H3Event } from 'h3';
 
 import { eq } from 'drizzle-orm';
@@ -96,13 +95,11 @@ export function sendOAuthRedirect(event: H3Event, provider: OAuthProviderType) {
 export async function updateOrCreateUserFromSocialAuth(social: NormalizedSocialUser) {
   const drizzle = getDrizzle();
 
-  const defaultUserSelect: Prisma.UserSelect = { id: true, email: true, username: true };
-
   const user = await drizzle.transaction(async (tx) => {
     let dbUser = await tx.query.user
       .findFirst({
         columns: { id: true, email: true, username: true },
-        where: eq(schema.user, social.email),
+        where: eq(schema.user.email, social.email),
       })
       .execute();
 
