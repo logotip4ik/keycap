@@ -1,7 +1,8 @@
-import { sql } from 'drizzle-orm';
+import { relations, sql } from 'drizzle-orm';
 import { bigint, pgTable, text, timestamp, varchar } from 'drizzle-orm/pg-core';
 
 import { user } from './user';
+import { share } from './share';
 import { folder } from './folder';
 
 export const note = pgTable('Note', {
@@ -17,3 +18,17 @@ export const note = pgTable('Note', {
   updatedAt: timestamp('updatedAt').notNull().defaultNow(),
   createdAt: timestamp('createdAt').notNull().defaultNow(),
 });
+
+export const noteRelations = relations(note, ({ one, many }) => ({
+  owner: one(user, {
+    fields: [note.ownerId],
+    references: [user.id],
+  }),
+
+  parent: one(folder, {
+    fields: [note.parentId],
+    references: [folder.id],
+  }),
+
+  shares: many(share),
+}));

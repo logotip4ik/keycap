@@ -1,4 +1,4 @@
-import { sql } from 'drizzle-orm';
+import { relations, sql } from 'drizzle-orm';
 import { bigint, pgTable, timestamp, varchar } from 'drizzle-orm/pg-core';
 
 import { user } from './user';
@@ -15,3 +15,15 @@ export const share = pgTable('Share', {
   updatedAt: timestamp('updatedAt').notNull().defaultNow(),
   createdAt: timestamp('createdAt').notNull().defaultNow(),
 });
+
+export const shareRelations = relations(share, ({ one }) => ({
+  note: one(note, {
+    fields: [share.noteId],
+    references: [note.id],
+  }),
+
+  owner: one(user, {
+    fields: [share.ownerId],
+    references: [user.id],
+  }),
+}));

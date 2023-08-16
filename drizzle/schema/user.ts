@@ -1,5 +1,10 @@
-import { sql } from 'drizzle-orm';
+import { relations, sql } from 'drizzle-orm';
 import { bigint, pgTable, timestamp, varchar } from 'drizzle-orm/pg-core';
+
+import { note } from './note';
+import { share } from './share';
+import { folder } from './folder';
+import { oauth } from './oauth';
 
 export const user = pgTable('User', {
   id: bigint('id', { mode: 'bigint' }).primaryKey().notNull().default(sql`unique_rowid()`),
@@ -11,3 +16,10 @@ export const user = pgTable('User', {
   updatedAt: timestamp('updatedAt').notNull().defaultNow(),
   createdAt: timestamp('createdAt').notNull().defaultNow(),
 });
+
+export const userRelations = relations(user, ({ many }) => ({
+  notes: many(note),
+  shares: many(share),
+  folders: many(folder),
+  socials: many(oauth),
+}));
