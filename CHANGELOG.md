@@ -1,6 +1,25 @@
 # Changelog
 
 
+## v2.2.6
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v2.2.5...v2.2.6)
+
+### 💅 Refactors
+
+- Repatch link extension to remove linkifyjs ([7100f8b](https://github.com/logotip4ik/keycap/commit/7100f8b))
+
+### 🏡 Chore
+
+- **release:** V2.2.5 ([7f33416](https://github.com/logotip4ik/keycap/commit/7f33416))
+- Update deps ([cc5a13c](https://github.com/logotip4ik/keycap/commit/cc5a13c))
+- Apply path for tiptap core ([a4a4df5](https://github.com/logotip4ik/keycap/commit/a4a4df5))
+
+### ❤️  Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+- Logotip4ik ([@betterqualityassuranceuser](http://github.com/betterqualityassuranceuser))
+
 ## v2.2.5
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v2.2.4...v2.2.5)
