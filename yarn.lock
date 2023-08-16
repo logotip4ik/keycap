@@ -3704,7 +3704,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-link@npm:^2.1.0":
+"@tiptap/extension-link@npm:2.1.0":
   version: 2.1.0
   resolution: "@tiptap/extension-link@npm:2.1.0"
   dependencies:
@@ -3713,6 +3713,18 @@ __metadata:
     "@tiptap/core": ^2.0.0
     "@tiptap/pm": ^2.0.0
   checksum: 8897d1bfc7decf0a9e251e7aa320682773d972a758aa7d911388d6ad0c3a055ab40d1852cd1b190f8f214b5588de17eddee04b38edc0fd69c8d12afd25380e24
+  languageName: node
+  linkType: hard
+
+"@tiptap/extension-link@patch:@tiptap/extension-link@npm%3A2.1.0#./.yarn/patches/@tiptap-extension-link-npm-2.1.0-266d67cf34.patch::locator=keycap%40workspace%3A.":
+  version: 2.1.0
+  resolution: "@tiptap/extension-link@patch:@tiptap/extension-link@npm%3A2.1.0#./.yarn/patches/@tiptap-extension-link-npm-2.1.0-266d67cf34.patch::version=2.1.0&hash=801544&locator=keycap%40workspace%3A."
+  dependencies:
+    linkifyjs: ^4.1.0
+  peerDependencies:
+    "@tiptap/core": ^2.0.0
+    "@tiptap/pm": ^2.0.0
+  checksum: 732e5bec0fc5166822f73bdcdf486b46aabefdc63b863eea517247c88bf353e42db37a98964c5f31c02b379f18988dbd1eea6dbbccad76545cb02b9b0d350f10
   languageName: node
   linkType: hard
 
