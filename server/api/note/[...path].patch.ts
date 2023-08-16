@@ -30,7 +30,7 @@ export default defineEventHandler(async (event) => {
 
   // if user updates note name we also need to update its path
   if (data.name)
-    data.path = makeNewNotePath(path, data.name);
+    data.path = makeNewNotePath(notePath, data.name);
 
   const drizzle = getDrizzle();
 
