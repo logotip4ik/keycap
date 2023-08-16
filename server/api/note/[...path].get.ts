@@ -25,16 +25,15 @@ export default defineEventHandler(async (event) => {
     columns: isDetailsRequest
       ? { updatedAt: true, createdAt: true }
       : { id: true, name: true, content: true, path: true },
-    ...(isDetailsRequest
+
+    with: isDetailsRequest
       ? {
-          with: {
-            shares: {
-              limit: 1,
-              columns: { link: true, updatedAt: true, createdAt: true },
-            },
+          shares: {
+            limit: 1,
+            columns: { link: true, updatedAt: true, createdAt: true },
           },
         }
-      : {}),
+      : {},
   });
   // }).catch(async (err) => {
   //   await event.context.logger.error({ err, msg: 'note.findFirst failed' });
