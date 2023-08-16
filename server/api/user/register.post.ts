@@ -42,7 +42,8 @@ export default defineEventHandler(async (event) => {
         password: hashedPassword,
         updatedAt: new Date(),
       })
-      .returning({ id: schema.user.id }))[0];
+      .returning({ id: schema.user.id })
+      .execute())[0];
 
     await tx
       .insert(schema.folder)
@@ -52,16 +53,18 @@ export default defineEventHandler(async (event) => {
         path: generateRootFolderPath(body.username),
         ownerId: user.id,
         updatedAt: new Date(),
-      });
+      })
+      .execute();
 
     return {
       id: user.id,
       email: body.email,
       username: body.username,
     };
-  }).catch(async (err) => {
-    await event.context.logger.error({ err, msg: 'user.create failed' });
-  });
+  })
+    .catch(async (err) => {
+      await event.context.logger.error({ err, msg: 'user.create failed' });
+    });
 
   if (!user)
     throw createError({ statusCode: 400, statusMessage: 'user with this email or username might already exist' });

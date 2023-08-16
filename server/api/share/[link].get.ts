@@ -25,6 +25,10 @@ export default defineEventHandler(async (event) => {
           where: eq(schema.share.link, link),
         },
       },
+    })
+    .execute()
+    .catch(async (err) => {
+      await event.context.logger.error({ err, msg: 'note.findFirst failed' });
     });
 
   if (!note)

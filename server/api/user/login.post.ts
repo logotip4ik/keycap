@@ -29,7 +29,9 @@ export default defineEventHandler(async (event) => {
     .findFirst({
       where: eq(schema.user.email, body.email),
       columns: { id: true, email: true, username: true, password: true },
-    }).catch(async (err) => {
+    })
+    .execute()
+    .catch(async (err) => {
       await event.context.logger.error({ err, msg: 'user.findUnique failed' });
     });
 
@@ -58,6 +60,7 @@ export default defineEventHandler(async (event) => {
       .update(schema.user)
       .set({ password: rehashedPassword, updatedAt: new Date() })
       .where(eq(schema.user.id, user.id))
+      .execute()
       .catch(async (err) => {
         await event.context.logger.error({ err, msg: 'user.update failed updating password' });
       });

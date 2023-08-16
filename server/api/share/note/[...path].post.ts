@@ -17,18 +17,20 @@ export default defineEventHandler(async (event) => {
 
   timer.start('db');
   const share = await drizzle.transaction(async (tx) => {
-    const note = await tx.query.note.findFirst({
-      where: and(
-        eq(schema.note.path, notePath),
-        eq(schema.note.ownerId, user.id),
-      ),
-      columns: { id: true },
-      with: {
-        shares: {
-          columns: { id: true },
+    const note = await tx.query.note
+      .findFirst({
+        where: and(
+          eq(schema.note.path, notePath),
+          eq(schema.note.ownerId, user.id),
+        ),
+        columns: { id: true },
+        with: {
+          shares: {
+            columns: { id: true },
+          },
         },
-      },
-    }).execute();
+      })
+      .execute();
 
     if (!note)
       throw createError({ statusCode: 400 });
@@ -43,7 +45,8 @@ export default defineEventHandler(async (event) => {
         noteId: note.id,
         ownerId: user.id,
         updatedAt: new Date(),
-      });
+      })
+      .execute();
   })
     .catch(async (err) => {
       await event.context.logger.error({ err, msg: 'cannot create share' });

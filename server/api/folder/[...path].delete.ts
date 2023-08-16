@@ -23,10 +23,10 @@ export default defineEventHandler(async (event) => {
       eq(schema.folder.path, folderPath),
       eq(schema.folder.ownerId, user.id),
     ))
-    .execute();
-  // }).catch(async (err) => {
-  //   await event.context.logger.error({ err, msg: 'folder.delete failed' });
-  // });
+    .execute()
+    .catch(async (err) => {
+      await event.context.logger.error({ err, msg: 'folder.delete failed' });
+    });
   timer.end();
 
   if (!folder)

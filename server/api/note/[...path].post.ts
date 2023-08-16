@@ -38,11 +38,10 @@ export default defineEventHandler(async (event) => {
       updatedAt: new Date(),
     })
     .returning({ id: schema.note.id })
-    .execute();
-
-  // }).catch(async (err) => {
-  //   await event.context.logger.error({ err, msg: 'note.create failed' });
-  // });
+    .execute()
+    .catch(async (err) => {
+      await event.context.logger.error({ err, msg: 'note.create failed' });
+    });
   timer.end();
 
   if (!note)

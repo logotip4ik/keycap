@@ -38,10 +38,10 @@ export default defineEventHandler(async (event) => {
       updatedAt: new Date(),
     })
     .returning({ id: schema.folder.id })
-    .execute();
-  // }).catch(async (err) => {
-  //   await event.context.logger.error({ err, msg: 'folder.create failed' });
-  // });
+    .execute()
+    .catch(async (err) => {
+      await event.context.logger.error({ err, msg: 'folder.create failed' });
+    });
   timer.end();
 
   if (!folder)

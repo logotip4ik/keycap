@@ -19,7 +19,9 @@ export default defineEventHandler(async (event) => {
     .where(and(
       eq(schema.note.path, notePath),
       eq(schema.note.ownerId, user.id),
-    )).catch(async (err) => {
+    ))
+    .execute()
+    .catch(async (err) => {
       await event.context.logger.error({ err, msg: 'note.delete failed' });
     });
   timer.end();

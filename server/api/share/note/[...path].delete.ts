@@ -47,7 +47,12 @@ export default defineEventHandler(async (event) => {
       .delete(schema.share)
       .where(eq(schema.share.link, shareToDelete.link))
       .execute();
+  }).catch(async (err) => {
+    await event.context.logger.error({ err, msg: 'share delete failed' });
+
+    throw createError({ statusCode: 400 });
   });
+
   timer.end();
 
   timer.appendHeader(event);

@@ -35,10 +35,11 @@ export default defineEventHandler(async (event) => {
               orderBy: [asc(schema.folder.name)],
             },
           },
+    })
+    .execute()
+    .catch(async (err) => {
+      await event.context.logger.error({ err, msg: 'folder.findFirst failed' });
     });
-  // }).catch(async (err) => {
-  //   await event.context.logger.error({ err, msg: 'folder.findFirst failed' });
-  // });
   timer.end();
 
   if (!folder)

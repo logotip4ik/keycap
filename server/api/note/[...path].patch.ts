@@ -47,10 +47,10 @@ export default defineEventHandler(async (event) => {
       eq(schema.note.path, notePath),
       eq(schema.note.ownerId, user.id),
     ))
-    .execute();
-  // }).catch(async (err) => {
-  //   await event.context.logger.error({ err, msg: 'note.update failed' });
-  // });
+    .execute()
+    .catch(async (err) => {
+      await event.context.logger.error({ err, msg: 'note.update failed' });
+    });
   timer.end();
 
   if (!updatedNote)

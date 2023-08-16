@@ -31,21 +31,31 @@ export default defineEventHandler(async (event) => {
 
   if (!query.socialUser) {
     const [oauth, dbUser] = await Promise.all([
-      drizzle.query.oauth.findFirst({
-        where: eq(schema.oauth.id, googleUser.id),
-        columns: {},
-        with: {
-          user: {
-            columns: { id: true, email: true, username: true },
+      drizzle.query.oauth
+        .findFirst({
+          where: eq(schema.oauth.id, googleUser.id),
+          columns: {},
+          with: {
+            user: {
+              columns: { id: true, email: true, username: true },
+            },
           },
-        },
-      }),
+        })
+        .execute(),
 
-      drizzle.query.user.findFirst({
-        where: eq(schema.user.email, googleUser.email),
-        columns: { id: true, email: true, username: true },
-      }),
-    ]);
+      drizzle.query.user
+        .findFirst({
+          where: eq(schema.user.email, googleUser.email),
+          columns: { id: true, email: true, username: true },
+        })
+        .execute(),
+    ])
+      .catch(async (err) => {
+        await event.context.logger.error({ err, msg: '(oauth|user).findFirst failed' });
+
+        return [null, null];
+      });
+
     user = oauth?.user || dbUser || null;
   }
 

@@ -19,18 +19,22 @@ export default defineEventHandler(async (event) => {
 
   timer.start('db');
   const [notes, folders] = await Promise.all([
-    drizzle.query.note.findMany({
-      offset: skip,
-      limit: Math.round(select * 0.75),
-      columns: { name: true, path: true },
-      where: like(schema.note.path, pathToSearch),
-    }),
-    drizzle.query.folder.findMany({
-      offset: skip,
-      limit: Math.round(select * 0.25),
-      columns: { name: true, path: true, root: true },
-      where: like(schema.folder.path, pathToSearch),
-    }),
+    drizzle.query.note
+      .findMany({
+        offset: skip,
+        limit: Math.round(select * 0.75),
+        columns: { name: true, path: true },
+        where: like(schema.note.path, pathToSearch),
+      })
+      .execute(),
+    drizzle.query.folder
+      .findMany({
+        offset: skip,
+        limit: Math.round(select * 0.25),
+        columns: { name: true, path: true, root: true },
+        where: like(schema.folder.path, pathToSearch),
+      })
+      .execute(),
   ]).catch(async (err) => {
     await event.context.logger.error({ err, msg: '(note|folder).findMany failed' });
 
