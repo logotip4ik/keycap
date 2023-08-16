@@ -155,17 +155,13 @@ export default defineNuxtConfig({
       target: 'esnext',
       // cssMinify: 'lightningcss',
       cssTarget: browserslistToEsbuild(),
-      ...(isCI
-        ? {
-            minify: 'terser',
-            terserOptions: {
-              compress: true,
-              mangle: true,
-              safari10: false,
-              ecma: 2020,
-            },
-          }
-        : {}),
+      minify: isCI ? 'terser' : 'esbuild',
+      terserOptions: {
+        compress: true,
+        mangle: true,
+        safari10: false,
+        ecma: 2020,
+      },
     },
 
     optimizeDeps: {
