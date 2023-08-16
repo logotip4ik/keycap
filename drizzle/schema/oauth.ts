@@ -1,4 +1,4 @@
-import { pgEnum, pgTable, serial, timestamp, varchar } from 'drizzle-orm/pg-core';
+import { bigint, pgEnum, pgTable, timestamp, varchar } from 'drizzle-orm/pg-core';
 
 import { relations } from 'drizzle-orm';
 import { user } from './user';
@@ -8,9 +8,9 @@ export const socialAuthEnum = pgEnum('SocialAuth', ['Google', 'GitHub']);
 export const oauth = pgTable('OAuth', {
   id: varchar('id').primaryKey().notNull(),
 
-  type: socialAuthEnum('type'),
+  type: socialAuthEnum('type').notNull(),
 
-  userId: serial('userId').notNull().references(() => user.id),
+  userId: bigint('userId', { mode: 'bigint' }).notNull().references(() => user.id),
   updatedAt: timestamp('updatedAt').notNull().defaultNow(),
   createdAt: timestamp('createdAt').notNull().defaultNow(),
 });
