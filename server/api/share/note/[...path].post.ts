@@ -28,7 +28,7 @@ export default defineEventHandler(async (event) => {
           columns: { id: true },
         },
       },
-    });
+    }).execute();
 
     if (!note)
       throw createError({ statusCode: 400 });
@@ -44,9 +44,10 @@ export default defineEventHandler(async (event) => {
         ownerId: user.id,
         updatedAt: new Date(),
       });
-  }).catch(async (err) => {
-    await event.context.logger.error({ err, msg: 'cannot create share' });
-  });
+  })
+    .catch(async (err) => {
+      await event.context.logger.error({ err, msg: 'cannot create share' });
+    });
   timer.end();
 
   if (!share)

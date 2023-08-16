@@ -5,6 +5,7 @@ import { withQuery } from 'ufo';
 import type { Prisma } from '@prisma/client';
 import type { H3Event } from 'h3';
 
+import { eq } from 'drizzle-orm';
 import { OAuthProvider } from '~/server/utils';
 
 import type { NormalizedSocialUser, OAuthProvider as OAuthProviderType, SafeUser } from '~/types/server';
@@ -92,54 +93,68 @@ export function sendOAuthRedirect(event: H3Event, provider: OAuthProviderType) {
   );
 }
 
-export async function updateOrCreateUserFromSocialAuth(normalizedUser: NormalizedSocialUser) {
-  const prisma = getPrisma();
-
-  const social: Prisma.OAuthCreateWithoutUserInput = {
-    id: normalizedUser.id,
-    type: normalizedUser.type,
-  };
+export async function updateOrCreateUserFromSocialAuth(social: NormalizedSocialUser) {
+  const drizzle = getDrizzle();
 
   const defaultUserSelect: Prisma.UserSelect = { id: true, email: true, username: true };
 
-  const user = await prisma.$transaction(async (tx) => {
-    let dbUser = await tx.user.findFirst({
-      select: defaultUserSelect,
-      where: { email: normalizedUser.email },
-    });
+  const user = await drizzle.transaction(async (tx) => {
+    let dbUser = await tx.query.user
+      .findFirst({
+        columns: { id: true, email: true, username: true },
+        where: eq(schema.user, social.email),
+      })
+      .execute();
 
     if (dbUser) {
-      await tx.user.update({
-        select: null,
-        where: { id: dbUser.id },
-        data: {
-          socials: {
-            connectOrCreate: {
-              where: { id: normalizedUser.id },
-              create: social,
-            },
-          },
-        },
-      });
+      await tx
+        .insert(schema.oauth)
+        .values({
+          id: social.id,
+          type: social.type,
+          userId: dbUser.id,
+        })
+        .onConflictDoUpdate({
+          target: schema.oauth.id,
+          set: { userId: dbUser.id, updatedAt: new Date() },
+          where: eq(schema.oauth.id, social.id),
+        })
+        .execute();
     }
     else {
-      dbUser = await tx.user.create({
-        select: defaultUserSelect,
-        data: {
-          email: normalizedUser.email,
-          username: normalizedUser.username,
+      dbUser = (await tx
+        .insert(schema.user)
+        .values({
+          email: social.email,
+          username: social.username,
+        })
+        .returning({
+          id: schema.user.id,
+          email: schema.user.email,
+          username: schema.user.username,
+        })
+        .execute())[0];
 
-          folders: {
-            create: {
-              name: `${normalizedUser.username}'s workspace`,
-              root: true,
-              path: generateRootFolderPath(normalizedUser.username),
-            },
-          },
+      await Promise.all([
+        await tx
+          .insert(schema.folder)
+          .values({
+            name: `${social.username}'s workspace`,
+            root: true,
+            path: generateRootFolderPath(social.username),
+            ownerId: dbUser.id,
+          })
+          .execute(),
 
-          socials: { create: social },
-        },
-      });
+        await tx
+          .insert(schema.oauth)
+          .values({
+            id: social.id,
+            type: social.type,
+            userId: dbUser.id,
+          })
+          .execute(),
+      ]);
     }
 
     return dbUser;

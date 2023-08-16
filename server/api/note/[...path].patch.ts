@@ -1,3 +1,4 @@
+import { and, eq } from 'drizzle-orm';
 import type { TypeOf } from 'suretype';
 
 type UpdatableFields = Partial<TypeOf<typeof noteUpdateSchema> & { path: string }>;
@@ -5,8 +6,6 @@ type UpdatableFields = Partial<TypeOf<typeof noteUpdateSchema> & { path: string 
 export default defineEventHandler(async (event) => {
   const user = event.context.user!;
   const timer = event.context.timer!;
-
-  const prisma = getPrisma();
 
   const path = getRouterParam(event, 'path');
 
@@ -33,16 +32,30 @@ export default defineEventHandler(async (event) => {
   if (data.name)
     data.path = makeNewNotePath(path, data.name);
 
+  const drizzle = getDrizzle();
   const selectParams = getNoteSelectParamsFromEvent(event);
 
   timer.start('db');
-  const updatedNote = await prisma.note.update({
-    data,
-    where: { path: notePath },
-    select: { ...selectParams },
-  }).catch(async (err) => {
-    await event.context.logger.error({ err, msg: 'note.update failed' });
-  });
+  const updatedNote = await drizzle
+    .update(schema.note)
+    .set({
+      name: data.name,
+      content: data.content,
+      path: data.path,
+      updatedAt: new Date(),
+    })
+    .where(and(
+      eq(schema.note.path, notePath),
+      eq(schema.note.ownerId, user.id),
+    ))
+    .execute();
+  // const updatedNote = await prisma.note.update({
+  //   data,
+  //   where: { path: notePath },
+  //   select: { ...selectParams },
+  // }).catch(async (err) => {
+  //   await event.context.logger.error({ err, msg: 'note.update failed' });
+  // });
   timer.end();
 
   if (!updatedNote)

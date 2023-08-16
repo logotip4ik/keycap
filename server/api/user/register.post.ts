@@ -31,7 +31,6 @@ export default defineEventHandler(async (event) => {
   if (!hashedPassword)
     throw createError({ statusCode: 500 });
 
-  const prisma = getPrisma();
   const drizzle = getDrizzle();
 
   const user = await drizzle.transaction(async (tx) => {

@@ -1,3 +1,5 @@
+import { and, eq } from 'drizzle-orm';
+
 export default defineEventHandler(async (event) => {
   const user = event.context.user!;
   const timer = event.context.timer!;
@@ -9,15 +11,17 @@ export default defineEventHandler(async (event) => {
 
   const notePath = generateNotePath(user.username, path);
 
-  const prisma = getPrisma();
+  const drizzle = getDrizzle();
 
   timer.start('db');
-  const note = await prisma.note.delete({
-    where: { path: notePath },
-    select: { id: true },
-  }).catch(async (err) => {
-    await event.context.logger.error({ err, msg: 'note.delete failed' });
-  });
+  const note = await drizzle
+    .delete(schema.note)
+    .where(and(
+      eq(schema.note.path, notePath),
+      eq(schema.note.ownerId, user.id),
+    )).catch(async (err) => {
+      await event.context.logger.error({ err, msg: 'note.delete failed' });
+    });
   timer.end();
 
   if (!note)

@@ -1,3 +1,4 @@
+import { eq } from 'drizzle-orm';
 import parseDuration from 'parse-duration';
 
 export async function checkIfUsernameTaken(username: string) {
@@ -6,10 +7,14 @@ export async function checkIfUsernameTaken(username: string) {
 
   username = username.trim();
 
-  const prisma = getPrisma();
+  const drizzle = getDrizzle();
 
-  const user = await prisma.user.findFirst({ where: { username }, select: { username: true } })
-    .catch(() => null);
+  const user = await drizzle.query.user
+    .findFirst({
+      where: eq(schema.user.username, username),
+      columns: { username: true },
+    })
+    .execute();
 
   return !!user?.username;
 }

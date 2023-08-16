@@ -1,3 +1,4 @@
+import { sql } from 'drizzle-orm';
 import parseDuration from 'parse-duration';
 
 interface Info {
@@ -21,11 +22,11 @@ export default defineCachedEventHandler(async (event) => {
   };
 
   if (typeof getQuery(event)[build.id] !== 'undefined') {
-    const prisma = getPrisma();
+    const drizzle = getDrizzle();
 
     const [users, notes] = await Promise.all([
-      prisma.user.count({ select: { id: true } }),
-      prisma.note.count({ select: { id: true } }),
+      drizzle.select({ count: sql<number>`count(*)` }).from(schema.user).execute(),
+      drizzle.select({ count: sql<number>`count(*)` }).from(schema.note).execute(),
     ]).catch(async (err) => {
       await event.context.logger.error({ err, msg: '(user|note).count failed' });
 
@@ -33,9 +34,9 @@ export default defineCachedEventHandler(async (event) => {
     });
 
     if (users)
-      info.users = users.id;
+      info.users = users[0].count;
     if (notes)
-      info.notes = notes.id;
+      info.notes = notes[0].count;
   }
 
   return info;

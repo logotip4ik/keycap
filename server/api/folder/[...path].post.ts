@@ -4,8 +4,6 @@ export default defineEventHandler(async (event) => {
   const user = event.context.user!;
   const timer = event.context.timer!;
 
-  const prisma = getPrisma();
-
   const path = getRouterParam(event, 'path');
 
   if (!path)
@@ -27,21 +25,23 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const selectParams = getFolderSelectParamsFromEvent(event);
+  const drizzle = getDrizzle();
 
   timer.start('db');
-  const folder = await prisma.folder.create({
-    data: {
+  const folder = await drizzle
+    .insert(schema.folder)
+    .values({
       name: body.name,
       path: body.path,
-      owner: { connect: { email: user.email } },
-      parent: { connect: { id: toBigInt(body.parentId) } },
-    },
-
-    select: { ...selectParams },
-  }).catch(async (err) => {
-    await event.context.logger.error({ err, msg: 'folder.create failed' });
-  });
+      ownerId: user.id,
+      parentId: toBigInt(body.parentId),
+      updatedAt: new Date(),
+    })
+    .returning({ id: schema.folder.id })
+    .execute();
+  // }).catch(async (err) => {
+  //   await event.context.logger.error({ err, msg: 'folder.create failed' });
+  // });
   timer.end();
 
   if (!folder)
@@ -51,5 +51,12 @@ export default defineEventHandler(async (event) => {
 
   setResponseStatus(event, 201);
 
-  return { ...folder, notes: [], subfolders: [] };
+  return {
+    id: folder[0].id,
+    name: body.name,
+    path: body.path,
+    root: false,
+    notes: [],
+    subfolders: [],
+  };
 });

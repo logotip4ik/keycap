@@ -1,8 +1,8 @@
+import { and, eq } from 'drizzle-orm';
+
 export default defineEventHandler(async (event) => {
   const user = event.context.user!;
   const timer = event.context.timer!;
-
-  const prisma = getPrisma();
 
   const path = getRouterParam(event, 'path');
 
@@ -14,13 +14,19 @@ export default defineEventHandler(async (event) => {
   if (generateRootFolderPath(user.username) === folderPath)
     return {};
 
+  const drizzle = getDrizzle();
+
   timer.start('db');
-  const folder = await prisma.folder.delete({
-    where: { path: folderPath },
-    select: { id: true },
-  }).catch(async (err) => {
-    await event.context.logger.error({ err, msg: 'folder.delete failed' });
-  });
+  const folder = await drizzle
+    .delete(schema.folder)
+    .where(and(
+      eq(schema.folder.path, folderPath),
+      eq(schema.folder.ownerId, user.id),
+    ))
+    .execute();
+  // }).catch(async (err) => {
+  //   await event.context.logger.error({ err, msg: 'folder.delete failed' });
+  // });
   timer.end();
 
   if (!folder)

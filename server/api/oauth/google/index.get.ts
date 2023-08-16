@@ -1,4 +1,5 @@
 import { destr } from 'destr';
+import { eq } from 'drizzle-orm';
 import { withQuery } from 'ufo';
 
 import type { GoogleUserRes } from '~/types/server-google';
@@ -26,23 +27,25 @@ export default defineEventHandler(async (event) => {
     return sendRedirect(event, '/');
   }
 
-  const prisma = getPrisma();
+  const drizzle = getDrizzle();
 
   if (!query.socialUser) {
-    const userSelect = { id: true, email: true, username: true };
-
     const [oauth, dbUser] = await Promise.all([
-      prisma.oAuth.findFirst({
-        where: { id: googleUser.id },
-        select: { user: { select: userSelect } },
+      drizzle.query.oauth.findFirst({
+        where: eq(schema.oauth.id, googleUser.id),
+        columns: {},
+        with: {
+          user: {
+            columns: { id: true, email: true, username: true },
+          },
+        },
       }),
 
-      prisma.user.findFirst({
-        where: { email: googleUser.email },
-        select: userSelect,
+      drizzle.query.user.findFirst({
+        where: eq(schema.user.email, googleUser.email),
+        columns: { id: true, email: true, username: true },
       }),
     ]);
-
     user = oauth?.user || dbUser || null;
   }
 

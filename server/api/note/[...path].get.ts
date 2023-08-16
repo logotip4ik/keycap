@@ -1,3 +1,5 @@
+import { and, eq } from 'drizzle-orm';
+
 export default defineEventHandler(async (event) => {
   const user = event.context.user!;
   const timer = event.context.timer!;
@@ -9,16 +11,34 @@ export default defineEventHandler(async (event) => {
 
   const notePath = generateNotePath(user.username, path);
 
-  const prisma = getPrisma();
-  const selectParams = getNoteSelectParamsFromEvent(event);
+  const query = getQuery(event);
+  const drizzle = getDrizzle();
+
+  const isDetailsRequest = typeof query.details !== 'undefined';
 
   timer.start('db');
-  const note = await prisma.note.findFirst({
-    where: { path: notePath, ownerId: user.id },
-    select: { ...selectParams },
-  }).catch(async (err) => {
-    await event.context.logger.error({ err, msg: 'note.findFirst failed' });
+  const note = await drizzle.query.note.findFirst({
+    where: and(
+      eq(schema.note.path, notePath),
+      eq(schema.note.ownerId, user.id),
+    ),
+    columns: isDetailsRequest
+      ? { updatedAt: true, createdAt: true }
+      : { id: true, name: true, content: true, path: true },
+    ...(isDetailsRequest
+      ? {
+          with: {
+            shares: {
+              limit: 1,
+              columns: { link: true, updatedAt: true, createdAt: true },
+            },
+          },
+        }
+      : {}),
   });
+  // }).catch(async (err) => {
+  //   await event.context.logger.error({ err, msg: 'note.findFirst failed' });
+  // });
   timer.end();
 
   if (!note)

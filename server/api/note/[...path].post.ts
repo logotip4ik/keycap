@@ -4,8 +4,6 @@ export default defineEventHandler(async (event) => {
   const user = event.context.user!;
   const timer = event.context.timer!;
 
-  const prisma = getPrisma();
-
   const path = getRouterParam(event, 'path');
 
   if (!path)
@@ -24,22 +22,25 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const selectParams = getNoteSelectParamsFromEvent(event);
+  const drizzle = getDrizzle();
 
   timer.start('db');
-  const note = await prisma.note.create({
-    data: {
-      // last route param always should be note name
+  const note = await drizzle
+    .insert(schema.note)
+    .values({
       name: body.name,
       content: '',
       path: body.path,
-      owner: { connect: { id: user.id } },
-      parent: { connect: { id: toBigInt(body.parentId) } },
-    },
-    select: { ...selectParams },
-  }).catch(async (err) => {
-    await event.context.logger.error({ err, msg: 'note.create failed' });
-  });
+      ownerId: user.id,
+      parentId: toBigInt(body.parentId),
+      updatedAt: new Date(),
+    })
+    .returning({ id: schema.note.id })
+    .execute();
+
+  // }).catch(async (err) => {
+  //   await event.context.logger.error({ err, msg: 'note.create failed' });
+  // });
   timer.end();
 
   if (!note)
@@ -47,5 +48,10 @@ export default defineEventHandler(async (event) => {
 
   timer.appendHeader(event);
 
-  return note;
+  return {
+    id: note[0].id,
+    name: body.name,
+    content: '',
+    path: body.path,
+  };
 });

@@ -1,8 +1,8 @@
+import { like } from 'drizzle-orm';
+
 export default defineEventHandler(async (event) => {
   const user = event.context.user!;
   const timer = event.context.timer!;
-
-  const prisma = getPrisma();
 
   const query = getQuery(event) || {};
 
@@ -14,21 +14,22 @@ export default defineEventHandler(async (event) => {
   if (query.select && !Number.isNaN(query.select))
     select = Number(query.select);
 
-  const pathToSearch = `/${user.username}`;
+  const drizzle = getDrizzle();
+  const pathToSearch = `/${user.username}%`;
 
   timer.start('db');
   const [notes, folders] = await Promise.all([
-    prisma.note.findMany({
-      skip,
-      where: { path: { startsWith: pathToSearch } },
-      take: Math.round(select * 0.75),
-      select: { name: true, path: true },
+    drizzle.query.note.findMany({
+      offset: skip,
+      limit: Math.round(select * 0.75),
+      columns: { name: true, path: true },
+      where: like(schema.note.path, pathToSearch),
     }),
-    prisma.folder.findMany({
-      skip,
-      where: { path: { startsWith: pathToSearch } },
-      take: Math.round(select * 0.25),
-      select: { name: true, path: true, root: true },
+    drizzle.query.folder.findMany({
+      offset: skip,
+      limit: Math.round(select * 0.25),
+      columns: { name: true, path: true, root: true },
+      where: like(schema.note.path, pathToSearch),
     }),
   ]).catch(async (err) => {
     await event.context.logger.error({ err, msg: '(note|folder).findMany failed' });

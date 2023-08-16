@@ -1,4 +1,5 @@
 import { destr } from 'destr';
+import { eq } from 'drizzle-orm';
 import { withQuery } from 'ufo';
 
 import type { GitHubUserRes } from '~/types/server-github';
@@ -28,20 +29,23 @@ export default defineEventHandler(async (event) => {
     return sendRedirect(event, '/');
   }
 
-  const prisma = getPrisma();
+  const drizzle = getDrizzle();
 
   if (!query.socialUser) {
-    const userSelect = { id: true, email: true, username: true };
-
     const [oauth, dbUser] = await Promise.all([
-      prisma.oAuth.findFirst({
-        where: { id: githubUser.id.toString() },
-        select: { user: { select: userSelect } },
+      drizzle.query.oauth.findFirst({
+        where: eq(schema.oauth.id, githubUser.id.toString()),
+        columns: {},
+        with: {
+          user: {
+            columns: { id: true, email: true, username: true },
+          },
+        },
       }),
 
-      prisma.user.findFirst({
-        where: { email: githubUser.email },
-        select: userSelect,
+      drizzle.query.user.findFirst({
+        where: eq(schema.user.email, githubUser.email),
+        columns: { id: true, email: true, username: true },
       }),
     ]);
 
