@@ -19,6 +19,7 @@ export default defineEventHandler(async (event) => {
         eq(schema.folder.path, folderPath),
         eq(schema.folder.ownerId, user.id),
       ),
+
       columns: isDetailsRequest
         ? { updatedAt: true, createdAt: true }
         : { id: true, name: true, path: true, root: true },

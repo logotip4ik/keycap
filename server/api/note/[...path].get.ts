@@ -22,6 +22,7 @@ export default defineEventHandler(async (event) => {
       eq(schema.note.path, notePath),
       eq(schema.note.ownerId, user.id),
     ),
+
     columns: isDetailsRequest
       ? { updatedAt: true, createdAt: true }
       : { id: true, name: true, content: true, path: true },
