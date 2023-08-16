@@ -42,10 +42,10 @@ export default defineEventHandler(async (event) => {
     if (!shareToDelete)
       throw createError({ statusCode: 400, statusMessage: 'no share to delete' });
 
-    // TODO: deletion with bigint is not working, thou find is ?
+    // TODO: deletion with bigint is not working, thou `find` is ?
     await tx
       .delete(schema.share)
-      .where(eq(schema.share.id, shareToDelete.id))
+      .where(eq(schema.share.link, shareToDelete.link))
       .execute();
   });
   timer.end();
