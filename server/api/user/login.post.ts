@@ -1,3 +1,5 @@
+import { eq } from 'drizzle-orm';
+
 import type { TypeOf } from 'suretype';
 import type { SafeUser } from '~/types/server';
 
@@ -21,14 +23,15 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const prisma = getPrisma();
+  const drizzle = getDrizzle();
 
-  const user = await prisma.user.findUnique({
-    where: { email: body.email },
-    select: { id: true, email: true, username: true, password: true },
-  }).catch(async (err) => {
-    await event.context.logger.error({ err, msg: 'user.findUnique failed' });
-  });
+  const user = await drizzle.query.user
+    .findFirst({
+      where: eq(schema.user.email, body.email),
+      columns: { id: true, email: true, username: true, password: true },
+    }).catch(async (err) => {
+      await event.context.logger.error({ err, msg: 'user.findUnique failed' });
+    });
 
   if (!user)
     throw createError({ statusCode: 400, statusMessage: 'email or password is incorrect' });
@@ -51,7 +54,13 @@ export default defineEventHandler(async (event) => {
   if (user.password.startsWith('$2')) {
     const rehashedPassword = await hashPassword(body.password);
 
-    await prisma.user.update({ where: { id: user.id }, data: { password: rehashedPassword } });
+    await drizzle
+      .update(schema.user)
+      .set({ password: rehashedPassword, updatedAt: new Date() })
+      .where(eq(schema.user.id, user.id))
+      .catch(async (err) => {
+        await event.context.logger.error({ err, msg: 'user.update failed updating password' });
+      });
   }
 
   const safeUser: SafeUser = { id: user.id, username: user.username, email: user.email };

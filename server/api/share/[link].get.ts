@@ -1,3 +1,5 @@
+import { eq } from 'drizzle-orm';
+
 export default defineEventHandler(async (event) => {
   const link = getRouterParam(event, 'link');
 
@@ -7,14 +9,23 @@ export default defineEventHandler(async (event) => {
   if (!isShareLinkValid(link))
     throw createError({ statusCode: 400 });
 
-  const prisma = getPrisma();
+  const drizzle = getDrizzle();
 
-  const note = await prisma.note.findFirst({
-    select: { name: true, content: true, updatedAt: true, createdAt: true },
-    where: { shares: { some: { link } } },
-  }).catch(async (err) => {
-    await event.context.logger.error({ err, msg: 'note.findFirst failed' });
-  });
+  const note = await drizzle.query.note
+    .findFirst({
+      columns: {
+        name: true,
+        content: true,
+        updatedAt: true,
+        createdAt: true,
+      },
+      with: {
+        shares: {
+          columns: { link: true },
+          where: eq(schema.share.link, link),
+        },
+      },
+    });
 
   if (!note)
     throw createError({ statusCode: 404 });

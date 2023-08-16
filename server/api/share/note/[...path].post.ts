@@ -1,3 +1,5 @@
+import { and, eq } from 'drizzle-orm';
+
 export default defineEventHandler(async (event) => {
   const user = event.context.user!;
   const timer = event.context.timer!;
@@ -9,28 +11,39 @@ export default defineEventHandler(async (event) => {
 
   const notePath = generateNotePath(user.username, path);
 
-  const prisma = getPrisma();
+  const drizzle = getDrizzle();
 
   const link = generateShareLink();
 
   timer.start('db');
-  const share = await prisma.$transaction(async (tx) => {
-    const note = await tx.note.findFirst({
-      where: { path: notePath, ownerId: user.id },
-      select: { shares: { select: { id: true } } },
-    });
-
-    if (note?.shares && note?.shares.length > 0)
-      return note.shares[0];
-
-    return await tx.share.create({
-      select: { id: true },
-      data: {
-        link,
-        note: { connect: { path: notePath } },
-        owner: { connect: { id: user.id } },
+  const share = await drizzle.transaction(async (tx) => {
+    const note = await tx.query.note.findFirst({
+      where: and(
+        eq(schema.note.path, notePath),
+        eq(schema.note.ownerId, user.id),
+      ),
+      columns: { id: true },
+      with: {
+        shares: {
+          columns: { id: true },
+        },
       },
     });
+
+    if (!note)
+      throw createError({ statusCode: 400 });
+
+    if (note && note.shares && note.shares.length > 0)
+      return note.shares[0];
+
+    return await tx
+      .insert(schema.share)
+      .values({
+        link,
+        noteId: note.id,
+        ownerId: user.id,
+        updatedAt: new Date(),
+      });
   }).catch(async (err) => {
     await event.context.logger.error({ err, msg: 'cannot create share' });
   });

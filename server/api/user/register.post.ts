@@ -1,3 +1,5 @@
+import type { TypeOf } from 'suretype';
+
 export default defineEventHandler(async (event) => {
   if (event.context.user) return null;
 
@@ -6,7 +8,7 @@ export default defineEventHandler(async (event) => {
   if (isOriginMismatch)
     throw createError({ statusCode: 403 });
 
-  const body = await readBody(event) || {};
+  const body = await readBody<TypeOf<typeof registerSchema> & { browserAction?: unknown }>(event) || {};
 
   if (body.email) body.email = body.email.trim();
   if (body.username) body.username = body.username.trim().replace(/\s/g, '_');
@@ -21,8 +23,6 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const prisma = getPrisma();
-
   const hashedPassword = await hashPassword(body.password)
     .catch(async (err) => {
       await event.context.logger.error({ err, msg: 'password hashing failed' });
@@ -31,21 +31,33 @@ export default defineEventHandler(async (event) => {
   if (!hashedPassword)
     throw createError({ statusCode: 500 });
 
-  const user = await prisma.user.create({
-    data: {
+  const prisma = getPrisma();
+  const drizzle = getDrizzle();
+
+  const user = await drizzle.transaction(async (tx) => {
+    const user = (await tx
+      .insert(schema.user)
+      .values({
+        email: body.email,
+        username: body.username,
+        password: hashedPassword,
+      })
+      .returning({ id: schema.user.id }))[0];
+
+    await tx
+      .insert(schema.folder)
+      .values({
+        name: `${body.username}'s workspace`,
+        root: true,
+        path: generateRootFolderPath(body.username),
+        ownerId: user.id,
+      });
+
+    return {
+      id: user.id,
       email: body.email,
       username: body.username,
-      password: hashedPassword,
-      folders: {
-        create: {
-          name: `${body.username}'s workspace`,
-          root: true,
-          path: generateRootFolderPath(body.username),
-        },
-      },
-    },
-
-    select: { id: true, email: true, username: true },
+    };
   }).catch(async (err) => {
     await event.context.logger.error({ err, msg: 'user.create failed' });
   });
