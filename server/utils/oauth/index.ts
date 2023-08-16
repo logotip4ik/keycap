@@ -113,6 +113,7 @@ export async function updateOrCreateUserFromSocialAuth(social: NormalizedSocialU
           id: social.id,
           type: social.type,
           userId: dbUser.id,
+          updatedAt: new Date(),
         })
         .onConflictDoUpdate({
           target: schema.oauth.id,
@@ -127,6 +128,7 @@ export async function updateOrCreateUserFromSocialAuth(social: NormalizedSocialU
         .values({
           email: social.email,
           username: social.username,
+          updatedAt: new Date(),
         })
         .returning({
           id: schema.user.id,
@@ -143,6 +145,7 @@ export async function updateOrCreateUserFromSocialAuth(social: NormalizedSocialU
             root: true,
             path: generateRootFolderPath(social.username),
             ownerId: dbUser.id,
+            updatedAt: new Date(),
           })
           .execute(),
 
@@ -152,6 +155,7 @@ export async function updateOrCreateUserFromSocialAuth(social: NormalizedSocialU
             id: social.id,
             type: social.type,
             userId: dbUser.id,
+            updatedAt: new Date(),
           })
           .execute(),
       ]);

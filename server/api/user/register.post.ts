@@ -40,6 +40,7 @@ export default defineEventHandler(async (event) => {
         email: body.email,
         username: body.username,
         password: hashedPassword,
+        updatedAt: new Date(),
       })
       .returning({ id: schema.user.id }))[0];
 
@@ -50,6 +51,7 @@ export default defineEventHandler(async (event) => {
         root: true,
         path: generateRootFolderPath(body.username),
         ownerId: user.id,
+        updatedAt: new Date(),
       });
 
     return {

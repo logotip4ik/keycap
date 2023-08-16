@@ -14,7 +14,7 @@ export function getDrizzle() {
   if (!globalThis.__drizzle) {
     const queryClient = postgres(process.env.DATABASE_URL!);
 
-    globalThis.__drizzle = drizzle(queryClient, { schema, logger: true });
+    globalThis.__drizzle = drizzle(queryClient, { schema });
   }
 
   return globalThis.__drizzle;
