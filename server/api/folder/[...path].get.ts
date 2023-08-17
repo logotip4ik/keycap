@@ -19,8 +19,15 @@ export default defineEventHandler(async (event) => {
   });
   timer.end();
 
-  if (!folder)
-    throw createError({ statusCode: 404 });
+  if (!folder) {
+    throw createError({
+      // prisma will return null if nothing found
+      // thou, error catching will return undefined
+      statusCode: folder === null
+        ? 404
+        : 400,
+    });
+  }
 
   timer.appendHeader(event);
 
