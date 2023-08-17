@@ -150,7 +150,7 @@ mitt.on('details:show', () => {
     showDetails();
 });
 
-watch(error, async (error) => {
+watch(error, debounce(async (error: Error | null) => {
   // Resetting fallback mode to false is previous error is removed
   if (!error)
     return isFallbackMode.value = false;
@@ -188,7 +188,7 @@ watch(error, async (error) => {
   }
 
   note.value = offlineNote;
-});
+}));
 
 watch(fetchedNote, (value) => {
   if (!value) return;

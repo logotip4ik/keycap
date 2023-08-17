@@ -103,7 +103,7 @@ mitt.on('details:show', () => {
 });
 
 // TODO:Create wrapper function for fetch that will handle showing loading and error toast
-watch(error, async (error) => {
+watch(error, debounce(async (error: Error | null) => {
   // if there was previously error, reset the fallback mode to false
   if (!error)
     return isFallbackMode.value = false;
@@ -140,7 +140,7 @@ watch(error, async (error) => {
   }
 
   folder.value = offlineFolder;
-});
+}));
 
 // updating if server sent different
 watch(fetchedFolder, (value) => {
