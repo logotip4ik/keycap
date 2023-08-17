@@ -59,6 +59,7 @@ export default defineNuxtConfig({
     ],
     imports: [
       { from: 'rad-event-listener', name: 'on' },
+      { from: 'perfect-debounce', name: 'debounce' },
     ],
   },
 
@@ -167,6 +168,7 @@ export default defineNuxtConfig({
     optimizeDeps: {
       include: [
         '@superhuman/command-score',
+        'perfect-debounce',
       ],
     },
 
