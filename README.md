@@ -5,11 +5,11 @@
 <img src="public\android-chrome-192x192.png" align="right"
   alt="Purple keycap with capital letter K" width="150" height="150"/>
 
-Simple note taking app with support for markdown. Share your thoughts with others and organize them into folders.
+Simple note-taking app with support for markdown. Share your thoughts with others and organize them into folders.
 
-## Why ?
+## Why?
 
-After months of usage windows and android phone, i found out that notes aren't syncing. Plus there wasn't support for markdown. But you can ask why to build something similar to notion? and answer will be pretty simple. With this project i developed my skills and i hope it will load much faster than notion 🙃
+After months of using Windows and Android, I found out that notes aren't syncing. Plus there wasn't support for markdown. But you can ask why build something similar to the Notion? and the answer will be pretty simple. With this project, I developed my skills and I hope it will load much faster than notion 🙃
 
 ## Stack
 
@@ -22,24 +22,23 @@ After months of usage windows and android phone, i found out that notes aren't s
 - [x] custom `ctrl+k` search
 - [x] commands through `ctrl+k`
 - [ ] add support for renaming __folders__
-- [x] oauth with google and github ?
+- [x] OAuth with Google and GitHub?
 - [x] show notes via sharable links
 - [ ] code highlighting
-- [ ] work without internet (kinda working, if page is still cached, notes and folders will be loaded from local copies)
+- [ ] work without internet (kinda working, if the page is still cached, notes and folders will be loaded from local copies)
 - [ ] create landing page
 - [x] create project logo
 
 ## Notes
 
-- [prisma vs drizzle (my benchmark)](./benchmarks/prisma-vs-drizzle/README.md)    
-  tldr: prisma even manages to beat drizzle in some queries (at least on my local machine)
+- [Prisma vs Drizzle (my benchmark)](./benchmarks/prisma-vs-drizzle/README.md)
+  tldr: Prisma even manages to beat drizzle in some queries (at least on my local machine)
 
-- [prisma vs kysely (my benchmark)](./benchmarks/prisma-vs-kysely/README.md)    
-  tldr: in queries without joins prisma is not that far, but in larger queries, kysely has usually more than 100 ops/s difference
+- [Prisma vs Kysely (my benchmark)](./benchmarks/prisma-vs-kysely/README.md)
+  tldr: in queries without joins prisma is not that far, but in larger queries, Kysely has usually more than 100 ops/s difference
 
-[Rewrite with kysely](https://github.com/logotip4ik/keycap/tree/feat/kysely). Kysely is slightly faster in development environment,
-though `node-postgres` isn't well suited for serverless. So to see kysely outperforms prisma you will needed much more traffic then 
-few visitors in a week.
+[Rewrite with kysely](https://github.com/logotip4ik/keycap/tree/feat/kysely). Kysely is slightly faster in a development environment,
+though `node-postgres` isn't well suited for serverless. So to see Kysely outperforms Prisma you will need much more traffic than a few visitors in a week.
 
 
 ### Load testing with Bombardier 
@@ -51,7 +50,7 @@ bombardier http://localhost:3000/api/note/main -l -d 60s -c 300
 ```
 
 <details>
-<summary>kysely</summary>
+<summary>Kysely</summary>
 
 ```sh
 Statistics        Avg      Stdev        Max
@@ -71,7 +70,7 @@ Statistics        Avg      Stdev        Max
 </details>
 
 <details>
-<summary>prisma</summary>
+<summary>Prisma</summary>
 
 ```sh
 Statistics        Avg      Stdev        Max
@@ -87,5 +86,27 @@ Statistics        Avg      Stdev        Max
     1xx - 0, 2xx - 35320, 3xx - 0, 4xx - 0, 5xx - 0
     others - 0
   Throughput:    33.94MB/s
+```
+</details>
+
+<details>
+<summary>Drizzle</summary>
+
+I should have done something wrong [`feat/drizzle`](https://github.com/logotip4ik/keycap/tree/feat/drizzle)
+
+```sh
+Statistics        Avg      Stdev        Max
+  Reqs/sec       173.54      34.56     269.03
+  Latency         1.70s   456.12ms      6.18s
+  Latency Distribution
+     50%      1.57s
+     75%      1.68s
+     90%      1.88s
+     95%      1.99s
+     99%      3.86s
+  HTTP codes:
+    1xx - 0, 2xx - 10716, 3xx - 0, 4xx - 0, 5xx - 0
+    others - 0
+  Throughput:    10.18MB/s
 ```
 </details>
