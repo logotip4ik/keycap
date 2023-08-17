@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v2.3.1
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v2.3.0...v2.3.1)
+
+### 📖 Documentation
+
+- Better readme and drizzle benchmark results ([a80f552](https://github.com/logotip4ik/keycap/commit/a80f552))
+
+### 🏡 Chore
+
+- **release:** V2.3.0 ([2fe1cdf](https://github.com/logotip4ik/keycap/commit/2fe1cdf))
+- Apply fixes ([b363463](https://github.com/logotip4ik/keycap/commit/b363463))
+
+### ❤️  Contributors
+
+- Logotip4ik ([@betterqualityassuranceuser](http://github.com/betterqualityassuranceuser))
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+
 ## v2.3.0
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v2.2.7...v2.3.0)
