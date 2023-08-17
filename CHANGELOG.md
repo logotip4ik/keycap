@@ -1,6 +1,42 @@
 # Changelog
 
 
+## v2.3.2
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v2.3.1...v2.3.2)
+
+### 🩹 Fixes
+
+- Redirect to workspace root if 404 ([713a99a](https://github.com/logotip4ik/keycap/commit/713a99a))
+- Also redirect to workspace root if 404 on folder ([7fe68da](https://github.com/logotip4ik/keycap/commit/7fe68da))
+- Correct folder name in toast text ([1c826e4](https://github.com/logotip4ik/keycap/commit/1c826e4))
+- Check if response from search is ok ([745933c](https://github.com/logotip4ik/keycap/commit/745933c))
+
+### 💅 Refactors
+
+- Better error status codes ([b7234f3](https://github.com/logotip4ik/keycap/commit/b7234f3))
+- Better error messages if no offline copy was found ([309f809](https://github.com/logotip4ik/keycap/commit/309f809))
+- Use `debounce` instead of `useDebounceFn` ([481ca77](https://github.com/logotip4ik/keycap/commit/481ca77))
+- Debounce error watchers ([b9a3315](https://github.com/logotip4ik/keycap/commit/b9a3315))
+- Check for nuxtError rather then debouncing watcher ([0e6213d](https://github.com/logotip4ik/keycap/commit/0e6213d))
+- Use typescript reference ([e043dce](https://github.com/logotip4ik/keycap/commit/e043dce))
+
+### 🏡 Chore
+
+- **release:** V2.3.1 ([7102752](https://github.com/logotip4ik/keycap/commit/7102752))
+- Add eslint cache to gitignore ([742ea65](https://github.com/logotip4ik/keycap/commit/742ea65))
+- Auto-import `debounce` from `perfect-debounce` ([6298330](https://github.com/logotip4ik/keycap/commit/6298330))
+- Apply fixes ([d01342f](https://github.com/logotip4ik/keycap/commit/d01342f))
+
+### 🎨 Styles
+
+- Move minify property lower in object ([6fd40ab](https://github.com/logotip4ik/keycap/commit/6fd40ab))
+
+### ❤️  Contributors
+
+- Logotip4ik ([@betterqualityassuranceuser](http://github.com/betterqualityassuranceuser))
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+
 ## v2.3.1
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v2.3.0...v2.3.1)
