@@ -21,7 +21,6 @@ jobs:
       - name: Checkouting repo
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
         with:
-          persist-credentials: false
           fetch-depth: 0
 
       - name: Node setup
@@ -45,14 +44,8 @@ jobs:
       - name: Test if project still builds
         run: yarn build
 
-      - name: Commit changes
+      - name: Commit and push changes
         run: |
-          git config --local user.email "noreply@github.com"
-          git config --local user.name "${{ github.actor }}"
-          git commit -a -m "chore: update deps"
-
-      - name: Push changes
-        uses: ad-m/github-push-action@9a2e3c14aaecf56d5816dc3a54514f82050820b2
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
+          git config --local user.email "github-actions@github.com"
+          git config --local user.name "github-actions"
+          git push
