@@ -132,7 +132,7 @@ watch(error, debounce(async (error: Error | null) => {
   const offlineFolder = await offlineStorage.value?.getItem(folderPath.value) as FolderWithContents;
 
   if (!offlineFolder) {
-    createToast(`Sorry ⊙︿⊙ We can't find offline copy for folder: "${route.params.note}"`);
+    createToast(`Sorry ⊙︿⊙ We can't find offline copy for folder: "${route.params.folders.at(-1)}"`);
 
     await navigateTo(`/@${user.value.username}`);
 
