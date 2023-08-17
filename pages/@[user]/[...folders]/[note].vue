@@ -156,13 +156,19 @@ watch(error, async (error) => {
     return isFallbackMode.value = false;
 
   // @ts-expect-error there actually is statusCode
-  if (error.statusCode && error.statusCode === 401) {
+  if (error.statusCode === 401 || !user.value) {
     user.value = null;
     await navigateTo('/login');
     return;
   }
 
-  // No network connection
+  // @ts-expect-error there actually is statusCode
+  if (error.statusCode === 404) {
+    await navigateTo(`/@${user.value.username}`);
+    return;
+  }
+
+  // Some other network error
   if (error.name === 'FetchError')
     isFallbackMode.value = true;
 
