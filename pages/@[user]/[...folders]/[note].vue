@@ -180,7 +180,7 @@ watch(error, async (error) => {
 
   // if offline storage hasn't got the note, navigate to root of in hope folder is in cache
   if (!offlineNote) {
-    createToast('No offline copy found');
+    createToast(`Sorry ⊙︿⊙ We can't find offline copy for note: "${route.params.note}"`);
 
     await navigateTo({ ...route, params: { note: BLANK_NOTE_NAME } });
 

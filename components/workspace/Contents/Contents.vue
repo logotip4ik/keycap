@@ -131,8 +131,13 @@ watch(error, async (error) => {
   // last chance to show user folder, if iterator in @[user].vue page hasn't yet set the foldersCache
   const offlineFolder = await offlineStorage.value?.getItem(folderPath.value) as FolderWithContents;
 
-  if (!offlineFolder)
-    return createToast('No offline copy found');
+  if (!offlineFolder) {
+    createToast(`Sorry ⊙︿⊙ We can't find offline copy for folder: "${route.params.note}"`);
+
+    await navigateTo(`/@${user.value.username}`);
+
+    return;
+  }
 
   folder.value = offlineFolder;
 });
