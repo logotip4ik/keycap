@@ -1,6 +1,40 @@
 # Changelog
 
 
+## v2.3.0
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v2.2.7...v2.3.0)
+
+### 🚀 Enhancements
+
+- Add dockerfile for building nuxt app ([c3d4767](https://github.com/logotip4ik/keycap/commit/c3d4767))
+
+### 💅 Refactors
+
+- Use global process ([c3b62a6](https://github.com/logotip4ik/keycap/commit/c3b62a6))
+- Add dockerignore file ([a44d741](https://github.com/logotip4ik/keycap/commit/a44d741))
+- Use different folders for builder and release stages ([b59dd8d](https://github.com/logotip4ik/keycap/commit/b59dd8d))
+
+### 🏡 Chore
+
+- **release:** V2.2.7 ([e846fb0](https://github.com/logotip4ik/keycap/commit/e846fb0))
+- Enforce use of global `process` ([c02ffea](https://github.com/logotip4ik/keycap/commit/c02ffea))
+- Apply fixes ([2fa2e89](https://github.com/logotip4ik/keycap/commit/2fa2e89))
+
+### 🎨 Styles
+
+- Always specify `terserOptions` ([fbd0f36](https://github.com/logotip4ik/keycap/commit/fbd0f36))
+- Remove whitespaces ([6e7302d](https://github.com/logotip4ik/keycap/commit/6e7302d))
+
+### 🤖 CI
+
+- Use `actions/checkout` to push code back to origin ([1e12c8a](https://github.com/logotip4ik/keycap/commit/1e12c8a))
+
+### ❤️  Contributors
+
+- Logotip4ik ([@betterqualityassuranceuser](http://github.com/betterqualityassuranceuser))
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+
 ## v2.2.7
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v2.2.6...v2.2.7)
