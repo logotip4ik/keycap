@@ -103,7 +103,11 @@ mitt.on('details:show', () => {
 });
 
 // TODO:Create wrapper function for fetch that will handle showing loading and error toast
-watch(error, debounce(async (error: Error | null) => {
+watch(error, async (error) => {
+  // @ts-expect-error second error is actually nuxt error
+  if (isNuxtError(error))
+    return;
+
   // if there was previously error, reset the fallback mode to false
   if (!error)
     return isFallbackMode.value = false;
@@ -140,7 +144,7 @@ watch(error, debounce(async (error: Error | null) => {
   }
 
   folder.value = offlineFolder;
-}));
+});
 
 // updating if server sent different
 watch(fetchedFolder, (value) => {

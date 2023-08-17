@@ -150,7 +150,11 @@ mitt.on('details:show', () => {
     showDetails();
 });
 
-watch(error, debounce(async (error: Error | null) => {
+watch(error, async (error) => {
+  // @ts-expect-error second error is actually nuxt error
+  if (isNuxtError(error))
+    return;
+
   // Resetting fallback mode to false is previous error is removed
   if (!error)
     return isFallbackMode.value = false;
@@ -188,7 +192,7 @@ watch(error, debounce(async (error: Error | null) => {
   }
 
   note.value = offlineNote;
-}));
+});
 
 watch(fetchedNote, (value) => {
   if (!value) return;
