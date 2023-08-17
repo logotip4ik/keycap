@@ -1,10 +1,10 @@
+/// <reference path="../types/store" />
+
 // @ts-expect-error no types :(
 import getScore from '@superhuman/command-score';
 import { expose } from 'comlink';
 
 import { commandActionsMin as commandsCache } from '~/utils/menu';
-
-import type { } from '~/types/store';
 
 const itemsCache = new Map<string, FuzzyItem>();
 
