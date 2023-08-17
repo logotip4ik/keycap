@@ -44,7 +44,7 @@ function search(query: string, maxLength = 4): Array<FuzzyItem | CommandItem> {
 
 async function populateItemsCache() {
   const res = await fetch('/api/search/client');
-  const items = await res.json() as Array<FuzzyItem>;
+  const items = res.ok ? await res.json() as Array<FuzzyItem> : [];
 
   itemsCache.clear();
 
