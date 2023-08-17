@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { withoutLeadingSlash } from 'ufo';
-
 interface Props { onClose: () => void }
 const props = defineProps<Props>();
 
@@ -9,13 +7,12 @@ const fuzzyWorker = useFuzzyWorker();
 const results = shallowRef<Array<FuzzyItem | CommandItem>>([]);
 const isLoadingResults = ref(false);
 const selectedResult = ref(0);
+const searchInput = ref('');
+const isResultsEmpty = ref(false);
 const typeaheadResult = computed<FuzzyItem | CommandItem | null>(() => results.value[selectedResult.value] || null);
 
 const inputEl = ref<HTMLElement | null>(null);
 const searchEl = ref<HTMLElement | null>(null);
-
-const searchInput = ref('');
-const debouncedSearchInput = useDebounce(searchInput, 125);
 
 defineExpose({ input: inputEl });
 
@@ -90,16 +87,14 @@ function fillSearchInput() {
     searchInput.value = typeaheadResult.value.name;
 }
 
-const isResultsEmpty = computed(() => {
-  if (!debouncedSearchInput.value || isLoadingResults.value)
-    return false;
+watch([searchInput, isLoadingResults, results], debounce(([value, isLoading, results]) => {
+  if (!value || isLoading)
+    isResultsEmpty.value = false;
 
-  const inputValue = withoutLeadingSlash(debouncedSearchInput.value);
+  isResultsEmpty.value = value.length !== 0 && results.length === 0;
+}, 125));
 
-  return inputValue && results.value.length === 0;
-});
-
-watch(debouncedSearchInput, handleSearchInput);
+watch(searchInput, debounce(handleSearchInput, 100));
 
 let prevHeight = 0;
 let prevAnimation: Animation | null;

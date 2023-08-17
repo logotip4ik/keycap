@@ -94,9 +94,9 @@ const editor = useEditor({
     }),
   ],
 
-  onUpdate: useDebounceFn(() => {
+  onUpdate: debounce(() => {
     saveEditorContent();
-  }, 350, { maxWait: 2250 }),
+  }, 350),
 });
 
 function update(content: string) {

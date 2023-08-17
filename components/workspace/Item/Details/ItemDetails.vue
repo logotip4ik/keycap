@@ -93,7 +93,7 @@ async function copyShareLink() {
   createToast('Copied share link');
 }
 
-const debouncedToggleShareLink = useDebounceFn(toggleShareLink, 250);
+const debouncedToggleShareLink = debounce(toggleShareLink, 250);
 function toggleShareLink(isCreateRequest: boolean) {
   if (isLoadingItemDetails.value)
     return;
