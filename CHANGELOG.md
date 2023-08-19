@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v2.3.3
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v2.3.2...v2.3.3)
+
+### 🩹 Fixes
+
+- **ci:** Actually commit changes ([83e216f](https://github.com/logotip4ik/keycap/commit/83e216f))
+
+### 🏡 Chore
+
+- **release:** V2.3.2 ([e5c7c43](https://github.com/logotip4ik/keycap/commit/e5c7c43))
+- Update deps ([5571e07](https://github.com/logotip4ik/keycap/commit/5571e07))
+
+### ❤️  Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+- Logotip4ik ([@betterqualityassuranceuser](http://github.com/betterqualityassuranceuser))
+
 ## v2.3.2
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v2.3.1...v2.3.2)
