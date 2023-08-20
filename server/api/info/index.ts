@@ -24,8 +24,8 @@ export default defineCachedEventHandler(async (event) => {
     const prisma = getPrisma();
 
     const [users, notes] = await Promise.all([
-      prisma.user.count({ select: { id: true } }),
-      prisma.note.count({ select: { id: true } }),
+      prisma.user.count(),
+      prisma.note.count(),
     ]).catch(async (err) => {
       await event.context.logger.error({ err, msg: '(user|note).count failed' });
 
@@ -33,9 +33,9 @@ export default defineCachedEventHandler(async (event) => {
     });
 
     if (users)
-      info.users = users.id;
+      info.users = users;
     if (notes)
-      info.notes = notes.id;
+      info.notes = notes;
   }
 
   return info;
