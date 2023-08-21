@@ -155,7 +155,7 @@ export default defineNuxtConfig({
     build: {
       target: 'esnext',
       cssTarget: browserslistToEsbuild(),
-      // cssMinify: 'lightningcss',
+      cssMinify: 'lightningcss',
       minify: isCI ? 'terser' : 'esbuild',
       terserOptions: {
         compress: true,
