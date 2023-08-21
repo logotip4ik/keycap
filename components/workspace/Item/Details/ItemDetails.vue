@@ -215,7 +215,7 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
     background-color: hsla(var(--surface-color-hsl), 0.5);
   }
 
-  @media screen and (max-width: $breakpoint-tablet) {
+  @media (max-width: $breakpoint-tablet) {
     width: 100%;
     max-width: unset;
 
@@ -240,7 +240,7 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
 
     background-color: hsla(var(--surface-color-hsl), 0.9);
 
-    @media screen and (max-width: $breakpoint-tablet) {
+    @media (max-width: $breakpoint-tablet) {
       align-items: stretch;
     }
 

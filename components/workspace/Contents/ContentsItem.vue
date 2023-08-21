@@ -335,7 +335,7 @@ function handleContextmenu(event: Event) {
       color: var(--text-color);
     }
 
-    @media screen and (max-width: $breakpoint-tablet) {
+    @media (max-width: $breakpoint-tablet) {
       --button-size-min: 2.5rem;
 
       display: block;
@@ -350,7 +350,7 @@ function handleContextmenu(event: Event) {
 
     transition: background-color .1s, color .1s;
 
-    @media screen and (max-width: $breakpoint-tablet) {
+    @media (max-width: $breakpoint-tablet) {
       border-color: transparent !important;
     }
   }
@@ -360,7 +360,7 @@ function handleContextmenu(event: Event) {
 
     border-color: var(--text-color) !important;
 
-    @media screen and (max-width: $breakpoint-tablet) {
+    @media (max-width: $breakpoint-tablet) {
       border-color: transparent !important;
     }
   }
@@ -371,7 +371,7 @@ function handleContextmenu(event: Event) {
     pointer-events: none;
   };
 
-  @media screen and (max-width: $breakpoint-tablet) {
+  @media (max-width: $breakpoint-tablet) {
     font-size: 1.2rem;
   }
 }

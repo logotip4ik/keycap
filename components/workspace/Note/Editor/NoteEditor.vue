@@ -211,7 +211,7 @@ onMounted(() => {
     color: hsla(var(--text-color-hsl), 0.5);
   }
 
-  @media screen and (max-width: $breakpoint-tablet) {
+  @media (max-width: $breakpoint-tablet) {
     top: 0.15rem;
   }
 

@@ -104,7 +104,7 @@ const shortCommitSha = build.commit;
       margin: 0;
       margin-bottom: 1.5rem;
 
-      @media screen and (max-width: $breakpoint-tablet) {
+      @media (max-width: $breakpoint-tablet) {
         font-size: max(5vw, 4rem);
       }
     }

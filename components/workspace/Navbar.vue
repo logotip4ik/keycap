@@ -181,7 +181,7 @@ const folderRootPath = computed(() => {
       pointer-events: none;
       background-color: transparent;
 
-      @media screen and (max-width: $breakpoint-tablet) {
+      @media (max-width: $breakpoint-tablet) {
         &[data-show-back-button="true"] {
           opacity: 1;
           pointer-events: all;
@@ -194,12 +194,12 @@ const folderRootPath = computed(() => {
       width: auto;
     }
 
-    @media screen and (max-width: $breakpoint-tablet) {
+    @media (max-width: $breakpoint-tablet) {
       display: flex;
     }
   }
 
-  @media screen and (max-width: $breakpoint-tablet) {
+  @media (max-width: $breakpoint-tablet) {
     width: 100%;
 
     max-width: unset;

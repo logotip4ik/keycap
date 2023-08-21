@@ -75,7 +75,7 @@ onMounted(() => {
 
   pointer-events: none;
 
-  @media screen and (max-width: $breakpoint-tablet) {
+  @media (max-width: $breakpoint-tablet) {
     --screen-spacing-bottom: 1rem;
 
     justify-items: flex-start;
@@ -111,7 +111,7 @@ onMounted(() => {
 
   transition: transform 0.3s, opacity 0.3s;
 
-  @media screen and (max-width: $breakpoint-tablet) {
+  @media (max-width: $breakpoint-tablet) {
     right: unset;
     left: 0;
   }

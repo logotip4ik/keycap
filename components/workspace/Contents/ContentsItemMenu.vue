@@ -219,7 +219,7 @@ onBeforeUnmount(() => {
         }
       }
 
-      @media screen and (max-width: $breakpoint-tablet) {
+      @media (max-width: $breakpoint-tablet) {
         font-size: 1.1rem;
         padding: 0.5rem 1.5rem;
       }

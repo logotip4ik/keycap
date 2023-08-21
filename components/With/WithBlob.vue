@@ -46,7 +46,7 @@ const bindings = computed(() => {
     animation: var(--appear-animation), blob-anim 20s infinite linear alternate;
   }
 
-  @media screen and (max-width: $breakpoint-tablet) {
+  @media (max-width: $breakpoint-tablet) {
     --size: 30vmin;
     --blur-divider: 2;
   }

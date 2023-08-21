@@ -243,7 +243,7 @@ onBeforeUnmount(() => {
 
     margin: 0 auto;
 
-    @media screen and (max-width: $breakpoint-tablet) {
+    @media (max-width: $breakpoint-tablet) {
       width: 100%;
     }
   }

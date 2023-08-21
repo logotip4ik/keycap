@@ -105,7 +105,7 @@ function normalizeShortcut(shortcut: string) {
     }
   }
 
-  @media screen and (max-width: $breakpoint-tablet) {
+  @media (max-width: $breakpoint-tablet) {
     display: none;
   }
 }

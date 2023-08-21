@@ -324,7 +324,7 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
       transition: border-color .1s;
     }
 
-    @media screen and (max-width: $breakpoint-tablet) {
+    @media (max-width: $breakpoint-tablet) {
       max-width: 32ch;
     }
   }
@@ -377,10 +377,10 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
       height: auto;
     }
 
-    @media screen and (max-width: $breakpoint-tablet) {
+    @media (max-width: $breakpoint-tablet) {
       --size-basis: calc(2.25rem + 1.5vw);
 
-      @media screen and (max-width: 365px) {
+      @media (max-width: 365px) {
         --size-basis: 2.25rem;
       }
     }

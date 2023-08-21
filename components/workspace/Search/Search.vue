@@ -213,7 +213,7 @@ useTinykeys({ Escape: handleCancel });
     background-color: hsla(var(--surface-color-hsl), 0.5);
   }
 
-  @media screen and (max-width: $breakpoint-tablet) {
+  @media (max-width: $breakpoint-tablet) {
     width: 100%;
     max-width: unset;
 
@@ -237,7 +237,7 @@ useTinykeys({ Escape: handleCancel });
       backdrop-filter: blur(8px);
     }
 
-    @media screen and (max-width: $breakpoint-tablet) {
+    @media (max-width: $breakpoint-tablet) {
       padding-top: 0;
     }
   }
@@ -263,7 +263,7 @@ useTinykeys({ Escape: handleCancel });
       border-color: var(--task-list-indicator-color);
     }
 
-    @media screen and (max-width: $breakpoint-tablet) {
+    @media (max-width: $breakpoint-tablet) {
       --search-font-size: 1.1rem;
     }
 
@@ -351,7 +351,7 @@ useTinykeys({ Escape: handleCancel });
         vertical-align: baseline !important;
       }
 
-      @media screen and (max-width: $breakpoint-tablet) {
+      @media (max-width: $breakpoint-tablet) {
         display: inline-flex;
       }
     }

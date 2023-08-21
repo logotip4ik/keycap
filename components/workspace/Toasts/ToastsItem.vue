@@ -188,7 +188,7 @@ onBeforeUnmount(() => clearTimeout(timeout));
       }
     }
 
-    @media screen and (max-width: $breakpoint-tablet) {
+    @media (max-width: $breakpoint-tablet) {
       padding-block: 0.65rem;
     }
   }

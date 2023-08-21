@@ -162,7 +162,7 @@ provide(IsNoteNameEmptyKey, isNoteNameEmpty);
     border-right: 1px solid hsla(var(--text-color-hsl), 0.25);
     border-bottom: 1px solid hsla(var(--text-color-hsl), 0.25);
 
-    @media screen and (max-width: $breakpoint-tablet) {
+    @media (max-width: $breakpoint-tablet) {
       grid-area: 1 / 1;
 
       border-right: none
@@ -205,7 +205,7 @@ provide(IsNoteNameEmptyKey, isNoteNameEmpty);
       }
     }
 
-    @media screen and (max-width: $breakpoint-tablet) {
+    @media (max-width: $breakpoint-tablet) {
       width: 100%;
       max-width: 100%;
 
@@ -238,12 +238,12 @@ provide(IsNoteNameEmptyKey, isNoteNameEmpty);
       background-color: var(--scrollbar-thumb-color);
     }
 
-    @media screen and (max-width: $breakpoint-tablet) {
+    @media (max-width: $breakpoint-tablet) {
       grid-area: 2 / 1;
     }
   }
 
-  @media screen and (max-width: $breakpoint-tablet) {
+  @media (max-width: $breakpoint-tablet) {
     grid-template-rows: auto 1fr;
     grid-template-columns: 1fr;
   }

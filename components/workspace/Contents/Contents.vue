@@ -211,7 +211,7 @@ useTinykeys({
     .item__name {
       margin: 0;
 
-      @media screen and (max-width: $breakpoint-tablet) {
+      @media (max-width: $breakpoint-tablet) {
         justify-content: center;
       }
     }

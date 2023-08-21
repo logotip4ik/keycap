@@ -48,7 +48,7 @@
     }
   }
 
-  @media screen and (max-width: $breakpoint-tablet) {
+  @media (max-width: $breakpoint-tablet) {
     padding: 1rem 1rem 45vh;
   }
 }
