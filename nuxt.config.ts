@@ -1,7 +1,6 @@
 import UnheadVite from '@unhead/addons/vite';
 import parseDuration from 'parse-duration';
-import browserslist from 'browserslist';
-import { browserslistToTargets } from 'lightningcss';
+import browserslistToEsbuild from 'browserslist-to-esbuild';
 import { resolve } from 'pathe';
 import { isCI, isDevelopment } from 'std-env';
 
@@ -156,6 +155,7 @@ export default defineNuxtConfig({
     build: {
       target: 'esnext',
       cssMinify: 'lightningcss',
+      cssTarget: browserslistToEsbuild(),
       minify: isCI ? 'terser' : 'esbuild',
       terserOptions: {
         compress: true,
@@ -173,10 +173,6 @@ export default defineNuxtConfig({
     },
 
     css: {
-      lightningcss: {
-        targets: browserslistToTargets(browserslist()),
-      },
-
       preprocessorOptions: {
         scss: {
           additionalData: [
@@ -226,22 +222,6 @@ export default defineNuxtConfig({
         fallbacks: ['Arial'],
       },
     ],
-  },
-
-  postcss: {
-    plugins: {
-      'postcss-preset-env': {
-        features: {
-          'custom-properties': false,
-          'is-pseudo-class': false,
-          'clamp': false,
-          'focus-visible-pseudo-class': false,
-          'focus-within-pseudo-class': false,
-          'gap-properties': false,
-          'prefers-color-scheme-query': false,
-        },
-      },
-    },
   },
 
   serverHandlers: [
