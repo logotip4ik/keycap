@@ -16,6 +16,7 @@ export default defineEventHandler(async (event) => {
   // is better to type body as create schema and later set path
   const body = await readBody<TypeOf<typeof folderCreateSchema>>(event) || {};
 
+  body.name = body.name?.trim();
   body.path = generateFolderPath(user.username, path);
 
   const validation = useFolderCreateValidation(body);
