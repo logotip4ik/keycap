@@ -1,6 +1,25 @@
 # Changelog
 
 
+## v2.3.4
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v2.3.3...v2.3.4)
+
+### 💅 Refactors
+
+- Default count column ([e500732](https://github.com/logotip4ik/keycap/commit/e500732))
+- Do not use cache for `info` route ([1614875](https://github.com/logotip4ik/keycap/commit/1614875))
+
+### 🏡 Chore
+
+- **release:** V2.3.3 ([a5cbcf7](https://github.com/logotip4ik/keycap/commit/a5cbcf7))
+- Apply fixes ([8eb701a](https://github.com/logotip4ik/keycap/commit/8eb701a))
+
+### ❤️  Contributors
+
+- Logotip4ik ([@betterqualityassuranceuser](http://github.com/betterqualityassuranceuser))
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+
 ## v2.3.3
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v2.3.2...v2.3.3)
