@@ -4,23 +4,20 @@ const props = defineProps<Props>();
 
 const isCommand = 'key' in props.item;
 
-const itemPath = (() => {
-  if (isCommand) return '';
-
-  // TODO: rewrite item path resolution ?
-  const path = (props.item as FuzzyItem).path
+const itemPath = isCommand
+  ? ''
+  : decodeURIComponent(
+    props.item.path
+    //   // TODO: rewrite item path resolution ?
     // removing account name
-    .replace(/\/\w+\//, '')
+      .replace(/\/\w+\//, '')
     // the last one string from path
-    .replace(/\/?[\w%]+$/, '');
+      .replace(/\/?[\w%]+$/, ''),
+  );
 
-  return decodeURIComponent(path);
-})();
-const itemHref = (() => {
-  if (isCommand) return '';
-
-  return generateItemRouteParams(props.item as FuzzyItem);
-})();
+const itemHref = isCommand
+  ? ''
+  : generateItemRouteParams(props.item);
 </script>
 
 <template>
