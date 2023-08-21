@@ -59,6 +59,7 @@ const itemHref = isCommand
 
   backdrop-filter: blur(2px);
   transition: background-color .4s;
+  cursor: pointer;
 
   &__name {
     text-overflow: ellipsis;
