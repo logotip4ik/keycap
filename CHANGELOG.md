@@ -1,6 +1,28 @@
 # Changelog
 
 
+## v2.3.5
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v2.3.4...v2.3.5)
+
+### 🩹 Fixes
+
+- **deps:** Lower `std-env` version ([f52009f](https://github.com/logotip4ik/keycap/commit/f52009f))
+- Rework start item to enable animation ([deaad43](https://github.com/logotip4ik/keycap/commit/deaad43))
+
+### 🏡 Chore
+
+- **release:** V2.3.4 ([6f65de3](https://github.com/logotip4ik/keycap/commit/6f65de3))
+
+### 🎨 Styles
+
+- Empty line ([1877cff](https://github.com/logotip4ik/keycap/commit/1877cff))
+
+### ❤️  Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+- Logotip4ik ([@betterqualityassuranceuser](http://github.com/betterqualityassuranceuser))
+
 ## v2.3.4
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v2.3.3...v2.3.4)
