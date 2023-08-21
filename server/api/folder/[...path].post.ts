@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400 });
 
   // NOTE: path is actually is not required param for body
-  // just to reuse object and thus improve pref, i think it
+  // just to reuse object and thus improve perf, i think it
   // is better to type body as create schema and later set path
   const body = await readBody<TypeOf<typeof folderCreateSchema>>(event) || {};
 
