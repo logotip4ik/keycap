@@ -1,6 +1,41 @@
 # Changelog
 
 
+## v2.3.7
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v2.3.6...v2.3.7)
+
+### 🩹 Fixes
+
+- Open item on mouse and touch clicks ([6eecc9f](https://github.com/logotip4ik/keycap/commit/6eecc9f))
+
+### 💅 Refactors
+
+- Directly specify targets for `lightningscss` ([d871191](https://github.com/logotip4ik/keycap/commit/d871191))
+- Lower tranform transition duration ([0df5f24](https://github.com/logotip4ik/keycap/commit/0df5f24))
+- Handle all transformations for lightningcss ([a7c0787](https://github.com/logotip4ik/keycap/commit/a7c0787))
+- Do not use `screen` in media query ([4ea7528](https://github.com/logotip4ik/keycap/commit/4ea7528))
+- Use turnery statements instead of function calls ([c6af469](https://github.com/logotip4ik/keycap/commit/c6af469))
+- `pointer` cursor for search item ([1d8d8ee](https://github.com/logotip4ik/keycap/commit/1d8d8ee))
+
+### 🏡 Chore
+
+- **release:** V2.3.6 ([99f1a28](https://github.com/logotip4ik/keycap/commit/99f1a28))
+- Install and enable back lightningcss ([acdf6be](https://github.com/logotip4ik/keycap/commit/acdf6be))
+- Update yarn ([fc64ee4](https://github.com/logotip4ik/keycap/commit/fc64ee4))
+- Optimize css target ([7f03b17](https://github.com/logotip4ik/keycap/commit/7f03b17))
+- Uninstall `postcss-preset-env` ([08a63f7](https://github.com/logotip4ik/keycap/commit/08a63f7))
+- Use postcss plugin for combining same media queries ([deaa612](https://github.com/logotip4ik/keycap/commit/deaa612))
+
+### 🎨 Styles
+
+- Inline browserslist query ([51afb3f](https://github.com/logotip4ik/keycap/commit/51afb3f))
+
+### ❤️  Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+- Logotip4ik ([@betterqualityassuranceuser](http://github.com/betterqualityassuranceuser))
+
 ## v2.3.6
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v2.3.5...v2.3.6)
