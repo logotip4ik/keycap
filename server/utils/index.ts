@@ -5,9 +5,10 @@ import { withLeadingSlash, withoutTrailingSlash } from 'ufo';
 import type { H3Event } from 'h3';
 import type { Prisma } from '@prisma/client';
 
-export const stringifiedBigIntRE = /(\d{18})n/;
 export const usernameRE = /^[\w.\-]{3,16}$/;
 export const OAuthProvider = SocialAuth;
+
+export { toBigInt, stringifiedBigIntRE } from '~/utils';
 
 export function getServerUserAgent() {
   const postfix = isProduction ? '' : 'Dev';
@@ -27,20 +28,6 @@ export function generateNotePath(username: string, path: string): string {
 
 export function generateRootFolderPath(username: string) {
   return `/${username}`;
-}
-
-export function toBigInt(string: string): bigint {
-  const match = string.match(stringifiedBigIntRE);
-
-  if (match)
-    return BigInt(match[1]);
-
-  try {
-    return BigInt(string);
-  }
-  catch {
-    return BigInt(-1);
-  }
 }
 
 export function getNoteSelectParamsFromEvent(event: H3Event): Prisma.NoteSelect {
@@ -94,13 +81,4 @@ export function getFolderSelectParamsFromEvent(event: H3Event): Prisma.FolderSel
   }
 
   return defaultSelects;
-}
-
-if (import.meta.vitest) {
-  const { it, expect } = import.meta.vitest;
-
-  it('toBigInt', () => {
-    expect(toBigInt('77777777777777777n')).to.equal(BigInt(-1));
-    expect(toBigInt('777777777777777777n')).to.not.equal(BigInt(-1));
-  });
 }

@@ -1,7 +1,5 @@
 import parseDuration from 'parse-duration';
 
-import { toBigInt } from '~/server/utils';
-
 const NEAR_HOUR = parseDuration('0.9 hour')!;
 
 let prevInterval: NodeJS.Timer;
