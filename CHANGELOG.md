@@ -1,6 +1,27 @@
 # Changelog
 
 
+## v2.3.6
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v2.3.5...v2.3.6)
+
+### 💅 Refactors
+
+- Move client used functions to client utils ([0a460a4](https://github.com/logotip4ik/keycap/commit/0a460a4))
+- Trim note and folder names before creation ([d3b1bb9](https://github.com/logotip4ik/keycap/commit/d3b1bb9))
+
+### 🏡 Chore
+
+- **release:** V2.3.5 ([f80b1e3](https://github.com/logotip4ik/keycap/commit/f80b1e3))
+- Bump back `std-env` to latest ([71987dd](https://github.com/logotip4ik/keycap/commit/71987dd))
+- Fix typo ([b5e0a0b](https://github.com/logotip4ik/keycap/commit/b5e0a0b))
+- Apply fixes ([c0f0ccc](https://github.com/logotip4ik/keycap/commit/c0f0ccc))
+
+### ❤️  Contributors
+
+- Logotip4ik ([@betterqualityassuranceuser](http://github.com/betterqualityassuranceuser))
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+
 ## v2.3.5
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v2.3.4...v2.3.5)
