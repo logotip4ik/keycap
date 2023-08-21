@@ -46,31 +46,31 @@ function handleSearchInput(value: string) {
     });
 }
 
-async function openResult() {
-  const resultToOpen = results.value[selectedResult.value];
+async function openItem(item?: FuzzyItem | CommandItem) {
+  item ||= results.value[selectedResult.value];
 
-  if (!resultToOpen) {
+  if (!item) {
     if (!afterSearchCallback)
-      afterSearchCallback = openResult;
+      afterSearchCallback = openItem;
 
     return;
   };
 
-  const isCommand = 'key' in resultToOpen;
+  const isCommand = 'key' in item;
 
   if (isCommand) {
     const args = searchInput.value.slice(1).split(' ').slice(1);
 
-    const action = commandActions[(resultToOpen as CommandItem).key];
+    const action = commandActions[(item as CommandItem).key];
 
     if (action) await action(args);
   }
   else {
-    await navigateTo(generateItemRouteParams(resultToOpen as FolderOrNote));
+    await navigateTo(generateItemRouteParams(item as FolderOrNote));
 
     document
-      .querySelector(`a[title="${resultToOpen.name}"]`)
-      ?.scrollIntoView({ behavior: 'smooth' }); // TODO: this do not work on chrome ?
+      .querySelector(`a[title="${item.name}"]`)
+      ?.scrollIntoView({ behavior: 'smooth' }); // TODO: this is not working on chrome ?
   }
 
   handleCancel();
@@ -125,7 +125,7 @@ useTinykeys({ Escape: handleCancel });
 <template>
   <div class="search-wrapper" @click.self="handleCancel">
     <div ref="searchEl" class="search">
-      <form class="search__form" @submit.prevent="openResult">
+      <form class="search__form" @submit.prevent="openItem()">
         <WorkspaceSearchInput
           ref="inputEl"
           :value="searchInput"
@@ -179,8 +179,8 @@ useTinykeys({ Escape: handleCancel });
               <WorkspaceSearchItem
                 :item="item"
                 :selected="selectedResult === idx"
-                @click="handleCancel"
                 @focus="selectedResult = idx"
+                @click="openItem(item)"
               />
             </li>
           </template>
