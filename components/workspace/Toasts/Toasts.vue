@@ -94,7 +94,7 @@ onMounted(() => {
 
   transform-origin: bottom center;
 
-  transition: transform 0.4s var(--ease-out-cubic), opacity 0.3s;
+  transition: transform 0.3s var(--ease-out-cubic), opacity 0.3s;
 
   [data-icon] {
     transition: opacity 0.4s;
@@ -109,7 +109,7 @@ onMounted(() => {
 
   width: var(--prev-width);
 
-  transition: opacity 0.3s, transform 0.4s;
+  transition: transform 0.3s, opacity 0.3s;
 
   @media screen and (max-width: $breakpoint-tablet) {
     right: unset;
