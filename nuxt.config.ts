@@ -1,8 +1,9 @@
-import { isCI, isDevelopment } from 'std-env';
 import UnheadVite from '@unhead/addons/vite';
-import browserslistToEsbuild from 'browserslist-to-esbuild';
 import parseDuration from 'parse-duration';
+import browserslist from 'browserslist';
+import { browserslistToTargets } from 'lightningcss';
 import { resolve } from 'pathe';
+import { isCI, isDevelopment } from 'std-env';
 
 import { getHeaders } from './headers.config';
 import breakpoints from './constants/breakpoints';
@@ -154,7 +155,6 @@ export default defineNuxtConfig({
 
     build: {
       target: 'esnext',
-      cssTarget: browserslistToEsbuild(),
       cssMinify: 'lightningcss',
       minify: isCI ? 'terser' : 'esbuild',
       terserOptions: {
@@ -173,6 +173,10 @@ export default defineNuxtConfig({
     },
 
     css: {
+      lightningcss: {
+        targets: browserslistToTargets(browserslist()),
+      },
+
       preprocessorOptions: {
         scss: {
           additionalData: [
