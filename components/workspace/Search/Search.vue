@@ -5,6 +5,7 @@ const props = defineProps<Props>();
 const fuzzyWorker = useFuzzyWorker();
 
 const results = shallowRef<Array<FuzzyItem | CommandItem>>([]);
+const resultsEl = ref<ComponentPublicInstance<HTMLUListElement> | null>(null);
 const isLoadingResults = ref(false);
 const selectedResult = ref(0);
 const searchInput = ref('');
@@ -17,10 +18,9 @@ const searchEl = ref<HTMLElement | null>(null);
 defineExpose({ input: inputEl });
 
 function handleCancel(_event?: Event) {
-  props.onClose();
-
-  searchInput.value = '';
-  selectedResult.value = 0;
+  setTimeout(() => {
+    props.onClose();
+  }, 0);
 }
 
 let afterSearchCallback: ((...args: Array<any>) => any) | null;
@@ -46,34 +46,29 @@ function handleSearchInput(value: string) {
     });
 }
 
-async function openItem(item?: FuzzyItem | CommandItem) {
-  item ||= results.value[selectedResult.value];
+async function openItem() {
+  const list = resultsEl.value?.$el as HTMLUListElement;
+  const result = list.children[selectedResult.value];
 
-  if (!item) {
+  if (!result) {
     if (!afterSearchCallback)
       afterSearchCallback = openItem;
 
     return;
   };
 
-  const isCommand = 'key' in item;
+  const actionEl = result.firstElementChild as HTMLAnchorElement | HTMLButtonElement;
+  const actionName = actionEl.dataset.name;
 
-  if (isCommand) {
-    const args = searchInput.value.slice(1).split(' ').slice(1);
+  actionEl.click();
 
-    const action = commandActions[(item as CommandItem).key];
-
-    if (action) await action(args);
-  }
-  else {
-    await navigateTo(generateItemRouteParams(item as FolderOrNote));
-
-    document
-      .querySelector(`a[title="${item.name}"]`)
-      ?.scrollIntoView({ behavior: 'smooth' }); // TODO: this is not working on chrome ?
-  }
-
-  handleCancel();
+  setTimeout(() => {
+    if (actionName) {
+      document
+        .querySelector(`a[title="${actionName}"]`)
+        ?.scrollIntoView({ behavior: 'smooth' }); // TODO: this is not working on chrome ?
+    }
+  }, 0);
 }
 
 function changeSelectedResult(difference: number) {
@@ -125,7 +120,7 @@ useTinykeys({ Escape: handleCancel });
 <template>
   <div class="search-wrapper" @click.self="handleCancel">
     <div ref="searchEl" class="search">
-      <form class="search__form" @submit.prevent="openItem()">
+      <form class="search__form" @submit.prevent="openItem">
         <WorkspaceSearchInput
           ref="inputEl"
           :value="searchInput"
@@ -134,7 +129,7 @@ useTinykeys({ Escape: handleCancel });
           @update-value="searchInput = $event"
           @keydown.up.prevent="changeSelectedResult(-1)"
           @keydown.down.prevent="changeSelectedResult(+1)"
-          @keydown.tab.prevent="fillSearchInput"
+          @keydown.tab.prevent="fillSearchInput()"
         />
 
         <p v-show="typeaheadResult" class="search__form__typeahead">
@@ -170,20 +165,23 @@ useTinykeys({ Escape: handleCancel });
 
         <TransitionGroup
           v-else-if="results.length !== 0"
+          ref="resultsEl"
           tag="ul"
           name="list"
           class="search__results"
         >
-          <template v-for="(item, idx) in results" :key="`${item.name}-${item.path}`">
-            <li class="search__results__item">
-              <WorkspaceSearchItem
-                :item="item"
-                :selected="selectedResult === idx"
-                @focus="selectedResult = idx"
-                @click="openItem(item)"
-              />
-            </li>
-          </template>
+          <li
+            v-for="(item, idx) in results"
+            :key="item.name + (item as FuzzyItem).path"
+            class="search__results__item"
+          >
+            <WorkspaceSearchItem
+              :item="item"
+              :selected="selectedResult === idx"
+              @focus="selectedResult = idx"
+              @click="handleCancel"
+            />
+          </li>
         </TransitionGroup>
       </Transition>
     </div>
