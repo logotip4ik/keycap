@@ -190,7 +190,7 @@ onMounted(() => {
 <style lang="scss">
 .note-editor__details-button {
   position: absolute;
-  top: 1rem;
+  top: 2rem;
   right: 0;
   z-index: 2;
 
@@ -209,10 +209,6 @@ onMounted(() => {
 
   @media (hover: hover) {
     color: hsla(var(--text-color-hsl), 0.5);
-  }
-
-  @media (max-width: $breakpoint-tablet) {
-    top: 0.15rem;
   }
 
   &:is(:hover, :focus-visible) {
