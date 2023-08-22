@@ -98,10 +98,12 @@ kbd {
 
 // @see https: //github.com/elk-zone/elk/blob/main/styles/global.css
 .skeleton-bg {
-  background: linear-gradient(to right,
-      hsla(var(--text-color-hsl), 0.2) 25%,
-      hsla(var(--text-color-hsl), 0.24) 37%,
-      hsla(var(--text-color-hsl), 0.2) 63%);
+  background: linear-gradient(
+    to right,
+    hsla(var(--text-color-hsl), 0.2) 25%,
+    hsla(var(--text-color-hsl), 0.24) 37%,
+    hsla(var(--text-color-hsl), 0.2) 63%
+  );
 
   background-size: 400% 100%;
 
