@@ -236,7 +236,7 @@ onBeforeUnmount(() => {
 <style lang="scss">
 .workspace {
   &__note-editor {
-    width: 95%;
+    width: 97.5%;
     height: 100%;
 
     max-width: 1300px;
