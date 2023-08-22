@@ -18,15 +18,24 @@ const itemPath = isCommand
 const itemHref = isCommand
   ? ''
   : generateItemRouteParams(props.item);
+
+async function handleActionClick() {
+  if (!isCommand)
+    return;
+
+  const action = commandActions[props.item.key];
+
+  action && await action();
+}
 </script>
 
 <template>
-  <button v-if="isCommand" class="search-item" :data-selected="selected">
+  <button v-if="isCommand" class="search-item" :data-selected="selected" @click="handleActionClick">
     <span class="search-item__name">{{ item.name }}</span>
     <LazyIconRoundKeyboardReturn v-once class="search-item__enter-icon" />
   </button>
 
-  <NuxtLink v-else :href="itemHref" class="search-item" :data-selected="selected">
+  <NuxtLink v-else :href="itemHref" class="search-item" :data-selected="selected" :data-name="item.name">
     <span v-if="itemPath !== ''" class="search-item__path">{{ itemPath }}/</span>
     <span class="search-item__name">{{ item.name }}</span>
     <LazyIconRoundKeyboardReturn v-once class="search-item__enter-icon" />
