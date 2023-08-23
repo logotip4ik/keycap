@@ -5,12 +5,18 @@ permissions:
   contents: write
 
 on:
+  workflow_run:
+    workflows: ['Auto update dependencies']
+    types: ['completed']
+    branches:
+      - master
   push:
     branches:
       - master
 
 jobs:
   test-lint-build:
+    if: ${{ github.event_name == 'push' || github.event.workflow_run.conclusion == 'success' }}
     timeout-minutes: 3
     runs-on: ubuntu-latest
 
