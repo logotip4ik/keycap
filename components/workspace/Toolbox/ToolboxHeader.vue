@@ -8,27 +8,27 @@ const user = useUser();
 </script>
 
 <template>
-  <header class="sidebar__header">
+  <header class="toolbox__header">
     <!-- TODO: better accessibility -->
     <button
-      class="sidebar__header__open-btn"
-      :class="{ 'sidebar__header__open-btn--exposed': state === 'hidden' }"
+      class="toolbox__header__open-btn"
+      :class="{ 'toolbox__header__open-btn--exposed': state === 'hidden' }"
       aria-controls="sidebar"
       :aria-pressed="state === 'pinned'"
       @click="onUpdateState(state === 'pinned' ? 'hidden' : 'pinned')"
       @mouseenter="state === 'hidden' && onUpdateState('visible')"
     >
-      <LazyIconMenuRounded class="sidebar__header__open-btn__icon" />
+      <LazyIconMenuRounded class="toolbox__header__open-btn__icon" />
     </button>
 
-    <p class="sidebar__header__username font-wide">
+    <p class="toolbox__header__username font-wide">
       {{ user?.username }}
     </p>
   </header>
 </template>
 
 <style lang="scss">
-.sidebar__header {
+.toolbox__header {
   display: flex;
   justify-content: flex-start;
   align-items: center;
