@@ -4,20 +4,16 @@ import 'requestidlecallback-polyfill';
 
 import parseDuration from 'parse-duration';
 
-const { width: windowWidth } = useWindowSize();
-
 // NOTE: should be removed from client bundle
 const device = import.meta.env.SSR ? parseUA(useRequestHeaders()['user-agent']) : undefined;
 
 const isFirefox = import.meta.env.SSR
   ? device!.isFirefox
   : checkIsFirefox(navigator.userAgent);
+const isSmallScreen = import.meta.env.SSR
+  ? device!.isMobileOrTablet
+  : window.innerWidth < breakpoints.tablet;
 
-const isSmallScreen = computed(() =>
-  import.meta.env.SSR
-    ? device!.isMobileOrTablet
-    : windowWidth.value < breakpoints.tablet,
-);
 provide(IsSmallScreenKey, isSmallScreen);
 provide(IsFirefoxKey, isFirefox);
 
@@ -25,7 +21,7 @@ useHead({
   htmlAttrs: {
     class: {
       'firefox': isFirefox,
-      'phone-or-tablet': isSmallScreen.value,
+      'phone-or-tablet': isSmallScreen,
     },
   },
 });
