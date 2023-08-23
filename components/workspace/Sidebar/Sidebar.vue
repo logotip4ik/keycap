@@ -54,7 +54,6 @@ watch(state, debounce((state: SidebarState) => {
   />
 
   <aside
-    id="sidebar"
     class="sidebar"
     :class="{ 'sidebar--hidden': state === 'hidden', 'sidebar--right': dir === 'right' }"
     :data-state="state"

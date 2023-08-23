@@ -13,7 +13,6 @@ const user = useUser();
     <button
       class="toolbox__header__open-btn"
       :class="{ 'toolbox__header__open-btn--exposed': state === 'hidden' }"
-      aria-controls="sidebar"
       :aria-pressed="state === 'pinned'"
       @click="onUpdateState(state === 'pinned' ? 'hidden' : 'pinned')"
       @mouseenter="state === 'hidden' && onUpdateState('visible')"
