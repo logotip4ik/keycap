@@ -54,7 +54,7 @@ const utils = [
 
       width: 100%;
 
-      padding: calc(var(--pd-y) * 0.66) calc(var(--pd-x) * 0.66);
+      padding: calc(var(--pd-y) * 0.75) calc(var(--pd-x) * 0.66);
 
       border: none;
       border-radius: 0.225rem;
