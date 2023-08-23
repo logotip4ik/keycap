@@ -91,26 +91,7 @@ provide(IsNoteNameEmptyKey, isNoteNameEmpty);
 
 <template>
   <div class="workspace">
-    <WorkspaceNavbar
-      class="workspace__navbar"
-      @open-search="isShowingSearch = true"
-    />
-
-    <Transition name="fade">
-      <LazyWorkspaceFab
-        v-show="isSmallScreen ? isNoteNameEmpty : true"
-        @open-search="isShowingSearch = true"
-      />
-    </Transition>
-
-    <Transition name="fade">
-      <aside
-        v-show="isSmallScreen ? isNoteNameEmpty : true"
-        class="workspace__contents"
-      >
-        <LazyWorkspaceContents />
-      </aside>
-    </Transition>
+    <LazyWorkspaceSidebar />
 
     <Transition name="fade">
       <!-- Do not load welcome component on mobile devices -->
@@ -150,76 +131,20 @@ provide(IsNoteNameEmptyKey, isNoteNameEmpty);
 
 <style lang="scss">
 .workspace {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-rows: auto 1fr;
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
 
-  height: calc(var(--1vh, 1vh) * 100);
-
-  &__navbar {
-    grid-column: 1 / 1;
-
-    border-right: 1px solid hsla(var(--text-color-hsl), 0.25);
-    border-bottom: 1px solid hsla(var(--text-color-hsl), 0.25);
-
-    @media (max-width: $breakpoint-tablet) {
-      grid-area: 1 / 1;
-
-      border-right: none
-    }
-  }
-
-  &__contents {
-    grid-area: 2 / 1;
-
-    height: 100%;
-    width: 20vw;
-
-    max-width: 250px;
-    min-width: 125px;
-
-    margin: 0;
-    padding: 0;
-
-    border-right: 1px solid hsla(var(--text-color-hsl), 0.25);
-
-    overflow: auto;
-    scroll-snap-type: y proximity;
-    scrollbar-width: none;
-    &::-webkit-scrollbar {
-      display: none;
-    }
-
-    &__list {
-      padding: 0 0 12rem;
-      margin: 0;
-
-      list-style-type: none;
-
-      & > li {
-        scroll-snap-align: start;
-
-        a {
-          scroll-margin: 2.25rem;
-        }
-      }
-    }
-
-    @media (max-width: $breakpoint-tablet) {
-      width: 100%;
-      max-width: 100%;
-
-      padding: 0 1rem 2rem;
-    }
-  }
+  height: 100vh;
+  height: 100svh;
 
   &__note {
     --scrollbar-thumb-color: hsla(var(--text-color-hsl), 0.175);
     --scrollbar-background: var(--surface-color);
 
-    grid-row: 1 / end;
-    grid-column: 2;
+    flex: 1;
 
+    width: 100%;
     height: 100%;
 
     overflow-y: auto;
@@ -237,15 +162,6 @@ provide(IsNoteNameEmptyKey, isNoteNameEmpty);
 
       background-color: var(--scrollbar-thumb-color);
     }
-
-    @media (max-width: $breakpoint-tablet) {
-      grid-area: 2 / 1;
-    }
-  }
-
-  @media (max-width: $breakpoint-tablet) {
-    grid-template-rows: auto 1fr;
-    grid-template-columns: 1fr;
   }
 }
 
