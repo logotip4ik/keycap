@@ -9,15 +9,17 @@ definePageMeta({
 
 const route = useRoute();
 const user = useUser();
+const mitt = useMitt();
 const { shortcuts } = useAppConfig();
 
 const currentNoteState = useCurrentNoteState();
 const currentItemForDetails = useCurrentItemForDetails();
+const isSmallScreen = inject(IsSmallScreenKey)!;
 
 const isShowingSearch = ref(false);
 
-const isSmallScreen = inject(IsSmallScreenKey);
-const isNoteNameEmpty = computed(() => !route.params.note || route.params.note === BLANK_NOTE_NAME);
+const isNoteEmpty = computed(() => !route.params.note || route.params.note === BLANK_NOTE_NAME);
+const shouldShowContents = computed(() => !isSmallScreen || isNoteEmpty.value);
 
 const currentRouteName = computed(() => {
   const folders = route.params.folders;
@@ -35,6 +37,8 @@ const currentRouteName = computed(() => {
 function focusSearchInput(event: Element) {
   nextTick(() => event.querySelector('input')?.focus());
 }
+
+mitt.on('search:show', () => isShowingSearch.value = true);
 
 watch(() => route.params.note, (noteName) => {
   const isEmptyNoteName = !noteName || noteName === BLANK_NOTE_NAME;
@@ -85,26 +89,17 @@ onMounted(() => {
     // @ts-expect-error this should not be defined
     window.$createToast = useToast();
 });
-
-provide(IsNoteNameEmptyKey, isNoteNameEmpty);
 </script>
 
 <template>
-  <div class="workspace">
-    <LazyWorkspaceSidebar />
+  <div id="workspace" class="workspace">
+    <LazyWorkspaceToolbox />
 
-    <Transition name="fade">
-      <!-- Do not load welcome component on mobile devices -->
-      <LazyWorkspaceWelcome
-        v-if="!isSmallScreen && isNoteNameEmpty"
-        key="blank-note"
-        class="workspace__note"
-      />
+    <main class="workspace__note">
+      <NuxtPage />
+    </main>
 
-      <main v-else-if="isSmallScreen ? !isNoteNameEmpty : true" class="workspace__note">
-        <NuxtPage />
-      </main>
-    </Transition>
+    <LazyWorkspaceContents />
 
     <Teleport to="body">
       <Transition
