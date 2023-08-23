@@ -5,8 +5,8 @@ permissions:
 
 on:
   workflow_run:
-    workflows: ['Auto update dependencies']
-    types: ['completed']
+    workflows: [Auto update dependencies]
+    types: [completed]
     branches:
       - master
   push:
