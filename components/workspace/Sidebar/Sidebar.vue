@@ -90,7 +90,7 @@ watch(state, debounce((state: SidebarState) => {
 }
 
 .sidebar {
-  --dir: -1;
+  --dir: 1;
   --base-shadow-color: 0, 0, 0;
   --sidebar-hidden-scale: 0.975;
 
@@ -144,7 +144,7 @@ watch(state, debounce((state: SidebarState) => {
   }
 
   &--right {
-    --dir: 1;
+    --dir: -1;
     left: inherit;
     right: var(--mr-x);
 
@@ -152,7 +152,7 @@ watch(state, debounce((state: SidebarState) => {
   }
 
   &--hidden {
-    transform: scale(var(--sidebar-hidden-scale)) translateX(calc(var(--dir) * var(--sidebar-width)));
+    transform: scale(var(--sidebar-hidden-scale)) translateX(calc(-1 * var(--dir) * var(--sidebar-width)));
   }
 }
 </style>
