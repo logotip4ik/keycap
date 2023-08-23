@@ -6,8 +6,18 @@
   <WorkspaceSidebar
     v-slot="{ state, updateState }"
     cookie-name="_contents-state"
-    dir="rtl"
+    dir="right"
+    class="contents"
   >
-    Showing folder contents
+    <WorkspaceContentsHeader
+      :state="state"
+      @update-state="updateState"
+    />
   </WorkspaceSidebar>
 </template>
+
+<style lang="scss">
+.contents {
+  width: calc(var(--sidebar-width) - var(--mr-x) * 2);
+}
+</style>
