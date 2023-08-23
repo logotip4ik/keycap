@@ -35,7 +35,7 @@ const user = useUser();
 
   &__username {
     font-size: calc(1rem + 0.25vw);
-    color: hsla(var(--text-color-hsl), 0.9);
+    color: hsla(var(--text-color-hsl), 0.875);
     text-overflow: ellipsis;
     white-space: nowrap;
 
@@ -99,7 +99,7 @@ const user = useUser();
     &__icon {
       color: hsla(var(--text-color-hsl), 0.5);
 
-      width: 100%;
+      width: 80%;
       height: auto;
 
       transition: color var(--sidebar-tr-duration) ease;
