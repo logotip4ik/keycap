@@ -57,6 +57,8 @@ watch(state, debounce((state: SidebarState) => {
       :state="state"
       @update-state="updateState"
     />
+
+    <WorkspaceSidebarFooter />
   </aside>
 </template>
 
@@ -91,8 +93,13 @@ watch(state, debounce((state: SidebarState) => {
 
   --mr-y: 2rem;
   --mr-x: 1rem;
-  --pd-x: 0.7rem;
-  --pd-y: 0.7rem;
+  --pd-x: 1rem;
+  --pd-y: 1rem;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  flex-direction: column;
 
   position: absolute;
   top: var(--mr-y);
