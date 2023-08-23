@@ -14,8 +14,8 @@ const user = useUser();
       class="sidebar__header__open-btn"
       :class="{ 'sidebar__header__open-btn--exposed': state === 'hidden' }"
       aria-controls="sidebar"
-      :aria-pressed="state === 'fixed'"
-      @click="onUpdateState(state === 'fixed' ? 'hidden' : 'fixed')"
+      :aria-pressed="state === 'pinned'"
+      @click="onUpdateState(state === 'pinned' ? 'hidden' : 'pinned')"
       @mouseenter="state === 'hidden' && onUpdateState('visible')"
     >
       <LazyIconMenuRounded class="sidebar__header__open-btn__icon" />

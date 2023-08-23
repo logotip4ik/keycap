@@ -3,11 +3,11 @@ import { getCookie } from 'h3';
 import { debounce } from 'perfect-debounce';
 import parseDuration from 'parse-duration';
 
-export type SidebarState = 'hidden' | 'visible' | 'fixed';
+export type SidebarState = 'hidden' | 'visible' | 'pinned';
 
 const stateCookieName = '_sidebar-state';
 const state = useState<SidebarState>(() => { // TODO: maybe default to hidden on phones ?
-  const stateWhitelist = ['hidden', 'visible', 'fixed'] satisfies Array<SidebarState>;
+  const stateWhitelist = ['hidden', 'visible', 'pinned'] satisfies Array<SidebarState>;
   let stateCookieValue: SidebarState | undefined;
 
   if (import.meta.env.SSR) {
@@ -42,7 +42,7 @@ watch(state, debounce((state: SidebarState) => {
 <template>
   <div
     class="sidebar-spacer"
-    :class="{ 'sidebar-spacer--open': state === 'fixed' }"
+    :class="{ 'sidebar-spacer--open': state === 'pinned' }"
   />
 
   <aside
@@ -53,6 +53,7 @@ watch(state, debounce((state: SidebarState) => {
     @pointerleave="state === 'visible' && updateState('hidden')"
   >
     <!-- TODO: add fade ? animation when entering. Something like iphone quick settings menu -->
+    <!-- TODO: use provide instead of props ? -->
     <WorkspaceSidebarHeader
       :state="state"
       @update-state="updateState"
