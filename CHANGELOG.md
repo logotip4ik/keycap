@@ -1,6 +1,36 @@
 # Changelog
 
 
+## v2.3.8
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v2.3.7...v2.3.8)
+
+### 💅 Refactors
+
+- Move action handlers to `SearchItem` component ([0515609](https://github.com/logotip4ik/keycap/commit/0515609))
+- Directly use result element click handler ([3c0cf6c](https://github.com/logotip4ik/keycap/commit/3c0cf6c))
+
+### 🏡 Chore
+
+- **release:** V2.3.7 ([60eb5be](https://github.com/logotip4ik/keycap/commit/60eb5be))
+- Update deps ([dc42329](https://github.com/logotip4ik/keycap/commit/dc42329))
+
+### 🎨 Styles
+
+- Run `lint:fix` ([a4c521f](https://github.com/logotip4ik/keycap/commit/a4c521f))
+
+### 🤖 CI
+
+- Trigger release workflow after updating dependencies ([5d1d57c](https://github.com/logotip4ik/keycap/commit/5d1d57c))
+- Remove actions permission ([25633ee](https://github.com/logotip4ik/keycap/commit/25633ee))
+- Do not run `lint:fix` against `.github` folder ([7c02ec7](https://github.com/logotip4ik/keycap/commit/7c02ec7))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+- Github-actions <github-actions@github.com>
+- Logotip4ik ([@betterqualityassuranceuser](http://github.com/betterqualityassuranceuser))
+
 ## v2.3.7
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v2.3.6...v2.3.7)
