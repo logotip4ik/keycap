@@ -153,17 +153,17 @@ export default defineNuxtConfig({
       // will still render it's contents
       // Though nuxt specifically prevents users from doing this, am i doing smth wronk? :b
       // https://github.com/nuxt/nuxt/blob/main/packages/nuxt/src/pages/utils.ts#L83C93-L83C93
-      const userPage = pages.find((page) => page.name === '@user')!;
+      // const userPage = pages.find((page) => page.name === '@user')!;
 
-      const [foldersPage, notePage] = userPage.children!;
+      // const [foldersPage, notePage] = userPage.children!;
 
-      foldersPage.path = ':folders*';
-      notePage.path = notePage.path.split('/')[1];
+      // foldersPage.path = ':folders*';
+      // notePage.path = notePage.path.split('/')[1];
 
-      foldersPage.children ||= [];
-      foldersPage.children.push(notePage);
+      // foldersPage.children ||= [];
+      // foldersPage.children.push(notePage);
 
-      userPage.children = [foldersPage];
+      // userPage.children = [foldersPage];
     },
   },
 
