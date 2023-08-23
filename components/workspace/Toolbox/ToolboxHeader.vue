@@ -75,6 +75,10 @@ const user = useUser();
     &:is(:hover, :focus-visible) {
       outline: 1px solid hsla(var(--selection-bg-color-hsl), 0.25);
 
+      &:focus-visible {
+        background-color: hsla(var(--selection-bg-color-hsl), 0.25);
+      }
+
       svg {
         color: hsla(var(--text-color-hsl), 0.65);
 
