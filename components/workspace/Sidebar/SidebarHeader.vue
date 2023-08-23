@@ -46,29 +46,30 @@ const user = useUser();
   }
 
   &__open-btn {
-    flex-shrink: 0;
     --size: min(5vw, 2.5rem);
+
+    flex-shrink: 0;
 
     width: var(--size);
     height: var(--size);
 
     appearance: none;
+    border: none;
     border-radius: 0.25rem;
-    border: 1px solid hsla(var(--text-color-hsl), 0.125);
+    outline: 1px solid hsla(var(--selection-bg-color-hsl), 0.25);
     background-color: hsla(var(--surface-color-hsl), 0.95);
 
     cursor: pointer;
     transition: transform var(--sidebar-tr-duration) var(--ease);
 
     @supports (backdrop-filter: blur(1px)) {
-      border-color: transparent;
       background-color: transparent;
 
       backdrop-filter: blur(12px);
     }
 
     @media (width <= $breakpoint-tablet) {
-      --size: min(12.5vw, 3.125rem);
+      --size: min(12.5vw, 3rem);
     }
 
     &:is(:hover, :focus-visible) {
