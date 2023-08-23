@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { SidebarState } from './Sidebar.vue';
+import type { SidebarState } from '~/components/Workspace/Sidebar/Sidebar.vue';
 
 interface Props { state: SidebarState; onUpdateState: (newState: SidebarState) => any };
 defineProps<Props>();
