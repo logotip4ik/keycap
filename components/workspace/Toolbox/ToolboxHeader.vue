@@ -94,7 +94,7 @@ const user = useUser();
     }
 
     &--exposed {
-      transform: translate(calc(var(--sidebar-width) + 1px), 1px) scale(calc(2 - var(--sidebar-hidden-scale)));
+      transform: translate(calc(var(--dir) * var(--sidebar-width) + 1px), 1px) scale(calc(2 - var(--sidebar-hidden-scale)));
     }
 
     &__icon {
