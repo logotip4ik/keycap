@@ -2,7 +2,7 @@
 import type { SidebarState } from './Sidebar.vue';
 
 interface Props { state: SidebarState; onUpdateState: (newState: SidebarState) => any };
-const props = defineProps<Props>();
+defineProps<Props>();
 
 const user = useUser();
 </script>
