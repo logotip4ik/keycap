@@ -4,21 +4,27 @@ import { debounce } from 'perfect-debounce';
 import parseDuration from 'parse-duration';
 
 export type SidebarState = 'hidden' | 'visible' | 'pinned';
+export type State = Ref<SidebarState>;
 
-const stateCookieName = '_sidebar-state';
-const state = useState<SidebarState>(() => { // TODO: maybe default to hidden on phones ?
+interface Props {
+  cookieName: string
+  dir?: 'rtl' | 'ltr'
+}
+const props = withDefaults(defineProps<Props>(), { dir: 'rtl' });
+
+const state: State = useState<SidebarState>(() => { // TODO: maybe default to hidden on phones ?
   const stateWhitelist = ['hidden', 'visible', 'pinned'] satisfies Array<SidebarState>;
   let stateCookieValue: SidebarState | undefined;
 
   if (import.meta.env.SSR) {
     const event = useRequestEvent();
 
-    stateCookieValue = getCookie(event, stateCookieName) as SidebarState;
+    stateCookieValue = getCookie(event, props.cookieName) as SidebarState;
   }
   else {
     stateCookieValue = document.cookie
       .split('; ')
-      .find((cookie) => cookie.startsWith(stateCookieName))
+      .find((cookie) => cookie.startsWith(props.cookieName))
       ?.split('=')[1] as SidebarState | undefined;
   }
 
@@ -32,10 +38,12 @@ function updateState(newState: SidebarState) {
   state.value = newState;
 }
 
+provide('sidebar-state', state);
+
 watch(state, debounce((state: SidebarState) => {
   const value: SidebarState = state === 'visible' ? 'hidden' : state;
 
-  document.cookie = `${stateCookieName}=${value}; Max-Age=${parseDuration('0.5year', 's')}; Path=/; Secure; SameSite=Lax`;
+  document.cookie = `${props.cookieName}=${value}; Max-Age=${parseDuration('0.5year', 's')}; Path=/; Secure; SameSite=Lax`;
 }, 350));
 </script>
 
@@ -48,18 +56,11 @@ watch(state, debounce((state: SidebarState) => {
   <aside
     id="sidebar"
     class="sidebar"
-    :class="{ 'sidebar--hidden': state === 'hidden' }"
+    :class="{ 'sidebar--hidden': state === 'hidden', 'sidebar--ltr': dir === 'ltr' }"
     :data-state="state"
     @pointerleave="state === 'visible' && updateState('hidden')"
   >
-    <!-- TODO: add fade ? animation when entering. Something like iphone quick settings menu -->
-    <!-- TODO: use provide instead of props ? -->
-    <WorkspaceSidebarHeader
-      :state="state"
-      @update-state="updateState"
-    />
-
-    <WorkspaceSidebarFooter />
+    <slot :state="state" :update-state="updateState" />
   </aside>
 </template>
 
@@ -89,6 +90,7 @@ watch(state, debounce((state: SidebarState) => {
 }
 
 .sidebar {
+  --dir: -1;
   --base-shadow-color: 0, 0, 0;
   --sidebar-hidden-scale: 0.975;
 
@@ -141,8 +143,14 @@ watch(state, debounce((state: SidebarState) => {
     backdrop-filter: blur(12px);
   }
 
+  &--ltr {
+    --dir: 1;
+
+    transform-origin: right top;
+  }
+
   &--hidden {
-    transform: scale(var(--sidebar-hidden-scale)) translateX(calc(-1 * var(--sidebar-width)));
+    transform: scale(var(--sidebar-hidden-scale)) translateX(calc(var(--dir) * var(--sidebar-width)));
   }
 }
 </style>
