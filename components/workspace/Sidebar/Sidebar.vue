@@ -54,6 +54,7 @@ watch(state, debounce((state: SidebarState) => {
   />
 
   <aside
+    v-bind="$attrs"
     class="sidebar"
     :class="{ 'sidebar--hidden': state === 'hidden', 'sidebar--right': dir === 'right' }"
     :data-state="state"
