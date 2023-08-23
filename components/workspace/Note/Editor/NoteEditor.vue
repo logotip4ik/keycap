@@ -158,6 +158,9 @@ onMounted(() => {
 
 <template>
   <div class="note-editor__wrapper">
+    <!-- TODO: vue does not like when this two elements change
+      (even without lazy)
+     -->
     <LazyBubblePopup
       v-if="editor && !isSmallScreen"
       :editor="editor"
