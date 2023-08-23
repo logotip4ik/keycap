@@ -4,7 +4,7 @@ const currentYear = new Date().getFullYear();
 const links = [
   { href: 'https://github.com/logotip4ik/keycap', name: 'GitHub' },
   { href: 'mailto:contact@bogdankostyuk.xyz', name: 'Contact Us' },
-  { href: 'https://example.com', name: 'eeeeee' },
+  { href: 'https://example.com', name: 'eeeeee' }, // TODO: add correct third link
 ];
 </script>
 
