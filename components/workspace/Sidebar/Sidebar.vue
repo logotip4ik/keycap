@@ -63,7 +63,7 @@ watch(state, debounce((state: SidebarState) => {
 <style lang="scss">
 :root {
   --ease: cubic-bezier(0.16, 1, 0.3, 1); // expo
-  --sidebar-width: min(33.3vw, 22rem);
+  --sidebar-width: min(33.3vw, 25rem);
   --sidebar-tr-duration: .375s;
 
   @media (width <= $breakpoint-tablet) {
