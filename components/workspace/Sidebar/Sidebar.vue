@@ -8,11 +8,11 @@ export type State = Ref<SidebarState>;
 
 interface Props {
   cookieName: string
-  dir?: 'rtl' | 'ltr'
+  dir?: 'left' | 'right'
 }
-const props = withDefaults(defineProps<Props>(), { dir: 'rtl' });
+const props = withDefaults(defineProps<Props>(), { dir: 'left' });
 
-const state: State = useState<SidebarState>(() => { // TODO: maybe default to hidden on phones ?
+const state: State = useState<SidebarState>(props.cookieName, () => { // TODO: maybe default to hidden on phones ?
   const stateWhitelist = ['hidden', 'visible', 'pinned'] satisfies Array<SidebarState>;
   let stateCookieValue: SidebarState | undefined;
 
@@ -56,7 +56,7 @@ watch(state, debounce((state: SidebarState) => {
   <aside
     id="sidebar"
     class="sidebar"
-    :class="{ 'sidebar--hidden': state === 'hidden', 'sidebar--ltr': dir === 'ltr' }"
+    :class="{ 'sidebar--hidden': state === 'hidden', 'sidebar--right': dir === 'right' }"
     :data-state="state"
     @pointerleave="state === 'visible' && updateState('hidden')"
   >
@@ -143,8 +143,10 @@ watch(state, debounce((state: SidebarState) => {
     backdrop-filter: blur(12px);
   }
 
-  &--ltr {
+  &--right {
     --dir: 1;
+    left: inherit;
+    right: var(--mr-x);
 
     transform-origin: right top;
   }
