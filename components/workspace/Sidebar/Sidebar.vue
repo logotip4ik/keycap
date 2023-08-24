@@ -1,49 +1,23 @@
 <script setup lang="ts">
-import { getCookie } from 'h3';
 import { debounce } from 'perfect-debounce';
 import parseDuration from 'parse-duration';
 
-export type SidebarState = 'hidden' | 'visible' | 'pinned';
-export type State = Ref<SidebarState>;
+import type { SidebarState } from '~/composables/sidebars';
 
 interface Props {
-  cookieName: string
   dir?: 'left' | 'right'
+  name: string
+  state: Ref<SidebarState>
+  onUpdateState: (newState: SidebarState) => any
 }
 const props = withDefaults(defineProps<Props>(), { dir: 'left' });
 
-const state: State = useState<SidebarState>(props.cookieName, () => { // TODO: maybe default to hidden on phones ?
-  const stateWhitelist = ['hidden', 'visible', 'pinned'] satisfies Array<SidebarState>;
-  let stateCookieValue: SidebarState | undefined;
-
-  if (import.meta.env.SSR) {
-    const event = useRequestEvent();
-
-    stateCookieValue = getCookie(event, props.cookieName) as SidebarState;
-  }
-  else {
-    stateCookieValue = document.cookie
-      .split('; ')
-      .find((cookie) => cookie.startsWith(props.cookieName))
-      ?.split('=')[1] as SidebarState | undefined;
-  }
-
-  if (stateCookieValue && stateWhitelist.includes(stateCookieValue))
-    return stateCookieValue as SidebarState || 'hidden';
-
-  return 'hidden';
-});
-
-function updateState(newState: SidebarState) {
-  state.value = newState;
-}
-
-provide('sidebar-state', state);
+const state = toRef(props, 'state');
 
 watch(state, debounce((state: SidebarState) => {
   const value: SidebarState = state === 'visible' ? 'hidden' : state;
 
-  document.cookie = `${props.cookieName}=${value}; Max-Age=${parseDuration('0.5year', 's')}; Path=/; Secure; SameSite=Lax`;
+  document.cookie = `${props.name}=${value}; Max-Age=${parseDuration('0.5year', 's')}; Path=/; Secure; SameSite=Lax`;
 }, 350));
 </script>
 
@@ -58,9 +32,9 @@ watch(state, debounce((state: SidebarState) => {
     class="sidebar"
     :class="{ 'sidebar--hidden': state === 'hidden', 'sidebar--right': dir === 'right' }"
     :data-state="state"
-    @pointerleave="state === 'visible' && updateState('hidden')"
+    @pointerleave="state === 'visible' && onUpdateState('hidden')"
   >
-    <slot :state="state" :update-state="updateState" />
+    <slot />
   </aside>
 </template>
 
