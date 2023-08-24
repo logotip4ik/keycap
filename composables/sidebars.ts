@@ -2,6 +2,14 @@ import { getCookie } from 'h3';
 
 export type SidebarState = 'hidden' | 'visible' | 'pinned';
 
+export function useToolboxSidebarState() {
+  return makeSidebarState('toolbox');
+}
+
+export function useContentsSidebarState() {
+  return makeSidebarState('contents');
+}
+
 export function makeSidebarState(key: string): Ref<SidebarState> {
   return useState<SidebarState>(key, () => { // TODO: maybe default to hidden on phones ?
     const stateWhitelist = ['hidden', 'visible', 'pinned'] satisfies Array<SidebarState>;
