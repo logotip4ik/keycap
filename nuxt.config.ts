@@ -6,6 +6,7 @@ import { isCI, isDevelopment } from 'std-env';
 
 import { getHeaders } from './headers.config';
 import breakpoints from './constants/breakpoints';
+import { sidebarsBreakpoints } from './composables/sidebars';
 import { ParseDurationTransformPlugin } from './vite/transform-parse-duration';
 
 const tsExcludes = ['../data', '../benchmarks', '../scripts'];
@@ -209,6 +210,7 @@ export default defineNuxtConfig({
         scss: {
           additionalData: [
             Object.entries(breakpoints).map(([key, value]) => `$breakpoint-${key}: ${value}px;`).join('\n'),
+            Object.entries(sidebarsBreakpoints).map(([key, value]) => `$sidebar-breakpoint-${key}: ${value}px;`).join('\n'),
           ].join('\n'),
         },
       },

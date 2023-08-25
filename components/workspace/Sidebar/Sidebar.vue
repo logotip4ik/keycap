@@ -39,12 +39,14 @@ watch(state, debounce((state: SidebarState) => {
 </template>
 
 <style lang="scss">
+$breakpoint-one: $sidebar-breakpoint-one;
+
 :root {
   --ease: cubic-bezier(0.16, 1, 0.3, 1); // expo
   --sidebar-width: min(33.3vw, 25rem);
   --sidebar-tr-duration: .375s;
 
-  @media (width <= $breakpoint-tablet) {
+  @media (width <= $breakpoint-one) {
     --sidebar-width: 100vw;
   }
 }
@@ -56,7 +58,7 @@ watch(state, debounce((state: SidebarState) => {
   will-change: width;
   transition: width var(--sidebar-tr-duration) var(--ease);
 
-  @media (width > $breakpoint-tablet) {
+  @media (width > $breakpoint-one) {
     &--open {
       width: var(--sidebar-width);
     }
@@ -104,9 +106,9 @@ watch(state, debounce((state: SidebarState) => {
     --base-shadow-color: 200, 200, 200;
   }
 
-  @media (width <= $breakpoint-tablet) {
+  @media (width <= $breakpoint-one) {
     --mr-y: 1rem;
-    --mr-x: 0.5rem;
+    --mr-x: 0.75rem;
 
     width: calc(var(--sidebar-width) - var(--mr-x) * 2);
   }
