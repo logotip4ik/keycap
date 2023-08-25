@@ -3,7 +3,6 @@ import { debounce } from 'perfect-debounce';
 
 import type { SidebarState } from '~/composables/sidebars';
 
-const name = 'toolbox';
 const toolboxState = useToolboxSidebarState();
 const contentsState = useContentsSidebarState();
 
@@ -26,7 +25,7 @@ function smartUpdateState(newState: SidebarState) {
 
 // otherwise volar is yelling that state is not ref :(
 const data = {
-  name,
+  name: 'toolbox',
   class: 'toolbox',
   state: toolboxState,
   onUpdateState: updateState,

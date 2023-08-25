@@ -3,7 +3,6 @@ import { debounce } from 'perfect-debounce';
 
 import type { SidebarState } from '~/composables/sidebars';
 
-const name = 'contents';
 const contentsState = useContentsSidebarState();
 const toolboxState = useToolboxSidebarState();
 
@@ -28,7 +27,7 @@ function smartUpdateState(newState: SidebarState) {
 // otherwise volar is yelling that state is not ref :(
 const data = {
   dir: 'right' as const,
-  name,
+  name: 'contents',
   state: contentsState,
   onUpdateState: updateState,
 };
@@ -45,6 +44,10 @@ if (!import.meta.env.SSR) {
     <WorkspaceContentsHeader
       :state="contentsState"
       @update-state="smartUpdateState"
+    />
+
+    <WorkspaceContentsList
+      :state="contentsState"
     />
   </WorkspaceSidebar>
 </template>
