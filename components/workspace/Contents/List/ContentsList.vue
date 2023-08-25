@@ -24,7 +24,8 @@ let pollingTimer: NodeJS.Timeout;
 
 // Intentionally not awaited
 const { data: folder, refresh } = useAsyncData<FolderWithContents | undefined>('folder', async () => {
-  if (import.meta.env.SSR || props.state === 'hidden') return;
+  if (import.meta.env.SSR || props.state === 'hidden')
+    return;
 
   clearTimeout(pollingTimer);
 
@@ -80,10 +81,21 @@ watch(() => props.state, (state, oldState) => {
   )
     return refresh();
 }, { immediate: true });
+
+if (!import.meta.env.SSR) {
+  onBeforeUnmount(on(document, 'visibilitychange', () => {
+    if (document.visibilityState === 'visible')
+      refresh();
+  }));
+};
 </script>
 
+<!-- TODO: use LazyWorkspaceContentsListItem component, but it throws some errors
+  `child.el is null`
+  :( -->
+
 <template>
-  <Transition appear name="fade">
+  <Transition name="fade">
     <div v-if="!folder" key="1">
       <!-- TODO: show skeleton -->
       loading ...
@@ -93,15 +105,53 @@ watch(() => props.state, (state, oldState) => {
       No notes here yet ^_^
     </div>
 
-    <TransitionGroup v-else key="3" tag="ul" name="list" style="overflow: auto;">
-      <li
+    <TransitionGroup
+      v-else
+      key="3"
+      tag="ul"
+      name="list"
+      class="contents__list"
+      @contextmenu.prevent
+    >
+      <WorkspaceContentsListItem
         v-for="item in folderContents"
         :key="item.id"
-      >
-        <NuxtLink :href="generateItemRouteParams(item)">
-          {{ item.name }}
-        </NuxtLink>
-      </li>
+        :item="item"
+        :parent="folder"
+      />
     </TransitionGroup>
   </Transition>
 </template>
+
+<style lang="scss">
+.contents__list {
+  --scrollbar-thumb-color: hsla(var(--text-color-hsl), 0.175);
+  --scrollbar-background: var(--surface-color);
+
+  margin: 0;
+  margin-top: calc(var(--pd-y) * 1);
+  margin-right: calc(-1 * var(--pd-x));
+  margin-bottom: calc(-1 * var(--pd-y));
+
+  padding: 0 calc(var(--pd-x)) var(--pd-y) 0;
+
+  list-style-type: none;
+
+  overflow-y: auto;
+  scroll-snap-type: y proximity;
+
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-background);
+  &::-webkit-scrollbar {
+    width: 0.75rem;
+
+    background: var(--scrollbar-background);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    width: 0.75rem;
+
+    background-color: var(--scrollbar-thumb-color);
+  }
+}
+</style>
