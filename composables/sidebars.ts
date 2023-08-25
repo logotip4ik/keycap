@@ -2,6 +2,15 @@ import { getCookie } from 'h3';
 
 export type SidebarState = 'hidden' | 'visible' | 'pinned';
 
+export const sidebarsBreakpoints = {
+  two: 1500,
+};
+
+/* @__NO_SIDE_EFFECTS__ */ export function shouldUnpinSidebar(first: ReturnType<typeof makeSidebarState>, second: ReturnType<typeof makeSidebarState>) {
+  if (window.innerWidth < sidebarsBreakpoints.two && first.value === 'pinned')
+    return second;
+}
+
 export function useToolboxSidebarState() {
   return makeSidebarState('toolbox');
 }
