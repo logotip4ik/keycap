@@ -1,10 +1,9 @@
 import { withLeadingSlash, withTrailingSlash, withoutLeadingSlash } from 'ufo';
 
-import type { Note } from '@prisma/client';
 import type { RouteLocationRaw } from 'vue-router';
 import type { NavigateToOptions } from '#app/composables/router';
 
-type ItemWithPath = Partial<FolderOrNote> & { path: string };
+interface ItemWithPath { root?: boolean; path: string }
 export function generateItemRouteParams(item: ItemWithPath): RouteLocationRaw {
   const user = useUser();
   const route = useRoute();
@@ -33,7 +32,7 @@ export async function showItem(item: ItemWithPath, options: NavigateToOptions = 
 }
 
 export function preCreateItem(folderToAppend: FolderWithContents, initialValues?: Partial<NoteMinimal>) {
-  const id = BigInt(Math.floor(Math.random() * 1000));
+  const id = Math.floor(Math.random() * 1000).toString();
 
   const noteValues = {
     id,
@@ -96,7 +95,7 @@ export async function createNote(noteName: string, self: FolderOrNote, parent: F
   const newNotePathName = encodeURIComponent(noteName.trim());
   const newNotePath = currentFolderPath + newNotePathName;
 
-  const newlyCreatedNote = await $fetch<NoteMinimal>(`/api/note${newNotePath}`, {
+  const newlyCreatedNote = await $fetch<SerializedNote>(`/api/note${newNotePath}`, {
     method: 'POST',
     body: { name: noteName, parentId: parent.id },
   })
@@ -105,10 +104,10 @@ export async function createNote(noteName: string, self: FolderOrNote, parent: F
   if (!newlyCreatedNote)
     return;
 
-  notesCache.set(newlyCreatedNote.path, newlyCreatedNote as Note);
+  notesCache.set(newlyCreatedNote.path, newlyCreatedNote);
   updateNoteInFolder(self, { ...newlyCreatedNote, content: '', creating: false }, parent);
 
-  showItem(newlyCreatedNote as FolderOrNote);
+  showItem(newlyCreatedNote);
 }
 
 export async function renameFolder() {
@@ -188,5 +187,5 @@ export async function preloadItem(self: FolderOrNote) {
 
   // @ts-expect-error idk how to setup this type
   cache.set(item.path, item);
-  offlineStorage.value?.setItem(item.path!, item);
+  offlineStorage.value?.setItem(item.path, item);
 }
