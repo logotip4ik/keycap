@@ -42,9 +42,9 @@ watch(state, debounce((state: SidebarState) => {
 $breakpoint-one: $sidebar-breakpoint-one;
 
 :root {
-  --ease: cubic-bezier(0.16, 1, 0.3, 1); // expo
   --sidebar-width: min(33.3vw, 25rem);
   --sidebar-tr-duration: .375s;
+  --sidebar-tr-ease: cubic-bezier(0.16, 1, 0.3, 1); // expo
 
   @media (width <= $breakpoint-one) {
     --sidebar-width: 100vw;
@@ -56,7 +56,7 @@ $breakpoint-one: $sidebar-breakpoint-one;
   height: 100%;
 
   will-change: width;
-  transition: width var(--sidebar-tr-duration) var(--ease);
+  transition: width var(--sidebar-tr-duration) var(--sidebar-tr-ease);
 
   @media (width > $breakpoint-one) {
     &--open {
@@ -100,7 +100,7 @@ $breakpoint-one: $sidebar-breakpoint-one;
   ;
 
   transform-origin: left top;
-  transition: transform var(--sidebar-tr-duration) var(--ease);
+  transition: transform var(--sidebar-tr-duration) var(--sidebar-tr-ease);
 
   @media (prefers-color-scheme: dark) {
     --base-shadow-color: 200, 200, 200;

@@ -59,7 +59,7 @@ const user = useUser();
     background-color: hsla(var(--surface-color-hsl), 0.95);
 
     cursor: pointer;
-    transition: transform var(--sidebar-tr-duration) var(--ease);
+    transition: transform var(--sidebar-tr-duration) var(--sidebar-tr-ease);
 
     @supports (backdrop-filter: blur(1px)) {
       background-color: transparent;
