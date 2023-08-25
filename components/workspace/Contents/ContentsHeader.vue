@@ -10,17 +10,24 @@ const folderName = computed(() => {
   if (!route.params.folders)
     return 'Workspace';
 
-  const folder = Array(route.params.folders) ? route.params.folders.at(-1) : route.params.folders;
+  if (Array.isArray(route.params.folders) && route.params.folders.length > 0) {
+    return [
+      'WS', // Abbreviationion for Workspace ?
+      ...route.params.folders,
+    ].join('/');
+  }
 
-  return folder || 'Workspace';
+  return 'Workspace';
 });
 </script>
 
 <template>
   <header class="contents__header">
-    <p class="contents__header__folder-name">
-      {{ folderName }}
-    </p>
+    <Transition name="fade">
+      <p :key="folderName" class="contents__header__folder-name">
+        {{ folderName }}
+      </p>
+    </Transition>
 
     <button
       class="contents__header__open-btn"
@@ -42,8 +49,8 @@ const folderName = computed(() => {
 
   &__folder-name {
     font-size: calc(1rem + 0.25vw);
-    font-weight: 300;
-    color: hsla(var(--text-color-hsl), 0.875);
+    font-stretch: 105%;
+    color: hsla(var(--text-color-hsl), 0.825);
     text-overflow: ellipsis;
     white-space: nowrap;
 
