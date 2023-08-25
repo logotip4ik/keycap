@@ -202,6 +202,7 @@ export default defineNuxtConfig({
       include: [
         '@superhuman/command-score',
         'perfect-debounce',
+        '@popperjs/core',
       ],
     },
 
