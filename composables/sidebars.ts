@@ -11,8 +11,8 @@ export const sidebarsBreakpoints = {
   if (window.innerWidth < sidebarsBreakpoints.two && first.value === 'pinned' && second.value === 'pinned')
     return second;
 
-  if (window.innerWidth < sidebarsBreakpoints.one)
-    return first;
+  if (window.innerWidth < sidebarsBreakpoints.one && second.value === 'pinned')
+    return second;
 }
 
 export function useToolboxSidebarState() {
