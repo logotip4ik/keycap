@@ -11,6 +11,8 @@ interface _IFuzzyWorker {
 }
 
 declare global {
+  export type SerializedNote = Note & { id: string };
+  
   export type NoteMinimal = Pick<Note, 'name' | 'path'> & {
     id: string
     content?: string
@@ -18,7 +20,7 @@ declare global {
     creating?: boolean
   };
 
-  export interface FolderWithContents extends Omit<Folder, 'createdAt' | 'updatedAt'> {
+  export type FolderWithContents = Omit<Folder, 'createdAt' | 'updatedAt'> & {
     id: string
     editing?: boolean
     creating?: boolean
@@ -35,8 +37,7 @@ declare global {
 
   export type FuzzyItem = Pick<FolderOrNote, 'name' | 'path' | 'root'>;
 
-  export interface IFuzzyWorker extends Remote<_IFuzzyWorker> {
-  }
+  export type IFuzzyWorker =  Remote<_IFuzzyWorker>
 
   export interface OfflineStorage {
     setItem: <T = any>(key: string, value: T) => Promise<void>
