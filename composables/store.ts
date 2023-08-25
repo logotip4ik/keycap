@@ -2,13 +2,11 @@
 // NOTE: keep an eye on this package
 import LRUCache from '@tinkoff/lru-cache-nano';
 
-import type { Note } from '@prisma/client';
-
 export const useCurrentItemForDetails = () => useState<FolderOrNote | null>(() => null);
 export const useRootFolderContents = () => useState<FolderWithContents | null>(() => null);
 export const useCurrentNoteState = () => useState<'' | 'updating' | 'fetching' | 'saved'>(() => '' as const);
 
-const notesCache = new LRUCache<string, Note>({ max: 100 });
+const notesCache = new LRUCache<string, SerializedNote>({ max: 100 });
 export const useNotesCache = () => notesCache;
 
 const foldersCache = new LRUCache<string, FolderWithContents>({ max: 25 });
