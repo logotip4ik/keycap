@@ -11,7 +11,7 @@ export const useCurrentNoteState = () => useState<'' | 'updating' | 'fetching' |
 const notesCache = new LRUCache<string, Note>({ max: 100 });
 export const useNotesCache = () => notesCache;
 
-const foldersCache = new LRUCache<string, FolderWithContents>({ max: 50 });
+const foldersCache = new LRUCache<string, FolderWithContents>({ max: 25 });
 export const useFoldersCache = () => foldersCache;
 
 const fuzzyWorker = shallowRef<null | IFuzzyWorker>(null);
