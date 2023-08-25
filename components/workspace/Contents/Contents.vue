@@ -46,6 +46,9 @@ if (!import.meta.env.SSR) {
       @update-state="smartUpdateState"
     />
 
+    <!-- TODO: add button for creating new item -->
+    <!-- TODO: add button for going up folder if current folder is not root ? -->
+
     <WorkspaceContentsList
       :state="contentsState"
     />
