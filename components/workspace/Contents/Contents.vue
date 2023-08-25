@@ -1,34 +1,50 @@
 <script setup lang="ts">
+import { debounce } from 'perfect-debounce';
+
 import type { SidebarState } from '~/composables/sidebars';
 
-const name = '_contents';
-const state = makeSidebarState(name);
+const name = 'contents';
+const contentsState = useContentsSidebarState();
+const toolboxState = useToolboxSidebarState();
 
 function updateState(newState: SidebarState) {
-  state.value = newState;
+  contentsState.value = newState;
+}
+
+function hideSidebarsIfNeeded() {
+  const sidebar = shouldUnpinSidebar(contentsState, toolboxState);
+
+  if (sidebar)
+    sidebar.value = 'hidden';
+}
+
+// TODO: hoist this function and use in contents as well as here ?
+function smartUpdateState(newState: SidebarState) {
+  contentsState.value = newState;
+
+  hideSidebarsIfNeeded();
 }
 
 // otherwise volar is yelling that state is not ref :(
 const data = {
   dir: 'right' as const,
   name,
-  state,
-  class: 'contents',
+  state: contentsState,
   onUpdateState: updateState,
 };
+
+if (!import.meta.env.SSR) {
+  onBeforeUnmount(
+    on(window, 'resize', debounce(hideSidebarsIfNeeded, 200)),
+  );
+}
 </script>
 
 <template>
   <WorkspaceSidebar v-bind="data">
     <WorkspaceContentsHeader
-      :state="state"
-      @update-state="updateState"
+      :state="contentsState"
+      @update-state="smartUpdateState"
     />
   </WorkspaceSidebar>
 </template>
-
-<style lang="scss">
-.contents {
-  width: calc(var(--sidebar-width) - var(--mr-x) * 2);
-}
-</style>
