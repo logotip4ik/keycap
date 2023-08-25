@@ -53,7 +53,9 @@ if (!import.meta.env.SSR) {
 </template>
 
 <style lang="scss">
-.toolbox {
-  width: calc(var(--sidebar-width) - var(--mr-x));
+@media (width > $sidebar-breakpoint-one) {
+  .toolbox {
+    width: calc(var(--sidebar-width) - var(--mr-x));
+  }
 }
 </style>
