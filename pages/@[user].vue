@@ -95,9 +95,13 @@ onMounted(() => {
   <div id="workspace" class="workspace">
     <LazyWorkspaceToolbox />
 
-    <main class="workspace__note">
-      <NuxtPage />
-    </main>
+    <Transition name="fade" appear>
+      <LazyWorkspaceWelcome v-if="isNoteEmpty" />
+
+      <main v-else class="workspace__note">
+        <NuxtPage />
+      </main>
+    </Transition>
 
     <LazyWorkspaceContents />
 
