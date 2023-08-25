@@ -83,7 +83,7 @@ watch(state, debounce((state: SidebarState) => {
   left: var(--mr-x);
   z-index: 1;
 
-  width: calc(var(--sidebar-width) - var(--mr-x));
+  width: calc(var(--sidebar-width) - var(--mr-x) * 2);
   height: calc(100% - var(--mr-y) * 2);
 
   padding: var(--pd-y) var(--pd-x);
