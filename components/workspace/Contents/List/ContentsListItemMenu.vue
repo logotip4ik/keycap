@@ -39,7 +39,7 @@ function withEffects(event: Event, action: MenuAction) {
     const targetCancelEvents = ['pointerup', 'pointerleave', 'touchend', 'touchcancel'];
     const target = event.target as HTMLElement;
 
-    currentlyConfirming.value = Number(target.getAttribute('data-key'));
+    currentlyConfirming.value = props.actions.indexOf(action);
 
     const animation = target.animate([
       { opacity: 1, transform: 'translate(-100%, 0%)' },
@@ -107,7 +107,6 @@ onBeforeUnmount(() => {
       class="item-context-menu__item"
     >
       <button
-        :data-key="key"
         class="item-context-menu__item__button"
         @click="withEffects($event, action)"
         @pointerdown="withEffects($event, action)"
