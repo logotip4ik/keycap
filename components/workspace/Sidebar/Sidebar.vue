@@ -116,7 +116,7 @@ $breakpoint-one: $sidebar-breakpoint-one;
   @supports (backdrop-filter: blur(1px)) {
     background-color: hsla(var(--surface-color-hsl), 0.25);
 
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(16px);
   }
 
   &--right {
