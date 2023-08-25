@@ -8,8 +8,11 @@ export const sidebarsBreakpoints = {
 } as const;
 
 /* @__NO_SIDE_EFFECTS__ */ export function shouldUnpinSidebar(first: ReturnType<typeof makeSidebarState>, second: ReturnType<typeof makeSidebarState>) {
-  if (window.innerWidth < sidebarsBreakpoints.two && first.value === 'pinned')
+  if (window.innerWidth < sidebarsBreakpoints.two && first.value === 'pinned' && second.value === 'pinned')
     return second;
+
+  if (window.innerWidth < sidebarsBreakpoints.one)
+    return first;
 }
 
 export function useToolboxSidebarState() {
