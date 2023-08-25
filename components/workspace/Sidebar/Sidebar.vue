@@ -80,7 +80,7 @@ $breakpoint-one: $sidebar-breakpoint-one;
   align-items: stretch;
   flex-direction: column;
 
-  position: absolute;
+  position: fixed;
   top: var(--mr-y);
   left: var(--mr-x);
   z-index: 1;
