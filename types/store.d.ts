@@ -11,13 +11,15 @@ interface _IFuzzyWorker {
 }
 
 declare global {
-  export type NoteMinimal = Pick<Note, 'id' | 'name' | 'path'> & {
+  export type NoteMinimal = Pick<Note, 'name' | 'path'> & {
+    id: string
     content?: string
     editing?: boolean
     creating?: boolean
   };
 
   export interface FolderWithContents extends Omit<Folder, 'createdAt' | 'updatedAt'> {
+    id: string
     editing?: boolean
     creating?: boolean
     notes: NoteMinimal[]
