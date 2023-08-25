@@ -65,7 +65,7 @@ async function openItem() {
   setTimeout(() => {
     if (actionName) {
       document
-        .querySelector(`a[title="${actionName}"]`)
+        .querySelector(`.contents__list a[aria-label*="${actionName}"]`)
         ?.scrollIntoView({ behavior: 'smooth' }); // TODO: this is not working on chrome ?
     }
   }, 0);
