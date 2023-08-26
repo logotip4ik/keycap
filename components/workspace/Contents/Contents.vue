@@ -48,6 +48,8 @@ if (import.meta.client) {
 
     <!-- TODO: add button for creating new item -->
 
+    <WorkspaceContentsCreateBtn />
+
     <WorkspaceContentsList
       :state="contentsState"
     />

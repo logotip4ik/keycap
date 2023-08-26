@@ -1,0 +1,43 @@
+<script setup lang="ts">
+function handleClick() {
+  const { data: folder } = useNuxtData('folder');
+
+  if (!folder.value)
+    return;
+
+  preCreateItem(folder.value);
+}
+</script>
+
+<template>
+  <button class="contents__add" @click="handleClick">
+    <IconOutlineAdd class="contents__add__icon" />
+
+    Create new
+  </button>
+</template>
+
+<style lang="scss">
+.contents__add {
+  font-family: inherit;
+  text-align: left;
+  color: hsla(var(--text-color-hsl), 0.85);
+
+  width: 100%;
+
+  margin-top: var(--pd-y);
+  padding: calc(var(--pd-y) * 0.75) calc(var(--pd-x));
+
+  appearance: none;
+  border-radius: 0.225rem;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+
+  &:is(:hover, :focus-visible) {
+    background-color: hsla(var(--text-color-hsl), 0.045);
+    color: var(--text-color);
+    outline: none;
+  }
+}
+</style>
