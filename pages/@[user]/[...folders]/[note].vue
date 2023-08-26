@@ -44,6 +44,7 @@ let abortControllerGet: AbortController | null;
 
 const { data: fetchedNote, pending, error, refresh } = useAsyncData<SerializedNote | undefined>(
   'note',
+  // TODO: rework this handler to be similar to what is in `ContentsList`
   async () => {
     clearTimeout(pollingTimer);
 
