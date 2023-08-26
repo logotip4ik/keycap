@@ -5,8 +5,7 @@ import { resolve } from 'pathe';
 import { isCI, isDevelopment } from 'std-env';
 
 import { getHeaders } from './headers.config';
-import breakpoints from './constants/breakpoints';
-import { sidebarsBreakpoints } from './composables/sidebars';
+import { breakpoints, sidebarsBreakpoints } from './constants/breakpoints';
 import { ParseDurationTransformPlugin } from './vite/transform-parse-duration';
 
 const tsExcludes = ['../data', '../benchmarks', '../scripts'];
