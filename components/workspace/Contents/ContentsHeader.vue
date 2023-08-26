@@ -6,28 +6,58 @@ defineProps<Props>();
 
 const route = useRoute();
 
-const folderName = computed(() => {
-  if (!route.params.folders)
-    return 'Workspace';
+interface Crumb { name: string; href: string }
+const crumbs = computed(() => {
+  const folders = (
+    Array.isArray(route.params.folders)
+      ? route.params.folders
+      : [route.params.folders])
+    .filter(Boolean);
 
-  if (Array.isArray(route.params.folders) && route.params.folders.length > 0) {
-    return [
-      'WS', // Abbreviationion for Workspace ?
-      ...route.params.folders,
-    ].join('/');
+  const crumbs: Array<Crumb> = [{
+    name: folders.length === 0 ? 'Workspace' : 'WS',
+    href: `/@${route.params.user}`,
+  }];
+
+  for (let i = 0; i < folders.length; i++) {
+    const base = crumbs[i].href.replace(`/${BLANK_NOTE_NAME}`, '');
+
+    crumbs.push({
+      name: folders[i],
+      href: `${base}/${encodeURIComponent(folders[i])}/${BLANK_NOTE_NAME}`,
+    });
   }
 
-  return 'Workspace';
+  return crumbs;
 });
 </script>
 
 <template>
   <header class="contents__header">
-    <Transition name="fade">
-      <p :key="folderName" class="contents__header__folder-name">
-        {{ folderName }}
+    <TransitionGroup
+      tag="div"
+      class="contents__header__name"
+      name="fade"
+    >
+      <p
+        v-for="(crumb, i) in crumbs"
+        :key="crumb.name + crumb.href"
+        class="contents__header__name__crumb"
+      >
+        <LazyIconRoundChevronRight
+          v-if="i !== 0"
+          :key="crumb.href"
+          class="contents__header__name__crumb__icon"
+        />
+
+        <NuxtLink
+          :href="crumb.href"
+          class="contents__header__name__crumb__link"
+        >
+          {{ crumb.name }}
+        </NuxtLink>
       </p>
-    </Transition>
+    </TransitionGroup>
 
     <button
       class="contents__header__open-btn"
@@ -47,17 +77,79 @@ const folderName = computed(() => {
   justify-content: space-between;
   align-items: center;
 
-  &__folder-name {
+  &__name {
+      --scrollbar-thumb-color: hsla(var(--text-color-hsl), 0.175);
+  --scrollbar-background: var(--surface-color);
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
     font-size: calc(1rem + 0.25vw);
     font-stretch: 105%;
     color: hsla(var(--text-color-hsl), 0.825);
     text-overflow: ellipsis;
     white-space: nowrap;
 
-    margin: 0 var(--pd-x) 0 0;
     padding: 0;
+    margin-right: calc(var(--pd-x) / 2);
 
-    overflow: hidden;
+    overflow: auto;
+    scroll-snap-type: x proximity;;
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-background);
+    &::-webkit-scrollbar {
+      height: 0.25rem;
+
+      background: var(--scrollbar-background);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      height: 0.25rem;
+
+      background-color: var(--scrollbar-thumb-color);
+    }
+
+    &__crumb {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+
+      margin: 0;
+
+      scroll-snap-align: start;
+
+      &__link {
+        color: hsla(var(--text-color-hsl), 0.825);
+
+        transition: color .3s;
+
+        @media (hover: hover) {
+          color: hsla(var(--text-color-hsl), 0.75);
+        }
+
+        &:is(:hover, :focus-visible) {
+          color: var(--text-color);
+          transition-duration: 0.1s;
+        }
+
+        text-decoration: underline dashed 1px hsla(var(--selection-bg-color-hsl), 1);
+        text-underline-offset: 3px;
+      }
+
+      &__icon {
+        --size: max(3vw, 1.5rem);
+
+        width: var(--size);
+        height: auto;
+
+        max-width: 2rem;
+
+        margin: 0 -0.25ch;
+
+        color: hsla(var(--text-color-hsl), 0.2)
+      }
+    }
   }
 
   &__open-btn {
