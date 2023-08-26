@@ -42,13 +42,11 @@ const utils = [
 
   &__item {
     &__btn {
-      --ff-size: calc(0.95rem + 0.25vw);
-
       display: flex;
       justify-content: flex-start;
       align-items: center;
 
-      font-size: var(--ff-size);
+      font-size: 1.175rem;
       text-align: start;
       color: hsla(var(--text-color-hsl), 0.65);
 
@@ -64,6 +62,14 @@ const utils = [
       cursor: pointer;
       transition: background-color 0.1s, color 0.1s;
 
+      @media (width <= $sidebar-breakpoint-one) {
+        --pd-y: 1.25rem;
+      }
+
+      &:not(:first-child) {
+        margin-top: calc(var(--pd-y) / 5);
+      }
+
       &:is(:hover, :focus-visible) {
         background-color: hsla(var(--text-color-hsl), 0.05);
 
@@ -77,7 +83,7 @@ const utils = [
       &__icon {
         color: hsla(var(--text-color-hsl), 0.5);
 
-        width: calc(var(--ff-size) * 1.33);
+        width: 1.5rem;
         height: auto;
 
         margin-right: calc(var(--pd-x) * 0.5);
