@@ -22,11 +22,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@antfu/eslint-config-basic@npm:0.40.3":
-  version: 0.40.3
-  resolution: "@antfu/eslint-config-basic@npm:0.40.3"
+"@antfu/eslint-config-basic@npm:0.41.0":
+  version: 0.41.0
+  resolution: "@antfu/eslint-config-basic@npm:0.41.0"
   dependencies:
-    eslint-plugin-antfu: 0.40.3
+    eslint-plugin-antfu: 0.41.0
     eslint-plugin-eslint-comments: ^3.2.0
     eslint-plugin-html: ^7.1.0
     eslint-plugin-import: "npm:eslint-plugin-i@2.28.0-2"
@@ -42,44 +42,44 @@ __metadata:
     yaml-eslint-parser: ^1.2.2
   peerDependencies:
     eslint: ">=7.4.0"
-  checksum: c711f7f661e2dce291f953159ac2c8762b750363eaeacbcc146f9c38f660b8a1302d09874286222dab8bb558ea71d4fdfb5ff54c10798ff363c6b20da70effe2
+  checksum: 44583d161fa1e5ce0fb5ab9322d4cea78ea7f344c079f4ad9003e7941873fb80843ba44fda88f2a9dab5c7a0dd9455966f76f5e7c1a6fb9bc3b6a8abf6e061ec
   languageName: node
   linkType: hard
 
-"@antfu/eslint-config-ts@npm:0.40.3":
-  version: 0.40.3
-  resolution: "@antfu/eslint-config-ts@npm:0.40.3"
+"@antfu/eslint-config-ts@npm:0.41.0":
+  version: 0.41.0
+  resolution: "@antfu/eslint-config-ts@npm:0.41.0"
   dependencies:
-    "@antfu/eslint-config-basic": 0.40.3
+    "@antfu/eslint-config-basic": 0.41.0
     "@typescript-eslint/eslint-plugin": ^6.4.1
     "@typescript-eslint/parser": ^6.4.1
     eslint-plugin-jest: ^27.2.3
   peerDependencies:
     eslint: ">=7.4.0"
     typescript: ">=3.9"
-  checksum: 67905da1f70a993606cdf9882557098b21e4f5c5b1575e050e9389fe3c55e24846bade8db68843d3b482880a38e8e99f2fd0b1617c0c78d6dd734572b70ecc42
+  checksum: fe9b3a99840d549185176571e936c96c0cb4f5904caa0068a453b830a30c08063df866f0dd5b44af3f4730a654a11b1ecfada19b9b529e8da4f0cfea12a1df7b
   languageName: node
   linkType: hard
 
-"@antfu/eslint-config-vue@npm:0.40.3":
-  version: 0.40.3
-  resolution: "@antfu/eslint-config-vue@npm:0.40.3"
+"@antfu/eslint-config-vue@npm:0.41.0":
+  version: 0.41.0
+  resolution: "@antfu/eslint-config-vue@npm:0.41.0"
   dependencies:
-    "@antfu/eslint-config-basic": 0.40.3
-    "@antfu/eslint-config-ts": 0.40.3
+    "@antfu/eslint-config-basic": 0.41.0
+    "@antfu/eslint-config-ts": 0.41.0
     eslint-plugin-vue: ^9.17.0
     local-pkg: ^0.4.3
   peerDependencies:
     eslint: ">=7.4.0"
-  checksum: beb8438c0847efbffa9433a4ae79c3df0c48bc15ec26eecc511428256b3f1315a999da526b69ab1b583bf6acd9d3d3dd68680058881ad35711ec91a1dfbab8fd
+  checksum: d8bc1e3f72a9f0eaef8330731e07b6e9b9dd61a68ac24419d3f6488e2d38f9df731c85428b2fcc36f2a0122f8a6ec1d9ecf50784ffee9b3f285c10727e43d1db
   languageName: node
   linkType: hard
 
-"@antfu/eslint-config@npm:^0.40.2":
-  version: 0.40.3
-  resolution: "@antfu/eslint-config@npm:0.40.3"
+"@antfu/eslint-config@npm:^0.41.0":
+  version: 0.41.0
+  resolution: "@antfu/eslint-config@npm:0.41.0"
   dependencies:
-    "@antfu/eslint-config-vue": 0.40.3
+    "@antfu/eslint-config-vue": 0.41.0
     "@typescript-eslint/eslint-plugin": ^6.4.1
     "@typescript-eslint/parser": ^6.4.1
     eslint-plugin-eslint-comments: ^3.2.0
@@ -95,7 +95,7 @@ __metadata:
     yaml-eslint-parser: ^1.2.2
   peerDependencies:
     eslint: ">=7.4.0"
-  checksum: db775251400da98bc62320e549c6c6b4085340e152464e0fad03afbc0b3006d8d26b2a6040d40da42ac9f5e8370ad57d7a20de1fd668a2154dbe9874939b1816
+  checksum: 9f76fe42e6f9e1c65702049915fd2fc6d2b0e5521a3ce612d04732ccb725f2422970d3eb0417d6adb9e61f2c35f6b3590cc5c9367f1f7180038eac20c10bcdea
   languageName: node
   linkType: hard
 
@@ -2008,7 +2008,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/js@npm:^8.47.0":
+"@eslint/js@npm:8.48.0":
   version: 8.48.0
   resolution: "@eslint/js@npm:8.48.0"
   checksum: b2755f9c0ee810c886eba3c50dcacb184ba5a5cd1cbc01988ee506ad7340653cae0bd55f1d95c64b56dfc6d25c2caa7825335ffd2c50165bae9996fe0f396851
@@ -2674,7 +2674,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxt/kit@npm:3.7.0, @nuxt/kit@npm:^3.2.0, @nuxt/kit@npm:^3.5.3, @nuxt/kit@npm:^3.6.0, @nuxt/kit@npm:^3.6.5":
+"@nuxt/kit@npm:3.7.0, @nuxt/kit@npm:^3.2.0, @nuxt/kit@npm:^3.5.3, @nuxt/kit@npm:^3.6.0, @nuxt/kit@npm:^3.6.5, @nuxt/kit@npm:^3.7.0":
   version: 3.7.0
   resolution: "@nuxt/kit@npm:3.7.0"
   dependencies:
@@ -2915,7 +2915,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@parcel/watcher@npm:^2.2.0":
+"@parcel/watcher@npm:^2.2.0, @parcel/watcher@npm:^2.3.0":
   version: 2.3.0
   resolution: "@parcel/watcher@npm:2.3.0"
   dependencies:
@@ -3406,7 +3406,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-blockquote@npm:^2.1.6":
+"@tiptap/extension-blockquote@npm:^2.1.7":
   version: 2.1.7
   resolution: "@tiptap/extension-blockquote@npm:2.1.7"
   peerDependencies:
@@ -3415,7 +3415,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-bold@npm:^2.1.6":
+"@tiptap/extension-bold@npm:^2.1.7":
   version: 2.1.7
   resolution: "@tiptap/extension-bold@npm:2.1.7"
   peerDependencies:
@@ -3424,7 +3424,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-bubble-menu@npm:^2.1.6, @tiptap/extension-bubble-menu@npm:^2.1.7":
+"@tiptap/extension-bubble-menu@npm:^2.1.7":
   version: 2.1.7
   resolution: "@tiptap/extension-bubble-menu@npm:2.1.7"
   dependencies:
@@ -3436,7 +3436,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-bullet-list@npm:^2.1.6":
+"@tiptap/extension-bullet-list@npm:^2.1.7":
   version: 2.1.7
   resolution: "@tiptap/extension-bullet-list@npm:2.1.7"
   peerDependencies:
@@ -3445,7 +3445,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-code-block@npm:^2.1.6":
+"@tiptap/extension-code-block@npm:^2.1.7":
   version: 2.1.7
   resolution: "@tiptap/extension-code-block@npm:2.1.7"
   peerDependencies:
@@ -3455,7 +3455,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-code@npm:^2.1.6":
+"@tiptap/extension-code@npm:^2.1.7":
   version: 2.1.7
   resolution: "@tiptap/extension-code@npm:2.1.7"
   peerDependencies:
@@ -3464,7 +3464,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-document@npm:^2.1.6":
+"@tiptap/extension-document@npm:^2.1.7":
   version: 2.1.7
   resolution: "@tiptap/extension-document@npm:2.1.7"
   peerDependencies:
@@ -3485,7 +3485,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-hard-break@npm:^2.1.6":
+"@tiptap/extension-hard-break@npm:^2.1.7":
   version: 2.1.7
   resolution: "@tiptap/extension-hard-break@npm:2.1.7"
   peerDependencies:
@@ -3494,7 +3494,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-heading@npm:^2.1.6":
+"@tiptap/extension-heading@npm:^2.1.7":
   version: 2.1.7
   resolution: "@tiptap/extension-heading@npm:2.1.7"
   peerDependencies:
@@ -3503,7 +3503,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-history@npm:^2.1.6":
+"@tiptap/extension-history@npm:^2.1.7":
   version: 2.1.7
   resolution: "@tiptap/extension-history@npm:2.1.7"
   peerDependencies:
@@ -3513,7 +3513,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-horizontal-rule@npm:^2.1.6":
+"@tiptap/extension-horizontal-rule@npm:^2.1.7":
   version: 2.1.7
   resolution: "@tiptap/extension-horizontal-rule@npm:2.1.7"
   peerDependencies:
@@ -3523,7 +3523,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-italic@npm:^2.1.6":
+"@tiptap/extension-italic@npm:^2.1.7":
   version: 2.1.7
   resolution: "@tiptap/extension-italic@npm:2.1.7"
   peerDependencies:
@@ -3556,7 +3556,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-list-item@npm:^2.1.6":
+"@tiptap/extension-list-item@npm:^2.1.7":
   version: 2.1.7
   resolution: "@tiptap/extension-list-item@npm:2.1.7"
   peerDependencies:
@@ -3565,7 +3565,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-ordered-list@npm:^2.1.6":
+"@tiptap/extension-ordered-list@npm:^2.1.7":
   version: 2.1.7
   resolution: "@tiptap/extension-ordered-list@npm:2.1.7"
   peerDependencies:
@@ -3574,7 +3574,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-paragraph@npm:^2.1.6":
+"@tiptap/extension-paragraph@npm:^2.1.7":
   version: 2.1.7
   resolution: "@tiptap/extension-paragraph@npm:2.1.7"
   peerDependencies:
@@ -3583,7 +3583,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-placeholder@npm:^2.1.6":
+"@tiptap/extension-placeholder@npm:^2.1.7":
   version: 2.1.7
   resolution: "@tiptap/extension-placeholder@npm:2.1.7"
   peerDependencies:
@@ -3593,7 +3593,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-strike@npm:^2.1.6":
+"@tiptap/extension-strike@npm:^2.1.7":
   version: 2.1.7
   resolution: "@tiptap/extension-strike@npm:2.1.7"
   peerDependencies:
@@ -3602,7 +3602,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-task-item@npm:^2.1.6":
+"@tiptap/extension-task-item@npm:^2.1.7":
   version: 2.1.7
   resolution: "@tiptap/extension-task-item@npm:2.1.7"
   peerDependencies:
@@ -3612,7 +3612,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-task-list@npm:^2.1.6":
+"@tiptap/extension-task-list@npm:^2.1.7":
   version: 2.1.7
   resolution: "@tiptap/extension-task-list@npm:2.1.7"
   peerDependencies:
@@ -3621,7 +3621,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-text-align@npm:^2.1.6":
+"@tiptap/extension-text-align@npm:^2.1.7":
   version: 2.1.7
   resolution: "@tiptap/extension-text-align@npm:2.1.7"
   peerDependencies:
@@ -3630,7 +3630,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-text@npm:^2.1.6":
+"@tiptap/extension-text@npm:^2.1.7":
   version: 2.1.7
   resolution: "@tiptap/extension-text@npm:2.1.7"
   peerDependencies:
@@ -3639,7 +3639,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/pm@npm:^2.1.6":
+"@tiptap/pm@npm:^2.1.7":
   version: 2.1.7
   resolution: "@tiptap/pm@npm:2.1.7"
   dependencies:
@@ -3665,7 +3665,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/vue-3@npm:^2.1.6":
+"@tiptap/vue-3@npm:^2.1.7":
   version: 2.1.7
   resolution: "@tiptap/vue-3@npm:2.1.7"
   dependencies:
@@ -4073,7 +4073,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@unhead/addons@npm:^1.3.5":
+"@unhead/addons@npm:^1.3.7":
   version: 1.3.7
   resolution: "@unhead/addons@npm:1.3.7"
   dependencies:
@@ -4461,7 +4461,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vueuse/core@npm:10.4.0, @vueuse/core@npm:^10.3.0":
+"@vueuse/core@npm:10.4.0, @vueuse/core@npm:^10.4.0":
   version: 10.4.0
   resolution: "@vueuse/core@npm:10.4.0"
   dependencies:
@@ -4480,7 +4480,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vueuse/nuxt@npm:^10.3.0":
+"@vueuse/nuxt@npm:^10.4.0":
   version: 10.4.0
   resolution: "@vueuse/nuxt@npm:10.4.0"
   dependencies:
@@ -6949,12 +6949,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-antfu@npm:0.40.3":
-  version: 0.40.3
-  resolution: "eslint-plugin-antfu@npm:0.40.3"
+"eslint-plugin-antfu@npm:0.41.0":
+  version: 0.41.0
+  resolution: "eslint-plugin-antfu@npm:0.41.0"
   dependencies:
     "@typescript-eslint/utils": ^6.4.1
-  checksum: 6b919cf0887050530738a0cc79ec78b4fc83c344a2bc4a32e8a3368a15e959d9d286e9d176dbea8ca9d279eb7b0225d5488d8c6017c7ff9dbfb9b7cdd1fb60cf
+  checksum: 053e406a5571da8a7952f81bd5baf6cb6a1f1be2c844189aecd7d81fa2ceb864f72e92a5d422b574e1adbc7c0192c7533fafc0b178edeb612d99d610c129d459
   languageName: node
   linkType: hard
 
@@ -7351,14 +7351,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:8.47.0":
-  version: 8.47.0
-  resolution: "eslint@npm:8.47.0"
+"eslint@npm:8.48.0":
+  version: 8.48.0
+  resolution: "eslint@npm:8.48.0"
   dependencies:
     "@eslint-community/eslint-utils": ^4.2.0
     "@eslint-community/regexpp": ^4.6.1
     "@eslint/eslintrc": ^2.1.2
-    "@eslint/js": ^8.47.0
+    "@eslint/js": 8.48.0
     "@humanwhocodes/config-array": ^0.11.10
     "@humanwhocodes/module-importer": ^1.0.1
     "@nodelib/fs.walk": ^1.2.8
@@ -7394,7 +7394,7 @@ __metadata:
     text-table: ^0.2.0
   bin:
     eslint: bin/eslint.js
-  checksum: 1988617f703eadc5c7540468d54dc8e5171cf2bb9483f6172799cd1ff54a9a5e4470f003784e8cef92687eaa14de37172732787040e67817581a20bcb9c15970
+  checksum: f20b359a4f8123fec5c033577368cc020d42978b1b45303974acd8da7a27063168ee3fe297ab5b35327162f6a93154063e3ce6577102f70f9809aff793db9bd0
   languageName: node
   linkType: hard
 
@@ -9417,56 +9417,56 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "keycap@workspace:."
   dependencies:
-    "@antfu/eslint-config": ^0.40.2
+    "@antfu/eslint-config": ^0.41.0
     "@faker-js/faker": ^8.0.2
     "@node-rs/argon2": ^1.5.2
     "@node-rs/bcrypt": ^1.7.3
     "@nuxt/devtools": ^0.8.0
-    "@nuxt/kit": ^3.6.5
+    "@nuxt/kit": ^3.7.0
     "@nuxtjs/fontaine": ^0.4.1
-    "@parcel/watcher": ^2.2.0
+    "@parcel/watcher": ^2.3.0
     "@prisma/client": ^5.2.0
     "@size-limit/file": ^8.2.6
     "@superhuman/command-score": ^0.5.0
     "@tinkoff/lru-cache-nano": ^7.8.1
-    "@tiptap/core": ^2.1.6
-    "@tiptap/extension-blockquote": ^2.1.6
-    "@tiptap/extension-bold": ^2.1.6
-    "@tiptap/extension-bubble-menu": ^2.1.6
-    "@tiptap/extension-bullet-list": ^2.1.6
-    "@tiptap/extension-code": ^2.1.6
-    "@tiptap/extension-code-block": ^2.1.6
-    "@tiptap/extension-document": ^2.1.6
-    "@tiptap/extension-hard-break": ^2.1.6
-    "@tiptap/extension-heading": ^2.1.6
-    "@tiptap/extension-history": ^2.1.6
-    "@tiptap/extension-horizontal-rule": ^2.1.6
-    "@tiptap/extension-italic": ^2.1.6
-    "@tiptap/extension-link": ^2.1.6
-    "@tiptap/extension-list-item": ^2.1.6
-    "@tiptap/extension-ordered-list": ^2.1.6
-    "@tiptap/extension-paragraph": ^2.1.6
-    "@tiptap/extension-placeholder": ^2.1.6
-    "@tiptap/extension-strike": ^2.1.6
-    "@tiptap/extension-task-item": ^2.1.6
-    "@tiptap/extension-task-list": ^2.1.6
-    "@tiptap/extension-text": ^2.1.6
-    "@tiptap/extension-text-align": ^2.1.6
-    "@tiptap/pm": ^2.1.6
-    "@tiptap/vue-3": ^2.1.6
+    "@tiptap/core": ^2.1.7
+    "@tiptap/extension-blockquote": ^2.1.7
+    "@tiptap/extension-bold": ^2.1.7
+    "@tiptap/extension-bubble-menu": ^2.1.7
+    "@tiptap/extension-bullet-list": ^2.1.7
+    "@tiptap/extension-code": ^2.1.7
+    "@tiptap/extension-code-block": ^2.1.7
+    "@tiptap/extension-document": ^2.1.7
+    "@tiptap/extension-hard-break": ^2.1.7
+    "@tiptap/extension-heading": ^2.1.7
+    "@tiptap/extension-history": ^2.1.7
+    "@tiptap/extension-horizontal-rule": ^2.1.7
+    "@tiptap/extension-italic": ^2.1.7
+    "@tiptap/extension-link": ^2.1.7
+    "@tiptap/extension-list-item": ^2.1.7
+    "@tiptap/extension-ordered-list": ^2.1.7
+    "@tiptap/extension-paragraph": ^2.1.7
+    "@tiptap/extension-placeholder": ^2.1.7
+    "@tiptap/extension-strike": ^2.1.7
+    "@tiptap/extension-task-item": ^2.1.7
+    "@tiptap/extension-task-list": ^2.1.7
+    "@tiptap/extension-text": ^2.1.7
+    "@tiptap/extension-text-align": ^2.1.7
+    "@tiptap/pm": ^2.1.7
+    "@tiptap/vue-3": ^2.1.7
     "@total-typescript/ts-reset": ^0.5.1
     "@types/decomment": ^0.9.3
     "@types/lambda-rate-limiter": ^3.0.0
     "@types/node": ^18.17.6
     "@types/sanitize-html": ^2.9.0
-    "@unhead/addons": ^1.3.5
+    "@unhead/addons": ^1.3.7
     "@vite-pwa/nuxt": ^0.1.0
-    "@vueuse/core": ^10.3.0
-    "@vueuse/nuxt": ^10.3.0
+    "@vueuse/core": ^10.4.0
+    "@vueuse/nuxt": ^10.4.0
     browserslist-to-esbuild: ^1.2.0
     comlink: ^4.4.1
     decomment: ^0.9.5
-    eslint: 8.47.0
+    eslint: 8.48.0
     eslint-plugin-github: ^4.9.2
     eslint-plugin-regexp: ^1.15.0
     estree-walker: ^3.0.3
@@ -9479,7 +9479,7 @@ __metadata:
     mitt: ^3.0.1
     nanoid: ^4.0.2
     normalize.css: ^8.0.1
-    nuxt: ^3.6.5
+    nuxt: ^3.7.0
     nuxt-vitest: ^0.10.2
     parse-duration: ^1.1.0
     postcss-combine-media-query: ^1.0.1
@@ -9493,10 +9493,10 @@ __metadata:
     svgo: ^3.0.2
     terser: ^5.19.2
     tinykeys: ^2.1.0
-    typescript: ^5.1.6
-    ufo: ^1.2.0
+    typescript: ^5.2.2
+    ufo: ^1.3.0
     unplugin-ltsdi: ^0.1.1
-    vitest: ^0.34.2
+    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -10914,7 +10914,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nuxt@npm:^3.6.5":
+"nuxt@npm:^3.6.5, nuxt@npm:^3.7.0":
   version: 3.7.0
   resolution: "nuxt@npm:3.7.0"
   dependencies:
@@ -13970,7 +13970,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.1.6":
+"typescript@npm:^5.2.2":
   version: 5.2.2
   resolution: "typescript@npm:5.2.2"
   bin:
@@ -13980,7 +13980,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^5.1.6#~builtin<compat/typescript>":
+"typescript@patch:typescript@^5.2.2#~builtin<compat/typescript>":
   version: 5.2.2
   resolution: "typescript@patch:typescript@npm%3A5.2.2#~builtin<compat/typescript>::version=5.2.2&hash=f3b441"
   bin:
@@ -14644,7 +14644,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vitest@npm:^0.34.2":
+"vitest@npm:^0.34.3":
   version: 0.34.3
   resolution: "vitest@npm:0.34.3"
   dependencies:
