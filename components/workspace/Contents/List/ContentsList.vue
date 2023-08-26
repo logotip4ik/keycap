@@ -27,8 +27,7 @@ const visibleStates = ['visible', 'pinned'] satisfies Array<SidebarState>;
 const POLLING_TIME = parseDuration('2.5 minutes')!;
 let pollingTimer: NodeJS.Timeout;
 
-// Intentionally not awaited
-const { data: folder, refresh } = useAsyncData<FolderWithContents | undefined>('folder', async () => {
+const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefined>('folder', async () => {
   if (import.meta.server || props.state === 'hidden')
     return;
 
@@ -88,6 +87,8 @@ if (import.meta.client) {
       refresh();
   }));
 };
+
+// TODO: add tinykeys with shortcut
 </script>
 
 <template>
@@ -98,6 +99,7 @@ if (import.meta.client) {
     </div>
 
     <div v-else-if="folderContents.length === 0" key="2">
+      <!-- TODO: add styles -->
       No notes here yet ^_^
     </div>
 
