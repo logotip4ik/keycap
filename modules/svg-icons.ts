@@ -27,7 +27,7 @@ export default defineNuxtModule({
 
       const { dst } = addTemplate({
         write: true,
-        filename: `${icon.kebabCaseName}.mjs`,
+        filename: `icons/${icon.kebabCaseName}.mjs`,
         getContents: async () =>
           await generateIconFileDefinition({ name: icon.pascalCase, path: icon.path }),
       });
