@@ -183,13 +183,9 @@ if (import.meta.client) {
   }
 
   &__item {
-    min-height: calc(var(--pd-y) * 0.75 * 2 + 1.125rem);
-
     scroll-snap-align: start;
 
-    &:not(:first-child) {
-      margin-top: calc(var(--pd-y) / 5);
-    }
+    margin-top: calc(var(--pd-y) / 5);
   }
 }
 </style>
