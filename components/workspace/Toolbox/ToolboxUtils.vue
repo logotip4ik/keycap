@@ -3,7 +3,7 @@ import { LazyIconSearchRounded } from '#components';
 
 const utils = [
   {
-    text: 'Search',
+    text: 'Open Search',
     label: 'open quick search',
     icon: LazyIconSearchRounded,
     action: () => {
