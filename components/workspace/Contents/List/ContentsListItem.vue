@@ -181,14 +181,14 @@ function unpinIfNeeded() {
   &:is(:hover, :focus-visible) {
     color: hsla(var(--text-color-hsl), 1);
 
-    background-color: hsla(var(--text-color-hsl), 0.035);
+    background-color: hsla(var(--text-color-hsl), 0.045);
 
     transition-duration: 0;
   }
 
-  // overwrites media hover rules
-  &--active.list__item {
-    color: hsla(var(--text-color-hsl), 1);
+  &--active {
+    color: hsla(var(--text-color-hsl), 1) !important;
+    background-color: hsla(var(--text-color-hsl), 0.025);
     outline-color: hsla(var(--selection-bg-color-hsl), 0.35);
   }
 
