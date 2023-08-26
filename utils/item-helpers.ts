@@ -44,9 +44,18 @@ export function preCreateItem(folderToAppend: FolderWithContents, initialValues?
 
   folderToAppend.notes.unshift(noteValues);
 
-  nextTick(() => {
-    (document.querySelector('.item[data-creating="true"] > form > input') as HTMLInputElement | null)?.focus();
-  });
+  focusItemInput();
+}
+
+export function focusItemInput(time: number = 1) {
+  setTimeout(() => {
+    const input = document.querySelector('#contentsListItemInput') as HTMLInputElement | null;
+
+    if (!input)
+      return focusItemInput(100);
+
+    input.focus();
+  }, time);
 }
 
 export function getCurrentFolderPath() {

@@ -116,17 +116,6 @@ function deleteItem() {
   props.onClose();
 }
 
-function focusItemInput(time: number = 1) {
-  setTimeout(() => {
-    const input = document.querySelector('#contentsListItemInput') as HTMLInputElement | null;
-
-    if (!input)
-      return focusItemInput(100);
-
-    input.focus();
-  }, time);
-}
-
 useClickOutside(menu, () => props.onClose());
 
 useTinykeys({
