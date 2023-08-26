@@ -1,6 +1,75 @@
 # Changelog
 
 
+## v2.4.0
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v2.3.9...v2.4.0)
+
+### 🚀 Enhancements
+
+- Actually update nuxt and deps ([382f4cc](https://github.com/logotip4ik/keycap/commit/382f4cc))
+
+### 🏡 Chore
+
+- **release:** V2.3.9 ([ff35b8f](https://github.com/logotip4ik/keycap/commit/ff35b8f))
+- Apply fixes ([2f91758](https://github.com/logotip4ik/keycap/commit/2f91758))
+
+### ❤️ Contributors
+
+- Logotip4ik ([@betterqualityassuranceuser](http://github.com/betterqualityassuranceuser))
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+
+## v2.3.9
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v2.3.8...v2.3.9)
+
+### 💅 Refactors
+
+- Enable `headNext` ([a10b8fd](https://github.com/logotip4ik/keycap/commit/a10b8fd))
+- Remove idle callback polyfill import ([55beb9c](https://github.com/logotip4ik/keycap/commit/55beb9c))
+
+### 🏡 Chore
+
+- **release:** V2.3.8 ([6448b5c](https://github.com/logotip4ik/keycap/commit/6448b5c))
+- Update deps ([d18f54d](https://github.com/logotip4ik/keycap/commit/d18f54d))
+- Remove not needed idle callback polyfill ([956fe7d](https://github.com/logotip4ik/keycap/commit/956fe7d))
+- Also remove idle callback patch ([4e14fd6](https://github.com/logotip4ik/keycap/commit/4e14fd6))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+- Logotip4ik ([@betterqualityassuranceuser](http://github.com/betterqualityassuranceuser))
+
+## v2.3.8
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v2.3.7...v2.3.8)
+
+### 💅 Refactors
+
+- Move action handlers to `SearchItem` component ([0515609](https://github.com/logotip4ik/keycap/commit/0515609))
+- Directly use result element click handler ([3c0cf6c](https://github.com/logotip4ik/keycap/commit/3c0cf6c))
+
+### 🏡 Chore
+
+- **release:** V2.3.7 ([60eb5be](https://github.com/logotip4ik/keycap/commit/60eb5be))
+- Update deps ([dc42329](https://github.com/logotip4ik/keycap/commit/dc42329))
+
+### 🎨 Styles
+
+- Run `lint:fix` ([a4c521f](https://github.com/logotip4ik/keycap/commit/a4c521f))
+
+### 🤖 CI
+
+- Trigger release workflow after updating dependencies ([5d1d57c](https://github.com/logotip4ik/keycap/commit/5d1d57c))
+- Remove actions permission ([25633ee](https://github.com/logotip4ik/keycap/commit/25633ee))
+- Do not run `lint:fix` against `.github` folder ([7c02ec7](https://github.com/logotip4ik/keycap/commit/7c02ec7))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+- Github-actions <github-actions@github.com>
+- Logotip4ik ([@betterqualityassuranceuser](http://github.com/betterqualityassuranceuser))
+
 ## v2.3.7
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v2.3.6...v2.3.7)

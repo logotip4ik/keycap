@@ -43,6 +43,7 @@ export default defineNuxtConfig({
     componentIslands: true,
     watcher: 'parcel',
     typescriptBundlerResolution: true,
+    headNext: true,
   },
 
   typescript: {

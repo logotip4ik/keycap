@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import '~/polyfills/array-at';
-import 'requestidlecallback-polyfill';
 
 import parseDuration from 'parse-duration';
 
