@@ -103,6 +103,12 @@ function unpinIfNeeded() {
     transition-duration: 0;
   }
 
+  // This class is toggled by ListItemMenu
+  &.outlined {
+    outline-color: hsla(var(--text-color-hsl), 0.125);
+    box-shadow: 0 0 0.5rem hsla(var(--text-color-hsl), 0.05);
+  }
+
   &--active {
     color: hsla(var(--text-color-hsl), 1) !important;
     background-color: hsla(var(--text-color-hsl), 0.025);

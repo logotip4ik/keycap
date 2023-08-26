@@ -132,6 +132,8 @@ onMounted(() => {
       { name: 'offset', options: { offset: [0, 4] } },
     ],
   });
+
+  props.target.classList.add('outlined');
 });
 
 onBeforeUnmount(() => {
@@ -139,6 +141,7 @@ onBeforeUnmount(() => {
   cleanup = null;
 
   popperInstance.value?.destroy();
+  props.target.classList.remove('outlined');
 });
 </script>
 
