@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v2.4.0
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v2.3.9...v2.4.0)
+
+### 🚀 Enhancements
+
+- Actually update nuxt and deps ([382f4cc](https://github.com/logotip4ik/keycap/commit/382f4cc))
+
+### 🏡 Chore
+
+- **release:** V2.3.9 ([ff35b8f](https://github.com/logotip4ik/keycap/commit/ff35b8f))
+- Apply fixes ([2f91758](https://github.com/logotip4ik/keycap/commit/2f91758))
+
+### ❤️ Contributors
+
+- Logotip4ik ([@betterqualityassuranceuser](http://github.com/betterqualityassuranceuser))
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+
 ## v2.3.9
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v2.3.8...v2.3.9)
