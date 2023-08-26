@@ -21,7 +21,7 @@ const props = defineProps<Props>();
 const createToast = useToast();
 const detailsItem = useCurrentItemForDetails();
 
-const isFolder = computed(() => 'root' in props.item);
+const isFolder = 'root' in props.item;
 const popperInstance = shallowRef<null | PopperInstance>(null);
 const menu = ref<null | HTMLElement>(null);
 const currentlyConfirming = ref(-1); // You can confirm one at a time
@@ -35,7 +35,7 @@ const noteActions = [
 const actions = computed(() => {
   const copy = noteActions.slice();
 
-  if (isFolder.value)
+  if (isFolder)
     copy.splice(1, 1);
 
   return copy;
@@ -93,7 +93,7 @@ function preloadItemWithIndication() {
 }
 
 function renameItem() {
-  const updateItem = isFolder.value ? updateSubfolderInFolder : updateNoteInFolder;
+  const updateItem = isFolder ? updateSubfolderInFolder : updateNoteInFolder;
 
   updateItem(props.item, { editing: true }, props.parent);
 
@@ -112,7 +112,7 @@ function showDetails() {
 }
 
 function deleteItem() {
-  const deleteItem = isFolder.value ? deleteFolder : deleteNote;
+  const deleteItem = isFolder ? deleteFolder : deleteNote;
 
   deleteItem(props.item, props.parent);
 
