@@ -115,19 +115,21 @@ if (import.meta.client) {
         :key="item.id"
         class="contents__list__item"
       >
-        <Transition name="fade" appear>
-          <LazyWorkspaceContentsListItemInput
-            v-if="item.creating || item.editing"
-            :item="item"
-            :parent="folder"
-          />
+        <Transition name="fade">
+          <Suspense>
+            <LazyWorkspaceContentsListItemInput
+              v-if="item.creating || item.editing"
+              :item="item"
+              :parent="folder"
+            />
 
-          <LazyWorkspaceContentsListItem
-            v-else
-            :item="item"
-            :parent="folder"
-            @show-menu="showMenu($event, item)"
-          />
+            <LazyWorkspaceContentsListItem
+              v-else
+              :item="item"
+              :parent="folder"
+              @show-menu="showMenu($event, item)"
+            />
+          </Suspense>
         </Transition>
       </li>
     </TransitionGroup>
