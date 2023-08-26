@@ -151,13 +151,14 @@ if (import.meta.client) {
 .contents__list {
   --scrollbar-thumb-color: hsla(var(--text-color-hsl), 0.175);
   --scrollbar-background: var(--surface-color);
+  --items-spacing: calc(var(--pd-y) / 5);
 
   position: relative;
 
   height: 100%;
 
   margin: 0;
-  margin-top: calc(var(--pd-y) * 1);
+  margin-top: calc(var(--pd-y) - var(--items-spacing));
   margin-right: calc(-1 * var(--pd-x));
   margin-bottom: calc(-1 * var(--pd-y));
 
@@ -185,7 +186,7 @@ if (import.meta.client) {
   &__item {
     scroll-snap-align: start;
 
-    margin-top: calc(var(--pd-y) / 5);
+    margin-top: var(--items-spacing);
   }
 }
 </style>
