@@ -139,7 +139,7 @@ onMounted(() => {
 
   &__note {
     --scrollbar-thumb-color: hsla(var(--text-color-hsl), 0.175);
-    --scrollbar-background: var(--surface-color);
+    --scrollbar-background: hsla(var(--text-color-hsl), 0.025);
 
     flex: 1;
 
@@ -151,13 +151,13 @@ onMounted(() => {
     scrollbar-width: thin;
     scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-background);
     &::-webkit-scrollbar {
-      width: 0.75rem;
+      width: 0.5rem;
 
       background: var(--scrollbar-background);
     }
 
     &::-webkit-scrollbar-thumb {
-      width: 0.75rem;
+      width: 0.5rem;
 
       background-color: var(--scrollbar-thumb-color);
     }
