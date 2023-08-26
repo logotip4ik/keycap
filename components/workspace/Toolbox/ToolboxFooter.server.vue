@@ -40,6 +40,8 @@ const links = [
 
 <style lang="scss">
 .toolbox__footer {
+  --spacing: 1ch;
+
   display: flex;
   justify-content: flex-start;
   align-items: stretch;
@@ -57,7 +59,7 @@ const links = [
     color: hsla(var(--text-color-hsl), 0.65);
 
     margin: 0;
-    padding-left: calc(var(--pd-x) / 4);
+    padding-left: calc(var(--pd-x) / 5);
 
     &__img {
       display: block;
@@ -65,7 +67,7 @@ const links = [
       width: 1.5rem;
       height: auto;
 
-      margin-right: 0.5ch;
+      margin-right: var(--spacing);
 
       opacity: 0.65;
 
@@ -81,7 +83,7 @@ const links = [
     font-size: 0.925rem;
     font-weight: 300;
 
-    margin: 1rem 0 0;
+    margin: calc(var(--spacing) * 1.33) 0 0;
     padding: 0;
 
     list-style-type: none;
