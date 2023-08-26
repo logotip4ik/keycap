@@ -1,6 +1,27 @@
 # Changelog
 
 
+## v2.3.9
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v2.3.8...v2.3.9)
+
+### 💅 Refactors
+
+- Enable `headNext` ([a10b8fd](https://github.com/logotip4ik/keycap/commit/a10b8fd))
+- Remove idle callback polyfill import ([55beb9c](https://github.com/logotip4ik/keycap/commit/55beb9c))
+
+### 🏡 Chore
+
+- **release:** V2.3.8 ([6448b5c](https://github.com/logotip4ik/keycap/commit/6448b5c))
+- Update deps ([d18f54d](https://github.com/logotip4ik/keycap/commit/d18f54d))
+- Remove not needed idle callback polyfill ([956fe7d](https://github.com/logotip4ik/keycap/commit/956fe7d))
+- Also remove idle callback patch ([4e14fd6](https://github.com/logotip4ik/keycap/commit/4e14fd6))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+- Logotip4ik ([@betterqualityassuranceuser](http://github.com/betterqualityassuranceuser))
+
 ## v2.3.8
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v2.3.7...v2.3.8)
