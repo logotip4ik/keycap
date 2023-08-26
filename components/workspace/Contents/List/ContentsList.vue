@@ -151,6 +151,8 @@ if (import.meta.client) {
 
   position: relative;
 
+  height: 100%;
+
   margin: 0;
   margin-top: calc(var(--pd-y) * 1);
   margin-right: calc(-1 * var(--pd-x));
