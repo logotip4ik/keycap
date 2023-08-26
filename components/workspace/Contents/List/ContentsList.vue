@@ -108,6 +108,7 @@ if (import.meta.client) {
       name="list"
       class="contents__list"
       appear
+      tabindex="-1"
       @contextmenu.prevent
     >
       <li
