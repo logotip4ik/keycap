@@ -32,7 +32,7 @@ const noteApiPath = computed(() => notePath.value.split('/').slice(2).join('/'))
 
 // NOTE: can't use default param in async data because it runs
 // before route navigation and our notes depends on route path
-const note = shallowRef<Note | null>(
+const note = shallowRef<SerializedNote | null>(
   notesCache.get(notePath.value) || null,
 );
 
@@ -42,7 +42,7 @@ let firstTimeFetch = true;
 let loadingToast: RefToastInstance;
 let abortControllerGet: AbortController | null;
 
-const { data: fetchedNote, pending, error, refresh } = useLazyAsyncData<Note | null>(
+const { data: fetchedNote, pending, error, refresh } = useAsyncData<SerializedNote | undefined>(
   'note',
   async () => {
     clearTimeout(pollingTimer);
@@ -50,7 +50,7 @@ const { data: fetchedNote, pending, error, refresh } = useLazyAsyncData<Note | n
     currentNoteState.value = '';
 
     if (!route.params.note || route.params.note === BLANK_NOTE_NAME)
-      return null;
+      return;
 
     if (!note.value) {
       offlineStorage.value?.getItem(notePath.value)
@@ -71,7 +71,7 @@ const { data: fetchedNote, pending, error, refresh } = useLazyAsyncData<Note | n
 
     abortControllerGet = new AbortController();
 
-    return await $fetch<Note>(
+    return await $fetch<SerializedNote>(
       `/api/note/${noteApiPath.value}`,
       { retry: 2, signal: abortControllerGet.signal },
     )
@@ -82,7 +82,7 @@ const { data: fetchedNote, pending, error, refresh } = useLazyAsyncData<Note | n
         pollingTimer = setTimeout(refresh, POLLING_TIME * multiplier);
       });
   },
-  { server: false },
+  { server: false, lazy: true },
 );
 
 let abortControllerUpdate: AbortController | null;
@@ -106,7 +106,7 @@ function updateNote(content: string) {
   if (!note.value || !notesCache.get(notePath.value))
     return;
 
-  const newNote: Note = { ...toRaw(note.value), content };
+  const newNote = { ...toRaw(note.value), content };
 
   // enables optimistic ui
   notesCache.set(note.value.path, newNote);
@@ -180,7 +180,7 @@ watch(error, async (error) => {
   if (note.value)
     return;
 
-  const offlineNote = await offlineStorage.value?.getItem(notePath.value) as Note;
+  const offlineNote = await offlineStorage.value?.getItem(notePath.value);
 
   // if offline storage hasn't got the note, navigate to root of in hope folder is in cache
   if (!offlineNote) {
