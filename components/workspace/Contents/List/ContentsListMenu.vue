@@ -93,9 +93,9 @@ function preloadItemWithIndication() {
 }
 
 function renameItem() {
-  const update = isFolder ? updateSubfolderInFolder : updateNoteInFolder;
+  const updateItem = isFolder.value ? updateSubfolderInFolder : updateNoteInFolder;
 
-  update(props.item, { editing: true }, props.parent);
+  updateItem(props.item, { editing: true }, props.parent);
 
   props.onClose();
 
@@ -112,7 +112,7 @@ function showDetails() {
 }
 
 function deleteItem() {
-  const deleteItem = isFolder ? deleteFolder : deleteNote;
+  const deleteItem = isFolder.value ? deleteFolder : deleteNote;
 
   deleteItem(props.item, props.parent);
 
