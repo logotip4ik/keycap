@@ -44,6 +44,7 @@ function handleReset() {
       enterkeyhint="done"
       type="text"
       minlength="2"
+      placeholder="note..."
       @blur="handleReset"
       @keydown.esc="handleReset"
     >
@@ -75,6 +76,7 @@ function handleReset() {
     outline-offset: -1px;
     border: none;
     border-radius: 0.225rem;
+    background-color: hsla(var(--text-color-hsl), 0.025);
   }
 }
 </style>
