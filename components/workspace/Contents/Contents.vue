@@ -32,7 +32,7 @@ const data = {
   onUpdateState: updateState,
 };
 
-if (!import.meta.env.SSR) {
+if (import.meta.client) {
   onBeforeUnmount(
     on(window, 'resize', debounce(hideSidebarsIfNeeded, 200)),
   );

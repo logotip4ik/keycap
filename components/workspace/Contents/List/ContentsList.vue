@@ -24,7 +24,7 @@ let pollingTimer: NodeJS.Timeout;
 
 // Intentionally not awaited
 const { data: folder, refresh } = useAsyncData<FolderWithContents | undefined>('folder', async () => {
-  if (import.meta.env.SSR || props.state === 'hidden')
+  if (import.meta.server || props.state === 'hidden')
     return;
 
   clearTimeout(pollingTimer);
@@ -82,7 +82,7 @@ watch(() => props.state, (state, oldState) => {
     return refresh();
 }, { immediate: true });
 
-if (!import.meta.env.SSR) {
+if (import.meta.client) {
   onBeforeUnmount(on(document, 'visibilitychange', () => {
     if (document.visibilityState === 'visible')
       refresh();

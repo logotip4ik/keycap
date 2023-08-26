@@ -4,12 +4,12 @@ import '~/polyfills/array-at';
 import parseDuration from 'parse-duration';
 
 // NOTE: should be removed from client bundle
-const device = import.meta.env.SSR ? parseUA(useRequestHeaders()['user-agent']) : undefined;
+const device = import.meta.server ? parseUA(useRequestHeaders()['user-agent']) : undefined;
 
-const isFirefox = import.meta.env.SSR
+const isFirefox = import.meta.server
   ? device!.isFirefox
   : checkIsFirefox(navigator.userAgent);
-const isSmallScreen = import.meta.env.SSR
+const isSmallScreen = import.meta.server
   ? device!.isMobileOrTablet
   : window.innerWidth < breakpoints.tablet;
 
@@ -25,7 +25,7 @@ useHead({
   },
 });
 
-if (!import.meta.env.SSR) {
+if (import.meta.client) {
   const UPDATE_WORKER_DELAY = parseDuration('1.5s')!;
 
   setTimeout(() => {
@@ -37,7 +37,7 @@ if (!import.meta.env.SSR) {
   }, UPDATE_WORKER_DELAY);
 }
 
-if (import.meta.env.SSR) {
+if (import.meta.server) {
   const { siteOrigin } = useRuntimeConfig().public;
 
   const prefix = import.meta.env.PROD ? 'https' : 'http';

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { OAuthProvider } from '~/server/utils';
 
-if (!import.meta.env.SSR) {
+if (import.meta.client) {
   throw createError({
     statusCode: 418,
     statusMessage: 'this page should not run on client',

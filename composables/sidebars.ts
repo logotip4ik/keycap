@@ -28,7 +28,7 @@ export function makeSidebarState(key: string): Ref<SidebarState> {
     const stateWhitelist = ['hidden', 'visible', 'pinned'] satisfies Array<SidebarState>;
     let stateCookieValue: SidebarState | undefined;
 
-    if (import.meta.env.SSR) {
+    if (import.meta.server) {
       const event = useRequestEvent();
 
       stateCookieValue = getCookie(event, key) as SidebarState;

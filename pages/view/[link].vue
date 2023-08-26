@@ -18,7 +18,7 @@ if (error.value || !note.value) {
   });
 }
 
-if (import.meta.env.SSR) {
+if (import.meta.server) {
   const url = getRequestURL(useRequestEvent());
 
   useSeoMeta({
