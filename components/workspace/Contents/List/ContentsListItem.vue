@@ -69,7 +69,7 @@ function unpinIfNeeded() {
   justify-content: flex-start;
   align-items: center;
 
-  font: inherit;
+  font-family: inherit;
   text-decoration: none;
   text-align: left;
   color: hsla(var(--text-color-hsl), 0.85);
