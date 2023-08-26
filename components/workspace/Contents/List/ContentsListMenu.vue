@@ -10,26 +10,39 @@ interface MenuAction {
   handler: () => any | Promise<any>
 }
 
-interface Props { x: number; y: number; actions: Array<MenuAction>; onClose: () => void }
+interface Props {
+  target: HTMLElement
+  item: FolderOrNote
+  parent: FolderWithContents
+  onClose: () => void
+}
 const props = defineProps<Props>();
 
+const createToast = useToast();
+const detailsItem = useCurrentItemForDetails();
+
+const isFolder = computed(() => 'root' in props.item);
 const popperInstance = shallowRef<null | PopperInstance>(null);
 const menu = ref<null | HTMLElement>(null);
 const currentlyConfirming = ref(-1); // You can confirm one at a time
-let cleanup: null | (() => void);
 
+const noteActions = [
+  { name: 'preload', handler: preloadItemWithIndication },
+  { name: 'rename', handler: renameItem },
+  { name: 'show details', handler: showDetails },
+  { name: 'delete', needConfirmation: true, handler: deleteItem },
+];
+const actions = computed(() => {
+  const copy = noteActions.slice();
+
+  if (isFolder.value)
+    copy.splice(1, 1);
+
+  return copy;
+});
+
+let cleanup: null | (() => void);
 const confirmDuration = parseDuration('5 seconds')!;
-const virtualElement: VirtualElement = {
-  // @ts-expect-error missing toJSON method
-  getBoundingClientRect: () => ({
-    width: 0,
-    height: 0,
-    top: props.y,
-    right: props.x,
-    bottom: props.y,
-    left: props.x,
-  }),
-};
 
 function withEffects(event: Event, action: MenuAction) {
   if (event.type === 'click' && !action.needConfirmation)
@@ -39,7 +52,7 @@ function withEffects(event: Event, action: MenuAction) {
     const targetCancelEvents = ['pointerup', 'pointerleave', 'touchend', 'touchcancel'];
     const target = event.target as HTMLElement;
 
-    currentlyConfirming.value = props.actions.indexOf(action);
+    currentlyConfirming.value = actions.value.indexOf(action);
 
     const animation = target.animate([
       { opacity: 1, transform: 'translate(-100%, 0%)' },
@@ -66,20 +79,45 @@ function withEffects(event: Event, action: MenuAction) {
   }
 }
 
-watch([() => props.x, () => props.y], async () => {
-  if (!menu.value) {
-    await nextTick();
-    await nextTick();
-  }
+function preloadItemWithIndication() {
+  const loadingToast = createToast(`Preloading into cache: "${props.item.name}"`, {
+    delay: 250,
+    duration: parseDuration('0.5 minute'),
+    type: 'loading',
+  });
 
-  if (!popperInstance.value) {
-    popperInstance.value = createPopper(virtualElement, menu.value!, {
-      placement: 'bottom-end',
-    });
-  }
+  preloadItem(props.item)
+    .finally(() => loadingToast.value?.remove());
 
-  popperInstance.value?.update();
-}, { immediate: true });
+  props.onClose();
+}
+
+function renameItem() {
+  const update = isFolder ? updateSubfolderInFolder : updateNoteInFolder;
+
+  update(props.item, { editing: true }, props.parent);
+
+  props.onClose();
+
+  nextTick(() => {
+    // TODO: add input
+    // (document.querySelector('.item[data-editing="true"] > form > input') as HTMLInputElement | null)?.focus();
+  });
+}
+
+function showDetails() {
+  detailsItem.value = props.item;
+
+  props.onClose();
+}
+
+function deleteItem() {
+  const deleteItem = isFolder ? deleteFolder : deleteNote;
+
+  deleteItem(props.item, props.parent);
+
+  props.onClose();
+}
 
 useClickOutside(menu, () => props.onClose());
 
@@ -87,41 +125,56 @@ useTinykeys({
   Escape: () => props.onClose(),
 });
 
+onMounted(() => {
+  popperInstance.value = createPopper(props.target, menu.value!, {
+    placement: 'bottom',
+    modifiers: [
+      { name: 'offset', options: { offset: [0, 4] } },
+    ],
+  });
+});
+
 onBeforeUnmount(() => {
   cleanup?.();
   cleanup = null;
+
+  popperInstance.value?.destroy();
 });
 </script>
 
 <template>
-  <ul
-    ref="menu"
-    role="menu"
-    class="item-context-menu"
-    aria-orientation="vertical"
-    tabindex="-1"
-  >
-    <li
-      v-for="(action, key) in actions"
-      :key="key"
-      class="item-context-menu__item"
-    >
-      <button
-        class="item-context-menu__item__button"
-        @click="withEffects($event, action)"
-        @pointerdown="withEffects($event, action)"
+  <Teleport :to="props.target.parentElement">
+    <Transition name="fade" appear>
+      <ul
+        ref="menu"
+        role="menu"
+        class="item-context-menu fast-fade"
+        aria-orientation="vertical"
+        tabindex="-1"
       >
-        <Transition name="fade">
-          <span v-if="currentlyConfirming !== key">
-            {{ action.name }}
-          </span>
-          <span v-else>
-            Hold to confirm
-          </span>
-        </Transition>
-      </button>
-    </li>
-  </ul>
+        <li
+          v-for="(action, key) in actions"
+          :key="key"
+          class="item-context-menu__item"
+        >
+          <button
+            class="item-context-menu__item__button"
+            @click="withEffects($event, action)"
+            @pointerdown="withEffects($event, action)"
+          >
+            <Transition name="fade">
+              <span v-if="currentlyConfirming !== key">
+                {{ action.name }}
+              </span>
+              <span v-else>
+                Hold to confirm
+              </span>
+            </Transition>
+          </button>
+        </li>
+      </ul>
+    </Transition>
+  </Teleport>
 </template>
 
 <style lang="scss">

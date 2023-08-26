@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import parseDuration from 'parse-duration';
-
-interface Props { item: FolderOrNote; parent: FolderWithContents }
+interface Props {
+  item: FolderOrNote
+  parent: FolderWithContents
+  onShowMenu: (target: HTMLElement) => any
+}
 const props = defineProps<Props>();
 
 const isFolder = 'root' in props.item;
 
 const route = useRoute();
-const detailsItem = useCurrentItemForDetails();
-const createToast = useToast();
-const isFallbackMode = useFallbackMode();
 const contentsSidebarState = useContentsSidebarState();
 
+const link = ref<ComponentPublicInstance | null>(null);
 const isSmallScreen = inject(IsSmallScreenKey)!;
 
 const itemHref = computed(() => {
@@ -25,66 +25,6 @@ const itemHref = computed(() => {
 
 const isActive = computed(() => itemHref.value === route.path);
 
-const menuOptions = shallowReactive({
-  opened: false,
-  x: 0,
-  y: 0,
-  actions: [
-    { name: 'preload', handler: preloadItemWithIndication },
-    (!isFolder && { name: 'rename', handler: renameItem }),
-    { name: 'show details', handler: showDetails },
-    { name: 'delete', needConfirmation: true, handler: deleteItem },
-  ].filter(Boolean),
-});
-
-function preloadItemWithIndication() {
-  const loadingToast = createToast(`Preloading into cache: "${props.item.name}"`, {
-    delay: 250,
-    duration: parseDuration('0.5 minute'),
-    type: 'loading',
-  });
-
-  preloadItem(props.item)
-    .finally(() => loadingToast.value?.remove());
-
-  menuOptions.opened = false;
-}
-
-function renameItem() {
-  const update = isFolder ? updateSubfolderInFolder : updateNoteInFolder;
-
-  update(props.item, { editing: true }, props.parent);
-
-  menuOptions.opened = false;
-
-  nextTick(() => {
-    // TODO: add input
-    // (document.querySelector('.item[data-editing="true"] > form > input') as HTMLInputElement | null)?.focus();
-  });
-}
-
-function showDetails() {
-  detailsItem.value = props.item;
-
-  menuOptions.opened = false;
-}
-
-function deleteItem() {
-  const deleteItem = isFolder ? deleteFolder : deleteNote;
-
-  deleteItem(props.item, props.parent);
-
-  menuOptions.opened = false;
-}
-
-function showMenu(event: Event) {
-  if (isFallbackMode.value) return;
-
-  menuOptions.opened = true;
-  menuOptions.x = (event as MouseEvent).clientX;
-  menuOptions.y = (event as MouseEvent).clientY;
-}
-
 function unpinIfNeeded() {
   if (isSmallScreen && !isFolder)
     contentsSidebarState.value = 'hidden';
@@ -92,50 +32,35 @@ function unpinIfNeeded() {
 </script>
 
 <template>
-  <li class="list__item__wrapper">
-    <!-- TODO: add input -->
-    <!-- NOTE: previously `li` in contents list would wrap contents list item.
+  <!-- NOTE: previously `li` in contents list would wrap contents list item.
     This would solve some issues, like animation with lazy component -->
-    <NuxtLink
-      :href="itemHref"
-      class="list__item"
-      :class="{ 'list__item--active': isActive }"
-      :aria-label="`open ${isFolder ? 'folder' : 'note'} '${item.name}'`"
-      @click="unpinIfNeeded"
-      @contextmenu.prevent="showMenu"
+  <NuxtLink
+    ref="link"
+    :href="itemHref"
+    class="list__item"
+    :class="{ 'list__item--active': isActive }"
+    :aria-label="`open ${isFolder ? 'folder' : 'note'} '${item.name}'`"
+    @click="unpinIfNeeded"
+    @contextmenu.prevent="link && onShowMenu(link.$el)"
+  >
+    <LazyIconOutlineFolder
+      v-if="isFolder"
+      class="list__item__icon list__item__icon--folder"
+    />
+
+    <span class="list__item__name">
+      {{ item.name }}
+    </span>
+
+    <button
+      v-if="isSmallScreen"
+      class="list__item__edit"
+      :aria-label="`show ${isFolder ? 'folder' : 'note'} actions`"
+      @click.prevent.stop="link && onShowMenu(link.$el)"
     >
-      <LazyIconOutlineFolder
-        v-if="isFolder"
-        class="list__item__icon list__item__icon--folder"
-      />
-
-      <span class="list__item__name">
-        {{ item.name }}
-      </span>
-
-      <button
-        v-if="isSmallScreen"
-        class="list__item__edit"
-        :aria-label="`show ${isFolder ? 'folder' : 'note'} actions`"
-        @click.prevent.stop="showMenu"
-      >
-        <LazyIconBaselineMoreVert v-once class="list__item__icon list__item__icon--edit" />
-      </button>
-    </NuxtLink>
-
-    <Teleport to="body">
-      <Transition name="fade">
-        <LazyWorkspaceContentsListItemMenu
-          v-if="menuOptions.opened"
-          :x="menuOptions.x"
-          :y="menuOptions.y"
-          :actions="menuOptions.actions"
-          class="fast-fade"
-          @close="menuOptions.opened = false"
-        />
-      </Transition>
-    </Teleport>
-  </li>
+      <LazyIconBaselineMoreVert v-once class="list__item__icon list__item__icon--edit" />
+    </button>
+  </NuxtLink>
 </template>
 
 <style lang="scss">
@@ -166,14 +91,6 @@ function unpinIfNeeded() {
 
   @media (width <= $sidebar-breakpoint-one) {
     --pd-y: 1.25rem;
-  }
-
-  &__wrapper {
-    scroll-snap-align: start;
-
-    &:not(:first-child) {
-      margin-top: calc(var(--pd-y) / 5);
-    }
   }
 
   // .router-link-active is not always working with lazy components ?

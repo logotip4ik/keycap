@@ -18,6 +18,11 @@ const folderApiPath = computed(() => {
     : '';
 });
 
+const menuOptions = shallowReactive({
+  item: null as FolderOrNote | null,
+  target: null as HTMLElement | null,
+});
+
 const visibleStates = ['visible', 'pinned'] satisfies Array<SidebarState>;
 const POLLING_TIME = parseDuration('2.5 minutes')!;
 let pollingTimer: NodeJS.Timeout;
@@ -61,17 +66,12 @@ const folderContents = computed(() => {
   return folder.value.notes.concat(folder.value.subfolders) as Array<FolderOrNote>;
 });
 
-const parentFolderPath = computed(() => {
-  if (!folder.value) return '#';
+function showMenu(target: HTMLElement, item: FolderOrNote) {
+  if (isFallbackMode.value) return;
 
-  const parentPath = folder.value.path
-    .split('/')
-    .filter(Boolean);
-
-  parentPath.pop();
-
-  return `/@${parentPath.join('/')}`;
-});
+  menuOptions.item = item;
+  menuOptions.target = target;
+}
 
 watch(() => props.state, (state, oldState) => {
   if (
@@ -90,10 +90,6 @@ if (import.meta.client) {
 };
 </script>
 
-<!-- TODO: use LazyWorkspaceContentsListItem component, but it throws some errors
-  `child.el is null`
-  :( -->
-
 <template>
   <Transition name="fade">
     <div v-if="!folder" key="1">
@@ -111,22 +107,47 @@ if (import.meta.client) {
       tag="ul"
       name="list"
       class="contents__list"
+      appear
       @contextmenu.prevent
     >
-      <WorkspaceContentsListItem
+      <li
         v-for="item in folderContents"
         :key="item.id"
-        :item="item"
-        :parent="folder"
-      />
+        class="contents__list__item"
+      >
+        <Transition name="fade" appear>
+          <LazyWorkspaceContentsListItemInput
+            v-if="item.creating || item.editing"
+            :item="item"
+            :parent="folder"
+          />
+
+          <LazyWorkspaceContentsListItem
+            v-else
+            :item="item"
+            :parent="folder"
+            @show-menu="showMenu($event, item)"
+          />
+        </Transition>
+      </li>
     </TransitionGroup>
   </Transition>
+
+  <LazyWorkspaceContentsListMenu
+    v-if="menuOptions.item"
+    :item="menuOptions.item"
+    :target="menuOptions.target!"
+    :parent="folder!"
+    @close="menuOptions.item = null"
+  />
 </template>
 
 <style lang="scss">
 .contents__list {
   --scrollbar-thumb-color: hsla(var(--text-color-hsl), 0.175);
   --scrollbar-background: var(--surface-color);
+
+  position: relative;
 
   margin: 0;
   margin-top: calc(var(--pd-y) * 1);
@@ -152,6 +173,16 @@ if (import.meta.client) {
     width: 0.5rem;
 
     background-color: var(--scrollbar-thumb-color);
+  }
+
+  &__item {
+    min-height: calc(var(--pd-y) * 0.75 * 2 + 1.125rem);
+
+    scroll-snap-align: start;
+
+    &:not(:first-child) {
+      margin-top: calc(var(--pd-y) / 5);
+    }
   }
 }
 </style>
