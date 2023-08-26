@@ -99,10 +99,7 @@ function renameItem() {
 
   props.onClose();
 
-  nextTick(() => {
-    // TODO: add input
-    // (document.querySelector('.item[data-editing="true"] > form > input') as HTMLInputElement | null)?.focus();
-  });
+  focusItemInput();
 }
 
 function showDetails() {
@@ -117,6 +114,17 @@ function deleteItem() {
   deleteItem(props.item, props.parent);
 
   props.onClose();
+}
+
+function focusItemInput(time: number = 1) {
+  setTimeout(() => {
+    const input = document.querySelector('#contentsListItemInput') as HTMLInputElement | null;
+
+    if (!input)
+      return focusItemInput(100);
+
+    input.focus();
+  });
 }
 
 useClickOutside(menu, () => props.onClose());
