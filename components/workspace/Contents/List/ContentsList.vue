@@ -143,13 +143,13 @@ if (!import.meta.env.SSR) {
   scrollbar-width: thin;
   scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-background);
   &::-webkit-scrollbar {
-    width: 0.75rem;
+    width: 0.5rem;
 
     background: var(--scrollbar-background);
   }
 
   &::-webkit-scrollbar-thumb {
-    width: 0.75rem;
+    width: 0.5rem;
 
     background-color: var(--scrollbar-thumb-color);
   }
