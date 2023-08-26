@@ -141,7 +141,7 @@ onMounted(() => {
     ],
   });
 
-  props.target.classList.add('outlined');
+  props.target.classList.add('selected');
 });
 
 onBeforeUnmount(() => {
@@ -149,7 +149,7 @@ onBeforeUnmount(() => {
   cleanup = null;
 
   popperInstance.value?.destroy();
-  props.target.classList.remove('outlined');
+  props.target.classList.remove('selected');
 });
 </script>
 

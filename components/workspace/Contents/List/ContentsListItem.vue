@@ -95,18 +95,13 @@ function unpinIfNeeded() {
 
   // .router-link-active is not always working with lazy components ?
   &--active,
+  &.selected, // This class is toggled by ListItemMenu
   &:is(:hover, :focus-visible) {
     color: hsla(var(--text-color-hsl), 1);
 
     background-color: hsla(var(--text-color-hsl), 0.045);
 
     transition-duration: 0;
-  }
-
-  // This class is toggled by ListItemMenu
-  &.outlined {
-    outline-color: hsla(var(--text-color-hsl), 0.125);
-    box-shadow: 0 0 0.5rem hsla(var(--text-color-hsl), 0.05);
   }
 
   &--active {
