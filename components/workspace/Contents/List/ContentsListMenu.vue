@@ -124,7 +124,7 @@ function focusItemInput(time: number = 1) {
       return focusItemInput(100);
 
     input.focus();
-  });
+  }, time);
 }
 
 useClickOutside(menu, () => props.onClose());
