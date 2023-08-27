@@ -121,14 +121,12 @@ onBeforeUnmount(() => {
 
 <template>
   <Transition name="fade">
-    <div v-if="!folder" key="1">
-      <!-- TODO: show skeleton -->
-      loading ...
-    </div>
+    <WorkspaceContentsListSkeleton
+      v-if="!folder"
+    />
 
     <div
       v-else-if="folderContents.length === 0"
-      key="2"
       class="contents__empty"
     >
       <!-- TODO: add styles -->
@@ -137,7 +135,6 @@ onBeforeUnmount(() => {
 
     <TransitionGroup
       v-else
-      key="3"
       tag="ul"
       name="list"
       class="contents__list"
