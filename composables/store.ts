@@ -62,8 +62,8 @@ export function updateSubfolderInFolder(
   parentFolder: FolderWithContents) {
   Object.assign(folderToUpdate, fieldsToUpdate);
 
-  if (fieldsToUpdate.creating === false)
-    parentFolder.subfolders.push(folderToUpdate);
+  if (fieldsToUpdate.creating === true || fieldsToUpdate.editing === true)
+    return;
 
   if (fuzzyWorker.value) fuzzyWorker.value.refreshItemsCache();
   if (offlineStorage.value) {
