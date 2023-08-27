@@ -46,7 +46,6 @@ const utils = [
       justify-content: flex-start;
       align-items: center;
 
-      font-size: 1.175rem;
       text-align: start;
       color: hsla(var(--text-color-hsl), 0.65);
 
@@ -83,7 +82,7 @@ const utils = [
       &__icon {
         color: hsla(var(--text-color-hsl), 0.5);
 
-        width: 1.5rem;
+        width: 1.25rem;
         height: auto;
 
         margin-right: calc(var(--pd-x) * 0.5);
