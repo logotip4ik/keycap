@@ -29,21 +29,15 @@ const stop = watch(() => props.state, (state) => {
 </script>
 
 <template>
-  <Transition name="fade">
-    <div v-if="!recent" key="1">
-      loading...
-    </div>
+  <div class="toolbox__recent">
+    <p class="toolbox__recent__title">
+      Recent:
+    </p>
 
-    <div
-      v-else
-      key="2"
-      class="toolbox__recent"
-    >
-      <p class="toolbox__recent__title">
-        Recent:
-      </p>
+    <Transition name="fade">
+      <WorkspaceToolboxRecentSkeleton v-if="!recent" />
 
-      <ul class="toolbox__recent__list">
+      <ul v-else class="toolbox__recent__list">
         <li
           v-for="item in recent"
           :key="item.id"
@@ -54,8 +48,8 @@ const stop = watch(() => props.state, (state) => {
           </LazyWorkspaceToolboxRecentItem>
         </li>
       </ul>
-    </div>
-  </Transition>
+    </Transition>
+  </div>
 </template>
 
 <style lang="scss">
