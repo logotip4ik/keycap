@@ -7,8 +7,6 @@ import { version } from '../package.json';
 
 import type { BuildInfo, PrivateBuildInfo } from '~/types';
 
-const logger = useLogger('build-env');
-
 export default defineNuxtModule({
   meta: {
     name: 'build-env',
@@ -16,6 +14,8 @@ export default defineNuxtModule({
   async setup(_options, nuxt) {
     if (nuxt.options._prepare)
       return;
+
+    const logger = useLogger('build-env');
 
     const commit = await getCommitSha();
 
