@@ -44,21 +44,15 @@ export function updateNoteInFolder(
   noteToUpdate: NoteMinimal,
   fieldsToUpdate: Partial<NoteMinimal>,
   parent: FolderWithContents) {
-  const noteIdxToUpdate = parent.notes.findIndex((note) => note.id === noteToUpdate.id);
+  Object.assign(noteToUpdate, fieldsToUpdate);
 
-  if (noteIdxToUpdate === -1) return;
-
-  const updatedNote = {
-    ...noteToUpdate,
-    ...fieldsToUpdate,
-  };
-
-  parent.notes[noteIdxToUpdate] = updatedNote;
+  if (fieldsToUpdate.creating === true || fieldsToUpdate.editing === true)
+    return;
 
   if (fuzzyWorker.value) fuzzyWorker.value.refreshItemsCache();
   if (offlineStorage.value) {
     offlineStorage.value.removeItem(noteToUpdate.path);
-    offlineStorage.value.setItem(updatedNote.path, updatedNote);
+    offlineStorage.value.setItem(noteToUpdate.path, toRaw(noteToUpdate));
   }
 }
 
@@ -66,21 +60,14 @@ export function updateSubfolderInFolder(
   folderToUpdate: FolderWithContents,
   fieldsToUpdate: Partial<FolderWithContents>,
   parentFolder: FolderWithContents) {
-  const folderIdxToUpdate = parentFolder.subfolders.findIndex((folder) => folder.id === folderToUpdate.id);
+  Object.assign(folderToUpdate, fieldsToUpdate);
 
-  if (fieldsToUpdate.creating === false && folderIdxToUpdate === -1)
-    parentFolder.subfolders.push({ ...folderToUpdate, ...fieldsToUpdate });
-
-  const updatedSubfolder = {
-    ...folderToUpdate,
-    ...fieldsToUpdate,
-  };
-
-  parentFolder.subfolders[folderIdxToUpdate] = updatedSubfolder;
+  if (fieldsToUpdate.creating === false)
+    parentFolder.subfolders.push(folderToUpdate);
 
   if (fuzzyWorker.value) fuzzyWorker.value.refreshItemsCache();
   if (offlineStorage.value) {
     offlineStorage.value.removeItem(folderToUpdate.path);
-    offlineStorage.value.setItem(updatedSubfolder.path, updatedSubfolder);
+    offlineStorage.value.setItem(folderToUpdate.path, toRaw(folderToUpdate));
   }
 }
