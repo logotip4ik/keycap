@@ -35,7 +35,7 @@ const utils = [
 
 <style lang="scss">
 .toolbox__utils {
-  margin: 1.5rem 0 0;
+  margin: var(--pd-y) 0 calc(var(--pd-y) / 2);
   padding: 0;
 
   list-style-type: none;
