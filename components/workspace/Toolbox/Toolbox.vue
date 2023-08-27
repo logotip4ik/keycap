@@ -48,6 +48,10 @@ if (import.meta.client) {
 
     <WorkspaceToolboxUtils />
 
+    <hr>
+
+    <WorkspaceToolboxRecent :state="toolboxState" />
+
     <WorkspaceToolboxFooter />
   </WorkspaceSidebar>
 </template>
