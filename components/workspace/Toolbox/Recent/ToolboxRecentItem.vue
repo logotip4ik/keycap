@@ -16,6 +16,7 @@ const itemHref = computed(() => generateItemPath(props.item));
   display: block;
 
   font-size: 1.025rem;
+  font-weight: 300;
   color: currentColor;
   text-decoration: underline dashed 1px hsla(var(--selection-bg-color-hsl), 1);
   text-underline-offset: 3px;
