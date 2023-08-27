@@ -50,6 +50,8 @@ if (import.meta.client) {
 
     <WorkspaceContentsCreateBtn />
 
+    <hr>
+
     <WorkspaceContentsList
       :state="contentsState"
     />
