@@ -138,7 +138,11 @@ $breakpoint-one: $sidebar-breakpoint-one;
     margin-block: calc(var(--pd-y) / 2);
 
     border: none;
-    background-color: hsla(var(--selection-bg-color-hsl), 0.25);
+    background-image: linear-gradient(to right,
+      hsla(var(--selection-bg-color-hsl), 0.15) 0%,
+      hsla(var(--selection-bg-color-hsl), 0.35) 50%,
+      hsla(var(--selection-bg-color-hsl), 0.15) 100%,
+    )
   }
 }
 </style>
