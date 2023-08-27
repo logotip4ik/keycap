@@ -158,7 +158,6 @@ if (import.meta.client) {
   height: 100%;
 
   margin: 0;
-  margin-top: calc(var(--pd-y) - var(--items-spacing));
   margin-right: calc(-1 * var(--pd-x));
   margin-bottom: calc(-1 * var(--pd-y));
 
