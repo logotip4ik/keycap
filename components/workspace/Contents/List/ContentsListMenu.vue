@@ -2,7 +2,7 @@
 import { createPopper } from '@popperjs/core';
 import parseDuration from 'parse-duration';
 
-import type { Instance as PopperInstance, VirtualElement } from '@popperjs/core';
+import type { Instance as PopperInstance } from '@popperjs/core';
 
 interface MenuAction {
   name: string

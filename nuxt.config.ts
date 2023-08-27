@@ -136,38 +136,6 @@ export default defineNuxtConfig({
     transpile: ['tinykeys'],
   },
 
-  hooks: {
-    'pages:extend': function (pages) {
-      // By default nuxt generates this route structure
-      // @:user
-      // -> :folders(.*)*
-      // -> :folders(.*)/:note()*
-      // and this is probably fine, but i want to make
-      // note page child of folder page. So end tree will
-      // look something like this:
-      // @:user
-      // -> :folders*
-      //     -> :note()*
-      // Also i changed `:folders(.*)*` to `:folders*` so this path
-      // `/@username` will result in matched :user -> username and
-      // folders -> empty array, but the component for folders page
-      // will still render it's contents
-      // Though nuxt specifically prevents users from doing this, am i doing smth wronk? :b
-      // https://github.com/nuxt/nuxt/blob/main/packages/nuxt/src/pages/utils.ts#L83C93-L83C93
-      // const userPage = pages.find((page) => page.name === '@user')!;
-
-      // const [foldersPage, notePage] = userPage.children!;
-
-      // foldersPage.path = ':folders*';
-      // notePage.path = notePage.path.split('/')[1];
-
-      // foldersPage.children ||= [];
-      // foldersPage.children.push(notePage);
-
-      // userPage.children = [foldersPage];
-    },
-  },
-
   vite: {
     define: {
       'import.meta.vitest': 'undefined',

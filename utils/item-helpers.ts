@@ -1,4 +1,4 @@
-import { withLeadingSlash, withTrailingSlash, withoutLeadingSlash } from 'ufo';
+import { withLeadingSlash, withoutLeadingSlash } from 'ufo';
 
 import type { RouteLocationRaw } from 'vue-router';
 import type { NavigateToOptions } from '#app/composables/router';

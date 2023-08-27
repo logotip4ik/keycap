@@ -43,7 +43,7 @@ export function deleteSubfolderFromFolder(subfolderToDelete: FolderWithContents,
 export function updateNoteInFolder(
   noteToUpdate: NoteMinimal,
   fieldsToUpdate: Partial<NoteMinimal>,
-  parent: FolderWithContents) {
+  _parent: FolderWithContents) {
   Object.assign(noteToUpdate, fieldsToUpdate);
 
   if (fieldsToUpdate.creating === true || fieldsToUpdate.editing === true)
@@ -59,7 +59,7 @@ export function updateNoteInFolder(
 export function updateSubfolderInFolder(
   folderToUpdate: FolderWithContents,
   fieldsToUpdate: Partial<FolderWithContents>,
-  parentFolder: FolderWithContents) {
+  _parentFolder: FolderWithContents) {
   Object.assign(folderToUpdate, fieldsToUpdate);
 
   if (fieldsToUpdate.creating === true || fieldsToUpdate.editing === true)
