@@ -34,7 +34,7 @@ const noteApiPath = computed(() => route.path.replace(`/@${route.params.user}`, 
 
 const POLLING_TIME = parseDuration('2 minutes')!;
 let pollingTimer: NodeJS.Timeout;
-let loadingToast: RefToastInstance;
+let loadingToast: RefToastInstance | undefined;
 let abortControllerGet: AbortController | null;
 
 const { data: note, pending, refresh } = await useAsyncData<SerializedNote | undefined>('note', async () => {
@@ -67,7 +67,7 @@ const { data: note, pending, refresh } = await useAsyncData<SerializedNote | und
       const multiplier = document.visibilityState === 'visible' ? 1 : 2;
       pollingTimer = setTimeout(refresh, POLLING_TIME * multiplier);
 
-      loadingToast.value?.remove();
+      loadingToast?.value?.remove();
     });
 
   const notePath = `/${route.params.user}${noteApiPath.value}`;
@@ -149,7 +149,7 @@ onMounted(() => {
 
     clearTimeout(pollingTimer);
     abortControllerGet?.abort();
-    loadingToast.value?.remove();
+    loadingToast?.value?.remove();
   });
 });
 </script>
