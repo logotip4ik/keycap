@@ -4,15 +4,17 @@ import parseDuration from 'parse-duration';
 
 import type { RefToastInstance } from '~/composables/toasts';
 
+definePageMeta({
+  scrollToTop: true,
+});
+
 const route = useRoute();
 const isFallbackMode = useFallbackMode();
 const notesCache = useNotesCache();
-const currentNoteState = useCurrentNoteState();
 const createToast = useToast();
 const offlineStorage = useOfflineStorage();
 const currentItemForDetails = useCurrentItemForDetails();
 const mitt = useMitt();
-const user = useUser();
 
 const notePath = computed(() => {
   const paths = Array.isArray(route.params.folders)
@@ -27,63 +29,55 @@ const notePath = computed(() => {
 
   return `/${route.params.user}/${pathString}`;
 });
-const noteApiPath = computed(() => notePath.value.split('/').slice(2).join('/'));
 
-// NOTE: can't use default param in async data because it runs
-// before route navigation and our notes depends on route path
-const note = shallowRef<SerializedNote | null>(
-  notesCache.get(notePath.value) || null,
-);
+const noteApiPath = computed(() => route.path.replace(`/@${route.params.user}`, ''));
 
 const POLLING_TIME = parseDuration('2 minutes')!;
 let pollingTimer: NodeJS.Timeout;
-let firstTimeFetch = true;
 let loadingToast: RefToastInstance;
 let abortControllerGet: AbortController | null;
 
-const { data: fetchedNote, pending, error, refresh } = useAsyncData<SerializedNote | undefined>(
-  'note',
-  // TODO: rework this handler to be similar to what is in `ContentsList`
-  async () => {
-    clearTimeout(pollingTimer);
+const { data: note, pending, refresh } = await useAsyncData<SerializedNote | undefined>('note', async () => {
+  if (import.meta.server || !route.params.note || route.params.note === BLANK_NOTE_NAME)
+    return;
 
-    currentNoteState.value = '';
+  clearTimeout(pollingTimer);
 
-    if (!route.params.note || route.params.note === BLANK_NOTE_NAME)
-      return;
+  abortControllerGet?.abort();
+  abortControllerGet = new AbortController();
 
-    if (!note.value) {
-      offlineStorage.value?.getItem(notePath.value)
-        .then((noteCopy) => noteCopy && (note.value = noteCopy));
-    }
+  loadingToast = createToast('Fetching note takes longer then expected...', {
+    delay: parseDuration('1 minute'),
+    type: 'loading',
+  });
 
-    currentNoteState.value = 'fetching';
+  $fetch<SerializedNote>(`/api/note/${noteApiPath.value}`, { signal: abortControllerGet.signal })
+    .then((fetchedNote) => {
+      if (!fetchedNote)
+        return;
 
-    if (!loadingToast?.value) {
-      loadingToast = createToast('Fetching note. Please wait...', {
-        duration: parseDuration('1 minute')!,
-        delay: firstTimeFetch ? 3500 : 250,
-        type: 'loading',
-      });
+      isFallbackMode.value = false;
 
-      firstTimeFetch = false;
-    }
+      note.value = fetchedNote;
+      notesCache.set(fetchedNote.path, fetchedNote);
+      offlineStorage.value?.setItem(fetchedNote.path, fetchedNote);
+    })
+    .catch((e) => createToast(e.message)) // TODO: better error messages
+    .finally(() => {
+      const multiplier = document.visibilityState === 'visible' ? 1 : 2;
+      pollingTimer = setTimeout(refresh, POLLING_TIME * multiplier);
 
-    abortControllerGet = new AbortController();
+      loadingToast.value?.remove();
+    });
 
-    return await $fetch<SerializedNote>(
-      `/api/note/${noteApiPath.value}`,
-      { retry: 2, signal: abortControllerGet.signal },
-    )
-      .finally(() => {
-        loadingToast.value?.remove();
+  const notePath = `/${route.params.user}${noteApiPath.value}`;
 
-        const multiplier = document.visibilityState === 'visible' ? 1 : 2;
-        pollingTimer = setTimeout(refresh, POLLING_TIME * multiplier);
-      });
-  },
-  { server: false, lazy: true },
-);
+  return notesCache.get(notePath) || await offlineStorage.value?.getItem(notePath);
+}, {
+  server: false,
+  lazy: true,
+  immediate: false,
+});
 
 let abortControllerUpdate: AbortController | null;
 const throttledUpdate = useThrottleFn(updateNote, 1000, true, false); // enable trailing call and disable leading
@@ -111,9 +105,6 @@ function updateNote(content: string) {
   // enables optimistic ui
   notesCache.set(note.value.path, newNote);
 
-  if (updatingCurrentNote)
-    currentNoteState.value = 'updating';
-
   abortControllerUpdate?.abort();
   abortControllerUpdate = new AbortController();
 
@@ -126,11 +117,6 @@ function updateNote(content: string) {
     .then(() => {
       if (note.value)
         offlineStorage.value?.setItem(note.value.path, newNote);
-
-      // before route update, note will be saved and the indicator will be again reset to saved
-      // this checks if route is the same, so this wasn't last save and user is still on the same note
-      if (updatingCurrentNote)
-        currentNoteState.value = 'saved';
     })
     .catch((error) => console.warn(error));
 }
@@ -150,60 +136,7 @@ mitt.on('details:show', () => {
     showDetails();
 });
 
-watch(error, async (error) => {
-  // @ts-expect-error second error is actually nuxt error
-  if (isNuxtError(error))
-    return;
-
-  // Resetting fallback mode to false is previous error is removed
-  if (!error)
-    return isFallbackMode.value = false;
-
-  // @ts-expect-error there actually is statusCode
-  if (error.statusCode === 401 || !user.value) {
-    user.value = null;
-    await navigateTo('/login');
-    return;
-  }
-
-  // @ts-expect-error there actually is statusCode
-  if (error.statusCode === 404) {
-    await navigateTo(`/@${user.value.username}`);
-    return;
-  }
-
-  // Some other network error
-  if (error.name === 'FetchError')
-    isFallbackMode.value = true;
-
-  // But note was found in cache just display it
-  if (note.value)
-    return;
-
-  const offlineNote = await offlineStorage.value?.getItem(notePath.value);
-
-  // if offline storage hasn't got the note, navigate to root of in hope folder is in cache
-  if (!offlineNote) {
-    createToast(`Sorry ⊙︿⊙ We can't find offline copy for note: "${route.params.note}"`);
-
-    await navigateTo({ ...route, params: { note: BLANK_NOTE_NAME } });
-
-    return;
-  }
-
-  note.value = offlineNote;
-});
-
-watch(fetchedNote, (value) => {
-  if (!value) return;
-
-  note.value = toRaw(value);
-  notesCache.set(value.path, toRaw(value));
-  currentNoteState.value = 'saved';
-
-  isFallbackMode.value = false;
-  offlineStorage.value?.setItem(value.path, toRaw(value));
-});
+onBeforeMount(() => refresh());
 
 onMounted(() => {
   const off = on(document, 'visibilitychange', () => {
@@ -216,6 +149,7 @@ onMounted(() => {
 
     clearTimeout(pollingTimer);
     abortControllerGet?.abort();
+    loadingToast.value?.remove();
   });
 });
 </script>
