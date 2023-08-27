@@ -10,20 +10,20 @@ interface _IFuzzyWorker {
   refreshItemsCache: () => Promise<void>
 }
 
-declare global {
-  export type SerializedNote = Note & { id: string };
-  
-  export type NoteMinimal = Pick<Note, 'name' | 'path'> & {
-    id: string
-    content?: string
+declare global {  
+  export type ItemMetatags = { 
     editing?: boolean
     creating?: boolean
+  }
+
+  export type NoteMinimal = Pick<Note, 'name' | 'path'> & ItemMetatags & { 
+    id: string 
   };
 
-  export type FolderWithContents = Omit<Folder, 'createdAt' | 'updatedAt'> & {
+  export type SerializedNote = NoteMinimal & { content: string };
+
+  export type FolderWithContents = Omit<Folder, 'createdAt' | 'updatedAt'> & ItemMetatags & {
     id: string
-    editing?: boolean
-    creating?: boolean
     notes: NoteMinimal[]
     subfolders: FolderWithContents[]
   }
