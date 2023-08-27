@@ -8,7 +8,12 @@ import { getHeaders } from './headers.config';
 import { breakpoints, sidebarsBreakpoints } from './constants/breakpoints';
 import { ParseDurationTransformPlugin } from './vite/transform-parse-duration';
 
-const tsExcludes = ['../data', '../benchmarks', '../scripts'];
+const tsExcludes = [
+  '../data',
+  '../benchmarks',
+  '../scripts',
+  '../components/workspace/OldContents',
+];
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
@@ -134,6 +139,12 @@ export default defineNuxtConfig({
 
   build: {
     transpile: ['tinykeys'],
+  },
+
+  components: {
+    transform: {
+      exclude: [/oldcontents/i],
+    },
   },
 
   vite: {
