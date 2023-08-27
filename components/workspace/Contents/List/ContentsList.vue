@@ -27,6 +27,7 @@ const menuOptions = shallowReactive({
 const visibleStates = ['visible', 'pinned'] satisfies Array<SidebarState>;
 const POLLING_TIME = parseDuration('2.5 minutes')!;
 let pollingTimer: NodeJS.Timeout;
+let abortControllerGet: AbortController | null;
 
 const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefined>('folder', async () => {
   if (import.meta.server || props.state === 'hidden')
@@ -34,7 +35,10 @@ const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefi
 
   clearTimeout(pollingTimer);
 
-  $fetch<FolderWithContents>(`/api/folder${folderApiPath.value}`)
+  abortControllerGet?.abort();
+  abortControllerGet = new AbortController();
+
+  $fetch<FolderWithContents>(`/api/folder${folderApiPath.value}`, { signal: abortControllerGet.signal })
     .then((fetchedFolder) => {
       if (!fetchedFolder) return;
 
@@ -108,6 +112,10 @@ onMounted(() => {
       ]);
     });
   }, 550);
+});
+
+onBeforeUnmount(() => {
+  abortControllerGet?.abort();
 });
 </script>
 
