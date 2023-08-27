@@ -39,8 +39,10 @@ export function preCreateItem(folderToAppend: FolderWithContents, initialValues?
     name: '',
     path: '',
     creating: true,
-    ...(initialValues || {}),
   };
+
+  if (initialValues)
+    Object.assign(noteValues, initialValues);
 
   folderToAppend.notes.unshift(noteValues);
 
@@ -48,6 +50,9 @@ export function preCreateItem(folderToAppend: FolderWithContents, initialValues?
 }
 
 export function focusItemInput(time: number = 1) {
+  if (import.meta.server)
+    return;
+
   setTimeout(() => {
     const input = document.querySelector('#contentsListItemInput') as HTMLInputElement | null;
 
@@ -61,11 +66,9 @@ export function focusItemInput(time: number = 1) {
 export function getCurrentFolderPath() {
   const route = useRoute();
 
-  return withLeadingSlash(withTrailingSlash(
-    (Array.isArray(route.params.folders)
-      ? route.params.folders.map(encodeURIComponent).join('/')
-      : encodeURIComponent(route.params.folders || '')),
-  ));
+  return Array.isArray(route.params.folders) && route.params.folders.length > 0
+    ? `/${route.params.folders.map(encodeURIComponent).join('/')}/`
+    : '/';
 }
 
 export async function createFolder(folderName: string, self: FolderOrNote, parent: FolderWithContents) {
@@ -85,15 +88,14 @@ export async function createFolder(folderName: string, self: FolderOrNote, paren
   if (!newlyCreatedFolder)
     return;
 
-  newlyCreatedFolder.notes = newlyCreatedFolder.notes || [];
-  newlyCreatedFolder.subfolders = newlyCreatedFolder.subfolders || [];
-
-  foldersCache.set(newlyCreatedFolder.path, newlyCreatedFolder);
+  newlyCreatedFolder.creating = false;
+  parent.subfolders.push(newlyCreatedFolder);
 
   deleteNoteFromFolder(self, parent);
-  updateSubfolderInFolder(self, { ...newlyCreatedFolder, creating: false }, parent);
+  updateSubfolderInFolder(self, newlyCreatedFolder, parent);
 
   showItem(newlyCreatedFolder);
+  foldersCache.set(newlyCreatedFolder.path, newlyCreatedFolder);
 }
 
 export async function createNote(noteName: string, self: FolderOrNote, parent: FolderWithContents) {
@@ -113,8 +115,11 @@ export async function createNote(noteName: string, self: FolderOrNote, parent: F
   if (!newlyCreatedNote)
     return;
 
+  newlyCreatedNote.content ||= '';
+  newlyCreatedNote.creating = false;
+
   notesCache.set(newlyCreatedNote.path, newlyCreatedNote);
-  updateNoteInFolder(self, { ...newlyCreatedNote, content: '', creating: false }, parent);
+  updateNoteInFolder(self, newlyCreatedNote, parent);
 
   showItem(newlyCreatedNote);
 }
@@ -124,7 +129,7 @@ export async function renameFolder() {
 }
 
 export async function renameNote(newName: string, self: FolderOrNote, parent: FolderWithContents) {
-  const newNote = { name: newName.trim() };
+  const newNote: Record<string, string | boolean> = { name: newName.trim() };
 
   if (!newNote.name)
     return updateNoteInFolder(self, { editing: false }, parent);
@@ -138,13 +143,14 @@ export async function renameNote(newName: string, self: FolderOrNote, parent: Fo
   await $fetch<QuickResponse>(`/api/note${notePath}`, { method: 'PATCH', body: newNote })
     .catch(() => updateNoteInFolder(self, { editing: false }, parent));
 
-  const { user: username } = useRoute().params;
-  const newNotePath = `/${username}${currentFolderPath}${encodeURIComponent(newNote.name)}`;
+  newNote.editing = false;
+  newNote.path = self.path.replace(encodeURIComponent(self.name), encodeURIComponent(newNote.name));
 
   notesCache.delete(self.path);
-  updateNoteInFolder(self, { editing: false, ...newNote, path: newNotePath }, parent);
+  updateNoteInFolder(self, newNote, parent);
 
-  showItem({ ...self, ...newNote, path: newNotePath }, { replace: true });
+  // @ts-expect-error setting path two lines before
+  showItem(newNote, { replace: true });
 }
 
 export async function deleteNote(self: FolderOrNote, parent: FolderWithContents) {
