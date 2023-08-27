@@ -118,9 +118,13 @@ onMounted(() => {
       loading ...
     </div>
 
-    <div v-else-if="folderContents.length === 0" key="2">
+    <div
+      v-else-if="folderContents.length === 0"
+      key="2"
+      class="contents__empty"
+    >
       <!-- TODO: add styles -->
-      No notes here yet ^_^
+      No notes here yet (⌒‿⌒)
     </div>
 
     <TransitionGroup
@@ -129,7 +133,6 @@ onMounted(() => {
       tag="ul"
       name="list"
       class="contents__list"
-      appear
       tabindex="-1"
       @contextmenu.prevent
     >
@@ -168,6 +171,14 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
+.contents__empty {
+  font-size: 1.125rem;
+  text-align: center;
+  color: hsla(var(--text-color-hsl), 0.75);
+
+  padding-top: var(--pd-y);
+}
+
 .contents__list {
   --scrollbar-thumb-color: hsla(var(--text-color-hsl), 0.175);
   --scrollbar-background: var(--surface-color);
