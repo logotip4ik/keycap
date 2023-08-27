@@ -3,30 +3,19 @@ import { withLeadingSlash, withoutLeadingSlash } from 'ufo';
 import type { RouteLocationRaw } from 'vue-router';
 import type { NavigateToOptions } from '#app/composables/router';
 
-interface ItemWithPath { root?: boolean; path: string }
-export function generateItemRouteParams(item: ItemWithPath): RouteLocationRaw {
-  const user = useUser();
-  const route = useRoute();
-
+type ItemWithPath = Record<string, any> & { root?: boolean; path: string };
+export function generateItemPath(item: ItemWithPath): RouteLocationRaw {
   const isFolder = 'root' in item;
+  let path = item.path.replace('/', '/@');
 
-  const username = user.value?.username || route.params.user;
-  const routeName = isFolder ? BLANK_NOTE_NAME : (item as NoteMinimal).name;
-  const routeFolders = withoutLeadingSlash(item.path)
-    .split('/')
-    .slice(1)
-    // removing last item in array if item is note
-    .filter((_, i, array) => isFolder ? true : i !== array.length - 1)
-    .map(decodeURIComponent);
+  if (isFolder)
+    path += `/${BLANK_NOTE_NAME}`;
 
-  return {
-    name: '@user-folders-note',
-    params: { user: username, folders: routeFolders, note: routeName },
-  };
+  return path;
 }
 
 export async function showItem(item: ItemWithPath, options: NavigateToOptions = {}) {
-  const itemRouteParams = generateItemRouteParams(item);
+  const itemRouteParams = generateItemPath(item);
 
   await navigateTo(itemRouteParams, options);
 }

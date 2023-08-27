@@ -14,15 +14,7 @@ const contentsSidebarState = useContentsSidebarState();
 const link = ref<ComponentPublicInstance | null>(null);
 const isSmallScreen = inject(IsSmallScreenKey)!;
 
-const itemHref = computed(() => {
-  let path = props.item.path.replace('/', '/@');
-
-  if (isFolder)
-    path += `/${BLANK_NOTE_NAME}`;
-
-  return path;
-});
-
+const itemHref = computed(() => generateItemPath(props.item));
 const isActive = computed(() => itemHref.value === route.path);
 
 function unpinIfNeeded() {

@@ -17,7 +17,7 @@ const itemPath = isCommand
 
 const itemHref = isCommand
   ? ''
-  : generateItemRouteParams(props.item);
+  : generateItemPath(props.item);
 
 async function handleActionClick() {
   if (!isCommand)
