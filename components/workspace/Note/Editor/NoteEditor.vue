@@ -34,7 +34,6 @@ interface Props {
   content: string
   editable: boolean
   onUpdate: (content: string) => void
-  onRefresh: () => void
   onShowDetails: () => void
 }
 const props = defineProps<Props>();
@@ -142,17 +141,8 @@ useTinykeys({
   },
 });
 
-onMounted(() => {
-  const clear = on(document, 'visibilitychange', () => {
-    if (document.visibilityState === 'visible')
-      props.onRefresh();
-  });
-
-  onBeforeUnmount(() => {
-    clear();
-
-    editor.value?.destroy();
-  });
+onBeforeUnmount(() => {
+  editor.value?.destroy();
 });
 </script>
 

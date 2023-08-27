@@ -2,7 +2,6 @@
 import { withoutLeadingSlash } from 'ufo';
 import parseDuration from 'parse-duration';
 
-import type { Note } from '@prisma/client';
 import type { RefToastInstance } from '~/composables/toasts';
 
 const route = useRoute();
@@ -206,9 +205,18 @@ watch(fetchedNote, (value) => {
   offlineStorage.value?.setItem(value.path, toRaw(value));
 });
 
-onBeforeUnmount(() => {
-  clearTimeout(pollingTimer);
-  abortControllerGet?.abort();
+onMounted(() => {
+  const off = on(document, 'visibilitychange', () => {
+    if (document.visibilityState === 'visible')
+      refresh();
+  });
+
+  onBeforeUnmount(() => {
+    off();
+
+    clearTimeout(pollingTimer);
+    abortControllerGet?.abort();
+  });
 });
 </script>
 
@@ -221,7 +229,6 @@ onBeforeUnmount(() => {
       class="workspace__note-editor"
       :content="note.content || ''"
       :editable="!isFallbackMode && !!note"
-      @refresh="refresh"
       @update="throttledUpdate"
       @show-details="showDetails"
     />
