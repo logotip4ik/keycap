@@ -96,10 +96,7 @@ onMounted(() => {
     <LazyWorkspaceToolbox />
 
     <Transition name="fade" appear>
-      <LazyWorkspaceWelcome
-        v-if="isNoteEmpty"
-        class="workspace__note"
-      />
+      <LazyWorkspaceWelcome v-if="isNoteEmpty" />
 
       <main v-else class="workspace__note">
         <NuxtPage />
@@ -149,7 +146,7 @@ onMounted(() => {
     width: 100%;
     height: 100%;
 
-    will-change: width;
+    will-change: width, opacity;
 
     overflow-y: auto;
 
