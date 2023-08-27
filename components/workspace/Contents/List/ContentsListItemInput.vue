@@ -2,6 +2,7 @@
 interface Props { item: FolderOrNote; parent: FolderWithContents }
 const props = defineProps<Props>();
 
+const isFolder = 'root' in props.item;
 const name = ref<string>(props.item.name || '');
 
 function handleSubmit() {
@@ -12,7 +13,7 @@ function handleSubmit() {
     createAction(creationName, props.item, props.parent);
   }
   else if (props.item.editing) {
-    const renameAction = 'root' in props.item ? renameFolder : renameNote;
+    const renameAction = isFolder ? renameFolder : renameNote;
 
     renameAction(name.value, props.item, props.parent);
   }
@@ -22,7 +23,7 @@ function handleReset() {
   if (props.item.creating)
     return deleteNoteFromFolder(props.item, props.parent);
 
-  const updateAction = 'root' in props.item ? updateSubfolderInFolder : updateNoteInFolder;
+  const updateAction = isFolder ? updateSubfolderInFolder : updateNoteInFolder;
 
   updateAction(props.item, { editing: false, creating: false }, props.parent);
 }
