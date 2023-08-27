@@ -4,6 +4,8 @@ import browserslistToEsbuild from 'browserslist-to-esbuild';
 import { resolve } from 'pathe';
 import { isCI, isDevelopment } from 'std-env';
 
+import type { ComponentsDir } from 'nuxt/schema';
+
 import { getHeaders } from './headers.config';
 import { breakpoints, sidebarsBreakpoints } from './constants/breakpoints';
 import { ParseDurationTransformPlugin } from './vite/transform-parse-duration';
@@ -141,9 +143,15 @@ export default defineNuxtConfig({
     transpile: ['tinykeys'],
   },
 
-  components: {
-    transform: {
-      exclude: [/oldcontents/i],
+  hooks: {
+    'components:dirs': function (dirs) {
+      const componentsPath = resolve('./components');
+      const componentsDirIdx = dirs.findIndex((dir) => (dir as ComponentsDir).path === componentsPath);
+
+      const componentsDir = dirs[componentsDirIdx] as ComponentsDir;
+
+      componentsDir.ignore ||= [];
+      componentsDir.ignore.push('**/Old*/**');
     },
   },
 
