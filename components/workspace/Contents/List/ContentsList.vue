@@ -11,6 +11,7 @@ const isFallbackMode = useFallbackMode();
 const foldersCache = useFoldersCache();
 const offlineStorage = useOfflineStorage();
 const createToast = useToast();
+const { shortcuts } = useAppConfig();
 
 const folderApiPath = computed(() => {
   return Array.isArray(route.params.folders) && route.params.folders.length > 0
@@ -88,6 +89,14 @@ if (import.meta.client) {
   }));
 };
 
+useTinykeys({
+  [shortcuts.new]: (event) => {
+    event.preventDefault();
+
+    if (folder.value) preCreateItem(folder.value);
+  },
+});
+
 onMounted(() => {
   setTimeout(() => {
     requestIdleCallback(() => {
@@ -100,8 +109,6 @@ onMounted(() => {
     });
   }, 550);
 });
-
-// TODO: add tinykeys with shortcut
 </script>
 
 <template>
