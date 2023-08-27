@@ -22,7 +22,7 @@ function normalizeShortcut(shortcut: string) {
         Welcome back
       </p>
 
-      <p v-else class="welcome__title">
+      <p v-else :key="currentFolderPath" class="welcome__title">
         Path: {{ currentFolderPath }}
       </p>
     </Transition>
