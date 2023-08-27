@@ -1,7 +1,6 @@
 <script setup lang="ts">
 function handleClick() {
   const { data: folder } = useNuxtData('folder');
-
   if (!folder.value)
     return;
 
@@ -19,6 +18,10 @@ function handleClick() {
 
 <style lang="scss">
 .contents__add {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
   font-family: inherit;
   text-align: left;
   color: hsla(var(--text-color-hsl), 0.85);
@@ -33,6 +36,17 @@ function handleClick() {
   border: none;
   background-color: transparent;
   cursor: pointer;
+
+  @media (hover: hover) {
+    color: hsla(var(--text-color-hsl), 0.75);
+  }
+
+  &__icon {
+    margin-right: calc(var(--pd-x) * 0.66);
+
+    width: 1.25rem;
+    height: auto;
+  }
 
   &:is(:hover, :focus-visible) {
     background-color: hsla(var(--text-color-hsl), 0.045);
