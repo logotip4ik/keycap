@@ -130,5 +130,15 @@ $breakpoint-one: $sidebar-breakpoint-one;
   &--hidden {
     transform: scale(var(--sidebar-hidden-scale)) translateX(calc(-1 * var(--dir) * var(--sidebar-width)));
   }
+
+  hr {
+    width: 97.5%;
+    height: 1px;
+
+    margin-block: calc(var(--pd-y) / 2);
+
+    border: none;
+    background-color: hsla(var(--selection-bg-color-hsl), 0.25);
+  }
 }
 </style>
