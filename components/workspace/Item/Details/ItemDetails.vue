@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Note, Prisma } from '@prisma/client';
+import type { Folder, Note, Prisma } from '@prisma/client';
 
 interface Props { item: NoteMinimal }
 const props = defineProps<Props>();
@@ -10,15 +10,23 @@ const isLoadingItemDetails = ref(false);
 
 const isFolder = 'root' in props.item;
 
-type NoteDetails = Note & Prisma.NoteGetPayload<{ select: { shares: { select: { link: true; updatedAt: true; createdAt: true } } } }>;
+type Metadata = Pick<Note, 'updatedAt' | 'createdAt'> | Pick<Folder, 'updatedAt' | 'createdAt'>;
+type NoteDetails = Prisma.NoteGetPayload<{ select: { shares: { select: { link: true; updatedAt: true; createdAt: true } } } }>;
+type ItemDetails = Metadata & Partial<NoteDetails>;
 
 // NOTE(perf improvement): client bundle size reduced by using only useAsyncData or useFetch
-const { data: details, refresh } = useLazyAsyncData(async () => {
-  return await $fetch<Partial<NoteDetails>>(
+const { data: details, refresh } = await useAsyncData<ItemDetails | undefined>(async () => {
+  const res = await $fetch<ItemDetails>(
     // /api/[note|folder]/[item path without username]
     `/api/${isFolder ? 'folder' : 'note'}/${props.item.path.split('/').slice(2).join('/')}`,
-    { query: { details: true }, retry: 2 },
+    { query: { details: true } },
   );
+
+  return res;
+}, {
+  lazy: true,
+  server: false,
+  immediate: false,
 });
 
 const itemDetailsEl = shallowRef<HTMLElement | null>(null);
@@ -111,6 +119,8 @@ function toggleShareLink(isCreateRequest: boolean) {
 
 useTinykeys({ Escape: unsetCurrentItemForDetails });
 useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
+
+onBeforeMount(() => refresh());
 </script>
 
 <template>
