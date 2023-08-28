@@ -47,11 +47,11 @@ useTinykeys({
   [shortcuts.toolbox]: (e) => {
     e.preventDefault();
 
-    const nextState: SidebarState = toolboxState.value === 'hidden' ? 'pinned' : 'hidden';
+    const nextState: SidebarState = toolboxState.value === 'hidden' ? 'visible' : 'hidden';
 
     smartUpdateState(nextState);
 
-    if (nextState === 'pinned') {
+    if (nextState === 'visible') {
       prevFocusedEl = document.activeElement as HTMLElement;
 
       nextTick(() => sidebar.value?.el?.focus());

@@ -53,10 +53,10 @@ watch(state, debounce((state: SidebarState) => {
 
   updateTabindexForFocusableElements(state);
 
-  const value: SidebarState = state === 'visible' ? 'hidden' : state;
-  document.cookie = `${props.name}=${value}; Max-Age=${parseDuration('0.5year', 's')}; Path=/; Secure; SameSite=Lax`;
+  const cookieValue: SidebarState = state === 'visible' ? 'hidden' : state;
+  document.cookie = `${props.name}=${cookieValue}; Max-Age=${parseDuration('0.5year', 's')}; Path=/; Secure; SameSite=Lax`;
 
-  if (value === 'pinned')
+  if (state === 'visible')
     off = on(sidebar.value!, 'keydown', trapFocusInsideSidebar);
 }, 375), { flush: 'post' });
 
