@@ -11,6 +11,7 @@ const user = useUser();
   <header class="toolbox__header">
     <!-- TODO: better accessibility -->
     <button
+      data-open-button
       class="toolbox__header__open-btn"
       :class="{ 'toolbox__header__open-btn--exposed': state === 'hidden' }"
       :aria-pressed="state === 'pinned'"

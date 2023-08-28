@@ -60,6 +60,7 @@ const crumbs = computed(() => {
     </TransitionGroup>
 
     <button
+      data-open-button
       class="contents__header__open-btn"
       :class="{ 'contents__header__open-btn--exposed': state === 'hidden' }"
       :aria-pressed="state === 'pinned'"
