@@ -42,15 +42,19 @@ const stop = watch(() => props.state, (state) => {
     <Transition name="fade">
       <WorkspaceToolboxRecentSkeleton v-if="!recent" />
 
+      <div v-else-if="recent.length === 0" class="toolbox__recent__empty">
+        Seems to be empty ⚆_⚆
+      </div>
+
       <ul v-else class="toolbox__recent__list">
         <li
           v-for="item in recent"
           :key="item.id"
           class="toolbox__recent__list__item"
         >
-          <LazyWorkspaceToolboxRecentItem :item="item">
+          <WorkspaceToolboxRecentItem :item="item">
             {{ item.name }}
-          </LazyWorkspaceToolboxRecentItem>
+          </WorkspaceToolboxRecentItem>
         </li>
       </ul>
     </Transition>
@@ -65,6 +69,13 @@ const stop = watch(() => props.state, (state) => {
     color: hsla(var(--text-color-hsl), 0.875);
 
     margin: calc(var(--pd-y) * 0.75) 0 var(--pd-y);
+  }
+
+  &__empty {
+    font-size: 1.05rem;
+    font-weight: 300;
+    text-align: center;
+    color: hsla(var(--text-color-hsl), 0.75);
   }
 
   &__list {
