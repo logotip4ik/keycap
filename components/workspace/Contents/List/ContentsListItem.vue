@@ -2,6 +2,7 @@
 interface Props {
   item: FolderOrNote
   parent: FolderWithContents
+  menuTarget: HTMLElement | null
   onShowMenu: (target: HTMLElement) => any
 }
 const props = defineProps<Props>();
@@ -21,6 +22,18 @@ function unpinIfNeeded() {
   if (isSmallScreen && !isFolder)
     contentsSidebarState.value = 'hidden';
 }
+
+function showMenu(event: Event) {
+  if (!link.value)
+    return;
+
+  if (props.menuTarget === link.value.$el)
+    return;
+
+  props.onShowMenu(link.value.$el);
+
+  event.preventDefault();
+}
 </script>
 
 <template>
@@ -33,7 +46,7 @@ function unpinIfNeeded() {
     :class="{ 'list__item--active': isActive }"
     :aria-label="`open ${isFolder ? 'folder' : 'note'} '${item.name}'`"
     @click="unpinIfNeeded"
-    @contextmenu.prevent="link && onShowMenu(link.$el)"
+    @contextmenu="showMenu"
   >
     <LazyIconOutlineFolder
       v-if="isFolder"

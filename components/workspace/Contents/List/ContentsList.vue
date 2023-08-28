@@ -153,7 +153,8 @@ onBeforeUnmount(() => {
       name="list"
       class="contents__list"
       tabindex="-1"
-      @contextmenu.prevent
+      @contextmenu.self.prevent
+      @click.self="menuOptions.target = null"
     >
       <li
         v-for="item in folderContents"
@@ -172,6 +173,7 @@ onBeforeUnmount(() => {
               v-else
               :item="item"
               :parent="folder"
+              :menu-target="menuOptions.target"
               @show-menu="showMenu($event, item)"
             />
           </Suspense>
