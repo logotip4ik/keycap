@@ -129,7 +129,6 @@ onBeforeUnmount(() => {
       v-else-if="folderContents.length === 0"
       class="contents__empty"
     >
-      <!-- TODO: add styles -->
       No notes here yet (⌒‿⌒)
     </div>
 

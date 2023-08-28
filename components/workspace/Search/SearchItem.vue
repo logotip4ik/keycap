@@ -4,20 +4,21 @@ const props = defineProps<Props>();
 
 const isCommand = 'key' in props.item;
 
-const itemPath = isCommand
-  ? ''
-  : decodeURIComponent(
+const itemHref = computed(() => isCommand ? '' : generateItemPath(props.item));
+const itemPath = computed(() => {
+  if (isCommand)
+    return '';
+
+  return decodeURIComponent(
     props.item.path
-    //   // TODO: rewrite item path resolution ?
-    // removing account name
+      // TODO: rewrite item path resolution ?
+      // This is faster then array manipulation
+      // removing account name
       .replace(/\/\w+\//, '')
-    // the last one string from path
+      // the last one string from path
       .replace(/\/?[\w%]+$/, ''),
   );
-
-const itemHref = isCommand
-  ? ''
-  : generateItemPath(props.item);
+});
 
 async function handleActionClick() {
   if (!isCommand)

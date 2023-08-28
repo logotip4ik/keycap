@@ -15,7 +15,6 @@ export const useFoldersCache = () => foldersCache;
 const fuzzyWorker = shallowRef<null | IFuzzyWorker>(null);
 export const useFuzzyWorker = () => fuzzyWorker;
 
-// TODO: why note use shallowReactive ?
 const offlineStorage = shallowReactive<Partial<OfflineStorage>>(import.meta.server ? {} : getOfflineStorage());
 export const useOfflineStorage = () => offlineStorage;
 

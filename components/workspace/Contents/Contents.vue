@@ -17,7 +17,6 @@ function hideSidebarsIfNeeded() {
     sidebar.value = 'hidden';
 }
 
-// TODO: hoist this function and use in contents as well as here ?
 function smartUpdateState(newState: SidebarState) {
   contentsState.value = newState;
 
@@ -45,8 +44,6 @@ if (import.meta.client) {
       :state="contentsState"
       @update-state="smartUpdateState"
     />
-
-    <!-- TODO: add button for creating new item -->
 
     <WorkspaceContentsCreateBtn />
 
