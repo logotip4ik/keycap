@@ -136,9 +136,9 @@ useTinykeys({
 
 onMounted(() => {
   popperInstance.value = createPopper(props.target, menu.value!, {
-    placement: 'bottom',
+    placement: 'bottom-start',
     modifiers: [
-      { name: 'offset', options: { offset: [0, 4] } },
+      { name: 'offset', options: { offset: [12, 4] } },
     ],
   });
 
