@@ -37,7 +37,7 @@ const actions = computed(() => {
   const copy = noteActions.slice();
 
   if (isFolder)
-    copy.splice(1, 1);
+    copy.splice(2, 1);
 
   return copy;
 });
