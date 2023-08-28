@@ -83,7 +83,7 @@ watch(() => props.state, (state, oldState) => {
     && !folder.value
   )
     return refresh();
-}, { immediate: true });
+}, { immediate: import.meta.client });
 
 if (import.meta.client) {
   onBeforeUnmount(on(document, 'visibilitychange', () => {
