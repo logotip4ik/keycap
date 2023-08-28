@@ -1,4 +1,3 @@
-import { isDevelopment } from 'std-env';
 import parseDuration from 'parse-duration';
 
 export default defineCachedEventHandler(async (event) => {
