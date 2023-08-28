@@ -12,7 +12,7 @@ export function generateItemPath(item: ItemWithPath): RouteLocationRaw {
   return path;
 }
 
-export async function showItem(item: ItemWithPath, options: NavigateToOptions = {}) {
+export async function showItem(item: ItemWithPath, options?: NavigateToOptions) {
   const itemRouteParams = generateItemPath(item);
 
   await navigateTo(itemRouteParams, options);
