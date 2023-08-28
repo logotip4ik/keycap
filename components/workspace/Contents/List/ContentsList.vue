@@ -13,6 +13,7 @@ const offlineStorage = useOfflineStorage();
 const createToast = useToast();
 const detailsItem = useCurrentItemForDetails();
 const mitt = useMitt();
+const user = useUser();
 const { shortcuts } = useAppConfig();
 
 const folderApiPath = computed(() => {
@@ -49,7 +50,7 @@ const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefi
       foldersCache.set(fetchedFolder.path, fetchedFolder);
       offlineStorage.setItem?.(fetchedFolder.path, fetchedFolder);
     })
-    .catch((e) => createToast(e.message)) // TODO: better error handling and error messages
+    .catch(handleError)
     .finally(() => {
       const multiplier = document.visibilityState === 'visible' ? 1 : 2;
       pollingTimer = setTimeout(refresh, POLLING_TIME * multiplier);
@@ -76,6 +77,44 @@ function showMenu(target: HTMLElement, item: FolderOrNote) {
 
   menuOptions.item = item;
   menuOptions.target = target;
+}
+
+async function handleError(error: Error) {
+  if (error.message.includes('aborted'))
+    return;
+
+  // @ts-expect-error there actually is statusCode
+  if (error.statusCode === 401 || !user.value) {
+    user.value = null;
+    await navigateTo('/login');
+    return;
+  }
+  // @ts-expect-error there actually is statusCode
+  if (error.statusCode === 404)
+    return await navigateTo(`/@${user.value.username}`);
+
+  // Other network error ?
+  // TODO: send beacon to some endpoint ?
+  if (error.name === 'FetchError')
+    isFallbackMode.value = true;
+
+  // But if folder was found in cache, then do nothing, just display it
+  if (folder.value)
+    return;
+
+  // last chance to show user folder, if iterator in @[user].vue page hasn't yet set the foldersCache
+  const folderPath = `/${route.params.user}${folderApiPath.value}`;
+  const offlineFolder = await offlineStorage.getItem?.(folderPath);
+
+  if (!offlineFolder) {
+    createToast(`Sorry ⊙︿⊙ We couldn't find offline copy for folder: "${route.params.folders.at(-1)}"`);
+
+    await navigateTo(`/@${user.value.username}`);
+
+    return;
+  }
+
+  folder.value = offlineFolder;
 }
 
 watch(() => props.state, (state, oldState) => {

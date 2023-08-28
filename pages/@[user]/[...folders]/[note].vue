@@ -13,6 +13,7 @@ const notesCache = useNotesCache();
 const createToast = useToast();
 const offlineStorage = useOfflineStorage();
 const currentItemForDetails = useCurrentItemForDetails();
+const user = useUser();
 const mitt = useMitt();
 
 const notePath = computed(() => route.path.replace('/@', '/'));
@@ -48,7 +49,7 @@ const { data: note, pending, refresh } = await useAsyncData<SerializedNote | und
       notesCache.set(fetchedNote.path, fetchedNote);
       offlineStorage.setItem?.(fetchedNote.path, fetchedNote);
     })
-    .catch((e) => createToast(e.message)) // TODO: better error messages
+    .catch(handleError)
     .finally(() => {
       const multiplier = document.visibilityState === 'visible' ? 1 : 2;
       pollingTimer = setTimeout(refresh, POLLING_TIME * multiplier);
@@ -107,9 +108,41 @@ function updateNote(content: string) {
     .catch((error) => console.warn(error));
 }
 
-function showDetails() {
-  // @ts-expect-error idk why it is complaining
-  currentItemForDetails.value = note.value!;
+async function handleError(error: Error) {
+  if (error.message.includes('aborted'))
+    return;
+
+  // @ts-expect-error there actually is statusCode
+  if (error.statusCode === 401 || !user.value) {
+    user.value = null;
+    await navigateTo('/login');
+    return;
+  }
+  // @ts-expect-error there actually is statusCode
+  if (error.statusCode === 404)
+    return await navigateTo(`/@${user.value.username}`);
+
+  // Other network error ?
+  // TODO: send beacon to some endpoint ?
+  if (error.name === 'FetchError')
+    isFallbackMode.value = true;
+
+  // But if folder was found in cache, then do nothing, just display it
+  if (note.value)
+    return;
+
+  // last chance to show user folder, if iterator in @[user].vue page hasn't yet set the foldersCache
+  const offlineNote = await offlineStorage.getItem?.(notePath.value);
+
+  if (!offlineNote) {
+    createToast(`Sorry ⊙︿⊙ We couldn't find offline copy for folder: "${route.params.note}"`);
+
+    await navigateTo(`/@${user.value.username}`);
+
+    return;
+  }
+
+  note.value = offlineNote;
 }
 
 mitt.on('cache:populated', () => {
@@ -119,7 +152,8 @@ mitt.on('cache:populated', () => {
 
 mitt.on('details:show', () => {
   if (note.value)
-    showDetails();
+    // @ts-expect-error it will be okeeeeeey
+    currentItemForDetails.value = note.value;
 });
 
 onBeforeMount(() => refresh());
