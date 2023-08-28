@@ -26,8 +26,8 @@ import History from '@tiptap/extension-history';
 import Link from '@tiptap/extension-link';
 
 import {
-  LazyWorkspaceNoteFormatterBubbleMenu as LazyBubblePopup,
-  LazyWorkspaceNoteFormatterInlineMenu as LazyInlinePopup,
+  LazyWorkspaceNoteFormatterBubbleBox as LazyBubbleBox,
+  LazyWorkspaceNoteFormatterFixedBox as LazyFixedBox,
 } from '#components';
 
 interface Props {
@@ -151,19 +151,19 @@ onBeforeUnmount(() => {
     <!-- TODO: vue does not like when this two elements change
       (even without lazy)
      -->
-    <LazyBubblePopup
+    <LazyBubbleBox
       v-if="editor && !isSmallScreen"
       :editor="editor"
     >
       <WorkspaceNoteFormatter :editor="editor" @hide="hideBubbleMenu" />
-    </LazyBubblePopup>
+    </LazyBubbleBox>
 
-    <LazyInlinePopup
+    <LazyFixedBox
       v-else-if="editor && isSmallScreen"
       :editor="editor"
     >
       <WorkspaceNoteFormatter :editor="editor" @hide="() => null" />
-    </LazyInlinePopup>
+    </LazyFixedBox>
 
     <button
       class="note-editor__details-button"
