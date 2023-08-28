@@ -82,7 +82,7 @@ const stop = watch(() => props.state, (state) => {
     --spacing: calc(var(--pd-y) * 0.66);
 
     margin: var(--spacing) 0 0;
-    padding: 0 0 0 var(--pd-x);
+    padding: 0 0 0 calc(var(--pd-x) * 1.66);
 
     list-style-type: disc;
 
