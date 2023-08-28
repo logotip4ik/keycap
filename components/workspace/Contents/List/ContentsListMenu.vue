@@ -23,7 +23,7 @@ const detailsItem = useCurrentItemForDetails();
 
 const isFolder = 'root' in props.item;
 const popperInstance = shallowRef<null | PopperInstance>(null);
-const menu = ref<null | HTMLElement>(null);
+const menu = shallowRef<null | HTMLElement>(null);
 const currentlyConfirming = ref(-1); // You can confirm one at a time
 
 const noteActions = [

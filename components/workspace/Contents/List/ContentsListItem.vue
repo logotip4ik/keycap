@@ -11,7 +11,7 @@ const isFolder = 'root' in props.item;
 const route = useRoute();
 const contentsSidebarState = useContentsSidebarState();
 
-const link = ref<ComponentPublicInstance | null>(null);
+const link = shallowRef<ComponentPublicInstance | null>(null);
 const isSmallScreen = inject(IsSmallScreenKey)!;
 
 const itemHref = computed(() => generateItemPath(props.item));

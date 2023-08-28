@@ -10,8 +10,8 @@ const { oauthEnabled } = useRuntimeConfig().public;
 const user = useUser();
 const createToast = useToast();
 
-const emailComponent = ref<ComponentPublicInstance<HTMLInputElement> | null>(null);
-const passwordComponent = ref<ComponentPublicInstance<HTMLInputElement> | null>(null);
+const emailComponent = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);
+const passwordComponent = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);
 
 const isLoading = ref(false);
 

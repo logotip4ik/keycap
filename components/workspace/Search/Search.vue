@@ -5,15 +5,15 @@ const props = defineProps<Props>();
 const fuzzyWorker = useFuzzyWorker();
 
 const results = shallowRef<Array<FuzzyItem | CommandItem>>([]);
-const resultsEl = ref<ComponentPublicInstance<HTMLUListElement> | null>(null);
+const resultsEl = shallowRef<ComponentPublicInstance<HTMLUListElement> | null>(null);
 const isLoadingResults = ref(false);
 const selectedResult = ref(0);
 const searchInput = ref('');
 const isResultsEmpty = ref(false);
 const typeaheadResult = computed<FuzzyItem | CommandItem | null>(() => results.value[selectedResult.value] || null);
 
-const inputEl = ref<HTMLElement | null>(null);
-const searchEl = ref<HTMLElement | null>(null);
+const inputEl = shallowRef<HTMLElement | null>(null);
+const searchEl = shallowRef<HTMLElement | null>(null);
 
 defineExpose({ input: inputEl });
 

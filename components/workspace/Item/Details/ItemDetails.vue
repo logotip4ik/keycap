@@ -21,7 +21,7 @@ const { data: details, refresh } = useLazyAsyncData(async () => {
   );
 });
 
-const itemDetailsEl = ref<HTMLElement | null>(null);
+const itemDetailsEl = shallowRef<HTMLElement | null>(null);
 
 const mergedDetails = computed(() => {
   if (!details.value) return null;

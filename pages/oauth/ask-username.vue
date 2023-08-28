@@ -12,7 +12,7 @@ const user = useUser();
 const event = useRequestEvent();
 const { query } = useRoute();
 
-const usernameInput = ref<HTMLInputElement | null>(null);
+const usernameInput = shallowRef<HTMLInputElement | null>(null);
 
 if (user.value)
   await navigateTo(`/@${user.value.username}`);
