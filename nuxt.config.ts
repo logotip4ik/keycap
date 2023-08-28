@@ -10,13 +10,6 @@ import { getHeaders } from './headers.config';
 import { breakpoints, sidebarsBreakpoints } from './constants/breakpoints';
 import { ParseDurationTransformPlugin } from './vite/transform-parse-duration';
 
-const tsExcludes = [
-  '../data',
-  '../benchmarks',
-  '../scripts',
-  '../components/workspace/OldContents',
-];
-
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
   devtools: { enabled: true },
@@ -54,10 +47,16 @@ export default defineNuxtConfig({
 
   typescript: {
     tsConfig: {
-      exclude: tsExcludes,
       compilerOptions: {
         types: ['vitest/importMeta'],
       },
+      exclude: [
+        '../data',
+        '../benchmarks',
+        '../scripts',
+        '../components/workspace/OldContents',
+        '../components/workspace/OldNavbar.vue',
+      ],
     },
   },
 
@@ -152,6 +151,7 @@ export default defineNuxtConfig({
 
       componentsDir.ignore ||= [];
       componentsDir.ignore.push('**/Old*/**');
+      componentsDir.ignore.push('**/Old*');
     },
   },
 
@@ -213,10 +213,8 @@ export default defineNuxtConfig({
     typescript: {
       tsConfig: {
         compilerOptions: {
-          allowSyntheticDefaultImports: true,
           types: ['vitest/importMeta'],
         },
-        exclude: tsExcludes,
       },
     },
 
