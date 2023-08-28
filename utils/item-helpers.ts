@@ -1,5 +1,3 @@
-import { withLeadingSlash } from 'ufo';
-
 import type { RouteLocationRaw } from 'vue-router';
 import type { NavigateToOptions } from '#app/composables/router';
 
@@ -147,7 +145,7 @@ export async function deleteNote(self: FolderOrNote, parent: FolderWithContents)
 
   const currentFolderPath = getCurrentFolderPath();
   const notePathName = encodeURIComponent(self.name);
-  const notePath = currentFolderPath + withLeadingSlash(notePathName);
+  const notePath = currentFolderPath + notePathName;
 
   await $fetch<QuickResponse>(`/api/note${notePath}`, { method: 'DELETE' });
 
@@ -162,7 +160,7 @@ export async function deleteFolder(self: FolderOrNote, parent: FolderWithContent
 
   const currentFolderPath = getCurrentFolderPath();
   const folderPathName = encodeURIComponent(self.name);
-  const folderPath = currentFolderPath + withLeadingSlash(folderPathName);
+  const folderPath = currentFolderPath + folderPathName;
 
   await $fetch<QuickResponse>(`/api/folder${folderPath}`, { method: 'DELETE' });
 
