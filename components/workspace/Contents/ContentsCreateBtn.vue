@@ -37,6 +37,8 @@ function handleClick() {
   background-color: transparent;
   cursor: pointer;
 
+  transition: background-color .1s, color .1s;
+
   @media (hover: hover) {
     color: hsla(var(--text-color-hsl), 0.75);
   }
