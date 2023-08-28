@@ -19,6 +19,8 @@ const sidebar = shallowRef<HTMLDivElement | null>(null);
 const focusableElements = shallowRef<Array<FocusableElement>>([]);
 const state = toRef(props, 'state');
 
+defineExpose({ el: sidebar });
+
 function updateFocusableElements() {
   if (!sidebar.value)
     return;
@@ -85,6 +87,7 @@ onMounted(() => {
     class="sidebar"
     :class="{ 'sidebar--hidden': state === 'hidden', 'sidebar--right': dir === 'right' }"
     :data-state="state"
+    :tabindex="state === 'hidden' ? undefined : 0"
     @pointerleave="state === 'visible' && onUpdateState('hidden')"
   >
     <slot />
