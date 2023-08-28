@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import { debounce } from 'perfect-debounce';
 
+import type Sidebar from '../Sidebar/Sidebar.vue';
 import type { SidebarState } from '~/composables/sidebars';
 
+const sidebar = shallowRef<InstanceType<typeof Sidebar>>();
+
+const { shortcuts } = useAppConfig();
 const toolboxState = useToolboxSidebarState();
 const contentsState = useContentsSidebarState();
 
@@ -25,6 +29,7 @@ function smartUpdateState(newState: SidebarState) {
 
 // otherwise volar is yelling that state is not ref :(
 const data = {
+  ref: 'sidebar',
   name: 'toolbox',
   class: 'toolbox',
   state: toolboxState,
@@ -36,6 +41,26 @@ if (import.meta.client) {
     on(window, 'resize', debounce(hideSidebarsIfNeeded, 225)), // intentionally larger debounce time to hide toolbox first
   );
 };
+
+let prevFocusedEl: HTMLElement | undefined;
+useTinykeys({
+  [shortcuts.toolbox]: (e) => {
+    e.preventDefault();
+
+    const nextState: SidebarState = toolboxState.value === 'hidden' ? 'pinned' : 'hidden';
+
+    smartUpdateState(nextState);
+
+    if (nextState === 'pinned') {
+      prevFocusedEl = document.activeElement as HTMLElement;
+
+      nextTick(() => sidebar.value?.el?.focus());
+    }
+    else {
+      prevFocusedEl?.focus();
+    }
+  },
+});
 </script>
 
 <template>
