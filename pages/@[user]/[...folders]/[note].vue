@@ -60,7 +60,7 @@ const { data: note, pending, refresh } = await useAsyncData<SerializedNote | und
 
       note.value = fetchedNote;
       notesCache.set(fetchedNote.path, fetchedNote);
-      offlineStorage.value?.setItem(fetchedNote.path, fetchedNote);
+      offlineStorage.setItem?.(fetchedNote.path, fetchedNote);
     })
     .catch((e) => createToast(e.message)) // TODO: better error messages
     .finally(() => {
@@ -72,7 +72,7 @@ const { data: note, pending, refresh } = await useAsyncData<SerializedNote | und
 
   const notePath = `/${route.params.user}${noteApiPath.value}`;
 
-  return notesCache.get(notePath) || await offlineStorage.value?.getItem(notePath);
+  return notesCache.get(notePath) || await offlineStorage.getItem?.(notePath);
 }, {
   server: false,
   lazy: true,
@@ -116,7 +116,7 @@ function updateNote(content: string) {
   })
     .then(() => {
       if (note.value)
-        offlineStorage.value?.setItem(note.value.path, newNote);
+        offlineStorage.setItem?.(note.value.path, newNote);
     })
     .catch((error) => console.warn(error));
 }

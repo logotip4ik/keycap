@@ -46,7 +46,7 @@ const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefi
 
       folder.value = fetchedFolder;
       foldersCache.set(fetchedFolder.path, fetchedFolder);
-      offlineStorage.value?.setItem(fetchedFolder.path, fetchedFolder);
+      offlineStorage.setItem?.(fetchedFolder.path, fetchedFolder);
     })
     .catch((e) => createToast(e.message)) // TODO: better error handling and error messages
     .finally(() => {
@@ -56,7 +56,7 @@ const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefi
 
   const folderPath = `/${route.params.user}${folderApiPath.value}`;
 
-  return foldersCache.get(folderPath) || await offlineStorage.value?.getItem(folderPath);
+  return foldersCache.get(folderPath) || await offlineStorage.getItem?.(folderPath);
 }, {
   server: false,
   immediate: false,

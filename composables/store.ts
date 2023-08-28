@@ -15,7 +15,8 @@ export const useFoldersCache = () => foldersCache;
 const fuzzyWorker = shallowRef<null | IFuzzyWorker>(null);
 export const useFuzzyWorker = () => fuzzyWorker;
 
-const offlineStorage = shallowRef<null | OfflineStorage>(import.meta.server ? null : getOfflineStorage());
+// TODO: why note use shallowReactive ?
+const offlineStorage = shallowReactive<Partial<OfflineStorage>>(import.meta.server ? {} : getOfflineStorage());
 export const useOfflineStorage = () => offlineStorage;
 
 export function deleteNoteFromFolder(noteToDelete: NoteMinimal, parent: FolderWithContents) {
@@ -26,7 +27,7 @@ export function deleteNoteFromFolder(noteToDelete: NoteMinimal, parent: FolderWi
   parent.notes.splice(noteIdxToDelete, 1);
 
   if (fuzzyWorker.value && !noteToDelete.creating) fuzzyWorker.value.refreshItemsCache();
-  if (offlineStorage.value) offlineStorage.value.removeItem(noteToDelete.path);
+  if (offlineStorage.removeItem) offlineStorage.removeItem(noteToDelete.path);
 }
 
 export function deleteSubfolderFromFolder(subfolderToDelete: FolderWithContents, parent: FolderWithContents) {
@@ -37,7 +38,7 @@ export function deleteSubfolderFromFolder(subfolderToDelete: FolderWithContents,
   parent.subfolders.splice(folderIdxToDelete, 1);
 
   if (fuzzyWorker.value) fuzzyWorker.value.refreshItemsCache();
-  if (offlineStorage.value) offlineStorage.value.removeItem(subfolderToDelete.path);
+  if (offlineStorage.removeItem) offlineStorage.removeItem(subfolderToDelete.path);
 }
 
 export function updateNoteInFolder(
@@ -50,9 +51,9 @@ export function updateNoteInFolder(
     return;
 
   if (fuzzyWorker.value) fuzzyWorker.value.refreshItemsCache();
-  if (offlineStorage.value) {
-    offlineStorage.value.removeItem(noteToUpdate.path);
-    offlineStorage.value.setItem(noteToUpdate.path, toRaw(noteToUpdate));
+  if (offlineStorage.removeItem && offlineStorage.setItem) {
+    offlineStorage.removeItem(noteToUpdate.path);
+    offlineStorage.setItem(noteToUpdate.path, toRaw(noteToUpdate));
   }
 }
 
@@ -66,8 +67,8 @@ export function updateSubfolderInFolder(
     return;
 
   if (fuzzyWorker.value) fuzzyWorker.value.refreshItemsCache();
-  if (offlineStorage.value) {
-    offlineStorage.value.removeItem(folderToUpdate.path);
-    offlineStorage.value.setItem(folderToUpdate.path, toRaw(folderToUpdate));
+  if (offlineStorage.removeItem && offlineStorage.setItem) {
+    offlineStorage.removeItem(folderToUpdate.path);
+    offlineStorage.setItem(folderToUpdate.path, toRaw(folderToUpdate));
   }
 }

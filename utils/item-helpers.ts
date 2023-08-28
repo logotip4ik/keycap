@@ -191,5 +191,5 @@ export async function preloadItem(self: FolderOrNote) {
 
   // @ts-expect-error idk how to setup this type
   cache.set(item.path, item);
-  offlineStorage.value?.setItem(item.path, item);
+  offlineStorage.setItem?.(item.path, item);
 }
