@@ -24,7 +24,7 @@ let pollingTimer: NodeJS.Timeout;
 let loadingToast: RefToastInstance | undefined;
 let abortControllerGet: AbortController | null;
 
-const { data: note, pending, refresh } = await useAsyncData<SerializedNote | undefined>('note', async () => {
+const { data: note, pending, refresh, error } = await useAsyncData<SerializedNote | undefined>('note', async () => {
   if (import.meta.server || !route.params.note || route.params.note === BLANK_NOTE_NAME)
     return;
 
@@ -49,7 +49,10 @@ const { data: note, pending, refresh } = await useAsyncData<SerializedNote | und
       notesCache.set(fetchedNote.path, fetchedNote);
       offlineStorage.setItem?.(fetchedNote.path, fetchedNote);
     })
-    .catch(handleError)
+    .catch((e) => {
+      error.value = e; // set error in async data, since request promise is not awaited
+      handleError(e);
+    })
     .finally(() => {
       const multiplier = document.visibilityState === 'visible' ? 1 : 2;
       pollingTimer = setTimeout(refresh, POLLING_TIME * multiplier);
@@ -159,7 +162,13 @@ mitt.on('details:show', () => {
 onBeforeMount(() => refresh());
 
 onMounted(() => {
+  if (error.value)
+    return;
+
   const off = on(document, 'visibilitychange', () => {
+    if (error.value)
+      return off();
+
     if (document.visibilityState === 'visible')
       refresh();
   });
