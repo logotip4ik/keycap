@@ -27,6 +27,7 @@ const menu = shallowRef<null | HTMLElement>(null);
 const currentlyConfirming = ref(-1); // You can confirm one at a time
 
 const noteActions = [
+  { name: 'open in a new tab', handler: openNewTab },
   { name: 'preload', handler: preloadItemWithIndication },
   { name: 'rename', handler: renameItem },
   { name: 'show details', handler: showDetails },
@@ -112,6 +113,17 @@ function deleteItem() {
   const deleteItem = isFolder ? deleteFolder : deleteNote;
 
   deleteItem(props.item, props.parent);
+
+  props.onClose();
+}
+
+function openNewTab() {
+  let itemPath = props.item.path.replace('/', '/@');
+
+  if (isFolder)
+    itemPath += `/${BLANK_NOTE_NAME}`;
+
+  window.open(itemPath, 'target=_blank');
 
   props.onClose();
 }
