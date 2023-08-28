@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import trapFocus from 'focus-trap-js';
+
 interface Props { onClose: () => void }
 const props = defineProps<Props>();
 
@@ -77,11 +79,6 @@ function changeSelectedResult(difference: number) {
   selectedResult.value = newSelectedResult < 0 ? results.value.length - 1 : newSelectedResult;
 }
 
-function fillSearchInput() {
-  if (typeaheadResult.value)
-    searchInput.value = typeaheadResult.value.name;
-}
-
 watch([searchInput, isLoadingResults, results], debounce(([value, isLoading, results]) => {
   if (!value || isLoading)
     isResultsEmpty.value = false;
@@ -115,6 +112,12 @@ useResizeObserver(searchEl, (entries) => {
 });
 
 useTinykeys({ Escape: handleCancel });
+
+onMounted(() => {
+  const off = on(searchEl.value, 'keydown', (e: Event) => trapFocus(e, searchEl.value!));
+
+  onBeforeUnmount(() => off());
+});
 </script>
 
 <template>
@@ -129,7 +132,6 @@ useTinykeys({ Escape: handleCancel });
           @update-value="searchInput = $event"
           @keydown.up.prevent="changeSelectedResult(-1)"
           @keydown.down.prevent="changeSelectedResult(+1)"
-          @keydown.tab.prevent="fillSearchInput()"
         />
 
         <p v-show="typeaheadResult" class="search__form__typeahead">
