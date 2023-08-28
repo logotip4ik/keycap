@@ -47,6 +47,11 @@ function trapFocusInsideSidebar(event: Event) {
     trapFocus(event, sidebar.value);
 }
 
+function hideIf(trigger: SidebarState) {
+  if (state.value === trigger)
+    props.onUpdateState('hidden');
+}
+
 let off: (() => any) | undefined;
 watch(state, debounce((state: SidebarState) => {
   off && off();
@@ -63,6 +68,12 @@ watch(state, debounce((state: SidebarState) => {
 watch(focusableElements, debounce(() => {
   updateTabindexForFocusableElements(state.value);
 }, 375), { flush: 'post' });
+
+useClickOutside(sidebar, () => hideIf('visible'));
+
+useTinykeys({
+  Escape: () => hideIf('visible'),
+});
 
 onMounted(() => {
   requestIdleCallback(updateFocusableElements);
