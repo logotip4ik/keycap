@@ -9,7 +9,6 @@ const user = useUser();
 
 <template>
   <header class="toolbox__header">
-    <!-- TODO: better accessibility -->
     <button
       data-open-button
       class="toolbox__header__open-btn"
