@@ -11,6 +11,8 @@ const isFallbackMode = useFallbackMode();
 const foldersCache = useFoldersCache();
 const offlineStorage = useOfflineStorage();
 const createToast = useToast();
+const detailsItem = useCurrentItemForDetails();
+const mitt = useMitt();
 const { shortcuts } = useAppConfig();
 
 const folderApiPath = computed(() => {
@@ -91,6 +93,20 @@ if (import.meta.client) {
       refresh();
   }));
 };
+
+mitt.on('cache:populated', () => {
+  const folderPath = `/${route.params.user}${folderApiPath.value}`;
+
+  folder.value = foldersCache.get(folderPath) || null;
+});
+
+// TODO: rework details trigger ?
+mitt.on('details:show', () => {
+  // const noNote = !route.params.note || route.params.note === BLANK_NOTE_NAME;
+
+  // if (folder.value && noNote)
+  // detailsItem.value = { };
+});
 
 useTinykeys({
   [shortcuts.new]: (event) => {
