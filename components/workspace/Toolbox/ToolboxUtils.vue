@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { LazyIconSearchRounded } from '#components';
+import { LazyIconInfoOutline, LazyIconSearchRounded } from '#components';
+
+const detailsItem = useCurrentItemForDetails();
 
 const utils = [
   {
@@ -8,6 +10,20 @@ const utils = [
     icon: LazyIconSearchRounded,
     action: () => {
       useMitt().emit('search:show');
+    },
+  },
+  {
+    text: 'Show Item Details',
+    label: 'open item details popup',
+    icon: LazyIconInfoOutline,
+    buttonAttrs: {
+      ariaHaspopup: 'dialog',
+      ariaControls: 'item-details',
+      ariaLabel: 'current note details',
+      ariaExpanded: !!detailsItem.value,
+    },
+    action: () => {
+      useMitt().emit('details:show');
     },
   },
 ];
@@ -21,6 +37,7 @@ const utils = [
       class="toolbox__utils__item"
     >
       <button
+        v-bind="util.buttonAttrs"
         :aria-label="util.label"
         class="toolbox__utils__item__btn"
         @click="util.action"
@@ -41,6 +58,10 @@ const utils = [
   list-style-type: none;
 
   &__item {
+    &:not(:first-child) {
+      margin-top: calc(var(--pd-y) / 5);
+    }
+
     &__btn {
       display: flex;
       justify-content: flex-start;
@@ -63,10 +84,6 @@ const utils = [
 
       @media (width <= $sidebar-breakpoint-one) {
         --pd-y: 1.25rem;
-      }
-
-      &:not(:first-child) {
-        margin-top: calc(var(--pd-y) / 5);
       }
 
       &:is(:hover, :focus-visible) {
