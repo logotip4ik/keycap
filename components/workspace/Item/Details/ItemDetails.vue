@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import trapFocus from 'focus-trap-js';
+
 import type { Folder, Note, Prisma } from '@prisma/client';
 
 interface Props { item: NoteMinimal }
@@ -121,6 +123,13 @@ useTinykeys({ Escape: unsetCurrentItemForDetails });
 useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
 
 onBeforeMount(() => refresh());
+onMounted(() => {
+  itemDetailsEl.value?.focus();
+
+  const off = on(itemDetailsEl.value, 'keydown', (e: Event) => trapFocus(e, itemDetailsEl.value!));
+
+  onBeforeUnmount(() => off());
+});
 </script>
 
 <template>
@@ -132,7 +141,7 @@ onBeforeMount(() => refresh());
       class="item-details"
       aria-modal="true"
       aria-labelledby="item-details-dialog-title"
-      tabindex="-1"
+      tabindex="0"
     >
       <button class="item-details__close-button" @click="unsetCurrentItemForDetails">
         <LazyIconCloseRounded v-once class="item-details__close-button__icon" />
