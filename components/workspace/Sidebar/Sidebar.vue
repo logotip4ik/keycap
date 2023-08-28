@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { debounce } from 'perfect-debounce';
 import parseDuration from 'parse-duration';
+import trapFocus from 'focus-trap-js';
 
 import type { SidebarState } from '~/composables/sidebars';
+
+type FocusableElement = HTMLAnchorElement | HTMLButtonElement;
 
 interface Props {
   dir?: 'left' | 'right'
@@ -12,13 +15,62 @@ interface Props {
 }
 const props = withDefaults(defineProps<Props>(), { dir: 'left' });
 
+const sidebar = shallowRef<HTMLDivElement | null>(null);
+const focusableElements = shallowRef<Array<FocusableElement>>([]);
 const state = toRef(props, 'state');
 
-watch(state, debounce((state: SidebarState) => {
-  const value: SidebarState = state === 'visible' ? 'hidden' : state;
+function updateFocusableElements() {
+  if (!sidebar.value)
+    return;
 
+  const elements = Array.from(sidebar.value.querySelectorAll<FocusableElement>('a, button'));
+
+  focusableElements.value = elements;
+}
+
+function updateTabindexForFocusableElements(currentState: SidebarState) {
+  for (const el of focusableElements.value) {
+    if (typeof el.dataset.openButton !== 'undefined')
+      continue;
+
+    if (currentState === 'hidden')
+      el.setAttribute('tabindex', '-1');
+    else
+      el.removeAttribute('tabindex');
+  }
+}
+
+function trapFocusInsideSidebar(event: Event) {
+  if (sidebar.value)
+    trapFocus(event, sidebar.value);
+}
+
+let off: (() => any) | undefined;
+watch(state, debounce((state: SidebarState) => {
+  off && off();
+
+  updateTabindexForFocusableElements(state);
+
+  const value: SidebarState = state === 'visible' ? 'hidden' : state;
   document.cookie = `${props.name}=${value}; Max-Age=${parseDuration('0.5year', 's')}; Path=/; Secure; SameSite=Lax`;
-}, 350));
+
+  if (value === 'pinned')
+    off = on(sidebar.value!, 'keydown', trapFocusInsideSidebar);
+}, 375), { flush: 'post' });
+
+watch(focusableElements, debounce(() => {
+  updateTabindexForFocusableElements(state.value);
+}, 375), { flush: 'post' });
+
+onMounted(() => {
+  requestIdleCallback(updateFocusableElements);
+
+  const observer = new MutationObserver(debounce(updateFocusableElements, 100));
+
+  observer.observe(sidebar.value!, { childList: true, subtree: true });
+
+  onBeforeUnmount(() => observer.disconnect());
+});
 </script>
 
 <template>
@@ -29,6 +81,7 @@ watch(state, debounce((state: SidebarState) => {
 
   <aside
     v-bind="$attrs"
+    ref="sidebar"
     class="sidebar"
     :class="{ 'sidebar--hidden': state === 'hidden', 'sidebar--right': dir === 'right' }"
     :data-state="state"
