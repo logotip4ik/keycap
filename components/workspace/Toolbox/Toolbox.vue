@@ -75,7 +75,10 @@ useTinykeys({
 
     <hr>
 
-    <WorkspaceToolboxRecent :state="toolboxState" />
+    <WorkspaceToolboxRecent
+      :state="toolboxState"
+      @update-state="smartUpdateState"
+    />
 
     <WorkspaceToolboxFooter />
   </WorkspaceSidebar>

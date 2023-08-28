@@ -3,7 +3,7 @@ import parseDuration from 'parse-duration';
 
 import type { SidebarState } from '~/composables/sidebars';
 
-interface Props { state: SidebarState }
+interface Props { state: SidebarState; onUpdateState: (newState: SidebarState) => any }
 const props = defineProps<Props>();
 
 const POLLING_TIME = parseDuration('5 minutes');
@@ -52,7 +52,10 @@ const stop = watch(() => props.state, (state) => {
           :key="item.id"
           class="toolbox__recent__list__item"
         >
-          <WorkspaceToolboxRecentItem :item="item">
+          <WorkspaceToolboxRecentItem
+            :item="item"
+            @keydown.enter="onUpdateState('hidden')"
+          >
             {{ item.name }}
           </WorkspaceToolboxRecentItem>
         </li>
