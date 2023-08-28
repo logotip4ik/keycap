@@ -118,6 +118,8 @@ const crumbs = computed(() => {
 
       margin: 0;
 
+      // idk how, but chrome was adding y scroll at certain screen width
+      overflow: hidden;
       scroll-snap-align: start;
 
       &__link {
