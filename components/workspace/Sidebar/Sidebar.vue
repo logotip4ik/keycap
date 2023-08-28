@@ -175,6 +175,11 @@ $breakpoint-one: $sidebar-breakpoint-one;
     backdrop-filter: blur(16px);
   }
 
+  &:focus {
+    outline: 2px solid hsla(var(--selection-bg-color-hsl), 0.75);
+    box-shadow: 0 0 0.75rem hsla(var(--selection-bg-color-hsl), 0.5);
+  }
+
   &--right {
     --dir: -1;
     left: inherit;
