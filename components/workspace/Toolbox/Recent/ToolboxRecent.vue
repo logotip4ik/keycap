@@ -4,8 +4,6 @@ import type { SidebarState } from '~/composables/sidebars';
 interface Props { state: SidebarState }
 const props = defineProps<Props>();
 
-const visibleStates = ['visible', 'pinned'] satisfies Array<SidebarState>;
-
 const { data: recent, refresh } = await useAsyncData('recent', async () => {
   preloadComponents('WorkspaceToolboxRecentItem');
 
@@ -19,7 +17,7 @@ const { data: recent, refresh } = await useAsyncData('recent', async () => {
 });
 
 const stop = watch(() => props.state, (state) => {
-  if (visibleStates.includes(state)) {
+  if (sidebarVisibleStates.includes(state)) {
     setTimeout(() => {
       refresh();
       stop();

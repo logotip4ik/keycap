@@ -24,7 +24,6 @@ const menuOptions = shallowReactive({
   target: null as HTMLElement | null,
 });
 
-const visibleStates = ['visible', 'pinned'] satisfies Array<SidebarState>;
 const POLLING_TIME = parseDuration('2.5 minutes')!;
 let pollingTimer: NodeJS.Timeout;
 let abortControllerGet: AbortController | null;
@@ -79,7 +78,7 @@ function showMenu(target: HTMLElement, item: FolderOrNote) {
 
 watch(() => props.state, (state, oldState) => {
   if (
-    visibleStates.includes(state)
+    sidebarVisibleStates.includes(state)
     && (!oldState || oldState === 'hidden')
     && !folder.value
   )
