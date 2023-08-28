@@ -1,13 +1,20 @@
 <script setup lang="ts">
+import parseDuration from 'parse-duration';
+
 import type { SidebarState } from '~/composables/sidebars';
 
 interface Props { state: SidebarState }
 const props = defineProps<Props>();
 
+const POLLING_TIME = parseDuration('5 minutes');
+let pollingTimer: NodeJS.Timeout | undefined;
+
 const { data: recent, refresh } = await useAsyncData('recent', async () => {
+  clearTimeout(pollingTimer);
   preloadComponents('WorkspaceToolboxRecentItem');
 
   const recent = await $fetch<Array<NoteMinimal>>('/api/recent');
+  pollingTimer = setTimeout(refresh, POLLING_TIME);
 
   return recent;
 }, {
