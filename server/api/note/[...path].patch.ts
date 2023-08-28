@@ -38,7 +38,7 @@ export default defineEventHandler(async (event) => {
   timer.start('db');
   const updatedNote = await prisma.note.update({
     data,
-    where: { path: notePath },
+    where: { path: notePath, ownerId: user.id },
     select: { ...selectParams },
   }).catch(async (err) => {
     await event.context.logger.error({ err, msg: 'note.update failed' });
