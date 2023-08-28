@@ -150,7 +150,6 @@ onMounted(() => {
       :content="note.content || ''"
       :editable="!isFallbackMode && !!note"
       @update="throttledUpdate"
-      @show-details="showDetails"
     />
 
     <WorkspaceNoteEditorSkeleton

@@ -34,7 +34,6 @@ interface Props {
   content: string
   editable: boolean
   onUpdate: (content: string) => void
-  onShowDetails: () => void
 }
 const props = defineProps<Props>();
 
@@ -165,50 +164,6 @@ onBeforeUnmount(() => {
       <WorkspaceNoteFormatter :editor="editor" @hide="() => null" />
     </LazyFixedBox>
 
-    <button
-      class="note-editor__details-button"
-      aria-haspopup="dialog"
-      aria-controls="item-details"
-      aria-label="current note details"
-      :aria-expanded="!!detailsItem"
-      @click="onShowDetails"
-    >
-      details
-    </button>
-
     <EditorContent class="note-editor" :editor="editor" />
   </div>
 </template>
-
-<style lang="scss">
-.note-editor__details-button {
-  position: absolute;
-  top: 2rem;
-  right: 0;
-  z-index: 2;
-
-  font: inherit;
-  text-decoration: underline;
-  color: hsla(var(--text-color-hsl), 0.65);
-
-  padding: 0.5rem 0.75rem;
-
-  border: none;
-  outline-color: transparent;
-  background: transparent;
-  cursor: pointer;
-
-  transition: color .3s, text-shadow .3s;
-
-  @media (hover: hover) {
-    color: hsla(var(--text-color-hsl), 0.5);
-  }
-
-  &:is(:hover, :focus-visible) {
-    color: hsla(var(--text-color-hsl), 1);
-    text-shadow: 0 0 2rem hsla(var(--text-color-hsl), 1);
-
-    transition-duration: .05s;
-  }
-}
-</style>
