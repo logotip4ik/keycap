@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { withoutLeadingSlash } from 'ufo';
 import parseDuration from 'parse-duration';
 
 import type { RefToastInstance } from '~/composables/toasts';
@@ -16,20 +15,7 @@ const offlineStorage = useOfflineStorage();
 const currentItemForDetails = useCurrentItemForDetails();
 const mitt = useMitt();
 
-const notePath = computed(() => {
-  const paths = Array.isArray(route.params.folders)
-    ? [...route.params.folders, route.params.note]
-    : [route.params.note];
-
-  const pathString = withoutLeadingSlash(
-    paths
-      .map((string) => encodeURIComponent(string as string))
-      .join('/'),
-  );
-
-  return `/${route.params.user}/${pathString}`;
-});
-
+const notePath = computed(() => route.path.replace('/@', '/'));
 const noteApiPath = computed(() => route.path.replace(`/@${route.params.user}`, ''));
 
 const POLLING_TIME = parseDuration('2 minutes')!;
