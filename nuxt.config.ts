@@ -267,7 +267,7 @@ export default defineNuxtConfig({
     strategies: 'injectManifest',
     manifest: false,
     includeManifestIcons: false,
-    minify: true,
+    minify: true, // TODO: why this is not working ?
 
     client: {
       installPrompt: false,
