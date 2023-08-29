@@ -8,7 +8,6 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare && prisma generate",
-    "postbuild": "yarn terser -m -c --ecma 2020 ./.output/public/sw.js -o ./.output/public/sw.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "typecheck": "npx -p vue-tsc@latest -p typescript@latest vue-tsc --noEmit",
