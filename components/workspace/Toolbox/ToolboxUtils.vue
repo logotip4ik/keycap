@@ -91,6 +91,10 @@ const utils = [
 
         color: hsla(var(--text-color-hsl), 0.9);
 
+        &:focus-visible {
+          outline: 1px solid hsla(var(--selection-bg-color-hsl), 0.75);
+        }
+
         svg {
           color: hsla(var(--text-color-hsl), 0.9);
         }
