@@ -32,6 +32,7 @@ function handleReset() {
 
 onMounted(() => {
   inputEl.value?.focus();
+  inputEl.value?.scrollIntoView();
 });
 </script>
 
