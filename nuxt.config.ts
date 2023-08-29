@@ -265,7 +265,7 @@ export default defineNuxtConfig({
     strategies: 'injectManifest',
     manifest: false,
     includeManifestIcons: false,
-    minify: true, // TODO: why this is not working ?
+    minify: true, // TODO: why this is not working ? https://github.com/vite-pwa/nuxt/issues/62
 
     client: {
       installPrompt: false,
