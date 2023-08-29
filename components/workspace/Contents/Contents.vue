@@ -29,7 +29,6 @@ function smartUpdateState(newState: SidebarState) {
 
 // otherwise volar is yelling that state is not ref :(
 const data = {
-  ref: 'sidebar',
   dir: 'right' as const,
   name: 'contents',
   state: contentsState,
@@ -64,7 +63,7 @@ useTinykeys({
 </script>
 
 <template>
-  <WorkspaceSidebar v-bind="data">
+  <WorkspaceSidebar v-bind="data" ref="sidebar">
     <WorkspaceContentsHeader
       :state="contentsState"
       @update-state="smartUpdateState"

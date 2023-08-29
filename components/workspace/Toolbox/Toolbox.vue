@@ -29,7 +29,6 @@ function smartUpdateState(newState: SidebarState) {
 
 // otherwise volar is yelling that state is not ref :(
 const data = {
-  ref: 'sidebar',
   name: 'toolbox',
   class: 'toolbox',
   state: toolboxState,
@@ -64,7 +63,7 @@ useTinykeys({
 </script>
 
 <template>
-  <WorkspaceSidebar v-bind="data">
+  <WorkspaceSidebar v-bind="data" ref="sidebar">
     <!-- TODO: add fade ? animation when entering. Something like iphone quick settings menu -->
     <WorkspaceToolboxHeader
       :state="toolboxState"
