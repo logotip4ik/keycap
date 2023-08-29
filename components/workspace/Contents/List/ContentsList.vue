@@ -26,7 +26,6 @@ const folderApiPath = computed(() => {
 });
 
 const itemComponentResolved = ref(false);
-const itemInputComponentResolved = ref(false);
 const menuOptions = shallowReactive({
   item: null as FolderOrNote | null,
   target: null as HTMLElement | null,
@@ -221,29 +220,25 @@ onBeforeUnmount(() => {
       @contextmenu.self.prevent
       @click.self="menuOptions.target = null"
     >
-      <li
-        v-for="item in folderContents"
-        :key="item.id"
-        class="contents__list__item"
-      >
+      <template v-for="item in folderContents" :key="item.id">
         <Transition name="fade">
-          <Suspense v-if="item.creating || item.editing" @resolve="itemInputComponentResolved = true">
+          <li v-if="item.creating || item.editing" key="1">
             <LazyWorkspaceContentsListItemInput
               :item="item"
               :parent="folder"
             />
-          </Suspense>
+          </li>
 
-          <Suspense v-else @resolve="itemComponentResolved = true">
+          <li v-else key="2">
             <LazyWorkspaceContentsListItem
               :item="item"
               :parent="folder"
               :menu-target="menuOptions.target"
               @show-menu="showMenu($event, item)"
             />
-          </Suspense>
+          </li>
         </Transition>
-      </li>
+      </template>
     </TransitionGroup>
   </Transition>
 
