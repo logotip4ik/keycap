@@ -45,8 +45,7 @@ const crumbs = computed(() => {
         class="contents__header__name__crumb"
       >
         <LazyIconRoundChevronRight
-          v-if="i !== 0"
-          :key="crumb.href"
+          v-if="i"
           class="contents__header__name__crumb__icon"
         />
 
@@ -92,12 +91,13 @@ const crumbs = computed(() => {
     text-overflow: ellipsis;
     white-space: nowrap;
 
+    height: 100%;
+
     padding: 0;
     margin-right: calc(var(--pd-x) / 2);
 
     // idk how, but chrome was adding y scroll at certain screen width
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow: auto;
     scroll-snap-type: x proximity;
     scrollbar-width: thin;
     scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-background);
@@ -133,6 +133,12 @@ const crumbs = computed(() => {
 
         &:is(:hover, :focus-visible) {
           color: var(--text-color);
+
+          &:focus-visible {
+            border-radius: 0.125rem;
+            outline: 2px solid hsla(var(--selection-bg-color-hsl), 0.75);
+          }
+
           transition-duration: 0.1s;
         }
 
