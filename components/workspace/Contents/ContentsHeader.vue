@@ -95,8 +95,10 @@ const crumbs = computed(() => {
     padding: 0;
     margin-right: calc(var(--pd-x) / 2);
 
-    overflow: auto;
-    scroll-snap-type: x proximity;;
+    // idk how, but chrome was adding y scroll at certain screen width
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x proximity;
     scrollbar-width: thin;
     scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-background);
     &::-webkit-scrollbar {
@@ -118,8 +120,6 @@ const crumbs = computed(() => {
 
       margin: 0;
 
-      // idk how, but chrome was adding y scroll at certain screen width
-      overflow: hidden;
       scroll-snap-align: start;
 
       &__link {
