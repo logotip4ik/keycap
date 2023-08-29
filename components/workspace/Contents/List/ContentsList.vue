@@ -174,8 +174,7 @@ useTinykeys({
 
         if (isEmptyFolder || itemComponentResolved.value) {
           stop();
-          //                                     transition duration
-          setTimeout(() => preCreateItem(folder.value!), 375);
+          preCreateItem(folder.value!);
         }
       });
     }
