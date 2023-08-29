@@ -222,20 +222,30 @@ onBeforeUnmount(() => {
     >
       <template v-for="item in folderContents" :key="item.id">
         <Transition name="fade">
-          <li v-if="item.creating || item.editing" key="1">
+          <li
+            v-if="item.creating || item.editing"
+            key="1"
+            class="contents__list__item"
+          >
             <LazyWorkspaceContentsListItemInput
               :item="item"
               :parent="folder"
             />
           </li>
 
-          <li v-else key="2">
-            <LazyWorkspaceContentsListItem
-              :item="item"
-              :parent="folder"
-              :menu-target="menuOptions.target"
-              @show-menu="showMenu($event, item)"
-            />
+          <li
+            v-else
+            key="2"
+            class="contents__list__item"
+          >
+            <Suspense @resolve="itemComponentResolved = true">
+              <LazyWorkspaceContentsListItem
+                :item="item"
+                :parent="folder"
+                :menu-target="menuOptions.target"
+                @show-menu="showMenu($event, item)"
+              />
+            </Suspense>
           </li>
         </Transition>
       </template>
