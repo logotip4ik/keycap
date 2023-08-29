@@ -173,7 +173,7 @@ useTinykeys({
 
         if (isEmptyFolder || itemComponentResolved.value) {
           stop();
-          preCreateItem(folder.value!);
+          setTimeout(() => preCreateItem(folder.value!), 100);
         }
       });
     }
