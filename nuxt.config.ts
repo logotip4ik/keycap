@@ -1,7 +1,7 @@
 import UnheadVite from '@unhead/addons/vite';
 import parseDuration from 'parse-duration';
 import browserslistToEsbuild from 'browserslist-to-esbuild';
-import { resolve } from 'pathe';
+import { join, resolve } from 'pathe';
 import { isCI, isDevelopment } from 'std-env';
 
 import type { ComponentsDir } from 'nuxt/schema';
@@ -152,6 +152,30 @@ export default defineNuxtConfig({
       componentsDir.ignore ||= [];
       componentsDir.ignore.push('**/Old*/**');
       componentsDir.ignore.push('**/Old*');
+    },
+    'nitro:init': function (nitro) {
+      if (isDevelopment)
+        return;
+
+      nitro.hooks.hookOnce('compiled', async (nitro) => {
+        const terser = await import('terser');
+        const fsp = await import('node:fs/promises');
+
+        const { publicDir } = nitro.options.output;
+
+        const swPath = join(publicDir, 'sw.js');
+        const swSource = await fsp.readFile(swPath, 'utf-8');
+        const swMinified = await terser.minify(swSource, {
+          compress: true,
+          mangle: true,
+          ecma: 2020,
+          sourceMap: false,
+          ie8: false,
+          safari10: false,
+        });
+
+        await fsp.writeFile(swPath, swMinified.code!);
+      });
     },
   },
 
