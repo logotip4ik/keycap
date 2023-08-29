@@ -14,15 +14,12 @@ let prevAnimation: Animation | null;
 function handleKeyboardAppear() {
   const viewport = window.visualViewport;
 
-  if (!fixedBox.value || !viewport)
+  if (!fixedBox.value || !viewport || prevAnimation)
     return;
 
   const formatterPosition = window.innerHeight
       - viewport.offsetTop
       - viewport.height;
-
-  if (prevAnimation)
-    return;
 
   prevAnimation = fixedBox.value.animate([
     { transform: `translate3d(0,${-1 * prevFormatterPosition}px,0)` },
