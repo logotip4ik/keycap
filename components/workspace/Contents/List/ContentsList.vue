@@ -167,7 +167,6 @@ useTinykeys({
     }
     else if (!folder.value) {
       const stop = watch(() => [folder.value, itemComponentResolved.value], () => {
-        console.log(JSON.stringify(folder.value, null, 2));
         if (!folder.value)
           return;
 
@@ -183,6 +182,10 @@ useTinykeys({
       });
     }
   },
+});
+
+watchEffect(() => {
+  console.log(JSON.stringify(folder.value, null, 2));
 });
 
 onMounted(() => {
