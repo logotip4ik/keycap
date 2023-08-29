@@ -14,27 +14,28 @@ declare type ExtendableEvent = any;
 
 const cacheName = cacheNames.runtime;
 
-function buildStrategy(): Strategy {
-  class CacheNetworkRace extends Strategy {
-    _handle(request: Request, handler: StrategyHandler): Promise<Response | undefined> {
-      const fetchAndCachePutDone: Promise<Response> = handler.fetchAndCachePut(request);
-      const cacheMatchDone: Promise<Response | undefined> = handler.cacheMatch(request);
+class CacheNetworkRace extends Strategy {
+  _handle(request: Request, handler: StrategyHandler): Promise<Response | undefined> {
+    const fetchAndCachePutDone: Promise<Response> = handler.fetchAndCachePut(request);
+    const cacheMatchDone: Promise<Response | undefined> = handler.cacheMatch(request);
 
-      return new Promise((resolve, reject) => {
-        fetchAndCachePutDone.then((response) => response && resolve(response));
-        cacheMatchDone.then((response) => response && resolve(response));
+    return new Promise((resolve, reject) => {
+      fetchAndCachePutDone.then((response) => response && resolve(response));
+      cacheMatchDone.then((response) => response && resolve(response));
 
-        // Reject if both network and cache error or find no response.
-        Promise.allSettled([fetchAndCachePutDone, cacheMatchDone]).then((results) => {
-          const [fetchAndCachePutResult, cacheMatchResult] = results;
-          // @ts-expect-error taken from developer.chrome.com
-          if (fetchAndCachePutResult.status === 'rejected' && !cacheMatchResult.value)
-            reject(fetchAndCachePutResult.reason);
-        });
+      // Reject if both network and cache error or find no response.
+      Promise.allSettled([fetchAndCachePutDone, cacheMatchDone]).then((results) => {
+        const [fetchAndCachePutResult, cacheMatchResult] = results;
+        if (fetchAndCachePutResult.status === 'rejected'
+            && (cacheMatchResult.status === 'rejected' || !cacheMatchResult.value)
+        )
+          reject(fetchAndCachePutResult.reason);
       });
-    }
+    });
   }
+}
 
+function buildStrategy(): Strategy {
   return new CacheNetworkRace();
 }
 
