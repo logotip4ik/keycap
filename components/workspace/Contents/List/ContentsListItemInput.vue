@@ -3,7 +3,9 @@ interface Props { item: FolderOrNote; parent: FolderWithContents }
 const props = defineProps<Props>();
 
 const isFolder = 'root' in props.item;
-const name = ref<string>(props.item.name || '');
+
+const inputEl = ref<HTMLInputElement | null>(null);
+const name = ref(props.item.name || '');
 
 function handleSubmit() {
   if (props.item.creating) {
@@ -27,6 +29,10 @@ function handleReset() {
 
   updateAction(props.item, { editing: false, creating: false }, props.parent);
 }
+
+onMounted(() => {
+  inputEl.value?.focus();
+});
 </script>
 
 <template>
@@ -40,6 +46,7 @@ function handleReset() {
     </label>
     <input
       id="contentsListItemInput"
+      ref="inputEl"
       v-model="name"
       class="list-item__form__input"
       enterkeyhint="done"
