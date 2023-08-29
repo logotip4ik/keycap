@@ -97,7 +97,6 @@ onMounted(() => {
     ref="sidebar"
     class="sidebar"
     :class="{ 'sidebar--hidden': state === 'hidden', 'sidebar--right': dir === 'right' }"
-    :data-state="state"
     :tabindex="state === 'hidden' ? undefined : 0"
     @pointerleave="state === 'visible' && onUpdateState('hidden')"
   >
