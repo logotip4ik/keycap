@@ -167,10 +167,13 @@ useTinykeys({
     }
     else if (!folder.value) {
       const stop = watch(() => [folder.value, itemComponentResolved.value], () => {
+        console.log(JSON.stringify(folder.value, null, 2));
         if (!folder.value)
           return;
 
         const isEmptyFolder = folder.value.notes.length === 0 && folder.value.subfolders.length === 0;
+
+        console.log({ isEmptyFolder, resolved: itemComponentResolved.value });
 
         if (isEmptyFolder || itemComponentResolved.value) {
           stop();
