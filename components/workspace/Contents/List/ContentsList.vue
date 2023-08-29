@@ -174,8 +174,8 @@ useTinykeys({
 
         if (isEmptyFolder || itemComponentResolved.value) {
           stop();
-          //                                                   animation duration
-          setTimeout(() => preCreateItem(folder.value!), isEmptyFolder ? 375 : 1);
+          //                                     transition duration
+          setTimeout(() => preCreateItem(folder.value!), 375);
         }
       });
     }
