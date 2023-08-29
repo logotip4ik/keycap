@@ -75,6 +75,7 @@ useTinykeys({
 
     <WorkspaceContentsList
       :state="contentsState"
+      @update-state="smartUpdateState"
     />
   </WorkspaceSidebar>
 </template>
