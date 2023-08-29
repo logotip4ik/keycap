@@ -14,8 +14,6 @@ declare type ExtendableEvent = any;
 
 const cacheName = cacheNames.runtime;
 
-const wait = (t: number) => new Promise((resolve) => setTimeout(resolve, t));
-
 function buildStrategy(): Strategy {
   class CacheNetworkRace extends Strategy {
     _handle(request: Request, handler: StrategyHandler): Promise<Response | undefined> {
@@ -24,7 +22,7 @@ function buildStrategy(): Strategy {
 
       return new Promise((resolve, reject) => {
         fetchAndCachePutDone.then((response) => response && resolve(response));
-        cacheMatchDone.then((response) => response && wait(100).then(() => resolve(response)));
+        cacheMatchDone.then((response) => response && resolve(response));
 
         // Reject if both network and cache error or find no response.
         Promise.allSettled([fetchAndCachePutDone, cacheMatchDone]).then((results) => {
