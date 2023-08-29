@@ -165,6 +165,7 @@ $breakpoint-one: $sidebar-breakpoint-one;
     0px 0px 80px -20px rgba(var(--base-shadow-color), 0.05)
   ;
 
+  will-change: transform;
   transform-origin: left top;
   transition: transform var(--sidebar-tr-duration) var(--sidebar-tr-ease);
 
@@ -199,7 +200,7 @@ $breakpoint-one: $sidebar-breakpoint-one;
   }
 
   &--hidden {
-    transform: scale(var(--sidebar-hidden-scale)) translateX(calc(-1 * var(--dir) * var(--sidebar-width)));
+    transform: scale3d(var(--sidebar-hidden-scale), var(--sidebar-hidden-scale), 1) translate3d(calc(-1 * var(--dir) * var(--sidebar-width)), 0, 0);
   }
 
   hr {
