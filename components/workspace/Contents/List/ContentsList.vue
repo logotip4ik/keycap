@@ -3,7 +3,10 @@ import parseDuration from 'parse-duration';
 
 import type { SidebarState } from '~/composables/sidebars';
 
-interface Props { state: SidebarState}
+interface Props {
+  state: SidebarState
+  onUpdateState: (newState: SidebarState) => any
+}
 const props = defineProps<Props>();
 
 const route = useRoute();
@@ -22,6 +25,8 @@ const folderApiPath = computed(() => {
     : '';
 });
 
+const itemComponentResolved = ref(false);
+const itemInputComponentResolved = ref(false);
 const menuOptions = shallowReactive({
   item: null as FolderOrNote | null,
   target: null as HTMLElement | null,
@@ -148,10 +153,32 @@ mitt.on('details:show', () => {
 });
 
 useTinykeys({
-  [shortcuts.new]: (event) => {
+  [shortcuts.new]: async (event) => {
     event.preventDefault();
 
-    if (folder.value) preCreateItem(folder.value);
+    if (props.state === 'hidden') {
+      props.onUpdateState('visible');
+
+      await nextTick();
+    }
+
+    if (folder.value && !folder.value.notes.some((note) => note.creating)) {
+      preCreateItem(folder.value);
+    }
+    else if (!folder.value) {
+      const stop = watch(() => [folder.value, itemComponentResolved.value], () => {
+        if (!folder.value)
+          return;
+
+        const isEmptyFolder = folder.value.notes.length === 0 && folder.value.subfolders.length === 0;
+
+        if (isEmptyFolder || itemComponentResolved.value) {
+          stop();
+          //                                                   animation duration
+          setTimeout(() => preCreateItem(folder.value!), isEmptyFolder ? 375 : 0);
+        }
+      });
+    }
   },
 });
 
@@ -201,15 +228,15 @@ onBeforeUnmount(() => {
         class="contents__list__item"
       >
         <Transition name="fade">
-          <Suspense>
+          <Suspense v-if="item.creating || item.editing" @resolve="itemInputComponentResolved = true">
             <LazyWorkspaceContentsListItemInput
-              v-if="item.creating || item.editing"
               :item="item"
               :parent="folder"
             />
+          </Suspense>
 
+          <Suspense v-else @resolve="itemComponentResolved = true">
             <LazyWorkspaceContentsListItem
-              v-else
               :item="item"
               :parent="folder"
               :menu-target="menuOptions.target"
