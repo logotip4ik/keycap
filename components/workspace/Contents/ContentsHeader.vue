@@ -79,8 +79,8 @@ const crumbs = computed(() => {
   align-items: center;
 
   &__name {
-      --scrollbar-thumb-color: hsla(var(--text-color-hsl), 0.175);
-  --scrollbar-background: var(--surface-color);
+    --scrollbar-thumb-color: hsla(var(--text-color-hsl), 0.175);
+    --scrollbar-background: var(--surface-color);
 
     display: flex;
     justify-content: flex-start;
