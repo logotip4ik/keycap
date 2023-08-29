@@ -59,6 +59,7 @@ const user = useUser();
     background-color: hsla(var(--surface-color-hsl), 0.95);
 
     cursor: pointer;
+    will-change: transform;
     transition: transform var(--sidebar-tr-duration) var(--sidebar-tr-ease);
 
     @supports (backdrop-filter: blur(1px)) {
@@ -97,7 +98,7 @@ const user = useUser();
     }
 
     &--exposed {
-      transform: translate(calc(var(--dir) * var(--sidebar-width) + 1px), 1px) scale(calc(2 - var(--sidebar-hidden-scale)));
+      transform: translate3d(calc(var(--dir) * var(--sidebar-width) + 1px), 1px, 0) scale3d(calc(2 - var(--sidebar-hidden-scale)), calc(2 - var(--sidebar-hidden-scale)), 1);
     }
 
     &__icon {
