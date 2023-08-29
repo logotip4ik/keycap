@@ -1,7 +1,8 @@
 <script setup lang="ts">
 function handleClick() {
-  const { data: folder } = useNuxtData('folder');
-  if (!folder.value)
+  const { data: folder } = useNuxtData<FolderWithContents>('folder');
+
+  if (!folder.value || folder.value.notes.some((note) => note.creating))
     return;
 
   preCreateItem(folder.value);
