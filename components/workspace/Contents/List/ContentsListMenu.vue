@@ -99,8 +99,6 @@ function renameItem() {
   updateItem(props.item, { editing: true }, props.parent);
 
   props.onClose();
-
-  focusItemInput();
 }
 
 function showDetails() {

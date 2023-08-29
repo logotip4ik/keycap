@@ -32,22 +32,6 @@ export function preCreateItem(folderToAppend: FolderWithContents, initialValues?
     Object.assign(noteValues, initialValues);
 
   folderToAppend.notes.unshift(noteValues);
-
-  focusItemInput();
-}
-
-export function focusItemInput(time: number = 1) {
-  if (import.meta.server)
-    return;
-
-  setTimeout(() => {
-    const input = document.querySelector('#contentsListItemInput') as HTMLInputElement | null;
-
-    if (!input)
-      return focusItemInput(100);
-
-    input.focus();
-  }, time);
 }
 
 export function getCurrentFolderPath() {
