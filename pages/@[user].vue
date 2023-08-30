@@ -14,12 +14,10 @@ const { shortcuts } = useAppConfig();
 
 const currentNoteState = useCurrentNoteState();
 const currentItemForDetails = useCurrentItemForDetails();
-const isSmallScreen = inject(IsSmallScreenKey)!;
 
 const isShowingSearch = ref(false);
 
 const isNoteEmpty = computed(() => !route.params.note || route.params.note === BLANK_NOTE_NAME);
-const shouldShowContents = computed(() => !isSmallScreen || isNoteEmpty.value);
 
 const currentRouteName = computed(() => {
   const folders = route.params.folders;
