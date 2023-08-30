@@ -1,6 +1,20 @@
 # Changelog
 
 
+## v2.4.1
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v2.4.0...v2.4.1)
+
+### 🏡 Chore
+
+- **release:** V2.4.0 ([aa969d6](https://github.com/logotip4ik/keycap/commit/aa969d6))
+- Update deps ([186b151](https://github.com/logotip4ik/keycap/commit/186b151))
+
+### ❤️ Contributors
+
+- Github-actions <github-actions@github.com>
+- Logotip4ik ([@betterqualityassuranceuser](http://github.com/betterqualityassuranceuser))
+
 ## v2.4.0
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v2.3.9...v2.4.0)
