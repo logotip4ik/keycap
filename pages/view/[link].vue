@@ -62,7 +62,7 @@ function formatDate(date: string | Date) {
   position: relative;
   isolation: isolate;
 
-  width: 95%;
+  width: 91.25%;
   height: 100%;
 
   max-width: 1200px;
