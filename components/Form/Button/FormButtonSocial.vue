@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { OAuthProvider } from 'types/server';
+import type { OAuthProvider } from '~/types/server';
 
 import { LazyIconGithub, LazyIconGoogle } from '#components';
 
