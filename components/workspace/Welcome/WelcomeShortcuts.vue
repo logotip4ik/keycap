@@ -45,6 +45,10 @@ function humanizeShortcut(shortcut: string) {
   margin-bottom: -5vh;
   margin-bottom: -5svh;
 
+  @media (width <= $breakpoint-tablet) {
+    display: none;
+  }
+
   &__item {
     font-size: min(2.5vw, 1.175rem);
     text-align: center;
