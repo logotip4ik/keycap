@@ -13,7 +13,7 @@
 @use "sass:math";
 
 .skeleton {
-  padding: 10vh 1.5rem 25vh;
+  padding: 20vh 1.5rem 25vh;
 
   &__heading,
   &__text {
@@ -49,7 +49,7 @@
   }
 
   @media (max-width: $breakpoint-tablet) {
-    padding: 15.5vh 1rem 1rem;
+    padding: 19vh 1rem 1rem;
   }
 }
 </style>
