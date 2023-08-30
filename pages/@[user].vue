@@ -163,34 +163,4 @@ onMounted(() => {
     }
   }
 }
-
-.search-fade-leave-active,
-.search-fade-leave-active .search {
-  transition: opacity 0.25s ease, transform 0.25s ease;
-}
-
-.search-fade-enter-from,
-.search-fade-leave-to {
-  opacity: 0;
-
-  .search {
-    transform: scale(0.95);
-  }
-}
-
-@media (width <= $breakpoint-tablet) {
-  .search-fade-enter-active {
-    transition: opacity 0.25s ease;
-  }
-
-  .search-fade-leave-active {
-    transition-duration: 0s;
-  }
-
-  .search-fade-leave-to {
-    .search {
-      transform: none;
-    }
-  }
-}
 </style>
