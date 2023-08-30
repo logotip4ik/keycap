@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { debounce } from 'perfect-debounce';
 
-import type Sidebar from '../Sidebar/Sidebar.vue';
+import type SidebarVue from '../Sidebar/Sidebar.vue';
 import type { SidebarState } from '~/composables/sidebars';
 
-const sidebar = shallowRef<InstanceType<typeof Sidebar>>();
+const sidebar = shallowRef<InstanceType<typeof SidebarVue>>();
 
 const { shortcuts } = useAppConfig();
 const contentsState = useContentsSidebarState();
