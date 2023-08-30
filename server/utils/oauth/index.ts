@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { isProduction } from 'std-env';
 import { withQuery } from 'ufo';
+import parseDuration from 'parse-duration';
 
 import type { Prisma } from '@prisma/client';
 import type { H3Event } from 'h3';
@@ -52,9 +53,9 @@ export function sendOAuthRedirect(event: H3Event, provider: OAuthProviderType) {
   const protocol = isProduction ? 'https://' : 'http://';
 
   setCookie(event, 'state', state, {
-    secure: true,
+    path: '/',
     httpOnly: true,
-    sameSite: 'lax',
+    maxAge: parseDuration('0.75 hour', 's'),
   });
 
   let url: string;
