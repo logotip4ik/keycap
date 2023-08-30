@@ -36,8 +36,15 @@ const data = {
 };
 
 if (import.meta.client) {
+  let prevWindowWidth = window.innerWidth;
+
   onBeforeUnmount(
-    on(window, 'resize', debounce(hideSidebarsIfNeeded, 200)),
+    on(window, 'resize', debounce(() => {
+      if (prevWindowWidth !== window.innerWidth)
+        return hideSidebarsIfNeeded();
+
+      prevWindowWidth = window.innerWidth;
+    }, 200)),
   );
 }
 
