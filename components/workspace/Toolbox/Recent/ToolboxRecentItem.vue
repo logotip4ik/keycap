@@ -2,11 +2,24 @@
 interface Props { item: NoteMinimal }
 const props = defineProps<Props>();
 
+const isSmallScreen = inject(IsSmallScreenKey);
+const toolboxSidebarState = useToolboxSidebarState();
+
 const itemHref = computed(() => generateItemPath(props.item));
+
+function unpinIfNeeded() {
+  if (isSmallScreen)
+    toolboxSidebarState.value = 'hidden';
+}
 </script>
 
 <template>
-  <NuxtLink :href="itemHref" class="recent-item">
+  <NuxtLink
+    :href="itemHref"
+    class="recent-item"
+    :aria-label="`open note '${item.name}'`"
+    @click="unpinIfNeeded"
+  >
     <slot />
   </NuxtLink>
 </template>
