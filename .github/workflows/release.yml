@@ -40,8 +40,8 @@ jobs:
 
       - name: Commit changes
         run: |
-          git config --local user.email "noreply@github.com"
-          git config --local user.name "${{ github.actor }}"
+          git config --local user.email "github-actions@github.com"
+          git config --local user.name "github-actions"
           git commit -a -m "chore: apply fixes" || echo "nothing to update"
           git pull
 
@@ -71,8 +71,8 @@ jobs:
 
       - name: Bump versions
         run: |
-          git config --local user.email noreply@github.com
-          git config --local user.name ${{ github.actor }}
+          git config --local user.email "github-actions@github.com"
+          git config --local user.name "github-actions"
           git pull
 
           npx changelogen@latest --release
