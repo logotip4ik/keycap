@@ -29,7 +29,7 @@ const isSmallScreen = inject(IsSmallScreenKey);
   padding: 1.75rem;
 
   &__title {
-    font-size: min(5.75vw, 2.75rem);
+    font-size: min(5vw, 3rem);
     max-width: 33ch;
   }
 }
