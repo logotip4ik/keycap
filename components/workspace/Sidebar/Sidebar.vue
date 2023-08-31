@@ -217,4 +217,10 @@ $breakpoint-one: $sidebar-breakpoint-one;
     )
   }
 }
+
+@media print {
+  .sidebar, .sidebar-spacer {
+    display: none;
+  }
+}
 </style>
