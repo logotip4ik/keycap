@@ -108,7 +108,7 @@ onMounted(() => {
 $breakpoint-one: $sidebar-breakpoint-one;
 
 :root {
-  --sidebar-width: min(33.3vw, 25rem);
+  --sidebar-width: min(33.3vw, 26rem);
   --sidebar-tr-duration: .375s;
   --sidebar-tr-ease: cubic-bezier(0.16, 1, 0.3, 1); // expo
 
