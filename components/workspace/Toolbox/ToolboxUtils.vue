@@ -59,7 +59,7 @@ function transitionHeight() {
   utilsEl.value?.$el.animate([
     { height: `${prevHeight}px` },
     { height: `${currentHeight}px` },
-  ], { duration: 225, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' });
+  ], { duration: 375, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' });
 }
 </script>
 
