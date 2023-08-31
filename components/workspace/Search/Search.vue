@@ -91,28 +91,29 @@ watch([searchInput, isLoadingResults, results], debounce(([value, isLoading, res
 
 watch(searchInput, debounce(handleSearchInput, 100));
 
-let prevHeight = 0;
+let prevHeight: number;
 let prevAnimation: Animation | null;
-useResizeObserver(searchEl, (entries) => {
-  const entry = entries[0];
-  const borderBoxSize = entry.borderBoxSize![0];
+function rememberHeight() {
+  if (searchEl.value)
+    prevHeight = searchEl.value.clientHeight;
+}
 
-  const currentHeight = borderBoxSize.blockSize;
+function animateHeight() {
+  if (!searchEl.value)
+    return;
 
-  if (prevHeight && currentHeight && !prevAnimation) {
-    prevAnimation = entry.target.animate(
-      [
-        { height: `${prevHeight}px` },
-        { height: `${currentHeight}px` },
-      ],
-      { duration: 225, easing: 'cubic-bezier(0.33, 1, 0.68, 1)' },
-    );
+  if (prevAnimation)
+    prevAnimation.cancel();
 
-    prevAnimation.addEventListener('finish', () => prevAnimation = null);
-  }
+  const currentHeight = searchEl.value.clientHeight;
 
-  prevHeight = currentHeight;
-});
+  prevAnimation = searchEl.value.animate([
+    { height: `${prevHeight}px` },
+    { height: `${currentHeight}px` },
+  ], { duration: 225, easing: 'cubic-bezier(0.33, 1, 0.68, 1)' });
+
+  prevAnimation.addEventListener('finish', () => prevAnimation = null);
+}
 
 useTinykeys({ Escape: handleCancel });
 </script>
@@ -153,7 +154,13 @@ useTinykeys({ Escape: handleCancel });
         </button>
       </form>
 
-      <Transition name="fade">
+      <Transition
+        name="fade"
+        @enter="animateHeight"
+        @leave="animateHeight"
+        @before-enter="rememberHeight"
+        @before-leave="rememberHeight"
+      >
         <div
           v-if="isResultsEmpty"
           class="search__no-results"
@@ -169,6 +176,10 @@ useTinykeys({ Escape: handleCancel });
           tag="ul"
           name="list"
           class="search__results"
+          @enter="animateHeight"
+          @leave="animateHeight"
+          @before-enter="rememberHeight"
+          @before-leave="rememberHeight"
         >
           <li
             v-for="(item, idx) in results"
