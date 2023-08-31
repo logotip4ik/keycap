@@ -44,6 +44,8 @@ export async function assertNoOAuthErrors(event: H3Event) {
 
     throw createError({ statusCode: 422 });
   }
+
+  deleteCookie(event, 'state');
 }
 
 export function sendOAuthRedirect(event: H3Event, provider: OAuthProviderType) {
