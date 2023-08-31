@@ -108,7 +108,7 @@ export async function updateOrCreateUserFromSocialAuth(normalizedUser: Normalize
   const user = await prisma.$transaction(async (tx) => {
     let dbUser = await tx.user.findFirst({
       select: defaultUserSelect,
-      where: { email: normalizedUser.email },
+      where: { username: normalizedUser.username },
     });
 
     if (dbUser) {
