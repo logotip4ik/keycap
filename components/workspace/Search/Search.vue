@@ -209,7 +209,6 @@ onMounted(() => {
       20px 40px 80px rgba(0, 0, 0, 0.05);
 
   overflow: hidden;
-  will-change: height;
 
   @supports (backdrop-filter: blur(1px)) {
     backdrop-filter: blur(5px);
