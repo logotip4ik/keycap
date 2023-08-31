@@ -36,9 +36,6 @@ let pollingTimer: NodeJS.Timeout;
 let abortControllerGet: AbortController | null;
 
 const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefined>('folder', async () => {
-  if (import.meta.server || props.state === 'hidden')
-    return;
-
   clearTimeout(pollingTimer);
 
   abortControllerGet?.abort();
@@ -130,13 +127,6 @@ watch(() => props.state, (state, oldState) => {
     return refresh();
 }, { immediate: import.meta.client });
 
-if (import.meta.client) {
-  onBeforeUnmount(on(document, 'visibilitychange', () => {
-    if (document.visibilityState === 'visible')
-      refresh();
-  }));
-};
-
 mitt.on('cache:populated', () => {
   const folderPath = `/${route.params.user}${folderApiPath.value}`;
 
@@ -179,6 +169,13 @@ useTinykeys({
     }
   },
 });
+
+if (import.meta.client) {
+  onBeforeUnmount(on(document, 'visibilitychange', () => {
+    if (document.visibilityState === 'visible' && props.state !== 'hidden')
+      refresh();
+  }));
+};
 
 onMounted(() => {
   setTimeout(() => {
