@@ -120,7 +120,7 @@ async function handleError(error: Error) {
 
 watch(() => props.state, (state, oldState) => {
   if (
-    sidebarVisibleStates.includes(state)
+    state !== 'hidden'
     && (!oldState || oldState === 'hidden')
     && !folder.value
   )

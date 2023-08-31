@@ -24,7 +24,7 @@ const { data: recent, refresh } = await useAsyncData('recent', async () => {
 });
 
 const stop = watch(() => props.state, (state) => {
-  if (sidebarVisibleStates.includes(state)) {
+  if (state !== 'hidden') {
     setTimeout(() => {
       refresh();
       stop();
