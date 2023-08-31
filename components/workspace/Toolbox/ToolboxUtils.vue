@@ -3,7 +3,8 @@ import { LazyIconInfoOutline, LazyIconSearchRounded } from '#components';
 
 const detailsItem = useCurrentItemForDetails();
 
-const utils = [
+interface Util { text: string; label: string; icon: any; action: () => any; buttonAttrs?: Record<string, any> }
+const utils: Array<Util> = [
   {
     text: 'Open Search',
     label: 'open quick search',
@@ -12,20 +13,20 @@ const utils = [
       useMitt().emit('search:show');
     },
   },
-  {
-    text: 'Show Item Details',
-    label: 'open item details popup',
-    icon: LazyIconInfoOutline,
-    buttonAttrs: {
-      ariaHaspopup: 'dialog',
-      ariaControls: 'item-details',
-      ariaLabel: 'current note details',
-      ariaExpanded: !!detailsItem.value,
-    },
-    action: () => {
-      useMitt().emit('details:show');
-    },
-  },
+  // {
+  //   text: 'Show Item Details',
+  //   label: 'open item details popup',
+  //   icon: LazyIconInfoOutline,
+  //   buttonAttrs: {
+  //     ariaHaspopup: 'dialog',
+  //     ariaControls: 'item-details',
+  //     ariaLabel: 'current note details',
+  //     ariaExpanded: !!detailsItem.value,
+  //   },
+  //   action: () => {
+  //     useMitt().emit('details:show');
+  //   },
+  // },
 ];
 </script>
 
