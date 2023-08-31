@@ -4,11 +4,11 @@ import { debounce } from 'perfect-debounce';
 import type SidebarVue from '../Sidebar/Sidebar.vue';
 import type { SidebarState } from '~/composables/sidebars';
 
-const sidebar = shallowRef<InstanceType<typeof SidebarVue>>();
-
 const { shortcuts } = useAppConfig();
 const toolboxState = useToolboxSidebarState();
 const contentsState = useContentsSidebarState();
+
+const sidebar = shallowRef<InstanceType<typeof SidebarVue>>();
 
 function updateState(newState: SidebarState) {
   toolboxState.value = newState;
