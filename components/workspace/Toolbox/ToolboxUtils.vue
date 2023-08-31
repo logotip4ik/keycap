@@ -1,37 +1,79 @@
 <script setup lang="ts">
 import { LazyIconInfoOutline, LazyIconSearchRounded } from '#components';
 
+const route = useRoute();
 const detailsItem = useCurrentItemForDetails();
+const utilsEl = shallowRef<ComponentPublicInstance<HTMLUListElement> | null>(null);
 
-interface Util { text: string; label: string; icon: any; action: () => any; buttonAttrs?: Record<string, any> }
-const utils: Array<Util> = [
-  {
-    text: 'Open Search',
-    label: 'open quick search',
-    icon: LazyIconSearchRounded,
-    action: () => {
-      useMitt().emit('search:show');
-    },
+interface Util {
+  text: string
+  label: string
+  icon: any
+  buttonAttrs?: Record<string, any>
+  action: () => any
+}
+
+const searchUtil: Util = {
+  text: 'Open Search',
+  label: 'open quick search',
+  icon: LazyIconSearchRounded,
+  action: () => {
+    useMitt().emit('search:show');
   },
-  // {
-  //   text: 'Show Item Details',
-  //   label: 'open item details popup',
-  //   icon: LazyIconInfoOutline,
-  //   buttonAttrs: {
-  //     ariaHaspopup: 'dialog',
-  //     ariaControls: 'item-details',
-  //     ariaLabel: 'current note details',
-  //     ariaExpanded: !!detailsItem.value,
-  //   },
-  //   action: () => {
-  //     useMitt().emit('details:show');
-  //   },
-  // },
-];
+};
+const detailsUtil = computed((): Util => ({
+  text: 'Show Item Details',
+  label: 'open item details popup',
+  icon: LazyIconInfoOutline,
+  buttonAttrs: {
+    'aria-haspopup': 'dialog',
+    'aria-controls': 'item-details',
+    'aria-label': 'current note details',
+    'aria-expanded': !!detailsItem.value,
+  },
+  action: () => {
+    useMitt().emit('details:show');
+  },
+}));
+
+const utils = computed<Array<Util>>(() => {
+  const utils = [searchUtil, detailsUtil.value];
+
+  if (!route.params.note || route.params.note === BLANK_NOTE_NAME)
+    utils.pop();
+
+  return utils;
+});
+
+let prevHeight: number;
+function rememberHeight() {
+  if (!utilsEl.value)
+    return;
+
+  prevHeight = utilsEl.value.$el.clientHeight;
+}
+
+function transitionHeight() {
+  const currentHeight = utilsEl.value?.$el.clientHeight;
+
+  utilsEl.value?.$el.animate([
+    { height: `${prevHeight}px` },
+    { height: `${currentHeight}px` },
+  ], { duration: 225, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' });
+}
 </script>
 
 <template>
-  <ul class="toolbox__utils">
+  <TransitionGroup
+    ref="utilsEl"
+    tag="ul"
+    name="list"
+    class="toolbox__utils"
+    @enter="transitionHeight"
+    @leave="transitionHeight"
+    @before-enter="rememberHeight"
+    @before-leave="rememberHeight"
+  >
     <li
       v-for="(util, idx) in utils"
       :key="idx"
@@ -48,7 +90,7 @@ const utils: Array<Util> = [
         {{ util.text }}
       </button>
     </li>
-  </ul>
+  </TransitionGroup>
 </template>
 
 <style lang="scss">
