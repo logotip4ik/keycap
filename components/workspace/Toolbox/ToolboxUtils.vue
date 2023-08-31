@@ -98,6 +98,7 @@ function transitionHeight() {
   margin: var(--pd-y) 0 calc(var(--pd-y) / 2);
   padding: 0;
 
+  will-change: height;
   list-style-type: none;
 
   &__item {
