@@ -1491,7 +1491,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@esbuild-kit/core-utils@npm:^3.0.0":
+"@esbuild-kit/core-utils@npm:^3.0.0, @esbuild-kit/core-utils@npm:^3.2.2":
   version: 3.2.2
   resolution: "@esbuild-kit/core-utils@npm:3.2.2"
   dependencies:
@@ -3937,71 +3937,71 @@ __metadata:
   linkType: hard
 
 "@unhead/addons@npm:^1.3.9":
-  version: 1.3.9
-  resolution: "@unhead/addons@npm:1.3.9"
+  version: 1.4.1
+  resolution: "@unhead/addons@npm:1.4.1"
   dependencies:
-    "@rollup/pluginutils": ^5.0.3
-    "@unhead/schema": 1.3.9
-    "@unhead/shared": 1.3.9
+    "@rollup/pluginutils": ^5.0.4
+    "@unhead/schema": 1.4.1
+    "@unhead/shared": 1.4.1
     magic-string: ^0.30.3
-    mlly: ^1.4.0
+    mlly: ^1.4.1
     ufo: ^1.3.0
     unplugin: ^1.4.0
     unplugin-ast: ^0.8.2
-  checksum: 93755cae7230e1c9f74d397d06d952880d86b2109aa2e551005fedc001fbee13a66690e158929fe3703d824a8d3c2379cfae87c9b847007b96bba2fe46438c98
+  checksum: b5b8a996e89e5e0412893d6d9e759c0fc43be616787aa8155ae722a49374f8dd13f62416cc0ff9ac4744120f35b929bf0a11616c6cf2f76ab8efc6a585a12f74
   languageName: node
   linkType: hard
 
-"@unhead/dom@npm:1.3.9, @unhead/dom@npm:^1.3.7":
-  version: 1.3.9
-  resolution: "@unhead/dom@npm:1.3.9"
+"@unhead/dom@npm:1.4.1, @unhead/dom@npm:^1.3.7":
+  version: 1.4.1
+  resolution: "@unhead/dom@npm:1.4.1"
   dependencies:
-    "@unhead/schema": 1.3.9
-    "@unhead/shared": 1.3.9
-  checksum: 15fa804f5855a380f78a21c4771e7e6182fcd152c58982ea65b042819eb5151dd83af6ca090abf1e7b3cd9bff250002670ecd40f7310546ad98c3ebf78b6b702
+    "@unhead/schema": 1.4.1
+    "@unhead/shared": 1.4.1
+  checksum: 89d41477c1157e2bbfc1071c90e105b4012f78926f51eff7654d18a02aec21aa0262dc2f0e07d25f6684caea9388e570802ceb38ab2eb19a73d86db2f64678aa
   languageName: node
   linkType: hard
 
-"@unhead/schema@npm:1.3.9":
-  version: 1.3.9
-  resolution: "@unhead/schema@npm:1.3.9"
+"@unhead/schema@npm:1.4.1":
+  version: 1.4.1
+  resolution: "@unhead/schema@npm:1.4.1"
   dependencies:
     hookable: ^5.5.3
     zhead: ^2.0.10
-  checksum: a26fe24fe88f40b08ecd26d2da1bc7063c97f967d1528459afb7f00c75a9c8aebdfdeb458a6e0b0785c500cfc1d4b888f90c2a7eb2feceefa4ce5bedc401d9dc
+  checksum: 2a3449e9408a1be21b9c3f829ad4b6d66fc0b31ccd3c4a76a118b47fb424137b855412d178659e5f2ebfcd0832286c8aebf3f8397dd7749f51a5c8bcdd477e73
   languageName: node
   linkType: hard
 
-"@unhead/shared@npm:1.3.9":
-  version: 1.3.9
-  resolution: "@unhead/shared@npm:1.3.9"
+"@unhead/shared@npm:1.4.1":
+  version: 1.4.1
+  resolution: "@unhead/shared@npm:1.4.1"
   dependencies:
-    "@unhead/schema": 1.3.9
-  checksum: 54aeea2ceca74d92650148131ded040244dd47e29d852aa7b85c73e92ea64babbc53d5d085f24c2f2c5fe55a72264d9f2150d4e094309ffb288e993379ae7aad
+    "@unhead/schema": 1.4.1
+  checksum: 9f24f5e92d62b70aa86260d5648923e8acca778c4772b66c8cd499d46ddf050985bf3583099ad5a75ff3e3d2aa0eb7fa4f5b74f5b036f184bc199cce23fd3c26
   languageName: node
   linkType: hard
 
 "@unhead/ssr@npm:^1.3.7":
-  version: 1.3.9
-  resolution: "@unhead/ssr@npm:1.3.9"
+  version: 1.4.1
+  resolution: "@unhead/ssr@npm:1.4.1"
   dependencies:
-    "@unhead/schema": 1.3.9
-    "@unhead/shared": 1.3.9
-  checksum: d67f605cc1b7a0c687589bae248c04c94216385ce1320d492b5d752cbdd76f4bb71e0b354e651d8ca7c3c6c7c2830e3dd8449e6d13aee6e2bfbecbd5e9494233
+    "@unhead/schema": 1.4.1
+    "@unhead/shared": 1.4.1
+  checksum: 80abba7d385030276afd2acfa0e761408d6d67336c188cb88f82aebfdda431a9854f5bba2d83d3b5c5e875c0c61cd48012b3edfa0237a983b161751d0f7938d5
   languageName: node
   linkType: hard
 
 "@unhead/vue@npm:^1.3.7":
-  version: 1.3.9
-  resolution: "@unhead/vue@npm:1.3.9"
+  version: 1.4.1
+  resolution: "@unhead/vue@npm:1.4.1"
   dependencies:
-    "@unhead/schema": 1.3.9
-    "@unhead/shared": 1.3.9
+    "@unhead/schema": 1.4.1
+    "@unhead/shared": 1.4.1
     hookable: ^5.5.3
-    unhead: 1.3.9
+    unhead: 1.4.1
   peerDependencies:
     vue: ">=2.7 || >=3"
-  checksum: 386a6b343227714f7fc9cc9042b5b6e69f335a59a4c9fbe90e9e8f4544a91a7c0056fe97582acec4155d25b79b9e7e7dc4d2d50d14c87e324c765d44d3a9bfac
+  checksum: 872ce7b644dfc930ba8c8b24fdbcfb7992b0a8a12284b93be858bf957843e35b51d2af7637551562763686729ac5bae28ac4285b7391431a527f7cb0e459a0bd
   languageName: node
   linkType: hard
 
@@ -6326,9 +6326,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.477":
-  version: 1.4.506
-  resolution: "electron-to-chromium@npm:1.4.506"
-  checksum: 449966efca7ab56a308726eec952d0e5a673c12de23921da5336698adb49bfcc1e4e04f3e24c144db9ba8d40023c95bbe8a44a50eb709ddf55984884539eea91
+  version: 1.4.508
+  resolution: "electron-to-chromium@npm:1.4.508"
+  checksum: 4475eb18f5805d43f84d9542364045a39b183a14cd9f4626e0951ea61d0fa4f84a5ed579c2c32189f9af4a27a31041d09fed78f60930ac36b3baa08547dd3aa6
   languageName: node
   linkType: hard
 
@@ -7654,9 +7654,9 @@ __metadata:
   linkType: hard
 
 "fraction.js@npm:^4.2.0":
-  version: 4.3.4
-  resolution: "fraction.js@npm:4.3.4"
-  checksum: 26fdecf114e3b693c760d3b2d5447f8ba9e815991ca7c7cdb930156780793b87f10936979a890b389676d960d7cd026273da9a44a6e20c12e3c4fd282a026ed3
+  version: 4.3.5
+  resolution: "fraction.js@npm:4.3.5"
+  checksum: 4c4b98ce56500a78a0f886d31c7a0d60822153cc851f1f7f9ec968af1c4f7750077534f5a3ea1f8d09b0715e566fe22507a2abf7e3122bbbf21e2f7ae4127420
   languageName: node
   linkType: hard
 
@@ -8995,15 +8995,15 @@ __metadata:
   linkType: hard
 
 "joi@npm:^17.7.0":
-  version: 17.10.0
-  resolution: "joi@npm:17.10.0"
+  version: 17.10.1
+  resolution: "joi@npm:17.10.1"
   dependencies:
     "@hapi/hoek": ^9.0.0
     "@hapi/topo": ^5.0.0
     "@sideway/address": ^4.1.3
     "@sideway/formula": ^3.0.1
     "@sideway/pinpoint": ^2.0.0
-  checksum: 1a5a0e14e93f40d76e43409348bed222e9d3d6b4547a780a29d1a325e7c9aed820d725ac3ce5826f7a0675979c5fb4bd7a0c7d74219ed3eac83af06c148ed321
+  checksum: 7affbb27ae9283596d6471871352b85ebf73a1e782c0be1998bce1ecc86ba48bee834c8af9a44d7143bb470654d6ae1248a29009ee5463618675d655dbd69306
   languageName: node
   linkType: hard
 
@@ -13739,11 +13739,11 @@ __metadata:
   linkType: hard
 
 "tsx@npm:^3.2.1":
-  version: 3.12.7
-  resolution: "tsx@npm:3.12.7"
+  version: 3.12.8
+  resolution: "tsx@npm:3.12.8"
   dependencies:
     "@esbuild-kit/cjs-loader": ^2.4.2
-    "@esbuild-kit/core-utils": ^3.0.0
+    "@esbuild-kit/core-utils": ^3.2.2
     "@esbuild-kit/esm-loader": ^2.5.5
     fsevents: ~2.3.2
   dependenciesMeta:
@@ -13751,7 +13751,7 @@ __metadata:
       optional: true
   bin:
     tsx: dist/cli.js
-  checksum: ddec149ad263e5c75fc8fde5c6ba7ec2ee390934c0a2e2c23897bacab83bc8c665955a23b608a19c42f49c14a7362cf74ad793b52cc94eda684be5c2c13fdb4d
+  checksum: b27575672693e648106c0230587b5d4d901f0c714517b173e6b220d9907971f465c46cccfbf59ef68dcc0cdf7b30867b0d08aa1995d28b9ed0a580afe0e22cec
   languageName: node
   linkType: hard
 
@@ -13996,15 +13996,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unhead@npm:1.3.9":
-  version: 1.3.9
-  resolution: "unhead@npm:1.3.9"
+"unhead@npm:1.4.1":
+  version: 1.4.1
+  resolution: "unhead@npm:1.4.1"
   dependencies:
-    "@unhead/dom": 1.3.9
-    "@unhead/schema": 1.3.9
-    "@unhead/shared": 1.3.9
+    "@unhead/dom": 1.4.1
+    "@unhead/schema": 1.4.1
+    "@unhead/shared": 1.4.1
     hookable: ^5.5.3
-  checksum: fbc1c88d426fc2a2b623f2db7c992a0cf6a5cf4847fd8cb141a9bdd1d5232b6aebe35d4c1d448e0a05096fc3d2bdb34a8d8824fa79ee6439bc8d60126fb59045
+  checksum: 984ef71334141cc0e5326988f0ce04650131c46f983385be5cfc2c62439513c4f2b0f798f2392243f82e09a464cac09e521eb72a59325cf2f2b4a3f7e233abed
   languageName: node
   linkType: hard
 
