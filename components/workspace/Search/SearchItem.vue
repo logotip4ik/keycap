@@ -4,12 +4,10 @@ const props = defineProps<Props>();
 
 const isCommand = 'key' in props.item;
 
-const itemHref = computed(() => isCommand ? '' : generateItemPath(props.item));
-const itemPath = computed(() => {
-  if (isCommand)
-    return '';
-
-  return decodeURIComponent(
+const itemHref = isCommand ? '' : generateItemPath(props.item);
+const itemPath = isCommand
+  ? ''
+  : decodeURIComponent(
     props.item.path
       // TODO: rewrite item path resolution ?
       // This is faster then array manipulation
@@ -18,7 +16,6 @@ const itemPath = computed(() => {
       // the last one string from path
       .replace(/\/?[\w%]+$/, ''),
   );
-});
 
 async function handleActionClick() {
   if (!isCommand)
