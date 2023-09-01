@@ -26,21 +26,13 @@ const popperInstance = shallowRef<null | PopperInstance>(null);
 const menu = shallowRef<null | HTMLElement>(null);
 const currentlyConfirming = ref(-1); // You can confirm one at a time
 
-const noteActions = [
+const actions = [
   { name: 'open in a new tab', handler: openNewTab },
   { name: 'preload', handler: preloadItemWithIndication },
-  { name: 'rename', handler: renameItem },
+  (!isFolder && { name: 'rename', handler: renameItem }),
   { name: 'show details', handler: showDetails },
   { name: 'delete', needConfirmation: true, handler: deleteItem },
-];
-const actions = computed(() => {
-  const copy = noteActions.slice();
-
-  if (isFolder)
-    copy.splice(2, 1);
-
-  return copy;
-});
+].filter(Boolean);
 
 let cleanup: null | (() => void);
 const confirmDuration = parseDuration('5 seconds')!;
@@ -53,7 +45,7 @@ function withEffects(event: Event, action: MenuAction) {
     const targetCancelEvents = ['pointerup', 'pointerleave', 'touchend', 'touchcancel'];
     const target = event.target as HTMLElement;
 
-    currentlyConfirming.value = actions.value.indexOf(action);
+    currentlyConfirming.value = actions.indexOf(action);
 
     const animation = target.animate([
       { opacity: 1, transform: 'translate(-100%, 0%)' },
