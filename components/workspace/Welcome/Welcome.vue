@@ -8,7 +8,7 @@ const isSmallScreen = inject(IsSmallScreenKey);
       Welcome back
     </p>
 
-    <WorkspaceWelcomeShortcuts
+    <LazyWorkspaceWelcomeShortcuts
       v-if="!isSmallScreen"
     />
   </div>
