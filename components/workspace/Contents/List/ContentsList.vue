@@ -241,7 +241,7 @@ onBeforeUnmount(() => {
                 :parent="folder"
                 :menu-target="menuOptions.target"
                 @show-menu="showMenu($event, item)"
-                @keydown.enter="onUpdateState('hidden')"
+                @should-hide-sidebar="onUpdateState('hidden')"
               />
             </Suspense>
           </li>

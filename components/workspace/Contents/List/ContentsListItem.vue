@@ -4,6 +4,7 @@ interface Props {
   parent: FolderWithContents
   menuTarget: HTMLElement | null
   onShowMenu: (target: HTMLElement) => any
+  onShouldHideSidebar: () => any
 }
 const props = defineProps<Props>();
 
@@ -45,6 +46,7 @@ function showMenu(event: Event) {
     :aria-label="`open ${isFolder ? 'folder' : 'note'} '${item.name}'`"
     @click="unpinIfNeeded"
     @contextmenu="showMenu"
+    @keydown.enter="!isFolder && onShouldHideSidebar()"
   >
     <LazyIconOutlineFolder
       v-if="isFolder"
