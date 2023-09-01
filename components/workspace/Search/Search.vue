@@ -119,11 +119,11 @@ useResizeObserver(searchEl, (entries) => {
 
 useTinykeys({ Escape: handleCancel });
 
-if (import.meta.client) {
-  onBeforeUnmount(
-    on(searchEl.value, 'keydown', trapFocusInsideSearch),
-  );
-}
+onMounted(() => {
+  const off = on(searchEl.value, 'keydown', trapFocusInsideSearch);
+
+  onBeforeUnmount(off);
+});
 </script>
 
 <template>
