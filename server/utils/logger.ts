@@ -12,6 +12,7 @@ export const LOG_LEVEL = {
 class Logger {
   #userAgent = 'keycap/server'; // official sdk sets `axiom-js/0.13.0` where 0.13.0 is version
   #datasetEndpoint = '/v1/datasets';
+  #datasetUrl: string;
 
   #client: typeof $fetch;
   #data: LoggerData;
@@ -30,6 +31,7 @@ class Logger {
 
     this.#data = data;
     this.#config = config;
+    this.#datasetUrl = `${this.#datasetEndpoint}/${this.#config.dataset}/ingest`;
 
     this.#client = $fetch.create({
       headers,
@@ -45,10 +47,22 @@ class Logger {
     data.level = level;
     data._time = new Date().toISOString();
 
-    const datasetURL = `${this.#datasetEndpoint}/${this.#config.dataset}/ingest`;
+    if (data.error) {
+      data.error = Object.assign({}, data.error, {
+        message: data.error.message,
+        stack: data.error.stack,
+      });
+    }
+
+    if (data.err) {
+      data.err = Object.assign({}, data.err, {
+        message: data.err.message,
+        stack: data.err.stack,
+      });
+    }
 
     // avg log is 369.543ms pretty long :(
-    await this.#client(datasetURL, { body: data })
+    await this.#client(this.#datasetUrl, { body: data })
       .catch((err) => {
         // eslint-disable-next-line no-console
         console.log('that was unexpected', err);
