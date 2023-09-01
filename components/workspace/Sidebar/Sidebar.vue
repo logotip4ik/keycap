@@ -83,7 +83,10 @@ onMounted(() => {
 
   observer.observe(sidebar.value!, { childList: true, subtree: true });
 
-  onBeforeUnmount(() => observer.disconnect());
+  onBeforeUnmount(() => {
+    observer.disconnect();
+    off && off();
+  });
 });
 </script>
 
