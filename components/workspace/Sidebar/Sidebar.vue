@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { debounce } from 'perfect-debounce';
 import parseDuration from 'parse-duration';
 
 import type { SidebarState } from '~/composables/sidebars';
