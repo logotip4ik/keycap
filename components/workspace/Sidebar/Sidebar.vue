@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { debounce } from 'perfect-debounce';
 import parseDuration from 'parse-duration';
-import trapFocus from 'focus-trap-js';
 
 import type { SidebarState } from '~/composables/sidebars';
 
@@ -42,9 +41,12 @@ function updateTabindexForFocusableElements(currentState: SidebarState) {
   }
 }
 
-function trapFocusInsideSidebar(event: Event) {
-  if (sidebar.value)
+async function trapFocusInsideSidebar(event: Event) {
+  if (sidebar.value) {
+    const trapFocus = (await import('focus-trap-js')).default;
+
     trapFocus(event, sidebar.value);
+  }
 }
 
 function hideIf(trigger: SidebarState) {

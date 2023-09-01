@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import trapFocus from 'focus-trap-js';
-
 interface Props { onClose: () => void }
 const props = defineProps<Props>();
 
@@ -79,6 +77,14 @@ function changeSelectedResult(difference: number) {
   selectedResult.value = newSelectedResult < 0 ? results.value.length - 1 : newSelectedResult;
 }
 
+async function trapFocusInsideSearch(event: Event) {
+  if (searchEl.value) {
+    const trapFocus = (await import('focus-trap-js')).default;
+
+    trapFocus(event, searchEl.value);
+  }
+}
+
 watch([searchInput, isLoadingResults, results], debounce(([value, isLoading, results]) => {
   if (!value || isLoading)
     isResultsEmpty.value = false;
@@ -113,11 +119,11 @@ useResizeObserver(searchEl, (entries) => {
 
 useTinykeys({ Escape: handleCancel });
 
-onMounted(() => {
-  const off = on(searchEl.value, 'keydown', (e: Event) => trapFocus(e, searchEl.value!));
-
-  onBeforeUnmount(() => off());
-});
+if (import.meta.client) {
+  onBeforeUnmount(
+    on(searchEl.value, 'keydown', trapFocusInsideSearch),
+  );
+}
 </script>
 
 <template>

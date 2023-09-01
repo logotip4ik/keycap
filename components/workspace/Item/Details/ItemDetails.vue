@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import trapFocus from 'focus-trap-js';
-
 import type { Folder, Note, Prisma } from '@prisma/client';
 
 interface Props { item: NoteMinimal }
@@ -103,6 +101,14 @@ async function copyShareLink() {
   createToast('Copied share link');
 }
 
+async function trapFocusInsideDetails(event: Event) {
+  if (itemDetailsEl.value) {
+    const trapFocus = (await import('focus-trap-js')).default;
+
+    trapFocus(event, itemDetailsEl.value);
+  }
+}
+
 const debouncedToggleShareLink = debounce(toggleShareLink, 250);
 function toggleShareLink(isCreateRequest: boolean) {
   if (isLoadingItemDetails.value)
@@ -126,7 +132,7 @@ onBeforeMount(() => refresh());
 onMounted(() => {
   itemDetailsEl.value?.focus();
 
-  const off = on(itemDetailsEl.value, 'keydown', (e: Event) => trapFocus(e, itemDetailsEl.value!));
+  const off = on(itemDetailsEl.value, 'keydown', trapFocusInsideDetails);
 
   onBeforeUnmount(() => off());
 });
