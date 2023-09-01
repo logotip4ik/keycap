@@ -37,8 +37,6 @@ function showMenu(event: Event) {
 </script>
 
 <template>
-  <!-- NOTE: previously `li` in contents list would wrap contents list item.
-    This would solve some issues, like animation with lazy component -->
   <NuxtLink
     ref="link"
     :href="itemHref"
