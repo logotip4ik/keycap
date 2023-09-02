@@ -1,63 +1,45 @@
-import { withLeadingSlash, withTrailingSlash, withoutLeadingSlash } from 'ufo';
-
-import type { Note } from '@prisma/client';
 import type { RouteLocationRaw } from 'vue-router';
 import type { NavigateToOptions } from '#app/composables/router';
 
-type ItemWithPath = Partial<FolderOrNote> & { path: string };
-export function generateItemRouteParams(item: ItemWithPath): RouteLocationRaw {
-  const user = useUser();
-  const route = useRoute();
-
+type ItemWithPath = Record<string, any> & { root?: boolean; path: string };
+export function generateItemPath(item: ItemWithPath): RouteLocationRaw {
   const isFolder = 'root' in item;
+  let path = item.path.replace('/', '/@');
 
-  const username = user.value?.username || route.params.user;
-  const routeName = isFolder ? BLANK_NOTE_NAME : (item as NoteMinimal).name;
-  const routeFolders = withoutLeadingSlash(item.path)
-    .split('/')
-    .slice(1)
-    // removing last item in array if item is note
-    .filter((_, i, array) => isFolder ? true : i !== array.length - 1)
-    .map(decodeURIComponent);
+  if (isFolder)
+    path += `/${BLANK_NOTE_NAME}`;
 
-  return {
-    name: '@user-folders-note',
-    params: { user: username, folders: routeFolders, note: routeName },
-  };
+  return path;
 }
 
-export async function showItem(item: ItemWithPath, options: NavigateToOptions = {}) {
-  const itemRouteParams = generateItemRouteParams(item);
+export async function showItem(item: ItemWithPath, options?: NavigateToOptions) {
+  const itemRouteParams = generateItemPath(item);
 
   await navigateTo(itemRouteParams, options);
 }
 
 export function preCreateItem(folderToAppend: FolderWithContents, initialValues?: Partial<NoteMinimal>) {
-  const id = BigInt(Math.floor(Math.random() * 1000));
+  const id = Math.floor(Math.random() * 1000).toString();
 
   const noteValues = {
     id,
     name: '',
     path: '',
     creating: true,
-    ...(initialValues || {}),
   };
 
-  folderToAppend.notes.unshift(noteValues);
+  if (initialValues)
+    Object.assign(noteValues, initialValues);
 
-  nextTick(() => {
-    (document.querySelector('.item[data-creating="true"] > form > input') as HTMLInputElement | null)?.focus();
-  });
+  folderToAppend.notes.unshift(noteValues);
 }
 
 export function getCurrentFolderPath() {
   const route = useRoute();
 
-  return withLeadingSlash(withTrailingSlash(
-    (Array.isArray(route.params.folders)
-      ? route.params.folders.map(encodeURIComponent).join('/')
-      : encodeURIComponent(route.params.folders || '')),
-  ));
+  return Array.isArray(route.params.folders) && route.params.folders.length > 0
+    ? `/${route.params.folders.map(encodeURIComponent).join('/')}/`
+    : '/';
 }
 
 export async function createFolder(folderName: string, self: FolderOrNote, parent: FolderWithContents) {
@@ -77,15 +59,14 @@ export async function createFolder(folderName: string, self: FolderOrNote, paren
   if (!newlyCreatedFolder)
     return;
 
-  newlyCreatedFolder.notes = newlyCreatedFolder.notes || [];
-  newlyCreatedFolder.subfolders = newlyCreatedFolder.subfolders || [];
-
-  foldersCache.set(newlyCreatedFolder.path, newlyCreatedFolder);
+  newlyCreatedFolder.creating = false;
+  parent.subfolders.push(newlyCreatedFolder);
 
   deleteNoteFromFolder(self, parent);
-  updateSubfolderInFolder(self, { ...newlyCreatedFolder, creating: false }, parent);
+  updateSubfolderInFolder(self, newlyCreatedFolder, parent);
 
   showItem(newlyCreatedFolder);
+  foldersCache.set(newlyCreatedFolder.path, newlyCreatedFolder);
 }
 
 export async function createNote(noteName: string, self: FolderOrNote, parent: FolderWithContents) {
@@ -96,7 +77,7 @@ export async function createNote(noteName: string, self: FolderOrNote, parent: F
   const newNotePathName = encodeURIComponent(noteName.trim());
   const newNotePath = currentFolderPath + newNotePathName;
 
-  const newlyCreatedNote = await $fetch<NoteMinimal>(`/api/note${newNotePath}`, {
+  const newlyCreatedNote = await $fetch<SerializedNote>(`/api/note${newNotePath}`, {
     method: 'POST',
     body: { name: noteName, parentId: parent.id },
   })
@@ -105,10 +86,13 @@ export async function createNote(noteName: string, self: FolderOrNote, parent: F
   if (!newlyCreatedNote)
     return;
 
-  notesCache.set(newlyCreatedNote.path, newlyCreatedNote as Note);
-  updateNoteInFolder(self, { ...newlyCreatedNote, content: '', creating: false }, parent);
+  newlyCreatedNote.content ||= '';
+  newlyCreatedNote.creating = false;
 
-  showItem(newlyCreatedNote as FolderOrNote);
+  notesCache.set(newlyCreatedNote.path, newlyCreatedNote);
+  updateNoteInFolder(self, newlyCreatedNote, parent);
+
+  showItem(newlyCreatedNote);
 }
 
 export async function renameFolder() {
@@ -116,7 +100,7 @@ export async function renameFolder() {
 }
 
 export async function renameNote(newName: string, self: FolderOrNote, parent: FolderWithContents) {
-  const newNote = { name: newName.trim() };
+  const newNote: Record<string, string | boolean> = { name: newName.trim() };
 
   if (!newNote.name)
     return updateNoteInFolder(self, { editing: false }, parent);
@@ -130,13 +114,14 @@ export async function renameNote(newName: string, self: FolderOrNote, parent: Fo
   await $fetch<QuickResponse>(`/api/note${notePath}`, { method: 'PATCH', body: newNote })
     .catch(() => updateNoteInFolder(self, { editing: false }, parent));
 
-  const { user: username } = useRoute().params;
-  const newNotePath = `/${username}${currentFolderPath}${encodeURIComponent(newNote.name)}`;
+  newNote.editing = false;
+  newNote.path = self.path.replace(encodeURIComponent(self.name), encodeURIComponent(newNote.name));
 
   notesCache.delete(self.path);
-  updateNoteInFolder(self, { editing: false, ...newNote, path: newNotePath }, parent);
+  updateNoteInFolder(self, newNote, parent);
 
-  showItem({ ...self, ...newNote, path: newNotePath }, { replace: true });
+  // @ts-expect-error setting path two lines before
+  showItem(newNote, { replace: true });
 }
 
 export async function deleteNote(self: FolderOrNote, parent: FolderWithContents) {
@@ -144,7 +129,7 @@ export async function deleteNote(self: FolderOrNote, parent: FolderWithContents)
 
   const currentFolderPath = getCurrentFolderPath();
   const notePathName = encodeURIComponent(self.name);
-  const notePath = currentFolderPath + withLeadingSlash(notePathName);
+  const notePath = currentFolderPath + notePathName;
 
   await $fetch<QuickResponse>(`/api/note${notePath}`, { method: 'DELETE' });
 
@@ -159,7 +144,7 @@ export async function deleteFolder(self: FolderOrNote, parent: FolderWithContent
 
   const currentFolderPath = getCurrentFolderPath();
   const folderPathName = encodeURIComponent(self.name);
-  const folderPath = currentFolderPath + withLeadingSlash(folderPathName);
+  const folderPath = currentFolderPath + folderPathName;
 
   await $fetch<QuickResponse>(`/api/folder${folderPath}`, { method: 'DELETE' });
 
@@ -188,5 +173,5 @@ export async function preloadItem(self: FolderOrNote) {
 
   // @ts-expect-error idk how to setup this type
   cache.set(item.path, item);
-  offlineStorage.value?.setItem(item.path!, item);
+  offlineStorage.setItem?.(item.path, item);
 }

@@ -9,6 +9,7 @@ definePageMeta({
 
 const route = useRoute();
 const user = useUser();
+const mitt = useMitt();
 const { shortcuts } = useAppConfig();
 
 const currentNoteState = useCurrentNoteState();
@@ -16,8 +17,7 @@ const currentItemForDetails = useCurrentItemForDetails();
 
 const isShowingSearch = ref(false);
 
-const isSmallScreen = inject(IsSmallScreenKey);
-const isNoteNameEmpty = computed(() => !route.params.note || route.params.note === BLANK_NOTE_NAME);
+const isNoteEmpty = computed(() => !route.params.note || route.params.note === BLANK_NOTE_NAME);
 
 const currentRouteName = computed(() => {
   const folders = route.params.folders;
@@ -35,6 +35,8 @@ const currentRouteName = computed(() => {
 function focusSearchInput(event: Element) {
   nextTick(() => event.querySelector('input')?.focus());
 }
+
+mitt.on('search:show', () => isShowingSearch.value = true);
 
 watch(() => route.params.note, (noteName) => {
   const isEmptyNoteName = !noteName || noteName === BLANK_NOTE_NAME;
@@ -85,45 +87,21 @@ onMounted(() => {
     // @ts-expect-error this should not be defined
     window.$createToast = useToast();
 });
-
-provide(IsNoteNameEmptyKey, isNoteNameEmpty);
 </script>
 
 <template>
-  <div class="workspace">
-    <WorkspaceNavbar
-      class="workspace__navbar"
-      @open-search="isShowingSearch = true"
-    />
+  <div id="workspace" class="workspace">
+    <LazyWorkspaceToolbox />
 
-    <Transition name="fade">
-      <LazyWorkspaceFab
-        v-show="isSmallScreen ? isNoteNameEmpty : true"
-        @open-search="isShowingSearch = true"
-      />
-    </Transition>
+    <Transition name="fade" appear>
+      <LazyWorkspaceWelcome v-if="isNoteEmpty" />
 
-    <Transition name="fade">
-      <aside
-        v-show="isSmallScreen ? isNoteNameEmpty : true"
-        class="workspace__contents"
-      >
-        <LazyWorkspaceContents />
-      </aside>
-    </Transition>
-
-    <Transition name="fade">
-      <!-- Do not load welcome component on mobile devices -->
-      <LazyWorkspaceWelcome
-        v-if="!isSmallScreen && isNoteNameEmpty"
-        key="blank-note"
-        class="workspace__note"
-      />
-
-      <main v-else-if="isSmallScreen ? !isNoteNameEmpty : true" class="workspace__note">
+      <main v-else class="workspace__note">
         <NuxtPage />
       </main>
     </Transition>
+
+    <LazyWorkspaceContents />
 
     <Teleport to="body">
       <Transition
@@ -150,131 +128,38 @@ provide(IsNoteNameEmptyKey, isNoteNameEmpty);
 
 <style lang="scss">
 .workspace {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-rows: auto 1fr;
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
 
-  height: calc(var(--1vh, 1vh) * 100);
-
-  &__navbar {
-    grid-column: 1 / 1;
-
-    border-right: 1px solid hsla(var(--text-color-hsl), 0.25);
-    border-bottom: 1px solid hsla(var(--text-color-hsl), 0.25);
-
-    @media (max-width: $breakpoint-tablet) {
-      grid-area: 1 / 1;
-
-      border-right: none
-    }
-  }
-
-  &__contents {
-    grid-area: 2 / 1;
-
-    height: 100%;
-    width: 20vw;
-
-    max-width: 250px;
-    min-width: 125px;
-
-    margin: 0;
-    padding: 0;
-
-    border-right: 1px solid hsla(var(--text-color-hsl), 0.25);
-
-    overflow: auto;
-    scroll-snap-type: y proximity;
-    scrollbar-width: none;
-    &::-webkit-scrollbar {
-      display: none;
-    }
-
-    &__list {
-      padding: 0 0 12rem;
-      margin: 0;
-
-      list-style-type: none;
-
-      & > li {
-        scroll-snap-align: start;
-
-        a {
-          scroll-margin: 2.25rem;
-        }
-      }
-    }
-
-    @media (max-width: $breakpoint-tablet) {
-      width: 100%;
-      max-width: 100%;
-
-      padding: 0 1rem 2rem;
-    }
-  }
+  height: 100vh;
+  height: 100svh;
 
   &__note {
     --scrollbar-thumb-color: hsla(var(--text-color-hsl), 0.175);
-    --scrollbar-background: var(--surface-color);
+    --scrollbar-background: hsla(var(--text-color-hsl), 0.025);
 
-    grid-row: 1 / end;
-    grid-column: 2;
+    flex: 1;
 
+    width: 100%;
     height: 100%;
+
+    will-change: width, opacity;
 
     overflow-y: auto;
 
     scrollbar-width: thin;
     scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-background);
     &::-webkit-scrollbar {
-      width: 0.75rem;
+      width: 0.5rem;
 
       background: var(--scrollbar-background);
     }
 
     &::-webkit-scrollbar-thumb {
-      width: 0.75rem;
+      width: 0.5rem;
 
       background-color: var(--scrollbar-thumb-color);
-    }
-
-    @media (max-width: $breakpoint-tablet) {
-      grid-area: 2 / 1;
-    }
-  }
-
-  @media (max-width: $breakpoint-tablet) {
-    grid-template-rows: auto 1fr;
-    grid-template-columns: 1fr;
-  }
-}
-
-.search-fade-leave-active,
-.search-fade-leave-active .search {
-  transition: opacity 0.25s ease, transform 0.25s ease;
-}
-
-.search-fade-enter-from,
-.search-fade-leave-to {
-  opacity: 0;
-
-  .search {
-    transform: scale(0.95);
-  }
-}
-
-@media (width <= $breakpoint-tablet) {
-  .search-fade-enter-active {
-    transition: opacity 0.25s ease;
-  }
-
-  .search-fade-leave-active {
-    transition-duration: 0s;
-  }
-
-  .search-fade-leave-to {
-    .search {
-      transform: none;
     }
   }
 }

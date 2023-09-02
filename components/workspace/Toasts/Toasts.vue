@@ -4,7 +4,7 @@ import type { ComponentPublicInstance } from 'vue';
 
 const toasts = useToasts();
 
-const toasterEl = ref<null | ComponentPublicInstance<HTMLElement>>(null);
+const toasterEl = shallowRef<null | ComponentPublicInstance<HTMLElement>>(null);
 
 const sortedToasts = computed(() =>
   toasts.value.sort((a, b) => a.priority - b.priority),

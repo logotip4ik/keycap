@@ -175,7 +175,7 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
 </script>
 
 <template>
-  <Transition name="formatter-fade" @before-leave="beforeLeaveAnimation" @enter="enterAnimation">
+  <Transition name="fade" @before-leave="beforeLeaveAnimation" @enter="enterAnimation">
     <div v-if="!isEditingLink" class="formatter__contents-wrapper">
       <button
         class="formatter__button"
@@ -295,6 +295,8 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
     align-items: center;
     justify-content: flex-start;
     gap: var(--items-spacing);
+
+    transition-delay: .1s;
   }
 
   &__input {
@@ -397,19 +399,5 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
       }
     }
   }
-}
-
-.formatter-fade-enter-active,
-.formatter-fade-leave-active {
-  transition: opacity .3s .1s;
-}
-
-.formatter-fade-leave-active {
-  display: none;
-}
-
-.formatter-fade-enter-from,
-.formatter-fade-leave-to {
-  opacity: 0;
 }
 </style>

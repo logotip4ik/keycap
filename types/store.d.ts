@@ -10,16 +10,20 @@ interface _IFuzzyWorker {
   refreshItemsCache: () => Promise<void>
 }
 
-declare global {
-  export type NoteMinimal = Pick<Note, 'id' | 'name' | 'path'> & {
-    content?: string
+declare global {  
+  export type ItemMetatags = { 
     editing?: boolean
     creating?: boolean
+  }
+
+  export type NoteMinimal = Pick<Note, 'name' | 'path'> & ItemMetatags & { 
+    id: string 
   };
 
-  export interface FolderWithContents extends Omit<Folder, 'createdAt' | 'updatedAt'> {
-    editing?: boolean
-    creating?: boolean
+  export type SerializedNote = NoteMinimal & { content: string };
+
+  export type FolderWithContents = Omit<Folder, 'createdAt' | 'updatedAt'> & ItemMetatags & {
+    id: string
     notes: NoteMinimal[]
     subfolders: FolderWithContents[]
   }
@@ -33,8 +37,7 @@ declare global {
 
   export type FuzzyItem = Pick<FolderOrNote, 'name' | 'path' | 'root'>;
 
-  export interface IFuzzyWorker extends Remote<_IFuzzyWorker> {
-  }
+  export type IFuzzyWorker =  Remote<_IFuzzyWorker>
 
   export interface OfflineStorage {
     setItem: <T = any>(key: string, value: T) => Promise<void>

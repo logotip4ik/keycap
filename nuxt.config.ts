@@ -1,14 +1,14 @@
 import UnheadVite from '@unhead/addons/vite';
 import parseDuration from 'parse-duration';
 import browserslistToEsbuild from 'browserslist-to-esbuild';
-import { resolve } from 'pathe';
+import { join, resolve } from 'pathe';
 import { isCI, isDevelopment } from 'std-env';
 
-import { getHeaders } from './headers.config';
-import breakpoints from './constants/breakpoints';
-import { ParseDurationTransformPlugin } from './vite/transform-parse-duration';
+import type { ComponentsDir } from 'nuxt/schema';
 
-const tsExcludes = ['../data', '../benchmarks', '../scripts'];
+import { getHeaders } from './headers.config';
+import { breakpoints, sidebarsBreakpoints } from './constants/breakpoints';
+import { ParseDurationTransformPlugin } from './vite/transform-parse-duration';
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
@@ -47,10 +47,16 @@ export default defineNuxtConfig({
 
   typescript: {
     tsConfig: {
-      exclude: tsExcludes,
       compilerOptions: {
         types: ['vitest/importMeta'],
       },
+      exclude: [
+        '../data',
+        '../benchmarks',
+        '../scripts',
+        '../components/workspace/OldContents',
+        '../components/workspace/OldNavbar.vue',
+      ],
     },
   },
 
@@ -136,6 +142,45 @@ export default defineNuxtConfig({
     transpile: ['tinykeys'],
   },
 
+  hooks: {
+    // removes `old` components from auto-import
+    'components:dirs': function (dirs) {
+      const componentsPath = resolve('./components');
+      const componentsDirIdx = dirs.findIndex((dir) => (dir as ComponentsDir).path === componentsPath);
+
+      const componentsDir = dirs[componentsDirIdx] as ComponentsDir;
+
+      componentsDir.ignore ||= [];
+      componentsDir.ignore.push('**/Old*/**');
+      componentsDir.ignore.push('**/Old*');
+    },
+    // minifies service worker
+    'nitro:init': function (nitro) {
+      if (isDevelopment)
+        return;
+
+      nitro.hooks.hookOnce('compiled', async (nitro) => {
+        const terser = await import('terser');
+        const fsp = await import('node:fs/promises');
+
+        const { publicDir } = nitro.options.output;
+
+        const swPath = join(publicDir, 'sw.js');
+        const swSource = await fsp.readFile(swPath, 'utf-8');
+        const swMinified = await terser.minify(swSource, {
+          compress: true,
+          mangle: true,
+          ecma: 2020,
+          sourceMap: false,
+          ie8: false,
+          safari10: false,
+        });
+
+        await fsp.writeFile(swPath, swMinified.code!);
+      });
+    },
+  },
+
   vite: {
     define: {
       'import.meta.vitest': 'undefined',
@@ -158,7 +203,7 @@ export default defineNuxtConfig({
       cssMinify: 'lightningcss',
       cssTarget: browserslistToEsbuild(),
       minify: isCI ? 'terser' : 'esbuild',
-      terserOptions: {
+      terserOptions: !isCI ? undefined : { // eslint-disable-line multiline-ternary
         compress: true,
         mangle: true,
         safari10: false,
@@ -170,6 +215,7 @@ export default defineNuxtConfig({
       include: [
         '@superhuman/command-score',
         'perfect-debounce',
+        '@popperjs/core',
       ],
     },
 
@@ -178,6 +224,7 @@ export default defineNuxtConfig({
         scss: {
           additionalData: [
             Object.entries(breakpoints).map(([key, value]) => `$breakpoint-${key}: ${value}px;`).join('\n'),
+            Object.entries(sidebarsBreakpoints).map(([key, value]) => `$sidebar-breakpoint-${key}: ${value}px;`).join('\n'),
           ].join('\n'),
         },
       },
@@ -192,10 +239,8 @@ export default defineNuxtConfig({
     typescript: {
       tsConfig: {
         compilerOptions: {
-          allowSyntheticDefaultImports: true,
           types: ['vitest/importMeta'],
         },
-        exclude: tsExcludes,
       },
     },
 
@@ -246,7 +291,7 @@ export default defineNuxtConfig({
     strategies: 'injectManifest',
     manifest: false,
     includeManifestIcons: false,
-    minify: true,
+    minify: true, // TODO: why this is not working ? https://github.com/vite-pwa/nuxt/issues/62
 
     client: {
       installPrompt: false,

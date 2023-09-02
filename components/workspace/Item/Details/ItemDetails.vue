@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Note, Prisma } from '@prisma/client';
+import type { Folder, Note, Prisma } from '@prisma/client';
 
 interface Props { item: NoteMinimal }
 const props = defineProps<Props>();
@@ -10,18 +10,26 @@ const isLoadingItemDetails = ref(false);
 
 const isFolder = 'root' in props.item;
 
-type NoteDetails = Note & Prisma.NoteGetPayload<{ select: { shares: { select: { link: true; updatedAt: true; createdAt: true } } } }>;
+type Metadata = Pick<Note, 'updatedAt' | 'createdAt'> | Pick<Folder, 'updatedAt' | 'createdAt'>;
+type NoteDetails = Prisma.NoteGetPayload<{ select: { shares: { select: { link: true; updatedAt: true; createdAt: true } } } }>;
+type ItemDetails = Metadata & Partial<NoteDetails>;
 
 // NOTE(perf improvement): client bundle size reduced by using only useAsyncData or useFetch
-const { data: details, refresh } = useLazyAsyncData(async () => {
-  return await $fetch<Partial<NoteDetails>>(
+const { data: details, refresh } = await useAsyncData<ItemDetails | undefined>(async () => {
+  const res = await $fetch<ItemDetails>(
     // /api/[note|folder]/[item path without username]
     `/api/${isFolder ? 'folder' : 'note'}/${props.item.path.split('/').slice(2).join('/')}`,
-    { query: { details: true }, retry: 2 },
+    { query: { details: true } },
   );
+
+  return res;
+}, {
+  lazy: true,
+  server: false,
+  immediate: false,
 });
 
-const itemDetailsEl = ref<HTMLElement | null>(null);
+const itemDetailsEl = shallowRef<HTMLElement | null>(null);
 
 const mergedDetails = computed(() => {
   if (!details.value) return null;
@@ -93,6 +101,14 @@ async function copyShareLink() {
   createToast('Copied share link');
 }
 
+async function trapFocusInsideDetails(event: Event) {
+  if (itemDetailsEl.value) {
+    const trapFocus = (await import('focus-trap-js')).default;
+
+    trapFocus(event, itemDetailsEl.value);
+  }
+}
+
 const debouncedToggleShareLink = debounce(toggleShareLink, 250);
 function toggleShareLink(isCreateRequest: boolean) {
   if (isLoadingItemDetails.value)
@@ -111,6 +127,15 @@ function toggleShareLink(isCreateRequest: boolean) {
 
 useTinykeys({ Escape: unsetCurrentItemForDetails });
 useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
+
+onBeforeMount(() => refresh());
+onMounted(() => {
+  itemDetailsEl.value?.focus();
+
+  const off = on(itemDetailsEl.value, 'keydown', trapFocusInsideDetails);
+
+  onBeforeUnmount(() => off());
+});
 </script>
 
 <template>
@@ -122,7 +147,7 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
       class="item-details"
       aria-modal="true"
       aria-labelledby="item-details-dialog-title"
-      tabindex="-1"
+      tabindex="0"
     >
       <button class="item-details__close-button" @click="unsetCurrentItemForDetails">
         <LazyIconCloseRounded v-once class="item-details__close-button__icon" />
@@ -202,7 +227,7 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
   padding: 2rem 1.25rem 1.5rem;
 
   border-radius: 0.5rem;
-  border: 1px solid hsla(var(--text-color-hsl), 0.2);
+  border: 1px solid hsla(var(--text-color-hsl), 0.1);
   background-color: rgba(var(--surface-color-hsl), 0.98);
   box-shadow:
     inset -1px -1px 0.1rem rgba($color: #000000, $alpha: 0.025),

@@ -5,15 +5,15 @@ const props = defineProps<Props>();
 const fuzzyWorker = useFuzzyWorker();
 
 const results = shallowRef<Array<FuzzyItem | CommandItem>>([]);
-const resultsEl = ref<ComponentPublicInstance<HTMLUListElement> | null>(null);
+const resultsEl = shallowRef<ComponentPublicInstance<HTMLUListElement> | null>(null);
 const isLoadingResults = ref(false);
 const selectedResult = ref(0);
 const searchInput = ref('');
 const isResultsEmpty = ref(false);
 const typeaheadResult = computed<FuzzyItem | CommandItem | null>(() => results.value[selectedResult.value] || null);
 
-const inputEl = ref<HTMLElement | null>(null);
-const searchEl = ref<HTMLElement | null>(null);
+const inputEl = shallowRef<HTMLElement | null>(null);
+const searchEl = shallowRef<HTMLElement | null>(null);
 
 defineExpose({ input: inputEl });
 
@@ -65,7 +65,7 @@ async function openItem() {
   setTimeout(() => {
     if (actionName) {
       document
-        .querySelector(`a[title="${actionName}"]`)
+        .querySelector(`.contents__list a[aria-label*="${actionName}"]`)
         ?.scrollIntoView({ behavior: 'smooth' }); // TODO: this is not working on chrome ?
     }
   }, 0);
@@ -77,9 +77,12 @@ function changeSelectedResult(difference: number) {
   selectedResult.value = newSelectedResult < 0 ? results.value.length - 1 : newSelectedResult;
 }
 
-function fillSearchInput() {
-  if (typeaheadResult.value)
-    searchInput.value = typeaheadResult.value.name;
+async function trapFocusInsideSearch(event: Event) {
+  if (searchEl.value) {
+    const trapFocus = (await import('focus-trap-js')).default;
+
+    trapFocus(event, searchEl.value);
+  }
 }
 
 watch([searchInput, isLoadingResults, results], debounce(([value, isLoading, results]) => {
@@ -116,12 +119,19 @@ function animateHeight() {
 }
 
 useTinykeys({ Escape: handleCancel });
+
+onMounted(() => {
+  const off = on(searchEl.value, 'keydown', trapFocusInsideSearch);
+
+  onBeforeUnmount(off);
+});
 </script>
 
 <template>
   <div class="search-wrapper" @click.self="handleCancel">
     <div ref="searchEl" class="search">
       <form class="search__form" @submit.prevent="openItem">
+        <!-- TODO: split into smaller components -->
         <WorkspaceSearchInput
           ref="inputEl"
           :value="searchInput"
@@ -130,7 +140,6 @@ useTinykeys({ Escape: handleCancel });
           @update-value="searchInput = $event"
           @keydown.up.prevent="changeSelectedResult(-1)"
           @keydown.down.prevent="changeSelectedResult(+1)"
-          @keydown.tab.prevent="fillSearchInput()"
         />
 
         <p v-show="typeaheadResult" class="search__form__typeahead">
@@ -170,6 +179,7 @@ useTinykeys({ Escape: handleCancel });
           </p>
         </div>
 
+        <!-- TODO: rework this animation to use transition events -->
         <TransitionGroup
           v-else-if="results.length !== 0"
           ref="resultsEl"
@@ -390,6 +400,36 @@ useTinykeys({ Escape: handleCancel });
       font-size: 1.5rem;
 
       opacity: 0.75;
+    }
+  }
+}
+
+.search-fade-leave-active,
+.search-fade-leave-active .search {
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.search-fade-enter-from,
+.search-fade-leave-to {
+  opacity: 0;
+
+  .search {
+    transform: scale(0.95);
+  }
+}
+
+@media (width <= $breakpoint-tablet) {
+  .search-fade-enter-active {
+    transition: opacity 0.25s ease;
+  }
+
+  .search-fade-leave-active {
+    transition-duration: 0s;
+  }
+
+  .search-fade-leave-to {
+    .search {
+      transform: none;
     }
   }
 }

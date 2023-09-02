@@ -3,33 +3,20 @@ import '~/polyfills/array-at';
 
 import parseDuration from 'parse-duration';
 
-const { width: windowWidth } = useWindowSize();
-
 // NOTE: should be removed from client bundle
-const device = import.meta.env.SSR ? parseUA(useRequestHeaders()['user-agent']) : undefined;
+const device = import.meta.server ? parseUA(useRequestHeaders()['user-agent']) : undefined;
 
-const isFirefox = import.meta.env.SSR
+const isFirefox = import.meta.server
   ? device!.isFirefox
   : checkIsFirefox(navigator.userAgent);
+const isSmallScreen = import.meta.server
+  ? device!.isMobileOrTablet
+  : window.innerWidth < breakpoints.tablet;
 
-const isSmallScreen = computed(() =>
-  import.meta.env.SSR
-    ? device!.isMobileOrTablet
-    : windowWidth.value < breakpoints.tablet,
-);
 provide(IsSmallScreenKey, isSmallScreen);
 provide(IsFirefoxKey, isFirefox);
 
-useHead({
-  htmlAttrs: {
-    class: {
-      'firefox': isFirefox,
-      'phone-or-tablet': isSmallScreen.value,
-    },
-  },
-});
-
-if (!import.meta.env.SSR) {
+if (import.meta.client) {
   const UPDATE_WORKER_DELAY = parseDuration('1.5s')!;
 
   setTimeout(() => {
@@ -41,19 +28,19 @@ if (!import.meta.env.SSR) {
   }, UPDATE_WORKER_DELAY);
 }
 
-if (import.meta.env.SSR) {
+if (import.meta.server) {
   const { siteOrigin } = useRuntimeConfig().public;
 
-  const prefix = import.meta.env.PROD ? 'https' : 'http';
+  const protocol = import.meta.env.PROD ? 'https' : 'http';
 
   useSeoMeta({
     title: 'Keycap - Better Notes',
     ogTitle: 'Keycap - Better Notes',
     ogDescription: 'Better then just notes ❤. Synced between your devices, simple, fast and purple.',
-    ogImage: `${prefix}://${siteOrigin}/og-image.webp`,
+    ogImage: `${protocol}://${siteOrigin}/og-image.webp`,
     ogImageWidth: 1200,
     ogImageHeight: 630,
-    ogUrl: `${prefix}://${siteOrigin}`,
+    ogUrl: `${protocol}://${siteOrigin}`,
     robots: { none: true },
     applicationName: 'Keycap',
     author: 'Bogdan Kostyuk',
@@ -61,6 +48,13 @@ if (import.meta.env.SSR) {
   }, { mode: 'server' });
 
   useHead({
+    htmlAttrs: {
+      class: {
+        'firefox': isFirefox,
+        'phone-or-tablet': isSmallScreen,
+      },
+    },
+
     link: [
       {
         rel: 'preload',

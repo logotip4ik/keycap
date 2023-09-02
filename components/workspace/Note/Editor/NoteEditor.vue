@@ -26,16 +26,14 @@ import History from '@tiptap/extension-history';
 import Link from '@tiptap/extension-link';
 
 import {
-  LazyWorkspaceNoteFormatterBubbleMenu as LazyBubblePopup,
-  LazyWorkspaceNoteFormatterInlineMenu as LazyInlinePopup,
+  LazyWorkspaceNoteFormatterBubbleBox as LazyBubbleBox,
+  LazyWorkspaceNoteFormatterFixedBox as LazyFixedBox,
 } from '#components';
 
 interface Props {
   content: string
   editable: boolean
   onUpdate: (content: string) => void
-  onRefresh: () => void
-  onShowDetails: () => void
 }
 const props = defineProps<Props>();
 
@@ -46,7 +44,7 @@ const detailsItem = useCurrentItemForDetails();
 
 // TODO: export this whole mess into separate file
 const editor = useEditor({
-  autofocus: !isSmallScreen.value && 'start', // disable auto focus on small screens
+  autofocus: !isSmallScreen && 'start', // disable auto focus on small screens
   content: props.content,
   editable: props.editable,
   extensions: [
@@ -142,84 +140,30 @@ useTinykeys({
   },
 });
 
-onMounted(() => {
-  const clear = on(document, 'visibilitychange', () => {
-    if (document.visibilityState === 'visible')
-      props.onRefresh();
-  });
-
-  onBeforeUnmount(() => {
-    clear();
-
-    editor.value?.destroy();
-  });
+onBeforeUnmount(() => {
+  editor.value?.destroy();
 });
 </script>
 
 <template>
   <div class="note-editor__wrapper">
-    <LazyBubblePopup
+    <!-- TODO: vue does not like when this two elements change
+      (even without lazy)
+     -->
+    <LazyBubbleBox
       v-if="editor && !isSmallScreen"
       :editor="editor"
     >
       <WorkspaceNoteFormatter :editor="editor" @hide="hideBubbleMenu" />
-    </LazyBubblePopup>
+    </LazyBubbleBox>
 
-    <LazyInlinePopup
+    <LazyFixedBox
       v-else-if="editor && isSmallScreen"
       :editor="editor"
     >
       <WorkspaceNoteFormatter :editor="editor" @hide="() => null" />
-    </LazyInlinePopup>
-
-    <button
-      class="note-editor__details-button"
-      aria-haspopup="dialog"
-      aria-controls="item-details"
-      aria-label="current note details"
-      :aria-expanded="!!detailsItem"
-      @click="onShowDetails"
-    >
-      details
-    </button>
+    </LazyFixedBox>
 
     <EditorContent class="note-editor" :editor="editor" />
   </div>
 </template>
-
-<style lang="scss">
-.note-editor__details-button {
-  position: absolute;
-  top: 1rem;
-  right: 0;
-  z-index: 2;
-
-  font: inherit;
-  text-decoration: underline;
-  color: hsla(var(--text-color-hsl), 0.65);
-
-  padding: 0.5rem 0.75rem;
-
-  border: none;
-  outline-color: transparent;
-  background: transparent;
-  cursor: pointer;
-
-  transition: color .3s, text-shadow .3s;
-
-  @media (hover: hover) {
-    color: hsla(var(--text-color-hsl), 0.5);
-  }
-
-  @media (max-width: $breakpoint-tablet) {
-    top: 0.15rem;
-  }
-
-  &:is(:hover, :focus-visible) {
-    color: hsla(var(--text-color-hsl), 1);
-    text-shadow: 0 0 2rem hsla(var(--text-color-hsl), 1);
-
-    transition-duration: .05s;
-  }
-}
-</style>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { OAuthProvider } from '~/server/utils';
 
-if (!import.meta.env.SSR) {
+if (import.meta.client) {
   throw createError({
     statusCode: 418,
     statusMessage: 'this page should not run on client',
@@ -12,7 +12,7 @@ const user = useUser();
 const event = useRequestEvent();
 const { query } = useRoute();
 
-const usernameInput = ref<HTMLInputElement | null>(null);
+const usernameInput = shallowRef<HTMLInputElement | null>(null);
 
 if (user.value)
   await navigateTo(`/@${user.value.username}`);

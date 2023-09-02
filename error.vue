@@ -25,9 +25,6 @@ const errorMessages: Record<number, string> = {
 
 const message = errorMessages[props.error.statusCode] || 'That was unexpected (⊙_⊙;)';
 
-if (!import.meta.env.PROD)
-  console.error(props.error);
-
 function handleError() {
   clearError({
     redirect: user.value ? `/@${user.value.username}` : '/',
