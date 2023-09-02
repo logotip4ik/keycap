@@ -1,6 +1,6 @@
 import parseDuration from 'parse-duration';
 
-export async function getRecentForUser(user: { id: bigint }) {
+export async function getRecentForUser(user: { id: bigint; username: string }) {
   const prisma = getPrisma();
 
   // TODO: more advanced recent algorithm :P
@@ -16,5 +16,5 @@ export const cachedGetRecentForUser = cachedFunction(getRecentForUser, {
   swr: true,
   maxAge: parseDuration('5 minutes', 's'),
   staleMaxAge: parseDuration('30 minutes', 's'),
-  getKey: (event) => `${event.context.user!.username}-recent`,
+  getKey: (user) => `${user.username}-recent`,
 });
