@@ -38,18 +38,14 @@ jobs:
       - name: Run Build
         run: yarn run build
 
+      - name: Setup git user
+        uses: fregante/setup-git-user@77c1b5542f14ab6db4b8462d6857e31deb988b09
+        
       - name: Commit changes
         run: |
-          git config --local user.email "github-actions@github.com"
-          git config --local user.name "github-actions"
           git commit -a -m "chore: apply fixes" || echo "nothing to update"
           git pull
-
-      - name: Push changes
-        uses: ad-m/github-push-action@29f05e01bb17e6f28228b47437e03a7b69e1f9ef
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
+          git push
 
   bump-package-version:
     needs: test-lint-build
@@ -69,10 +65,11 @@ jobs:
           node-version: 18
           cache: yarn
 
+      - name: Setup git user
+        uses: fregante/setup-git-user@77c1b5542f14ab6db4b8462d6857e31deb988b09
+
       - name: Bump versions
         run: |
-          git config --local user.email "github-actions@github.com"
-          git config --local user.name "github-actions"
           git pull
 
           npx changelogen@latest --release
@@ -80,10 +77,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Push changes
-        uses: ad-m/github-push-action@29f05e01bb17e6f28228b47437e03a7b69e1f9ef
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
+        run: git push
 
   trigger-release:
     needs: [test-lint-build, bump-package-version]
