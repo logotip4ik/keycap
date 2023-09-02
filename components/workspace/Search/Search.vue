@@ -2,6 +2,7 @@
 interface Props { onClose: () => void }
 const props = defineProps<Props>();
 
+const nuxtApp = useNuxtApp();
 const fuzzyWorker = useFuzzyWorker();
 
 const results = shallowRef<Array<FuzzyItem | CommandItem>>([]);
@@ -62,13 +63,19 @@ async function openItem() {
 
   actionEl.click();
 
-  setTimeout(() => {
-    if (actionName) {
-      document
-        .querySelector(`.contents__list a[aria-label*="${actionName}"]`)
-        ?.scrollIntoView({ behavior: 'smooth' }); // TODO: this is not working on chrome ?
-    }
-  }, 0);
+  if (!actionName)
+    return;
+
+  const focusActionItem = (t = 1): any => setTimeout(() => {
+    const item = document.querySelector(`.contents__list a[aria-label*="${actionName}"]`);
+
+    if (!item)
+      return focusActionItem(100);
+
+    item.scrollIntoView({ behavior: 'smooth' }); // TODO: this is not working on chrome ?
+  }, t);
+
+  focusActionItem();
 }
 
 function changeSelectedResult(difference: number) {
