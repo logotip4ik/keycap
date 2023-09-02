@@ -48,8 +48,8 @@ function handleSearchInput(value: string) {
 }
 
 async function openItem() {
-  const list = resultsEl.value?.$el as HTMLUListElement;
-  const result = list.children[selectedResult.value];
+  const list = resultsEl.value?.$el as HTMLUListElement | undefined;
+  const result = list?.children[selectedResult.value];
 
   if (!result) {
     if (!afterSearchCallback)
