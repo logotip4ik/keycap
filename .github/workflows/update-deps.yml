@@ -19,12 +19,12 @@ jobs:
 
     steps:
       - name: Checkouting repo
-        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744
         with:
           fetch-depth: 0
 
       - name: Node setup
-        uses: actions/setup-node@e33196f7422957bea03ed53f6fbb155025ffc7b8
+        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d
         with:
           node-version: 18
           cache: yarn
@@ -44,9 +44,10 @@ jobs:
       - name: Test if project still builds
         run: yarn build
 
+      - name: Setup git user
+        uses: fregante/setup-git-user@77c1b5542f14ab6db4b8462d6857e31deb988b09
+        
       - name: Commit and push changes
         run: |
-          git config --local user.email "github-actions@github.com"
-          git config --local user.name "github-actions"
           git commit -am "chore: update deps"
           git push
