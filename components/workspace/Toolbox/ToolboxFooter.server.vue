@@ -30,7 +30,7 @@ const links = [
         :key="idx"
         class="toolbox__footer__links__item"
       >
-        <NuxtLink :to="link.href" target="_blank" class="toolbox__footer__links__item__link">
+        <NuxtLink :href="link.href" target="_blank" class="toolbox__footer__links__item__link">
           {{ link.name }}
         </NuxtLink>
       </li>
