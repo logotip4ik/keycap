@@ -2663,7 +2663,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxtjs/fontaine@npm:^0.4.1":
+"@nuxtjs/fontaine@npm:0.4.1":
   version: 0.4.1
   resolution: "@nuxtjs/fontaine@npm:0.4.1"
   dependencies:
@@ -2673,6 +2673,19 @@ __metadata:
     pathe: ^1.0.0
     ufo: ^1.0.0
   checksum: 27b7f9f54f7875a24403a61a4ebe984c41e1f2cc75c767dac76533aefd837164c54bc0a9e1d8a68e4e63a357c7532423b6e3cd81bfd6ea4fa5d4968c90600055
+  languageName: node
+  linkType: hard
+
+"@nuxtjs/fontaine@patch:@nuxtjs/fontaine@npm%3A0.4.1#./.yarn/patches/@nuxtjs-fontaine-npm-0.4.1-7794318bb4.patch::locator=keycap%40workspace%3A.":
+  version: 0.4.1
+  resolution: "@nuxtjs/fontaine@patch:@nuxtjs/fontaine@npm%3A0.4.1#./.yarn/patches/@nuxtjs-fontaine-npm-0.4.1-7794318bb4.patch::version=0.4.1&hash=cc6b5c&locator=keycap%40workspace%3A."
+  dependencies:
+    "@nuxt/kit": ^3.6.0
+    fontaine: ^0.4.0
+    magic-string: ^0.30.0
+    pathe: ^1.0.0
+    ufo: ^1.0.0
+  checksum: 87c12f3d2da9a2285698e36fe5e69355d14601a29b6358fb3fdbc4cc6754b97a779a8612daba47a726d4e551da86e5e8a14cc403e3585e7491e8221d35ef9bfa
   languageName: node
   linkType: hard
 
