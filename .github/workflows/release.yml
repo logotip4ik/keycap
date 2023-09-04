@@ -65,9 +65,12 @@ jobs:
           git pull
           
           npx --yes changelogen@latest --release
-      
+          
       - name: Push changes
-        run: git push origin ${{ github.ref_name }}
+        run: |
+          git config user.name --local "github-actions[bot]"
+          git config user.email --local "github-actions[bot]@users.noreply.github.com"
+          git push origin ${{ github.ref_name }}
 
   trigger-release:
     needs: [test-lint-build, bump-package-version]
