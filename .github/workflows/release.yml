@@ -64,7 +64,7 @@ jobs:
           git config user.email --local "github-actions[bot]@users.noreply.github.com"
           git pull
           
-          npx --yes changelogen@latest --relase
+          npx --yes changelogen@latest gh relase
       
       - name: Push changes
         uses: ad-m/github-push-action@master
