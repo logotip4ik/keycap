@@ -2,7 +2,6 @@
 interface Props { onClose: () => void }
 const props = defineProps<Props>();
 
-const nuxtApp = useNuxtApp();
 const fuzzyWorker = useFuzzyWorker();
 
 const results = shallowRef<Array<FuzzyItem | CommandItem>>([]);
