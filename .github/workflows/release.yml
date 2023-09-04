@@ -58,16 +58,19 @@ jobs:
 
       - name: Bump versions
         run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
+          git config user.name --local "github-actions[bot]"
+          git config user.email --local "github-actions[bot]@users.noreply.github.com"
           git pull
-
-          npx changelogen@latest --release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+          
+          npx changelogen@latest gh release
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
       - name: Push changes
-        run: git push
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
 
   trigger-release:
     needs: [test-lint-build, bump-package-version]
