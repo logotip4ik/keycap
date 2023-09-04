@@ -32,19 +32,11 @@ jobs:
       - name: Run tests
         run: yarn run test
 
-      - name: Run lint:fix
-        run: yarn run lint:fix --ignore-pattern ".github"
+      - name: Run lint
+        run: yarn run lint --ignore-pattern ".github"
 
       - name: Run Build
         run: yarn run build
-
-      - name: Commit changes
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          git commit -a -m "chore: apply fixes" || echo "nothing to update"
-          git pull
-          git push
 
   bump-package-version:
     needs: test-lint-build
