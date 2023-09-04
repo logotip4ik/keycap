@@ -49,4 +49,5 @@ jobs:
           git config user.name --local "github-actions[bot]"
           git config user.email --local "github-actions[bot]@users.noreply.github.com"
           git commit -am "chore: update deps" || echo "nothing changed ?"
-          git push origin ${{ github.ref_name }}  
+          git remote set-url origin https://${{ secrets.ACTIONS_PAT }}@github.com/logotip4ik/keycap
+          git push origin ${{ github.ref_name }}
