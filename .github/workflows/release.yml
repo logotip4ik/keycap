@@ -62,7 +62,7 @@ jobs:
           git config user.email --local "github-actions[bot]@users.noreply.github.com"
           git pull
           
-          npx changelogen@latest gh release
+          npx changelogen@latest --relase
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
