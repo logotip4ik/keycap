@@ -30,6 +30,8 @@ function handleError() {
     redirect: user.value ? `/@${user.value.username}` : '/',
   });
 }
+
+onMounted(() => sendError(props.error))
 </script>
 
 <template>
