@@ -51,7 +51,6 @@ export async function generateIconFileDefinition({ name, path }: { name: string;
 
   }).data
     // NOTE: will this cause issues ?
-    // eslint-disable-next-line github/unescaped-html-literal
     .replace('<svg', '<svg v-once');
 
   const compiledCode = compileTemplate({
