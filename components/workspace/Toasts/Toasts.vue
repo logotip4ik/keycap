@@ -128,7 +128,7 @@ onMounted(() => {
 }
 
 .toast-enter-from {
-  transform: scale(0.9) translate3d(var(--initial-pos));
+  transform: scale(0.95) translate3d(var(--initial-pos));
 }
 
 .toast-leave-to {
