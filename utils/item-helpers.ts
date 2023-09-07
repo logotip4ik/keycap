@@ -95,8 +95,27 @@ export async function createNote(noteName: string, self: FolderOrNote, parent: F
   showItem(newlyCreatedNote);
 }
 
-export async function renameFolder() {
-  // TODO
+export async function renameFolder(newName: string, self: FolderOrNote, parent: FolderWithContents) {
+  const newFolder: Record<string, string | boolean> = { name: newName.trim() };
+
+  if (!newFolder.name)
+    return updateSubfolderInFolder(self, { editing: false }, parent);
+
+  const foldersCache = useFoldersCache();
+
+  const currentFolderPath = getCurrentFolderPath();
+  const folderPathName = encodeURIComponent(self.name);
+  const folderPath = currentFolderPath + folderPathName;
+
+  await $fetch<QuickResponse>(`/api/folder${folderPath}`, { method: 'PATCH', body: newFolder })
+    .catch(() => updateSubfolderInFolder(self, { editing: false }, parent));
+
+  const folderNameRegex = new RegExp(`${encodeURIComponent(self.name)}$`);
+  newFolder.editing = false;
+  newFolder.path = self.path.replace(folderNameRegex, encodeURIComponent(newFolder.name));
+
+  foldersCache.delete(self.path);
+  updateSubfolderInFolder(self, newFolder, parent);
 }
 
 export async function renameNote(newName: string, self: FolderOrNote, parent: FolderWithContents) {
