@@ -29,7 +29,7 @@ const currentlyConfirming = ref(-1); // You can confirm one at a time
 const actions = [
   { name: 'open in a new tab', handler: openNewTab },
   { name: 'preload', handler: preloadItemWithIndication },
-  (!isFolder && { name: 'rename', handler: renameItem }),
+  { name: 'rename', handler: renameItem },
   { name: 'show details', handler: showDetails },
   { name: 'delete', needConfirmation: true, handler: deleteItem },
 ].filter(Boolean);
