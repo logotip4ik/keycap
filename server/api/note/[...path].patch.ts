@@ -53,7 +53,7 @@ export default defineEventHandler(async (event) => {
   return { ok: true };
 });
 
-const currentNoteNameRE = /[\w%]+$/;
+const currentNoteNameRE = /[\w%.]+$/;
 function makeNewNotePath(currentPath: string, newName: string): string {
   return currentPath.replace(currentNoteNameRE, encodeURIComponent(newName));
 }
@@ -63,13 +63,17 @@ if (import.meta.vitest) {
 
   describe('note.patch route', () => {
     it('correctly generated new note path', () => {
-      const currentPath = '/with%20note';
-      const newPath = makeNewNotePath(currentPath, 'new name');
+      let currentPath = '/with%20note';
+      let newPath = makeNewNotePath(currentPath, 'new name');
       expect(newPath).toEqual('/new%20name');
 
-      const currentInFolderPath = '/folder/with%20note';
-      const newInFolderPath = makeNewNotePath(currentInFolderPath, 'new name');
-      expect(newInFolderPath).toEqual('/folder/new%20name');
+      currentPath = '/folder/with%20note';
+      newPath = makeNewNotePath(currentPath, 'new name');
+      expect(newPath).toEqual('/folder/new%20name');
+
+      currentPath = '/something%204.0';
+      newPath = makeNewNotePath(currentPath, 'something 5.0');
+      expect(newPath).toEqual('/something%205.0');
     });
   });
 }

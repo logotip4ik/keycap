@@ -14,7 +14,7 @@ const itemPath = isCommand
       // removing account name
       .replace(/\/\w+\//, '')
       // the last one string from path
-      .replace(/\/?[\w%]+$/, ''),
+      .replace(/\/?[\w%.]+$/, ''),
   );
 
 async function handleActionClick() {
