@@ -70,7 +70,10 @@ const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefi
 const folderContents = computed(() => {
   if (!folder.value) return [];
 
-  return folder.value.notes.concat(folder.value.subfolders) as Array<FolderOrNote>;
+  const notes = folder.value.notes || [];
+  const subfolders = folder.value.subfolders || [];
+
+  return notes.concat(subfolders) as Array<FolderOrNote>;
 });
 
 function showMenu(target: HTMLElement, item: FolderOrNote) {
