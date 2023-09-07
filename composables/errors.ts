@@ -29,10 +29,10 @@ export function sendError(error: Error, properties?: Record<string, string>) {
   if (properties)
     Object.assign(payload.properties, properties);
 
-  // if (import.meta.env.PROD)
+  if (import.meta.env.PROD)
     navigator.sendBeacon(errors.url, JSON.stringify(payload));
-  // else
-  //   console.log(payload)
+  else
+    console.log(payload)
 } 
 
 function getSessionId() {
