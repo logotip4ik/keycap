@@ -31,7 +31,7 @@ function handleError() {
   });
 }
 
-onMounted(() => sendError(props.error))
+onMounted(() => sendError(props.error));
 </script>
 
 <template>
