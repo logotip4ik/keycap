@@ -4,8 +4,7 @@
     "@antfu"
   ],
   "plugins": [
-    "regexp",
-    "github"
+    "regexp"
   ],
   "rules": {
     "quotes": ["error", "single"],
@@ -17,7 +16,6 @@
     "@typescript-eslint/array-type": ["error", { "default": "generic" }],
     "@typescript-eslint/no-shadow": "off",
     "yml/no-empty-mapping-value": "off",
-    "github/no-dataset": "off",
     "n/prefer-global/process": ["error", "always"]
   }
 }
