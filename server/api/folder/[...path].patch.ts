@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
   if (!data.name)
     return { ok: true };
 
-  const newFolderPath = makeNewFolderPath(folderPath, data.name);
+  const newFolderPath = makeNewItemPath(folderPath, data.name);
 
   const sqlStartsWithFolderPath = `${folderPath}/%`;
 
@@ -57,24 +57,3 @@ export default defineEventHandler(async (event) => {
 
   return { ok: true };
 });
-
-const currentFolderNameRE = /[\w%.]+$/;
-function makeNewFolderPath(currentPath: string, newName: string): string {
-  return currentPath.replace(currentFolderNameRE, encodeURIComponent(newName));
-}
-
-if (import.meta.vitest) {
-  const { describe, it, expect } = import.meta.vitest;
-
-  describe('folder.patch route', () => {
-    it('correctly generated new note path', () => {
-      const currentPath = '/bogdankostyuk/folder%201/polytech%202.0';
-      const newPath = makeNewFolderPath(currentPath, 'polytech 2.1');
-      expect(newPath).toEqual('/bogdankostyuk/folder%201/polytech%202.1');
-
-      const currentInFolderPath = '/folder/with%20note';
-      const newInFolderPath = makeNewFolderPath(currentInFolderPath, 'new name');
-      expect(newInFolderPath).toEqual('/folder/new%20name');
-    });
-  });
-}

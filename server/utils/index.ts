@@ -6,6 +6,7 @@ import type { H3Event } from 'h3';
 import type { Prisma } from '@prisma/client';
 
 export const usernameRE = /^[\w.\-]{3,16}$/;
+export const currentItemNameRE = /[\w%.]+$/;
 export const OAuthProvider = SocialAuth;
 
 export { toBigInt, stringifiedBigIntRE } from '~/utils';
@@ -28,6 +29,10 @@ export function generateNotePath(username: string, path: string): string {
 
 export function generateRootFolderPath(username: string) {
   return `/${username}`;
+}
+
+export function makeNewItemPath(currentPath: string, newName: string): string {
+  return currentPath.replace(currentItemNameRE, encodeURIComponent(newName));
 }
 
 export function getNoteSelectParamsFromEvent(event: H3Event): Prisma.NoteSelect {
@@ -84,4 +89,28 @@ export function getFolderSelectParamsFromEvent(event: H3Event): Prisma.FolderSel
     return { id: true };
 
   return defaultSelects;
+}
+
+if (import.meta.vitest) {
+  const { describe, it, expect } = import.meta.vitest;
+
+  describe('new item.path generation', () => {
+    it('correctly generated new note path', () => {
+      let currentPath = '/with%20note';
+      let newPath = makeNewItemPath(currentPath, 'new name');
+      expect(newPath).toEqual('/new%20name');
+
+      currentPath = '/folder/with%20note';
+      newPath = makeNewItemPath(currentPath, 'new name');
+      expect(newPath).toEqual('/folder/new%20name');
+
+      currentPath = '/something%204.0';
+      newPath = makeNewItemPath(currentPath, 'something 5.0');
+      expect(newPath).toEqual('/something%205.0');
+
+      currentPath = '/in%20folder/folder%201/abc%202.0';
+      newPath = makeNewItemPath(currentPath, 'abc 2.1');
+      expect(newPath).toEqual('/in%20folder/folder%201/abc%202.1');
+    });
+  });
 }
