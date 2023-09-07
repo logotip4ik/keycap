@@ -80,5 +80,8 @@ export function getFolderSelectParamsFromEvent(event: H3Event): Prisma.FolderSel
     }
   }
 
+  if (isMethod(event, 'PATCH'))
+    return { id: true };
+
   return defaultSelects;
 }
