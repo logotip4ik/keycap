@@ -31,7 +31,7 @@ export function sendError(error: Error, properties?: Record<string, string>) {
   if (import.meta.env.PROD)
     navigator.sendBeacon(errors.url, JSON.stringify(payload));
   else
-    console.log(payload);
+    console.log(payload); // eslint-disable-line no-console
 }
 
 function getSessionId() {
