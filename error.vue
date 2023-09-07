@@ -31,7 +31,14 @@ function handleError() {
   });
 }
 
-onMounted(() => sendError(props.error));
+onMounted(() => {
+  requestIdleCallback(() => {
+    if (props.error.statusCode === 404)
+      return;
+
+    sendError(props.error);
+  });
+});
 </script>
 
 <template>
