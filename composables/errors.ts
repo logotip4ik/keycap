@@ -6,10 +6,10 @@ export function setupErrorHandling() {
     return;
 
 
-  onErrorCaptured(sendError);
+  onErrorCaptured((e) => sendError(e));
 }
 
-export function sendError(error: Error) {
+export function sendError(error: Error, properties?: Record<string, string>) {
   const { errors } = useRuntimeConfig().public;
 
   const payload = {
@@ -25,6 +25,9 @@ export function sendError(error: Error) {
     },
     event: "$event"
   }
+
+  if (properties)
+    Object.assign(payload.properties, properties);
 
   // if (import.meta.env.PROD)
     navigator.sendBeacon(errors.url, JSON.stringify(payload));
