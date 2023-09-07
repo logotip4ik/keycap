@@ -78,8 +78,8 @@ export default defineNuxtConfig({
 
       errors: {
         url: '',
-        apiKey: ''
-      }
+        apiKey: '',
+      },
     },
 
     github: {
