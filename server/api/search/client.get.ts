@@ -20,13 +20,13 @@ export default defineEventHandler(async (event) => {
   const [notes, folders] = await Promise.all([
     prisma.note.findMany({
       skip,
-      where: { path: { startsWith: pathToSearch } },
+      where: { path: { startsWith: pathToSearch }, ownerId: user.id },
       take: Math.round(select * 0.75),
       select: { name: true, path: true },
     }),
     prisma.folder.findMany({
       skip,
-      where: { path: { startsWith: pathToSearch } },
+      where: { path: { startsWith: pathToSearch }, ownerId: user.id },
       take: Math.round(select * 0.25),
       select: { name: true, path: true, root: true },
     }),
