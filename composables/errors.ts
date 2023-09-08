@@ -1,6 +1,6 @@
 import parseDuration from 'parse-duration';
 
-export function setupErrorHandling() {
+export function setupErrorLogging() {
   // TODO: use server logger ?
   if (import.meta.server)
     return;
