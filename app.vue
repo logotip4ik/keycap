@@ -3,6 +3,8 @@ import '~/polyfills/array-at';
 
 import parseDuration from 'parse-duration';
 
+setupErrorLogging();
+
 // NOTE: should be removed from client bundle
 const device = import.meta.server ? parseUA(useRequestHeaders()['user-agent']) : undefined;
 

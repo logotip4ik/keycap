@@ -30,6 +30,15 @@ function handleError() {
     redirect: user.value ? `/@${user.value.username}` : '/',
   });
 }
+
+onMounted(() => {
+  requestIdleCallback(() => {
+    if (props.error.statusCode === 404)
+      return;
+
+    sendError(props.error);
+  });
+});
 </script>
 
 <template>
