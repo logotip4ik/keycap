@@ -1,5 +1,5 @@
 import { readFile, readdir } from 'node:fs/promises';
-import { addComponent, addTemplate, defineNuxtModule } from '@nuxt/kit';
+import { addComponent, addTemplate, addTypeTemplate, defineNuxtModule } from '@nuxt/kit';
 import { resolve } from 'pathe';
 import { camelCase, pascalCase } from 'scule';
 import { optimize as optimizeSvg } from 'svgo';
@@ -40,6 +40,22 @@ export default defineNuxtModule({
         preload: false,
       });
     }
+
+    addTypeTemplate({
+      write: true,
+      filename: './types/icons-shim.d.ts',
+      async getContents() {
+        const contents = [
+          'declare module \'icons/icon-*\' {',
+          '  import { DefineComponent } from \'vue\'',
+          '  const component: DefineComponent<{}, {}, any>',
+          '  export default component',
+          '}',
+        ];
+
+        return contents.join('\n');
+      },
+    });
   },
 });
 
