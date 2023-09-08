@@ -37,7 +37,7 @@ export default defineEventHandler(async (event) => {
   const newFolderPath = makeNewItemPath(folderPath, data.name);
 
   const sqlStartsWithFolderPath = `${folderPath}/%`;
-  const sqlFolderPathRegexp = `^${folderPath.replace(/\//g, '\/')}\/`;
+  const sqlFolderPathRegexp = `^${folderPath}/`;
 
   const replaceValue = `${newFolderPath}/`;
 
