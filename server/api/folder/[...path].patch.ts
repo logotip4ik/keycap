@@ -28,7 +28,8 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  // if user updates note name we also need to update its path
+  // Shortcircuting as currently only folder name could be updated
+  // But we don't require `name` prop in request body
   if (!data.name)
     return { ok: true };
 
