@@ -81,7 +81,7 @@ export async function createNote(noteName: string, self: FolderOrNote, parent: F
     method: 'POST',
     body: { name: noteName, parentId: parent.id },
   })
-    .catch((err) => { createToast(err.data.statusMessage); });
+    .catch((err) => { createToast(err.data.statusMessage); }); // TODO: show to user more pleasing error
 
   if (!newlyCreatedNote)
     return;
@@ -101,14 +101,16 @@ export async function renameFolder(newName: string, self: FolderOrNote, parent: 
   if (!newFolder.name)
     return updateSubfolderInFolder(self, { editing: false }, parent);
 
-  const foldersCache = useFoldersCache();
-
   const currentFolderPath = getCurrentFolderPath();
   const folderPathName = encodeURIComponent(self.name);
   const folderPath = currentFolderPath + folderPathName;
 
-  await $fetch<QuickResponse>(`/api/folder${folderPath}`, { method: 'PATCH', body: newFolder })
-    .catch(() => updateSubfolderInFolder(self, { editing: false }, parent));
+  const res = await $fetch<QuickResponse>(`/api/folder${folderPath}`, { method: 'PATCH', body: newFolder })
+    .catch(() => { updateSubfolderInFolder(self, { editing: false }, parent); });
+
+  if (!res) return;
+
+  const foldersCache = useFoldersCache();
 
   const folderNameRegex = new RegExp(`${encodeURIComponent(self.name)}$`);
   newFolder.editing = false;
@@ -124,14 +126,16 @@ export async function renameNote(newName: string, self: FolderOrNote, parent: Fo
   if (!newNote.name)
     return updateNoteInFolder(self, { editing: false }, parent);
 
-  const notesCache = useNotesCache();
-
   const currentFolderPath = getCurrentFolderPath();
   const notePathName = encodeURIComponent(self.name);
   const notePath = currentFolderPath + notePathName;
 
-  await $fetch<QuickResponse>(`/api/note${notePath}`, { method: 'PATCH', body: newNote })
-    .catch(() => updateNoteInFolder(self, { editing: false }, parent));
+  const res = await $fetch<QuickResponse>(`/api/note${notePath}`, { method: 'PATCH', body: newNote })
+    .catch(() => { updateNoteInFolder(self, { editing: false }, parent); });
+
+  if (!res) return;
+
+  const notesCache = useNotesCache();
 
   newNote.editing = false;
   newNote.path = self.path.replace(encodeURIComponent(self.name), encodeURIComponent(newNote.name));
