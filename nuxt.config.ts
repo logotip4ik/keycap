@@ -75,6 +75,11 @@ export default defineNuxtConfig({
       siteOrigin: '',
 
       oauthEnabled: false,
+
+      errors: {
+        url: '',
+        apiKey: '',
+      },
     },
 
     github: {

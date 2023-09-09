@@ -17,10 +17,7 @@ export default defineEventHandler(async (event) => {
 
   await prisma.$transaction(async (tx) => {
     const shareToDelete = await tx.share.findFirst({
-      where: {
-        owner: { id: user.id },
-        note: { path: notePath },
-      },
+      where: { note: { path: notePath }, ownerId: user.id },
       select: { id: true, link: true },
     }).catch(async (err) => {
       await event.context.logger.error({ err, msg: 'share.findFirst failed' });
