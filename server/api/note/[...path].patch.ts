@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
 
   // if user updates note name we also need to update its path
   if (data.name)
-    data.path = makeNewNotePath(notePath, data.name);
+    data.path = makeNewItemPath(notePath, data.name);
 
   const selectParams = getNoteSelectParamsFromEvent(event);
 
@@ -52,28 +52,3 @@ export default defineEventHandler(async (event) => {
 
   return { ok: true };
 });
-
-const currentNoteNameRE = /[\w%.]+$/;
-function makeNewNotePath(currentPath: string, newName: string): string {
-  return currentPath.replace(currentNoteNameRE, encodeURIComponent(newName));
-}
-
-if (import.meta.vitest) {
-  const { describe, it, expect } = import.meta.vitest;
-
-  describe('note.patch route', () => {
-    it('correctly generated new note path', () => {
-      let currentPath = '/with%20note';
-      let newPath = makeNewNotePath(currentPath, 'new name');
-      expect(newPath).toEqual('/new%20name');
-
-      currentPath = '/folder/with%20note';
-      newPath = makeNewNotePath(currentPath, 'new name');
-      expect(newPath).toEqual('/folder/new%20name');
-
-      currentPath = '/something%204.0';
-      newPath = makeNewNotePath(currentPath, 'something 5.0');
-      expect(newPath).toEqual('/something%205.0');
-    });
-  });
-}
