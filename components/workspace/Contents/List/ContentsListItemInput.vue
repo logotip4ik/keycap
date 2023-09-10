@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { allowedItemNameRE } from '~/server/utils';
+
 interface Props { item: FolderOrNote; parent: FolderWithContents }
 const props = defineProps<Props>();
 
@@ -54,6 +56,7 @@ onMounted(() => {
       type="text"
       minlength="2"
       placeholder="note..."
+      :pattern="allowedItemNameRE.source"
       @blur="handleReset"
       @keydown.esc="handleReset"
     >

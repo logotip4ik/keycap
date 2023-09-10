@@ -5,8 +5,10 @@ import { withLeadingSlash, withoutTrailingSlash } from 'ufo';
 import type { H3Event } from 'h3';
 import type { Prisma } from '@prisma/client';
 
+// escaping `-` because it is used on client side and browsers don't like it unescaped
+export const allowedItemNameRE = /^[\w .&#!\-]{2,50}$/;
+export const currentItemNameRE = /[\w%.!]+$/;
 export const usernameRE = /^[\w.\-]{3,16}$/;
-export const currentItemNameRE = /[\w%.]+$/;
 export const OAuthProvider = SocialAuth;
 
 export { toBigInt, stringifiedBigIntRE } from '~/utils';
@@ -93,6 +95,35 @@ export function getFolderSelectParamsFromEvent(event: H3Event): Prisma.FolderSel
 
 if (import.meta.vitest) {
   const { describe, it, expect } = import.meta.vitest;
+
+  describe('item name validation', () => {
+    it('valid names', () => {
+      let name = 'something like this';
+      expect(allowedItemNameRE.test(name)).toBeTruthy();
+
+      name = 'som_4hing-like.this';
+      expect(allowedItemNameRE.test(name)).toBeTruthy();
+
+      const allowedSymbols = ['&', '#', '!'];
+
+      for (const symbol of allowedSymbols) {
+        name = `test${symbol}`;
+        expect(allowedItemNameRE.test(name)).toBeTruthy();
+      }
+    });
+
+    it('not valid names', () => {
+      let name = 's';
+      expect(allowedItemNameRE.test(name)).toBeFalsy();
+
+      const disalloedSymbols = ['(', '%', '$', '*', '@'];
+
+      for (const symbol of disalloedSymbols) {
+        name = `test${symbol}`;
+        expect(allowedItemNameRE.test(name)).toBeFalsy();
+      }
+    });
+  });
 
   describe('new item.path generation', () => {
     it('correctly generated new note path', () => {
