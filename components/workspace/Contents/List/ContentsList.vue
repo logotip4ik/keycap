@@ -154,7 +154,12 @@ useTinykeys({
       await nextTick();
     }
 
-    if (folder.value && !folder.value.notes.some((note) => note.creating)) {
+    const alreadyCreating = folder.value && folder.value.notes.some((note) => note.creating);
+
+    if (alreadyCreating)
+      return;
+
+    if (folder.value) {
       preCreateItem(folder.value);
     }
     else if (!folder.value) {
