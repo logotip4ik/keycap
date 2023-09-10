@@ -43,7 +43,6 @@ export function getCurrentFolderPath() {
 }
 
 export async function createFolder(folderName: string, self: FolderOrNote, parent: FolderWithContents) {
-  const foldersCache = useFoldersCache();
   const createToast = useToast();
 
   const currentFolderPath = getCurrentFolderPath();
@@ -59,18 +58,22 @@ export async function createFolder(folderName: string, self: FolderOrNote, paren
   if (!newlyCreatedFolder)
     return;
 
+  const foldersCache = useFoldersCache();
+  const offlineStorage = useOfflineStorage();
+
   newlyCreatedFolder.creating = false;
   parent.subfolders.push(newlyCreatedFolder);
 
   deleteNoteFromFolder(self, parent);
+
+  foldersCache.set(newlyCreatedFolder.path, newlyCreatedFolder);
+  offlineStorage.setItem?.(newlyCreatedFolder.path, newlyCreatedFolder);
   updateSubfolderInFolder(self, newlyCreatedFolder, parent);
 
   showItem(newlyCreatedFolder);
-  foldersCache.set(newlyCreatedFolder.path, newlyCreatedFolder);
 }
 
 export async function createNote(noteName: string, self: FolderOrNote, parent: FolderWithContents) {
-  const notesCache = useNotesCache();
   const createToast = useToast();
 
   const currentFolderPath = getCurrentFolderPath();
@@ -86,10 +89,14 @@ export async function createNote(noteName: string, self: FolderOrNote, parent: F
   if (!newlyCreatedNote)
     return;
 
+  const notesCache = useNotesCache();
+  const offlineStorage = useOfflineStorage();
+
   newlyCreatedNote.content ||= '';
   newlyCreatedNote.creating = false;
 
   notesCache.set(newlyCreatedNote.path, newlyCreatedNote);
+  offlineStorage.setItem?.(newlyCreatedNote.path, newlyCreatedNote);
   updateNoteInFolder(self, newlyCreatedNote, parent);
 
   showItem(newlyCreatedNote);
@@ -108,16 +115,38 @@ export async function renameFolder(newName: string, self: FolderOrNote, parent: 
   const res = await $fetch<QuickResponse>(`/api/folder${folderPath}`, { method: 'PATCH', body: newFolder })
     .catch(() => { updateSubfolderInFolder(self, { editing: false }, parent); });
 
-  if (!res) return;
+  if (!res)
+    return;
 
+  const notesCache = useNotesCache();
   const foldersCache = useFoldersCache();
+  const offlineStorage = useOfflineStorage();
 
   const folderNameRegex = new RegExp(`${encodeURIComponent(self.name)}$`);
-  newFolder.editing = false;
   newFolder.path = self.path.replace(folderNameRegex, encodeURIComponent(newFolder.name));
+  newFolder.editing = false;
+
+  const folder = foldersCache.get(self.path);
 
   foldersCache.delete(self.path);
+  offlineStorage.removeItem?.(self.path);
+
   updateSubfolderInFolder(self, newFolder, parent);
+
+  self = toRaw(self);
+  foldersCache.set(self.path, self);
+  offlineStorage.setItem?.(self.path, self);
+
+  if (folder) {
+    const itemsToRename = folder.notes.concat(folder.subfolders);
+
+    for (const item of itemsToRename) {
+      const cache = 'root' in item ? foldersCache : notesCache;
+
+      cache.delete(item.path);
+      offlineStorage.removeItem?.(item.path);
+    }
+  }
 }
 
 export async function renameNote(newName: string, self: FolderOrNote, parent: FolderWithContents) {
@@ -133,46 +162,84 @@ export async function renameNote(newName: string, self: FolderOrNote, parent: Fo
   const res = await $fetch<QuickResponse>(`/api/note${notePath}`, { method: 'PATCH', body: newNote })
     .catch(() => { updateNoteInFolder(self, { editing: false }, parent); });
 
-  if (!res) return;
+  if (!res)
+    return;
 
   const notesCache = useNotesCache();
+  const offlineStorage = useOfflineStorage();
 
+  const noteNameRegex = new RegExp(`${encodeURIComponent(self.name)}$`);
+  newNote.path = self.path.replace(noteNameRegex, encodeURIComponent(newNote.name));
   newNote.editing = false;
-  newNote.path = self.path.replace(encodeURIComponent(self.name), encodeURIComponent(newNote.name));
+
+  const note = notesCache.get(self.path);
 
   notesCache.delete(self.path);
+  offlineStorage.removeItem?.(self.path);
+
   updateNoteInFolder(self, newNote, parent);
 
+  if (note) {
+    Object.assign(note, newNote);
+
+    notesCache.set(note.path, note);
+    offlineStorage.setItem?.(note.path, note);
+  }
+
   // @ts-expect-error setting path two lines before
-  showItem(newNote, { replace: true });
+  showItem(newNote);
 }
 
 export async function deleteNote(self: FolderOrNote, parent: FolderWithContents) {
-  const notesCache = useNotesCache();
-
   const currentFolderPath = getCurrentFolderPath();
   const notePathName = encodeURIComponent(self.name);
   const notePath = currentFolderPath + notePathName;
 
-  await $fetch<QuickResponse>(`/api/note${notePath}`, { method: 'DELETE' });
+  const res = await $fetch.raw(`/api/note${notePath}`, { method: 'DELETE' })
+    .catch(() => null);
 
-  showItem(parent, { replace: true });
+  if (!res)
+    return;
 
-  deleteNoteFromFolder(self, parent);
+  const notesCache = useNotesCache();
+  const offlineStorage = useOfflineStorage();
+
+  showItem(parent);
+
   notesCache.delete(self.path);
+  offlineStorage.removeItem?.(self.path);
+  deleteNoteFromFolder(self, parent);
 }
 
 export async function deleteFolder(self: FolderOrNote, parent: FolderWithContents) {
-  const foldersCache = useFoldersCache();
-
   const currentFolderPath = getCurrentFolderPath();
   const folderPathName = encodeURIComponent(self.name);
   const folderPath = currentFolderPath + folderPathName;
 
-  await $fetch<QuickResponse>(`/api/folder${folderPath}`, { method: 'DELETE' });
+  const res = await $fetch.raw<null>(`/api/folder${folderPath}`, { method: 'DELETE' })
+    .catch(() => null);
+
+  if (!res)
+    return;
+
+  const foldersCache = useFoldersCache();
+  const offlineStorage = useOfflineStorage();
+
+  foldersCache.delete(self.path);
+  offlineStorage.removeItem?.(self.path);
+
+  const itemPathToCheck = `${self.path}/`;
+  offlineStorage.getAllItems?.()
+    .then((items: Array<FolderOrNote>) => {
+      for (const item of items) {
+        if (!item.path.startsWith(itemPathToCheck))
+          continue;
+
+        offlineStorage.removeItem?.(item.path);
+      }
+    });
 
   deleteSubfolderFromFolder(self, parent);
-  foldersCache.delete(self.path);
 }
 
 // NOTE: Refactor all functions above to use this approach ?
@@ -184,7 +251,8 @@ export async function preloadItem(self: FolderOrNote) {
   const pathName = encodeURIComponent(self.name);
   const path = pathPrefix + currentFolderPath + pathName;
 
-  const item = await $fetch<FolderWithContents | NoteMinimal>(`/api/${path}`).catch(() => null);
+  const item = await $fetch<FolderWithContents | NoteMinimal>(`/api/${path}`)
+    .catch(() => null);
 
   if (!item) return;
 
