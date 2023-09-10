@@ -26,7 +26,7 @@ export function deleteNoteFromFolder(noteToDelete: NoteMinimal, parent: FolderWi
   parent.notes.splice(noteIdxToDelete, 1);
 }
 
-export function deleteSubfolderFromFolder(subfolderToDelete: FolderWithContents, parent: FolderWithContents) {
+export function deleteSubfolderFromFolder(subfolderToDelete: FolderMinimal, parent: FolderWithContents) {
   const folderIdxToDelete = parent.subfolders.findIndex((folder) => folder.id === subfolderToDelete.id);
 
   if (folderIdxToDelete === -1) return;
@@ -42,8 +42,8 @@ export function updateNoteInFolder(
 }
 
 export function updateSubfolderInFolder(
-  folderToUpdate: FolderWithContents,
-  fieldsToUpdate: Partial<FolderWithContents>,
+  folderToUpdate: FolderMinimal,
+  fieldsToUpdate: Partial<FolderMinimal>,
   _parentFolder: FolderWithContents) {
   Object.assign(folderToUpdate, fieldsToUpdate);
 }

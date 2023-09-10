@@ -133,9 +133,9 @@ export async function renameFolder(newName: string, self: FolderOrNote, parent: 
 
   updateSubfolderInFolder(self, newFolder, parent);
 
-  self = toRaw(self);
-  foldersCache.set(self.path, self);
-  offlineStorage.setItem?.(self.path, self);
+  const folderToCache = { ...toRaw(self), notes: [], subfolders: [] };
+  foldersCache.set(self.path, folderToCache);
+  offlineStorage.setItem?.(self.path, folderToCache);
 
   if (folder) {
     const itemsToRename = folder.notes.concat(folder.subfolders);

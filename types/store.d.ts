@@ -32,7 +32,7 @@ declare global {
   }
 
   // TODO: use FolderMinimal here
-  export type FolderOrNote = FolderWithContents & NoteMinimal;
+  export type FolderOrNote = FolderMinimal & NoteMinimal;
 
   export interface CommandItem {
     name: string
