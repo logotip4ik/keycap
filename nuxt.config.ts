@@ -191,13 +191,6 @@ export default defineNuxtConfig({
       'import.meta.vitest': 'undefined',
     },
 
-    test: {
-      includeSource: [
-        'server/**/*.{js,ts}',
-        'utils/**/*.{js,ts}',
-      ],
-    },
-
     plugins: [
       UnheadVite(),
       ParseDurationTransformPlugin(),
