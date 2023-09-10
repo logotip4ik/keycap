@@ -10,7 +10,7 @@ interface _IFuzzyWorker {
   refreshItemsCache: () => Promise<void>
 }
 
-declare global {  
+declare global {
   export type ItemMetatags = { 
     editing?: boolean
     creating?: boolean
@@ -20,14 +20,18 @@ declare global {
     id: string 
   };
 
-  export type SerializedNote = NoteMinimal & { content: string };
-
-  export type FolderWithContents = Omit<Folder, 'createdAt' | 'updatedAt'> & ItemMetatags & {
+  export type FolderMinimal = Pick<Folder, 'name' | 'path' | 'root'> & ItemMetatags & {
     id: string
-    notes: NoteMinimal[]
-    subfolders: FolderWithContents[]
   }
 
+  export type SerializedNote = NoteMinimal & { content: string };
+
+  export type FolderWithContents = FolderMinimal & {
+    notes: NoteMinimal[],
+    subfolders: FolderMinimal[],
+  }
+
+  // TODO: use FolderMinimal here
   export type FolderOrNote = FolderWithContents & NoteMinimal;
 
   export interface CommandItem {
