@@ -52,5 +52,8 @@ export default defineEventHandler(async (event) => {
 
   setResponseStatus(event, 201);
 
-  return { ...folder, notes: [], subfolders: [] };
+  folder.notes ||= [];
+  folder.subfolders ||= [];
+
+  return folder;
 });
