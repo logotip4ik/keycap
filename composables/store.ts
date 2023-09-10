@@ -24,9 +24,6 @@ export function deleteNoteFromFolder(noteToDelete: NoteMinimal, parent: FolderWi
   if (noteIdxToDelete === -1) return;
 
   parent.notes.splice(noteIdxToDelete, 1);
-
-  if (fuzzyWorker.value && !noteToDelete.creating) fuzzyWorker.value.refreshItemsCache();
-  if (offlineStorage.removeItem) offlineStorage.removeItem(noteToDelete.path);
 }
 
 export function deleteSubfolderFromFolder(subfolderToDelete: FolderWithContents, parent: FolderWithContents) {
@@ -35,9 +32,6 @@ export function deleteSubfolderFromFolder(subfolderToDelete: FolderWithContents,
   if (folderIdxToDelete === -1) return;
 
   parent.subfolders.splice(folderIdxToDelete, 1);
-
-  if (fuzzyWorker.value) fuzzyWorker.value.refreshItemsCache();
-  if (offlineStorage.removeItem) offlineStorage.removeItem(subfolderToDelete.path);
 }
 
 export function updateNoteInFolder(
@@ -45,15 +39,6 @@ export function updateNoteInFolder(
   fieldsToUpdate: Partial<NoteMinimal>,
   _parent: FolderWithContents) {
   Object.assign(noteToUpdate, fieldsToUpdate);
-
-  if (fieldsToUpdate.creating === true || fieldsToUpdate.editing === true)
-    return;
-
-  if (fuzzyWorker.value) fuzzyWorker.value.refreshItemsCache();
-  if (offlineStorage.removeItem && offlineStorage.setItem) {
-    offlineStorage.removeItem(noteToUpdate.path);
-    offlineStorage.setItem(noteToUpdate.path, toRaw(noteToUpdate));
-  }
 }
 
 export function updateSubfolderInFolder(
@@ -61,13 +46,4 @@ export function updateSubfolderInFolder(
   fieldsToUpdate: Partial<FolderWithContents>,
   _parentFolder: FolderWithContents) {
   Object.assign(folderToUpdate, fieldsToUpdate);
-
-  if (fieldsToUpdate.creating === true || fieldsToUpdate.editing === true)
-    return;
-
-  if (fuzzyWorker.value) fuzzyWorker.value.refreshItemsCache();
-  if (offlineStorage.removeItem && offlineStorage.setItem) {
-    offlineStorage.removeItem(folderToUpdate.path);
-    offlineStorage.setItem(folderToUpdate.path, toRaw(folderToUpdate));
-  }
 }
