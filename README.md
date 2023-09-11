@@ -21,7 +21,7 @@ After months of using Windows and Android, I found out that notes aren't syncing
 
 - [x] custom `ctrl+k` search
 - [x] commands through `ctrl+k`
-- [ ] add support for renaming __folders__
+- [x] add support for renaming __folders__
 - [x] OAuth with Google and GitHub?
 - [x] show notes via sharable links
 - [ ] code highlighting
