@@ -1,6 +1,63 @@
 # Changelog
 
 
+## v3.0.0
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v2.5.0...v3.0.0)
+
+### 🚀 Enhancements
+
+- Client error logging ([#6](https://github.com/logotip4ik/keycap/pull/6))
+- Folder renaming ([#7](https://github.com/logotip4ik/keycap/pull/7))
+
+### 🩹 Fixes
+
+- Remove github plugin from eslint config ([c57be88](https://github.com/logotip4ik/keycap/commit/c57be88))
+- Provide icons shim ([49c316f](https://github.com/logotip4ik/keycap/commit/49c316f))
+- Use correct type for subfolder ([2db6dc8](https://github.com/logotip4ik/keycap/commit/2db6dc8))
+
+### 💅 Refactors
+
+- Remove github eslint plugin ([d6e922a](https://github.com/logotip4ik/keycap/commit/d6e922a))
+- Bump a bit toast scale from transition value ([a86b8e6](https://github.com/logotip4ik/keycap/commit/a86b8e6))
+- Allow dots in note names ([331aff7](https://github.com/logotip4ik/keycap/commit/331aff7))
+- Use `ownerId` in where clause ([61941dc](https://github.com/logotip4ik/keycap/commit/61941dc))
+- Don't do anything if already creating ([876ca65](https://github.com/logotip4ik/keycap/commit/876ca65))
+- Reuse folder object at return ([6161860](https://github.com/logotip4ik/keycap/commit/6161860))
+- Utilize nitro to auto set status ([08d8613](https://github.com/logotip4ik/keycap/commit/08d8613))
+- Remove cache and offlineStorage handling in store ([a04328f](https://github.com/logotip4ik/keycap/commit/a04328f))
+- Handle offline storage and cache in item helpers ([34bbfb4](https://github.com/logotip4ik/keycap/commit/34bbfb4))
+- Move vitest config to vitest file ([14ca4f1](https://github.com/logotip4ik/keycap/commit/14ca4f1))
+- ⚠️  Specify allowed characters for item name ([b9cc650](https://github.com/logotip4ik/keycap/commit/b9cc650))
+
+### 🏡 Chore
+
+- **release:** V2.5.0 ([803892f](https://github.com/logotip4ik/keycap/commit/803892f))
+- Update deps ([ee47b4c](https://github.com/logotip4ik/keycap/commit/ee47b4c))
+- Also update patch resolutions ([2ee4d34](https://github.com/logotip4ik/keycap/commit/2ee4d34))
+- Run lint:fix ([e61fd46](https://github.com/logotip4ik/keycap/commit/e61fd46))
+- Remove note needed eslint error supression ([31f9bf1](https://github.com/logotip4ik/keycap/commit/31f9bf1))
+- Repatch link extension to remove linkifyjs ([ef35e53](https://github.com/logotip4ik/keycap/commit/ef35e53))
+- Update deps ([3e1d22f](https://github.com/logotip4ik/keycap/commit/3e1d22f))
+- Add todo ([209c104](https://github.com/logotip4ik/keycap/commit/209c104))
+- Add todo ([43e5ded](https://github.com/logotip4ik/keycap/commit/43e5ded))
+- Update unhead ([fca0b0b](https://github.com/logotip4ik/keycap/commit/fca0b0b))
+- Update deps ([c1765dd](https://github.com/logotip4ik/keycap/commit/c1765dd))
+
+### 🤖 CI
+
+- Remove --local from git user config ([942d167](https://github.com/logotip4ik/keycap/commit/942d167))
+- Shift update deps schedule to sunday night ([be55a22](https://github.com/logotip4ik/keycap/commit/be55a22))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  Specify allowed characters for item name ([b9cc650](https://github.com/logotip4ik/keycap/commit/b9cc650))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+- --local <--local>
+
 ## v2.5.0
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v2.4.1...v2.5.0)
