@@ -60,8 +60,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config user.name --local "github-actions[bot]"
-          git config user.email --local "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           git pull
 
           npx --yes changelogen@latest --release
@@ -70,8 +70,8 @@ jobs:
         env:
           PAT: ${{ secrets.ACTIONS_PAT }}
         run: |
-          git config user.name --local "github-actions[bot]"
-          git config user.email --local "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           git remote set-url origin "https://$PAT@github.com/logotip4ik/keycap"
           git push origin ${{ github.ref_name }}
 
