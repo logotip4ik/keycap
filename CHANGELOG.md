@@ -1,6 +1,29 @@
 # Changelog
 
 
+## v3.0.1
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.0.0...v3.0.1)
+
+### 📖 Documentation
+
+- Mark todo ([cca2500](https://github.com/logotip4ik/keycap/commit/cca2500))
+
+### 🏡 Chore
+
+- **release:** V3.0.0 ([d019cc8](https://github.com/logotip4ik/keycap/commit/d019cc8))
+- Update deps ([e97c11c](https://github.com/logotip4ik/keycap/commit/e97c11c))
+- Update deps ([b9bdf7d](https://github.com/logotip4ik/keycap/commit/b9bdf7d))
+
+### 🤖 CI
+
+- Remove --local from git user config ([35bb9ee](https://github.com/logotip4ik/keycap/commit/35bb9ee))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+- --local <--local>
+
 ## v3.0.0
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v2.5.0...v3.0.0)
