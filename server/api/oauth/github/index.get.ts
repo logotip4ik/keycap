@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
   // This means that user was redirected here to actually sign in
   // with social accout, so this technically is not an error
   if (!query.code)
-    return sendOAuthRedirect(event, OAuthProvider.GitHub);
+    return await sendOAuthRedirect(event, OAuthProvider.GitHub);
 
   const githubUser = destr<GitHubUserRes>(query.socialUser) || await getGitHubUserWithEvent(event)
     .catch(async (err) => {
@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
   if (!userValidation.ok) {
     await event.context.logger.error({ err: userValidation.errors, msg: 'social user validation failed' });
 
-    return sendRedirect(event, '/');
+    return await sendRedirect(event, '/');
   }
 
   const prisma = getPrisma();
@@ -63,7 +63,7 @@ export default defineEventHandler(async (event) => {
 
       // NOTE: this basically makes infinate loop
       // to force user to input correct username
-      return sendRedirect(event,
+      return await sendRedirect(event,
         withQuery('/oauth/ask-username', query),
       );
     }
@@ -82,12 +82,12 @@ export default defineEventHandler(async (event) => {
     });
 
   if (!user)
-    return sendRedirect(event, '/');
+    return await sendRedirect(event, '/');
 
   await Promise.all([
     setAuthCookies(event, user),
     removeFunctionCache(`${username}-taken`),
   ]);
 
-  return sendRedirect(event, `/@${user.username}`);
+  return await sendRedirect(event, `/@${user.username}`);
 });

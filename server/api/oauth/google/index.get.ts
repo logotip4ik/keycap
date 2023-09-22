@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
   await assertNoOAuthErrors(event);
 
   if (!query.code)
-    return sendOAuthRedirect(event, OAuthProvider.Google);
+    return await sendOAuthRedirect(event, OAuthProvider.Google);
 
   const googleUser = destr<GoogleUserRes>(query.socialUser) || await getGoogleUserWithEvent(event)
     .catch(async (err) => {
@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
   if (!userValidation.ok) {
     await event.context.logger.error({ err: userValidation.errors, msg: 'social user validation failed' });
 
-    return sendRedirect(event, '/');
+    return await sendRedirect(event, '/');
   }
 
   const prisma = getPrisma();
@@ -59,7 +59,7 @@ export default defineEventHandler(async (event) => {
       query.socialUser = googleUser;
       query.usernameTaken = await checkIfUsernameTaken(username!) ? username : '';
 
-      return sendRedirect(event,
+      return await sendRedirect(event,
         withQuery('/oauth/ask-username', query),
       );
     }
@@ -78,12 +78,12 @@ export default defineEventHandler(async (event) => {
     });
 
   if (!user)
-    return sendRedirect(event, '/');
+    return await sendRedirect(event, '/');
 
   await Promise.all([
     setAuthCookies(event, user),
     removeFunctionCache(`${username}-taken`),
   ]);
 
-  return sendRedirect(event, `/@${user.username}`);
+  return await sendRedirect(event, `/@${user.username}`);
 });
