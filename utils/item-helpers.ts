@@ -60,6 +60,7 @@ export async function createFolder(folderName: string, self: FolderOrNote, paren
 
   const foldersCache = useFoldersCache();
   const offlineStorage = useOfflineStorage();
+  const fuzzyWorker = useFuzzyWorker();
 
   newlyCreatedFolder.creating = false;
   parent.subfolders.push(newlyCreatedFolder);
@@ -69,6 +70,7 @@ export async function createFolder(folderName: string, self: FolderOrNote, paren
   foldersCache.set(newlyCreatedFolder.path, newlyCreatedFolder);
   offlineStorage.setItem?.(newlyCreatedFolder.path, newlyCreatedFolder);
   updateSubfolderInFolder(self, newlyCreatedFolder, parent);
+  fuzzyWorker.value?.refreshItemsCache();
 
   showItem(newlyCreatedFolder);
 }
@@ -91,6 +93,7 @@ export async function createNote(noteName: string, self: FolderOrNote, parent: F
 
   const notesCache = useNotesCache();
   const offlineStorage = useOfflineStorage();
+  const fuzzyWorker = useFuzzyWorker();
 
   newlyCreatedNote.content ||= '';
   newlyCreatedNote.creating = false;
@@ -98,6 +101,7 @@ export async function createNote(noteName: string, self: FolderOrNote, parent: F
   notesCache.set(newlyCreatedNote.path, newlyCreatedNote);
   offlineStorage.setItem?.(newlyCreatedNote.path, newlyCreatedNote);
   updateNoteInFolder(self, newlyCreatedNote, parent);
+  fuzzyWorker.value?.refreshItemsCache();
 
   showItem(newlyCreatedNote);
 }
@@ -121,6 +125,7 @@ export async function renameFolder(newName: string, self: FolderOrNote, parent: 
   const notesCache = useNotesCache();
   const foldersCache = useFoldersCache();
   const offlineStorage = useOfflineStorage();
+  const fuzzyWorker = useFuzzyWorker();
 
   const folderNameRegex = new RegExp(`${encodeURIComponent(self.name)}$`);
   newFolder.path = self.path.replace(folderNameRegex, encodeURIComponent(newFolder.name));
@@ -132,6 +137,7 @@ export async function renameFolder(newName: string, self: FolderOrNote, parent: 
   offlineStorage.removeItem?.(self.path);
 
   updateSubfolderInFolder(self, newFolder, parent);
+  fuzzyWorker.value?.refreshItemsCache();
 
   const folderToCache = { ...toRaw(self), notes: [], subfolders: [] };
   foldersCache.set(self.path, folderToCache);
@@ -167,6 +173,7 @@ export async function renameNote(newName: string, self: FolderOrNote, parent: Fo
 
   const notesCache = useNotesCache();
   const offlineStorage = useOfflineStorage();
+  const fuzzyWorker = useFuzzyWorker();
 
   const noteNameRegex = new RegExp(`${encodeURIComponent(self.name)}$`);
   newNote.path = self.path.replace(noteNameRegex, encodeURIComponent(newNote.name));
@@ -178,6 +185,7 @@ export async function renameNote(newName: string, self: FolderOrNote, parent: Fo
   offlineStorage.removeItem?.(self.path);
 
   updateNoteInFolder(self, newNote, parent);
+  fuzzyWorker.value?.refreshItemsCache();
 
   if (note) {
     Object.assign(note, newNote);
@@ -203,12 +211,14 @@ export async function deleteNote(self: FolderOrNote, parent: FolderWithContents)
 
   const notesCache = useNotesCache();
   const offlineStorage = useOfflineStorage();
+  const fuzzyWorker = useFuzzyWorker();
 
   showItem(parent);
 
   notesCache.delete(self.path);
   offlineStorage.removeItem?.(self.path);
   deleteNoteFromFolder(self, parent);
+  fuzzyWorker.value?.refreshItemsCache();
 }
 
 export async function deleteFolder(self: FolderOrNote, parent: FolderWithContents) {
@@ -224,6 +234,7 @@ export async function deleteFolder(self: FolderOrNote, parent: FolderWithContent
 
   const foldersCache = useFoldersCache();
   const offlineStorage = useOfflineStorage();
+  const fuzzyWorker = useFuzzyWorker();
 
   foldersCache.delete(self.path);
   offlineStorage.removeItem?.(self.path);
@@ -240,6 +251,7 @@ export async function deleteFolder(self: FolderOrNote, parent: FolderWithContent
     });
 
   deleteSubfolderFromFolder(self, parent);
+  fuzzyWorker.value?.refreshItemsCache();
 }
 
 // NOTE: Refactor all functions above to use this approach ?
