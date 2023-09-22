@@ -262,6 +262,10 @@ export default defineNuxtConfig({
   },
 
   nitro: {
+    alias: {
+      'isomorphic-ws': 'unenv/runtime/mock/proxy',
+    },
+
     imports: {
       dirs: ['./prisma'],
     },
