@@ -202,6 +202,22 @@ export default defineNuxtConfig({
       ParseDurationTransformPlugin(),
     ],
 
+    $server: {
+      plugins: [
+        // Taken from elk
+        //  https://github.com/elk-zone/elk/blob/ed5592260fc83f0207a12a7184973749e87bc85e/nuxt.config.ts#L186
+        {
+          name: 'mock',
+          enforce: 'pre',
+          resolveId(id) {
+            if (id.match(/(^|\/)(@tiptap)\//))
+              return resolve('./mocks/tiptap.ts');
+            if (id.match(/(^|\/)(prosemirror)/))
+              return resolve('./mocks/prosemirror.ts');
+          },
+        }],
+    },
+
     build: {
       target: 'esnext',
       cssMinify: 'lightningcss',
