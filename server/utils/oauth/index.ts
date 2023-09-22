@@ -1,5 +1,4 @@
 import { randomUUID } from 'node:crypto';
-import { isProduction } from 'std-env';
 import { withQuery } from 'ufo';
 import parseDuration from 'parse-duration';
 
@@ -52,7 +51,7 @@ export function sendOAuthRedirect(event: H3Event, provider: OAuthProviderType) {
   const { google, github, public: config } = useRuntimeConfig(event);
 
   const state = randomUUID();
-  const protocol = isProduction ? 'https://' : 'http://';
+  const protocol = import.meta.env.PROD ? 'https://' : 'http://';
 
   setCookie(event, 'state', state, {
     path: '/',

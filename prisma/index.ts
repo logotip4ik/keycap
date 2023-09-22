@@ -1,5 +1,4 @@
 import { PrismaClient } from '@prisma/client';
-import { isDevelopment } from 'std-env';
 
 import type { Prisma } from '@prisma/client';
 
@@ -10,9 +9,9 @@ declare global {
 
 export function getPrisma() {
   if (!globalThis.prisma) {
-    const log: Array<Prisma.LogLevel> = isDevelopment
-      ? ['info', 'error', 'warn']
-      : ['info', 'error'];
+    const log: Array<Prisma.LogLevel> = import.meta.env.PROD
+      ? ['info', 'error']
+      : ['info', 'error', 'warn'];
 
     globalThis.prisma = new PrismaClient({ log });
   }

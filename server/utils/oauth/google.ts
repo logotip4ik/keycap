@@ -1,5 +1,3 @@
-import { isProduction } from 'std-env';
-
 import type { H3Event } from 'h3';
 
 import type { NormalizedSocialUser } from '~/types/server';
@@ -22,7 +20,7 @@ export async function getGoogleUserWithEvent(event: H3Event) {
   if (!code)
     throw new Error('no code was found');
 
-  const protocol = isProduction ? 'https://' : 'http://';
+  const protocol = import.meta.env.PROD ? 'https://' : 'http://';
 
   const auth = await $fetch<GoogleAuthRes>('https://oauth2.googleapis.com/token', {
     method: 'POST',

@@ -1,4 +1,3 @@
-import { isProduction } from 'std-env';
 import { SocialAuth } from '@prisma/client';
 import { withLeadingSlash, withoutTrailingSlash } from 'ufo';
 
@@ -14,7 +13,7 @@ export const OAuthProvider = SocialAuth;
 export { toBigInt, stringifiedBigIntRE } from '~/utils';
 
 export function getServerUserAgent() {
-  const postfix = isProduction ? '' : 'Dev';
+  const postfix = import.meta.env.PROD ? '' : 'Dev';
   const serverName = process.env.SERVER_NAME || 'Keycap';
 
   return `${serverName} ${postfix}`.trim();

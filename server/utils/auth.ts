@@ -1,7 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { getCookie, setCookie } from 'h3';
 import { SignJWT, jwtVerify } from 'jose';
-import { isDevelopment, isProduction } from 'std-env';
 import bcrypt from '@node-rs/bcrypt';
 import argon2 from '@node-rs/argon2';
 import parseDuration from 'parse-duration';
@@ -33,7 +32,7 @@ async function generateAccessToken(object: Record<string, any>): Promise<string>
 
 function getAccessTokenName(): string {
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#cookie_prefixes
-  const prefix = isDevelopment ? '' : '__Host-';
+  const prefix = import.meta.env.PROD ? '__Host-' : '';
 
   return `${prefix}keycap-user`;
 }
@@ -65,7 +64,7 @@ export async function setAuthCookies(event: H3Event, user: SafeUser) {
     path: '/',
     sameSite: 'lax',
     httpOnly: true,
-    secure: isProduction,
+    secure: import.meta.env.PROD,
     maxAge: AUTH_EXPIRATiON,
   });
 }
