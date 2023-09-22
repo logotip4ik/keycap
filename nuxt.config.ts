@@ -247,6 +247,7 @@ export default defineNuxtConfig({
 
     esbuild: {
       options: {
+        minify: true,
         target: 'esnext',
 
         define: {
