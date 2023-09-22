@@ -165,9 +165,12 @@ export default defineNuxtConfig({
       if (isDevelopment)
         return;
 
+      const terserPromise = import('terser');
+      const fspPromise = import('node:fs/promises');
+
       nitro.hooks.hookOnce('compiled', async (nitro) => {
-        const terser = await import('terser');
-        const fsp = await import('node:fs/promises');
+        const terser = await terserPromise;
+        const fsp = await fspPromise;
 
         const { publicDir } = nitro.options.output;
 
@@ -247,7 +250,7 @@ export default defineNuxtConfig({
 
     esbuild: {
       options: {
-        minify: true,
+        // minify: true,
         target: 'esnext',
 
         define: {
