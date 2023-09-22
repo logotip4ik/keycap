@@ -64,6 +64,7 @@ export default defineNuxtConfig({
     dirs: [
       './constants',
     ],
+
     imports: [
       { from: 'rad-event-listener', name: 'on' },
       { from: 'perfect-debounce', name: 'debounce' },
@@ -245,6 +246,10 @@ export default defineNuxtConfig({
     esbuild: {
       options: {
         target: 'esnext',
+
+        define: {
+          'globalThis._importMeta_.vitest': 'undefined',
+        },
       },
     },
 
