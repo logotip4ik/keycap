@@ -280,7 +280,7 @@ export default defineNuxtConfig({
 
     esbuild: {
       options: {
-        // minify: true,
+        minify: true,
         target: 'esnext',
 
         define: {
