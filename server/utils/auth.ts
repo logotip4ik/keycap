@@ -32,7 +32,7 @@ async function generateAccessToken(object: Record<string, any>): Promise<string>
 
 function getAccessTokenName(): string {
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#cookie_prefixes
-  const prefix = import.meta.env.PROD ? '__Host-' : '';
+  const prefix = isProduction ? '__Host-' : '';
 
   return `${prefix}keycap-user`;
 }
@@ -64,7 +64,7 @@ export async function setAuthCookies(event: H3Event, user: SafeUser) {
     path: '/',
     sameSite: 'lax',
     httpOnly: true,
-    secure: import.meta.env.PROD,
+    secure: isProduction,
     maxAge: AUTH_EXPIRATiON,
   });
 }

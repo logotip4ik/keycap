@@ -1,4 +1,5 @@
 import { addVitePlugin, defineNuxtModule } from '@nuxt/kit';
+import { isDevelopment } from 'std-env';
 import MagicString from 'magic-string';
 import decomment from 'decomment';
 
@@ -8,7 +9,7 @@ export default defineNuxtModule({
     name: 'purge-comments',
   },
   setup(_options, nuxt) {
-    if (!import.meta.env.PROD || nuxt.options._prepare)
+    if (isDevelopment || nuxt.options._prepare)
       return;
 
     addVitePlugin({

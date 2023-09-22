@@ -51,7 +51,7 @@ export function sendOAuthRedirect(event: H3Event, provider: OAuthProviderType) {
   const { google, github, public: config } = useRuntimeConfig(event);
 
   const state = randomUUID();
-  const protocol = import.meta.env.PROD ? 'https://' : 'http://';
+  const protocol = isProduction ? 'https://' : 'http://';
 
   setCookie(event, 'state', state, {
     path: '/',

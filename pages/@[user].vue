@@ -83,7 +83,7 @@ onMounted(() => {
   [preloadDashboardComponents, defineFuzzyWorker]
     .map((cb) => requestIdleCallback(cb));
 
-  if (import.meta.env.DEV)
+  if (isDevelopment)
     // @ts-expect-error this should not be defined
     window.$createToast = useToast();
 });

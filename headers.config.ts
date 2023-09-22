@@ -1,3 +1,4 @@
+import { isDevelopment, isProduction } from 'std-env';
 import parseDuration from 'parse-duration';
 
 import type { HTTPMethod } from 'h3';
@@ -45,7 +46,7 @@ export const defaultHeaders = {
   'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
   'Vary': 'Accept-Encoding, Accept, X-Requested-With, X-Authorized',
   ...makeCacheControlHeader({ private: false, maxAge: 2, staleWhileRevalidate: 4 }),
-  ...(import.meta.env.PROD ? cspHeaders : {}),
+  ...(isProduction ? cspHeaders : {}),
 };
 
 export interface NoteViewHeaderOptions {
@@ -65,7 +66,7 @@ export function getHeaders(headersOptions?: HeadersType | { type: HeadersType; o
 
   const headers = { };
 
-  if (!import.meta.env.PROD)
+  if (isDevelopment)
     return headers;
 
   Object.assign(headers, defaultHeaders);

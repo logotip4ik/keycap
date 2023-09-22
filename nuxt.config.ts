@@ -2,7 +2,7 @@ import UnheadVite from '@unhead/addons/vite';
 import parseDuration from 'parse-duration';
 import browserslistToEsbuild from 'browserslist-to-esbuild';
 import { join, resolve } from 'pathe';
-import { isCI, isDevelopment } from 'std-env';
+import { isCI, isDevelopment, isProduction } from 'std-env';
 
 import type { ComponentsDir } from 'nuxt/schema';
 
@@ -190,6 +190,8 @@ export default defineNuxtConfig({
   vite: {
     define: {
       'import.meta.vitest': 'undefined',
+      'isDevelopment': isDevelopment.toString(),
+      'isProduction': isProduction.toString(),
     },
 
     plugins: [
@@ -202,6 +204,7 @@ export default defineNuxtConfig({
       cssMinify: 'lightningcss',
       cssTarget: browserslistToEsbuild(),
       minify: isCI ? 'terser' : 'esbuild',
+      minify: false,
       terserOptions: !isCI ? undefined : { // eslint-disable-line multiline-ternary
         compress: true,
         mangle: true,
@@ -249,6 +252,8 @@ export default defineNuxtConfig({
 
         define: {
           'globalThis._importMeta_.vitest': 'undefined',
+          'isDevelopment': isDevelopment.toString(),
+          'isProduction': isProduction.toString(),
         },
       },
     },
