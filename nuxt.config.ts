@@ -1,7 +1,8 @@
 import UnheadVite from '@unhead/addons/vite';
 import parseDuration from 'parse-duration';
 import browserslistToEsbuild from 'browserslist-to-esbuild';
-import { join, resolve } from 'pathe';
+import { join } from 'pathe';
+import { createResolver } from '@nuxt/kit';
 import { isCI, isDevelopment, isProduction } from 'std-env';
 
 import type { ComponentsDir } from 'nuxt/schema';
@@ -9,6 +10,8 @@ import type { ComponentsDir } from 'nuxt/schema';
 import { getHeaders } from './headers.config';
 import { breakpoints, sidebarsBreakpoints } from './constants/breakpoints';
 import { ParseDurationTransformPlugin } from './vite/transform-parse-duration';
+
+const { resolve } = createResolver(import.meta.url);
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
