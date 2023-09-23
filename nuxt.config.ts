@@ -238,13 +238,6 @@ export default defineNuxtConfig({
     },
 
     $server: {
-      resolve: {
-        alias: {
-          'eventemitter3': resolve('./mock/class.ts'),
-          'isomorphic-ws': resolve('./mock/class.ts'),
-        },
-      },
-
       plugins: [
         // Taken from elk
         //  https://github.com/elk-zone/elk/blob/ed5592260fc83f0207a12a7184973749e87bc85e/nuxt.config.ts#L186
@@ -263,7 +256,6 @@ export default defineNuxtConfig({
 
   nitro: {
     alias: {
-      'isomorphic-ws': 'unenv/runtime/mock/proxy',
       // https://github.com/unjs/nitro/pull/1724
       'node-fetch-native/polyfill': 'unenv/runtime/mock/empty',
       'node-fetch-native': 'node-fetch-native/native',
