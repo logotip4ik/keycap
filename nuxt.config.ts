@@ -250,7 +250,8 @@ export default defineNuxtConfig({
             if (id.match(/(^|\/)(prosemirror)/))
               return resolve('./mocks/prosemirror.ts');
           },
-        }],
+        },
+      ],
     },
   },
 
