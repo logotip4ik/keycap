@@ -264,6 +264,9 @@ export default defineNuxtConfig({
   nitro: {
     alias: {
       'isomorphic-ws': 'unenv/runtime/mock/proxy',
+      // https://github.com/unjs/nitro/pull/1724
+      'node-fetch-native/polyfill': 'unenv/runtime/mock/empty',
+      'node-fetch-native': 'node-fetch-native/native',
     },
 
     imports: {
