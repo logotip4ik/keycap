@@ -13,7 +13,7 @@ export const OAuthProvider = SocialAuth;
 export { toBigInt, stringifiedBigIntRE } from '~/utils';
 
 export function getServerUserAgent() {
-  const postfix = isProduction ? '' : 'Dev';
+  const postfix = import.meta.prod ? '' : 'Dev';
   const serverName = process.env.SERVER_NAME || 'Keycap';
 
   return `${serverName} ${postfix}`.trim();

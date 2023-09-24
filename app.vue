@@ -33,7 +33,7 @@ if (import.meta.client) {
 if (import.meta.server) {
   const { siteOrigin } = useRuntimeConfig().public;
 
-  const protocol = isProduction ? 'https' : 'http';
+  const protocol = import.meta.prod ? 'https' : 'http';
 
   useSeoMeta({
     title: 'Keycap - Better Notes',

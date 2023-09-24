@@ -4,6 +4,7 @@ import browserslistToEsbuild from 'browserslist-to-esbuild';
 import { join } from 'pathe';
 import { createResolver } from '@nuxt/kit';
 import { isCI, isDevelopment, isProduction } from 'std-env';
+import RollupReplace from '@rollup/plugin-replace';
 
 import type { ComponentsDir } from 'nuxt/schema';
 
@@ -195,9 +196,9 @@ export default defineNuxtConfig({
 
   vite: {
     define: {
-      'import.meta.vitest': 'undefined',
-      'isDevelopment': isDevelopment.toString(),
-      'isProduction': isProduction.toString(),
+      'import.meta.vitest': JSON.stringify(undefined),
+      'import.meta.dev': JSON.stringify(isDevelopment),
+      'import.meta.prod': JSON.stringify(isProduction),
     },
 
     plugins: [
@@ -274,16 +275,24 @@ export default defineNuxtConfig({
       },
     },
 
+    rollupConfig: {
+      // @ts-expect-error types are probably broken
+      plugins: [
+        RollupReplace({
+          preventAssignment: true,
+          values: {
+            'import.meta.vitest': JSON.stringify(undefined),
+            'import.meta.dev': JSON.stringify(isDevelopment),
+            'import.meta.prod': JSON.stringify(isProduction),
+          },
+        }),
+      ],
+    },
+
     esbuild: {
       options: {
         minify: true,
         target: 'esnext',
-
-        define: {
-          'globalThis._importMeta_.vitest': 'undefined',
-          'isDevelopment': isDevelopment.toString(),
-          'isProduction': isProduction.toString(),
-        },
       },
     },
 

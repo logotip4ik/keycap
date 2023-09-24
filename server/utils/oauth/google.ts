@@ -20,7 +20,7 @@ export async function getGoogleUserWithEvent(event: H3Event) {
   if (!code)
     throw new Error('no code was found');
 
-  const protocol = isProduction ? 'https://' : 'http://';
+  const protocol = import.meta.prod ? 'https://' : 'http://';
 
   const auth = await $fetch<GoogleAuthRes>('https://oauth2.googleapis.com/token', {
     method: 'POST',

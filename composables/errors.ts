@@ -13,7 +13,7 @@ export function sendError(error: Error, properties?: Record<string, string>) {
 
   const payload = {
     api_key: errors.apiKey,
-    distinct_id: isProduction ? 'Keycap' : 'Keycap Dev',
+    distinct_id: import.meta.prod ? 'Keycap' : 'Keycap Dev',
     properties: {
       name: error.name,
       msg: error.message,
@@ -28,7 +28,7 @@ export function sendError(error: Error, properties?: Record<string, string>) {
   if (properties)
     Object.assign(payload.properties, properties);
 
-  if (isProduction)
+  if (import.meta.prod)
     navigator.sendBeacon(errors.url, JSON.stringify(payload));
   else
     console.log(payload); // eslint-disable-line no-console

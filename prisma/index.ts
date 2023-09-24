@@ -9,7 +9,7 @@ declare global {
 
 export function getPrisma() {
   if (!globalThis.prisma) {
-    const log: Array<Prisma.LogLevel> = isProduction
+    const log: Array<Prisma.LogLevel> = import.meta.prod
       ? ['info', 'error']
       : ['info', 'error', 'warn'];
 
