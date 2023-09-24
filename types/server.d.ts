@@ -10,9 +10,6 @@ declare global {
   interface QuickResponse { 
     ok: boolean
   }
-
-  const isProduction: boolean
-  const isDevelopment: boolean
 }
 
 export interface SafeUser extends Pick<User, 'id' | 'email' | 'username'> {}

@@ -8,6 +8,11 @@ export declare global {
   interface BigInt {
     toJSON: () => string
   }
+
+  interface ImportMeta {
+    dev: boolean
+    prod: boolean
+  }
 }
 
 export interface PrivateBuildInfo {
