@@ -13,10 +13,11 @@ export const OAuthProvider = SocialAuth;
 export { toBigInt, stringifiedBigIntRE } from '~/utils';
 
 export function getServerUserAgent() {
-  const postfix = import.meta.prod ? '' : 'Dev';
   const serverName = process.env.SERVER_NAME || 'Keycap';
 
-  return `${serverName} ${postfix}`.trim();
+  return import.meta.prod
+    ? serverName
+    : `${process.env.SERVER_NAME || 'Keycap'} Dev`;
 }
 
 export function generateFolderPath(username: string, path: string): string {
