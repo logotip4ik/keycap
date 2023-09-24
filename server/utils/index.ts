@@ -5,7 +5,7 @@ import type { H3Event } from 'h3';
 import type { Prisma } from '@prisma/client';
 
 // escaping `-` because it is used on client side and browsers don't like it unescaped
-export const allowedItemNameRE = /^[\w .&#!\-]{2,50}$/;
+export const allowedItemNameRE = /^[\w .&#!\-\u0404-\u0457]{2,50}$/;
 export const currentItemNameRE = /[\w%.!]+$/;
 export const usernameRE = /^[\w.\-]{3,16}$/;
 export const OAuthProvider = SocialAuth;
