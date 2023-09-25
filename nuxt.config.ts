@@ -5,12 +5,13 @@ import { join } from 'pathe';
 import { createResolver } from '@nuxt/kit';
 import { isCI, isDevelopment, isProduction } from 'std-env';
 import RollupReplace from '@rollup/plugin-replace';
+import RollupTypescript from '@rollup/plugin-typescript';
 
 import type { ComponentsDir } from 'nuxt/schema';
 
 import { getHeaders } from './headers.config';
 import { breakpoints, sidebarsBreakpoints } from './constants/breakpoints';
-import { ParseDurationTransformPlugin } from './vite/transform-parse-duration';
+import { ParseDurationTransformPlugin } from './unplugin/parse-duration';
 
 const { resolve } = createResolver(import.meta.url);
 
@@ -203,7 +204,7 @@ export default defineNuxtConfig({
 
     plugins: [
       UnheadVite(),
-      ParseDurationTransformPlugin(),
+      ParseDurationTransformPlugin.vite(),
     ],
 
     build: {
@@ -278,6 +279,7 @@ export default defineNuxtConfig({
     rollupConfig: {
       // @ts-expect-error types are probably broken
       plugins: [
+        RollupTypescript(),
         RollupReplace({
           preventAssignment: true,
           values: {
@@ -286,6 +288,7 @@ export default defineNuxtConfig({
             'import.meta.prod': JSON.stringify(isProduction),
           },
         }),
+        ParseDurationTransformPlugin.rollup(),
       ],
     },
 
