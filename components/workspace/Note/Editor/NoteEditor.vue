@@ -13,7 +13,6 @@ import Blockquote from '@tiptap/extension-blockquote';
 import BulletList from '@tiptap/extension-bullet-list';
 import HardBreak from '@tiptap/extension-hard-break';
 import Heading from '@tiptap/extension-heading';
-import HorizontalRule from '@tiptap/extension-horizontal-rule';
 import ListItem from '@tiptap/extension-list-item';
 import OrderedList from '@tiptap/extension-ordered-list';
 import Code from '@tiptap/extension-code';
@@ -40,7 +39,6 @@ const props = defineProps<Props>();
 const mitt = useMitt();
 
 const isSmallScreen = inject(IsSmallScreenKey)!;
-const detailsItem = useCurrentItemForDetails();
 
 // TODO: export this whole mess into separate file
 const editor = useEditor({
@@ -55,7 +53,6 @@ const editor = useEditor({
     BulletList,
     HardBreak,
     Heading.configure({ levels: [1, 2, 3] }),
-    HorizontalRule,
     ListItem,
     OrderedList,
     Bold,
