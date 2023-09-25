@@ -17,7 +17,7 @@ export function getServerUserAgent() {
 
   return import.meta.prod
     ? serverName
-    : `${process.env.SERVER_NAME || 'Keycap'} Dev`;
+    : `${serverName} Dev`;
 }
 
 export function generateFolderPath(username: string, path: string): string {
