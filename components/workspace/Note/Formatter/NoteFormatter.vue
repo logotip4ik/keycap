@@ -6,6 +6,12 @@ interface Props { editor: Editor; onHide: () => void }
 
 const props = defineProps<Props>();
 
+const LinkInputPlaceholder = {
+  INITIALLY_EMPTY: 'hit enter to show menu',
+  MADE_EMPTY: 'hit enter to remove link',
+};
+
+const linkInputPlaceholder = ref(LinkInputPlaceholder.INITIALLY_EMPTY);
 const isEditingLink = ref(false);
 const editingLink = ref('');
 
@@ -33,6 +39,7 @@ function enterAnimation(el: Element) {
     : '';
 
   editingLink.value = activeUrl;
+  linkInputPlaceholder.value = activeUrl ? LinkInputPlaceholder.MADE_EMPTY : LinkInputPlaceholder.INITIALLY_EMPTY;
 
   nextTick(() => {
     const input = el.querySelector('input');
@@ -267,7 +274,7 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
         v-model="editingLink"
         type="url"
         class="formatter__input"
-        placeholder="hit enter to remove link"
+        :placeholder="linkInputPlaceholder"
         enterkeyhint="done"
         @keydown.esc="isEditingLink = false"
       >
