@@ -11,7 +11,7 @@ import { toBigInt } from '.';
 
 import type { SafeUser } from '~/types/server';
 
-const AUTH_EXPIRATiON = parseDuration('3 days', 'second')!;
+const AUTH_EXPIRATION = parseDuration('3 days', 'second')!;
 
 async function generateAccessToken(object: Record<string, any>): Promise<string> {
   const secret = getJWTSecret();
@@ -26,7 +26,7 @@ async function generateAccessToken(object: Record<string, any>): Promise<string>
     .setSubject(id)
     .setIssuedAt()
     .setIssuer(issuer)
-    .setExpirationTime(now + AUTH_EXPIRATiON)
+    .setExpirationTime(now + AUTH_EXPIRATION)
     .sign(secret);
 }
 
@@ -65,7 +65,7 @@ export async function setAuthCookies(event: H3Event, user: SafeUser) {
     sameSite: 'lax',
     httpOnly: true,
     secure: import.meta.prod,
-    maxAge: AUTH_EXPIRATiON,
+    maxAge: AUTH_EXPIRATION,
   });
 }
 
