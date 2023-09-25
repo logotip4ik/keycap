@@ -1,6 +1,60 @@
 # Changelog
 
 
+## v3.0.2
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.0.1...v3.0.2)
+
+### 🔥 Performance
+
+- Mock tiptap and prosemirror on server ([12b50ed](https://github.com/logotip4ik/keycap/commit/12b50ed))
+- Mock node-fetch pollyfill ([d4a9d37](https://github.com/logotip4ik/keycap/commit/d4a9d37))
+
+### 🩹 Fixes
+
+- Allow esbuild to treeshake inline tests ([9c6e0f3](https://github.com/logotip4ik/keycap/commit/9c6e0f3))
+- Add back minification for client ([9d291fb](https://github.com/logotip4ik/keycap/commit/9d291fb))
+- Add back server minification ([94e853a](https://github.com/logotip4ik/keycap/commit/94e853a))
+- Trigger worker refresh after item list mutations ([8949ed4](https://github.com/logotip4ik/keycap/commit/8949ed4))
+- Allow creating notes with cyrillic letters ([4bb3a15](https://github.com/logotip4ik/keycap/commit/4bb3a15))
+
+### 💅 Refactors
+
+- Await `sendRedirect` function ([01e3856](https://github.com/logotip4ik/keycap/commit/01e3856))
+- Use `import.meta.env` to allow further optimize and treeshake code ([5a239e0](https://github.com/logotip4ik/keycap/commit/5a239e0))
+- Replace `std-env`s `isDevelopment`  and `isProduction`  to better treeshake ([735e0d4](https://github.com/logotip4ik/keycap/commit/735e0d4))
+- Hoist import promises into init hook ([6af923e](https://github.com/logotip4ik/keycap/commit/6af923e))
+- Also mock eventemitter and isomorphic-ws ([b7e3f61](https://github.com/logotip4ik/keycap/commit/b7e3f61))
+- Create resolver with `@nuxt/kit` ([d3e216c](https://github.com/logotip4ik/keycap/commit/d3e216c))
+- Also remove isomorphic-ws from nitro server ([98398a3](https://github.com/logotip4ik/keycap/commit/98398a3))
+- Use `import.meta` based `prod` and `dev` handlers ([8b430b6](https://github.com/logotip4ik/keycap/commit/8b430b6))
+- Move correct types into index file ([cba38fb](https://github.com/logotip4ik/keycap/commit/cba38fb))
+- Optimize function by utilizing build flags ([cc1ab6e](https://github.com/logotip4ik/keycap/commit/cc1ab6e))
+
+### 🏡 Chore
+
+- **release:** V3.0.1 ([0a71b06](https://github.com/logotip4ik/keycap/commit/0a71b06))
+- Update deps and repatch tiptap link extension ([d74f95e](https://github.com/logotip4ik/keycap/commit/d74f95e))
+- Mention patch in lock file ([f3af91c](https://github.com/logotip4ik/keycap/commit/f3af91c))
+- Remove note used patches ([57a7257](https://github.com/logotip4ik/keycap/commit/57a7257))
+- Refresh lock file ([ef12edd](https://github.com/logotip4ik/keycap/commit/ef12edd))
+- Also minify server ([2b9e314](https://github.com/logotip4ik/keycap/commit/2b9e314))
+- Remove not needed mocks ([435d42f](https://github.com/logotip4ik/keycap/commit/435d42f))
+- Update deps ([b202b25](https://github.com/logotip4ik/keycap/commit/b202b25))
+- Install rollup plugin replace ([15bcc13](https://github.com/logotip4ik/keycap/commit/15bcc13))
+
+### 🎨 Styles
+
+- Put bracket on new line ([bf4f48d](https://github.com/logotip4ik/keycap/commit/bf4f48d))
+
+### 🤖 CI
+
+- Update deps only on wednesday ([b5def33](https://github.com/logotip4ik/keycap/commit/b5def33))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+
 ## v3.0.1
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.0.0...v3.0.1)
