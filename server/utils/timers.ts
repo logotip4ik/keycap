@@ -100,6 +100,7 @@ if (import.meta.vitest) {
       timer.end();
 
       let results = timer.getResults();
+
       expect(results).not.include('first');
       expect(results).include('second');
       expect(results).not.include(',');
