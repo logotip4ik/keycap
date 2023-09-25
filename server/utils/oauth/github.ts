@@ -14,7 +14,7 @@ export function normalizeGitHubUser(githubUser: GitHubUserRes, params: Normaliza
 }
 
 export async function getGitHubUserWithEvent(event: H3Event) {
-  const { github } = useRuntimeConfig(event);
+  const { github } = useRuntimeConfig();
   const code = getQuery(event).code;
 
   if (!code)

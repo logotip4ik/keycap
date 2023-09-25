@@ -100,7 +100,7 @@ class Logger {
 // NOTE: maybe we should keep only one instance of logger
 // but then we need to provide `event` on each log ?
 export function createLogger(event: H3Event) {
-  const { axiom } = useRuntimeConfig(event);
+  const { axiom } = useRuntimeConfig();
   const [path, query] = event.path.split('?');
 
   const additionalData: LoggerData = {

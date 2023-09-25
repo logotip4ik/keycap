@@ -5,7 +5,7 @@ interface Rule { path: string; handler: RuleFunction }
 type RuleFunction = (event: H3Event) => boolean | undefined | Promise<boolean | undefined | void>;
 
 function withoutUser(event: H3Event) {
-  const { oauthEnabled } = useRuntimeConfig(event).public;
+  const { oauthEnabled } = useRuntimeConfig().public;
 
   if (!oauthEnabled)
     throw createError({ statusCode: 404 });

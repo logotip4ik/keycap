@@ -48,7 +48,7 @@ export async function assertNoOAuthErrors(event: H3Event) {
 }
 
 export function sendOAuthRedirect(event: H3Event, provider: OAuthProviderType) {
-  const { google, github, public: config } = useRuntimeConfig(event);
+  const { google, github, public: config } = useRuntimeConfig();
 
   const state = randomUUID();
   const protocol = import.meta.prod ? 'https://' : 'http://';
