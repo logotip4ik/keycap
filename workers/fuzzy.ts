@@ -21,7 +21,7 @@ function search(query: string, maxLength = 4): Array<FuzzyItem | CommandItem> {
   // See https://stackblitz.com/edit/node-ezlzug?file=index.js&view=editor and run `node index.js`
   // but in `real world`? fuzzaldrin was a bit slower plus had much more bigger bundle footprint
 
-  const isCommand = query.startsWith('/');
+  const isCommand = query[0] === '/';
 
   if (isCommand)
     query = (query.match(/\w+/) || [''])[0];
