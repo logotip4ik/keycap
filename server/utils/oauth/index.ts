@@ -35,9 +35,7 @@ export async function assertNoOAuthErrors(event: H3Event) {
   }
 
   if (query.state !== getCookie(event, 'state')) {
-    const identifier = getHeader(event, 'x-real-ip')
-      || getHeader(event, 'client-ip')
-      || getHeader(event, 'x-forwarded-for');
+    const identifier = getRequestIP(event);
 
     await event.context.logger.error({ msg: 'someone is messing with authentication', identifier });
 

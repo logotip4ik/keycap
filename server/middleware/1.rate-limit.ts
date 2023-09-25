@@ -11,9 +11,7 @@ const LIMIT = Math.floor((INTERVAL * 2) / 1000); // two per second
 export default defineEventHandler(async (event) => {
   if (event.path?.startsWith('/api')) {
     const rateLimit = getRateLimiter();
-    const identifier = getHeader(event, 'x-real-ip')
-      || getHeader(event, 'client-ip')
-      || getHeader(event, 'x-forwarded-for');
+    const identifier = getRequestIP(event);
 
     const used = await rateLimit(LIMIT, identifier!).catch(() => LIMIT + LIMIT);
 
