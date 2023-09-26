@@ -18,9 +18,7 @@ class Logger {
   #data: LoggerData;
   #config: RuntimeConfig['axiom'];
 
-  constructor(opts: { data: LoggerData; config: RuntimeConfig['axiom'] }) {
-    const { config, data } = opts;
-
+  constructor(data: LoggerData, config: RuntimeConfig['axiom']) {
     const headers: Record<string, string> = {
       'Accept': 'application/json',
       'Content-Type': 'application/x-ndjson',
@@ -112,5 +110,5 @@ export function createLogger(event: H3Event) {
     username: event.context.user?.username,
   };
 
-  return new Logger({ data: additionalData, config: axiom });
+  return new Logger(additionalData, axiom);
 }
