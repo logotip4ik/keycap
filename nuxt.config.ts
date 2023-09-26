@@ -258,6 +258,8 @@ export default defineNuxtConfig({
   },
 
   nitro: {
+    minify: true,
+
     alias: {
       // https://github.com/unjs/nitro/pull/1724
       'node-fetch-native/polyfill': 'unenv/runtime/mock/empty',
@@ -294,7 +296,6 @@ export default defineNuxtConfig({
 
     esbuild: {
       options: {
-        minify: true,
         target: 'esnext',
       },
     },
