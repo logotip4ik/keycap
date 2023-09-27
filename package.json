@@ -16,17 +16,17 @@
     "test:dev": "vitest"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.42.1",
+    "@antfu/eslint-config": "^1.0.0-beta.12",
     "@faker-js/faker": "^8.1.0",
-    "@nuxt/devtools": "^0.8.4",
+    "@nuxt/devtools": "^0.8.5",
     "@nuxtjs/fontaine": "^0.4.1",
     "@parcel/watcher": "^2.3.0",
     "@types/lambda-rate-limiter": "^3.0.0",
     "@types/node": "~18.17.19",
-    "@types/sanitize-html": "^2.9.0",
+    "@types/sanitize-html": "^2.9.1",
     "eslint": "8.50.0",
     "normalize.css": "^8.0.1",
-    "nuxt": "^3.7.3",
+    "nuxt": "^3.7.4",
     "prisma": "^5.3.1",
     "sass": "^1.68.0",
     "typescript": "^5.2.2"
@@ -34,10 +34,10 @@
   "dependencies": {
     "@node-rs/argon2": "^1.5.2",
     "@node-rs/bcrypt": "^1.7.3",
-    "@nuxt/kit": "^3.7.3",
+    "@nuxt/kit": "^3.7.4",
     "@prisma/client": "^5.3.1",
     "@rollup/plugin-replace": "^5.0.2",
-    "@rollup/plugin-typescript": "^11.1.3",
+    "@rollup/plugin-typescript": "^11.1.4",
     "@size-limit/file": "^9.0.0",
     "@superhuman/command-score": "^0.5.0",
     "@tinkoff/lru-cache-nano": "^7.8.1",
@@ -78,7 +78,7 @@
     "eslint-plugin-regexp": "^1.15.0",
     "estree-walker": "^3.0.3",
     "focus-trap-js": "^1.1.0",
-    "happy-dom": "^12.1.6",
+    "happy-dom": "^12.2.1",
     "idb-keyval": "^6.2.1",
     "jose": "^4.14.6",
     "lambda-rate-limiter": "^4.0.0",
@@ -103,10 +103,10 @@
   },
   "packageManager": "yarn@3.6.3",
   "resolutions": {
-    "nuxt": "patch:nuxt@npm%3A3.7.3#./.yarn/patches/nuxt-npm-3.7.0-1603ad03d3.patch",
+    "nuxt": "patch:nuxt@npm%3A3.7.4#./.yarn/patches/nuxt-npm-3.7.0-1603ad03d3.patch",
     "@nuxtjs/fontaine": "patch:@nuxtjs/fontaine@npm%3A0.4.1#./.yarn/patches/@nuxtjs-fontaine-npm-0.4.1-7794318bb4.patch",
     "tinykeys": "patch:tinykeys@npm%3A2.1.0#./.yarn/patches/tinykeys-npm-2.1.0-819feeaed0.patch",
-    "@tiptap/core": "patch:@tiptap/core@npm%3A2.1.10#./.yarn/patches/@tiptap-core-npm-2.0.4-25bd396515.patch",
+    "@tiptap/core": "patch:@tiptap/core@npm%3A2.1.11#./.yarn/patches/@tiptap-core-npm-2.0.4-25bd396515.patch",
     "@tiptap/extension-link": "patch:@tiptap/extension-link@npm%3A2.1.11#./.yarn/patches/@tiptap-extension-link-npm-2.1.11-ca63515652.patch"
   },
   "prisma": {
