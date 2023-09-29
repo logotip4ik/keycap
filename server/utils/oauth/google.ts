@@ -36,7 +36,7 @@ export async function getGoogleUserWithEvent(event: H3Event) {
   const apiAuthHeaders = {
     'Authorization': `${auth.token_type} ${auth.access_token}`,
     'Accept': 'application/json',
-    'User-Agent': getServerUserAgent(),
+    'User-Agent': serverUserAgent,
   };
 
   return await $fetch<GoogleUserRes>('https://www.googleapis.com/oauth2/v2/userinfo', {

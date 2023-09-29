@@ -9,16 +9,9 @@ export const allowedItemNameRE = /^[\w .&#!\|\-\u0404-\u0457]{2,50}$/; // eslint
 export const currentItemNameRE = /[\w%.!]+$/;
 export const usernameRE = /^[\w.\-]{3,16}$/;
 export const OAuthProvider = SocialAuth;
+export const serverUserAgent = import.meta.prod ? process.env.SERVER_NAME || 'Keycap' : `${process.env.SERVER_NAME || 'Keycap'} Dev`;
 
 export { toBigInt, stringifiedBigIntRE } from '~/utils';
-
-export function getServerUserAgent() {
-  const serverName = process.env.SERVER_NAME || 'Keycap';
-
-  return import.meta.prod
-    ? serverName
-    : `${serverName} Dev`;
-}
 
 export function generateFolderPath(username: string, path: string): string {
   // prepending leading slash to username + leading slash path + remove trailing slash

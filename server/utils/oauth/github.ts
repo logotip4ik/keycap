@@ -36,7 +36,7 @@ export async function getGitHubUserWithEvent(event: H3Event) {
     'Authorization': `${auth.token_type} ${auth.access_token}`,
     'X-GitHub-Api-Version': '2022-11-28',
     'Accept': 'application/vnd.github+json',
-    'User-Agent': getServerUserAgent(),
+    'User-Agent': serverUserAgent,
   };
 
   const user = await $fetch<GitHubUserRes>(
