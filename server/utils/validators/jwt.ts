@@ -9,4 +9,4 @@ export const jwtPayloadSchema = v.object({
 });
 
 export const isJwtPayload = compile(jwtPayloadSchema, { simple: true });
-export const useJwtPayloadValidation = compile(jwtPayloadSchema);
+export const useJwtPayloadValidation = /* @__PURE__ */ compile(jwtPayloadSchema);
