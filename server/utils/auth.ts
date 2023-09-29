@@ -12,10 +12,11 @@ import { toBigInt } from '.';
 import type { SafeUser } from '~/types/server';
 
 const AUTH_EXPIRATION = parseDuration('3 days', 'second')!;
+const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || '');
+const JWT_ISSUER = process.env.JWT_ISSUER || 'test:keycap';
+const ACCESS_TOKEN_NAME = import.meta.prod ? '__Host-keycap-user' : 'keycap-user';
 
 async function generateAccessToken(object: Record<string, any>): Promise<string> {
-  const secret = getJWTSecret();
-  const issuer = getJWTIssuer();
   const now = Math.floor(Date.now() / 1000);
 
   const { id, ...rest } = object;
@@ -25,26 +26,9 @@ async function generateAccessToken(object: Record<string, any>): Promise<string>
     .setJti(randomUUID())
     .setSubject(id)
     .setIssuedAt()
-    .setIssuer(issuer)
     .setExpirationTime(now + AUTH_EXPIRATION)
-    .sign(secret);
-}
-
-function getAccessTokenName(): string {
-  // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#cookie_prefixes
-  const prefix = import.meta.prod ? '__Host-' : '';
-
-  return `${prefix}keycap-user`;
-}
-
-function getJWTSecret(): Uint8Array {
-  const secret = process.env.JWT_SECRET || '';
-
-  return new TextEncoder().encode(secret);
-}
-
-function getJWTIssuer(): string {
-  return process.env.JWT_ISSUER || 'test:keycap';
+    .setIssuer(JWT_ISSUER)
+    .sign(JWT_SECRET);
 }
 
 function getArgon2Options(): argon2.Options {
@@ -56,11 +40,10 @@ function getArgon2Options(): argon2.Options {
 }
 
 export async function setAuthCookies(event: H3Event, user: SafeUser) {
-  const accessTokenName = getAccessTokenName();
   const accessToken = await generateAccessToken(user);
 
   // https://web.dev/first-party-cookie-recipes/#the-good-first-party-cookie-recipe
-  setCookie(event, accessTokenName, accessToken, {
+  setCookie(event, ACCESS_TOKEN_NAME, accessToken, {
     path: '/',
     sameSite: 'lax',
     httpOnly: true,
@@ -74,15 +57,11 @@ export async function removeAuthCookies(_event: H3Event) {
 }
 
 export async function getUserFromEvent(event: H3Event): Promise<SafeUser | null> {
-  const accessTokenName = getAccessTokenName();
-  const accessToken = getCookie(event, accessTokenName);
+  const accessToken = getCookie(event, ACCESS_TOKEN_NAME);
 
   if (!accessToken) return null;
 
-  const secret = getJWTSecret();
-  const issuer = getJWTIssuer();
-
-  const { payload } = await jwtVerify(accessToken, secret, { issuer })
+  const { payload } = await jwtVerify(accessToken, JWT_SECRET, { issuer: JWT_ISSUER })
     .catch(async (err) => {
       await event.context.logger.error({ err, msg: 'jwt verification failed' });
 
