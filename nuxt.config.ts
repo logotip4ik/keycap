@@ -212,7 +212,7 @@ export default defineNuxtConfig({
       cssMinify: 'lightningcss',
       cssTarget: browserslistToEsbuild(),
       minify: isCI ? 'terser' : 'esbuild',
-      terserOptions: !isCI ? undefined : { // eslint-disable-line multiline-ternary
+      terserOptions: !isCI ? undefined : { // eslint-disable-line @stylistic/js/multiline-ternary
         compress: true,
         mangle: true,
         safari10: false,
@@ -258,8 +258,6 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    minify: true,
-
     alias: {
       // https://github.com/unjs/nitro/pull/1724
       'node-fetch-native/polyfill': 'unenv/runtime/mock/empty',
@@ -279,9 +277,8 @@ export default defineNuxtConfig({
     },
 
     rollupConfig: {
-      // @ts-expect-error types are probably broken
+      // @ts-expect-error probably broken types
       plugins: [
-        RollupTypescript(),
         RollupReplace({
           preventAssignment: true,
           values: {
@@ -290,7 +287,6 @@ export default defineNuxtConfig({
             'import.meta.prod': JSON.stringify(isProduction),
           },
         }),
-        ParseDurationTransformPlugin.rollup(),
       ],
     },
 
@@ -352,6 +348,19 @@ export default defineNuxtConfig({
     injectManifest: {
       globPatterns: ['**/*.{js,json,css,html,txt,svg,png,ico,webp,woff,woff2,ttf,eot,otf,wasm}'],
       globIgnores: ['**.webmanifest', 'register', 'login', 'sw.js', 'index.html'],
+    },
+  },
+
+  $production: {
+    nitro: {
+      minify: true,
+
+      rollupConfig: {
+        plugins: [
+          RollupTypescript(),
+          ParseDurationTransformPlugin.rollup(),
+        ],
+      },
     },
   },
 });
