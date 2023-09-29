@@ -67,7 +67,7 @@ export default defineNuxtConfig({
 
   imports: {
     dirs: [
-      './constants',
+      resolve('./constants'),
     ],
 
     imports: [
@@ -265,7 +265,9 @@ export default defineNuxtConfig({
     },
 
     imports: {
-      dirs: ['./prisma'],
+      dirs: [
+        resolve('./prisma'),
+      ],
     },
 
     typescript: {
