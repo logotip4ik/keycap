@@ -7,6 +7,7 @@ import parseDuration from 'parse-duration';
 
 import type { H3Event } from 'h3';
 
+import { isJwtPayload } from './validators/jwt';
 import { toBigInt } from '.';
 
 import type { SafeUser } from '~/types/server';
@@ -65,17 +66,19 @@ export async function getUserFromEvent(event: H3Event): Promise<SafeUser | null>
     .catch(async (err) => {
       await event.context.logger.error({ err, msg: 'jwt verification failed' });
 
-      return { payload: undefined };
+      return {} as { payload: undefined };
     });
 
-  if (!payload)
+  if (isJwtPayload(payload)) {
+    return {
+      id: toBigInt(payload.sub),
+      email: payload.email,
+      username: payload.username,
+    };
+  }
+  else {
     return null;
-
-  return {
-    id: toBigInt(payload.sub || payload.id as string),
-    email: payload.email as string,
-    username: payload.username as string,
-  };
+  }
 }
 
 export async function hashPassword(pass: string): Promise<string> {
