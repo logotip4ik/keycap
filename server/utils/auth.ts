@@ -12,10 +12,10 @@ import { toBigInt } from '.';
 
 import type { SafeUser } from '~/types/server';
 
-const AUTH_EXPIRATION = parseDuration('3 days', 'second')!;
-const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || '');
-const JWT_ISSUER = process.env.JWT_ISSUER || 'test:keycap';
-const ACCESS_TOKEN_NAME = import.meta.prod ? '__Host-keycap-user' : 'keycap-user';
+const authExpiration = parseDuration('3 days', 'second')!;
+const jwtSecret = new TextEncoder().encode(process.env.JWT_SECRET || '');
+const jwtIssuer = process.env.JWT_ISSUER || 'test:keycap';
+const accessTokenName = import.meta.prod ? '__Host-keycap-user' : 'keycap-user';
 
 async function generateAccessToken(object: Record<string, any>): Promise<string> {
   const now = Math.floor(Date.now() / 1000);
@@ -27,9 +27,9 @@ async function generateAccessToken(object: Record<string, any>): Promise<string>
     .setJti(randomUUID())
     .setSubject(id)
     .setIssuedAt()
-    .setExpirationTime(now + AUTH_EXPIRATION)
-    .setIssuer(JWT_ISSUER)
-    .sign(JWT_SECRET);
+    .setExpirationTime(now + authExpiration)
+    .setIssuer(jwtIssuer)
+    .sign(jwtSecret);
 }
 
 function getArgon2Options(): argon2.Options {
@@ -44,12 +44,12 @@ export async function setAuthCookies(event: H3Event, user: SafeUser) {
   const accessToken = await generateAccessToken(user);
 
   // https://web.dev/first-party-cookie-recipes/#the-good-first-party-cookie-recipe
-  setCookie(event, ACCESS_TOKEN_NAME, accessToken, {
+  setCookie(event, accessTokenName, accessToken, {
     path: '/',
     sameSite: 'lax',
     httpOnly: true,
     secure: import.meta.prod,
-    maxAge: AUTH_EXPIRATION,
+    maxAge: authExpiration,
   });
 }
 
@@ -58,11 +58,11 @@ export async function removeAuthCookies(_event: H3Event) {
 }
 
 export async function getUserFromEvent(event: H3Event): Promise<SafeUser | null> {
-  const accessToken = getCookie(event, ACCESS_TOKEN_NAME);
+  const accessToken = getCookie(event, accessTokenName);
 
   if (!accessToken) return null;
 
-  const { payload } = await jwtVerify(accessToken, JWT_SECRET, { issuer: JWT_ISSUER })
+  const { payload } = await jwtVerify(accessToken, jwtSecret, { issuer: jwtIssuer })
     .catch(async (err) => {
       await event.context.logger.error({ err, msg: 'jwt verification failed' });
 
