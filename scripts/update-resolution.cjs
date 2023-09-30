@@ -17,7 +17,10 @@ async function updatePatches() {
 
     if (!dep) continue;
 
-    const [resolutionVersion] = patch.match(patchVersion_RE);
+    const [resolutionVersion] = patch.match(patchVersion_RE) || [];
+
+    if (!resolutionName) continue;
+
     const normalizedDepVersion = dep[1].startsWith('^') ? dep[1].slice(1) : dep[1];
 
     if (resolutionVersion === normalizedDepVersion)
