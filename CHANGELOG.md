@@ -1,6 +1,67 @@
 # Changelog
 
 
+## v3.1.0
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.0.2...v3.1.0)
+
+### 🚀 Enhancements
+
+- Make unplugin plugin to transform parse-duration calls ([8df4cee](https://github.com/logotip4ik/keycap/commit/8df4cee))
+- Also transform parse-duration calls in nitro server ([88795b1](https://github.com/logotip4ik/keycap/commit/88795b1))
+
+### 🩹 Fixes
+
+- All uppercase letters ([4e90c5f](https://github.com/logotip4ik/keycap/commit/4e90c5f))
+- **scripts:** Do not fail if resolution version is not defined ([ea62f1b](https://github.com/logotip4ik/keycap/commit/ea62f1b))
+
+### 💅 Refactors
+
+- Use already defined server name variable ([2afef57](https://github.com/logotip4ik/keycap/commit/2afef57))
+- Use `===` instead of `startsWith` ([712a5dc](https://github.com/logotip4ik/keycap/commit/712a5dc))
+- Use cached version of the function ([7f1f167](https://github.com/logotip4ik/keycap/commit/7f1f167))
+- Remove not used tiptap extension ([35c8e2d](https://github.com/logotip4ik/keycap/commit/35c8e2d))
+- Show different hints in placeholder depending on previous input ([5b0bb7d](https://github.com/logotip4ik/keycap/commit/5b0bb7d))
+- Use `getRequestIP` instead of manually getting ip ([b5e52a0](https://github.com/logotip4ik/keycap/commit/b5e52a0))
+- Do not pass options through object ([f0237ea](https://github.com/logotip4ik/keycap/commit/f0237ea))
+- Use nitro toplevel minification option ([3e88f86](https://github.com/logotip4ik/keycap/commit/3e88f86))
+- Also allow ` ([` char in item name](https://github.com/logotip4ik/keycap/commit/` char in item name))
+- Move parse duration transformers into production only plugins ([29243a6](https://github.com/logotip4ik/keycap/commit/29243a6))
+- Make server user agent variable instead of function ([132bb8c](https://github.com/logotip4ik/keycap/commit/132bb8c))
+- User constants instead of function calls where possible ([034bf9a](https://github.com/logotip4ik/keycap/commit/034bf9a))
+- Resolve to abolute path where possible ([3cb5ba8](https://github.com/logotip4ik/keycap/commit/3cb5ba8))
+- Use suretype validator to check if jwt payload is valid ([4a91667](https://github.com/logotip4ik/keycap/commit/4a91667))
+- Allow dropping not used suretype compile statements ([f1108be](https://github.com/logotip4ik/keycap/commit/f1108be))
+- Transform auth constants to camel case ([0b282fe](https://github.com/logotip4ik/keycap/commit/0b282fe))
+- Disable app manifest ([7987c61](https://github.com/logotip4ik/keycap/commit/7987c61))
+
+### 🏡 Chore
+
+- **release:** V3.0.2 ([dab1da4](https://github.com/logotip4ik/keycap/commit/dab1da4))
+- Install rollup plugin for typescript ([eb713f0](https://github.com/logotip4ik/keycap/commit/eb713f0))
+- Remove argument from `useRuntimeConfig` ([34cbc17](https://github.com/logotip4ik/keycap/commit/34cbc17))
+- Update deps ([cdcdcce](https://github.com/logotip4ik/keycap/commit/cdcdcce))
+- Pin eslint config version ([c7cd782](https://github.com/logotip4ik/keycap/commit/c7cd782))
+- Pin vite and remove not maintained packages ([9038916](https://github.com/logotip4ik/keycap/commit/9038916))
+- Remove unused error supression ([da57398](https://github.com/logotip4ik/keycap/commit/da57398))
+- Update deps ([896d41f](https://github.com/logotip4ik/keycap/commit/896d41f))
+- Run lint fix ([901204f](https://github.com/logotip4ik/keycap/commit/901204f))
+
+### 🎨 Styles
+
+- Add missing empty line ([fee5708](https://github.com/logotip4ik/keycap/commit/fee5708))
+
+### 🤖 CI
+
+- Use default mode for auto updating deps ([490d43e](https://github.com/logotip4ik/keycap/commit/490d43e))
+- Change update deps schedule to run on fridays ([f107785](https://github.com/logotip4ik/keycap/commit/f107785))
+- Bump the actions group with 1 update ([#8](https://github.com/logotip4ik/keycap/pull/8))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+- 13be7b6 <Bogdan Kostyuk>
+
 ## v3.0.2
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.0.1...v3.0.2)
