@@ -1,35 +1,35 @@
-import type { Note, Folder } from '@prisma/client'
-import type { Remote } from 'comlink'
+import type { Folder, Note } from '@prisma/client';
+import type { Remote } from 'comlink';
 
-import type { SearchAction, SearchActionValues } from '~/types/common'
+import type { SearchActionValues } from '~/types/common';
 
 interface _IFuzzyWorker {
-  searchWithQuery: (query: string, maxLength = 4) => FuzzyItem[]
+  searchWithQuery: (query: string, maxLength = 4) => Array<FuzzyItem>
   addItemToCache: (item: FuzzyItem) => void
-  addItemsToCache: (items: FuzzyItem[]) => void
+  addItemsToCache: (items: Array<FuzzyItem>) => void
   refreshItemsCache: () => Promise<void>
 }
 
 declare global {
-  export type ItemMetatags = { 
+  export interface ItemMetatags {
     editing?: boolean
     creating?: boolean
-  }
+  };
 
-  export type NoteMinimal = Pick<Note, 'name' | 'path'> & ItemMetatags & { 
-    id: string 
+  export type NoteMinimal = Pick<Note, 'name' | 'path'> & ItemMetatags & {
+    id: string
   };
 
   export type FolderMinimal = Pick<Folder, 'name' | 'path' | 'root'> & ItemMetatags & {
     id: string
-  }
+  };
 
   export type SerializedNote = NoteMinimal & { content: string };
 
   export type FolderWithContents = FolderMinimal & {
-    notes: NoteMinimal[],
-    subfolders: FolderMinimal[],
-  }
+    notes: Array<NoteMinimal>
+    subfolders: Array<FolderMinimal>
+  };
 
   // TODO: use FolderMinimal here
   export type FolderOrNote = FolderMinimal & NoteMinimal;
@@ -41,14 +41,14 @@ declare global {
 
   export type FuzzyItem = Pick<FolderOrNote, 'name' | 'path' | 'root'>;
 
-  export type IFuzzyWorker =  Remote<_IFuzzyWorker>
+  export type IFuzzyWorker = Remote<_IFuzzyWorker>;
 
   export interface OfflineStorage {
     setItem: <T = any>(key: string, value: T) => Promise<void>
     getItem: <T = any>(key: string) => Promise<T | undefined>
     removeItem: (key: string) => Promise<void>
-    getAllItems: <T = any>() => Promise<T[]>
+    getAllItems: <T = any>() => Promise<Array<T>>
   }
 }
 
-export {}
+export {};
