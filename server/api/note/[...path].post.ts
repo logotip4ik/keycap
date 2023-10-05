@@ -37,7 +37,7 @@ export default defineEventHandler(async (event) => {
       owner: { connect: { id: user.id } },
       parent: { connect: { id: toBigInt(body.parentId) } },
     },
-    select: { ...selectParams },
+    select: selectParams,
   }).catch(async (err) => {
     await event.context.logger.error({ err, msg: 'note.create failed' });
   });

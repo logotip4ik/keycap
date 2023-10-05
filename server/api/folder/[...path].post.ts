@@ -39,7 +39,7 @@ export default defineEventHandler(async (event) => {
       parent: { connect: { id: toBigInt(body.parentId) } },
     },
 
-    select: { ...selectParams },
+    select: selectParams,
   }).catch(async (err) => {
     await event.context.logger.error({ err, msg: 'folder.create failed' });
   });
