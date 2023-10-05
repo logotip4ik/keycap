@@ -52,14 +52,15 @@ export default defineEventHandler(async (event) => {
 
   if (!user) {
     username = query.username?.toString().trim() || '';
-    const isUsernameValid = useUsernameValidator(username).ok
-      && !(await checkIfUsernameTakenCached(username!));
+
+    const validation = useUsernameValidator(username);
+    const isUsernameValid = validation.ok && !(await checkIfUsernameTakenCached(username!));
 
     if (!isUsernameValid) {
       query.provider = OAuthProvider.GitHub;
       query.username = undefined;
       query.socialUser = githubUser;
-      query.usernameTaken = await checkIfUsernameTakenCached(username!) ? username : '';
+      query.usernameTaken = validation.ok ? await checkIfUsernameTakenCached(username!) : '';
 
       // NOTE: this basically makes infinate loop
       // to force user to input correct username
