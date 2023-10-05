@@ -10,6 +10,8 @@ import { OAuthProvider } from '~/server/utils';
 import type { NormalizedSocialUser, OAuthProvider as OAuthProviderType, SafeUser } from '~/types/server';
 
 export async function assertNoOAuthErrors(event: H3Event) {
+  deleteCookie(event, 'state');
+
   const proviersMap = {
     '/api/oauth/github': OAuthProvider.GitHub,
     '/api/oauth/google': OAuthProvider.Google,
@@ -41,8 +43,6 @@ export async function assertNoOAuthErrors(event: H3Event) {
 
     throw createError({ statusCode: 422 });
   }
-
-  deleteCookie(event, 'state');
 }
 
 export function sendOAuthRedirect(event: H3Event, provider: OAuthProviderType) {
