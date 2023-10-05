@@ -1,6 +1,25 @@
 # Changelog
 
 
+## v3.1.1
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.1.0...v3.1.1)
+
+### 🩹 Fixes
+
+- Delete state cookie in all circumstances ([68177bd](https://github.com/logotip4ik/keycap/commit/68177bd))
+- Do not call username taken check if short circuiting ([3e56dc8](https://github.com/logotip4ik/keycap/commit/3e56dc8))
+
+### 🏡 Chore
+
+- **release:** V3.1.0 ([f865899](https://github.com/logotip4ik/keycap/commit/f865899))
+- Update vite ([38f4cab](https://github.com/logotip4ik/keycap/commit/38f4cab))
+- Update deps ([f9706d2](https://github.com/logotip4ik/keycap/commit/f9706d2))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+
 ## v3.1.0
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.0.2...v3.1.0)
