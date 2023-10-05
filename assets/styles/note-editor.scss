@@ -146,7 +146,9 @@
 
       border-left: 2px solid var(--task-list-indicator-color);
       background-color: hsla(var(--text-color-hsl), 0.075);
-      box-shadow: 0 0 1rem 0 hsla(var(--selection-bg-color-hsl), 0.075);
+      box-shadow:
+        -0.75rem 0 0.5rem -0.25rem hsla(var(--selection-bg-color-hsl), 0.125),
+        0 0 1rem 0 hsla(var(--selection-bg-color-hsl), 0.075);
     }
 
     h1,
