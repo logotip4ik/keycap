@@ -25,9 +25,7 @@ export default defineEventHandler(async (event) => {
     throw createError({
       // prisma will return null if nothing found
       // thou, error catching will return undefined
-      statusCode: note === null
-        ? 404
-        : 400,
+      statusCode: note === null ? 404 : 400,
     });
   }
 
