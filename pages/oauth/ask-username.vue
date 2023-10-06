@@ -91,6 +91,7 @@ const notEmptyQuery = Object.fromEntries(
             autocomplete="username"
             minlength="3"
             :pattern="usernameRE.source"
+            autofocus="true"
           />
 
           <FormInputNote>
