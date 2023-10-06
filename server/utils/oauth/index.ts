@@ -57,7 +57,6 @@ export function sendOAuthRedirect(event: H3Event, provider: OAuthProviderType) {
   setCookie(event, 'state', state, {
     path: '/',
     httpOnly: true,
-    maxAge: parseDuration('0.75 hour', 's'),
   });
 
   let url: string;
