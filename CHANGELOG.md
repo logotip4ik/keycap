@@ -1,6 +1,38 @@
 # Changelog
 
 
+## v3.1.2
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.1.1...v3.1.2)
+
+### 🩹 Fixes
+
+- Use shared username regexp ([168eae2](https://github.com/logotip4ik/keycap/commit/168eae2))
+- Clear oauth state cookie only at error or successful registration ([3c8b64f](https://github.com/logotip4ik/keycap/commit/3c8b64f))
+- Tighten oauth state check ([7666305](https://github.com/logotip4ik/keycap/commit/7666305))
+
+### 💅 Refactors
+
+- Add little glow for blockquote element ([0da2217](https://github.com/logotip4ik/keycap/commit/0da2217))
+- Do not use rest operator for select params ([a861b4d](https://github.com/logotip4ik/keycap/commit/a861b4d))
+- Add autofocus attribute to username input ([552bc85](https://github.com/logotip4ik/keycap/commit/552bc85))
+- Set cookie age as session ([60f15f4](https://github.com/logotip4ik/keycap/commit/60f15f4))
+
+### 🏡 Chore
+
+- **release:** V3.1.1 ([3965c72](https://github.com/logotip4ik/keycap/commit/3965c72))
+- Bump vite ([9b53e95](https://github.com/logotip4ik/keycap/commit/9b53e95))
+- Enable back format on save for vscode ([fc573c5](https://github.com/logotip4ik/keycap/commit/fc573c5))
+
+### 🎨 Styles
+
+- Ternary statement on one line ([f0c40d2](https://github.com/logotip4ik/keycap/commit/f0c40d2))
+- Run eslint --fix ([a4b6ff7](https://github.com/logotip4ik/keycap/commit/a4b6ff7))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+
 ## v3.1.1
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.1.0...v3.1.1)
