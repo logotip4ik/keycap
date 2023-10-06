@@ -74,6 +74,7 @@ async function login() {
           placeholder="email"
           autocomplete="email"
           minlength="5"
+          autofocus="true"
         />
       </FormItem>
 
