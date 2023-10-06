@@ -37,7 +37,7 @@ export async function assertNoOAuthErrors(event: H3Event) {
     throw createError({ statusCode: 418, statusMessage: decodeURIComponent(query.error.toString()) });
   }
 
-  if (query.state !== getCookie(event, 'state')) {
+  if (typeof query.state === 'string' && query.state !== getCookie(event, 'state')) {
     deleteCookie(event, 'state');
 
     const identifier = getRequestIP(event);
