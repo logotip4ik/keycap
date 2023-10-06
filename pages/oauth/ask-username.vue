@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { OAuthProvider } from '~/server/utils';
+import { OAuthProvider, usernameRE } from '~/server/utils';
 
 if (import.meta.client) {
   throw createError({
@@ -90,7 +90,7 @@ const notEmptyQuery = Object.fromEntries(
             placeholder="username (no spaces allowed)"
             autocomplete="username"
             minlength="3"
-            pattern="[\w,.-]+?"
+            :pattern="usernameRE.source"
           />
 
           <FormInputNote>
