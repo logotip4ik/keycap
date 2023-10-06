@@ -73,6 +73,9 @@ export default defineEventHandler(async (event) => {
     username = user.username;
   }
 
+  // clear oauth state cookie
+  deleteCookie(event, 'state')
+
   user = await updateOrCreateUserFromSocialAuth(
     normalizeGitHubUser(githubUser, { username }),
   )

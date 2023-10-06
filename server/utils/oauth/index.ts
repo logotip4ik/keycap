@@ -10,8 +10,6 @@ import { OAuthProvider } from '~/server/utils';
 import type { NormalizedSocialUser, OAuthProvider as OAuthProviderType, SafeUser } from '~/types/server';
 
 export async function assertNoOAuthErrors(event: H3Event) {
-  deleteCookie(event, 'state');
-
   const proviersMap = {
     '/api/oauth/github': OAuthProvider.GitHub,
     '/api/oauth/google': OAuthProvider.Google,
@@ -22,7 +20,8 @@ export async function assertNoOAuthErrors(event: H3Event) {
   const provider = proviersMap[pathWithoutQuery as keyof typeof proviersMap];
 
   if (!provider) {
-    // path is set by logger
+    deleteCookie(event, 'state');
+
     await event.context.logger.error({ msg: 'undefined provider' });
 
     throw createError({ statusCode: 418, statusMessage: 'i a coffeepot' });
@@ -31,12 +30,16 @@ export async function assertNoOAuthErrors(event: H3Event) {
   const query = getQuery(event);
 
   if (query.error) {
+    deleteCookie(event, 'state');
+
     await event.context.logger.error({ err: query.error, msg: 'oauth failed' });
 
     throw createError({ statusCode: 418, statusMessage: decodeURIComponent(query.error.toString()) });
   }
 
   if (query.state !== getCookie(event, 'state')) {
+    deleteCookie(event, 'state');
+
     const identifier = getRequestIP(event);
 
     await event.context.logger.error({ msg: 'someone is messing with authentication', identifier });
