@@ -70,7 +70,7 @@ export default defineEventHandler(async (event) => {
   }
 
   // clear oauth state cookie
-  deleteCookie(event, 'state')
+  deleteCookie(event, 'state');
 
   user = await updateOrCreateUserFromSocialAuth(
     normalizeGoogleUser(googleUser, { username }),

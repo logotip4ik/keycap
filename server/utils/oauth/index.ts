@@ -1,6 +1,5 @@
 import { randomUUID } from 'node:crypto';
 import { withQuery } from 'ufo';
-import parseDuration from 'parse-duration';
 
 import type { Prisma } from '@prisma/client';
 import type { H3Event } from 'h3';
