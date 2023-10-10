@@ -12,7 +12,14 @@ const name = ref(props.item.name || '');
 function handleSubmit() {
   if (props.item.creating) {
     const creationName = name.value.replace(/\//g, '');
+
+    if (!creationName.match(allowedItemNameRE))
+      return inputEl.value?.setCustomValidity('name contains invalid characters')
+    else
+      inputEl.value?.setCustomValidity('');
+
     const createAction = creationName.length !== name.value.length ? createFolder : createNote;
+
 
     createAction(creationName, props.item, props.parent);
   }
@@ -39,27 +46,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <form
-    class="list-item__form"
-    @submit.prevent="handleSubmit"
-    @reset.prevent="handleReset"
-  >
+  <form class="list-item__form" @submit.prevent="handleSubmit" @reset.prevent="handleReset">
     <label v-once class="list-item__form__label" for="contentsListItemInput">
       Item name (enter "/" at the end to create folder)
     </label>
-    <input
-      id="contentsListItemInput"
-      ref="inputEl"
-      v-model="name"
-      class="list-item__form__input"
-      enterkeyhint="done"
-      type="text"
-      minlength="2"
-      placeholder="note..."
-      :pattern="allowedItemNameRE.source"
-      @blur="handleReset"
-      @keydown.esc="handleReset"
-    >
+    <input id="contentsListItemInput" ref="inputEl" v-model="name" class="list-item__form__input" enterkeyhint="done"
+      type="text" minlength="2" placeholder="note..." @blur="handleReset" @keydown.esc="handleReset">
   </form>
 </template>
 
