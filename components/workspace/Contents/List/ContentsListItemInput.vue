@@ -14,12 +14,11 @@ function handleSubmit() {
     const creationName = name.value.replace(/\//g, '');
 
     if (!creationName.match(allowedItemNameRE))
-      return inputEl.value?.setCustomValidity('name contains invalid characters')
+      return inputEl.value?.setCustomValidity('name contains invalid characters');
     else
       inputEl.value?.setCustomValidity('');
 
     const createAction = creationName.length !== name.value.length ? createFolder : createNote;
-
 
     createAction(creationName, props.item, props.parent);
   }

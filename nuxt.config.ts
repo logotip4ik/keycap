@@ -7,8 +7,6 @@ import { isCI, isDevelopment, isProduction } from 'std-env';
 import RollupReplace from '@rollup/plugin-replace';
 import RollupTypescript from '@rollup/plugin-typescript';
 
-import type { ComponentsDir } from 'nuxt/schema';
-
 import { getHeaders } from './headers.config';
 import { breakpoints, sidebarsBreakpoints } from './constants/breakpoints';
 import { ParseDurationTransformPlugin } from './unplugin/parse-duration';
