@@ -18,8 +18,7 @@ const isLoading = ref(false);
 const providers: Array<OAuthProvider> = ['GitHub', 'Google'];
 
 watch(user, async (value) =>
-  value && await navigateTo(`/@${value.username}`),
-);
+  value && await navigateTo(`/@${value.username}`));
 
 async function login() {
   const data = {

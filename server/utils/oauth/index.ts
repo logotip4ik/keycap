@@ -88,9 +88,7 @@ export function sendOAuthRedirect(event: H3Event, provider: OAuthProviderType) {
     throw new Error(`incorrect provider option: ${provider}`);
   }
 
-  return sendRedirect(event,
-    withQuery(url, oauthOptions),
-  );
+  return sendRedirect(event, withQuery(url, oauthOptions));
 }
 
 export async function updateOrCreateUserFromSocialAuth(normalizedUser: NormalizedSocialUser) {

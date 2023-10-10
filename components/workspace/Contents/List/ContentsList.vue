@@ -14,7 +14,6 @@ const isFallbackMode = useFallbackMode();
 const foldersCache = useFoldersCache();
 const offlineStorage = useOfflineStorage();
 const createToast = useToast();
-const detailsItem = useCurrentItemForDetails();
 const mitt = useMitt();
 const user = useUser();
 const { shortcuts } = useAppConfig();

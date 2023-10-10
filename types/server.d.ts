@@ -28,7 +28,7 @@ export interface NormalizedSocialUser {
   type: OAuthProvider
 }
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
+// eslint-disable-next-line ts/no-redeclare
 export type OAuthProvider = (typeof OAuthProvider)[keyof typeof OAuthProvider];
 
 export {};

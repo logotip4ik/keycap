@@ -49,8 +49,18 @@ onMounted(() => {
     <label v-once class="list-item__form__label" for="contentsListItemInput">
       Item name (enter "/" at the end to create folder)
     </label>
-    <input id="contentsListItemInput" ref="inputEl" v-model="name" class="list-item__form__input" enterkeyhint="done"
-      type="text" minlength="2" placeholder="note or folder/..." @blur="handleReset" @keydown.esc="handleReset">
+    <input
+      id="contentsListItemInput"
+      ref="inputEl"
+      v-model="name"
+      class="list-item__form__input"
+      enterkeyhint="done"
+      type="text"
+      minlength="2"
+      placeholder="note or folder/..."
+      @blur="handleReset"
+      @keydown.esc="handleReset"
+    >
   </form>
 </template>
 

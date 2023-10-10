@@ -1,7 +1,7 @@
 import type { Emitter } from 'mitt';
 import mitt from 'mitt';
 
-// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+// eslint-disable-next-line ts/consistent-type-definitions
 type Events = {
   'save:note'?: Partial<{ force: boolean }>
   'cache:populated'?: Partial<object>
@@ -11,18 +11,18 @@ type Events = {
 };
 
 const emitter = mitt<Events>();
+const beseOn = emitter.on;
+// @ts-expect-error end user will still get type support because of useMitt function
+emitter.on = (type, handler) => {
+  beseOn(type, handler);
+
+  if (getCurrentInstance()) {
+    onScopeDispose(() => {
+      emitter.off(type, handler);
+    });
+  }
+};
 
 export function useMitt(): Emitter<Events> {
-  return {
-    ...emitter,
-    // eslint-disable-next-line @typescript-eslint/prefer-ts-expect-error
-    // @ts-ignore we still return correct type from function
-    on: (type, handler) => {
-      emitter.on(type, handler);
-
-      onScopeDispose(() => {
-        emitter.off(type, handler);
-      });
-    },
-  };
+  return emitter;
 };

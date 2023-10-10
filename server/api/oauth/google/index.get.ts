@@ -60,9 +60,7 @@ export default defineEventHandler(async (event) => {
       query.socialUser = googleUser;
       query.usernameTaken = validation.ok && await checkIfUsernameTakenCached(username!) ? username : '';
 
-      return await sendRedirect(event,
-        withQuery('/oauth/ask-username', query),
-      );
+      return await sendRedirect(event, withQuery('/oauth/ask-username', query));
     }
   }
   else {

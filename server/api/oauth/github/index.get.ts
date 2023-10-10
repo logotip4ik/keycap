@@ -64,9 +64,7 @@ export default defineEventHandler(async (event) => {
 
       // NOTE: this basically makes infinate loop
       // to force user to input correct username
-      return await sendRedirect(event,
-        withQuery('/oauth/ask-username', query),
-      );
+      return await sendRedirect(event, withQuery('/oauth/ask-username', query));
     }
   }
   else {

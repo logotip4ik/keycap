@@ -49,11 +49,10 @@ async function main() {
 
   const hashedPasswords = await Promise.all(users.map((user) => hashPassword(user.password!)));
 
-  const dbUsers = await Promise.all(users.map((user, i) =>
-    prisma.user.create({
-      data: { ...user, password: hashedPasswords[i] },
-      select: { id: true, username: true, email: true, password: true },
-    })),
+  const dbUsers = await Promise.all(users.map((user, i) => prisma.user.create({
+    data: { ...user, password: hashedPasswords[i] },
+    select: { id: true, username: true, email: true, password: true },
+  })),
   );
 
   await fsp.appendFile(resultsPath, [
