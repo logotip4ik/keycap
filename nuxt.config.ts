@@ -155,17 +155,6 @@ export default defineNuxtConfig({
   },
 
   hooks: {
-    // removes `old` components from auto-import
-    'components:dirs': function (dirs) {
-      const componentsPath = resolve('./components');
-      const componentsDirIdx = dirs.findIndex((dir) => (dir as ComponentsDir).path === componentsPath);
-
-      const componentsDir = dirs[componentsDirIdx] as ComponentsDir;
-
-      componentsDir.ignore ||= [];
-      componentsDir.ignore.push('**/Old*/**');
-      componentsDir.ignore.push('**/Old*');
-    },
     // minifies service worker
     'nitro:init': function (nitro) {
       if (isDevelopment)
