@@ -1,6 +1,29 @@
 # Changelog
 
 
+## v3.1.3
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.1.2...v3.1.3)
+
+### 🩹 Fixes
+
+- Pass correct `usernameTaken` prop to `ask-username` page ([2c71fab](https://github.com/logotip4ik/keycap/commit/2c71fab))
+
+### 💅 Refactors
+
+- Set autofocus for first inputs on login and register pages ([62b509c](https://github.com/logotip4ik/keycap/commit/62b509c))
+
+### 🏡 Chore
+
+- Specify type as module ([59c8778](https://github.com/logotip4ik/keycap/commit/59c8778))
+- **release:** V3.1.2 ([d92c012](https://github.com/logotip4ik/keycap/commit/d92c012))
+- Update deps ([abfcafb](https://github.com/logotip4ik/keycap/commit/abfcafb))
+- Force resolve postcss to above  version 8 ([4253269](https://github.com/logotip4ik/keycap/commit/4253269))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+
 ## v3.1.2
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.1.1...v3.1.2)
