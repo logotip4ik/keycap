@@ -1,6 +1,31 @@
 # Changelog
 
 
+## v3.1.4
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.1.3...v3.1.4)
+
+### 🩹 Fixes
+
+- Allow creating folders ([fb1820f](https://github.com/logotip4ik/keycap/commit/fb1820f))
+
+### 💅 Refactors
+
+- New input placeholder ([894584c](https://github.com/logotip4ik/keycap/commit/894584c))
+
+### 🏡 Chore
+
+- **release:** V3.1.3 ([a1991fb](https://github.com/logotip4ik/keycap/commit/a1991fb))
+- Remove not used files ([669cbaf](https://github.com/logotip4ik/keycap/commit/669cbaf))
+
+### 🎨 Styles
+
+- Run lint:fix ([7da2a96](https://github.com/logotip4ik/keycap/commit/7da2a96))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+
 ## v3.1.3
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.1.2...v3.1.3)
