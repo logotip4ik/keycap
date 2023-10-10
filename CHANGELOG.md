@@ -1,6 +1,27 @@
 # Changelog
 
 
+## v3.1.5
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.1.4...v3.1.5)
+
+### 💅 Refactors
+
+- Migrate to eslint flat config ([1a207b6](https://github.com/logotip4ik/keycap/commit/1a207b6))
+
+### 🏡 Chore
+
+- **release:** V3.1.4 ([3594b28](https://github.com/logotip4ik/keycap/commit/3594b28))
+- Update deps ([5e9d952](https://github.com/logotip4ik/keycap/commit/5e9d952))
+
+### 🎨 Styles
+
+- Fix some eslint complains ([0550206](https://github.com/logotip4ik/keycap/commit/0550206))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+
 ## v3.1.4
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.1.3...v3.1.4)
