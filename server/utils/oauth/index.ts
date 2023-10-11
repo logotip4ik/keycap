@@ -39,7 +39,7 @@ export async function assertNoOAuthErrors(event: H3Event) {
   if (typeof query.state === 'string' && query.state !== getCookie(event, 'state')) {
     deleteCookie(event, 'state');
 
-    const identifier = getRequestIP(event);
+    const identifier = getRequestIP(event, { xForwardedFor: true });
 
     await event.context.logger.error({ msg: 'someone is messing with authentication', identifier });
 
