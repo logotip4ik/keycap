@@ -6,7 +6,7 @@ const props = defineProps<Props>();
 
 const isFolder = 'root' in props.item;
 
-const inputEl = ref<HTMLInputElement | null>(null);
+const inputEl = shallowRef<HTMLInputElement | null>(null);
 const name = ref(props.item.name || '');
 
 function handleSubmit() {
