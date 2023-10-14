@@ -73,7 +73,7 @@ async function openItem() {
 
     item.offsetParent!.scroll({
       top: item.offsetTop - 8,
-      behavior: 'smooth', // the animation look horrible in chrome
+      behavior: 'smooth', // the animation looks horrible in chrome
     });
   }, t);
 
