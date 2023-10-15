@@ -206,6 +206,16 @@ export default defineNuxtConfig({
         safari10: false,
         ecma: 2020,
       },
+
+      rollupOptions: {
+        output: {
+          interop: 'esModule',
+          generatedCode: {
+            constBindings: true,
+            objectShorthand: true,
+          },
+        },
+      },
     },
 
     optimizeDeps: {
