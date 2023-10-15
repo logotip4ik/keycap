@@ -237,6 +237,14 @@ export default defineNuxtConfig({
       },
     },
 
+    $client: {
+      build: {
+        rollupOptions: {
+          external: ['.prisma/client/index-browser'],
+        },
+      },
+    },
+
     $server: {
       plugins: [
         // Taken from elk
