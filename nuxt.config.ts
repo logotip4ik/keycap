@@ -208,6 +208,8 @@ export default defineNuxtConfig({
       },
 
       rollupOptions: {
+        treeshake: 'recommended',
+
         output: {
           interop: 'esModule',
           generatedCode: {
