@@ -8234,7 +8234,6 @@ __metadata:
     nuxt: ^3.7.4
     nuxt-vitest: ^0.11.0
     parse-duration: ^1.1.0
-    postcss-combine-media-query: ^1.0.1
     prisma: ^5.4.2
     rad-event-listener: ^0.2.4
     sanitize-html: ^2.11.0
@@ -10230,15 +10229,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-combine-media-query@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "postcss-combine-media-query@npm:1.0.1"
-  dependencies:
-    postcss: ^7.0.21
-  checksum: 177c0400ff733424beb6c9f1192bbdd0bb397a9471a34c72e03be2d38c3373e57482fdae1a5b0eb89595b3438faac3e850ebb84fa98551adfe8b212a79085736
-  languageName: node
-  linkType: hard
-
 "postcss-convert-values@npm:^6.0.0":
   version: 6.0.0
   resolution: "postcss-convert-values@npm:6.0.0"
@@ -10570,7 +10560,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.0.0":
+"postcss@npm:^8.1.10, postcss@npm:^8.3.11, postcss@npm:^8.4.27, postcss@npm:^8.4.30":
   version: 8.4.31
   resolution: "postcss@npm:8.4.31"
   dependencies:
