@@ -295,12 +295,6 @@ export default defineNuxtConfig({
     },
   },
 
-  postcss: {
-    plugins: {
-      'postcss-combine-media-query': {},
-    },
-  },
-
   fontMetrics: {
     fonts: [
       {
