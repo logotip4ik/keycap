@@ -1,6 +1,42 @@
 # Changelog
 
 
+## v3.1.6
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.1.5...v3.1.6)
+
+### 🔥 Performance
+
+- Use shallowRef for input reference ([1e82e95](https://github.com/logotip4ik/keycap/commit/1e82e95))
+
+### 🩹 Fixes
+
+- Correctly get ip ([e13f8e6](https://github.com/logotip4ik/keycap/commit/e13f8e6))
+- Add smooth scroll to item ([a2b3d1c](https://github.com/logotip4ik/keycap/commit/a2b3d1c))
+
+### 💅 Refactors
+
+- Pollyfill `.at` only when it is not defined ([28469ac](https://github.com/logotip4ik/keycap/commit/28469ac))
+- Also remove post css plugin from postcss config ([5789487](https://github.com/logotip4ik/keycap/commit/5789487))
+- Tweak rollup output options ([e8ecbf8](https://github.com/logotip4ik/keycap/commit/e8ecbf8))
+
+### 🏡 Chore
+
+- **release:** V3.1.5 ([d874acb](https://github.com/logotip4ik/keycap/commit/d874acb))
+- Update tiptap and repatch link extension to remove linkify dep ([1a65ecf](https://github.com/logotip4ik/keycap/commit/1a65ecf))
+- Update deps ([65f0849](https://github.com/logotip4ik/keycap/commit/65f0849))
+- Fix typo ([acbff42](https://github.com/logotip4ik/keycap/commit/acbff42))
+- Remove not used files ([b3f54dd](https://github.com/logotip4ik/keycap/commit/b3f54dd))
+- Correct regexp plugin import ([1a70da0](https://github.com/logotip4ik/keycap/commit/1a70da0))
+- Install `nolyfill` ([be8aca7](https://github.com/logotip4ik/keycap/commit/be8aca7))
+- Remove postcss plugin to combine media queries ([0427106](https://github.com/logotip4ik/keycap/commit/0427106))
+- Hint that prisma is external for client and remove warning ([ab290a4](https://github.com/logotip4ik/keycap/commit/ab290a4))
+- Enable recommended treeshake options for rollup ([3f3ed50](https://github.com/logotip4ik/keycap/commit/3f3ed50))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+
 ## v3.1.5
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.1.4...v3.1.5)
