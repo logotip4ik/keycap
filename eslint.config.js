@@ -1,25 +1,6 @@
 import antfu from '@antfu/eslint-config';
 import * as regexp from 'eslint-plugin-regexp';
 
-const ignores = [
-  'data',
-  'node_modules',
-  '.nuxt',
-  '.output',
-  '.vscode',
-  '.yarn/',
-  'archive',
-  'prisma/migrations',
-  'public',
-  'docker-compose.*',
-  'package.json',
-  '*.lock',
-  'tsconfig.json',
-  'vercel.json',
-  'dist',
-  'benchmarks',
-];
-
 export default antfu({
   stylistic: {
     quotes: 'single',
@@ -41,5 +22,22 @@ export default antfu({
   ...regexp.configs.recommended,
   plugins: { regexp },
 }, {
-  ignores,
+  ignores: [
+    'data',
+    'node_modules',
+    '.nuxt',
+    '.output',
+    '.vscode',
+    '.yarn/',
+    'archive',
+    'prisma/migrations',
+    'public',
+    'docker-compose.*',
+    'package.json',
+    '*.lock',
+    'tsconfig.json',
+    'vercel.json',
+    'dist',
+    'benchmarks',
+  ],
 });
