@@ -67,6 +67,7 @@ const { data: note, pending, refresh, error } = await useAsyncData<SerializedNot
   server: false,
   lazy: true,
   immediate: false,
+  deep: false,
 });
 
 let abortControllerUpdate: AbortController | null;
