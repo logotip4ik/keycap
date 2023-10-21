@@ -31,7 +31,6 @@ declare global {
     subfolders: Array<FolderMinimal>
   };
 
-  // TODO: use FolderMinimal here
   export type FolderOrNote = FolderMinimal & NoteMinimal;
 
   export interface CommandItem {

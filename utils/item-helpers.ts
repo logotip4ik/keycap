@@ -149,7 +149,7 @@ export async function renameFolder(newName: string, self: FolderOrNote, parent: 
     for (const item of itemsToRename) {
       const cache = 'root' in item ? foldersCache : notesCache;
 
-      cache.delete(item.path); // TODO: do we need to worry about this
+      cache.delete(item.path);
       offlineStorage.removeItem?.(item.path);
     }
   }

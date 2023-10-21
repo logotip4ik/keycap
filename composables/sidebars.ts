@@ -19,7 +19,7 @@ export function useContentsSidebarState() {
 }
 
 export function makeSidebarState(key: string): Ref<SidebarState> {
-  return useState<SidebarState>(key, () => { // TODO: maybe default to hidden on phones ?
+  return useState<SidebarState>(key, () => {
     const stateWhitelist = ['hidden', 'visible', 'pinned'] satisfies Array<SidebarState>;
     let stateCookieValue: SidebarState | undefined;
 
