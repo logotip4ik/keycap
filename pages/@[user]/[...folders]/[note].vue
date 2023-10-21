@@ -127,9 +127,10 @@ async function handleError(error: Error) {
     return await navigateTo(`/@${user.value.username}`);
 
   // Other network error ?
-  // TODO: send beacon to some endpoint ?
-  if (error.name === 'FetchError')
+  if (error.name === 'FetchError') {
+    sendError(error);
     isFallbackMode.value = true;
+  }
 
   // But if folder was found in cache, then do nothing, just display it
   if (note.value)
