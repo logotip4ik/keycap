@@ -63,7 +63,7 @@ const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefi
   server: false,
   immediate: false,
   lazy: true,
-  deep: true,
+  deep: true, // TODO: make it work with `deep: false`
   watch: [folderApiPath],
 });
 
