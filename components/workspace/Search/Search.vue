@@ -188,7 +188,6 @@ onMounted(() => {
           </p>
         </div>
 
-        <!-- TODO: rework this animation to use transition events -->
         <TransitionGroup
           v-else-if="results.length !== 0"
           ref="resultsEl"
