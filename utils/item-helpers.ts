@@ -1,3 +1,5 @@
+import escapeRE from 'escape-string-regexp';
+
 import type { RouteLocationRaw } from 'vue-router';
 import type { NavigateToOptions } from '#app/composables/router';
 
@@ -127,7 +129,7 @@ export async function renameFolder(newName: string, self: FolderOrNote, parent: 
   const offlineStorage = useOfflineStorage();
   const fuzzyWorker = useFuzzyWorker();
 
-  const folderNameRegex = new RegExp(`${encodeURIComponent(self.name)}$`);
+  const folderNameRegex = new RegExp(`${escapeRE(encodeURIComponent(self.name))}$`);
   newFolder.path = self.path.replace(folderNameRegex, encodeURIComponent(newFolder.name));
   newFolder.editing = false;
 
@@ -175,7 +177,7 @@ export async function renameNote(newName: string, self: FolderOrNote, parent: Fo
   const offlineStorage = useOfflineStorage();
   const fuzzyWorker = useFuzzyWorker();
 
-  const noteNameRegex = new RegExp(`${encodeURIComponent(self.name)}$`);
+  const noteNameRegex = new RegExp(`${escapeRE(encodeURIComponent(self.name))}$`);
   newNote.path = self.path.replace(noteNameRegex, encodeURIComponent(newNote.name));
   newNote.editing = false;
 
