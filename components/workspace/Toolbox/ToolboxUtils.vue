@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { HTMLAttributes } from 'vue';
 import { LazyIconInfoOutline, LazyIconSearchRounded } from '#components';
 
 const route = useRoute();
@@ -6,44 +7,39 @@ const detailsItem = useCurrentItemForDetails();
 const utilsEl = shallowRef<ComponentPublicInstance<HTMLUListElement> | null>(null);
 
 interface Util {
+  shouldShow?: ComputedRef<boolean>
   text: string
   label: string
   icon: any
-  buttonAttrs?: Record<string, any>
+  ariaHaspopup?: HTMLAttributes['aria-haspopup'] | ComputedRef<HTMLAttributes['aria-haspopup']>
+  ariaControls?: HTMLAttributes['aria-controls'] | ComputedRef<HTMLAttributes['aria-controls']>
+  ariaExpanded?: HTMLAttributes['aria-expanded'] | ComputedRef<HTMLAttributes['aria-expanded']>
   action: () => any
 }
 
-const searchUtil: Util = {
-  text: 'Open Search',
-  label: 'open quick search',
-  icon: LazyIconSearchRounded,
-  action: () => {
-    useMitt().emit('search:show');
+const utils: Array<Util> = [
+  {
+    text: 'Open Search',
+    label: 'open quick search',
+    icon: LazyIconSearchRounded,
+    action: () => {
+      useMitt().emit('search:show');
+    },
   },
-};
-const detailsUtil = computed((): Util => ({
-  text: 'Show Item Details',
-  label: 'open item details popup',
-  icon: LazyIconInfoOutline,
-  buttonAttrs: {
-    'aria-haspopup': 'dialog',
-    'aria-controls': 'item-details',
-    'aria-label': 'current note details',
-    'aria-expanded': !!detailsItem.value,
+  {
+    shouldShow: computed(() => !!route.params.note && route.params.note !== BLANK_NOTE_NAME),
+    text: 'Show Item Details',
+    label: 'open item details popup',
+    icon: LazyIconInfoOutline,
+    action: () => {
+      useMitt().emit('details:show');
+    },
+
+    ariaHaspopup: 'dialog',
+    ariaControls: 'item-details',
+    ariaExpanded: computed(() => !!detailsItem.value),
   },
-  action: () => {
-    useMitt().emit('details:show');
-  },
-}));
-
-const utils = computed<Array<Util>>(() => {
-  const utils = [searchUtil, detailsUtil.value];
-
-  if (!route.params.note || route.params.note === BLANK_NOTE_NAME)
-    utils.pop();
-
-  return utils;
-});
+];
 
 let prevHeight: number;
 function rememberHeight() {
@@ -74,22 +70,28 @@ function transitionHeight() {
     @before-enter="rememberHeight"
     @before-leave="rememberHeight"
   >
-    <li
+    <template
       v-for="(util, idx) in utils"
       :key="idx"
-      class="toolbox__utils__item"
     >
-      <button
-        v-bind="util.buttonAttrs"
-        :aria-label="util.label"
-        class="toolbox__utils__item__btn"
-        @click="util.action"
+      <li
+        v-if="unref(util.shouldShow) ?? true"
+        class="toolbox__utils__item"
       >
-        <component :is="util.icon" class="toolbox__utils__item__btn__icon" />
+        <button
+          class="toolbox__utils__item__btn"
+          :aria-label="util.label"
+          :aria-haspopup="unref(util.ariaHaspopup)"
+          :aria-controls="unref(util.ariaControls)"
+          :aria-expanded="unref(util.ariaExpanded)"
+          @click="util.action"
+        >
+          <component :is="util.icon" class="toolbox__utils__item__btn__icon" />
 
-        {{ util.text }}
-      </button>
-    </li>
+          {{ util.text }}
+        </button>
+      </li>
+    </template>
   </TransitionGroup>
 </template>
 
