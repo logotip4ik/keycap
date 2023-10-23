@@ -1,6 +1,35 @@
 # Changelog
 
 
+## v3.1.7
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.1.6...v3.1.7)
+
+### 💅 Refactors
+
+- Rely on pixles for root font size ([38205cb](https://github.com/logotip4ik/keycap/commit/38205cb))
+- Specify what could be `shallowRef` ([48574af](https://github.com/logotip4ik/keycap/commit/48574af))
+- Try to send error if captured one ([ff24b8e](https://github.com/logotip4ik/keycap/commit/ff24b8e))
+- Add missing will-change contents property ([f5ede96](https://github.com/logotip4ik/keycap/commit/f5ede96))
+- Do not use computed on utils array ([47dce85](https://github.com/logotip4ik/keycap/commit/47dce85))
+
+### 🏡 Chore
+
+- **release:** V3.1.6 ([522cf39](https://github.com/logotip4ik/keycap/commit/522cf39))
+- Remove vite from package resolution ([78afb3c](https://github.com/logotip4ik/keycap/commit/78afb3c))
+- Install new deps after removing vite from resolutions ([9d4dba0](https://github.com/logotip4ik/keycap/commit/9d4dba0))
+- Update deps and refresh lock file ([cc89d0c](https://github.com/logotip4ik/keycap/commit/cc89d0c))
+- Add todo ([9713506](https://github.com/logotip4ik/keycap/commit/9713506))
+- Remove done todo ([865ec7f](https://github.com/logotip4ik/keycap/commit/865ec7f))
+- Remove marked todos and add more clear description ([235db85](https://github.com/logotip4ik/keycap/commit/235db85))
+- Install `escape-string-regexp` ([ad904b4](https://github.com/logotip4ik/keycap/commit/ad904b4))
+- Escape string before using it in regexp ([8f4073e](https://github.com/logotip4ik/keycap/commit/8f4073e))
+- Remove not needed variable ([868b1ed](https://github.com/logotip4ik/keycap/commit/868b1ed))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+
 ## v3.1.6
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.1.5...v3.1.6)
