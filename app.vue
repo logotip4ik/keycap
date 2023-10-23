@@ -30,6 +30,15 @@ if (import.meta.client) {
   }, UPDATE_WORKER_DELAY);
 }
 
+useHead({
+  htmlAttrs: {
+    class: {
+      'firefox': isFirefox,
+      'phone-or-tablet': isSmallScreen,
+    },
+  },
+});
+
 if (import.meta.server) {
   const { siteOrigin } = useRuntimeConfig().public;
 
@@ -47,16 +56,9 @@ if (import.meta.server) {
     applicationName: 'Keycap',
     author: 'Bogdan Kostyuk',
     twitterCard: 'summary',
-  }, { mode: 'server' });
+  });
 
   useHead({
-    htmlAttrs: {
-      class: {
-        'firefox': isFirefox,
-        'phone-or-tablet': isSmallScreen,
-      },
-    },
-
     link: [
       {
         rel: 'preload',
@@ -66,7 +68,7 @@ if (import.meta.server) {
         href: import('~/assets/fonts/Mona-Sans/Mona-Sans.woff2?url').then((url) => url.default),
       },
     ],
-  }, { mode: 'server' });
+  });
 }
 </script>
 
