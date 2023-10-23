@@ -195,6 +195,10 @@ export default defineNuxtConfig({
       ParseDurationTransformPlugin.vite(),
     ],
 
+    resolve: {
+      extensions: ['.mjs', '.js', '.ts', '.json'],
+    },
+
     build: {
       target: 'esnext',
       cssMinify: 'lightningcss',
