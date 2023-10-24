@@ -97,8 +97,8 @@ export function getHeaders(headersOptions?: HeadersType | { type: HeadersType; o
     Object.assign(headers, corsHeaders);
     Object.assign(headers, makeCacheControlHeader({
       private: false,
-      maxAge: parseDuration('1 days', 'second')!,
-      staleWhileRevalidate: parseDuration('4 days', 'second')!,
+      maxAge: parseDuration('1 hour', 'second')!,
+      staleWhileRevalidate: parseDuration('1 day', 'second')!,
       CDN: true,
     }));
   }
