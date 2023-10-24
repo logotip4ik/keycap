@@ -114,6 +114,7 @@ export default defineNuxtConfig({
     '/_nuxt/**': { headers: getHeaders('assets') },
 
     '/api/**': { headers: getHeaders('api') },
+    '/api/info': { isr: true },
 
     // this would be great https://github.com/unjs/nitro/issues/603#issuecomment-1415826732
     '/view/**': { isr: parseDuration('15 minutes', 'second') },
