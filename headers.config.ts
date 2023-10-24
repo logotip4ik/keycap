@@ -45,7 +45,6 @@ export const defaultHeaders = {
   'Referrer-Policy': 'origin-when-cross-origin, strict-origin-when-cross-origin',
   'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
   'Vary': 'Accept-Encoding, Accept, X-Requested-With, X-Authorized',
-  ...makeCacheControlHeader({ private: false, maxAge: 2, staleWhileRevalidate: 4 }),
   ...(isProduction ? cspHeaders : {}),
 };
 
@@ -56,7 +55,7 @@ export interface NoteViewHeaderOptions {
    */
   staleWhileRevalidate?: number
 }
-export type HeadersType = 'default' | 'assets' | 'api' | 'note-view' | 'webmanifest';
+export type HeadersType = 'default' | 'assets' | 'api' | 'api-info' | 'webmanifest';
 export type HeadersOptions = NoteViewHeaderOptions | unknown;
 
 export function getHeaders(headersOptions?: HeadersType | { type: HeadersType; opts: HeadersOptions }) {
@@ -86,7 +85,7 @@ export function getHeaders(headersOptions?: HeadersType | { type: HeadersType; o
     Object.assign(headers, makeCacheControlHeader(assetsCacheOptions));
   }
 
-  if (type === 'api') {
+  else if (type === 'api') {
     Object.assign(headers, corsHeaders);
     Object.assign(headers, makeCacheControlHeader({
       private: true,
@@ -94,29 +93,22 @@ export function getHeaders(headersOptions?: HeadersType | { type: HeadersType; o
     }));
   }
 
-  if (type === 'note-view') {
-    const options = (isObject ? headersOptions.opts : {}) as NoteViewHeaderOptions;
-
-    const viewCacheOptions: CacheControlHeaderOptions = {
+  else if (type === 'api-info') {
+    Object.assign(headers, corsHeaders);
+    Object.assign(headers, makeCacheControlHeader({
       private: false,
-      maxAge: options.isr,
-      staleWhileRevalidate: options.isr,
-    };
-
-    Object.assign(headers, makeCacheControlHeader(viewCacheOptions));
-
-    viewCacheOptions.CDN = true;
-
-    Object.assign(headers, makeCacheControlHeader(viewCacheOptions));
+      maxAge: parseDuration('1 hour', 'second')!,
+      staleWhileRevalidate: parseDuration('1 day', 'second')!,
+      CDN: true,
+    }));
   }
 
-  if (type === 'webmanifest') {
-    const manifestCacheOptions: CacheControlHeaderOptions = {
+  else if (type === 'webmanifest') {
+    Object.assign(headers, makeCacheControlHeader({
       private: true,
-      maxAge: parseDuration('1 day', 'second')!,
-    };
-
-    Object.assign(headers, makeCacheControlHeader(manifestCacheOptions));
+      maxAge: 0,
+      mustRevalidate: true,
+    }));
   }
 
   return headers;
@@ -125,6 +117,7 @@ export function getHeaders(headersOptions?: HeadersType | { type: HeadersType; o
 export interface CacheControlHeaderOptions {
   private: boolean
   immutable?: boolean
+  mustRevalidate?: boolean
   /**
    * in seconds
    */
@@ -147,6 +140,9 @@ export function makeCacheControlHeader(opts: CacheControlHeaderOptions) {
 
   if (opts.staleWhileRevalidate)
     values.push(`stale-while-revalidate=${opts.staleWhileRevalidate}`);
+
+  if (opts.mustRevalidate)
+    values.push(`must-revalidate`);
 
   const headerName = ['Cache', 'Control'];
 
