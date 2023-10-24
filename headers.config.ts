@@ -104,12 +104,11 @@ export function getHeaders(headersOptions?: HeadersType | { type: HeadersType; o
   }
 
   else if (type === 'webmanifest') {
-    const manifestCacheOptions: CacheControlHeaderOptions = {
+    Object.assign(headers, makeCacheControlHeader({
       private: true,
-      maxAge: parseDuration('1 day', 'second')!,
-    };
-
-    Object.assign(headers, makeCacheControlHeader(manifestCacheOptions));
+      maxAge: 0,
+      mustRevalidate: true,
+    }));
   }
 
   return headers;
