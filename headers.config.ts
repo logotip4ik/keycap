@@ -118,6 +118,7 @@ export function getHeaders(headersOptions?: HeadersType | { type: HeadersType; o
 export interface CacheControlHeaderOptions {
   private: boolean
   immutable?: boolean
+  mustRevalidate?: boolean
   /**
    * in seconds
    */
@@ -140,6 +141,9 @@ export function makeCacheControlHeader(opts: CacheControlHeaderOptions) {
 
   if (opts.staleWhileRevalidate)
     values.push(`stale-while-revalidate=${opts.staleWhileRevalidate}`);
+
+  if (opts.mustRevalidate)
+    values.push(`must-revalidate`);
 
   const headerName = ['Cache', 'Control'];
 
