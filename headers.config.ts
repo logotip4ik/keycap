@@ -55,7 +55,7 @@ export interface NoteViewHeaderOptions {
    */
   staleWhileRevalidate?: number
 }
-export type HeadersType = 'default' | 'assets' | 'api' | 'webmanifest';
+export type HeadersType = 'default' | 'assets' | 'api' | 'api-info' | 'webmanifest';
 export type HeadersOptions = NoteViewHeaderOptions | unknown;
 
 export function getHeaders(headersOptions?: HeadersType | { type: HeadersType; opts: HeadersOptions }) {
@@ -85,7 +85,7 @@ export function getHeaders(headersOptions?: HeadersType | { type: HeadersType; o
     Object.assign(headers, makeCacheControlHeader(assetsCacheOptions));
   }
 
-  if (type === 'api') {
+  else if (type === 'api') {
     Object.assign(headers, corsHeaders);
     Object.assign(headers, makeCacheControlHeader({
       private: true,
@@ -93,7 +93,17 @@ export function getHeaders(headersOptions?: HeadersType | { type: HeadersType; o
     }));
   }
 
-  if (type === 'webmanifest') {
+  else if (type === 'api-info') {
+    Object.assign(headers, corsHeaders);
+    Object.assign(headers, makeCacheControlHeader({
+      private: false,
+      maxAge: parseDuration('1 days', 'second')!,
+      staleWhileRevalidate: parseDuration('4 days', 'second')!,
+      CDN: true,
+    }));
+  }
+
+  else if (type === 'webmanifest') {
     const manifestCacheOptions: CacheControlHeaderOptions = {
       private: true,
       maxAge: parseDuration('1 day', 'second')!,
