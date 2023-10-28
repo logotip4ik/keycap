@@ -34,6 +34,7 @@ const itemDetailsEl = shallowRef<HTMLElement | null>(null);
 const mergedDetails = computed(() => {
   if (!details.value) return null;
 
+  // NOTE: maybe use `options.tranform` from useAsyncData ?
   return {
     name: props.item.name,
     ...details.value,
