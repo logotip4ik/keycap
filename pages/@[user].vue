@@ -39,7 +39,7 @@ watch(isShowingSearch, async (search) => {
   // @ts-expect-error idk why it is not happy, but it works
   query.search = search ? null : undefined;
 
-  await navigateTo({ ...route, query }, { replace: true });
+  await navigateTo({ ...route, query });
 });
 
 useHead({
