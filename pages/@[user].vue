@@ -12,7 +12,6 @@ const user = useUser();
 const mitt = useMitt();
 const { shortcuts } = useAppConfig();
 
-const currentNoteState = useCurrentNoteState();
 const currentItemForDetails = useCurrentItemForDetails();
 
 const isShowingSearch = ref(false);
@@ -23,12 +22,6 @@ const isNoteEmpty = computed(() => !route.params.note || route.params.note === B
 function focusSearchInput(event: Element) {
   nextTick(() => event.querySelector('input')?.focus());
 }
-
-watch(() => route.params.note, (noteName) => {
-  const isEmptyNoteName = !noteName || noteName === BLANK_NOTE_NAME;
-
-  if (isEmptyNoteName) currentNoteState.value = '';
-});
 
 let popstateOff: (() => any) | undefined;
 watch(isShowingSearch, async (search) => {
