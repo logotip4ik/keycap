@@ -38,7 +38,7 @@ async function register() {
 
   isLoading.value = true;
 
-  preloadRouteComponents('/@__preload_user_page__');
+  preloadRouteComponents('/a');
 
   $fetch<SafeUser | null>('/api/user/register', { method: 'POST', body: data })
     .then((newUser) => newUser && (user.value = newUser))
