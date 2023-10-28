@@ -16,14 +16,13 @@ const currentNoteState = useCurrentNoteState();
 const currentItemForDetails = useCurrentItemForDetails();
 
 const isShowingSearch = ref(false);
+mitt.on('search:show', () => isShowingSearch.value = true);
 
 const isNoteEmpty = computed(() => !route.params.note || route.params.note === BLANK_NOTE_NAME);
 
 function focusSearchInput(event: Element) {
   nextTick(() => event.querySelector('input')?.focus());
 }
-
-mitt.on('search:show', () => isShowingSearch.value = true);
 
 watch(() => route.params.note, (noteName) => {
   const isEmptyNoteName = !noteName || noteName === BLANK_NOTE_NAME;
