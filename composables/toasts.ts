@@ -2,7 +2,6 @@ import type { MaybeRefOrGetter } from '@vueuse/core';
 import type { ShallowRef } from 'vue';
 
 const toasts = shallowRef<Array<ToastInstance>>([]);
-
 export const useToasts = () => toasts;
 
 export function useToast() {
