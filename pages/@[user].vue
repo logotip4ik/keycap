@@ -19,19 +19,6 @@ const isShowingSearch = ref(false);
 
 const isNoteEmpty = computed(() => !route.params.note || route.params.note === BLANK_NOTE_NAME);
 
-const currentRouteName = computed(() => {
-  const folders = route.params.folders;
-  const currentFolder = Array.isArray(folders) ? folders.at(-1) : folders as string;
-
-  if (currentFolder && (!route.params.folders || route.params.note === BLANK_NOTE_NAME))
-    return decodeURIComponent(currentFolder);
-
-  if (route.params.note && route.params.note !== BLANK_NOTE_NAME)
-    return decodeURIComponent(route.params.note as string);
-
-  return null;
-});
-
 function focusSearchInput(event: Element) {
   nextTick(() => event.querySelector('input')?.focus());
 }
@@ -56,12 +43,13 @@ watch(isShowingSearch, async (search) => {
 });
 
 useHead({
-  title: () => currentRouteName.value,
+  title: () => !isNoteEmpty.value
+    ? (route.params.note as string)
+    : ((route.params.folders && route.params.folders.at(-1)) || ''),
   titleTemplate: (name) => {
-    const username = user.value?.username;
-    const title = name ? `${name} | ${username}` : (username || '');
-
-    return title ? `${title} - Keycap` : 'Keycap';
+    return name
+      ? `${name} | ${user.value!.username} - Keycap`
+      : `${user.value!.username} - Keycap`;
   },
 });
 
