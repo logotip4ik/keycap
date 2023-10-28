@@ -12,8 +12,6 @@ const user = useUser();
 const event = useRequestEvent();
 const { query } = useRoute();
 
-const usernameInput = shallowRef<HTMLInputElement | null>(null);
-
 if (user.value)
   await navigateTo(`/@${user.value.username}`);
 
@@ -84,7 +82,6 @@ const notEmptyQuery = Object.fromEntries(
 
           <FormInput
             id="username"
-            ref="usernameInput"
             type="text"
             name="username"
             placeholder="username (no spaces allowed)"
