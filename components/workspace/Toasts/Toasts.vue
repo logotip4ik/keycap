@@ -12,7 +12,7 @@ const sortedToasts = computed(() =>
 
 let toasterElClientRect: DOMRect | null;
 const ANIMATION_DURATION = parseDuration('0.3s')!;
-function beforeLeaveHook(el: Element) {
+function preservePositionAndSize(el: Element) {
   const elClientRect = el.getBoundingClientRect();
 
   toasterElClientRect = toasterElClientRect || toasterEl.value!.$el.getBoundingClientRect();
@@ -43,7 +43,7 @@ onMounted(() => {
       tag="section"
       name="toast"
       aria-label="Notifications"
-      @before-leave="beforeLeaveHook"
+      @before-leave="preservePositionAndSize"
     >
       <WorkspaceToastsItem
         v-for="(toast, i) in sortedToasts"
