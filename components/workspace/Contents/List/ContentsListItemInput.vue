@@ -8,6 +8,11 @@ const isFolder = 'root' in props.item;
 
 const inputEl = shallowRef<HTMLInputElement | null>(null);
 const name = ref(props.item.name || '');
+const placeholder = props.item.creating
+  ? 'note or folder/'
+  : isFolder
+    ? 'new folder name'
+    : 'new note name';
 
 function handleSubmit() {
   if (props.item.creating) {
@@ -57,7 +62,7 @@ onMounted(() => {
       enterkeyhint="done"
       type="text"
       minlength="2"
-      placeholder="note or folder/..."
+      :placeholder="placeholder"
       @blur="handleReset"
       @keydown.esc="handleReset"
     >
