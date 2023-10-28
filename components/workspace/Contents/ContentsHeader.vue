@@ -11,7 +11,8 @@ const crumbs = computed(() => {
   const folders = (
     Array.isArray(route.params.folders)
       ? route.params.folders
-      : [route.params.folders])
+      : [route.params.folders]
+  )
     .filter(Boolean);
 
   const crumbs: Array<Crumb> = [{
