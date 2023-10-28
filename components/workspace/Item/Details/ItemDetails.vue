@@ -41,10 +41,10 @@ const mergedDetails = computed(() => {
   };
 });
 
-const rowsData = computed(() => [
-  { title: 'Last update', value: formatDate(mergedDetails.value?.updatedAt) },
-  { title: 'Created at', value: formatDate(mergedDetails.value?.createdAt) },
-]);
+const rowsData = [
+  { title: 'Last update', value: computed(() => formatDate(mergedDetails.value?.updatedAt)) },
+  { title: 'Created at', value: computed(() => formatDate(mergedDetails.value?.createdAt)) },
+];
 
 function unsetCurrentItemForDetails() {
   details.value = null; // clearing details from prev request
@@ -204,8 +204,8 @@ onMounted(() => {
             <hr class="item-details__data__row__hr">
 
             <Transition name="fade">
-              <p :key="data.value" class="item-details__data__row__value">
-                {{ data.value }}
+              <p :key="data.value.value" class="item-details__data__row__value">
+                {{ data.value.value }}
               </p>
             </Transition>
           </div>
