@@ -30,13 +30,16 @@ watch(() => route.params.note, (noteName) => {
   if (isEmptyNoteName) currentNoteState.value = '';
 });
 
+let popstateOff: (() => any) | undefined;
 watch(isShowingSearch, async (search) => {
+  popstateOff?.();
   const query = { ...route.query };
 
   // `undefined` and empty array removes param from query
   // `null` means that query param should be there but value should be empty
   // @ts-expect-error idk why it is not happy, but it works
   query.search = search ? null : undefined;
+  popstateOff = on(window, 'popstate', () => isShowingSearch.value = false);
 
   await navigateTo({ ...route, query });
 });
@@ -74,6 +77,8 @@ onMounted(() => {
     // @ts-expect-error this should not be defined
     window.$createToast = useToast();
 });
+
+onBeforeUnmount(() => popstateOff?.());
 </script>
 
 <template>
