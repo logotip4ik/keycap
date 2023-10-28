@@ -1,22 +1,9 @@
 <script setup lang="ts">
-interface Props {
-  top?: string
-}
-
-const props = defineProps<Props>();
-
-const bindings = computed(() => {
-  const bindings: Record<string, string> = {};
-
-  if (props.top)
-    bindings['--t'] = props.top;
-
-  return bindings;
-});
+defineProps<{ top?: string }>();
 </script>
 
 <template>
-  <slot class="_blob" :style="bindings" />
+  <slot class="_blob" :style="{ '--t': top }" />
 </template>
 
 <style lang="scss">
