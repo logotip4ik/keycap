@@ -34,13 +34,13 @@
 }
 
 html {
-  font-size: 16px;
+  font-size: 1rem;
   tab-size: 4;
 
   &:not(.firefox).phone-or-tablet {
     // Noticed that chrome had much bigger font size than firefox, but only on smartphone
     // p.s. i am using android
-    font-size: 14px;
+    font-size: 0.875rem;
   }
 }
 
