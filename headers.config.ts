@@ -13,6 +13,7 @@ export const corsHeaders = {
   'Access-Control-Allow-Origin': CorsOrigin,
   'Access-Control-Allow-Methods': CorsMethods.join(', '),
   'Access-Control-Allow-Headers': CorsHeaders.join(', '),
+  'Access-Control-Max-Age': parseDuration('24 hours', 's'),
 };
 
 export const cspHeaders = {
