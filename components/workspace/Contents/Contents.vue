@@ -74,7 +74,7 @@ useTinykeys({
       @update-state="smartUpdateState"
     />
 
-    <WorkspaceContentsCreateBtn />
+    <WorkspaceContentsCreateButton />
 
     <hr>
 
