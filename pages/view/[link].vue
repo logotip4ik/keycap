@@ -60,7 +60,6 @@ function formatDate(date: string | Date) {
 <style lang="scss">
 .note-view {
   position: relative;
-  isolation: isolate;
 
   width: 91.25%;
   height: 100%;

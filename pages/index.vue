@@ -64,7 +64,6 @@ const shortCommitSha = build.commit;
   &__header {
     position: relative;
     z-index: 0;
-    isolation: isolate;
 
     width: 100%;
     max-width: 1100px;

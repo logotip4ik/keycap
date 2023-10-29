@@ -276,7 +276,6 @@ onMounted(() => {
     align-items: center;
 
     position: relative;
-    isolation: isolate;
     z-index: 1;
 
     margin: 0;

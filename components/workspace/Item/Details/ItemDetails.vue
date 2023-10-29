@@ -220,7 +220,6 @@ onMounted(() => {
 .item-details {
   position: relative;
   z-index: 1;
-  isolation: isolate;
 
   width: 90%;
   max-width: $breakpoint-tablet;

@@ -222,7 +222,6 @@ onBeforeUnmount(() => {
       display: block;
 
       position: relative;
-      isolation: isolate;
       z-index: 1;
 
       font: inherit;
