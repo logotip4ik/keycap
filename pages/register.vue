@@ -40,7 +40,7 @@ async function register() {
 
   preloadRouteComponents('/a');
 
-  $fetch<SafeUser | null>('/api/user/register', { method: 'POST', body: data })
+  $fetch<SafeUser | null>('/api/auth/register', { method: 'POST', body: data })
     .then((newUser) => newUser && (user.value = newUser))
     .catch((e) => createToast(e.data.statusMessage))
     .finally(() => isLoading.value = false);
@@ -52,7 +52,7 @@ async function register() {
 
   <main v-once class="register">
     <Form
-      action="/api/user/register"
+      action="/api/auth/register"
       method="POST"
       @submit.prevent="register"
     >

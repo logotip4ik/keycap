@@ -36,7 +36,7 @@ async function login() {
 
   preloadRouteComponents('/@a');
 
-  $fetch<SafeUser | null>('/api/user/login', { method: 'POST', body: data })
+  $fetch<SafeUser | null>('/api/auth/login', { method: 'POST', body: data })
     .then((newUser) => newUser && (user.value = newUser))
     .catch((e) => createToast(e.data.statusMessage))
     .finally(() => isLoading.value = false);
@@ -48,7 +48,7 @@ async function login() {
 
   <main v-once class="login">
     <Form
-      action="/api/user/login"
+      action="/api/auth/login"
       method="POST"
       @submit.prevent="login"
     >
