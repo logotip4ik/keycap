@@ -154,7 +154,6 @@ $breakpoint-one: $sidebar-breakpoint-one;
   top: var(--mr-y);
   left: var(--mr-x);
   z-index: 1;
-  isolation: isolate;
 
   width: calc(var(--sidebar-width) - var(--mr-x) * 2);
   height: calc(100% - var(--mr-y) * 2);
@@ -163,7 +162,7 @@ $breakpoint-one: $sidebar-breakpoint-one;
 
   border: 1px solid hsla(var(--selection-bg-color-hsl), 0.25);
   border-radius: 0.35rem;
-  background-color: hsla(var(--surface-color-hsl), 0.975);
+  background-color: transparent;
   box-shadow:
     0px 0px 5.3px -20px rgba(var(--base-shadow-color), 0.02),
     0px 0px 17.9px -20px rgba(var(--base-shadow-color), 0.03),
@@ -174,6 +173,22 @@ $breakpoint-one: $sidebar-breakpoint-one;
   transform-origin: left top;
   transition: transform var(--sidebar-tr-duration) var(--sidebar-tr-ease);
 
+  &::before {
+    content: '';
+
+    position: absolute;
+    inset: 0;
+
+    border-radius: inherit;
+    background-color: hsla(var(--surface-color-hsl), 0.975);
+
+    @supports (backdrop-filter: blur(1px)) {
+      background-color: hsla(var(--surface-color-hsl), 0.25);
+
+      backdrop-filter: blur(16px);
+    }
+  }
+
   @media (prefers-color-scheme: dark) {
     --base-shadow-color: 200, 200, 200;
   }
@@ -183,12 +198,6 @@ $breakpoint-one: $sidebar-breakpoint-one;
     --mr-x: 0.75rem;
 
     width: calc(var(--sidebar-width) - var(--mr-x) * 2);
-  }
-
-  @supports (backdrop-filter: blur(1px)) {
-    background-color: hsla(var(--surface-color-hsl), 0.25);
-
-    backdrop-filter: blur(16px);
   }
 
   &:focus-visible {
