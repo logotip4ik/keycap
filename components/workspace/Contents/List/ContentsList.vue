@@ -40,7 +40,7 @@ const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefi
   abortControllerGet?.abort();
   abortControllerGet = new AbortController();
 
-  $fetch<FolderWithContents>(`/api/folder${folderApiPath.value}`, { signal: abortControllerGet.signal })
+  $fetch<FolderWithContents>(`/api/folders${folderApiPath.value}`, { signal: abortControllerGet.signal })
     .then((fetchedFolder) => {
       if (!fetchedFolder) return;
 

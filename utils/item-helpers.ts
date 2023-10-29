@@ -51,7 +51,7 @@ export async function createFolder(folderName: string, self: FolderOrNote, paren
   const newFolderPathName = encodeURIComponent(folderName.trim());
   const newFolderPath = currentFolderPath + newFolderPathName;
 
-  const newlyCreatedFolder = await $fetch<FolderWithContents>(`/api/folder${newFolderPath}`, {
+  const newlyCreatedFolder = await $fetch<FolderWithContents>(`/api/folders${newFolderPath}`, {
     method: 'POST',
     body: { name: folderName, parentId: parent.id },
   })
@@ -84,7 +84,7 @@ export async function createNote(noteName: string, self: FolderOrNote, parent: F
   const newNotePathName = encodeURIComponent(noteName.trim());
   const newNotePath = currentFolderPath + newNotePathName;
 
-  const newlyCreatedNote = await $fetch<SerializedNote>(`/api/note${newNotePath}`, {
+  const newlyCreatedNote = await $fetch<SerializedNote>(`/api/notes${newNotePath}`, {
     method: 'POST',
     body: { name: noteName, parentId: parent.id },
   })
@@ -118,7 +118,7 @@ export async function renameFolder(newName: string, self: FolderOrNote, parent: 
   const folderPathName = encodeURIComponent(self.name);
   const folderPath = currentFolderPath + folderPathName;
 
-  const res = await $fetch<QuickResponse>(`/api/folder${folderPath}`, { method: 'PATCH', body: newFolder })
+  const res = await $fetch<QuickResponse>(`/api/folders${folderPath}`, { method: 'PATCH', body: newFolder })
     .catch(() => { updateSubfolderInFolder(self, { editing: false }, parent); });
 
   if (!res)
@@ -167,7 +167,7 @@ export async function renameNote(newName: string, self: FolderOrNote, parent: Fo
   const notePathName = encodeURIComponent(self.name);
   const notePath = currentFolderPath + notePathName;
 
-  const res = await $fetch<QuickResponse>(`/api/note${notePath}`, { method: 'PATCH', body: newNote })
+  const res = await $fetch<QuickResponse>(`/api/notes${notePath}`, { method: 'PATCH', body: newNote })
     .catch(() => { updateNoteInFolder(self, { editing: false }, parent); });
 
   if (!res)
@@ -205,7 +205,7 @@ export async function deleteNote(self: FolderOrNote, parent: FolderWithContents)
   const notePathName = encodeURIComponent(self.name);
   const notePath = currentFolderPath + notePathName;
 
-  const res = await $fetch.raw(`/api/note${notePath}`, { method: 'DELETE' })
+  const res = await $fetch.raw(`/api/notes${notePath}`, { method: 'DELETE' })
     .catch(() => null);
 
   if (!res)
@@ -228,7 +228,7 @@ export async function deleteFolder(self: FolderOrNote, parent: FolderWithContent
   const folderPathName = encodeURIComponent(self.name);
   const folderPath = currentFolderPath + folderPathName;
 
-  const res = await $fetch.raw<null>(`/api/folder${folderPath}`, { method: 'DELETE' })
+  const res = await $fetch.raw<null>(`/api/folders${folderPath}`, { method: 'DELETE' })
     .catch(() => null);
 
   if (!res)
