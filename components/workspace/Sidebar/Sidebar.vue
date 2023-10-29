@@ -154,6 +154,7 @@ $breakpoint-one: $sidebar-breakpoint-one;
   top: var(--mr-y);
   left: var(--mr-x);
   z-index: 1;
+  isolation: isolate;
 
   width: calc(var(--sidebar-width) - var(--mr-x) * 2);
   height: calc(100% - var(--mr-y) * 2);
