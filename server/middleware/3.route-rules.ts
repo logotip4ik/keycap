@@ -1,6 +1,10 @@
 import type { InternalApi } from 'nitropack';
 import type { H3Event } from 'h3';
 
+import parseDuration from 'parse-duration';
+
+import { CorsHeaders, CorsMethods, CorsOrigin } from '~/headers.config';
+
 interface Rule {
   path: keyof InternalApi | (string & NonNullable<unknown>)
   handler: RuleFunction
@@ -38,6 +42,16 @@ const rules: Array<Rule> = [
 ];
 
 export default defineEventHandler(async (event) => {
+  if (isMethod(event, 'OPTIONS')) {
+    appendCorsPreflightHeaders(event, {
+      allowHeaders: CorsHeaders,
+      methods: CorsMethods,
+      origin: [CorsOrigin],
+      maxAge: parseDuration('24 hours', 's')?.toString(),
+    });
+    return;
+  }
+
   const rule = rules.find((rule) => event.path.startsWith(rule.path));
 
   if (!rule)
