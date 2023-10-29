@@ -178,6 +178,7 @@ $breakpoint-one: $sidebar-breakpoint-one;
 
     position: absolute;
     inset: 0;
+    z-index: -1;
 
     border-radius: inherit;
     background-color: hsla(var(--surface-color-hsl), 0.975);
@@ -187,10 +188,6 @@ $breakpoint-one: $sidebar-breakpoint-one;
 
       backdrop-filter: blur(16px);
     }
-  }
-
-  & > * {
-    isolation: isolate;
   }
 
   @media (prefers-color-scheme: dark) {
