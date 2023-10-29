@@ -1,6 +1,10 @@
+import type { InternalApi } from 'nitropack';
 import type { H3Event } from 'h3';
 
-interface Rule { path: string; handler: RuleFunction }
+interface Rule {
+  path: keyof InternalApi | (string & NonNullable<unknown>)
+  handler: RuleFunction
+}
 // true and undefined - shouldPass else - shouldDisallow
 type RuleFunction = (event: H3Event) => boolean | undefined | Promise<boolean | undefined | void>;
 
