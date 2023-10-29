@@ -179,13 +179,6 @@ useTinykeys({
   },
 });
 
-if (import.meta.client) {
-  onBeforeUnmount(on(document, 'visibilitychange', () => {
-    if (document.visibilityState === 'visible' && props.state !== 'hidden')
-      refresh();
-  }));
-};
-
 onMounted(() => {
   setTimeout(() => {
     requestIdleCallback(() => {
@@ -199,9 +192,17 @@ onMounted(() => {
   }, 550);
 });
 
-onBeforeUnmount(() => {
-  abortControllerGet?.abort();
-});
+if (import.meta.client) {
+  const offVisibilityChange = on(document, 'visibilitychange', () => {
+    if (document.visibilityState === 'visible' && props.state !== 'hidden')
+      refresh();
+  });
+
+  onBeforeUnmount(() => {
+    offVisibilityChange();
+    abortControllerGet?.abort();
+  });
+};
 </script>
 
 <template>
