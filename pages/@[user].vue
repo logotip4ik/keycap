@@ -129,8 +129,6 @@ onBeforeUnmount(() => popstateOff?.());
     width: 100%;
     height: 100%;
 
-    will-change: width, opacity;
-
     overflow-y: auto;
 
     scrollbar-width: thin;
