@@ -3,8 +3,7 @@ import parseDuration from 'parse-duration';
 
 import type { HTTPMethod } from 'h3';
 
-export const WEEK_IN_SECONDS = parseDuration('1 week', 'second')!;
-export const SIX_MONTHS_IN_SECONDS = parseDuration('0.5 year', 'second')!;
+const SIX_MONTHS_IN_SECONDS = parseDuration('0.5 year', 'second')!;
 
 export const CorsOrigin = process.env.NUXT_PUBLIC_SITE_ORIGIN || '*';
 export const CorsMethods = ['GET', 'OPTIONS', 'PATCH', 'POST', 'DELETE'] satisfies Array<HTTPMethod>;
