@@ -362,7 +362,7 @@ onMounted(() => {
       }
 
       &__checkbox {
-        transform: scale(1.65);
+        transform: scale(1.75);
 
         margin-left: 0.2rem;
         margin-right: 0.35rem;
