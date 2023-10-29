@@ -189,6 +189,10 @@ $breakpoint-one: $sidebar-breakpoint-one;
     }
   }
 
+  & > * {
+    isolation: isolate;
+  }
+
   @media (prefers-color-scheme: dark) {
     --base-shadow-color: 200, 200, 200;
   }
