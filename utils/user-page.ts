@@ -48,7 +48,8 @@ export function getOfflineStorage() {
     if (!fallbackToast)
       fallbackToast = createToast('Fallback mode enabled. Populating cache from offline storage.');
 
-    const items = await values<FolderOrNote>() || [];
+    const items = (await values<FolderOrNote>() || [])
+      .filter((value) => typeof value === 'object');
 
     for (const item of items) {
       const isFolder = 'root' in item;
