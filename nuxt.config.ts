@@ -3,7 +3,7 @@ import parseDuration from 'parse-duration';
 import browserslistToEsbuild from 'browserslist-to-esbuild';
 import { join } from 'pathe';
 import { createResolver } from '@nuxt/kit';
-import { isCI, isDevelopment, isProduction } from 'std-env';
+import { isCI, isDevelopment, isProduction, isTest } from 'std-env';
 import RollupReplace from '@rollup/plugin-replace';
 import RollupTypescript from '@rollup/plugin-typescript';
 
@@ -132,7 +132,7 @@ export default defineNuxtConfig({
   },
 
   modules: [
-    'nuxt-vitest',
+    isTest && 'nuxt-vitest',
     '@vueuse/nuxt',
     '@vite-pwa/nuxt',
     '@nuxtjs/fontaine',
