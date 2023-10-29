@@ -27,7 +27,7 @@ const rules: Array<Rule> = [
   { path: '/api/folders', handler: withUserOnly },
   { path: '/api/search', handler: withUserOnly },
   { path: '/api/recent', handler: withUserOnly },
-  { path: '/api/user/refresh', handler: withUserOnly },
+  { path: '/api/users/me', handler: withUserOnly },
   { path: '/api/share/note', handler: withUserOnly },
 
   { path: '/api/oauth', handler: withoutUser },
