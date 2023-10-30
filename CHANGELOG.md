@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.2.1
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.2.0...v3.2.1)
+
+### 🩹 Fixes
+
+- Deploy fail because header value is not string ([4cd4240](https://github.com/logotip4ik/keycap/commit/4cd4240))
+
+### 🏡 Chore
+
+- **release:** V3.2.0 ([dbd1f03](https://github.com/logotip4ik/keycap/commit/dbd1f03))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+
 ## v3.2.0
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.1.7...v3.2.0)
