@@ -1,6 +1,79 @@
 # Changelog
 
 
+## v3.2.0
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.1.7...v3.2.0)
+
+### 🚀 Enhancements
+
+- Better caching for api routes and webmanifest ([#9](https://github.com/logotip4ik/keycap/pull/9))
+
+### 🩹 Fixes
+
+- Move html class handling to client and server side ([5f7c045](https://github.com/logotip4ik/keycap/commit/5f7c045))
+- **chrome:** Not showing nested backdrop-filters ([8ea0a86](https://github.com/logotip4ik/keycap/commit/8ea0a86))
+- Sidebar blur interearing with contents ([9f9cafc](https://github.com/logotip4ik/keycap/commit/9f9cafc))
+- Move blur behind text to prevent creating multiple stacking contexts ([9e2b9f7](https://github.com/logotip4ik/keycap/commit/9e2b9f7))
+- Use `asyncData` prop to access correct folder reference ([43a5eba](https://github.com/logotip4ik/keycap/commit/43a5eba))
+
+### 💅 Refactors
+
+- Narrow down resolve extensions ([149fd5c](https://github.com/logotip4ik/keycap/commit/149fd5c))
+- Watch user immediately in login and register pages ([4391854](https://github.com/logotip4ik/keycap/commit/4391854))
+- Lower repload path length ([fd37761](https://github.com/logotip4ik/keycap/commit/fd37761))
+- Simplify with blob component ([04eec58](https://github.com/logotip4ik/keycap/commit/04eec58))
+- Remove not used dom reference ([b81a446](https://github.com/logotip4ik/keycap/commit/b81a446))
+- Remove not needed computed on root array ([0f6d527](https://github.com/logotip4ik/keycap/commit/0f6d527))
+- Rename function to something more meaningfull ([fef6c5e](https://github.com/logotip4ik/keycap/commit/fef6c5e))
+- Set description in dev mode only ([1fcf90a](https://github.com/logotip4ik/keycap/commit/1fcf90a))
+- Simplify title and title template resolution ([150c8ed](https://github.com/logotip4ik/keycap/commit/150c8ed))
+- Push to new route instead of replacing when search opens ([98162fd](https://github.com/logotip4ik/keycap/commit/98162fd))
+- Try to close search when back button pressed ([ab36222](https://github.com/logotip4ik/keycap/commit/ab36222))
+- Remove not used note state variable ([2be39c3](https://github.com/logotip4ik/keycap/commit/2be39c3))
+- Show different placeholders depending on item ([0acd557](https://github.com/logotip4ik/keycap/commit/0acd557))
+- Add more space between text ([52d5fed](https://github.com/logotip4ik/keycap/commit/52d5fed))
+- Create isolation context on root element ([fd8fa3d](https://github.com/logotip4ik/keycap/commit/fd8fa3d))
+- Use rems to set initial and smaller font size ([e27afe8](https://github.com/logotip4ik/keycap/commit/e27afe8))
+- Remove font rendering styles ([fcf4e87](https://github.com/logotip4ik/keycap/commit/fcf4e87))
+- Isolate only at root component ([6a86f20](https://github.com/logotip4ik/keycap/commit/6a86f20))
+- Apply nuxt-vitest module only if testing ([a6d9bd5](https://github.com/logotip4ik/keycap/commit/a6d9bd5))
+- Create new stacking context in sidebar ([d588d5b](https://github.com/logotip4ik/keycap/commit/d588d5b))
+- Remove `will-change` hint ([f975ed9](https://github.com/logotip4ik/keycap/commit/f975ed9))
+- Merge before unmount hooks ([0980d7d](https://github.com/logotip4ik/keycap/commit/0980d7d))
+- Do not use shortcuts in file names ([7e2b69f](https://github.com/logotip4ik/keycap/commit/7e2b69f))
+- Bump a bit checkbox size as item share button ([72488b5](https://github.com/logotip4ik/keycap/commit/72488b5))
+- Treat item as folder or note only if item is object ([28e9b6e](https://github.com/logotip4ik/keycap/commit/28e9b6e))
+- Rename note and folder api routes to plural names ([e4ced87](https://github.com/logotip4ik/keycap/commit/e4ced87))
+- Move login and register endpoints to auth subroute ([78129ed](https://github.com/logotip4ik/keycap/commit/78129ed))
+- Rename `/user/refresh` route to `/users/me` ([c874044](https://github.com/logotip4ik/keycap/commit/c874044))
+- Provide type hints for rule path ([0a7426a](https://github.com/logotip4ik/keycap/commit/0a7426a))
+- Remove and do not export not used stuff ([bccea61](https://github.com/logotip4ik/keycap/commit/bccea61))
+- Handle cors request ([cf513dc](https://github.com/logotip4ik/keycap/commit/cf513dc))
+- Append `max-age` header for cors ([d5f935d](https://github.com/logotip4ik/keycap/commit/d5f935d))
+
+### 🏡 Chore
+
+- **release:** V3.1.7 ([b1ad168](https://github.com/logotip4ik/keycap/commit/b1ad168))
+- Update package maneger ([cecd105](https://github.com/logotip4ik/keycap/commit/cecd105))
+- Update lock file to latest version ([8dc4183](https://github.com/logotip4ik/keycap/commit/8dc4183))
+- Supres typescript error ([d0d1ce5](https://github.com/logotip4ik/keycap/commit/d0d1ce5))
+- Add `.vercel` folder to gitignore ([806c7ba](https://github.com/logotip4ik/keycap/commit/806c7ba))
+- Update deps ([a75b41f](https://github.com/logotip4ik/keycap/commit/a75b41f))
+- Add note ([bd57f2a](https://github.com/logotip4ik/keycap/commit/bd57f2a))
+- Remove not needed comment ([812da47](https://github.com/logotip4ik/keycap/commit/812da47))
+- Update yarn ([1fcfcdf](https://github.com/logotip4ik/keycap/commit/1fcfcdf))
+
+### 🎨 Styles
+
+- Move bracket to the new line ([89119e0](https://github.com/logotip4ik/keycap/commit/89119e0))
+- Remove whiteline ([0b4e62c](https://github.com/logotip4ik/keycap/commit/0b4e62c))
+- Move mutating function closer to source ([9f0df9b](https://github.com/logotip4ik/keycap/commit/9f0df9b))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+
 ## v3.1.7
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.1.6...v3.1.7)
