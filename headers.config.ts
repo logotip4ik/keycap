@@ -9,14 +9,14 @@ export const CorsOrigin = process.env.NUXT_PUBLIC_SITE_ORIGIN || '*';
 export const CorsMethods = ['GET', 'OPTIONS', 'PATCH', 'POST', 'DELETE'] satisfies Array<HTTPMethod>;
 export const CorsHeaders = ['Origin', 'Content-Type', 'Accept'];
 
-export const corsHeaders = {
+export const corsHeaders: Record<string, string | undefined> = {
   'Access-Control-Allow-Origin': CorsOrigin,
   'Access-Control-Allow-Methods': CorsMethods.join(', '),
   'Access-Control-Allow-Headers': CorsHeaders.join(', '),
-  'Access-Control-Max-Age': parseDuration('24 hours', 's'),
+  'Access-Control-Max-Age': parseDuration('24 hours', 's')?.toString(),
 };
 
-export const cspHeaders = {
+export const cspHeaders: Record<string, string | undefined> = {
   'Content-Security-Policy': [
     'default-src \'self\';',
     'connect-src https: \'self\';',
@@ -29,7 +29,7 @@ export const cspHeaders = {
 };
 
 // basically helmet defaults with some customizations
-export const defaultHeaders = {
+export const defaultHeaders: Record<string, string | undefined> = {
   'Cross-Origin-Embedder-Policy': 'require-corp',
   'Cross-Origin-Opener-Policy': 'same-origin',
   'Cross-Origin-Resource-Policy': 'same-origin',
@@ -58,7 +58,9 @@ export interface NoteViewHeaderOptions {
 export type HeadersType = 'default' | 'assets' | 'api' | 'api-info' | 'webmanifest';
 export type HeadersOptions = NoteViewHeaderOptions | unknown;
 
-export function getHeaders(headersOptions?: HeadersType | { type: HeadersType; opts: HeadersOptions }) {
+export function getHeaders(
+  headersOptions?: HeadersType | { type: HeadersType; opts: HeadersOptions },
+): Record<string, string | undefined> {
   const isObject = typeof headersOptions === 'object';
 
   const type: HeadersType = isObject ? headersOptions.type : (headersOptions ?? 'default');
