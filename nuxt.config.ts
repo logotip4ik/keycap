@@ -221,6 +221,10 @@ export default defineNuxtConfig({
           },
         },
       },
+
+      commonjsOptions: {
+        strictRequires: true,
+      }
     },
 
     optimizeDeps: {
