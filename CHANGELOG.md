@@ -1,6 +1,32 @@
 # Changelog
 
 
+## v3.2.2
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.2.1...v3.2.2)
+
+### 💅 Refactors
+
+- **rollup:** Maybe make build output more deterministic ([96e5037](https://github.com/logotip4ik/keycap/commit/96e5037))
+- Use singular endpoint names for note and folder ([417b55b](https://github.com/logotip4ik/keycap/commit/417b55b))
+
+### 📖 Documentation
+
+- Update api endpoint ([ab37b15](https://github.com/logotip4ik/keycap/commit/ab37b15))
+- Specify what prisma version was benchmarked ([e445dd5](https://github.com/logotip4ik/keycap/commit/e445dd5))
+
+### 🏡 Chore
+
+- **release:** V3.2.1 ([d24b73b](https://github.com/logotip4ik/keycap/commit/d24b73b))
+
+### 🎨 Styles
+
+- Add missing trailing comma ([c63f178](https://github.com/logotip4ik/keycap/commit/c63f178))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.2.1
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.2.0...v3.2.1)
