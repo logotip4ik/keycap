@@ -46,7 +46,7 @@ though `node-postgres` isn't well suited for serverless. So to see Kysely outper
 test command: 
 
 ```sh
-bombardier http://localhost:3000/api/note/main -l -d 60s -c 300
+bombardier http://localhost:3000/api/notes/main -l -d 60s -c 300
 ```
 
 <details>
