@@ -31,8 +31,8 @@ function withUserOnly(event: H3Event) {
 }
 
 const rules: Array<Rule> = [
-  { path: '/api/notes', handler: withUserOnly },
-  { path: '/api/folders', handler: withUserOnly },
+  { path: '/api/note', handler: withUserOnly },
+  { path: '/api/folder', handler: withUserOnly },
   { path: '/api/search', handler: withUserOnly },
   { path: '/api/recent', handler: withUserOnly },
   { path: '/api/users/me', handler: withUserOnly },

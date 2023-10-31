@@ -38,7 +38,7 @@ const { data: note, pending, refresh, error } = await useAsyncData<SerializedNot
     type: 'loading',
   });
 
-  $fetch<SerializedNote>(`/api/notes${noteApiPath.value}`, { signal: abortControllerGet.signal })
+  $fetch<SerializedNote>(`/api/note${noteApiPath.value}`, { signal: abortControllerGet.signal })
     .then((fetchedNote) => {
       if (!fetchedNote)
         return;
@@ -99,7 +99,7 @@ function updateNote(content: string) {
   abortControllerUpdate?.abort();
   abortControllerUpdate = new AbortController();
 
-  $fetch<QuickResponse>(`/api/notes${noteApiPath.value}`, {
+  $fetch<QuickResponse>(`/api/note${noteApiPath.value}`, {
     method: 'PATCH',
     body: { content },
     retry: 2,
