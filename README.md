@@ -70,7 +70,7 @@ Statistics        Avg      Stdev        Max
 </details>
 
 <details>
-<summary>Prisma</summary>
+<summary>Prisma (v4)</summary>
 
 ```sh
 Statistics        Avg      Stdev        Max
