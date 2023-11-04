@@ -1,4 +1,6 @@
 export const stringifiedBigIntRE = /(\d{18})n/;
+export const allowedClientItemNameRE = /^[\w .&#!\|\-\u0404-\u0457]{2,50}\/?$/; // eslint-disable-line regexp/no-useless-escape
+// NOTE: do not forget to change same RE in nitro side
 
 export function toBigInt(string: string): bigint {
   const match = string.match(stringifiedBigIntRE);
