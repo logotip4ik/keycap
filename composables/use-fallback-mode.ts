@@ -4,6 +4,6 @@ const fallbackMode = ref(!isOnline);
 
 watch(isOnline, (value) => fallbackMode.value = !value);
 
-export default function useFallbackMode() {
+export function useFallbackMode() {
   return fallbackMode;
 }
