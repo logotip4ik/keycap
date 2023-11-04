@@ -1,0 +1,236 @@
+diff --git a/dist/index.cjs b/dist/index.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..eb2af75852ea42fc199fb0fee9c119ca33df3979
+--- /dev/null
++++ b/dist/index.cjs
+@@ -0,0 +1,25 @@
++"use strict";
++Object.defineProperty(exports, "__esModule", { value: true });
++exports.rad = exports.on = exports.radEventListener = void 0;
++function radEventListener(element, 
++// recreate the args for addEventListener
++...args) {
++    element.addEventListener(...args);
++    return () => {
++        element.removeEventListener(...args);
++    };
++}
++exports.radEventListener = radEventListener;
++exports.on = radEventListener;
++function rad(element, gen) {
++    let cleanup;
++    gen((listener, options) => {
++        element.addEventListener(listener, options);
++        cleanup = () => element.removeEventListener(listener, options);
++    });
++    if (!cleanup) {
++        throw new Error("you forgot to add event listener");
++    }
++    return cleanup;
++}
++exports.rad = rad;
+diff --git a/dist/index.d.ts b/dist/index.d.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..a4643a63061c4bdcd81e59fe80c89ca9fd1a43d1
+--- /dev/null
++++ b/dist/index.d.ts
+@@ -0,0 +1,15 @@
++export declare function radEventListener<MyElement extends {
++    addEventListener: any;
++    removeEventListener: any;
++}, Event extends {
++    [K in keyof MyElement]-?: K extends `on${infer E}` ? E : never;
++}[keyof MyElement]>(element: MyElement, ...args: [
++    type: Event,
++    listener: MyElement extends Record<`on${Event}`, null | ((...args: infer Args) => infer Return)> ? (this: MyElement, ...args: Args) => Return : never,
++    options?: boolean | AddEventListenerOptions
++]): () => void;
++export { radEventListener as on };
++export declare function rad<MyElement extends {
++    addEventListener?: any;
++    removeEventListener?: any;
++}>(element: MyElement, gen: (rad: MyElement["addEventListener"]) => void): () => void;
+diff --git a/dist/index.mjs b/dist/index.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..4cab2e4a4279ad232244388538a8696017b2dd0c
+--- /dev/null
++++ b/dist/index.mjs
+@@ -0,0 +1,20 @@
++export function radEventListener(element, 
++// recreate the args for addEventListener
++...args) {
++    element.addEventListener(...args);
++    return () => {
++        element.removeEventListener(...args);
++    };
++}
++export { radEventListener as on };
++export function rad(element, gen) {
++    let cleanup;
++    gen((listener, options) => {
++        element.addEventListener(listener, options);
++        cleanup = () => element.removeEventListener(listener, options);
++    });
++    if (!cleanup) {
++        throw new Error("you forgot to add event listener");
++    }
++    return cleanup;
++}
+diff --git a/esm/mod.js b/esm/mod.js
+deleted file mode 100644
+index 4cab2e4a4279ad232244388538a8696017b2dd0c..0000000000000000000000000000000000000000
+--- a/esm/mod.js
++++ /dev/null
+@@ -1,20 +0,0 @@
+-export function radEventListener(element, 
+-// recreate the args for addEventListener
+-...args) {
+-    element.addEventListener(...args);
+-    return () => {
+-        element.removeEventListener(...args);
+-    };
+-}
+-export { radEventListener as on };
+-export function rad(element, gen) {
+-    let cleanup;
+-    gen((listener, options) => {
+-        element.addEventListener(listener, options);
+-        cleanup = () => element.removeEventListener(listener, options);
+-    });
+-    if (!cleanup) {
+-        throw new Error("you forgot to add event listener");
+-    }
+-    return cleanup;
+-}
+diff --git a/esm/package.json b/esm/package.json
+deleted file mode 100644
+index 3dbc1ca591c0557e35b6004aeba250e6a70b56e3..0000000000000000000000000000000000000000
+--- a/esm/package.json
++++ /dev/null
+@@ -1,3 +0,0 @@
+-{
+-  "type": "module"
+-}
+diff --git a/package.json b/package.json
+index bd84651dec133430606df328615b9c094077ec94..9a7cbbd9aa98d8268efb87e37aab3c1270739914 100644
+--- a/package.json
++++ b/package.json
+@@ -1,11 +1,27 @@
+ {
+-  "module": "./esm/mod.js",
+-  "main": "./script/mod.js",
+-  "types": "./types/mod.d.ts",
+   "name": "rad-event-listener",
+   "version": "0.2.4",
+   "description": "Simple wrapper for addEventListener that returns a cleanup function so you don't have to call removeEventListener manually. The rad part is that it works with typescript 🤯",
++  "repository": "JLarky/rad-event-listener",
+   "license": "MIT",
++  "sideEffects": false,
++
++  "exports": {
++    ".": {
++      "types": "./dist/index.d.ts",
++      "require": "./dist/index.cjs",
++      "import": "./dist/index.mjs"
++    },
++    "./*": "./*"
++  },
++  
++  "main": "./dist/index.cjs",
++  "module": "./dist/index.mjs",
++  "types": "./dist/index.d.ts",
++  "files": [
++    "dist"
++  ],
++
+   "keywords": [
+     "addEventListener",
+     "cleanup",
+@@ -14,25 +30,9 @@
+   "engines": {
+     "node": ">=8.0.0"
+   },
+-  "repository": {
+-    "type": "git",
+-    "url": "git+https://github.com/JLarky/rad-event-listener.git"
+-  },
+   "bugs": {
+     "url": "https://github.com/JLarky/rad-event-listener/issues"
+   },
+   "dependencies": {},
+-  "devDependencies": {},
+-  "exports": {
+-    ".": {
+-      "import": {
+-        "types": "./types/mod.d.ts",
+-        "default": "./esm/mod.js"
+-      },
+-      "require": {
+-        "types": "./types/mod.d.ts",
+-        "default": "./script/mod.js"
+-      }
+-    }
+-  }
++  "devDependencies": {}
+ }
+diff --git a/script/mod.js b/script/mod.js
+deleted file mode 100644
+index eb2af75852ea42fc199fb0fee9c119ca33df3979..0000000000000000000000000000000000000000
+--- a/script/mod.js
++++ /dev/null
+@@ -1,25 +0,0 @@
+-"use strict";
+-Object.defineProperty(exports, "__esModule", { value: true });
+-exports.rad = exports.on = exports.radEventListener = void 0;
+-function radEventListener(element, 
+-// recreate the args for addEventListener
+-...args) {
+-    element.addEventListener(...args);
+-    return () => {
+-        element.removeEventListener(...args);
+-    };
+-}
+-exports.radEventListener = radEventListener;
+-exports.on = radEventListener;
+-function rad(element, gen) {
+-    let cleanup;
+-    gen((listener, options) => {
+-        element.addEventListener(listener, options);
+-        cleanup = () => element.removeEventListener(listener, options);
+-    });
+-    if (!cleanup) {
+-        throw new Error("you forgot to add event listener");
+-    }
+-    return cleanup;
+-}
+-exports.rad = rad;
+diff --git a/script/package.json b/script/package.json
+deleted file mode 100644
+index 5bbefffbabee392d1855491b84dc0a716b6a3bf2..0000000000000000000000000000000000000000
+--- a/script/package.json
++++ /dev/null
+@@ -1,3 +0,0 @@
+-{
+-  "type": "commonjs"
+-}
+diff --git a/types/mod.d.ts b/types/mod.d.ts
+deleted file mode 100644
+index a4643a63061c4bdcd81e59fe80c89ca9fd1a43d1..0000000000000000000000000000000000000000
+--- a/types/mod.d.ts
++++ /dev/null
+@@ -1,15 +0,0 @@
+-export declare function radEventListener<MyElement extends {
+-    addEventListener: any;
+-    removeEventListener: any;
+-}, Event extends {
+-    [K in keyof MyElement]-?: K extends `on${infer E}` ? E : never;
+-}[keyof MyElement]>(element: MyElement, ...args: [
+-    type: Event,
+-    listener: MyElement extends Record<`on${Event}`, null | ((...args: infer Args) => infer Return)> ? (this: MyElement, ...args: Args) => Return : never,
+-    options?: boolean | AddEventListenerOptions
+-]): () => void;
+-export { radEventListener as on };
+-export declare function rad<MyElement extends {
+-    addEventListener?: any;
+-    removeEventListener?: any;
+-}>(element: MyElement, gen: (rad: MyElement["addEventListener"]) => void): () => void;
