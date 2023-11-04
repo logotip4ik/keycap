@@ -333,6 +333,10 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
       transition: border-color .1s;
     }
 
+    &:user-invalid {
+      border-color: var(--error-color);
+    }
+
     @media (max-width: $breakpoint-tablet) {
       max-width: 32ch;
     }

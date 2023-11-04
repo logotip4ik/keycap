@@ -95,6 +95,12 @@ onMounted(() => {
     border: none;
     border-radius: 0.225rem;
     background-color: hsla(var(--text-color-hsl), 0.025);
+
+    transition: outline-color .3s;
+
+    &:user-invalid {
+      outline-color: var(--error-color);
+    }
   }
 }
 </style>

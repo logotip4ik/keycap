@@ -65,5 +65,10 @@ withDefaults(defineProps<Props>(), {
   &:focus-visible {
     border-color: hsla(var(--text-color-hsl), 0.5);
   }
+
+  &:user-invalid {
+    border-color: var(--error-color);
+    box-shadow: 0 0 1rem hsla(var(--error-color-hsl), 0.175);
+  }
 }
 </style>
