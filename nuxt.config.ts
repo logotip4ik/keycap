@@ -316,6 +316,14 @@ export default defineNuxtConfig({
     },
   },
 
+  serverHandlers: [
+    {
+      route: '/security.txt',
+      handler: resolve('./server/routes/.well-known/security.txt.get.ts'),
+      lazy: true,
+    },
+  ],
+
   fontMetrics: {
     fonts: [
       {
@@ -326,14 +334,6 @@ export default defineNuxtConfig({
       },
     ],
   },
-
-  serverHandlers: [
-    {
-      route: '/security.txt',
-      handler: resolve('./server/routes/.well-known/security.txt.get.ts'),
-      lazy: true,
-    },
-  ],
 
   pwa: {
     srcDir: 'workers',
