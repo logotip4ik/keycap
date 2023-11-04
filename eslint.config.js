@@ -8,6 +8,7 @@ export default antfu({
 
   rules: {
     'style/semi': ['error', 'always'],
+    'style/arrow-parens': ['error', 'always'],
     'ts/array-type': ['error', { default: 'generic' }],
     'ts/no-shadow': 'off',
 
