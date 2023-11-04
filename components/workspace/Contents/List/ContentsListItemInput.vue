@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { allowedItemNameRE } from '~/server/utils';
-
 interface Props { item: FolderOrNote; parent: FolderWithContents }
 const props = defineProps<Props>();
 
@@ -17,12 +15,6 @@ const placeholder = props.item.creating
 function handleSubmit() {
   if (props.item.creating) {
     const creationName = name.value.replace(/\//g, '');
-
-    if (!creationName.match(allowedItemNameRE))
-      return inputEl.value?.setCustomValidity('name contains invalid characters');
-    else
-      inputEl.value?.setCustomValidity('');
-
     const createAction = creationName.length !== name.value.length ? createFolder : createNote;
 
     createAction(creationName, props.item, props.parent);
@@ -62,6 +54,7 @@ onMounted(() => {
       enterkeyhint="done"
       type="text"
       minlength="2"
+      :pattern="allowedClientItemNameRE.source"
       :placeholder="placeholder"
       @blur="handleReset"
       @keydown.esc="handleReset"
