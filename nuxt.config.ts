@@ -273,12 +273,6 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    alias: {
-      // https://github.com/unjs/nitro/pull/1724
-      'node-fetch-native/polyfill': 'unenv/runtime/mock/empty',
-      'node-fetch-native': 'node-fetch-native/native',
-    },
-
     imports: {
       dirs: [
         resolve('./prisma'),
