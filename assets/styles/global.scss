@@ -13,10 +13,11 @@
   --text-color-hsl: var(--hsl-primary-color), 5%, 17%;
   --selection-bg-color-hsl: var(--hsl-primary-color), 65%, 85%; // NOTE: maybe change color
   --error-color-hsl: 0, 75%, 75%;
-
+  
   --surface-color: hsl(var(--surface-color-hsl));
   --text-color: hsl(var(--text-color-hsl));
   --selection-bg-color: hsl(var(--selection-bg-color-hsl));
+  --error-color: hsl(var(--error-color-hsl));
 
   @media (prefers-color-scheme: dark) {
     --task-list-indicator-color: hsl(var(--hsl-primary-color), 40%, 40%);
