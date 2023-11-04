@@ -131,11 +131,13 @@ useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
 
 onBeforeMount(() => refresh());
 onMounted(() => {
-  itemDetailsEl.value?.focus();
+  if (itemDetailsEl.value) {
+    itemDetailsEl.value.focus();
 
-  const off = on(itemDetailsEl.value, 'keydown', trapFocusInsideDetails);
-
-  onBeforeUnmount(() => off());
+    onBeforeUnmount(
+      on(itemDetailsEl.value, 'keydown', trapFocusInsideDetails),
+    );
+  }
 });
 </script>
 

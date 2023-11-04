@@ -163,11 +163,8 @@ mitt.on('details:show', () => {
 
 onBeforeMount(() => refresh());
 
-onMounted(() => {
-  if (error.value)
-    return;
-
-  const off = on(document, 'visibilitychange', () => {
+if (import.meta.client) {
+  const off: () => void = on(document, 'visibilitychange', () => {
     if (error.value)
       return off();
 
@@ -177,12 +174,11 @@ onMounted(() => {
 
   onBeforeUnmount(() => {
     off();
-
     clearTimeout(pollingTimer);
     abortControllerGet?.abort();
     loadingToast?.value?.remove();
   });
-});
+}
 </script>
 
 <template>

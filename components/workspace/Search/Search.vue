@@ -130,9 +130,11 @@ function animateHeight() {
 useTinykeys({ Escape: handleCancel });
 
 onMounted(() => {
-  const off = on(searchEl.value, 'keydown', trapFocusInsideSearch);
-
-  onBeforeUnmount(off);
+  if (searchEl.value) {
+    onBeforeUnmount(
+      on(searchEl.value, 'keydown', trapFocusInsideSearch),
+    );
+  }
 });
 </script>
 

@@ -28,11 +28,11 @@ function handleResize() {
   toasterElClientRect = null;
 }
 
-onMounted(() => {
-  const clear = on(window, 'resize', handleResize);
-
-  onBeforeUnmount(() => clear());
-});
+if (import.meta.client) {
+  onBeforeUnmount(
+    on(window, 'resize', handleResize),
+  );
+}
 </script>
 
 <template>
