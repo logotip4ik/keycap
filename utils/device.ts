@@ -13,18 +13,11 @@ export function checkIsFirefox(a: string): boolean {
   return REGEX_IS_FIREFOX.test(a);
 }
 
-const cache = new Map<string, DeviceInfo>();
-
 export function parseUA(userAgent: string): DeviceInfo {
-  if (cache.has(userAgent))
-    return cache.get(userAgent)!;
-
   const deviceInfo: DeviceInfo = {
     isMobileOrTablet: checkIsMobileOrTablet(userAgent),
     isFirefox: checkIsFirefox(userAgent),
   };
-
-  cache.set(userAgent, deviceInfo);
 
   return deviceInfo;
 }
