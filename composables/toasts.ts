@@ -8,7 +8,7 @@ export function useToast() {
   return (message: ToastInstance['message'], options?: ToastUserOptions & { delay?: number }): RefToastInstance => {
     const timeout: { value: NodeJS.Timeout | null } = { value: null };
 
-    const toast = createToast({ ...(options ?? {}), message, timeout });
+    const toast = createToast({ ...options, message, timeout });
 
     const addToastToQueue = () => {
       timeout.value = null;
