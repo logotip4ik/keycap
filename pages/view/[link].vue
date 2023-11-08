@@ -35,7 +35,7 @@ if (import.meta.server) {
   <div v-if="note" v-once class="note-view">
     <NavSimple />
 
-    <ViewHeader
+    <PagesViewHeader
       :note-name="note.name"
       :updated-at="note.updatedAt"
     />
