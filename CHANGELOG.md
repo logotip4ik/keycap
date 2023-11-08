@@ -1,6 +1,45 @@
 # Changelog
 
 
+## v3.3.0
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.2.2...v3.3.0)
+
+### 🚀 Enhancements
+
+- Error color ([d94f601](https://github.com/logotip4ik/keycap/commit/d94f601))
+- Mark not valid inputs ([a9547fb](https://github.com/logotip4ik/keycap/commit/a9547fb))
+
+### 💅 Refactors
+
+- Remove not needed mocking ([68745e4](https://github.com/logotip4ik/keycap/commit/68745e4))
+- Do not use default export ([6dd8ac9](https://github.com/logotip4ik/keycap/commit/6dd8ac9))
+- Optimize remove hooks function call ([6a19b5c](https://github.com/logotip4ik/keycap/commit/6a19b5c))
+- Also add alias to error color wrapped in hsl ([c9da17c](https://github.com/logotip4ik/keycap/commit/c9da17c))
+- Add same item name re but for client side ([f31dce0](https://github.com/logotip4ik/keycap/commit/f31dce0))
+- Use pattern attr on input to validate input ([adde223](https://github.com/logotip4ik/keycap/commit/adde223))
+
+### 🏡 Chore
+
+- **release:** V3.2.2 ([85e137f](https://github.com/logotip4ik/keycap/commit/85e137f))
+- Update deps ([66038f3](https://github.com/logotip4ik/keycap/commit/66038f3))
+- Update some deps to new major version ([164e4b9](https://github.com/logotip4ik/keycap/commit/164e4b9))
+- Force brackets around arrow function argument ([73fe52b](https://github.com/logotip4ik/keycap/commit/73fe52b))
+- Patch `rad-event-listener` to correct? package json ([8d9515c](https://github.com/logotip4ik/keycap/commit/8d9515c))
+
+### 🎨 Styles
+
+- Move serverHandlers close to nitro prop ([7744758](https://github.com/logotip4ik/keycap/commit/7744758))
+
+### 🤖 CI
+
+- Bump the actions group with 2 updates ([#10](https://github.com/logotip4ik/keycap/pull/10))
+- Update node version ([ed29d95](https://github.com/logotip4ik/keycap/commit/ed29d95))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.2.2
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.2.1...v3.2.2)
