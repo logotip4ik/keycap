@@ -29,27 +29,16 @@ if (import.meta.server) {
     ogUrl: url.toString(),
   }, { mode: 'server' });
 }
-
-function formatDate(date: string | Date) {
-  date = new Date(date);
-
-  return Intl.DateTimeFormat(undefined, { dateStyle: 'short' }).format(date);
-}
 </script>
 
 <template>
   <div v-if="note" v-once class="note-view">
     <NavSimple />
 
-    <header class="note-view__header">
-      <p class="note-view__header__name">
-        {{ note.name }}
-      </p>
-
-      <p class="note-view__header__updated-at">
-        Last update at: {{ formatDate(note.updatedAt) }}
-      </p>
-    </header>
+    <ViewHeader
+      :note-name="note.name"
+      :updated-at="note.updatedAt"
+    />
 
     <main class="note-view__main">
       <NoteRenderer class="note-view__main__note-renderer" :content="note.content!" />
