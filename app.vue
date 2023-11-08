@@ -8,15 +8,11 @@ setupErrorLogging();
 // NOTE: should be removed from client bundle
 const device = import.meta.server ? parseUA(useRequestHeaders()['user-agent']) : undefined;
 
-const isFirefox = import.meta.server
-  ? device!.isFirefox
-  : checkIsFirefox(navigator.userAgent);
 const isSmallScreen = import.meta.server
   ? device!.isMobileOrTablet
   : window.innerWidth < breakpoints.tablet;
 
 provide(IsSmallScreenKey, isSmallScreen);
-provide(IsFirefoxKey, isFirefox);
 
 if (import.meta.client) {
   const UPDATE_WORKER_DELAY = parseDuration('1.5s')!;
@@ -33,7 +29,9 @@ if (import.meta.client) {
 useHead({
   htmlAttrs: {
     class: {
-      'firefox': isFirefox,
+      'firefox': import.meta.server
+        ? device!.isFirefox
+        : checkIsFirefox(navigator.userAgent),
       'phone-or-tablet': isSmallScreen,
     },
   },
