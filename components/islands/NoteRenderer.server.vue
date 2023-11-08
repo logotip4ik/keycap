@@ -48,7 +48,7 @@ const sanitized = sanitizeHTML(props.content, {
   font-size: calc(1.5rem + 1.5vw);
   text-align: center;
 
-  margin-top: 15vh;
+  margin-top: 7.5vh;
 
   small {
     font-weight: 300;
