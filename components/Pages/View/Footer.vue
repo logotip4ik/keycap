@@ -9,7 +9,7 @@
 <style lang="scss">
 .note-view__footer {
   width: fit-content;
-  margin: 0 auto;
+  margin: auto auto 0;
   padding: 15vh 0 7.5vh;
 
   &__link {

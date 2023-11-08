@@ -50,10 +50,13 @@ if (import.meta.server) {
 
 <style lang="scss">
 .note-view {
+  display: flex;
+  flex-direction: column;
   position: relative;
 
   width: 91.25%;
-  height: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
 
   max-width: 1200px;
 
