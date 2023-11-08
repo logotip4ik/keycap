@@ -43,6 +43,8 @@ if (import.meta.server) {
     <main class="note-view__main">
       <NoteRenderer class="note-view__main__note-renderer" :content="note.content!" />
     </main>
+
+    <PagesViewFooter />
   </div>
 </template>
 
