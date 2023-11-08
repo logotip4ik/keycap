@@ -25,7 +25,7 @@ if (import.meta.server) {
     titleTemplate: '%s - Keycap',
     title: note.value.name,
     ogTitle: note.value.name,
-    ogDescription: `View contents of '${note.value.name}'`,
+    ogDescription: `View "${note.value.name}" on Keycap"`,
     ogUrl: url.toString(),
   }, { mode: 'server' });
 }
