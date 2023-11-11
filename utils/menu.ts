@@ -10,10 +10,16 @@ interface Command {
 
 export const commandActions: Record<Command['key'], Command['handler']> = {
   [SearchAction.New]: (args) => {
-    const { data: folder } = useNuxtData('folder');
+    const folder = useNuxtApp()._asyncData.folder;
 
-    if (folder.value)
-      preCreateItem(folder.value, { name: args?.join(' ') || '' });
+    if (!folder) return;
+
+    const folderData = folder.data as Ref<FolderWithContents>;
+
+    if (!folderData.value)
+      return;
+
+    preCreateItem(folderData.value, args ? { name: args.join(' ') } : undefined);
   },
   [SearchAction.Refresh]: () => {
     refreshNuxtData('note');
