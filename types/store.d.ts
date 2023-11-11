@@ -11,34 +11,38 @@ interface _IFuzzyWorker {
 }
 
 declare global {
+  type Prettify<T> = {
+    [K in keyof T]: T[K];
+  } & unknown;
+
   export interface ItemMetatags {
     editing?: boolean
     creating?: boolean
   };
 
-  export type NoteMinimal = Pick<Note, 'name' | 'path'> & ItemMetatags & {
+  export type NoteMinimal = Prettify<Pick<Note, 'name' | 'path'> & ItemMetatags & {
     id: string
-  };
+  }>;
 
-  export type FolderMinimal = Pick<Folder, 'name' | 'path' | 'root'> & ItemMetatags & {
+  export type FolderMinimal = Prettify<Pick<Folder, 'name' | 'path' | 'root'> & ItemMetatags & {
     id: string
-  };
+  }>;
 
-  export type SerializedNote = NoteMinimal & { content: string };
+  export type SerializedNote = Prettify<NoteMinimal & Pick<Note, 'content'>>;
 
-  export type FolderWithContents = FolderMinimal & {
+  export type FolderWithContents = Prettify<FolderMinimal & {
     notes: Array<NoteMinimal>
     subfolders: Array<FolderMinimal>
-  };
+  }>;
 
-  export type FolderOrNote = FolderMinimal & NoteMinimal;
+  export type FolderOrNote = Prettify<FolderMinimal & NoteMinimal>;
 
   export interface CommandItem {
     name: string
     key: SearchActionValues
   }
 
-  export type FuzzyItem = Pick<FolderOrNote, 'name' | 'path' | 'root'>;
+  export type FuzzyItem = Prettify<Pick<FolderOrNote, 'name' | 'path' | 'root'>>;
 
   export type IFuzzyWorker = Remote<_IFuzzyWorker>;
 
