@@ -12,17 +12,22 @@ const isFolder = 'root' in props.item;
 
 type Metadata = Pick<Note, 'updatedAt' | 'createdAt'> | Pick<Folder, 'updatedAt' | 'createdAt'>;
 type NoteDetails = Prisma.NoteGetPayload<{ select: { shares: { select: { link: true; updatedAt: true; createdAt: true } } } }>;
-type ItemDetails = Metadata & Partial<NoteDetails>;
+type ItemDetails = Prettify<Metadata & Partial<NoteDetails>>;
+
+type Prettify<T> = {
+  [K in keyof T]: T[K];
+} & unknown;
 
 // NOTE(perf improvement): client bundle size reduced by using only useAsyncData or useFetch
-const { data: details, refresh } = await useAsyncData<ItemDetails | undefined>(async () => {
-  const res = await $fetch<ItemDetails>(
-    // /api/[note|folder]/[item path without username]
-    `/api/${isFolder ? 'folder' : 'note'}/${props.item.path.split('/').slice(2).join('/')}`,
+const { data: details, refresh } = await useAsyncData(async () => {
+  const path = props.item.path.split('/').slice(2).join('/');
+
+  const res = await $fetch<{ data: ItemDetails }>(
+    isFolder ? `/api/folder/${path}` : `/api/note/${path}`,
     { query: { details: true } },
   );
 
-  return res;
+  return res.data;
 }, {
   lazy: true,
   server: false,

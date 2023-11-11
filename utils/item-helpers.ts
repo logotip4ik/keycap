@@ -51,15 +51,16 @@ export async function createFolder(folderName: string, self: FolderOrNote, paren
   const newFolderPathName = encodeURIComponent(folderName.trim());
   const newFolderPath = currentFolderPath + newFolderPathName;
 
-  const newlyCreatedFolder = await $fetch<FolderWithContents>(`/api/folder${newFolderPath}`, {
+  const res = await $fetch<{ data: FolderWithContents }>(`/api/folder${newFolderPath}`, {
     method: 'POST',
     body: { name: folderName, parentId: parent.id },
   })
     .catch((err) => { createToast(err.data.statusMessage); });
 
-  if (!newlyCreatedFolder)
+  if (!res)
     return;
 
+  const { data: newlyCreatedFolder } = res;
   const foldersCache = useFoldersCache();
   const offlineStorage = useOfflineStorage();
   const fuzzyWorker = useFuzzyWorker();
@@ -84,15 +85,16 @@ export async function createNote(noteName: string, self: FolderOrNote, parent: F
   const newNotePathName = encodeURIComponent(noteName.trim());
   const newNotePath = currentFolderPath + newNotePathName;
 
-  const newlyCreatedNote = await $fetch<SerializedNote>(`/api/note${newNotePath}`, {
+  const res = await $fetch<{ data: SerializedNote }>(`/api/note${newNotePath}`, {
     method: 'POST',
     body: { name: noteName, parentId: parent.id },
   })
     .catch((err) => { createToast(err.data.statusMessage); }); // TODO: show to user more pleasing error
 
-  if (!newlyCreatedNote)
+  if (!res)
     return;
 
+  const { data: newlyCreatedNote } = res;
   const notesCache = useNotesCache();
   const offlineStorage = useOfflineStorage();
   const fuzzyWorker = useFuzzyWorker();
@@ -167,7 +169,7 @@ export async function renameNote(newName: string, self: FolderOrNote, parent: Fo
   const notePathName = encodeURIComponent(self.name);
   const notePath = currentFolderPath + notePathName;
 
-  const res = await $fetch<QuickResponse>(`/api/note${notePath}`, { method: 'PATCH', body: newNote })
+  const res = await $fetch(`/api/note${notePath}`, { method: 'PATCH', body: newNote })
     .catch(() => { updateNoteInFolder(self, { editing: false }, parent); });
 
   if (!res)
@@ -265,7 +267,7 @@ export async function preloadItem(self: FolderOrNote) {
   const pathName = encodeURIComponent(self.name);
   const path = pathPrefix + currentFolderPath + pathName;
 
-  const item = await $fetch<FolderWithContents | NoteMinimal>(`/api/${path}`)
+  const item = await $fetch<{ data: FolderWithContents | NoteMinimal }>(`/api/${path}`)
     .catch(() => null);
 
   if (!item) return;
@@ -278,5 +280,5 @@ export async function preloadItem(self: FolderOrNote) {
 
   // @ts-expect-error idk how to setup this type
   cache.set(item.path, item);
-  offlineStorage.setItem?.(item.path, item);
+  offlineStorage.setItem?.(item.data.path, item);
 }

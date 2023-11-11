@@ -36,9 +36,9 @@ async function login() {
 
   preloadRouteComponents('/@a');
 
-  $fetch<SafeUser | null>('/api/auth/login', { method: 'POST', body: data })
-    .then((newUser) => newUser && (user.value = newUser))
-    .catch((e) => createToast(e.data.statusMessage))
+  $fetch('/api/auth/login', { method: 'POST', body: data })
+    .then((res) => res && (user.value = res.data))
+    .catch((e) => { createToast(e.statusMessage); })
     .finally(() => isLoading.value = false);
 }
 </script>

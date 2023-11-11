@@ -7,9 +7,12 @@ const route = useRoute();
 
 type SharedNote = Pick<Note, 'name' | 'content' | 'updatedAt' | 'createdAt'>;
 
-const { data: note, error } = await useAsyncData(
-  async () => await $fetch<SharedNote>(`/api/share/${route.params.link}`),
-);
+const { data: note, error } = await useAsyncData('share', async () => {
+  // TODO: why res in unknown ?
+  const res = await $fetch<{ data: SharedNote }>(`/api/share/${route.params.link}`);
+
+  return res.data;
+});
 
 if (error.value || !note.value) {
   throw createError({

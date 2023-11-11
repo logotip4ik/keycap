@@ -38,11 +38,12 @@ const { data: note, pending, refresh, error } = await useAsyncData<SerializedNot
     type: 'loading',
   });
 
-  $fetch<SerializedNote>(`/api/note${noteApiPath.value}`, { signal: abortControllerGet.signal })
-    .then((fetchedNote) => {
-      if (!fetchedNote)
+  $fetch(`/api/note${noteApiPath.value}`, { signal: abortControllerGet.signal })
+    .then((res) => {
+      if (!res)
         return;
 
+      const { data: fetchedNote } = res;
       isFallbackMode.value = false;
 
       note.value = fetchedNote;
@@ -99,7 +100,7 @@ function updateNote(content: string) {
   abortControllerUpdate?.abort();
   abortControllerUpdate = new AbortController();
 
-  $fetch<QuickResponse>(`/api/note${noteApiPath.value}`, {
+  $fetch(`/api/note${noteApiPath.value}`, {
     method: 'PATCH',
     body: { content },
     retry: 2,

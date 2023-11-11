@@ -18,11 +18,11 @@ function refreshAuth() {
     const newUser = await $fetch('/api/users/me', { retry: 1 })
       .catch(() => null);
 
-    const isSameUser = newUser && newUser.username === user.value?.username;
+    const isSameUser = newUser && newUser.data.username === user.value?.username;
 
     if (!newUser || isSameUser)
       return;
 
-    user.value = { ...newUser, id: toBigInt(newUser.id) };
+    user.value = newUser.data;
   });
 }

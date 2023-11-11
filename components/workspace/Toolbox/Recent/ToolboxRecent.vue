@@ -13,10 +13,10 @@ const { data: recent, refresh } = await useAsyncData('recent', async () => {
   clearTimeout(pollingTimer);
   preloadComponents('WorkspaceToolboxRecentItem');
 
-  const recent = await $fetch<Array<NoteMinimal>>('/api/recent');
+  const recent = await $fetch('/api/recent');
   pollingTimer = setTimeout(refresh, POLLING_TIME);
 
-  return recent;
+  return recent.data;
 }, {
   server: false,
   lazy: true,
