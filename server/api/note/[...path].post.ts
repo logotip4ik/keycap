@@ -48,5 +48,5 @@ export default defineEventHandler(async (event) => {
 
   timer.appendHeader(event);
 
-  return note;
+  return { data: note };
 });

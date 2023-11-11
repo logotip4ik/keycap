@@ -55,5 +55,5 @@ export default defineEventHandler(async (event) => {
   folder.notes ||= [];
   folder.subfolders ||= [];
 
-  return folder;
+  return { data: folder };
 });

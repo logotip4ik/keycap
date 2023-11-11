@@ -43,5 +43,5 @@ export default defineEventHandler(async (event) => {
 
   setResponseStatus(event, 201);
 
-  return { link };
+  return { data: { link } };
 });

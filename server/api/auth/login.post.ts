@@ -61,5 +61,5 @@ export default defineEventHandler(async (event) => {
   if (typeof body.browserAction !== 'undefined')
     return await sendRedirect(event, `/@${safeUser.username}`);
 
-  return safeUser;
+  return { data: safeUser };
 });

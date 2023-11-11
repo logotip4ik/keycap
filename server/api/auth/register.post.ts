@@ -60,5 +60,5 @@ export default defineEventHandler(async (event) => {
 
   setResponseStatus(event, 201);
 
-  return user;
+  return { data: user };
 });

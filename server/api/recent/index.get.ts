@@ -12,5 +12,5 @@ export default defineEventHandler(async (event) => {
 
   timer.appendHeader(event);
 
-  return recent;
+  return { data: recent };
 });

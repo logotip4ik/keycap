@@ -19,5 +19,5 @@ export default defineEventHandler(async (event) => {
   if (!note)
     throw createError({ statusCode: 404 });
 
-  return note;
+  return { data: note };
 });

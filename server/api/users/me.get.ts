@@ -3,5 +3,5 @@ export default defineEventHandler(async (event) => {
 
   await setAuthCookies(event, user);
 
-  return user;
+  return { data: user };
 });

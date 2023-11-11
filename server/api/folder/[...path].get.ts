@@ -29,5 +29,5 @@ export default defineEventHandler(async (event) => {
 
   timer.appendHeader(event);
 
-  return folder;
+  return { data: folder };
 });

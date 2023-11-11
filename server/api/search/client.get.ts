@@ -42,5 +42,5 @@ export default defineEventHandler(async (event) => {
 
   timer.appendHeader(event);
 
-  return notes.concat(folders) as Array<FuzzyItem>;
+  return { data: notes.concat(folders) as Array<FuzzyItem> };
 });
