@@ -106,6 +106,7 @@ async function copyShareLink() {
 
 async function trapFocusInsideDetails(event: Event) {
   if (itemDetailsEl.value) {
+    // NOTE: should be preloaded by sidebar
     const trapFocus = (await import('focus-trap-js')).default;
 
     trapFocus(event, itemDetailsEl.value);
