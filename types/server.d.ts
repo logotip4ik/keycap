@@ -11,7 +11,7 @@ declare global {
   }
 }
 
-export interface SafeUser extends Pick<User, 'id' | 'email' | 'username'> {}
+export type SafeUser = Prettify<Pick<User, 'id' | 'email' | 'username'>>;
 
 export declare module 'h3' {
   interface H3EventContext {
