@@ -1,8 +1,4 @@
 <script setup lang="ts">
-const { build } = useRuntimeConfig().public;
-
-const lastTimeBuild = Intl.DateTimeFormat('en-UK', { dateStyle: 'medium' }).format(build.time);
-const shortCommitSha = build.commit;
 </script>
 
 <template>
@@ -11,39 +7,9 @@ const shortCommitSha = build.commit;
 
     <NavLogin />
 
-    <div class="container">
-      <WithBlob v-slot="props">
-        <header class="index__header" v-bind="props">
-          <small class="index__header__alert">
-            <LazyIconWarning v-once class="index__header__alert__icon" />
-            {{ build.version }} (in development)
-          </small>
+    <PagesIndexHero />
 
-          <h1 class="index__header__title font-wide">
-            Keycap
-          </h1>
-
-          <p class="index__header__subtitle">
-            Another note taking webapp ❤.
-            <br>
-            Simple, fast and purple.
-          </p>
-        </header>
-      </WithBlob>
-    </div>
-
-    <p class="index__build-info">
-      Last build at {{ lastTimeBuild }}
-      <br>
-      Commit sha:
-      <NuxtLink
-        class="index__build-info__commit-link"
-        target="_blank"
-        :href="`https://github.com/logotip4ik/keycap/tree/${shortCommitSha}`"
-      >
-        {{ shortCommitSha }}
-      </NuxtLink>
-    </p>
+    <PagesIndexBuildInfo />
   </main>
 </template>
 
