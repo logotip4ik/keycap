@@ -1,5 +1,5 @@
 <template>
-  <div class="skeleton">
+  <div v-once class="skeleton">
     <h3 class="skeleton__heading skeleton-bg" />
 
     <div class="skeleton__row">
