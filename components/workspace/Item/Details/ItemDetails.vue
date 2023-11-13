@@ -5,7 +5,7 @@ interface Props { item: NoteMinimal }
 const props = defineProps<Props>();
 
 const currentItemForDetails = useCurrentItemForDetails();
-const createToast = useToast();
+const createToast = useToaster();
 
 const isLoadingItemDetails = ref(false);
 const itemDetailsEl = shallowRef<HTMLElement | null>(null);

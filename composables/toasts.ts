@@ -22,7 +22,7 @@ function innerCreate(message: ToastInstance['message'], options?: ToastUserOptio
   return toast;
 };
 
-export function useToast() {
+export function useToaster() {
   return innerCreate;
 }
 

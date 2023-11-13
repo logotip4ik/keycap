@@ -68,7 +68,7 @@ onMounted(() => {
 
   if (import.meta.dev)
     // @ts-expect-error this should not be defined
-    window.$createToast = useToast();
+    window.$createToast = useToaster();
 });
 
 onBeforeUnmount(() => popstateOff?.());

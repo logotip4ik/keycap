@@ -45,7 +45,7 @@ export function getCurrentFolderPath() {
 }
 
 export async function createFolder(folderName: string, self: FolderOrNote, parent: FolderWithContents) {
-  const createToast = useToast();
+  const createToast = useToaster();
 
   const currentFolderPath = getCurrentFolderPath();
   const newFolderPathName = encodeURIComponent(folderName.trim());
@@ -79,7 +79,7 @@ export async function createFolder(folderName: string, self: FolderOrNote, paren
 }
 
 export async function createNote(noteName: string, self: FolderOrNote, parent: FolderWithContents) {
-  const createToast = useToast();
+  const createToast = useToaster();
 
   const currentFolderPath = getCurrentFolderPath();
   const newNotePathName = encodeURIComponent(noteName.trim());

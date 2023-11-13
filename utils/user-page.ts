@@ -25,7 +25,7 @@ export async function defineFuzzyWorker() {
 }
 
 export function getOfflineStorage() {
-  const createToast = useToast();
+  const createToast = useToaster();
   const isFallbackMode = useFallbackMode();
   const foldersCache = useFoldersCache();
   const notesCache = useNotesCache();

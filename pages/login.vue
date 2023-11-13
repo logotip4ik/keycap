@@ -8,7 +8,7 @@ definePageMeta({
 
 const { oauthEnabled } = useRuntimeConfig().public;
 const user = useUser();
-const createToast = useToast();
+const createToast = useToaster();
 
 const emailComponent = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);
 const passwordComponent = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);

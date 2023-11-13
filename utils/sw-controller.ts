@@ -2,7 +2,7 @@ import parseDuration from 'parse-duration';
 
 export function updateServiceWorker() {
   const { $pwa: pwa } = useNuxtApp();
-  const createToast = useToast();
+  const createToast = useToaster();
 
   watch(() => pwa.offlineReady, (ready) => {
     if (ready)

@@ -18,7 +18,7 @@ interface Props {
 }
 const props = defineProps<Props>();
 
-const createToast = useToast();
+const createToast = useToaster();
 const detailsItem = useCurrentItemForDetails();
 
 const isFolder = 'root' in props.item;

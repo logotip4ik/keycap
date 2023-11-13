@@ -10,7 +10,7 @@ definePageMeta({
 const route = useRoute();
 const isFallbackMode = useFallbackMode();
 const notesCache = useNotesCache();
-const createToast = useToast();
+const createToast = useToaster();
 const offlineStorage = useOfflineStorage();
 const currentItemForDetails = useCurrentItemForDetails();
 const user = useUser();
