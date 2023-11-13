@@ -87,6 +87,10 @@ onMounted(() => {
     observer.disconnect();
     off && off();
   });
+
+  setTimeout(() => {
+    requestIdleCallback(() => import('focus-trap-js'));
+  }, 400);
 });
 </script>
 
