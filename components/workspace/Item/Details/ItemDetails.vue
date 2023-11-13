@@ -54,7 +54,7 @@ function unsetCurrentDetailsItem() {
 }
 
 let prevPopupHeight: number | null;
-function storePopupHeight() {
+function rememberHeight() {
   prevPopupHeight = itemDetailsEl.value!.clientHeight;
 }
 
@@ -77,19 +77,20 @@ function transitionHeight(_: any, done: () => void) {
   animation.addEventListener('finish', () => done());
 }
 
+const formatter = Intl.DateTimeFormat(undefined, {
+  day: '2-digit',
+  month: 'short',
+  year: 'numeric',
+  hourCycle: 'h23',
+  hour: '2-digit',
+  minute: '2-digit',
+});
 function formatDate(dateString?: Date | string) {
   if (!dateString) return '';
 
   const date = new Date(dateString);
 
-  return Intl.DateTimeFormat(undefined, {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-    hourCycle: 'h23',
-    hour: '2-digit',
-    minute: '2-digit',
-  }).format(date);
+  return formatter.format(date);
 }
 
 async function copyShareLink() {
@@ -157,7 +158,7 @@ onMounted(() => {
         <LazyIconCloseRounded v-once class="item-details__close-button__icon" />
       </button>
 
-      <Transition name="fade" appear @before-leave="storePopupHeight" @enter="transitionHeight">
+      <Transition name="fade" appear @before-leave="rememberHeight" @enter="transitionHeight">
         <WorkspaceItemDetailsSkeleton v-if="!mergedDetails" key="skeleton" />
 
         <!-- TODO: split into smaller components -->
