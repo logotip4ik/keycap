@@ -24,7 +24,7 @@ let pollingTimer: NodeJS.Timeout;
 let loadingToast: RefToastInstance | undefined;
 let abortControllerGet: AbortController | null;
 
-const { data: note, pending, refresh, error } = await useAsyncData<SerializedNote | undefined>('note', async () => {
+const { data: note, pending, refresh, error } = await useAsyncData<NoteWithContent | undefined>('note', async () => {
   if (import.meta.server || !route.params.note || route.params.note === BLANK_NOTE_NAME)
     return;
 

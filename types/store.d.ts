@@ -1,3 +1,4 @@
+import type { Serialize } from 'nitropack';
 import type { Folder, Note } from '@prisma/client';
 import type { Remote } from 'comlink';
 
@@ -20,16 +21,10 @@ declare global {
     creating?: boolean
   };
 
-  export type NoteMinimal = Prettify<Pick<Note, 'name' | 'path'> & ItemMetatags & {
-    id: string
-  }>;
+  export type NoteMinimal = Prettify<Serialize<Pick<Note, 'id' | 'name' | 'path'> & ItemMetatags>>;
+  export type NoteWithContent = Prettify<NoteMinimal & Pick<Note, 'content'>>;
 
-  export type FolderMinimal = Prettify<Pick<Folder, 'name' | 'path' | 'root'> & ItemMetatags & {
-    id: string
-  }>;
-
-  export type SerializedNote = Prettify<NoteMinimal & Pick<Note, 'content'>>;
-
+  export type FolderMinimal = Prettify<Serialize<Pick<Folder, 'id' | 'name' | 'path' | 'root'> & ItemMetatags>>;
   export type FolderWithContents = Prettify<FolderMinimal & {
     notes: Array<NoteMinimal>
     subfolders: Array<FolderMinimal>

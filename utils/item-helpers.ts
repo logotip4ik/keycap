@@ -85,7 +85,7 @@ export async function createNote(noteName: string, self: FolderOrNote, parent: F
   const newNotePathName = encodeURIComponent(noteName.trim());
   const newNotePath = currentFolderPath + newNotePathName;
 
-  const res = await $fetch<{ data: SerializedNote }>(`/api/note${newNotePath}`, {
+  const res = await $fetch<{ data: NoteWithContent }>(`/api/note${newNotePath}`, {
     method: 'POST',
     body: { name: noteName, parentId: parent.id },
   })

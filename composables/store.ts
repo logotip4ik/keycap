@@ -4,7 +4,7 @@ import LRUCache from '@tinkoff/lru-cache-nano';
 export const useCurrentItemForDetails = () => useState<FolderOrNote | null>(() => null);
 export const useRootFolderContents = () => useState<FolderWithContents | null>(() => null);
 
-const notesCache = new LRUCache<string, SerializedNote>({ max: 100 });
+const notesCache = new LRUCache<string, NoteWithContent>({ max: 100 });
 export const useNotesCache = () => notesCache;
 
 const foldersCache = new LRUCache<string, FolderWithContents>({ max: 25 });
