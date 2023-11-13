@@ -88,6 +88,7 @@ function changeSelectedResult(difference: number) {
 
 async function trapFocusInsideSearch(event: Event) {
   if (searchEl.value) {
+    // NOTE: should be preloaded in sidebar
     const trapFocus = (await import('focus-trap-js')).default;
 
     trapFocus(event, searchEl.value);
