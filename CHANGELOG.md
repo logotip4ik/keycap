@@ -1,6 +1,55 @@
 # Changelog
 
 
+## v3.4.0
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.3.0...v3.4.0)
+
+### 🚀 Enhancements
+
+- Footer component for shared note page ([56550e8](https://github.com/logotip4ik/keycap/commit/56550e8))
+- Add autofix ci to fix linting issues on push and pr's ([5074044](https://github.com/logotip4ik/keycap/commit/5074044))
+
+### 🩹 Fixes
+
+- Check if `path` property is in item ([ba27e33](https://github.com/logotip4ik/keycap/commit/ba27e33))
+- Get correct folder reference for item creation ([4435b6d](https://github.com/logotip4ik/keycap/commit/4435b6d))
+
+### 💅 Refactors
+
+- Change og:description for shared note path ([95c05a1](https://github.com/logotip4ik/keycap/commit/95c05a1))
+- Do not scale up font size in note editor ([fe54cf6](https://github.com/logotip4ik/keycap/commit/fe54cf6))
+- Better font size resets ([7f531b4](https://github.com/logotip4ik/keycap/commit/7f531b4))
+- Remove caching from ua parsing ([ccbf2c3](https://github.com/logotip4ik/keycap/commit/ccbf2c3))
+- Do not provide not used variable ([2420687](https://github.com/logotip4ik/keycap/commit/2420687))
+- Put view page header into server component ([c65ffd7](https://github.com/logotip4ik/keycap/commit/c65ffd7))
+- Move `view` components to under `pages` folder ([4651419](https://github.com/logotip4ik/keycap/commit/4651419))
+- Remove bottom padding from note editor ([67ebb80](https://github.com/logotip4ik/keycap/commit/67ebb80))
+- Push footer to the bottom of the page ([eb7f77e](https://github.com/logotip4ik/keycap/commit/eb7f77e))
+- Do not push empty message too low ([1f080bf](https://github.com/logotip4ik/keycap/commit/1f080bf))
+- Remove not needed fallback object ([272cfed](https://github.com/logotip4ik/keycap/commit/272cfed))
+- Use `sendNoContent` instead of returning null ([36b40f6](https://github.com/logotip4ik/keycap/commit/36b40f6))
+- Do not return map or array as top level responses ([b2124a1](https://github.com/logotip4ik/keycap/commit/b2124a1))
+- Provide prettify type helper and prettify all types ([b89e96d](https://github.com/logotip4ik/keycap/commit/b89e96d))
+- Extract actual data from api response object ([91f7fee](https://github.com/logotip4ik/keycap/commit/91f7fee))
+
+### 🏡 Chore
+
+- **release:** V3.3.0 ([6e5691d](https://github.com/logotip4ik/keycap/commit/6e5691d))
+- Bump checkbox scaling for firefox ([d04dc73](https://github.com/logotip4ik/keycap/commit/d04dc73))
+- Update deps ([ca79a41](https://github.com/logotip4ik/keycap/commit/ca79a41))
+- Run lint:fix ([a83f842](https://github.com/logotip4ik/keycap/commit/a83f842))
+- Run lint:fix ([15b169c](https://github.com/logotip4ik/keycap/commit/15b169c))
+
+### 🤖 CI
+
+- Use latest preset for updating deps ([7a3f01b](https://github.com/logotip4ik/keycap/commit/7a3f01b))
+- Correct branch name ([d968f2c](https://github.com/logotip4ik/keycap/commit/d968f2c))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.3.0
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.2.2...v3.3.0)
