@@ -6,7 +6,10 @@ const props = defineProps<Props>();
 
 const currentItemForDetails = useCurrentItemForDetails();
 const createToast = useToast();
+
 const isLoadingItemDetails = ref(false);
+const itemDetailsEl = shallowRef<HTMLElement | null>(null);
+
 const path = props.item.path.split('/').slice(2).join('/');
 
 const isFolder = 'root' in props.item;
@@ -28,8 +31,6 @@ const { data: details, refresh } = await useAsyncData(async () => {
   server: false,
   immediate: false,
 });
-
-const itemDetailsEl = shallowRef<HTMLElement | null>(null);
 
 const mergedDetails = computed(() => {
   if (!details.value) return null;
