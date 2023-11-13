@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ComponentPublicInstance } from 'vue';
-import type { OAuthProvider, SafeUser } from '~/types/server';
+import type { OAuthProvider } from '~/types/server';
 
 import { usernameRE } from '~/server/utils';
 
