@@ -118,11 +118,9 @@ function toggleShareLink(isCreateRequest: boolean) {
   if (isLoadingItemDetails.value)
     return;
 
-  const notePath = currentItemForDetails.value!.path.split('/').slice(2).join('/');
-
   isLoadingItemDetails.value = true;
 
-  $fetch(`/api/share/note/${notePath}`, {
+  $fetch(`/api/share/note/${path}`, {
     method: isCreateRequest ? 'POST' : 'DELETE',
   })
     .then(() => refresh())
