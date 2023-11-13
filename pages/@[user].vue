@@ -25,7 +25,8 @@ function focusSearchInput(event: Element) {
 
 let popstateOff: (() => any) | undefined;
 watch(isShowingSearch, async (search) => {
-  popstateOff?.();
+  popstateOff && popstateOff();
+
   const query = { ...route.query };
 
   // `undefined` and empty array removes param from query
