@@ -70,28 +70,25 @@ function transitionHeight() {
     @before-enter="rememberHeight"
     @before-leave="rememberHeight"
   >
-    <template
+    <li
       v-for="(util, idx) in utils"
+      v-show="unref(util.shouldShow) ?? true"
       :key="idx"
+      class="toolbox__utils__item"
     >
-      <li
-        v-if="unref(util.shouldShow) ?? true"
-        class="toolbox__utils__item"
+      <button
+        class="toolbox__utils__item__btn"
+        :aria-label="util.label"
+        :aria-haspopup="unref(util.ariaHaspopup)"
+        :aria-controls="unref(util.ariaControls)"
+        :aria-expanded="unref(util.ariaExpanded)"
+        @click="util.action"
       >
-        <button
-          class="toolbox__utils__item__btn"
-          :aria-label="util.label"
-          :aria-haspopup="unref(util.ariaHaspopup)"
-          :aria-controls="unref(util.ariaControls)"
-          :aria-expanded="unref(util.ariaExpanded)"
-          @click="util.action"
-        >
-          <component :is="util.icon" class="toolbox__utils__item__btn__icon" />
+        <component :is="util.icon" class="toolbox__utils__item__btn__icon" />
 
-          {{ util.text }}
-        </button>
-      </li>
-    </template>
+        {{ util.text }}
+      </button>
+    </li>
   </TransitionGroup>
 </template>
 
