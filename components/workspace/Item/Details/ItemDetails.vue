@@ -14,10 +14,6 @@ type Metadata = Pick<Note, 'updatedAt' | 'createdAt'> | Pick<Folder, 'updatedAt'
 type NoteDetails = Prisma.NoteGetPayload<{ select: { shares: { select: { link: true; updatedAt: true; createdAt: true } } } }>;
 type ItemDetails = Prettify<Metadata & Partial<NoteDetails>>;
 
-type Prettify<T> = {
-  [K in keyof T]: T[K];
-} & unknown;
-
 // NOTE(perf improvement): client bundle size reduced by using only useAsyncData or useFetch
 const { data: details, refresh } = await useAsyncData(async () => {
   const path = props.item.path.split('/').slice(2).join('/');
