@@ -7,6 +7,7 @@ const props = defineProps<Props>();
 const currentItemForDetails = useCurrentItemForDetails();
 const createToast = useToast();
 const isLoadingItemDetails = ref(false);
+const path = props.item.path.split('/').slice(2).join('/');
 
 const isFolder = 'root' in props.item;
 
@@ -16,8 +17,6 @@ type ItemDetails = Prettify<Metadata & Partial<NoteDetails>>;
 
 // NOTE(perf improvement): client bundle size reduced by using only useAsyncData or useFetch
 const { data: details, refresh } = await useAsyncData(async () => {
-  const path = props.item.path.split('/').slice(2).join('/');
-
   const res = await $fetch<{ data: ItemDetails }>(
     isFolder ? `/api/folder/${path}` : `/api/note/${path}`,
     { query: { details: true } },
