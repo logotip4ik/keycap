@@ -65,7 +65,7 @@ async function openItem() {
   if (!actionName)
     return;
 
-  const focusActionItem = (t = 1): any => setTimeout(() => {
+  const focusActionItem = (delay = 1): any => setTimeout(() => {
     const item = document.querySelector(`.contents__list a[aria-label*="${actionName}"]`) as HTMLAnchorElement;
 
     if (!item)
@@ -75,7 +75,7 @@ async function openItem() {
       top: item.offsetTop - 8,
       behavior: 'smooth', // the animation looks horrible in chrome
     });
-  }, t);
+  }, delay);
 
   focusActionItem();
 }
