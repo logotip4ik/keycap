@@ -4,11 +4,9 @@ import type LRUCache from '@tinkoff/lru-cache-nano';
 import type * as Comlink from 'comlink';
 
 export function preloadDashboardComponents() {
-  const user = useUser();
-
   prefetchComponents('WorkspaceSearch');
 
-  const blankNotePath = `/@${user.value!.username}/${BLANK_NOTE_NAME}`;
+  const blankNotePath = `/@a/${BLANK_NOTE_NAME}`;
   preloadRouteComponents(blankNotePath);
 }
 
