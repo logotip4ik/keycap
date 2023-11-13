@@ -48,7 +48,7 @@ const rowsData = [
   { title: 'Created at', value: computed(() => formatDate(mergedDetails.value?.createdAt)) },
 ];
 
-function unsetCurrentItemForDetails() {
+function unsetCurrentDetailsItem() {
   details.value = null; // clearing details from prev request
   currentItemForDetails.value = null;
 }
@@ -127,8 +127,8 @@ function toggleShareLink(isCreateRequest: boolean) {
     .finally(() => isLoadingItemDetails.value = false);
 }
 
-useTinykeys({ Escape: unsetCurrentItemForDetails });
-useClickOutside(itemDetailsEl, unsetCurrentItemForDetails);
+useTinykeys({ Escape: unsetCurrentDetailsItem });
+useClickOutside(itemDetailsEl, unsetCurrentDetailsItem);
 
 onBeforeMount(() => refresh());
 onMounted(() => {
@@ -153,7 +153,7 @@ onMounted(() => {
       aria-labelledby="item-details-dialog-title"
       tabindex="0"
     >
-      <button class="item-details__close-button" @click="unsetCurrentItemForDetails">
+      <button class="item-details__close-button" @click="unsetCurrentDetailsItem">
         <LazyIconCloseRounded v-once class="item-details__close-button__icon" />
       </button>
 
