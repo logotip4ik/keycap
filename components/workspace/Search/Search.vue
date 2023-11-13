@@ -97,7 +97,7 @@ async function trapFocusInsideSearch(event: Event) {
 
 watch([searchInput, isLoadingResults, results], debounce(([value, isLoading, results]) => {
   if (!value || isLoading)
-    isResultsEmpty.value = false;
+    return isResultsEmpty.value = false;
 
   isResultsEmpty.value = value.length !== 0 && results.length === 0;
 }, 125));
