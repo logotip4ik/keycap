@@ -32,6 +32,7 @@ function createToast(options: ToastUserOptions & { message: ToastInstance['messa
 
   const toastId = Math.floor(Math.random() * 9999999);
 
+  // TODO: refactor this to class
   const toast: RefToastInstance = shallowRef({
     id: toastId,
     message: options.message,
