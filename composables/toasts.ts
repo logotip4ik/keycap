@@ -4,24 +4,26 @@ import type { ShallowRef } from 'vue';
 const toasts = shallowRef<Array<ToastInstance>>([]);
 export const useToasts = () => toasts;
 
-export function useToast() {
-  return (message: ToastInstance['message'], options?: ToastUserOptions & { delay?: number }): RefToastInstance => {
-    const timeout: { value: NodeJS.Timeout | null } = { value: null };
+function innerCreate(message: ToastInstance['message'], options?: ToastUserOptions & { delay?: number }): RefToastInstance {
+  const timeout: { value: NodeJS.Timeout | null } = { value: null };
 
-    const toast = createToast({ ...options, message, timeout });
+  const toast = createToast({ ...options, message, timeout });
 
-    const addToastToQueue = () => {
-      timeout.value = null;
-      toasts.value = toasts.value.concat(toast.value!);
-    };
-
-    if (options?.delay)
-      timeout.value = setTimeout(addToastToQueue, options.delay);
-    else
-      addToastToQueue();
-
-    return toast;
+  const addToastToQueue = () => {
+    timeout.value = null;
+    toasts.value = toasts.value.concat(toast.value!);
   };
+
+  if (options?.delay)
+    timeout.value = setTimeout(addToastToQueue, options.delay);
+  else
+    addToastToQueue();
+
+  return toast;
+};
+
+export function useToast() {
+  return innerCreate;
 }
 
 function createToast(options: ToastUserOptions & { message: ToastInstance['message']; timeout: { value: NodeJS.Timeout | null } }): RefToastInstance {
