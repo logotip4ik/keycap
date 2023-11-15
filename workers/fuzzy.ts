@@ -34,7 +34,7 @@ function search(query: string, maxLength = 4): Array<FuzzyItem | CommandItem> {
     const score = getScore(value.name, query);
 
     if (score > 0)
-      results.push({ score, value }); // TODO: maybe try creating class instead ?
+      results.push({ score, value });
   }
 
   if (results.length === 0)
