@@ -57,7 +57,9 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>, opts:
     off = on(el, 'keydown', (e) => {
       if (e.key === 'Tab' && normalizedIsEnabled()) {
         const currentFocuseElIdx = document.activeElement ? focusableEls.indexOf(document.activeElement as HTMLElement) : -1;
-        const nextIdx = (currentFocuseElIdx + 1) % focusableEls.length;
+
+        const nextDiff = e.shiftKey ? -1 : 1;
+        const nextIdx = (currentFocuseElIdx + nextDiff + focusableEls.length) % focusableEls.length;
 
         focusableEls[nextIdx]?.focus();
 
