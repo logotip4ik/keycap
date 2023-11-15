@@ -237,7 +237,6 @@ export default defineNuxtConfig({
         'idb-keyval',
         'rad-event-listener',
         '@tiptap/*',
-        'focus-trap-js',
         'h3',
         'escape-string-regexp',
         'comlink',
