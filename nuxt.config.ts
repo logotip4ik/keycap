@@ -184,7 +184,7 @@ export default defineNuxtConfig({
 
   vite: {
     define: {
-      'import.meta.vitest': JSON.stringify(undefined),
+      'import.meta.vitest': JSON.stringify(false),
       'import.meta.dev': JSON.stringify(isDevelopment),
       'import.meta.prod': JSON.stringify(isProduction),
     },
