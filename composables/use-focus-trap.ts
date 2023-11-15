@@ -5,7 +5,8 @@ export interface FocusTrapOptions {
 }
 
 export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>, opts: FocusTrapOptions = {}) {
-  if (import.meta.server) return;
+  if (import.meta.server)
+    return;
 
   const { isEnabled } = opts;
 
