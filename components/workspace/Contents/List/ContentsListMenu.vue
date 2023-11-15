@@ -32,7 +32,7 @@ const actions = [
   { name: 'rename', handler: renameItem },
   { name: 'show details', handler: showDetails },
   { name: 'delete', needConfirmation: true, handler: deleteItem },
-].filter(Boolean);
+];
 
 let cleanup: null | (() => void);
 const confirmDuration = parseDuration('5 seconds')!;
