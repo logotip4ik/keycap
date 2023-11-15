@@ -20,7 +20,5 @@ defineProps<Props>();
 
   margin: 0 auto;
   padding: clamp(1rem, 2vw, 2rem);
-
-  // border-radius: 0.25rem;
 }
 </style>
