@@ -5,7 +5,7 @@ import { join } from 'pathe';
 import { createResolver } from '@nuxt/kit';
 import { isCI, isDevelopment, isProduction, isTest } from 'std-env';
 import RollupReplace from '@rollup/plugin-replace';
-import RollupTypescript from '@rollup/plugin-typescript';
+import RollupSucrase from '@rollup/plugin-sucrase';
 
 import { getHeaders } from './headers.config';
 import { breakpoints, sidebarsBreakpoints } from './constants/breakpoints';
@@ -370,7 +370,12 @@ export default defineNuxtConfig({
 
       rollupConfig: {
         plugins: [
-          RollupTypescript(),
+          // NOTE: it results in smaller server size and faster builds. Neat ¯\_(ツ)_/¯
+          RollupSucrase({
+            transforms: [
+              'typescript',
+            ],
+          }),
           ParseDurationTransformPlugin.rollup(),
         ],
       },
