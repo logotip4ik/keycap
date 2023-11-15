@@ -1,7 +1,19 @@
 const TABBABLE_ELs = 'input:not([disabled]), select:not([disabled]), textarea:not([disabled]), a[href], button:not([disabled]), [tabindex="0"], audio[controls], video[controls], [contenteditable]:not([contenteditable="false"])';
 
-export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>) {
+export interface FocusTrapOptions {
+  isEnabled?: boolean | (() => boolean)
+}
+
+export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>, opts: FocusTrapOptions = {}) {
   if (import.meta.server) return;
+
+  const { isEnabled } = opts;
+
+  const normalizedIsEnabled = typeof isEnabled === 'boolean'
+    ? () => isEnabled
+    : typeof isEnabled === 'function'
+      ? isEnabled
+      : () => true;
 
   let lastFocusedEl: HTMLElement | undefined;
   let off: (() => any) | undefined;
@@ -43,7 +55,7 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>) {
     });
 
     off = on(el, 'keydown', (e) => {
-      if (e.key === 'Tab') {
+      if (e.key === 'Tab' && normalizedIsEnabled()) {
         const currentFocuseElIdx = document.activeElement ? focusableEls.indexOf(document.activeElement as HTMLElement) : -1;
         const nextIdx = (currentFocuseElIdx + 1) % focusableEls.length;
 
