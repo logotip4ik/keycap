@@ -1,4 +1,5 @@
-/// <reference path="../types/store" />
+/// <reference path="../.nuxt/nuxt.d.ts" />
+/// <reference path="../types/store.d.ts" />
 
 // @ts-expect-error no types :(
 import getScore from '@superhuman/command-score';
@@ -33,13 +34,25 @@ function search(query: string, maxLength = 4): Array<FuzzyItem | CommandItem> {
     const score = getScore(value.name, query);
 
     if (score > 0)
-      results.push({ score, value });
+      results.push({ score, value }); // TODO: maybe try creating class instead ?
   }
+
+  if (results.length === 0)
+    return [];
 
   return results
     .sort((a, b) => b.score - a.score)
     .map((suggestion) => suggestion.value)
     .slice(0, maxLength);
+}
+
+function searchWithTransliteration(query: string, maxLength = 4): Array<FuzzyItem | CommandItem> {
+  let result = search(query, maxLength);
+
+  if (result.length === 0)
+    result = search(transliterateToEnglish(query), maxLength);
+
+  return result;
 }
 
 async function populateItemsCache() {
@@ -52,7 +65,7 @@ async function populateItemsCache() {
 }
 
 expose({
-  searchWithQuery: search,
+  searchWithQuery: searchWithTransliteration,
   addItemToCache: addItem,
   addItemsToCache: addItems,
   refreshItemsCache: populateItemsCache,
