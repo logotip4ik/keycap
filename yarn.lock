@@ -3067,25 +3067,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/plugin-typescript@npm:^11.1.5":
-  version: 11.1.5
-  resolution: "@rollup/plugin-typescript@npm:11.1.5"
-  dependencies:
-    "@rollup/pluginutils": "npm:^5.0.1"
-    resolve: "npm:^1.22.1"
-  peerDependencies:
-    rollup: ^2.14.0||^3.0.0||^4.0.0
-    tslib: "*"
-    typescript: ">=3.7.0"
-  peerDependenciesMeta:
-    rollup:
-      optional: true
-    tslib:
-      optional: true
-  checksum: 3048c7837bcaae3770e6977aa22b34b7da3862f14f25a22249c83867be1a3f78138c0a62b28efd22037890dfd6933e960007da6667a945dcef45f585a581f1aa
-  languageName: node
-  linkType: hard
-
 "@rollup/plugin-wasm@npm:^6.2.2":
   version: 6.2.2
   resolution: "@rollup/plugin-wasm@npm:6.2.2"
@@ -8220,7 +8201,6 @@ __metadata:
     "@prisma/client": "npm:^5.5.2"
     "@rollup/plugin-replace": "npm:^5.0.5"
     "@rollup/plugin-sucrase": "npm:^5.0.2"
-    "@rollup/plugin-typescript": "npm:^11.1.5"
     "@size-limit/file": "npm:^10.0.2"
     "@superhuman/command-score": "npm:^0.5.0"
     "@tinkoff/lru-cache-nano": "npm:^7.8.1"
