@@ -34,7 +34,7 @@ function handleSearchInput(value: string) {
   isLoadingResults.value = true;
 
   fuzzyWorker.value.searchWithQuery(value)
-    .then(async (entries: Array<FuzzyItem | CommandItem>) => {
+    .then((entries: Array<FuzzyItem | CommandItem>) => {
       results.value = entries;
 
       afterSearchCallback && afterSearchCallback();
