@@ -40,14 +40,6 @@ function updateTabindexForFocusableElements(currentState: SidebarState) {
   }
 }
 
-async function trapFocusInsideSidebar(event: Event) {
-  if (sidebar.value) {
-    const trapFocus = (await import('focus-trap-js')).default;
-
-    trapFocus(event, sidebar.value);
-  }
-}
-
 function hideIf(trigger: SidebarState) {
   if (state.value === trigger)
     props.onUpdateState('hidden');
@@ -61,17 +53,14 @@ watch(state, debounce((state: SidebarState) => {
 
   const cookieValue: SidebarState = state === 'visible' ? 'hidden' : state;
   document.cookie = `${props.name}=${cookieValue}; Max-Age=${parseDuration('0.5year', 's')}; Path=/; Secure; SameSite=Lax`;
-
-  if (state === 'visible')
-    off = on(sidebar.value!, 'keydown', trapFocusInsideSidebar);
 }, 375), { flush: 'post' });
 
 watch(focusableElements, debounce(() => {
   updateTabindexForFocusableElements(state.value);
 }, 375), { flush: 'post' });
 
+useFocusTrap(sidebar, { isEnabled: () => state.value === 'visible' });
 useClickOutside(sidebar, () => hideIf('visible'));
-
 useTinykeys({
   Escape: () => hideIf('visible'),
 });
@@ -87,10 +76,6 @@ onMounted(() => {
     observer.disconnect();
     off && off();
   });
-
-  setTimeout(() => {
-    requestIdleCallback(() => import('focus-trap-js'));
-  }, 400);
 });
 </script>
 

@@ -86,15 +86,6 @@ function changeSelectedResult(difference: number) {
   selectedResult.value = newSelectedResult < 0 ? results.value.length - 1 : newSelectedResult;
 }
 
-async function trapFocusInsideSearch(event: Event) {
-  if (searchEl.value) {
-    // NOTE: should be preloaded in sidebar
-    const trapFocus = (await import('focus-trap-js')).default;
-
-    trapFocus(event, searchEl.value);
-  }
-}
-
 watch([searchInput, isLoadingResults, results], debounce(([value, isLoading, results]) => {
   if (!value || isLoading)
     return isResultsEmpty.value = false;
@@ -128,15 +119,8 @@ function animateHeight() {
   prevAnimation.addEventListener('finish', () => prevAnimation = null);
 }
 
+useFocusTrap(searchEl);
 useTinykeys({ Escape: handleCancel });
-
-onMounted(() => {
-  if (searchEl.value) {
-    onBeforeUnmount(
-      on(searchEl.value, 'keydown', trapFocusInsideSearch),
-    );
-  }
-});
 </script>
 
 <template>

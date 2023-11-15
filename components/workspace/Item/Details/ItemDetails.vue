@@ -104,15 +104,6 @@ async function copyShareLink() {
   createToast('Copied share link');
 }
 
-async function trapFocusInsideDetails(event: Event) {
-  if (itemDetailsEl.value) {
-    // NOTE: should be preloaded by sidebar
-    const trapFocus = (await import('focus-trap-js')).default;
-
-    trapFocus(event, itemDetailsEl.value);
-  }
-}
-
 const debouncedToggleShareLink = debounce(toggleShareLink, 250);
 function toggleShareLink(isCreateRequest: boolean) {
   if (isLoadingItemDetails.value)
@@ -127,19 +118,11 @@ function toggleShareLink(isCreateRequest: boolean) {
     .finally(() => isLoadingItemDetails.value = false);
 }
 
+useFocusTrap(itemDetailsEl);
 useTinykeys({ Escape: unsetCurrentDetailsItem });
 useClickOutside(itemDetailsEl, unsetCurrentDetailsItem);
 
 onBeforeMount(() => refresh());
-onMounted(() => {
-  if (itemDetailsEl.value) {
-    itemDetailsEl.value.focus();
-
-    onBeforeUnmount(
-      on(itemDetailsEl.value, 'keydown', trapFocusInsideDetails),
-    );
-  }
-});
 </script>
 
 <template>
