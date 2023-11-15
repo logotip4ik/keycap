@@ -124,7 +124,7 @@ watch(() => props.editable, (editable) => {
   if (!editor.value) return;
 
   if (editor.value.options.editable !== editable)
-    editor.value?.setOptions({ editable });
+    editor.value.setOptions({ editable });
 }, { immediate: true });
 
 useTinykeys({
