@@ -21,7 +21,7 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>, opts:
   let off: (() => any) | undefined;
   let observer: MutationObserver | undefined;
   let cachedEls: Array<HTMLElement> = [];
-  let scheduled: boolean;
+  let scheduled: boolean = true;
 
   function stop() {
     off && off();
@@ -40,7 +40,8 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>, opts:
     return cachedEls;
   }
 
-  watch(() => unref(el), (el) => {
+  // NOTE: maybe separate first element focus into another watcher ?
+  watch([() => unref(el), normalizedIsEnabled], ([el, isEnabled]) => {
     stop();
 
     if (!el)
@@ -49,25 +50,23 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>, opts:
     if (document.activeElement)
       lastFocusedEl = document.activeElement as HTMLElement;
 
-    let firstTime = true;
+    if (isEnabled) {
+      const focusableEls = getFocusableEls(el);
+      focusableEls[0]?.focus();
+    }
+
     observer = new MutationObserver(
       debounce(() => {
         scheduled = true;
-
-        if (firstTime && normalizedIsEnabled()) {
-          firstTime = false;
-          const focusableEls = getFocusableEls(el);
-          focusableEls[0]?.focus();
-        }
       }, 100),
     );
     observer.observe(el, {
-      attributes: true,
+      childList: true,
       subtree: true,
     });
 
     off = on(el, 'keydown', (e) => {
-      if (e.key !== 'Tab' || !normalizedIsEnabled()) return;
+      if (e.key !== 'Tab' || !isEnabled) return;
 
       const focusableEls = getFocusableEls(el);
       const firstFocusableEl = focusableEls.at(0);
@@ -82,7 +81,7 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>, opts:
         e.preventDefault();
       }
     });
-  });
+  }, { flush: 'post' });
 
   onScopeDispose(stop);
 
