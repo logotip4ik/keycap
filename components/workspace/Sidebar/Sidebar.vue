@@ -59,11 +59,13 @@ watch(focusableElements, debounce(() => {
   updateTabindexForFocusableElements(state.value);
 }, 375), { flush: 'post' });
 
-useFocusTrap(sidebar, { isEnabled: () => state.value === 'visible' });
 useClickOutside(sidebar, () => hideIf('visible'));
 useTinykeys({
   Escape: () => hideIf('visible'),
 });
+useFocusTrap(
+  computed(() => state.value === 'visible' ? sidebar.value : null),
+);
 
 onMounted(() => {
   requestIdleCallback(updateFocusableElements);
