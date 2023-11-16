@@ -10,6 +10,7 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>, opts:
 
   const { isEnabled } = opts;
 
+  // NOTE: it should always be a function that returns boolean
   const normalizedIsEnabled = typeof isEnabled === 'boolean'
     ? () => isEnabled
     : typeof isEnabled === 'function'
