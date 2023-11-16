@@ -4,7 +4,12 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>) {
   if (import.meta.server)
     return;
 
-  let lastFocusedEl: HTMLElement | undefined;
+  // TODO: add proper focus return handling
+  // to reproduce issue try opening item details through ctrl+k menu several times
+  // first time focus will be handled correctly, but then close button in details
+  // popup wont be focused
+
+  // let lastFocusedEl: HTMLElement | undefined;
   let off: (() => any) | undefined;
   let observer: MutationObserver | undefined;
   let cachedEls: Array<HTMLElement> = [];
@@ -13,8 +18,9 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>) {
   function stop() {
     off && off();
     observer && observer.disconnect();
-    lastFocusedEl && lastFocusedEl.focus();
+    // lastFocusedEl && lastFocusedEl.focus();
 
+    // lastFocusedEl = undefined;
     scheduled = true;
     cachedEls.length = 0;
   }
@@ -36,8 +42,8 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>) {
     if (!el)
       return;
 
-    if (document.activeElement)
-      lastFocusedEl = document.activeElement as HTMLElement;
+    // if (document.activeElement)
+    //   lastFocusedEl = document.activeElement as HTMLElement;
 
     getFocusableEls(el)[0].focus();
 
@@ -67,7 +73,7 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>) {
         e.preventDefault();
       }
     });
-  }, { flush: 'post' });
+  });
 
   onScopeDispose(stop);
 
