@@ -4,7 +4,7 @@ import type { ShallowRef } from 'vue';
 const toasts = shallowRef<Array<ToastInstance>>([]);
 export const useToasts = () => toasts;
 
-function innerCreate(message: ToastInstance['message'], options?: ToastUserOptions & { delay?: number }): RefToastInstance {
+function createToastRef(message: ToastInstance['message'], options?: ToastUserOptions & { delay?: number }): RefToastInstance {
   const timeout: { value: NodeJS.Timeout | null } = { value: null };
 
   const toast = createToast({ ...options, message, timeout });
@@ -23,7 +23,7 @@ function innerCreate(message: ToastInstance['message'], options?: ToastUserOptio
 };
 
 export function useToaster() {
-  return innerCreate;
+  return createToastRef;
 }
 
 function createToast(options: ToastUserOptions & { message: ToastInstance['message']; timeout: { value: NodeJS.Timeout | null } }): RefToastInstance {
