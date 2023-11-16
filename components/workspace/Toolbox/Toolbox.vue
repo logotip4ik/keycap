@@ -46,7 +46,6 @@ if (import.meta.client) {
   );
 };
 
-let prevFocusedEl: HTMLElement | undefined;
 useTinykeys({
   [shortcuts.toolbox]: (e) => {
     e.preventDefault();
@@ -54,15 +53,6 @@ useTinykeys({
     const nextState: SidebarState = toolboxState.value === 'hidden' ? 'visible' : 'hidden';
 
     smartUpdateState(nextState);
-
-    if (nextState === 'visible') {
-      prevFocusedEl = document.activeElement as HTMLElement;
-
-      nextTick(() => sidebar.value?.el?.focus());
-    }
-    else {
-      prevFocusedEl?.focus();
-    }
   },
 });
 </script>
