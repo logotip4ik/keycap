@@ -67,6 +67,7 @@ export default defineNuxtConfig({
   imports: {
     dirs: [
       resolve('./constants'),
+      resolve('./composables/toasts'),
     ],
 
     imports: [
