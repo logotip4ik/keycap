@@ -49,7 +49,6 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>) {
 
     observer.observe(el, {
       childList: true,
-      subtree: true,
     });
 
     off = on(el, 'keydown', (e) => {
