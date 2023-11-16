@@ -10,8 +10,9 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>, opts:
 
   const { isEnabled } = opts;
 
+  const getEl = () => unref(el);
   // NOTE: it should always be a function that returns boolean
-  const normalizedIsEnabled = typeof isEnabled === 'boolean'
+  const getIsEnabled = typeof isEnabled === 'boolean'
     ? () => isEnabled
     : typeof isEnabled === 'function'
       ? isEnabled
@@ -40,8 +41,14 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>, opts:
     return cachedEls;
   }
 
-  // NOTE: maybe separate first element focus into another watcher ?
-  watch([() => unref(el), normalizedIsEnabled], ([el, isEnabled]) => {
+  watch([getEl, getIsEnabled], ([el, isEnabled]) => {
+    if (el && isEnabled) {
+      const focusableEls = getFocusableEls(el);
+      focusableEls[0]?.focus();
+    }
+  });
+
+  watch(getEl, (el) => {
     stop();
 
     if (!el)
@@ -49,11 +56,6 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>, opts:
 
     if (document.activeElement)
       lastFocusedEl = document.activeElement as HTMLElement;
-
-    if (isEnabled) {
-      const focusableEls = getFocusableEls(el);
-      focusableEls[0]?.focus();
-    }
 
     observer = new MutationObserver(
       debounce(() => {
@@ -66,7 +68,7 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>, opts:
     });
 
     off = on(el, 'keydown', (e) => {
-      if (e.key !== 'Tab' || !isEnabled) return;
+      if (e.key !== 'Tab' || !getIsEnabled()) return;
 
       const focusableEls = getFocusableEls(el);
       const firstFocusableEl = focusableEls.at(0);
