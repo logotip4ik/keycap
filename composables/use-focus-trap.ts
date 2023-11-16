@@ -1,22 +1,8 @@
 const TABBABLE_ELs = 'input:not([disabled]), select:not([disabled]), textarea:not([disabled]), a[href], button:not([disabled]), [tabindex="0"], audio[controls], video[controls], [contenteditable]:not([contenteditable="false"])';
 
-export interface FocusTrapOptions {
-  isEnabled?: boolean | (() => boolean)
-}
-
-export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>, opts: FocusTrapOptions = {}) {
+export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>) {
   if (import.meta.server)
     return;
-
-  const { isEnabled } = opts;
-
-  const getEl = () => unref(el);
-  // NOTE: it should always be a function that returns boolean
-  const getIsEnabled = typeof isEnabled === 'boolean'
-    ? () => isEnabled
-    : typeof isEnabled === 'function'
-      ? isEnabled
-      : () => true;
 
   let lastFocusedEl: HTMLElement | undefined;
   let off: (() => any) | undefined;
@@ -41,14 +27,7 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>, opts:
     return cachedEls;
   }
 
-  watch([getEl, getIsEnabled], ([el, isEnabled]) => {
-    if (el && isEnabled) {
-      const focusableEls = getFocusableEls(el);
-      focusableEls[0]?.focus();
-    }
-  });
-
-  watch(getEl, (el) => {
+  watch(() => unref(el), (el) => {
     stop();
 
     if (!el)
@@ -57,18 +36,21 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>, opts:
     if (document.activeElement)
       lastFocusedEl = document.activeElement as HTMLElement;
 
+    getFocusableEls(el)[0].focus();
+
     observer = new MutationObserver(
       debounce(() => {
         scheduled = true;
       }, 100),
     );
+
     observer.observe(el, {
       childList: true,
       subtree: true,
     });
 
     off = on(el, 'keydown', (e) => {
-      if (e.key !== 'Tab' || !getIsEnabled()) return;
+      if (e.key !== 'Tab') return;
 
       const focusableEls = getFocusableEls(el);
       const firstFocusableEl = focusableEls.at(0);
