@@ -32,7 +32,9 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>, opts:
   function getFocusableEls(el: HTMLElement) {
     if (scheduled) {
       scheduled = false;
-      cachedEls = Array.from(el.querySelectorAll(TABBABLE_ELs)) as Array<HTMLElement>;
+      cachedEls = Array.from(
+        el.querySelectorAll(TABBABLE_ELs) as NodeListOf<HTMLElement>,
+      ).filter((el) => !isElementHidden(el));
     }
 
     return cachedEls;
@@ -85,4 +87,8 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>, opts:
   onScopeDispose(stop);
 
   return stop;
+}
+
+function isElementHidden(node: HTMLElement) {
+  return node.offsetParent === null || getComputedStyle(node).visibility === 'hidden';
 }
