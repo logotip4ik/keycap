@@ -21,8 +21,10 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>) {
     // lastFocusedEl && lastFocusedEl.focus();
 
     // lastFocusedEl = undefined;
-    scheduled = true;
+    off = undefined;
+    observer = undefined;
     cachedEls.length = 0;
+    scheduled = true;
   }
 
   function getFocusableEls(el: HTMLElement) {
