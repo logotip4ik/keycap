@@ -65,16 +65,18 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>, opts:
     });
 
     off = on(el, 'keydown', (e) => {
-      if (e.key === 'Tab' && normalizedIsEnabled()) {
-        const focusableEls = getFocusableEls(el);
+      if (e.key !== 'Tab' || !normalizedIsEnabled()) return;
 
-        const currentFocuseElIdx = document.activeElement ? focusableEls.indexOf(document.activeElement as HTMLElement) : -1;
+      const focusableEls = getFocusableEls(el);
+      const firstFocusableEl = focusableEls.at(0);
+      const lastFocusedEl = focusableEls.at(-1);
 
-        const nextDiff = e.shiftKey ? -1 : 1;
-        const nextIdx = (currentFocuseElIdx + nextDiff + focusableEls.length) % focusableEls.length;
-
-        focusableEls[nextIdx]?.focus();
-
+      if (e.shiftKey && e.target === firstFocusableEl) {
+        lastFocusedEl?.focus();
+        e.preventDefault();
+      }
+      else if (!e.shiftKey && e.target === lastFocusedEl) {
+        firstFocusableEl?.focus();
         e.preventDefault();
       }
     });
