@@ -19,10 +19,6 @@ mitt.on('search:show', () => isShowingSearch.value = true);
 
 const isNoteEmpty = computed(() => !route.params.note || route.params.note === BLANK_NOTE_NAME);
 
-function focusSearchInput(event: Element) {
-  nextTick(() => event.querySelector('input')?.focus());
-}
-
 let popstateOff: (() => any) | undefined;
 watch(isShowingSearch, async (search) => {
   popstateOff && popstateOff();
@@ -90,10 +86,7 @@ onBeforeUnmount(() => popstateOff?.());
     <LazyWorkspaceContents />
 
     <Teleport to="body">
-      <Transition
-        name="search-fade"
-        @after-enter="focusSearchInput"
-      >
+      <Transition name="search-fade">
         <LazyWorkspaceSearch
           v-if="isShowingSearch"
           @close="isShowingSearch = false"
