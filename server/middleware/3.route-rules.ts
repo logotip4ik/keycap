@@ -3,7 +3,7 @@ import type { H3Event } from 'h3';
 
 import parseDuration from 'parse-duration';
 
-import { CorsHeaders, CorsMethods, CorsOrigin } from '~/headers.config';
+import { CorsHeaders, CorsMethods, CorsOrigin } from '~/config/headers';
 
 interface Rule {
   path: keyof InternalApi | (string & NonNullable<unknown>)
