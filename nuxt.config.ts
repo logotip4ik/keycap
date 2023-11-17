@@ -7,7 +7,7 @@ import { isCI, isDevelopment, isProduction, isTest } from 'std-env';
 import RollupReplace from '@rollup/plugin-replace';
 import RollupSucrase from '@rollup/plugin-sucrase';
 
-import { getHeaders } from './headers.config';
+import { getHeaders } from './config/headers';
 import { breakpoints, sidebarsBreakpoints } from './constants/breakpoints';
 import { ParseDurationTransformPlugin } from './unplugin/parse-duration';
 
