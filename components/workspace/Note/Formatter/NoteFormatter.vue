@@ -19,12 +19,11 @@ let prevListItem: string | undefined;
 let prevHeadingLevel: number | undefined;
 
 let prevContainerWidth = '';
-
-function beforeLeaveAnimation(el: Element) {
+function rememberContainerWidth(el: Element) {
   prevContainerWidth = `${el.parentElement?.offsetWidth || 0}px`;
 }
 
-function enterAnimation(el: Element) {
+function animateContainerWidth(el: Element) {
   const currentContainerWidth = `${el.parentElement?.offsetWidth || 0}px`;
 
   el.parentElement?.animate(
@@ -182,7 +181,7 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
 </script>
 
 <template>
-  <Transition name="fade" @before-leave="beforeLeaveAnimation" @enter="enterAnimation">
+  <Transition name="fade" @before-leave="rememberContainerWidth" @enter="animateContainerWidth">
     <div v-if="!isEditingLink" class="formatter__contents-wrapper">
       <button
         class="formatter__button"
