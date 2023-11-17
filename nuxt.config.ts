@@ -237,7 +237,6 @@ export default defineNuxtConfig({
         'mitt',
         'idb-keyval',
         'rad-event-listener',
-        '@tiptap/*',
         'h3',
         'escape-string-regexp',
         'comlink',
