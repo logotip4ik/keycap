@@ -18,16 +18,16 @@ const editingLink = ref('');
 let prevListItem: string | undefined;
 let prevHeadingLevel: number | undefined;
 
-let prevContainerWidth = '';
+let prevContainerWidth: number;
 function rememberContainerWidth(el: Element) {
-  prevContainerWidth = `${el.parentElement?.offsetWidth || 0}px`;
+  prevContainerWidth = el.parentElement?.offsetWidth || 0;
 }
 
 function animateContainerWidth(el: Element) {
-  const currentContainerWidth = `${el.parentElement?.offsetWidth || 0}px`;
+  const currentContainerWidth = el.parentElement?.offsetWidth || 0;
 
   el.parentElement?.animate(
-    [{ width: prevContainerWidth }, { width: currentContainerWidth }],
+    [{ width: `${prevContainerWidth}px` }, { width: `${currentContainerWidth}px` }],
     { duration: 400, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' },
   );
 
