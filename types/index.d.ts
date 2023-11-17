@@ -1,3 +1,5 @@
+import type { Config } from '~/config/build';
+
 export interface BuildInfo {
   time: number
   commit: string
@@ -12,6 +14,8 @@ export declare global {
   interface ImportMeta {
     dev: boolean
     prod: boolean
+
+    config: Config
   }
 }
 

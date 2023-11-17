@@ -7,6 +7,7 @@ import { isCI, isDevelopment, isProduction, isTest } from 'std-env';
 import RollupReplace from '@rollup/plugin-replace';
 import RollupSucrase from '@rollup/plugin-sucrase';
 
+import { config } from './config/build';
 import { getHeaders } from './config/headers';
 import { breakpoints, sidebarsBreakpoints } from './constants/breakpoints';
 import { ParseDurationTransformPlugin } from './unplugin/parse-duration';
@@ -188,6 +189,13 @@ export default defineNuxtConfig({
       'import.meta.vitest': JSON.stringify(false),
       'import.meta.dev': JSON.stringify(isDevelopment),
       'import.meta.prod': JSON.stringify(isProduction),
+
+      ...Object.fromEntries(
+        Object.entries(config)
+          .map(
+            ([k, v]) => [`import.meta.config.${k}`, JSON.stringify(v)],
+          ),
+      ),
     },
 
     plugins: [
