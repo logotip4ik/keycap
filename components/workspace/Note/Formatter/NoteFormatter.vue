@@ -25,11 +25,14 @@ function rememberContainerWidth(el: Element) {
 
 function animateContainerWidth(el: Element) {
   const currentContainerWidth = el.parentElement?.offsetWidth || 0;
+  const containerWidthDiff = Math.abs(prevContainerWidth - currentContainerWidth);
 
-  el.parentElement?.animate(
-    [{ width: `${prevContainerWidth}px` }, { width: `${currentContainerWidth}px` }],
-    { duration: 400, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' },
-  );
+  if (containerWidthDiff < 2) {
+    el.parentElement?.animate(
+      [{ width: `${prevContainerWidth}px` }, { width: `${currentContainerWidth}px` }],
+      { duration: 400, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' },
+    );
+  }
 
   if (!isEditingLink.value) return;
 
