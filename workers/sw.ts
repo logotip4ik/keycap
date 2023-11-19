@@ -27,7 +27,7 @@ class CacheNetworkRace extends Strategy {
       Promise.allSettled([fetchAndCachePutDone, cacheMatchDone]).then((results) => {
         const [fetchAndCachePutResult, cacheMatchResult] = results;
         if (fetchAndCachePutResult.status === 'rejected'
-            && (cacheMatchResult.status === 'rejected' || !cacheMatchResult.value)
+          && (cacheMatchResult.status === 'rejected' || !cacheMatchResult.value)
         )
           reject(fetchAndCachePutResult.reason);
       });

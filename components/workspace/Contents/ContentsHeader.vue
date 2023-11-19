@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import type { SidebarState } from '~/composables/sidebars';
 
-interface Props { state: SidebarState; onUpdateState: (newState: SidebarState) => any };
+interface Props { state: SidebarState, onUpdateState: (newState: SidebarState) => any };
 defineProps<Props>();
 
 const route = useRoute();
 
-interface Crumb { name: string; href: string }
+interface Crumb { name: string, href: string }
 const crumbs = computed(() => {
   const folders = (
     Array.isArray(route.params.folders)

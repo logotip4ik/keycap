@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ToastInstance } from '~/composables/toasts';
 
-interface Props { toast: ToastInstance; animationDuration: number }
+interface Props { toast: ToastInstance, animationDuration: number }
 const props = defineProps<Props>();
 
 let timeout: NodeJS.Timeout;

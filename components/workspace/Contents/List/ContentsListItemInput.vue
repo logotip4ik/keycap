@@ -1,5 +1,5 @@
 <script setup lang="ts">
-interface Props { item: FolderOrNote; parent: FolderWithContents }
+interface Props { item: FolderOrNote, parent: FolderWithContents }
 const props = defineProps<Props>();
 
 const isFolder = 'root' in props.item;

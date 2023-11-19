@@ -1,5 +1,5 @@
 <script setup lang="ts">
-interface Props { item: FuzzyItem | CommandItem; selected: boolean }
+interface Props { item: FuzzyItem | CommandItem, selected: boolean }
 const props = defineProps<Props>();
 
 const isCommand = 'key' in props.item;

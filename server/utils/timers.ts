@@ -1,6 +1,6 @@
 import type { H3Event } from 'h3';
 
-interface TimerPoint { name: string; desc?: string; start: number }
+interface TimerPoint { name: string, desc?: string, start: number }
 
 class Timer {
   #timersStack: Array<TimerPoint> = [];

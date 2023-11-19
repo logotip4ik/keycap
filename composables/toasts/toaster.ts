@@ -28,7 +28,7 @@ export function useToaster() {
   return createToastRef;
 }
 
-function createToast(options: ToastUserOptions & { message: ToastInstance['message']; timeout: { value: NodeJS.Timeout | null } }): RefToastInstance {
+function createToast(options: ToastUserOptions & { message: ToastInstance['message'], timeout: { value: NodeJS.Timeout | null } }): RefToastInstance {
   if (unref(options.message).trim() === '')
     throw new Error('no message was provided');
 

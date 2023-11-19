@@ -3,7 +3,7 @@ import escapeRE from 'escape-string-regexp';
 import type { RouteLocationRaw } from 'vue-router';
 import type { NavigateToOptions } from '#app/composables/router';
 
-type ItemWithPath = Record<string, any> & { root?: boolean; path: string };
+type ItemWithPath = Record<string, any> & { root?: boolean, path: string };
 export function generateItemPath(item: ItemWithPath): RouteLocationRaw {
   const isFolder = 'root' in item;
   let path = item.path.replace('/', '/@');

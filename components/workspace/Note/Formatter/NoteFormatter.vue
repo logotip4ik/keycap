@@ -2,7 +2,7 @@
 import type { ChainedCommands, Editor } from '@tiptap/core';
 import type { Level } from '@tiptap/extension-heading';
 
-interface Props { editor: Editor; onHide: () => void }
+interface Props { editor: Editor, onHide: () => void }
 
 const props = defineProps<Props>();
 

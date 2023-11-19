@@ -49,7 +49,7 @@ export const ParseDurationTransformPlugin = createUnplugin(() => ({
         if (!functionNames.includes((node.callee as any).name))
           return;
 
-        const { start, end } = node as any as { start: number; end: number };
+        const { start, end } = node as any as { start: number, end: number };
 
         try {
           const value = runInContext(code.slice(start, end), context);

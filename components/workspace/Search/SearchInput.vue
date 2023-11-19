@@ -1,5 +1,5 @@
 <script setup lang="ts">
-interface Props { value: string; onUpdateValue: (v: string) => void }
+interface Props { value: string, onUpdateValue: (v: string) => void }
 
 const props = defineProps<Props>();
 

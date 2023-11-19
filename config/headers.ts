@@ -59,7 +59,7 @@ export type HeadersType = 'default' | 'assets' | 'api' | 'api-info' | 'webmanife
 export type HeadersOptions = NoteViewHeaderOptions | unknown;
 
 export function getHeaders(
-  headersOptions?: HeadersType | { type: HeadersType; opts: HeadersOptions },
+  headersOptions?: HeadersType | { type: HeadersType, opts: HeadersOptions },
 ): Record<string, string | undefined> {
   const isObject = typeof headersOptions === 'object';
 

@@ -1,6 +1,6 @@
 import parseDuration from 'parse-duration';
 
-export async function getRecentForUser(user: { id: bigint; username: string }) {
+export async function getRecentForUser(user: { id: bigint, username: string }) {
   const prisma = getPrisma();
 
   // TODO: more advanced recent algorithm :P

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { SidebarState } from '~/composables/sidebars';
 
-interface Props { state: SidebarState; onUpdateState: (newState: SidebarState) => any };
+interface Props { state: SidebarState, onUpdateState: (newState: SidebarState) => any };
 defineProps<Props>();
 
 const user = useUser();

@@ -61,7 +61,7 @@ async function main() {
   ].join('\n'));
 
   const totalNumberOfNotes = 1000;
-  const userFolders: Record<string, Array<{ name: string; path: string }>> = {};
+  const userFolders: Record<string, Array<{ name: string, path: string }>> = {};
   const notesPromises: Array<Promise<any>> = [];
 
   for (let i = 0; i < totalNumberOfNotes; i++) {

@@ -18,8 +18,8 @@ function handleKeyboardAppear() {
     return;
 
   const formatterPosition = window.innerHeight
-      - viewport.offsetTop
-      - viewport.height;
+    - viewport.offsetTop
+    - viewport.height;
 
   prevAnimation = fixedBox.value.animate([
     { transform: `translate3d(0,${-1 * prevFormatterPosition}px,0)` },

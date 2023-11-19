@@ -59,7 +59,7 @@ export default defineNuxtModule({
   },
 });
 
-export async function generateIconFileDefinition({ name, path }: { name: string; path: string }) {
+export async function generateIconFileDefinition({ name, path }: { name: string, path: string }) {
   const iconSource = optimizeSvg(await readFile(path, 'utf-8'), {
     path,
     multipass: true,
