@@ -289,6 +289,9 @@ export default defineNuxtConfig({
   },
 
   nitro: {
+    // https://github.com/danielroe/roe.dev/blob/main/nuxt.config.ts#L115
+    replace: { 'process.browser': false },
+
     imports: {
       dirs: [
         resolve('./prisma'),
