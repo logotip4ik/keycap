@@ -1,6 +1,101 @@
 # Changelog
 
 
+## v3.5.0
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.4.0...v3.5.0)
+
+### 🚀 Enhancements
+
+- Basic `toEnglish` transliteration ([1769fa1](https://github.com/logotip4ik/keycap/commit/1769fa1))
+- Try searching with transliterated query if no results found ([ea5b5c5](https://github.com/logotip4ik/keycap/commit/ea5b5c5))
+- `useFocusTrap` composable ([56d4ce9](https://github.com/logotip4ik/keycap/commit/56d4ce9))
+- Add `isEnabled` option ([e147247](https://github.com/logotip4ik/keycap/commit/e147247))
+- Sucrase server transpiler ([#12](https://github.com/logotip4ik/keycap/pull/12))
+- Add build time config variables ([dc399a5](https://github.com/logotip4ik/keycap/commit/dc399a5))
+
+### 🩹 Fixes
+
+- Try to open contents sidebar on menu new action ([5b68cbd](https://github.com/logotip4ik/keycap/commit/5b68cbd))
+- Do not proceed after if check ([ef74321](https://github.com/logotip4ik/keycap/commit/ef74321))
+- Allow tabbing back with `shift` key ([0b12d12](https://github.com/logotip4ik/keycap/commit/0b12d12))
+- Do not query hidden elements ([f148e8a](https://github.com/logotip4ik/keycap/commit/f148e8a))
+- Do not watch for subtree mutations ([f99dfd6](https://github.com/logotip4ik/keycap/commit/f99dfd6))
+- Correct path for headers config import ([1be24b0](https://github.com/logotip4ik/keycap/commit/1be24b0))
+
+### 💅 Refactors
+
+- Remove not needed rollup hint ([4627f01](https://github.com/logotip4ik/keycap/commit/4627f01))
+- Rename SerializedNote type to NoteWithContents and use Serialize type instead of manually converting bigint to string ([ca014dc](https://github.com/logotip4ik/keycap/commit/ca014dc))
+- Declare new type instead of extending interface from type ([5f4c833](https://github.com/logotip4ik/keycap/commit/5f4c833))
+- Shorten path to empty note ([cca645c](https://github.com/logotip4ik/keycap/commit/cca645c))
+- Use `v-show` rather then `v-if` for toolbox util button ([827d826](https://github.com/logotip4ik/keycap/commit/827d826))
+- Try preloading `focus-trap-js`  when idle ([08be86c](https://github.com/logotip4ik/keycap/commit/08be86c))
+- Rename function paramater ([91a8eb4](https://github.com/logotip4ik/keycap/commit/91a8eb4))
+- Remove duplicated prettify type helper declaration ([9cb6004](https://github.com/logotip4ik/keycap/commit/9cb6004))
+- Hoist path resolution out of asyncData handler ([cda3126](https://github.com/logotip4ik/keycap/commit/cda3126))
+- Rename function name to something more meaningfull ([11965d1](https://github.com/logotip4ik/keycap/commit/11965d1))
+- Hoist DateTimeFormat out of function scope ([354f37f](https://github.com/logotip4ik/keycap/commit/354f37f))
+- Reuse already declared item path ([5515e4c](https://github.com/logotip4ik/keycap/commit/5515e4c))
+- Add v-once to item details skeleton preloader ([a8fcb8f](https://github.com/logotip4ik/keycap/commit/a8fcb8f))
+- Move returned arrow function to outer scope ([305c25d](https://github.com/logotip4ik/keycap/commit/305c25d))
+- Rename `useToast` to `useToaster` ([20f5989](https://github.com/logotip4ik/keycap/commit/20f5989))
+- Remove not used composable ([53d55c0](https://github.com/logotip4ik/keycap/commit/53d55c0))
+- Move some index markup to server components ([0f68bd0](https://github.com/logotip4ik/keycap/commit/0f68bd0))
+- Use custom `useFocusTrap` composable instead of `focus-trap-js` package ([2df652e](https://github.com/logotip4ik/keycap/commit/2df652e))
+- Exclude some code from server bundle ([4448c8f](https://github.com/logotip4ik/keycap/commit/4448c8f))
+- Remove not needed `filter(Boolean)` ([ed65691](https://github.com/logotip4ik/keycap/commit/ed65691))
+- Use `false` value to tree shake vitest ([408baa8](https://github.com/logotip4ik/keycap/commit/408baa8))
+- Also use `false` value as `import.meta.vitest` replacement ([737f983](https://github.com/logotip4ik/keycap/commit/737f983))
+- Reduce `querySelectorAll` calls ([5a9c1e3](https://github.com/logotip4ik/keycap/commit/5a9c1e3))
+- Invert if check and handle refocus only for first and last elements ([cd93343](https://github.com/logotip4ik/keycap/commit/cd93343))
+- Remove initial focus handling from sidebars ([b3baf8f](https://github.com/logotip4ik/keycap/commit/b3baf8f))
+- Remove not needed focus handling ([7945cb1](https://github.com/logotip4ik/keycap/commit/7945cb1))
+- Set scheduled to true by default and also watch for isEnabled ([ff34a2b](https://github.com/logotip4ik/keycap/commit/ff34a2b))
+- Separate initial focus handling into another watcher ([44040b5](https://github.com/logotip4ik/keycap/commit/44040b5))
+- Remove not needed `isEnabled` option ([19e0ebb](https://github.com/logotip4ik/keycap/commit/19e0ebb))
+- Use reactivity to simulate `isEnabled` option prop ([f6a3581](https://github.com/logotip4ik/keycap/commit/f6a3581))
+- Reset `scheduled` and `cachedEls` in stop function ([7a8e5b4](https://github.com/logotip4ik/keycap/commit/7a8e5b4))
+- Remove `lastFocusedEl` handling and add note ([edff3f5](https://github.com/logotip4ik/keycap/commit/edff3f5))
+- Also clear `off` and `observer` ([8e60d6d](https://github.com/logotip4ik/keycap/commit/8e60d6d))
+- Handle last focused el only when current el is not defined ([c53b530](https://github.com/logotip4ik/keycap/commit/c53b530))
+- Rename function name to something more meaningfull ([ad0733f](https://github.com/logotip4ik/keycap/commit/ad0733f))
+- Split `toasts` and create toast class instead of plain object ([7b53ec7](https://github.com/logotip4ik/keycap/commit/7b53ec7))
+- Rename animation functions ([4d250bc](https://github.com/logotip4ik/keycap/commit/4d250bc))
+- Remove not valid entry name ([16a6a43](https://github.com/logotip4ik/keycap/commit/16a6a43))
+- Store prevContainerWidth in number rather than string ([7f50467](https://github.com/logotip4ik/keycap/commit/7f50467))
+- Animate only when width diff is large enough ([3ab0206](https://github.com/logotip4ik/keycap/commit/3ab0206))
+- Create config folder and move `headers.config` file into it ([1d3a2ce](https://github.com/logotip4ik/keycap/commit/1d3a2ce))
+
+### 🏡 Chore
+
+- **release:** V3.4.0 ([1539116](https://github.com/logotip4ik/keycap/commit/1539116))
+- Add note ([b384086](https://github.com/logotip4ik/keycap/commit/b384086))
+- Remove note ([469999c](https://github.com/logotip4ik/keycap/commit/469999c))
+- Add note ([cabb6be](https://github.com/logotip4ik/keycap/commit/cabb6be))
+- Add todo ([de3dac9](https://github.com/logotip4ik/keycap/commit/de3dac9))
+- Add more packages to optimizer ([d674c68](https://github.com/logotip4ik/keycap/commit/d674c68))
+- Remove note ([743c9cb](https://github.com/logotip4ik/keycap/commit/743c9cb))
+- Remove not needed `async` ([1e98da3](https://github.com/logotip4ik/keycap/commit/1e98da3))
+- Remove not used package ([917ea45](https://github.com/logotip4ik/keycap/commit/917ea45))
+- Exclude migrations from vscode search ([9c1a2db](https://github.com/logotip4ik/keycap/commit/9c1a2db))
+- Remove comment ([8e25f77](https://github.com/logotip4ik/keycap/commit/8e25f77))
+- Add note ([450a0a8](https://github.com/logotip4ik/keycap/commit/450a0a8))
+- Add toasts folder to auto import ([cfd42d4](https://github.com/logotip4ik/keycap/commit/cfd42d4))
+- Update deps ([ba83177](https://github.com/logotip4ik/keycap/commit/ba83177))
+
+### 🎨 Styles
+
+- Hoist itemDetailsEl ref declaration higher then asyncData ([61193c4](https://github.com/logotip4ik/keycap/commit/61193c4))
+- Merge imports ([59a7fb8](https://github.com/logotip4ik/keycap/commit/59a7fb8))
+- Do not use `.?` for function call ([86988c9](https://github.com/logotip4ik/keycap/commit/86988c9))
+- Use import aliases ([fe3974e](https://github.com/logotip4ik/keycap/commit/fe3974e))
+- Remove not needed question mark ([a381171](https://github.com/logotip4ik/keycap/commit/a381171))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.4.0
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.3.0...v3.4.0)
