@@ -19,7 +19,7 @@ type NoteDetails = Prisma.NoteGetPayload<{ select: { shares: { select: { link: t
 type ItemDetails = Prettify<Metadata & Partial<NoteDetails>>;
 
 // NOTE(perf improvement): client bundle size reduced by using only useAsyncData or useFetch
-const { data: details, refresh } = await useAsyncData(async () => {
+const { data: details, refresh } = useAsyncData(async () => {
   const res = await $fetch<{ data: ItemDetails }>(
     isFolder ? `/api/folder/${path}` : `/api/note/${path}`,
     { query: { details: true } },
