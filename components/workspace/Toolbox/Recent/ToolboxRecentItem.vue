@@ -3,7 +3,7 @@ const props = defineProps<{
   item: NoteMinimal
 }>();
 
-const isSmallScreen = inject(IsSmallScreenKey);
+const isSmallScreen = getIsSmallScreen();
 const toolboxSidebarState = useToolboxSidebarState();
 
 const itemHref = computed(() => generateItemPath(props.item));

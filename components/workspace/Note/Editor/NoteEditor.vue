@@ -37,7 +37,7 @@ const props = defineProps<{
 
 const mitt = useMitt();
 
-const isSmallScreen = inject(IsSmallScreenKey)!;
+const isSmallScreen = getIsSmallScreen();
 
 // TODO: export this whole mess into separate file
 const editor = useEditor({

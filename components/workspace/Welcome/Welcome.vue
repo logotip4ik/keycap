@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const isSmallScreen = inject(IsSmallScreenKey);
+const isSmallScreen = getIsSmallScreen();
 </script>
 
 <template>
