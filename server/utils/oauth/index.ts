@@ -1,22 +1,18 @@
 import { randomUUID } from 'node:crypto';
-import { withQuery } from 'ufo';
 
 import type { Prisma } from '@prisma/client';
 import type { H3Event } from 'h3';
 
 import { OAuthProvider } from '~/server/utils/index';
+import { googleConfig } from '~/server/utils/oauth/google';
+import { githubConfig } from '~/server/utils/oauth/github';
 
+import type { OAuthProviderConfig } from '~/types/oauth';
 import type { NormalizedSocialUser, OAuthProvider as OAuthProviderType, SafeUser } from '~/types/server';
 
-const providersCongfig: Record<OAuthProviderType, { url: string, scope: string }> = {
-  [OAuthProvider.GitHub]: {
-    scope: 'user:email',
-    url: 'https://github.com/login/oauth/authorize',
-  },
-  [OAuthProvider.Google]: {
-    scope: 'email',
-    url: 'https://accounts.google.com/o/oauth2/v2/auth',
-  },
+const providersCongfig: Record<OAuthProviderType, OAuthProviderConfig> = {
+  [OAuthProvider.GitHub]: githubConfig,
+  [OAuthProvider.Google]: googleConfig,
 };
 
 export function sendOAuthRedirect(event: H3Event, provider: OAuthProviderType) {
@@ -25,44 +21,30 @@ export function sendOAuthRedirect(event: H3Event, provider: OAuthProviderType) {
   if (!providerConfig)
     throw new Error(`incorrect provider option: ${provider}`);
 
-  const { google, github, public: config } = useRuntimeConfig();
+  const { public: config } = useRuntimeConfig();
 
   const state = randomUUID();
   const protocol = import.meta.prod ? 'https://' : 'http://';
+  const redirectUrl = new URL(`${providerConfig.authorizeEndpoint}`);
 
   setCookie(event, 'state', state, {
     path: '/',
     httpOnly: true,
   });
 
-  const oauthOptions: Record<string, string> = {
-    state,
+  redirectUrl.searchParams.set('state', state);
+  redirectUrl.searchParams.set('client_id', providerConfig.oauth.clientId);
+  redirectUrl.searchParams.set('response_type', 'code');
+  redirectUrl.searchParams.set('response_mode', 'query');
+  redirectUrl.searchParams.set('scope', providerConfig.scope);
+  redirectUrl.searchParams.set('redirect_uri', `${protocol}${config.siteOrigin}/api/oauth/${provider.toLowerCase()}`);
 
-    client_id: '',
-    response_type: 'code',
-    response_mode: 'query',
-
-    scope: providerConfig.scope,
-    redirect_uri: `${protocol}${config.siteOrigin}/api/oauth/${provider.toLowerCase()}`,
-  };
-
-  switch (provider) {
-    case OAuthProvider.GitHub:
-      // https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps#1-request-a-users-github-identity
-      oauthOptions.client_id = github.clientId;
-      break;
-    case OAuthProvider.Google:
-      oauthOptions.client_id = google.clientId;
-      // https://developers.google.com/identity/protocols/oauth2/web-server#creatingclient
-      oauthOptions.access_type = 'online';
-      break;
-    default:
+  if (providerConfig.options) {
+    for (const key of Object.keys(providerConfig.options))
+      redirectUrl.searchParams.set(key, providerConfig.options[key]);
   }
 
-  return sendRedirect(
-    event,
-    withQuery(providerConfig.url, oauthOptions),
-  );
+  return sendRedirect(event, redirectUrl.toString());
 }
 
 export async function updateOrCreateUserFromSocialAuth(normalizedUser: NormalizedSocialUser) {
