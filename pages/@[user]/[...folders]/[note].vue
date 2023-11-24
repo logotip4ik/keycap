@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import parseDuration from 'parse-duration';
 
-import type { RefToastInstance } from '~/composables/toasts';
-
 definePageMeta({
   scrollToTop: true,
 });

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { ToastInstance } from '~/composables/toasts';
-
 interface Props { toast: ToastInstance, animationDuration: number }
 const props = defineProps<Props>();
 
