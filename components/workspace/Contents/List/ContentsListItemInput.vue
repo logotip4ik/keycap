@@ -1,11 +1,15 @@
 <script setup lang="ts">
-interface Props { item: FolderOrNote, parent: FolderWithContents }
-const props = defineProps<Props>();
+const props = defineProps<{
+  item: FolderOrNote
+  parent: FolderWithContents
+}>();
 
-const isFolder = 'root' in props.item;
+const state = useContentsSidebarState();
 
 const inputEl = shallowRef<HTMLInputElement | null>(null);
 const name = ref(props.item.name || '');
+
+const isFolder = 'root' in props.item;
 const placeholder = props.item.creating
   ? 'note or folder/'
   : isFolder
@@ -13,17 +17,27 @@ const placeholder = props.item.creating
     : 'new note name';
 
 function handleSubmit() {
+  let promise: Promise<any>;
+
   if (props.item.creating) {
     const creationName = name.value.replace(/\//g, '');
     const createAction = creationName.length !== name.value.length ? createFolder : createNote;
 
-    createAction(creationName, props.item, props.parent);
+    promise = createAction(creationName, props.item, props.parent);
   }
   else if (props.item.editing) {
     const renameAction = isFolder ? renameFolder : renameNote;
 
-    renameAction(name.value, props.item, props.parent);
+    promise = renameAction(name.value, props.item, props.parent);
   }
+  else {
+    return;
+  }
+
+  promise.then(() => {
+    if (state.value === 'visible')
+      state.value = 'hidden';
+  });
 }
 
 function handleReset() {
