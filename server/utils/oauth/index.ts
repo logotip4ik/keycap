@@ -59,7 +59,7 @@ export function sendOAuthRedirect(event: H3Event, provider: OAuthProviderType) {
   });
 
   let url: string;
-  const oauthOptions: any = {
+  const oauthOptions: Record<string, string> = {
     state,
     client_id: '',
     scope: '',
