@@ -55,7 +55,6 @@ async function login() {
       <FormHiddenValue
         id="browserAction"
         name="browserAction"
-        type="checkbox"
         :value="true"
       />
 

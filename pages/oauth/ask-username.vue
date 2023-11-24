@@ -68,7 +68,6 @@ const notEmptyQuery = Object.fromEntries(
           :key="key.toString()"
           :name="key.toString()"
           :value="value!.toString()"
-          type="text"
         />
 
         <FormTitle>

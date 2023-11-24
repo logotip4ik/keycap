@@ -59,7 +59,6 @@ async function register() {
       <FormHiddenValue
         id="browserAction"
         name="browserAction"
-        type="checkbox"
         :value="true"
       />
 
