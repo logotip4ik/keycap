@@ -54,8 +54,6 @@ onBeforeUnmount(() => clearTimeout(timeout));
   font-size: 1.125rem;
   color: var(--surface-color);
 
-  max-width: 97.5vw;
-
   padding: 0.85rem 1.5rem 0.85rem 1.2rem;
 
   border-radius: 0.25rem;
