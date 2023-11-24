@@ -54,9 +54,9 @@ onBeforeUnmount(() => clearTimeout(timeout));
   font-size: 1.125rem;
   color: var(--surface-color);
 
-  max-width: 33ch;
+  max-width: 97.5vw;
 
-  padding: 0.85rem 1.5rem;
+  padding: 0.85rem 1.5rem 0.85rem 1.2rem;
 
   border-radius: 0.25rem;
   border: 1px solid hsla(var(--text-color-hsl), 1.0);
@@ -89,6 +89,8 @@ onBeforeUnmount(() => clearTimeout(timeout));
   &__text {
     margin: 0;
     padding-top: 0.1rem;
+
+    max-width: 33ch;
   }
 
   &__icon {
@@ -99,7 +101,8 @@ onBeforeUnmount(() => clearTimeout(timeout));
 
     opacity: 0.65;
 
-    margin-right: 0.6rem;
+    margin-top: 0.125rem;
+    margin-right: 0.75rem;
 
     &--spinner {
       position: relative;
