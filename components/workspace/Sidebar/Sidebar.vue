@@ -5,13 +5,12 @@ import type { SidebarState } from '~/composables/sidebars';
 
 type FocusableElement = HTMLAnchorElement | HTMLButtonElement;
 
-interface Props {
+const props = withDefaults(defineProps<{
   dir?: 'left' | 'right'
   name: string
   state: Ref<SidebarState>
   onUpdateState: (newState: SidebarState) => any
-}
-const props = withDefaults(defineProps<Props>(), { dir: 'left' });
+}>(), { dir: 'left' });
 
 const sidebar = shallowRef<HTMLDivElement | null>(null);
 const focusableElements = shallowRef<Array<FocusableElement>>([]);

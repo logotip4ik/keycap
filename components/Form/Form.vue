@@ -1,10 +1,8 @@
 <script setup lang="ts">
-interface Props {
+defineProps<{
   action: string
   method?: 'GET' | 'POST'
-}
-
-defineProps<Props>();
+}>();
 </script>
 
 <template>

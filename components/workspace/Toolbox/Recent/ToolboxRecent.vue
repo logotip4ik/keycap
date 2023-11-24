@@ -3,8 +3,10 @@ import parseDuration from 'parse-duration';
 
 import type { SidebarState } from '~/composables/sidebars';
 
-interface Props { state: SidebarState, onUpdateState: (newState: SidebarState) => any }
-const props = defineProps<Props>();
+const props = defineProps<{
+  state: SidebarState
+  onUpdateState: (newState: SidebarState) => any
+}>();
 
 const POLLING_TIME = parseDuration('5 minutes');
 let pollingTimer: NodeJS.Timeout | undefined;

@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import sanitizeHTML from 'sanitize-html';
 
-interface Props { content: string }
-const props = defineProps<Props>();
+const props = defineProps<{
+  content: string
+}>();
 
 const sanitized = sanitizeHTML(props.content, {
   allowedTags: [

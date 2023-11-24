@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import type { Editor } from '@tiptap/core';
 
-interface Props { editor: Editor }
-defineProps<Props>();
+defineProps<{
+  editor: Editor
+}>();
 
 const isFallbackMode = useFallbackMode();
 const fixedBox = shallowRef<HTMLElement | null>(null);

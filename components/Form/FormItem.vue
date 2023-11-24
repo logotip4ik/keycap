@@ -1,9 +1,7 @@
 <script setup lang="ts">
-interface Props {
+defineProps<{
   actions?: boolean
-}
-
-withDefaults(defineProps<Props>(), { actions: false });
+}>();
 </script>
 
 <template>

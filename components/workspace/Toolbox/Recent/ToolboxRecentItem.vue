@@ -1,6 +1,7 @@
 <script setup lang="ts">
-interface Props { item: NoteMinimal }
-const props = defineProps<Props>();
+const props = defineProps<{
+  item: NoteMinimal
+}>();
 
 const isSmallScreen = inject(IsSmallScreenKey);
 const toolboxSidebarState = useToolboxSidebarState();

@@ -3,11 +3,10 @@ import parseDuration from 'parse-duration';
 
 import type { SidebarState } from '~/composables/sidebars';
 
-interface Props {
+const props = defineProps<{
   state: SidebarState
   onUpdateState: (newState: SidebarState) => any
-}
-const props = defineProps<Props>();
+}>();
 
 const route = useRoute();
 const isFallbackMode = useFallbackMode();

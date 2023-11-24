@@ -29,12 +29,11 @@ import {
   LazyWorkspaceNoteFormatterFixedBox as LazyFixedBox,
 } from '#components';
 
-interface Props {
+const props = defineProps<{
   content: string
   editable: boolean
   onUpdate: (content: string) => void
-}
-const props = defineProps<Props>();
+}>();
 
 const mitt = useMitt();
 

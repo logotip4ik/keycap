@@ -1,5 +1,5 @@
 <script setup lang="ts">
-interface Props {
+withDefaults(defineProps<{
   id: string
   name: string
   type: 'email' | 'text' | 'password'
@@ -10,9 +10,7 @@ interface Props {
   required?: boolean
   value?: string
   onUpdateValue?: (text: string) => any
-}
-
-withDefaults(defineProps<Props>(), {
+}>(), {
   required: true,
 });
 </script>

@@ -1,10 +1,8 @@
 <script setup lang="ts">
-interface Props {
+defineProps<{
   type?: 'submit' | 'button' | 'reset'
   loading?: boolean
-}
-
-withDefaults(defineProps<Props>(), { loading: false });
+}>();
 </script>
 
 <template>

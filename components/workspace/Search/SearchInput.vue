@@ -1,7 +1,8 @@
 <script setup lang="ts">
-interface Props { value: string, onUpdateValue: (v: string) => void }
-
-const props = defineProps<Props>();
+const props = defineProps<{
+  value: string
+  onUpdateValue: (v: string) => void
+}>();
 
 function updateModelValue(event: Event) {
   props.onUpdateValue((event.target as HTMLInputElement).value);

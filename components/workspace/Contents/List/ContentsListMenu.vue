@@ -10,13 +10,12 @@ interface MenuAction {
   handler: () => any | Promise<any>
 }
 
-interface Props {
+const props = defineProps<{
   target: HTMLElement
   item: FolderOrNote
   parent: FolderWithContents
   onClose: () => void
-}
-const props = defineProps<Props>();
+}>();
 
 const createToast = useToaster();
 const detailsItem = useCurrentItemForDetails();

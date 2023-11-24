@@ -3,11 +3,9 @@ import type { OAuthProvider } from '~/types/server';
 
 import { LazyIconGithub, LazyIconGoogle } from '#components';
 
-interface Props {
+const props = defineProps<{
   provider: OAuthProvider
-}
-
-const props = defineProps<Props>();
+}>();
 
 const providerIcons: Record<OAuthProvider, ReturnType<typeof defineAsyncComponent>> = {
   GitHub: LazyIconGithub,

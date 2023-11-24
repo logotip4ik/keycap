@@ -7,8 +7,9 @@ import { BubbleMenu } from '@tiptap/vue-3';
 import type { Editor } from '@tiptap/core';
 import type { Props as TippyProps } from 'tippy.js';
 
-interface Props { editor: Editor }
-defineProps<Props>();
+defineProps<{
+  editor: Editor
+}>();
 
 const tippyOptions: Partial<TippyProps> = {
   zIndex: 2,

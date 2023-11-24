@@ -1,6 +1,7 @@
 <script setup lang="ts">
-interface Props { onClose: () => void }
-const props = defineProps<Props>();
+const props = defineProps<{
+  onClose: () => void
+}>();
 
 const fuzzyWorker = useFuzzyWorker();
 

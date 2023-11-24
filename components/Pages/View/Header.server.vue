@@ -1,9 +1,8 @@
 <script setup lang="ts">
-interface Props {
+defineProps<{
   noteName: string
   updatedAt: string | Date
-}
-defineProps<Props>();
+}>();
 
 function formatDate(date: string | Date) {
   date = new Date(date);

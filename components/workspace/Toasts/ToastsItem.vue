@@ -1,6 +1,8 @@
 <script setup lang="ts">
-interface Props { toast: ToastInstance, animationDuration: number }
-const props = defineProps<Props>();
+const props = defineProps<{
+  toast: ToastInstance
+  animationDuration: number
+}>();
 
 let timeout: NodeJS.Timeout;
 

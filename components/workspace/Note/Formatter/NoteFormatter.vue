@@ -2,9 +2,10 @@
 import type { ChainedCommands, Editor } from '@tiptap/core';
 import type { Level } from '@tiptap/extension-heading';
 
-interface Props { editor: Editor, onHide: () => void }
-
-const props = defineProps<Props>();
+const props = defineProps<{
+  editor: Editor
+  onHide: () => void
+}>();
 
 const LinkInputPlaceholder = {
   INITIALLY_EMPTY: 'hit enter to show menu',
