@@ -4,9 +4,20 @@ import { withQuery } from 'ufo';
 import type { Prisma } from '@prisma/client';
 import type { H3Event } from 'h3';
 
-import { OAuthProvider } from '~/server/utils';
+import { OAuthProvider } from '~/server/utils/index';
 
 import type { NormalizedSocialUser, OAuthProvider as OAuthProviderType, SafeUser } from '~/types/server';
+
+const providersCongfig: Record<OAuthProviderType, { url: string, scope: string }> = {
+  [OAuthProvider.GitHub]: {
+    scope: 'user:email',
+    url: 'https://github.com/login/oauth/authorize',
+  },
+  [OAuthProvider.Google]: {
+    scope: 'email',
+    url: 'https://accounts.google.com/o/oauth2/v2/auth',
+  },
+};
 
 export async function assertNoOAuthErrors(event: H3Event) {
   const proviersMap = {
@@ -48,6 +59,11 @@ export async function assertNoOAuthErrors(event: H3Event) {
 }
 
 export function sendOAuthRedirect(event: H3Event, provider: OAuthProviderType) {
+  const providerConfig = providersCongfig[provider];
+
+  if (!providerConfig)
+    throw new Error(`incorrect provider option: ${provider}`);
+
   const { google, github, public: config } = useRuntimeConfig();
 
   const state = randomUUID();
@@ -58,37 +74,34 @@ export function sendOAuthRedirect(event: H3Event, provider: OAuthProviderType) {
     httpOnly: true,
   });
 
-  let url: string;
   const oauthOptions: Record<string, string> = {
     state,
+
     client_id: '',
-    scope: '',
+    response_type: 'code',
+    response_mode: 'query',
+
+    scope: providerConfig.scope,
     redirect_uri: `${protocol}${config.siteOrigin}/api/oauth/${provider.toLowerCase()}`,
   };
 
-  if (provider === OAuthProvider.GitHub) {
-    url = 'https://github.com/login/oauth/authorize';
-
-    // https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps#1-request-a-users-github-identity
-    oauthOptions.client_id = github.clientId;
-    oauthOptions.scope = 'user:email';
-  }
-  else if (provider === OAuthProvider.Google) {
-    url = 'https://accounts.google.com/o/oauth2/v2/auth';
-
-    // https://developers.google.com/identity/protocols/oauth2/web-server#creatingclient
-    oauthOptions.client_id = google.clientId;
-    oauthOptions.scope = 'email';
-
-    oauthOptions.response_type = 'code';
-    oauthOptions.access_type = 'online';
-    oauthOptions.prompt = 'select_account';
-  }
-  else {
-    throw new Error(`incorrect provider option: ${provider}`);
+  switch (provider) {
+    case OAuthProvider.GitHub:
+      // https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps#1-request-a-users-github-identity
+      oauthOptions.client_id = github.clientId;
+      break;
+    case OAuthProvider.Google:
+      oauthOptions.client_id = google.clientId;
+      // https://developers.google.com/identity/protocols/oauth2/web-server#creatingclient
+      oauthOptions.access_type = 'online';
+      break;
+    default:
   }
 
-  return sendRedirect(event, withQuery(url, oauthOptions));
+  return sendRedirect(
+    event,
+    withQuery(providerConfig.url, oauthOptions),
+  );
 }
 
 export async function updateOrCreateUserFromSocialAuth(normalizedUser: NormalizedSocialUser) {
