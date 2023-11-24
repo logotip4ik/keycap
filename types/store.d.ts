@@ -1,5 +1,5 @@
 import type { Serialize } from 'nitropack';
-import type { Folder, Note } from '@prisma/client';
+import type { Folder, Note, Prisma } from '@prisma/client';
 import type { Remote } from 'comlink';
 
 import type { SearchActionValues } from '~/types/common';
@@ -21,6 +21,11 @@ declare global {
     creating?: boolean
   };
 
+  export type ItemMetadata = Prettify<
+    Pick<Note, 'updatedAt' | 'createdAt'> // | Pick<Folder, 'updatedAt' | 'createdAt'> - folder metadata should be the same as notes
+  >;
+
+  export type NoteShare = Prisma.NoteGetPayload<{ select: { shares: { select: { link: true, updatedAt: true, createdAt: true } } } }>;
   export type NoteMinimal = Prettify<Serialize<Pick<Note, 'id' | 'name' | 'path'> & ItemMetatags>>;
   export type NoteWithContent = Prettify<NoteMinimal & Pick<Note, 'content'>>;
 
@@ -31,6 +36,8 @@ declare global {
   }>;
 
   export type FolderOrNote = Prettify<FolderMinimal & NoteMinimal>;
+
+  export type SharedNote = Pick<Note, 'name' | 'content' | 'updatedAt' | 'createdAt'>;
 
   export interface CommandItem {
     name: string
@@ -49,4 +56,4 @@ declare global {
   }
 }
 
-export {};
+export { };

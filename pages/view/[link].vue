@@ -1,11 +1,7 @@
 <script setup lang="ts">
 import { getRequestURL } from 'h3';
 
-import type { Note } from '@prisma/client';
-
 const route = useRoute();
-
-type SharedNote = Pick<Note, 'name' | 'content' | 'updatedAt' | 'createdAt'>;
 
 const { data: note, error } = await useAsyncData('share', async () => {
   // TODO: why res in unknown ?

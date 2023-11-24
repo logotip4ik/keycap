@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { Folder, Note, Prisma } from '@prisma/client';
-
 interface Props { item: NoteMinimal }
 const props = defineProps<Props>();
 
@@ -14,9 +12,7 @@ const path = props.item.path.split('/').slice(2).join('/');
 
 const isFolder = 'root' in props.item;
 
-type Metadata = Pick<Note, 'updatedAt' | 'createdAt'> | Pick<Folder, 'updatedAt' | 'createdAt'>;
-type NoteDetails = Prisma.NoteGetPayload<{ select: { shares: { select: { link: true, updatedAt: true, createdAt: true } } } }>;
-type ItemDetails = Prettify<Metadata & Partial<NoteDetails>>;
+type ItemDetails = Prettify<ItemMetadata & Partial<NoteShare>>;
 
 // NOTE(perf improvement): client bundle size reduced by using only useAsyncData or useFetch
 const { data: details, refresh } = useAsyncData(async () => {
