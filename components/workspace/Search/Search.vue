@@ -72,7 +72,7 @@ async function openItem() {
     if (!item)
       return focusActionItem(100);
 
-    item.offsetParent!.scroll({
+    item.offsetParent?.scroll({
       top: item.offsetTop - 8,
       behavior: 'smooth', // the animation looks horrible in chrome
     });
