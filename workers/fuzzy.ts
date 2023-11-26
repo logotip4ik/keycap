@@ -1,6 +1,3 @@
-/// <reference types="../.nuxt/nuxt.d.ts" />
-/// <reference types="../types/store.d.ts" />
-
 import getScore from '@superhuman/command-score';
 import { expose } from 'comlink';
 

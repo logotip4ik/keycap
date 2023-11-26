@@ -1,6 +1,3 @@
-/// <reference lib="WebWorker" />
-/// <reference types="vite/client" />
-
 import { cacheNames, clientsClaim } from 'workbox-core';
 import { registerRoute } from 'workbox-routing';
 import { Strategy } from 'workbox-strategies';
@@ -10,7 +7,6 @@ import type { ManifestEntry } from 'workbox-build';
 
 // Give TypeScript the correct global.
 declare let self: ServiceWorkerGlobalScope;
-declare type ExtendableEvent = any;
 
 const cacheName = cacheNames.runtime;
 
