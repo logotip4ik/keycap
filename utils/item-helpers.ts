@@ -137,7 +137,7 @@ export async function renameFolder(newName: string, self: FolderOrNote, parent: 
 
   const folder = foldersCache.get(self.path);
 
-  foldersCache.delete(self.path);
+  foldersCache.remove(self.path);
   offlineStorage.removeItem?.(self.path);
 
   updateSubfolderInFolder(self, newFolder, parent);
@@ -153,7 +153,7 @@ export async function renameFolder(newName: string, self: FolderOrNote, parent: 
     for (const item of itemsToRename) {
       const cache = 'root' in item ? foldersCache : notesCache;
 
-      cache.delete(item.path);
+      cache.remove(item.path);
       offlineStorage.removeItem?.(item.path);
     }
   }
@@ -185,7 +185,7 @@ export async function renameNote(newName: string, self: FolderOrNote, parent: Fo
 
   const note = notesCache.get(self.path);
 
-  notesCache.delete(self.path);
+  notesCache.remove(self.path);
   offlineStorage.removeItem?.(self.path);
 
   updateNoteInFolder(self, newNote, parent);
@@ -219,7 +219,7 @@ export async function deleteNote(self: FolderOrNote, parent: FolderWithContents)
 
   showItem(parent);
 
-  notesCache.delete(self.path);
+  notesCache.remove(self.path);
   offlineStorage.removeItem?.(self.path);
   deleteNoteFromFolder(self, parent);
   fuzzyWorker.value?.refreshItemsCache();
@@ -240,7 +240,7 @@ export async function deleteFolder(self: FolderOrNote, parent: FolderWithContent
   const offlineStorage = useOfflineStorage();
   const fuzzyWorker = useFuzzyWorker();
 
-  foldersCache.delete(self.path);
+  foldersCache.remove(self.path);
   offlineStorage.removeItem?.(self.path);
 
   const itemPathToCheck = `${self.path}/`;

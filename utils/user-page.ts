@@ -1,6 +1,5 @@
 import { del, get, set, values } from 'idb-keyval';
 
-import type LRUCache from '@tinkoff/lru-cache-nano';
 import type * as Comlink from 'comlink';
 
 export function preloadDashboardComponents() {
@@ -51,7 +50,7 @@ export function getOfflineStorage() {
 
     for (const item of items) {
       const isFolder = 'root' in item;
-      const cache = (isFolder ? foldersCache : notesCache) as LRUCache<string, FolderOrNote>;
+      const cache = isFolder ? foldersCache : notesCache;
 
       if (!cache.has(item.path))
         cache.set(item.path, item);

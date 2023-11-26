@@ -1,13 +1,12 @@
-// NOTE: keep an eye on this package
-import LRUCache from '@tinkoff/lru-cache-nano';
+import LRUCache from 'hashlru';
 
 export const useCurrentItemForDetails = () => useState<FolderOrNote | null>(() => null);
 export const useRootFolderContents = () => useState<FolderWithContents | null>(() => null);
 
-const notesCache = new LRUCache<string, NoteWithContent>({ max: 100 });
+const notesCache = LRUCache(100);
 export const useNotesCache = () => notesCache;
 
-const foldersCache = new LRUCache<string, FolderWithContents>({ max: 25 });
+const foldersCache = LRUCache(25);
 export const useFoldersCache = () => foldersCache;
 
 const fuzzyWorker = shallowRef<null | IFuzzyWorker>(null);
