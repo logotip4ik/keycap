@@ -1,5 +1,5 @@
-/// <reference path="../.nuxt/nuxt.d.ts" />
-/// <reference path="../types/store.d.ts" />
+/// <reference types="../.nuxt/nuxt.d.ts" />
+/// <reference types="../types/store.d.ts" />
 
 import getScore from '@superhuman/command-score';
 import { expose } from 'comlink';
