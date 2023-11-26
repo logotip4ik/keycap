@@ -3398,13 +3398,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tinkoff/lru-cache-nano@npm:^7.9.0":
-  version: 7.9.0
-  resolution: "@tinkoff/lru-cache-nano@npm:7.9.0"
-  checksum: 637906a5f51448f18eeb0b8fa365b16ee5650f3f1a06884ba1f1f5b23ea190f5fee0b2d0ac72cd4584dbcf5dd7d94c215941467af38f3011a63204d65a9fcde2
-  languageName: node
-  linkType: hard
-
 "@tiptap/core@npm:2.1.12":
   version: 2.1.12
   resolution: "@tiptap/core@npm:2.1.12"
@@ -7438,6 +7431,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"hashlru@npm:^2.3.0":
+  version: 2.3.0
+  resolution: "hashlru@npm:2.3.0"
+  checksum: 38b3559e6fb9d19fa731edc52d8d7e72cd378f708dcb01cecd4a6ba0c52f06d7d06d6277249f5c43d9915d8dda9be31adad768a379eef188db213c3f2b09278d
+  languageName: node
+  linkType: hard
+
 "hasown@npm:^2.0.0":
   version: 2.0.0
   resolution: "hasown@npm:2.0.0"
@@ -8261,7 +8261,6 @@ __metadata:
     "@rollup/plugin-sucrase": "npm:^5.0.2"
     "@size-limit/file": "npm:^11.0.0"
     "@superhuman/command-score": "npm:^0.5.0"
-    "@tinkoff/lru-cache-nano": "npm:^7.9.0"
     "@tiptap/core": "npm:^2.1.12"
     "@tiptap/extension-blockquote": "npm:^2.1.12"
     "@tiptap/extension-bold": "npm:^2.1.12"
@@ -8304,6 +8303,7 @@ __metadata:
     eslint-plugin-regexp: "npm:^2.1.1"
     estree-walker: "npm:^3.0.3"
     happy-dom: "npm:^12.10.3"
+    hashlru: "npm:^2.3.0"
     idb-keyval: "npm:^6.2.1"
     jose: "npm:^5.1.1"
     lambda-rate-limiter: "npm:^4.0.0"
