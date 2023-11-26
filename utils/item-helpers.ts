@@ -267,18 +267,18 @@ export async function preloadItem(self: FolderOrNote) {
   const pathName = encodeURIComponent(self.name);
   const path = pathPrefix + currentFolderPath + pathName;
 
-  const item = await $fetch<{ data: FolderWithContents | NoteMinimal }>(`/api/${path}`)
+  const res = await $fetch<{ data: FolderWithContents | NoteMinimal }>(`/api/${path}`)
     .catch(() => null);
 
-  if (!item) return;
+  if (!res) return;
 
   const offlineStorage = useOfflineStorage();
   const notesCache = useNotesCache();
   const foldersCache = useFoldersCache();
 
+  const item = res.data;
   const cache = isFolder ? foldersCache : notesCache;
 
-  // @ts-expect-error idk how to setup this type
   cache.set(item.path, item);
-  offlineStorage.setItem?.(item.data.path, item);
+  offlineStorage.setItem?.(item.path, item);
 }
