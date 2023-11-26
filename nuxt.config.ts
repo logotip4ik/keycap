@@ -240,7 +240,7 @@ export default defineNuxtConfig({
       include: [
         'rad-event-listener',
         '@prisma/client',
-        '@tinkoff/lru-cache-nano',
+        'hashlru',
         'mitt',
         'idb-keyval',
         'perfect-debounce',
