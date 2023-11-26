@@ -1,7 +1,6 @@
 /// <reference path="../.nuxt/nuxt.d.ts" />
 /// <reference path="../types/store.d.ts" />
 
-// @ts-expect-error no types :(
 import getScore from '@superhuman/command-score';
 import { expose } from 'comlink';
 

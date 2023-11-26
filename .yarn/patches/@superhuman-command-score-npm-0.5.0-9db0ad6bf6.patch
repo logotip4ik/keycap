@@ -1,0 +1,19 @@
+diff --git a/index.d.ts b/index.d.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..9a95c59e85d4b19e4fc65f659a27192e46b47fa6
+--- /dev/null
++++ b/index.d.ts
+@@ -0,0 +1 @@
++export default function commandScore(item: string, query: string): number;
+diff --git a/package.json b/package.json
+index a81a1600605063192c64fde34aea81e72e861299..367c5e3e55e469672aa34dfe411923d296daf176 100644
+--- a/package.json
++++ b/package.json
+@@ -3,6 +3,7 @@
+   "version": "0.5.0",
+   "description": "Yet another javascript fuzzy matching library",
+   "main": "index.js",
++  "types": "index.d.ts",
+   "directories": {
+     "test": "test"
+   },

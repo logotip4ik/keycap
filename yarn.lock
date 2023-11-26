@@ -3369,10 +3369,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@superhuman/command-score@npm:^0.5.0":
+"@superhuman/command-score@npm:0.5.0":
   version: 0.5.0
   resolution: "@superhuman/command-score@npm:0.5.0"
   checksum: 34e9e00bad2eadc1de9d1436f0d74d243436e24cfbba25d04c0a4644d8e727551240a852e0a540c8de45080182d96a9e356ea3ac1fb0281347f6403e8af45bff
+  languageName: node
+  linkType: hard
+
+"@superhuman/command-score@patch:@superhuman/command-score@npm%3A0.5.0#~/.yarn/patches/@superhuman-command-score-npm-0.5.0-9db0ad6bf6.patch":
+  version: 0.5.0
+  resolution: "@superhuman/command-score@patch:@superhuman/command-score@npm%3A0.5.0#~/.yarn/patches/@superhuman-command-score-npm-0.5.0-9db0ad6bf6.patch::version=0.5.0&hash=3fdf2a"
+  checksum: 48c91e19a55fc75126fc8d08b4b6294eb3384595ec62b98ef3d0a394a99f073f83f65f3b651a67989d098852ce3cbf4c31b348c18e98130c8804364f213a53e9
   languageName: node
   linkType: hard
 
@@ -8260,7 +8267,7 @@ __metadata:
     "@rollup/plugin-replace": "npm:^5.0.5"
     "@rollup/plugin-sucrase": "npm:^5.0.2"
     "@size-limit/file": "npm:^11.0.0"
-    "@superhuman/command-score": "npm:^0.5.0"
+    "@superhuman/command-score": "patch:@superhuman/command-score@npm%3A0.5.0#~/.yarn/patches/@superhuman-command-score-npm-0.5.0-9db0ad6bf6.patch"
     "@tiptap/core": "npm:^2.1.12"
     "@tiptap/extension-blockquote": "npm:^2.1.12"
     "@tiptap/extension-bold": "npm:^2.1.12"
