@@ -79,7 +79,7 @@
     "eslint-plugin-regexp": "^2.1.1",
     "estree-walker": "^3.0.3",
     "happy-dom": "^12.10.3",
-    "hashlru": "^2.3.0",
+    "hashlru": "patch:hashlru@npm%3A2.3.0#~/.yarn/patches/hashlru-npm-2.3.0-8267692d49.patch",
     "idb-keyval": "^6.2.1",
     "jose": "^5.1.1",
     "lambda-rate-limiter": "^4.0.0",

@@ -7438,10 +7438,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hashlru@npm:^2.3.0":
+"hashlru@npm:2.3.0":
   version: 2.3.0
   resolution: "hashlru@npm:2.3.0"
   checksum: 38b3559e6fb9d19fa731edc52d8d7e72cd378f708dcb01cecd4a6ba0c52f06d7d06d6277249f5c43d9915d8dda9be31adad768a379eef188db213c3f2b09278d
+  languageName: node
+  linkType: hard
+
+"hashlru@patch:hashlru@npm%3A2.3.0#~/.yarn/patches/hashlru-npm-2.3.0-8267692d49.patch":
+  version: 2.3.0
+  resolution: "hashlru@patch:hashlru@npm%3A2.3.0#~/.yarn/patches/hashlru-npm-2.3.0-8267692d49.patch::version=2.3.0&hash=342c3c"
+  checksum: 448214f5b6c38177f41308d76ba86ae82170ccdec1b5bbabbb90a6b889dfeb993f81e9f07cd2db153aa8e79f9169fab8a427c323f46812b7e49855863c09319a
   languageName: node
   linkType: hard
 
@@ -8310,7 +8317,7 @@ __metadata:
     eslint-plugin-regexp: "npm:^2.1.1"
     estree-walker: "npm:^3.0.3"
     happy-dom: "npm:^12.10.3"
-    hashlru: "npm:^2.3.0"
+    hashlru: "patch:hashlru@npm%3A2.3.0#~/.yarn/patches/hashlru-npm-2.3.0-8267692d49.patch"
     idb-keyval: "npm:^6.2.1"
     jose: "npm:^5.1.1"
     lambda-rate-limiter: "npm:^4.0.0"

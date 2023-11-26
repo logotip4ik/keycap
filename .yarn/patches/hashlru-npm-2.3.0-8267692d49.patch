@@ -1,0 +1,31 @@
+diff --git a/index.js b/index.js
+index f4c7413cd01c0b490f17f9c935de253dc336d67a..1777f778ae89bf01f1f95334faa5388c8cddc3c4 100644
+--- a/index.js
++++ b/index.js
+@@ -1,5 +1,4 @@
+-module.exports = function (max) {
+-
++export default function (max) {
+   if (!max) throw Error('hashlru must have a max value, of type number, greater than 0')
+ 
+   var size = 0, cache = Object.create(null), _cache = Object.create(null)
+diff --git a/package.json b/package.json
+index 377aecced0d2dc2f1a3818c42cb330d219526de0..b5601613de212b2137ff5e7b8f776255a81424c3 100644
+--- a/package.json
++++ b/package.json
+@@ -3,6 +3,7 @@
+   "description": "simpler faster substitute for LRU",
+   "version": "2.3.0",
+   "homepage": "https://github.com/dominictarr/hashlru",
++  "type": "module",
+   "repository": {
+     "type": "git",
+     "url": "git://github.com/dominictarr/hashlru.git"
+@@ -11,6 +12,7 @@
+   "devDependencies": {
+     "istanbul": "^0.4.5"
+   },
++  "main": "index.js",
+   "types": "index.d.ts",
+   "scripts": {
+     "test": "set -e; for t in test/*.js; do node $t; done",
