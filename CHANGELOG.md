@@ -1,6 +1,62 @@
 # Changelog
 
 
+## v3.6.0
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.5.0...v3.6.0)
+
+### 🚀 Enhancements
+
+- `sr-only` helper class ([64cd4dc](https://github.com/logotip4ik/keycap/commit/64cd4dc))
+- Provide wrapper composabels for injections ([55dc459](https://github.com/logotip4ik/keycap/commit/55dc459))
+
+### 🩹 Fixes
+
+- Prevent focus traping on small screens ([b0de5fc](https://github.com/logotip4ik/keycap/commit/b0de5fc))
+- Remove not needed and broken type import ([3bd3877](https://github.com/logotip4ik/keycap/commit/3bd3877))
+- Use `?` to check if offsetParent exists ([3b03c7c](https://github.com/logotip4ik/keycap/commit/3b03c7c))
+- Pwa could be undefined ([592d1d0](https://github.com/logotip4ik/keycap/commit/592d1d0))
+- Correctly store item ([ef199a7](https://github.com/logotip4ik/keycap/commit/ef199a7))
+
+### 💅 Refactors
+
+- Do not await async data in item details modal ([0cf7039](https://github.com/logotip4ik/keycap/commit/0cf7039))
+- Move prisma related type imports to type files ([5d8c7c3](https://github.com/logotip4ik/keycap/commit/5d8c7c3))
+- Mark tiptap packages to optimization ([e594e97](https://github.com/logotip4ik/keycap/commit/e594e97))
+- Make spacing even ([4e62653](https://github.com/logotip4ik/keycap/commit/4e62653))
+- Remove not needed width rule ([022b7ac](https://github.com/logotip4ik/keycap/commit/022b7ac))
+- Remove not needed class ([f230f9d](https://github.com/logotip4ik/keycap/commit/f230f9d))
+- Move list transitions classes to user page styles ([99810ce](https://github.com/logotip4ik/keycap/commit/99810ce))
+- Use existing `hidden` type for hidden input ([96eca31](https://github.com/logotip4ik/keycap/commit/96eca31))
+- Hide sidebar after creating or renaming action ([248525d](https://github.com/logotip4ik/keycap/commit/248525d))
+- Bump back editor font size ([116ea08](https://github.com/logotip4ik/keycap/commit/116ea08))
+- Inline props interface into defineProps function ([8ce459b](https://github.com/logotip4ik/keycap/commit/8ce459b))
+- Use composable to get small screen injection ([d93b8c8](https://github.com/logotip4ik/keycap/commit/d93b8c8))
+- Correct object type ([1ac606c](https://github.com/logotip4ik/keycap/commit/1ac606c))
+- Rework oauth options setting ([7c51497](https://github.com/logotip4ik/keycap/commit/7c51497))
+- Move `assertNoOAuthErrors` to separate oauth validation file ([4b49baf](https://github.com/logotip4ik/keycap/commit/4b49baf))
+- Add config to each provider and `URL` to set query ([fc75592](https://github.com/logotip4ik/keycap/commit/fc75592))
+- Add little border smoothing for blockquote ([f9e86ce](https://github.com/logotip4ik/keycap/commit/f9e86ce))
+- Replace lru-cache-nano with hashlru in deps optimizations ([f209e57](https://github.com/logotip4ik/keycap/commit/f209e57))
+- Migrate to hashlru ([3b65502](https://github.com/logotip4ik/keycap/commit/3b65502))
+- Do not use `path` prop for reference ([260caae](https://github.com/logotip4ik/keycap/commit/260caae))
+- Use files instead of include ([6e71e69](https://github.com/logotip4ik/keycap/commit/6e71e69))
+
+### 🏡 Chore
+
+- **release:** V3.5.0 ([691cb61](https://github.com/logotip4ik/keycap/commit/691cb61))
+- Add static replacement for `process.browser` ([d69a1bf](https://github.com/logotip4ik/keycap/commit/d69a1bf))
+- Add .vercelignore ([73b529f](https://github.com/logotip4ik/keycap/commit/73b529f))
+- Update deps ([4a63cb2](https://github.com/logotip4ik/keycap/commit/4a63cb2))
+- Use latest vue ([8a4b8e6](https://github.com/logotip4ik/keycap/commit/8a4b8e6))
+- Install hashlru and remove lru-cache-nano ([2e7df89](https://github.com/logotip4ik/keycap/commit/2e7df89))
+- Patch command-score with types file ([c006a80](https://github.com/logotip4ik/keycap/commit/c006a80))
+- Patch hashlru to use esm modules ([497b818](https://github.com/logotip4ik/keycap/commit/497b818))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+
 ## v3.5.0
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.4.0...v3.5.0)
