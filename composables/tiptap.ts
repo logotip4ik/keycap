@@ -122,12 +122,3 @@ function onUpdate(cb: (editor: Editor) => any) {
     editor.value?.off('update', updater);
   });
 }
-
-if (import.meta.hot) {
-  import.meta.hot.accept(() => {
-    editor.value?.destroy();
-    editor.value = undefined;
-
-    initTiptap();
-  });
-}
