@@ -110,9 +110,16 @@ function setContent(content: string) {
 }
 
 function onUpdate(cb: (editor: Editor) => any) {
+  let updater: (() => any) | undefined;
+
   withEditor((editor) => {
-    editor.off('update');
-    editor.on('update', () => cb(editor));
+    updater = () => cb(editor);
+
+    editor.on('update', updater);
+  });
+
+  onScopeDispose(() => {
+    editor.value?.off('update', updater);
   });
 }
 
