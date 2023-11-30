@@ -22,6 +22,11 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>) {
     scheduled = true;
   }
 
+  function focusLastElement() {
+    lastFocusedEl && lastFocusedEl.focus();
+    lastFocusedEl = undefined;
+  }
+
   function getFocusableEls(el: HTMLElement) {
     if (scheduled) {
       scheduled = false;
@@ -36,12 +41,8 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>) {
   watch(() => unref(el), (el) => {
     stop();
 
-    if (!el) {
-      lastFocusedEl && lastFocusedEl.focus();
-      lastFocusedEl = undefined;
-
-      return;
-    }
+    if (!el)
+      return focusLastElement();
 
     if (document.activeElement)
       lastFocusedEl = document.activeElement as HTMLElement;
@@ -76,7 +77,10 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>) {
     });
   });
 
-  onScopeDispose(stop);
+  onScopeDispose(() => {
+    stop();
+    focusLastElement();
+  });
 
   return stop;
 }
