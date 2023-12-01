@@ -1,7 +1,7 @@
 import getScore from '@superhuman/command-score';
 import { expose } from 'comlink';
 
-import { transliterateToEnglish } from '~/utils/transliterate';
+import { transliterateFromEnglish, transliterateToEnglish } from '~/utils/transliterate';
 import { commandActionsMin as commandsCache } from '~/utils/menu';
 
 const itemsCache = new Map<string, FuzzyItem>();
@@ -46,8 +46,11 @@ function search(query: string, maxLength = 4): Array<FuzzyItem | CommandItem> {
 function searchWithTransliteration(query: string, maxLength = 4): Array<FuzzyItem | CommandItem> {
   let result = search(query, maxLength);
 
-  if (result.length === 0)
-    result = search(transliterateToEnglish(query), maxLength);
+  if (result.length === 0) {
+    const transliterator = query.charCodeAt(0) > 127 ? transliterateToEnglish : transliterateFromEnglish;
+
+    result = search(transliterator(query), maxLength);
+  }
 
   return result;
 }
@@ -69,3 +72,6 @@ expose({
 });
 
 populateItemsCache();
+
+if (import.meta.hot)
+  import.meta.hot.accept();
