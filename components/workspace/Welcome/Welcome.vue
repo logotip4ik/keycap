@@ -3,7 +3,7 @@ const isSmallScreen = getIsSmallScreen();
 </script>
 
 <template>
-  <div v-once class="welcome">
+  <div class="welcome">
     <p class="welcome__title font-wide">
       Welcome back
     </p>
