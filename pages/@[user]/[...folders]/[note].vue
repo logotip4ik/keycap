@@ -21,6 +21,7 @@ const POLLING_TIME = parseDuration('2 minutes')!;
 let pollingTimer: NodeJS.Timeout;
 let loadingToast: RefToastInstance | undefined;
 let abortControllerGet: AbortController | null;
+let lastRefetch: number | undefined;
 
 const { data: note, pending, refresh, error } = await useAsyncData<NoteWithContent | undefined>('note', async () => {
   if (import.meta.server || !route.params.note || route.params.note === BLANK_NOTE_NAME)
@@ -30,6 +31,8 @@ const { data: note, pending, refresh, error } = await useAsyncData<NoteWithConte
 
   abortControllerGet?.abort();
   abortControllerGet = new AbortController();
+
+  lastRefetch = Date.now();
 
   loadingToast = createToast('Fetching note takes longer then expected...', {
     delay: parseDuration('1 minute'),
@@ -167,7 +170,9 @@ if (import.meta.client) {
     if (error.value)
       return off();
 
-    if (document.visibilityState === 'visible')
+    const timeDiff = Date.now() - (lastRefetch || 0);
+
+    if (document.visibilityState === 'visible' && timeDiff > parseDuration('10 seconds')!)
       refresh();
   });
 
