@@ -72,7 +72,7 @@ function initTiptap() {
       }),
       Placeholder.configure({
         placeholder: ({ editor }) =>
-          editor.isEmpty ? ' # Start with heading...' : 'Write something...',
+          editor.isEmpty ? '# Start with heading...' : 'Write something...',
       }),
     ],
   });
