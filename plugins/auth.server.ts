@@ -2,6 +2,7 @@ import { getUserFromEvent } from '~/server/utils/auth';
 
 export default defineNuxtPlugin({
   parallel: true,
+  env: { islands: false },
   async setup() {
     const event = useRequestEvent();
     const user = useUser();
