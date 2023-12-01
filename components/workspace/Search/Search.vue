@@ -18,7 +18,7 @@ const searchEl = shallowRef<HTMLElement | null>(null);
 
 defineExpose({ input: inputEl });
 
-function handleCancel(_event?: Event) {
+function closeWithDelay(_event?: Event) {
   setTimeout(() => {
     props.onClose();
   }, 0);
@@ -121,11 +121,11 @@ function animateHeight() {
 }
 
 useFocusTrap(searchEl);
-useTinykeys({ Escape: handleCancel });
+useTinykeys({ Escape: closeWithDelay });
 </script>
 
 <template>
-  <div class="search-wrapper" @click.self="handleCancel">
+  <div class="search-wrapper" @click.self="closeWithDelay">
     <div ref="searchEl" class="search">
       <form class="search__form" @submit.prevent="openItem">
         <!-- TODO: split into smaller components -->
@@ -154,7 +154,7 @@ useTinykeys({ Escape: handleCancel });
         <button
           type="reset"
           class="search__form__cancel"
-          @click="handleCancel"
+          @click="closeWithDelay"
         >
           <LazyIconCloseRounded class="search__form__cancel__icon" />
         </button>
@@ -196,7 +196,7 @@ useTinykeys({ Escape: handleCancel });
               :item="item"
               :selected="selectedResult === idx"
               @focus="selectedResult = idx"
-              @click="handleCancel"
+              @click="closeWithDelay"
             />
           </li>
         </TransitionGroup>
