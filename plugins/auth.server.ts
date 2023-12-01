@@ -7,12 +7,7 @@ export default defineNuxtPlugin({
     const event = useRequestEvent();
     const user = useUser();
 
-    // @ts-expect-error devalue will still stringify this, so client will end up with string rather then bigint
+    // @ts-expect-error devalue will still stringify this
     user.value = await getUserFromEvent(event);
-
-    if (!user.value)
-      return;
-
-    user.value.id = `${user.value.id.toString()}n`;
   },
 });
