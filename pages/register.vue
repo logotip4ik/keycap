@@ -42,7 +42,7 @@ async function register() {
 
   $fetch('/api/auth/register', { method: 'POST', body: data })
     .then((res) => res && (user.value = res.data))
-    .catch((e) => createToast(e.statusMessage))
+    .catch((e) => createToast(e.statusMessage || e.data.statusMessage)) // NOTE: statusMessage is not defined in vercel env
     .finally(() => isLoading.value = false);
 }
 </script>
