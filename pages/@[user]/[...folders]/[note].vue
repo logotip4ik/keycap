@@ -166,10 +166,7 @@ mitt.on('details:show', () => {
 onBeforeMount(() => refresh());
 
 if (import.meta.client) {
-  const off: () => void = on(document, 'visibilitychange', () => {
-    if (error.value)
-      return off();
-
+  const off = on(document, 'visibilitychange', () => {
     const timeDiff = Date.now() - (lastRefetch || 0);
 
     if (document.visibilityState === 'visible' && timeDiff > parseDuration('10 seconds')!)
