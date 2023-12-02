@@ -1,5 +1,6 @@
 import proxy from 'unenv/runtime/mock/proxy';
 
+export const Editor = proxy;
 export const Extension = proxy;
 export const useEditor = proxy;
 export const EditorContent = proxy;
