@@ -1,8 +1,9 @@
 {
-  "extends": "../.nuxt/tsconfig.json",
+  "extends": "../tsconfig.json",
   "compilerOptions": {
-    "lib": ["ESNext", "DOM", "WebWorker"],
-    "types": ["vite/client", "service-worker"]
+    "lib": ["ESNext", "WebWorker", "DOM.Iterable"],
+    "types": ["vite/client"]
   },
-  "files": ["fuzzy.ts", "sw.ts"]
+  "include": ["./"],
+  "exclude": []
 }
