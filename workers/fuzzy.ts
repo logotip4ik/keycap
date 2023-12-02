@@ -1,3 +1,5 @@
+/// <reference path="../types/store.d.ts" />
+
 import getScore from '@superhuman/command-score';
 import { expose } from 'comlink';
 
