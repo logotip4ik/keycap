@@ -84,7 +84,7 @@ function transitionHeight() {
         :aria-expanded="unref(util.ariaExpanded)"
         @click="util.action"
       >
-        <component :is="util.icon" class="toolbox__utils__item__btn__icon" />
+        <Component :is="util.icon" class="toolbox__utils__item__btn__icon" />
 
         {{ util.text }}
       </button>

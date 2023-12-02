@@ -22,7 +22,7 @@ const lowercaseProvider = computed(() => props.provider.toLowerCase());
     :class="[`form__button--${lowercaseProvider}`]"
     :href="`/api/oauth/${lowercaseProvider}`"
   >
-    <component :is="providerIcon" />
+    <Component :is="providerIcon" />
 
     <slot />
   </a>
