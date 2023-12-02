@@ -75,22 +75,16 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="note-editor__wrapper">
-    <!-- TODO: vue does not like when this two elements change
-      (even without lazy)
-     -->
-    <LazyBubbleBox
-      v-if="editor && !isSmallScreen"
+    <Component
+      :is="isSmallScreen ? LazyFixedBox : LazyBubbleBox"
+      v-if="editor"
       :editor="editor"
     >
-      <WorkspaceNoteFormatter :editor="editor" @hide="hideBubbleMenu" />
-    </LazyBubbleBox>
-
-    <LazyFixedBox
-      v-else-if="editor && isSmallScreen"
-      :editor="editor"
-    >
-      <WorkspaceNoteFormatter :editor="editor" @hide="() => null" />
-    </LazyFixedBox>
+      <WorkspaceNoteFormatter
+        :editor="editor"
+        @hide="isSmallScreen ? () => null : hideBubbleMenu"
+      />
+    </Component>
 
     <EditorContent class="note-editor" :editor="editor" />
   </div>
