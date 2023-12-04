@@ -1,6 +1,48 @@
 # Changelog
 
 
+## v3.7.0
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.6.0...v3.7.0)
+
+### 🚀 Enhancements
+
+- Tiptap composable ([#13](https://github.com/logotip4ik/keycap/pull/13))
+
+### 🩹 Fixes
+
+- Explicitly import transliterate funcion ([ad35080](https://github.com/logotip4ik/keycap/commit/ad35080))
+
+### 💅 Refactors
+
+- Rename function to match its actions ([a8396a0](https://github.com/logotip4ik/keycap/commit/a8396a0))
+- Add from english transliteration ([239d744](https://github.com/logotip4ik/keycap/commit/239d744))
+- Use different transliteration based on first letter ([5afd3c6](https://github.com/logotip4ik/keycap/commit/5afd3c6))
+- Add back `.data` accessor to get error status message ([8ea66d3](https://github.com/logotip4ik/keycap/commit/8ea66d3))
+- Do not run auth plugin on island context ([c908a7b](https://github.com/logotip4ik/keycap/commit/c908a7b))
+- Do not stringify bigint ([fb29135](https://github.com/logotip4ik/keycap/commit/fb29135))
+- Do not refetch items too early ([14af612](https://github.com/logotip4ik/keycap/commit/14af612))
+- Remove off call when seen an error ([cbec9a1](https://github.com/logotip4ik/keycap/commit/cbec9a1))
+- Remove v-once directive from welcome component ([5ccbcee](https://github.com/logotip4ik/keycap/commit/5ccbcee))
+- Use dynamic `Component` to render formatter wrapper ([56848c0](https://github.com/logotip4ik/keycap/commit/56848c0))
+- Use PascalCase naming for built-in components ([781a208](https://github.com/logotip4ik/keycap/commit/781a208))
+- Use PascalCase folder naming ([b02eaff](https://github.com/logotip4ik/keycap/commit/b02eaff))
+- Correct typings for web workers ([08f7ac6](https://github.com/logotip4ik/keycap/commit/08f7ac6))
+
+### 🏡 Chore
+
+- **release:** V3.6.0 ([169b670](https://github.com/logotip4ik/keycap/commit/169b670))
+- Update package manager ([4513127](https://github.com/logotip4ik/keycap/commit/4513127))
+- Experimental bun dockerfile for production ([ef7ae9d](https://github.com/logotip4ik/keycap/commit/ef7ae9d))
+- Completely comment out not used code ([bb79ab6](https://github.com/logotip4ik/keycap/commit/bb79ab6))
+- Update deps ([cd9903a](https://github.com/logotip4ik/keycap/commit/cd9903a))
+- Hide node_modules and some `.` folders ([4dc5390](https://github.com/logotip4ik/keycap/commit/4dc5390))
+- Add reference to store types ([425a286](https://github.com/logotip4ik/keycap/commit/425a286))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk <bogdankostyuk12@gmail.com>
+
 ## v3.6.0
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.5.0...v3.6.0)
