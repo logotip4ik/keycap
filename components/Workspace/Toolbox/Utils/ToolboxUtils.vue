@@ -6,7 +6,7 @@ const route = useRoute();
 const detailsItem = useCurrentItemForDetails();
 const utilsEl = shallowRef<ComponentPublicInstance<HTMLUListElement> | null>(null);
 
-interface Util {
+type Util = {
   shouldShow?: ComputedRef<boolean>
   text: string
   label: string
@@ -15,7 +15,10 @@ interface Util {
   ariaControls?: HTMLAttributes['aria-controls'] | ComputedRef<HTMLAttributes['aria-controls']>
   ariaExpanded?: HTMLAttributes['aria-expanded'] | ComputedRef<HTMLAttributes['aria-expanded']>
   action: () => any
-}
+} | {
+  shouldShow?: ComputedRef<boolean>
+  component: ComponentPublicInstance
+};
 
 const utils: Array<Util> = [
   {
@@ -76,7 +79,13 @@ function transitionHeight() {
       :key="idx"
       class="toolbox__utils__item"
     >
+      <Component
+        :is="util.component"
+        v-if="'component' in util"
+      />
+
       <button
+        v-else
         class="toolbox__utils__item__btn"
         :aria-label="util.label"
         :aria-haspopup="unref(util.ariaHaspopup)"
