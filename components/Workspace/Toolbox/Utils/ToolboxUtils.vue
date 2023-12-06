@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue';
-import { LazyIconSearchRounded, LazyWorkspaceToolboxUtilsItemDetailsButton } from '#components';
+
+import {
+  LazyIconSearchRounded,
+  LazyWorkspaceToolboxUtilsItemDetailsButton,
+} from '#components';
 
 const route = useRoute();
 const utilsEl = shallowRef<ComponentPublicInstance<HTMLUListElement> | null>(null);
