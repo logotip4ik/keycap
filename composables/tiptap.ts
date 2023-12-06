@@ -22,6 +22,13 @@ import History from '@tiptap/extension-history';
 import Link from '@tiptap/extension-link';
 
 const editor = shallowRef<Editor | undefined>();
+const typingPromise = shallowRef<Promise<void> | undefined>();
+const isTyping = computed(() => !!typingPromise.value);
+
+const debouncedClearTypingPromise = debounce(clearTypingPromise, 500);
+function clearTypingPromise() {
+  typingPromise.value = undefined;
+}
 
 function initTiptap() {
   if (import.meta.server || editor.value)
@@ -32,6 +39,11 @@ function initTiptap() {
   editor.value = new Editor({
     autofocus: !isSmallScreen && 'start', // disable auto focus on small screens
     editable: true,
+    editorProps: {
+      handleKeyDown() {
+        typingPromise.value = debouncedClearTypingPromise();
+      },
+    },
     extensions: [
       Document,
       Text,
@@ -82,7 +94,7 @@ export function useTiptap() {
   if (!editor.value)
     initTiptap();
 
-  return { editor, setContent, setOptions, onUpdate };
+  return { editor, isTyping, setContent, setOptions, onUpdate };
 }
 
 function withEditor(cb: (editor: Editor) => any) {
