@@ -56,7 +56,7 @@ function transitionHeight() {
   <TransitionGroup
     ref="utilsEl"
     tag="ul"
-    name="list"
+    name="fade"
     class="toolbox__utils"
     @enter="transitionHeight"
     @leave="transitionHeight"
