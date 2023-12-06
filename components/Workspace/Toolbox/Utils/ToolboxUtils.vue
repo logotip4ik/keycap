@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {
-  LazyWorkspaceToolboxUtilsItemDetailsButton,
-  LazyWorkspaceToolboxUtilsSearchButton,
+  LazyWorkspaceToolboxUtilsButtonItemDetails,
+  LazyWorkspaceToolboxUtilsButtonSearch,
 } from '#components';
 
 const route = useRoute();
@@ -14,11 +14,11 @@ interface Util {
 
 const utils: Array<Util> = [
   {
-    component: LazyWorkspaceToolboxUtilsSearchButton,
+    component: LazyWorkspaceToolboxUtilsButtonSearch,
   },
   {
     shouldShow: computed(() => !!route.params.note && route.params.note !== BLANK_NOTE_NAME),
-    component: LazyWorkspaceToolboxUtilsItemDetailsButton,
+    component: LazyWorkspaceToolboxUtilsButtonItemDetails,
   },
 ];
 
