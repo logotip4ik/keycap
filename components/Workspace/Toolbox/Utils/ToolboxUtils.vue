@@ -2,8 +2,8 @@
 import type { HTMLAttributes } from 'vue';
 
 import {
-  LazyIconSearchRounded,
   LazyWorkspaceToolboxUtilsItemDetailsButton,
+  LazyWorkspaceToolboxUtilsSearchButton,
 } from '#components';
 
 const route = useRoute();
@@ -25,12 +25,7 @@ type Util = {
 
 const utils: Array<Util> = [
   {
-    text: 'Open Search',
-    label: 'open quick search',
-    icon: LazyIconSearchRounded,
-    action: () => {
-      useMitt().emit('search:show');
-    },
+    component: LazyWorkspaceToolboxUtilsSearchButton,
   },
   {
     shouldShow: computed(() => !!route.params.note && route.params.note !== BLANK_NOTE_NAME),
