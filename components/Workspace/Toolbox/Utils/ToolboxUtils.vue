@@ -4,7 +4,13 @@ import {
   LazyWorkspaceToolboxUtilsButtonSearch,
 } from '#components';
 
+const props = defineProps<{
+  state: SidebarState
+  onUpdateState: (newState: SidebarState) => any
+}>();
+
 const route = useRoute();
+const isSmallScreen = getIsSmallScreen();
 const utilsEl = shallowRef<ComponentPublicInstance<HTMLUListElement> | null>(null);
 
 interface Util {
@@ -38,6 +44,11 @@ function transitionHeight() {
     { height: `${currentHeight}px` },
   ], { duration: 375, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' });
 }
+
+function hideIfNeeded() {
+  if (isSmallScreen && props.state === 'pinned')
+    props.onUpdateState('hidden');
+}
 </script>
 
 <template>
@@ -56,10 +67,9 @@ function transitionHeight() {
       v-show="unref(util.shouldShow) ?? true"
       :key="idx"
       class="toolbox__utils__item"
+      @click="hideIfNeeded"
     >
-      <Component
-        :is="util.component"
-      />
+      <Component :is="util.component" />
     </li>
   </TransitionGroup>
 </template>

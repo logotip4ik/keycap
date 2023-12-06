@@ -65,7 +65,10 @@ useTinykeys({
       @update-state="smartUpdateState"
     />
 
-    <WorkspaceToolboxUtils />
+    <WorkspaceToolboxUtils
+      :state="toolboxState"
+      @update-state="smartUpdateState"
+    />
 
     <hr>
 
