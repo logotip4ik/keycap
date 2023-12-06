@@ -23,7 +23,7 @@ const {
   setContent: setEditorContent,
 } = useTiptap();
 
-function saveEditorContent(html?: string) {
+function updateContent(html?: string) {
   const noteContent = editor.value?.isEmpty ? '' : (html || editor.value?.getHTML());
 
   props.onUpdate(noteContent || '');
@@ -49,10 +49,10 @@ watch(() => props.editable, (editable) => {
     setEditorOptions({ editable });
 }, { immediate: true });
 
-mitt.on('save:note', () => saveEditorContent());
+mitt.on('save:note', () => updateContent());
 
 onContentUpdate(
-  debounce(() => saveEditorContent(), 350),
+  debounce(() => updateContent(), 100),
 );
 
 useTinykeys({
@@ -61,7 +61,7 @@ useTinykeys({
 
     event.preventDefault();
 
-    saveEditorContent();
+    updateContent();
   },
 });
 
@@ -69,7 +69,7 @@ onBeforeUnmount(() => {
   const html = editor.value?.getHTML();
 
   if (html !== props.content)
-    saveEditorContent(html);
+    updateContent(html);
 });
 </script>
 
