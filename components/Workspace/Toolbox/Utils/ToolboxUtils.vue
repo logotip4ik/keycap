@@ -111,6 +111,7 @@ function transitionHeight() {
       align-items: center;
 
       text-align: start;
+      line-height: 1.5;
       color: hsla(var(--text-color-hsl), 0.65);
 
       width: 100%;
