@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { HTMLAttributes } from 'vue';
-
 import {
   LazyWorkspaceToolboxUtilsItemDetailsButton,
   LazyWorkspaceToolboxUtilsSearchButton,
@@ -9,16 +7,7 @@ import {
 const route = useRoute();
 const utilsEl = shallowRef<ComponentPublicInstance<HTMLUListElement> | null>(null);
 
-type Util = {
-  shouldShow?: ComputedRef<boolean>
-  text: string
-  label: string
-  icon: any
-  ariaHaspopup?: HTMLAttributes['aria-haspopup'] | ComputedRef<HTMLAttributes['aria-haspopup']>
-  ariaControls?: HTMLAttributes['aria-controls'] | ComputedRef<HTMLAttributes['aria-controls']>
-  ariaExpanded?: HTMLAttributes['aria-expanded'] | ComputedRef<HTMLAttributes['aria-expanded']>
-  action: () => any
-} | {
+interface Util {
   shouldShow?: ComputedRef<boolean>
   component: Component
 };
@@ -70,22 +59,7 @@ function transitionHeight() {
     >
       <Component
         :is="util.component"
-        v-if="'component' in util"
       />
-
-      <button
-        v-else
-        class="toolbox__utils__item__btn"
-        :aria-label="util.label"
-        :aria-haspopup="unref(util.ariaHaspopup)"
-        :aria-controls="unref(util.ariaControls)"
-        :aria-expanded="unref(util.ariaExpanded)"
-        @click="util.action"
-      >
-        <Component :is="util.icon" class="toolbox__utils__item__btn__icon" />
-
-        {{ util.text }}
-      </button>
     </li>
   </TransitionGroup>
 </template>
