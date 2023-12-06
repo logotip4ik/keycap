@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue';
-import { LazyIconInfoOutline, LazyIconSearchRounded } from '#components';
+import { LazyIconSearchRounded, LazyWorkspaceToolboxUtilsItemDetailsButton } from '#components';
 
 const route = useRoute();
-const detailsItem = useCurrentItemForDetails();
 const utilsEl = shallowRef<ComponentPublicInstance<HTMLUListElement> | null>(null);
 
 type Util = {
@@ -17,7 +16,7 @@ type Util = {
   action: () => any
 } | {
   shouldShow?: ComputedRef<boolean>
-  component: ComponentPublicInstance
+  component: Component
 };
 
 const utils: Array<Util> = [
@@ -31,16 +30,7 @@ const utils: Array<Util> = [
   },
   {
     shouldShow: computed(() => !!route.params.note && route.params.note !== BLANK_NOTE_NAME),
-    text: 'Show Item Details',
-    label: 'open item details popup',
-    icon: LazyIconInfoOutline,
-    action: () => {
-      useMitt().emit('details:show');
-    },
-
-    ariaHaspopup: 'dialog',
-    ariaControls: 'item-details',
-    ariaExpanded: computed(() => !!detailsItem.value),
+    component: LazyWorkspaceToolboxUtilsItemDetailsButton,
   },
 ];
 
