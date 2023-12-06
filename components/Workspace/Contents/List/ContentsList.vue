@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import parseDuration from 'parse-duration';
 
-import type { SidebarState } from '~/composables/sidebars';
-
 const props = defineProps<{
   state: SidebarState
   onUpdateState: (newState: SidebarState) => any

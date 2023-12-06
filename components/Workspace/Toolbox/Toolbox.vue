@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type SidebarVue from '../Sidebar/Sidebar.vue';
-import type { SidebarState } from '~/composables/sidebars';
 
 const { shortcuts } = useAppConfig();
 const toolboxState = useToolboxSidebarState();

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { SidebarState } from '~/composables/sidebars';
-
 defineProps<{
   state: SidebarState
   onUpdateState: (newState: SidebarState) => any

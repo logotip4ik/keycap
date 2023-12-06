@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import parseDuration from 'parse-duration';
 
-import type { SidebarState } from '~/composables/sidebars';
-
 type FocusableElement = HTMLAnchorElement | HTMLButtonElement;
 
 const props = withDefaults(defineProps<{

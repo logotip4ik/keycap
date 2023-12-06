@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type SidebarVue from '~/components/Sidebar/Sidebar.vue';
-import type { SidebarState } from '~/composables/sidebars';
 
 const sidebar = shallowRef<InstanceType<typeof SidebarVue>>();
 

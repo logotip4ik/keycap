@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { ComponentPublicInstance } from 'vue';
 import type { OAuthProvider } from '~/types/server';
 
 definePageMeta({

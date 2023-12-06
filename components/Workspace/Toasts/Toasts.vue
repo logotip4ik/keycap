@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import parseDuration from 'parse-duration';
-import type { ComponentPublicInstance } from 'vue';
 
 const toasts = useToasts();
 

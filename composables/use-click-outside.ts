@@ -1,5 +1,3 @@
-import type { Ref } from 'vue';
-
 export function useClickOutside(target: Ref<HTMLElement | null>, callback: (e: Event) => any) {
   if (import.meta.server)
     return;
