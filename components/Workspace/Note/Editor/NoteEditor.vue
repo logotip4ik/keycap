@@ -18,6 +18,7 @@ const mitt = useMitt();
 const isSmallScreen = getIsSmallScreen();
 const {
   editor,
+  isTyping,
   onUpdate: onContentUpdate,
   setOptions: setEditorOptions,
   setContent: setEditorContent,
@@ -38,7 +39,7 @@ function hideBubbleMenu() {
 watch(() => props.content, (content) => {
   const editorContent = editor.value?.getHTML();
 
-  if (editorContent !== content)
+  if (editorContent !== content && !isTyping.value)
     setEditorContent(content);
 }, { immediate: true });
 
