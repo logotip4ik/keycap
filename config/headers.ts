@@ -31,7 +31,7 @@ export const cspHeaders: Record<string, string | undefined> = {
 export const defaultHeaders: Record<string, string | undefined> = {
   'Cross-Origin-Embedder-Policy': 'require-corp',
   'Cross-Origin-Opener-Policy': 'same-origin',
-  'Cross-Origin-Resource-Policy': 'cross-origin',
+  'Cross-Origin-Resource-Policy': 'same-origin',
   'Origin-Agent-Cluster': '?1',
   'X-DNS-Prefetch-Control': 'off',
   'X-Download-Options': 'noopen',
