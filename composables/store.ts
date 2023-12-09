@@ -9,7 +9,7 @@ export const useNotesCache = () => notesCache;
 const foldersCache = LRUCache(25);
 export const useFoldersCache = () => foldersCache;
 
-const fuzzyWorker = shallowRef<null | IFuzzyWorker>(null);
+const fuzzyWorker = shallowRef<null | FuzzyWorker>(null);
 export const useFuzzyWorker = () => fuzzyWorker;
 
 const offlineStorage = shallowReactive<Partial<OfflineStorage>>(import.meta.server ? {} : getOfflineStorage());

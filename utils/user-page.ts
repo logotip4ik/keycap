@@ -1,7 +1,5 @@
 import { del, get, set, values } from 'idb-keyval';
 
-import type * as Comlink from 'comlink';
-
 export function preloadDashboardComponents() {
   prefetchComponents('WorkspaceSearch');
 
@@ -10,8 +8,7 @@ export function preloadDashboardComponents() {
 }
 
 export async function defineFuzzyWorker() {
-  // @ts-expect-error idk how to setup this
-  const { wrap } = await import('comlink?only=wrap') as typeof Comlink;
+  const coincident = await import('coincident').then((m) => m.default);
 
   const fuzzyWorker = useFuzzyWorker();
 
@@ -20,7 +17,7 @@ export async function defineFuzzyWorker() {
     ? new Worker(new URL('../workers/fuzzy.ts', import.meta.url))
     : new Worker(new URL('../workers/fuzzy.ts', import.meta.url), { type: 'module' });
 
-  fuzzyWorker.value = wrap(worker);
+  fuzzyWorker.value = coincident(worker) as FuzzyWorker;
 }
 
 export function getOfflineStorage() {
@@ -61,3 +58,9 @@ export function getOfflineStorage() {
 
   return offlineStorage;
 }
+
+// if (import.meta.hot) {
+//   import.meta.hot.accept(() => {
+//     defineFuzzyWorker();
+//   });
+// }

@@ -244,7 +244,7 @@ export default defineNuxtConfig({
         'perfect-debounce',
         'h3',
         'escape-string-regexp',
-        'comlink',
+        'coincident',
         '@superhuman/command-score',
         '@popperjs/core',
         '@tiptap/core',

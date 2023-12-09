@@ -4065,6 +4065,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ungap/with-resolvers@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@ungap/with-resolvers@npm:0.1.0"
+  checksum: 295fe3eb9f9139333773b7cdc7091f89380611586a0cc787b8fb021a6a06587fd53feb1273fd5cf87fb647d7af21710bea06ff70bc90f4cf93262b6e3a5d553e
+  languageName: node
+  linkType: hard
+
 "@unhead/addons@npm:^1.8.9":
   version: 1.8.9
   resolution: "@unhead/addons@npm:1.8.9"
@@ -5353,6 +5360,22 @@ __metadata:
   version: 1.1.2
   resolution: "cluster-key-slot@npm:1.1.2"
   checksum: 516ed8b5e1a14d9c3a9c96c72ef6de2d70dfcdbaa0ec3a90bc7b9216c5457e39c09a5775750c272369070308542e671146120153062ab5f2f481bed5de2c925f
+  languageName: node
+  linkType: hard
+
+"coincident@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "coincident@npm:1.1.0"
+  dependencies:
+    "@ungap/structured-clone": "npm:^1.2.0"
+    "@ungap/with-resolvers": "npm:^0.1.0"
+    gc-hook: "npm:^0.2.5"
+    proxy-target: "npm:^3.0.1"
+    ws: "npm:^8.14.2"
+  dependenciesMeta:
+    ws:
+      optional: true
+  checksum: faf190a4019892539d4cde35e7537399a98fcdf9738ac6cd7f838973b3dc49263223c3009f71110a91340bc4ece492e7877991b342dda8910a1b5707ca4f054e
   languageName: node
   linkType: hard
 
@@ -7185,6 +7208,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"gc-hook@npm:^0.2.5":
+  version: 0.2.5
+  resolution: "gc-hook@npm:0.2.5"
+  checksum: 6903156f0da895d89232d1d12af18b6b7435a0ac8125aa1b90af1479a4d3236fc5521bdd929184989bfc65102a95e93e48d2e596d50b11cbfa18411e607f659d
+  languageName: node
+  linkType: hard
+
 "gensync@npm:^1.0.0-beta.2":
   version: 1.0.0-beta.2
   resolution: "gensync@npm:1.0.0-beta.2"
@@ -8366,6 +8396,7 @@ __metadata:
     "@vueuse/core": "npm:^10.7.0"
     "@vueuse/nuxt": "npm:^10.7.0"
     browserslist-to-esbuild: "npm:^1.2.0"
+    coincident: "npm:^1.1.0"
     comlink: "npm:^4.4.1"
     decomment: "npm:^0.9.5"
     escape-string-regexp: "npm:^5.0.0"
@@ -10838,6 +10869,13 @@ __metadata:
   version: 2.0.1
   resolution: "protocols@npm:2.0.1"
   checksum: 0cd08a55b9cb7cc96fed7a528255320428a7c86fd5f3f35965845285436433b7836178893168f80584efdf86391cd7c0a837b6f6bc5ddac3029c76be61118ba5
+  languageName: node
+  linkType: hard
+
+"proxy-target@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "proxy-target@npm:3.0.1"
+  checksum: 7cc6b49ef585de6ae75f1faef0871e2d25ac413790cee991a99f2aed0e51a2c06cb96c1a8362931e42179aa9918f64b7bf0367ca8e0a13e0db2133ad3544ab52
   languageName: node
   linkType: hard
 

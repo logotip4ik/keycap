@@ -32,7 +32,7 @@ export const cspHeaders: Record<string, string | undefined> = {
 export const defaultHeaders: Record<string, string | undefined> = {
   'Cross-Origin-Embedder-Policy': 'require-corp',
   'Cross-Origin-Opener-Policy': 'same-origin',
-  'Cross-Origin-Resource-Policy': 'same-origin',
+  'Cross-Origin-Resource-Policy': 'cross-origin',
   'Origin-Agent-Cluster': '?1',
   'X-DNS-Prefetch-Control': 'off',
   'X-Download-Options': 'noopen',
@@ -67,10 +67,10 @@ export function getHeaders(
 
   const headers = { };
 
+  Object.assign(headers, defaultHeaders);
+
   if (isDevelopment)
     return headers;
-
-  Object.assign(headers, defaultHeaders);
 
   if (type === 'assets') {
     const assetsCacheOptions: CacheControlHeaderOptions = {
