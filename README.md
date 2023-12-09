@@ -40,10 +40,9 @@ After months of using Windows and Android, I found out that notes aren't syncing
 [Rewrite with kysely](https://github.com/logotip4ik/keycap/tree/feat/kysely). Kysely is slightly faster in a development environment,
 though `node-postgres` isn't well suited for serverless. So to see Kysely outperforms Prisma you will need much more traffic than a few visitors in a week.
 
+### Load testing with Bombardier
 
-### Load testing with Bombardier 
-
-test command: 
+test command:
 
 ```sh
 bombardier http://localhost:3000/api/notes/main -l -d 60s -c 300
