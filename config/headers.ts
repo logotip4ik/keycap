@@ -66,10 +66,10 @@ export function getHeaders(
 
   const headers = { };
 
-  Object.assign(headers, defaultHeaders);
-
   if (isDevelopment)
     return headers;
+
+  Object.assign(headers, defaultHeaders);
 
   if (type === 'assets') {
     const assetsCacheOptions: CacheControlHeaderOptions = {
