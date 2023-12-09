@@ -1,5 +1,5 @@
 import { defineNuxtModule, useLogger } from '@nuxt/kit';
-import { nanoid } from 'nanoid';
+import { randomUUID } from 'uncrypto';
 import Git from 'simple-git';
 import colors from 'picocolors';
 
@@ -26,7 +26,8 @@ export default defineNuxtModule({
     };
 
     const privateBuildInfo: PrivateBuildInfo = {
-      id: nanoid(),
+      // TODO: export to common key generation utility
+      id: `build_${randomUUID().replace(/-/g, '')}`,
     };
 
     nuxt.options.runtimeConfig.build = privateBuildInfo;
