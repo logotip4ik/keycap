@@ -5363,7 +5363,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"coincident@npm:^1.1.0":
+"coincident@npm:1.1.0":
   version: 1.1.0
   resolution: "coincident@npm:1.1.0"
   dependencies:
@@ -5376,6 +5376,22 @@ __metadata:
     ws:
       optional: true
   checksum: faf190a4019892539d4cde35e7537399a98fcdf9738ac6cd7f838973b3dc49263223c3009f71110a91340bc4ece492e7877991b342dda8910a1b5707ca4f054e
+  languageName: node
+  linkType: hard
+
+"coincident@patch:coincident@npm%3A1.1.0#~/.yarn/patches/coincident-npm-1.1.0-02cde43e6f.patch":
+  version: 1.1.0
+  resolution: "coincident@patch:coincident@npm%3A1.1.0#~/.yarn/patches/coincident-npm-1.1.0-02cde43e6f.patch::version=1.1.0&hash=0cd26e"
+  dependencies:
+    "@ungap/structured-clone": "npm:^1.2.0"
+    "@ungap/with-resolvers": "npm:^0.1.0"
+    gc-hook: "npm:^0.2.5"
+    proxy-target: "npm:^3.0.1"
+    ws: "npm:^8.14.2"
+  dependenciesMeta:
+    ws:
+      optional: true
+  checksum: e3ef02ff6de9f9201de80520c2763c5b5d585f07c12f149b978315464c6d6392e5113bf6be3d082002312391d5ae7ef18db24b25ff5d0e662431792f812d09ab
   languageName: node
   linkType: hard
 
@@ -8389,7 +8405,7 @@ __metadata:
     "@vueuse/core": "npm:^10.7.0"
     "@vueuse/nuxt": "npm:^10.7.0"
     browserslist-to-esbuild: "npm:^1.2.0"
-    coincident: "npm:^1.1.0"
+    coincident: "patch:coincident@npm%3A1.1.0#~/.yarn/patches/coincident-npm-1.1.0-02cde43e6f.patch"
     decomment: "npm:^0.9.5"
     escape-string-regexp: "npm:^5.0.0"
     eslint: "npm:8.52.0"

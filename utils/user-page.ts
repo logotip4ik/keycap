@@ -12,12 +12,21 @@ export async function defineFuzzyWorker() {
 
   const fuzzyWorker = useFuzzyWorker();
 
+  const fallbackWorker = new Worker(new URL('../workers/async-coincidence-fallback.ts', import.meta.url));
+  const fallbackAsyncWait = (buffer: any) => ({
+    value: new Promise((onmessage) => {
+      fallbackWorker.onmessage = onmessage;
+      fallbackWorker.postMessage(buffer);
+    }),
+  });
+
   // https://vitejs.dev/guide/features.html#web-workers
   const worker = import.meta.prod
     ? new Worker(new URL('../workers/fuzzy.ts', import.meta.url))
     : new Worker(new URL('../workers/fuzzy.ts', import.meta.url), { type: 'module' });
 
-  fuzzyWorker.value = coincident(worker) as FuzzyWorker;
+  // @ts-expect-error patched version without types
+  fuzzyWorker.value = coincident(worker, { fallbackAsyncWait }) as FuzzyWorker;
 }
 
 export function getOfflineStorage() {
@@ -58,9 +67,3 @@ export function getOfflineStorage() {
 
   return offlineStorage;
 }
-
-// if (import.meta.hot) {
-//   import.meta.hot.accept(() => {
-//     defineFuzzyWorker();
-//   });
-// }
