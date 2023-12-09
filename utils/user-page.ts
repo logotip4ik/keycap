@@ -13,12 +13,15 @@ export async function defineFuzzyWorker() {
   const fuzzyWorker = useFuzzyWorker();
 
   const fallbackWorker = new Worker(new URL('../workers/async-coincidence-fallback.ts', import.meta.url));
-  const fallbackAsyncWait = (buffer: any) => ({
-    value: new Promise((onmessage) => {
-      fallbackWorker.onmessage = onmessage;
+  const fallbackValueObject = { value: Promise.resolve() };
+  const fallbackAsyncWait = (buffer: any) => {
+    fallbackValueObject.value = new Promise((onmessage) => {
+      fallbackWorker.onmessage = () => onmessage();
       fallbackWorker.postMessage(buffer);
-    }),
-  });
+    });
+
+    return fallbackValueObject;
+  };
 
   // https://vitejs.dev/guide/features.html#web-workers
   const worker = import.meta.prod
