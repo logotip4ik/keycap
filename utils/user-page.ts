@@ -25,8 +25,12 @@ export async function defineFuzzyWorker() {
     ? new Worker(new URL('../workers/fuzzy.ts', import.meta.url))
     : new Worker(new URL('../workers/fuzzy.ts', import.meta.url), { type: 'module' });
 
-  // @ts-expect-error patched version without types
-  fuzzyWorker.value = coincident(worker, { fallbackAsyncWait }) as FuzzyWorker;
+  // Worker is broken in prod because it relies on SharedArrayBuffer, which is only available for
+  // cross origin isolated sites, which localhost is not. But even if the set appropriate headers
+  // for isolation, then workers will not be available on localhost + isolation
+  if (import.meta.prod)
+    // @ts-expect-error patched version without types
+    fuzzyWorker.value = coincident(worker, { fallbackAsyncWait }) as FuzzyWorker;
 }
 
 export function getOfflineStorage() {
