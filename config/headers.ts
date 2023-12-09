@@ -18,14 +18,13 @@ export const corsHeaders: Record<string, string | undefined> = {
 
 export const cspHeaders: Record<string, string | undefined> = {
   'Content-Security-Policy': [
-    'default-src \'self\';',
-    'connect-src https: \'self\';',
-    'script-src \'unsafe-inline\' \'self\';',
-    'script-src-elem \'unsafe-inline\' \'self\';',
-    'style-src \'unsafe-inline\' \'self\';',
-    'object-src \'none\';',
+    'default-src \'self\'',
+    'connect-src \'self\' https:',
+    'script-src \'self\' \'unsafe-inline\'',
+    'style-src \'self\' \'unsafe-inline\'',
+    'object-src \'none\'',
     'upgrade-insecure-requests',
-  ].join(' '),
+  ].join('; '),
 };
 
 // basically helmet defaults with some customizations

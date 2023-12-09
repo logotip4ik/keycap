@@ -1,15 +1,7 @@
 import type { Serialize } from 'nitropack';
 import type { Folder, Note, Prisma } from '@prisma/client';
-import type { Remote } from 'comlink';
 
 import type { SearchActionValues } from '~/types/common';
-
-interface _IFuzzyWorker {
-  searchWithQuery: (query: string, maxLength = 4) => Array<FuzzyItem>
-  addItemToCache: (item: FuzzyItem) => void
-  addItemsToCache: (items: Array<FuzzyItem>) => void
-  refreshItemsCache: () => Promise<void>
-}
 
 declare global {
   type Prettify<T> = {
@@ -46,7 +38,13 @@ declare global {
 
   export type FuzzyItem = Prettify<Pick<FolderOrNote, 'name' | 'path' | 'root'>>;
 
-  export type IFuzzyWorker = Remote<_IFuzzyWorker>;
+  // export type IFuzzyWorker = Remote<_IFuzzyWorker>;
+  export interface FuzzyWorker {
+    searchWithQuery: (query: string, maxLength = 4) => Array<FuzzyItem>
+    addItemToCache: (item: FuzzyItem) => void
+    addItemsToCache: (items: Array<FuzzyItem>) => void
+    refreshItemsCache: () => Promise<void>
+  }
 
   export interface OfflineStorage {
     setItem: <T = any>(key: string, value: T) => Promise<void>

@@ -1,7 +1,7 @@
 /// <reference path="../types/store.d.ts" />
 
 import getScore from '@superhuman/command-score';
-import { expose } from 'comlink';
+import coincident from 'coincident';
 
 import { transliterateFromEnglish, transliterateToEnglish } from '~/utils/transliterate';
 import { commandActionsMin as commandsCache } from '~/utils/menu';
@@ -66,14 +66,16 @@ async function populateItemsCache() {
   addItems(items.data || []);
 }
 
-expose({
+populateItemsCache();
+
+const worker = coincident(globalThis);
+
+Object.assign(worker, {
   searchWithQuery: searchWithTransliteration,
   addItemToCache: addItem,
   addItemsToCache: addItems,
   refreshItemsCache: populateItemsCache,
 });
-
-populateItemsCache();
 
 if (import.meta.hot)
   import.meta.hot.accept();

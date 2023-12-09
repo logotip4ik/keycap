@@ -1,0 +1,44 @@
+diff --git a/cjs/index.js b/cjs/index.js
+index c179a014b24f69429dc0f76ca5b3da0eb1b9bb39..704de4420dfa5d9cc22c5797fb6ae920fdacb97f 100644
+--- a/cjs/index.js
++++ b/cjs/index.js
+@@ -45,7 +45,7 @@ let uid = 0;
+  * @param {{parse: (serialized: string) => any, stringify: (serializable: any) => string, transform?: (value:any) => any, interrupt?: () => void | Interrupt}} [JSON] an optional `JSON` like interface to `parse` or `stringify` content with extra `transform` ability.
+  * @returns {ProxyHandler<globalThis> | ProxyHandler<Worker>}
+  */
+-const coincident = (self, {parse = JSON.parse, stringify = JSON.stringify, transform, interrupt} = JSON) => {
++const coincident = (self, {parse = JSON.parse, stringify = JSON.stringify, transform, interrupt, fallbackAsyncWait} = JSON) => {
+   // create a Proxy once for the given context (globalThis or Worker instance)
+   if (!context.has(self)) {
+     // ensure the CHANNEL and data are posted correctly
+@@ -58,7 +58,7 @@ const coincident = (self, {parse = JSON.parse, stringify = JSON.stringify, trans
+     // automatically uses sync wait (worker -> main)
+     // or fallback to async wait (main -> worker)
+     const waitFor = (isAsync, sb) => isAsync ?
+-      (waitAsync || waitAsyncFallback)(sb, 0) :
++      (waitAsync || fallbackAsyncWait || waitAsyncFallback)(sb, 0) :
+       ((handler ? waitInterrupt(sb, delay, handler) : wait(sb, 0)), syncResult);
+ 
+     // prevent Harakiri https://github.com/WebReflection/coincident/issues/18
+diff --git a/esm/index.js b/esm/index.js
+index 222fc620df8aec6dde367268307a57a2df1af78e..58a38b42e41e29b555d3b3f4d4baf4dcd48d750e 100644
+--- a/esm/index.js
++++ b/esm/index.js
+@@ -44,7 +44,7 @@ let uid = 0;
+  * @param {{parse: (serialized: string) => any, stringify: (serializable: any) => string, transform?: (value:any) => any, interrupt?: () => void | Interrupt}} [JSON] an optional `JSON` like interface to `parse` or `stringify` content with extra `transform` ability.
+  * @returns {ProxyHandler<globalThis> | ProxyHandler<Worker>}
+  */
+-const coincident = (self, {parse = JSON.parse, stringify = JSON.stringify, transform, interrupt} = JSON) => {
++const coincident = (self, {parse = JSON.parse, stringify = JSON.stringify, transform, interrupt, fallbackAsyncWait} = JSON) => {
+   // create a Proxy once for the given context (globalThis or Worker instance)
+   if (!context.has(self)) {
+     // ensure the CHANNEL and data are posted correctly
+@@ -57,7 +57,7 @@ const coincident = (self, {parse = JSON.parse, stringify = JSON.stringify, trans
+     // automatically uses sync wait (worker -> main)
+     // or fallback to async wait (main -> worker)
+     const waitFor = (isAsync, sb) => isAsync ?
+-      (waitAsync || waitAsyncFallback)(sb, 0) :
++      (waitAsync || fallbackAsyncWait || waitAsyncFallback)(sb, 0) :
+       ((handler ? waitInterrupt(sb, delay, handler) : wait(sb, 0)), syncResult);
+ 
+     // prevent Harakiri https://github.com/WebReflection/coincident/issues/18

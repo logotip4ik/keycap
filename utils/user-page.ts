@@ -1,7 +1,5 @@
 import { del, get, set, values } from 'idb-keyval';
 
-import type * as Comlink from 'comlink';
-
 export function preloadDashboardComponents() {
   prefetchComponents('WorkspaceSearch');
 
@@ -10,17 +8,29 @@ export function preloadDashboardComponents() {
 }
 
 export async function defineFuzzyWorker() {
-  // @ts-expect-error idk how to setup this
-  const { wrap } = await import('comlink?only=wrap') as typeof Comlink;
+  const coincident = await import('coincident').then((m) => m.default);
 
   const fuzzyWorker = useFuzzyWorker();
+
+  const fallbackWorker = new Worker(new URL('../workers/async-coincidence-fallback.ts', import.meta.url));
+  const fallbackAsyncWait = (buffer: any) => ({
+    value: new Promise((onmessage) => {
+      fallbackWorker.onmessage = onmessage;
+      fallbackWorker.postMessage(buffer);
+    }),
+  });
 
   // https://vitejs.dev/guide/features.html#web-workers
   const worker = import.meta.prod
     ? new Worker(new URL('../workers/fuzzy.ts', import.meta.url))
     : new Worker(new URL('../workers/fuzzy.ts', import.meta.url), { type: 'module' });
 
-  fuzzyWorker.value = wrap(worker);
+  // Worker is broken in prod because it relies on SharedArrayBuffer, which is only available for
+  // cross origin isolated sites, which localhost is not. But even if the set appropriate headers
+  // for isolation, then workers will not be available on localhost + isolation
+  if (import.meta.prod)
+    // @ts-expect-error patched version without types
+    fuzzyWorker.value = coincident(worker, { fallbackAsyncWait }) as FuzzyWorker;
 }
 
 export function getOfflineStorage() {
