@@ -59,8 +59,6 @@ export default defineNuxtConfig({
         '../data',
         '../benchmarks',
         '../scripts',
-        '../components/workspace/OldContents',
-        '../components/workspace/OldNavbar.vue',
       ],
     },
   },
