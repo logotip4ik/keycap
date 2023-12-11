@@ -1,6 +1,49 @@
 # Changelog
 
 
+## v3.7.1
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.7.0...v3.7.1)
+
+### 🩹 Fixes
+
+- Correct transition name ([297926e](https://github.com/logotip4ik/keycap/commit/297926e))
+- Do not update editor contents if user is typing ([a46f6b4](https://github.com/logotip4ik/keycap/commit/a46f6b4))
+
+### 💅 Refactors
+
+- Move toolbox utils section into folder ([2f43186](https://github.com/logotip4ik/keycap/commit/2f43186))
+- Make button height same as contents list item ([b4e0347](https://github.com/logotip4ik/keycap/commit/b4e0347))
+- Allow components as utils ([8a27984](https://github.com/logotip4ik/keycap/commit/8a27984))
+- Move item details button to separate component ([651d82e](https://github.com/logotip4ik/keycap/commit/651d82e))
+- Move open search button into separate component ([9398711](https://github.com/logotip4ik/keycap/commit/9398711))
+- Use only components for utils ([87acbb1](https://github.com/logotip4ik/keycap/commit/87acbb1))
+- Move utils buttons under their own folder ([20730be](https://github.com/logotip4ik/keycap/commit/20730be))
+- Hide toolbox sidebar if needed ([b6c5c4d](https://github.com/logotip4ik/keycap/commit/b6c5c4d))
+- Rename function and lower debounce time ([1634dad](https://github.com/logotip4ik/keycap/commit/1634dad))
+- Return `isTyping` ref to user ([ff68c61](https://github.com/logotip4ik/keycap/commit/ff68c61))
+- Enable relation joins for prisma ([0c5212e](https://github.com/logotip4ik/keycap/commit/0c5212e))
+- Use `coincident` instead of `comlink` ([#15](https://github.com/logotip4ik/keycap/pull/15))
+- Do not create new object on each function call ([c61d384](https://github.com/logotip4ik/keycap/commit/c61d384))
+
+### 🏡 Chore
+
+- **release:** V3.7.0 ([23ce41b](https://github.com/logotip4ik/keycap/commit/23ce41b))
+- Remove not used patch file ([5166635](https://github.com/logotip4ik/keycap/commit/5166635))
+- Update deps ([c342180](https://github.com/logotip4ik/keycap/commit/c342180))
+- Remove nonexistant files ([a88d420](https://github.com/logotip4ik/keycap/commit/a88d420))
+- Remove comment ([17e7dfd](https://github.com/logotip4ik/keycap/commit/17e7dfd))
+- Fix typo ([4166e22](https://github.com/logotip4ik/keycap/commit/4166e22))
+
+### 🎨 Styles
+
+- Add empty line and break import ([b93f400](https://github.com/logotip4ik/keycap/commit/b93f400))
+- Remove not needed type imports ([867d8b6](https://github.com/logotip4ik/keycap/commit/867d8b6))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk <bogdankostyuk12@gmail.com>
+
 ## v3.7.0
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.6.0...v3.7.0)
