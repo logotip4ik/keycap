@@ -20,6 +20,7 @@ const folderApiPath = computed(() => {
     ? `/${route.params.folders.map(encodeURIComponent).join('/')}`
     : '';
 });
+const folderPath = computed(() => `/${route.params.user}${folderApiPath.value}`);
 
 const itemComponentResolved = ref(false);
 const menuOptions = shallowReactive({
@@ -57,9 +58,7 @@ const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefi
       pollingTimer = setTimeout(refresh, POLLING_TIME * multiplier);
     });
 
-  const folderPath = `/${route.params.user}${folderApiPath.value}`;
-
-  return foldersCache.get(folderPath) || await offlineStorage.getItem?.(folderPath);
+  return foldersCache.get(folderPath.value) || await offlineStorage.getItem?.(folderPath.value);
 }, {
   server: false,
   immediate: false,
@@ -109,8 +108,7 @@ async function handleError(error: Error) {
     return;
 
   // last chance to show user folder, if iterator in @[user].vue page hasn't yet set the foldersCache
-  const folderPath = `/${route.params.user}${folderApiPath.value}`;
-  const offlineFolder = await offlineStorage.getItem?.(folderPath);
+  const offlineFolder = await offlineStorage.getItem?.(folderPath.value);
 
   if (!offlineFolder) {
     createToast(`Sorry ⊙︿⊙ We couldn't find offline copy for folder: "${route.params.folders.at(-1)}"`);
@@ -133,9 +131,7 @@ watch(() => props.state, (state, oldState) => {
 }, { immediate: import.meta.client });
 
 mitt.on('cache:populated', () => {
-  const folderPath = `/${route.params.user}${folderApiPath.value}`;
-
-  folder.value = foldersCache.get(folderPath) || null;
+  folder.value = foldersCache.get(folderPath.value) || null;
 });
 
 // TODO: rework details trigger ?
