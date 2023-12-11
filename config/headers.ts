@@ -60,9 +60,9 @@ export type HeadersOptions = NoteViewHeaderOptions | unknown;
 export function getHeaders(
   headersOptions?: HeadersType | { type: HeadersType, opts: HeadersOptions },
 ): Record<string, string | undefined> {
-  const isObject = typeof headersOptions === 'object';
-
-  const type: HeadersType = isObject ? headersOptions.type : (headersOptions ?? 'default');
+  const type: HeadersType = typeof headersOptions === 'object'
+    ? headersOptions.type
+    : (headersOptions ?? 'default');
 
   const headers = { };
 
