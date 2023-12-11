@@ -1,9 +1,7 @@
 const TABBABLE_ELs = 'input:not([disabled]), select:not([disabled]), textarea:not([disabled]), a[href], button:not([disabled]), [tabindex="0"], audio[controls], video[controls], [contenteditable]:not([contenteditable="false"])';
 
 export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>) {
-  const isSmallScreen = getIsSmallScreen();
-
-  if (import.meta.server || isSmallScreen)
+  if (import.meta.server)
     return;
 
   let lastFocusedEl: HTMLElement | undefined;
