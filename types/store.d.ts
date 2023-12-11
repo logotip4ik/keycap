@@ -39,9 +39,9 @@ declare global {
   export type FuzzyItem = Prettify<Pick<FolderOrNote, 'name' | 'path' | 'root'>>;
 
   export interface FuzzyWorker {
-    searchWithQuery: (query: string, maxLength = 4) => Array<FuzzyItem>
-    addItemToCache: (item: FuzzyItem) => void
-    addItemsToCache: (items: Array<FuzzyItem>) => void
+    searchWithQuery: (query: string, maxLength = 4) => Promise<Array<FuzzyItem>>
+    addItemToCache: (item: FuzzyItem) => Promise<void>
+    addItemsToCache: (items: Array<FuzzyItem>) => Promise<void>
     refreshItemsCache: () => Promise<void>
   }
 
