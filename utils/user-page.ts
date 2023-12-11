@@ -1,4 +1,7 @@
 import { del, get, set, values } from 'idb-keyval';
+import { wrap as comlink } from 'comlink';
+
+import type { Remote } from 'comlink';
 
 export function preloadDashboardComponents() {
   prefetchComponents('WorkspaceSearch');
@@ -31,9 +34,15 @@ export async function defineFuzzyWorker() {
   // Worker is broken in dev because it relies on SharedArrayBuffer, which is only available for
   // cross origin isolated sites, which localhost is not. But even if the set appropriate headers
   // for isolation, then workers will not be available on localhost + isolation
-  if (import.meta.prod)
-    // @ts-expect-error patched version without types
-    fuzzyWorker.value = coincident(worker, { fallbackAsyncWait }) as FuzzyWorker;
+  if (import.meta.prod) {
+    fuzzyWorker.value = coincident(worker, {
+      // @ts-expect-error patched version without types
+      fallbackAsyncWait,
+    }) as Remote<FuzzyWorker>;
+  }
+  else {
+    fuzzyWorker.value = comlink(worker);
+  }
 }
 
 export function getOfflineStorage() {

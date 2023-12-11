@@ -2,6 +2,7 @@
 
 import getScore from '@superhuman/command-score';
 import coincident from 'coincident';
+import { expose } from 'comlink';
 
 import { transliterateFromEnglish, transliterateToEnglish } from '~/utils/transliterate';
 import { commandActionsMin as commandsCache } from '~/utils/menu';
@@ -68,14 +69,21 @@ async function populateItemsCache() {
 
 populateItemsCache();
 
-const worker = coincident(globalThis);
-
-Object.assign(worker, {
+const fuzzyInterface: FuzzyWorker = {
   searchWithQuery: searchWithTransliteration,
   addItemToCache: addItem,
   addItemsToCache: addItems,
   refreshItemsCache: populateItemsCache,
-});
+};
+
+if (import.meta.env.PROD) {
+  const worker = coincident(globalThis);
+
+  Object.assign(worker, fuzzyInterface);
+}
+else {
+  expose(fuzzyInterface);
+}
 
 if (import.meta.hot)
   import.meta.hot.accept();
