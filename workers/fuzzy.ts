@@ -1,8 +1,8 @@
 /// <reference path="../types/store.d.ts" />
 
-import getScore from '@superhuman/command-score';
 import coincident from 'coincident';
 import { expose } from 'comlink';
+import { commandScore as getScore } from '@superhuman/command-score';
 
 import { transliterateFromEnglish, transliterateToEnglish } from '~/utils/transliterate';
 import { commandActionsMin as commandsCache } from '~/utils/menu';
