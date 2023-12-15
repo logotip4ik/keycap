@@ -32,7 +32,7 @@ export function transliterate(str: string, map: Record<string, string>) {
   let newString = '';
 
   for (const char of str)
-    newString = newString.concat(map[char] || char);
+    newString += map[char] || char;
 
   return newString;
 }
