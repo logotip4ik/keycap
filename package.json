@@ -20,17 +20,22 @@
     "@antfu/eslint-config": "^2.4.3",
     "@faker-js/faker": "^8.3.1",
     "@nuxt/devtools": "^1.0.5",
+    "@nuxt/test-utils": "^3.9.0-alpha.1",
     "@nuxtjs/fontaine": "^0.4.1",
     "@parcel/watcher": "^2.3.0",
     "@types/lambda-rate-limiter": "^3.0.2",
     "@types/node": "~20.8.10",
     "@types/sanitize-html": "^2.9.5",
+    "@vue/test-utils": "^2.4.3",
     "eslint": "8.52.0",
     "normalize.css": "^8.0.1",
     "nuxt": "^3.8.2",
     "prisma": "^5.7.0",
     "sass": "^1.69.5",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "vitest": "^1.0.4",
+    "vitest-environment-nuxt": "^1.0.0-alpha.1",
+    "vue": "^3.3.11"
   },
   "dependencies": {
     "@node-rs/argon2": "^1.5.2",
@@ -88,7 +93,6 @@
     "magic-string": "^0.30.5",
     "mitt": "^3.0.1",
     "nanoid": "^5.0.4",
-    "nuxt-vitest": "^0.11.5",
     "parse-duration": "^1.1.0",
     "rad-event-listener": "patch:rad-event-listener@npm%3A0.2.4#~/.yarn/patches/rad-event-listener-npm-0.2.4-c250156549.patch",
     "sanitize-html": "^2.11.0",
@@ -99,8 +103,7 @@
     "terser": "^5.26.0",
     "tinykeys": "^2.1.0",
     "ufo": "^1.3.2",
-    "unplugin-ltsdi": "^0.1.1",
-    "vitest": "^1.0.2"
+    "unplugin-ltsdi": "^0.1.1"
   },
   "packageManager": "yarn@4.0.2",
   "resolutions": {

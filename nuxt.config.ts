@@ -132,7 +132,7 @@ export default defineNuxtConfig({
   },
 
   modules: [
-    isTest && 'nuxt-vitest',
+    isTest && '@nuxt/test-utils/module',
     '@vueuse/nuxt',
     '@vite-pwa/nuxt',
     '@nuxtjs/fontaine',
