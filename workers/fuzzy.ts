@@ -1,5 +1,3 @@
-/// <reference path="../types/store.d.ts" />
-
 import coincident from 'coincident';
 import { expose } from 'comlink';
 import { commandScore as getScore } from '@superhuman/command-score';
@@ -76,7 +74,7 @@ const fuzzyInterface: FuzzyWorker = {
   refreshItemsCache: populateItemsCache,
 };
 
-if (import.meta.env.PROD) {
+if (import.meta.prod) {
   const worker = coincident(globalThis);
 
   Object.assign(worker, fuzzyInterface);
