@@ -48,7 +48,10 @@ export default defineEventHandler(async (event) => {
 
   let username: string;
 
-  if (!user) {
+  if (user) {
+    username = user.username;
+  }
+  else {
     username = query.username?.toString().trim() || '';
 
     const validation = useUsernameValidator(username);
@@ -62,9 +65,6 @@ export default defineEventHandler(async (event) => {
 
       return await sendRedirect(event, withQuery('/oauth/ask-username', query));
     }
-  }
-  else {
-    username = user.username;
   }
 
   // clear oauth state cookie
