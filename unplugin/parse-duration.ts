@@ -23,7 +23,7 @@ export const ParseDurationTransformPlugin = createUnplugin(() => ({
     const statements = findStaticImports(code)
       .filter((i) => i.specifier === parseDurationSpecifier);
 
-    if (!statements.length) return;
+    if (statements.length === 0) return;
 
     const contextMap: Context = {};
     const functionNames: Array<string> = [];
@@ -73,6 +73,7 @@ export const ParseDurationTransformPlugin = createUnplugin(() => ({
   },
 }));
 
+const jsExtRE = /\.(?:(?:c|m)?j|t)sx?$/;
 function isVueOrJs(id: string) {
   const { pathname, search } = parseURL(decodeURIComponent(pathToFileURL(id).href));
   const { type } = parseQuery(search);
@@ -82,5 +83,5 @@ function isVueOrJs(id: string) {
     return true;
 
   // js files
-  return !!pathname.match(/\.((c|m)?j|t)sx?$/g);
+  return jsExtRE.test(pathname);
 }

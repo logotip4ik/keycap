@@ -34,7 +34,7 @@ export function makeNewItemPath(currentPath: string, newName: string): string {
 export function getNoteSelectParamsFromEvent(event: H3Event): Prisma.NoteSelect {
   const query = getQuery(event);
 
-  const isDetailsRequest = typeof query.details !== 'undefined';
+  const isDetailsRequest = query.details !== undefined;
 
   const defaultSelects = { id: true, name: true, content: true, path: true };
 
@@ -56,7 +56,7 @@ export function getNoteSelectParamsFromEvent(event: H3Event): Prisma.NoteSelect 
 export function getFolderSelectParamsFromEvent(event: H3Event): Prisma.FolderSelect {
   const query = getQuery(event);
 
-  const isDetailsRequest = typeof query.details !== 'undefined';
+  const isDetailsRequest = query.details !== undefined;
 
   const defaultSelects = { id: true, name: true, path: true, root: true };
 

@@ -50,7 +50,7 @@ function searchWithTransliteration(query: string, maxLength = 4): Array<FuzzyIte
   let result = search(query, maxLength);
 
   if (result.length === 0) {
-    const transliterator = query.charCodeAt(0) > 127 ? transliterateToEnglish : transliterateFromEnglish;
+    const transliterator = (query.codePointAt(0) || 0) > 127 ? transliterateToEnglish : transliterateFromEnglish;
 
     result = search(transliterator(query), maxLength);
   }

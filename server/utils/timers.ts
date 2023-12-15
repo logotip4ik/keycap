@@ -42,7 +42,7 @@ class Timer {
       `dur=${performance.now() - timer.start}`,
     ].filter(Boolean);
 
-    if (this.#results.length !== 0)
+    if (this.#results.length > 0)
       this.#results += ',';
 
     this.#results += result.join(';');

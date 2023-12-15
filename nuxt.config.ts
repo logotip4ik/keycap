@@ -210,12 +210,12 @@ export default defineNuxtConfig({
       cssMinify: 'lightningcss',
       cssTarget: browserslistToEsbuild(),
       minify: isCI ? 'terser' : 'esbuild',
-      terserOptions: !isCI ? undefined : { // eslint-disable-line style/multiline-ternary
+      terserOptions: isCI ? { // eslint-disable-line style/multiline-ternary
         compress: true,
         mangle: true,
         safari10: false,
         ecma: 2020,
-      },
+      } : undefined,
 
       rollupOptions: {
         treeshake: 'recommended',
@@ -301,9 +301,9 @@ export default defineNuxtConfig({
           name: 'mock',
           enforce: 'pre',
           resolveId(id) {
-            if (id.match(/(^|\/)(@tiptap)\//))
+            if (/(?:^|\/)@tiptap\//.test(id))
               return resolve('./mocks/tiptap.ts');
-            if (id.match(/(^|\/)(prosemirror)/))
+            if (/(?:^|\/)prosemirror/.test(id))
               return resolve('./mocks/prosemirror.ts');
           },
         },

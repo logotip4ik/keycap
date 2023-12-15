@@ -55,7 +55,7 @@ export default defineEventHandler(async (event) => {
 
   await setAuthCookies(event, user);
 
-  if (typeof body.browserAction !== 'undefined')
+  if (body.browserAction !== undefined)
     return sendRedirect(event, `/@${user.username}`);
 
   setResponseStatus(event, 201);

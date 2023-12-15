@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
     build_time: new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(config.build.time),
   };
 
-  if (typeof getQuery(event)[build.id] !== 'undefined') {
+  if (getQuery(event)[build.id] !== undefined) {
     const prisma = getPrisma();
 
     const [users, notes] = await Promise.all([
