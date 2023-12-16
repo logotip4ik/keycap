@@ -45,11 +45,16 @@ const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefi
       if (!res) return;
 
       const { data: fetchedFolder } = res;
+      const wasCreatingItem = folder.value?.notes.some((item) => item.creating);
+
       isFallbackMode.value = false;
 
       folder.value = fetchedFolder;
       foldersCache.set(fetchedFolder.path, fetchedFolder);
       offlineStorage.setItem?.(fetchedFolder.path, fetchedFolder);
+
+      if (wasCreatingItem)
+        preCreateItem(folder.value);
     })
     .catch(handleError)
     .finally(() => {
@@ -156,12 +161,12 @@ useTinykeys({
     if (alreadyCreating)
       return;
 
-    const stop = watch(folder, () => {
+    const stop = watchEffect(() => {
       if (folder.value) {
         preCreateItem(folder.value);
         nextTick(() => stop());
       }
-    }, { immediate: true });
+    }, { flush: 'sync' });
   },
 });
 
