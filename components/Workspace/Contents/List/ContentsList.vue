@@ -156,9 +156,11 @@ useTinykeys({
     if (alreadyCreating)
       return;
 
-    watch(folder, () => {
-      if (folder.value)
+    const stop = watch(folder, () => {
+      if (folder.value) {
         preCreateItem(folder.value);
+        nextTick(() => stop());
+      }
     }, { immediate: true });
   },
 });
