@@ -4,7 +4,6 @@ import browserslistToEsbuild from 'browserslist-to-esbuild';
 import { join } from 'pathe';
 import { createResolver } from '@nuxt/kit';
 import { isCI, isDevelopment, isProduction, isTest } from 'std-env';
-import RollupReplace from '@rollup/plugin-replace';
 import RollupSucrase from '@rollup/plugin-sucrase';
 
 import { config } from './config/build';
@@ -235,43 +234,7 @@ export default defineNuxtConfig({
     },
 
     optimizeDeps: {
-      include: [
-        'rad-event-listener',
-        '@prisma/client',
-        'hashlru',
-        'mitt',
-        'idb-keyval',
-        'perfect-debounce',
-        'h3',
-        'escape-string-regexp',
-        'comlink',
-        '@superhuman/command-score',
-        '@popperjs/core',
-        '@tiptap/core',
-        '@tiptap/extension-blockquote',
-        '@tiptap/extension-bold',
-        '@tiptap/extension-bubble-menu',
-        '@tiptap/extension-bullet-list',
-        '@tiptap/extension-code',
-        '@tiptap/extension-code-block',
-        '@tiptap/extension-document',
-        '@tiptap/extension-hard-break',
-        '@tiptap/extension-heading',
-        '@tiptap/extension-history',
-        '@tiptap/extension-horizontal-rule',
-        '@tiptap/extension-italic',
-        '@tiptap/extension-link',
-        '@tiptap/extension-list-item',
-        '@tiptap/extension-ordered-list',
-        '@tiptap/extension-paragraph',
-        '@tiptap/extension-placeholder',
-        '@tiptap/extension-strike',
-        '@tiptap/extension-task-item',
-        '@tiptap/extension-task-list',
-        '@tiptap/extension-text',
-        '@tiptap/extension-text-align',
-        '@tiptap/vue-3',
-      ],
+      include: ['@superhuman/command-score'],
     },
 
     css: {
@@ -313,7 +276,12 @@ export default defineNuxtConfig({
 
   nitro: {
     // https://github.com/danielroe/roe.dev/blob/main/nuxt.config.ts#L115
-    replace: { 'process.browser': false },
+    replace: {
+      'process.browser': false,
+      'import.meta.vitest': JSON.stringify(false),
+      'import.meta.dev': JSON.stringify(isDevelopment),
+      'import.meta.prod': JSON.stringify(isProduction),
+    },
 
     imports: {
       dirs: [
@@ -327,20 +295,6 @@ export default defineNuxtConfig({
           types: ['vitest/importMeta'],
         },
       },
-    },
-
-    rollupConfig: {
-      // @ts-expect-error probably broken types
-      plugins: [
-        RollupReplace({
-          preventAssignment: true,
-          values: {
-            'import.meta.vitest': JSON.stringify(false),
-            'import.meta.dev': JSON.stringify(isDevelopment),
-            'import.meta.prod': JSON.stringify(isProduction),
-          },
-        }),
-      ],
     },
 
     esbuild: {
@@ -403,6 +357,7 @@ export default defineNuxtConfig({
       minify: true,
 
       rollupConfig: {
+        // @ts-expect-error probably broken types
         plugins: [
           // NOTE: it results in smaller server size and faster builds. Neat ¯\_(ツ)_/¯
           RollupSucrase({
