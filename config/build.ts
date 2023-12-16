@@ -5,3 +5,10 @@ export interface Config {
 export const config: Config = {
 
 };
+
+export const prefixedConfig = Object.fromEntries(
+  Object.entries(config)
+    .map(
+      ([k, v]) => [`import.meta.config.${k}`, JSON.stringify(v)],
+    ),
+);
