@@ -150,11 +150,8 @@ useTinykeys({
   [shortcuts.new]: async (event) => {
     event.preventDefault();
 
-    if (props.state === 'hidden') {
+    if (props.state === 'hidden')
       props.onUpdateState('visible');
-
-      await nextTick();
-    }
 
     const alreadyCreating = folder.value && folder.value.notes.some((note) => note.creating);
 
