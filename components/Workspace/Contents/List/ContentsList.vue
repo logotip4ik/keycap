@@ -22,7 +22,6 @@ const folderApiPath = computed(() => {
 });
 const folderPath = computed(() => `/${route.params.user}${folderApiPath.value}`);
 
-const itemComponentResolved = ref(false);
 const menuOptions = shallowReactive({
   item: null as FolderOrNote | null,
   target: null as HTMLElement | null,
@@ -157,22 +156,10 @@ useTinykeys({
     if (alreadyCreating)
       return;
 
-    if (folder.value) {
-      preCreateItem(folder.value);
-    }
-    else if (!folder.value) {
-      const stop = watch(() => [folder.value, itemComponentResolved.value], () => {
-        if (!folder.value)
-          return;
-
-        const isEmptyFolder = folder.value.notes.length === 0 && folder.value.subfolders.length === 0;
-
-        if (isEmptyFolder || itemComponentResolved.value) {
-          stop();
-          setTimeout(() => preCreateItem(folder.value!), 100);
-        }
-      });
-    }
+    watch(folder, () => {
+      if (folder.value)
+        preCreateItem(folder.value);
+    }, { immediate: true });
   },
 });
 
@@ -248,15 +235,13 @@ if (import.meta.client) {
             key="2"
             class="contents__list__item"
           >
-            <Suspense @resolve="itemComponentResolved = true">
-              <LazyWorkspaceContentsListItem
-                :item="item"
-                :parent="folder"
-                :menu-target="menuOptions.target"
-                @show-menu="showMenu($event, item)"
-                @should-hide-sidebar="onUpdateState('hidden')"
-              />
-            </Suspense>
+            <LazyWorkspaceContentsListItem
+              :item="item"
+              :parent="folder"
+              :menu-target="menuOptions.target"
+              @show-menu="showMenu($event, item)"
+              @should-hide-sidebar="onUpdateState('hidden')"
+            />
           </li>
         </Transition>
       </template>
