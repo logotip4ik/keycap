@@ -293,6 +293,7 @@ export default defineNuxtConfig({
     esbuild: {
       options: {
         target: 'esnext',
+        treeShaking: true,
       },
     },
 
