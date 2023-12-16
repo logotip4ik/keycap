@@ -1,9 +1,13 @@
-const isOnline = useOnline();
-
-const fallbackMode = ref(!isOnline);
-
-watch(isOnline, (value) => fallbackMode.value = !value);
+const isFallbackMode = ref(false);
 
 export function useFallbackMode() {
-  return fallbackMode;
+  return isFallbackMode;
+}
+
+if (import.meta.client) {
+  if (navigator)
+    isFallbackMode.value = !navigator.onLine;
+
+  window.addEventListener('online', () => isFallbackMode.value = false);
+  window.addEventListener('offline', () => isFallbackMode.value = true);
 }
