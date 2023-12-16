@@ -275,9 +275,10 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    // https://github.com/danielroe/roe.dev/blob/main/nuxt.config.ts#L115
     replace: {
+      // https://github.com/danielroe/roe.dev/blob/main/nuxt.config.ts#L115
       'process.browser': false,
+
       'import.meta.vitest': JSON.stringify(false),
       'import.meta.dev': JSON.stringify(isDevelopment),
       'import.meta.prod': JSON.stringify(isProduction),
