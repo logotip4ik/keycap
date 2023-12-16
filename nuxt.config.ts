@@ -228,6 +228,11 @@ export default defineNuxtConfig({
       },
     },
 
+    server: {
+      fs: { deny: ['**/data/**'] },
+      watch: { ignored: ['**/data/**'] },
+    },
+
     $client: {
       build: {
         rollupOptions: {
