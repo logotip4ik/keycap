@@ -208,18 +208,6 @@ export default defineNuxtConfig({
 
       rollupOptions: {
         treeshake: 'recommended',
-
-        output: {
-          interop: 'esModule',
-          generatedCode: {
-            constBindings: true,
-            objectShorthand: true,
-          },
-        },
-      },
-
-      commonjsOptions: {
-        strictRequires: true,
       },
     },
 
