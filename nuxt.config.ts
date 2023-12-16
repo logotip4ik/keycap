@@ -190,11 +190,6 @@ export default defineNuxtConfig({
       ...prefixedConfig,
     },
 
-    plugins: [
-      UnheadVite(),
-      ParseDurationTransformPlugin.vite(),
-    ],
-
     resolve: {
       extensions: ['.mjs', '.js', '.ts', '.json'],
     },
@@ -351,6 +346,13 @@ export default defineNuxtConfig({
   },
 
   $production: {
+    vite: {
+      plugins: [
+        UnheadVite(),
+        ParseDurationTransformPlugin.vite(),
+      ],
+    },
+
     nitro: {
       minify: true,
 
