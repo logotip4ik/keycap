@@ -361,6 +361,7 @@ export default defineNuxtConfig({
         plugins: [
           // NOTE: it results in smaller server size and faster builds. Neat ¯\_(ツ)_/¯
           RollupSucrase({
+            disableESTransforms: true,
             transforms: [
               'typescript',
             ],
