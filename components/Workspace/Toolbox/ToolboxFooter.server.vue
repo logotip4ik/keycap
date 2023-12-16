@@ -2,10 +2,16 @@
 const currentYear = new Date().getFullYear();
 
 const links = [
+  { href: '/logout', name: 'Log Out' },
   { href: 'https://github.com/logotip4ik/keycap', name: 'GitHub' },
   { href: 'https://bogdankostyuk.xyz', name: 'Author' },
   { href: 'mailto:contact@bogdankostyuk.xyz', name: 'Contact Us' },
 ];
+
+function isRelative(url: string) {
+  // also could check for same window.location.origin
+  return url[0] === '/';
+}
 </script>
 
 <template>
@@ -30,7 +36,11 @@ const links = [
         :key="idx"
         class="toolbox__footer__links__item"
       >
-        <NuxtLink :href="link.href" target="_blank" class="toolbox__footer__links__item__link">
+        <NuxtLink
+          :href="link.href"
+          :target="isRelative(link.href) ? '_self' : '_blank'"
+          class="toolbox__footer__links__item__link"
+        >
           {{ link.name }}
         </NuxtLink>
       </li>
