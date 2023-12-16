@@ -74,6 +74,8 @@ export default defineNuxtConfig({
     ],
   },
 
+  ignore: ['**/data/**'],
+
   runtimeConfig: {
     public: {
       siteOrigin: '',
