@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto';
-import { getCookie, setCookie } from 'h3';
+import { deleteCookie, getCookie, setCookie } from 'h3';
 import { SignJWT, jwtVerify } from 'jose';
 import bcrypt from '@node-rs/bcrypt';
 import argon2 from '@node-rs/argon2';
@@ -53,8 +53,8 @@ export async function setAuthCookies(event: H3Event, user: SafeUser) {
   });
 }
 
-export async function removeAuthCookies(_event: H3Event) {
-  // noop
+export async function removeAuthCookies(event: H3Event) {
+  deleteCookie(event, accessTokenName);
 }
 
 export async function getUserFromEvent(event: H3Event): Promise<SafeUser | null> {
