@@ -1,6 +1,59 @@
 # Changelog
 
 
+## v3.7.2
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.7.1...v3.7.2)
+
+### 🩹 Fixes
+
+- Do handle focus trapping also for small screens ([5a8a3d8](https://github.com/logotip4ik/keycap/commit/5a8a3d8))
+- All fuzzy worker functions should return promises ([1fccf23](https://github.com/logotip4ik/keycap/commit/1fccf23))
+- Exclude data folder from tests ([a7a8d9d](https://github.com/logotip4ik/keycap/commit/a7a8d9d))
+- Restore creating item after reassigning folder ([d1fcee2](https://github.com/logotip4ik/keycap/commit/d1fcee2))
+
+### 💅 Refactors
+
+- Remove not needed variable ([e90c2f7](https://github.com/logotip4ik/keycap/commit/e90c2f7))
+- Typesafe fuzzy worker functions ([1188d47](https://github.com/logotip4ik/keycap/commit/1188d47))
+- Extract folder path to computed ([0c1d48c](https://github.com/logotip4ik/keycap/commit/0c1d48c))
+- Include types from root for workers ([5603643](https://github.com/logotip4ik/keycap/commit/5603643))
+- Rename and move nitro setup to stub-nitro ([b21d36e](https://github.com/logotip4ik/keycap/commit/b21d36e))
+- Use vitest default exclude variable ([6b1cc66](https://github.com/logotip4ik/keycap/commit/6b1cc66))
+- Simplify new shortcut function ([deea5b5](https://github.com/logotip4ik/keycap/commit/deea5b5))
+- Add link to log out ([d5a25b0](https://github.com/logotip4ik/keycap/commit/d5a25b0))
+- Add route handler for deleting auth cookie ([4aea67e](https://github.com/logotip4ik/keycap/commit/4aea67e))
+- Custom is fallback ref ([5153710](https://github.com/logotip4ik/keycap/commit/5153710))
+
+### 🏡 Chore
+
+- **release:** V3.7.1 ([f3967e2](https://github.com/logotip4ik/keycap/commit/f3967e2))
+- Install comlink for dev only envs ([1fd6b23](https://github.com/logotip4ik/keycap/commit/1fd6b23))
+- Make sure node env set to production when building ([eab8db5](https://github.com/logotip4ik/keycap/commit/eab8db5))
+- Patch command score to use esm named export ([5112930](https://github.com/logotip4ik/keycap/commit/5112930))
+- Fix oxlint's pedantic warnings ([203bac6](https://github.com/logotip4ik/keycap/commit/203bac6))
+- Don't use concat on string ([f2fa312](https://github.com/logotip4ik/keycap/commit/f2fa312))
+- Update deps ([3692941](https://github.com/logotip4ik/keycap/commit/3692941))
+- Clear watcher after call ([f00fec6](https://github.com/logotip4ik/keycap/commit/f00fec6))
+- Remove not needed wait for nextTick ([7eda064](https://github.com/logotip4ik/keycap/commit/7eda064))
+- Migrate to vite 5 ([e7dbf7e](https://github.com/logotip4ik/keycap/commit/e7dbf7e))
+- Tweak sucrase options ([f1947e9](https://github.com/logotip4ik/keycap/commit/f1947e9))
+- Apply build config for nitro as well ([488219b](https://github.com/logotip4ik/keycap/commit/488219b))
+- Enable tree shaking for nitro ([b834cf2](https://github.com/logotip4ik/keycap/commit/b834cf2))
+- Remove not needed output options ([01011b3](https://github.com/logotip4ik/keycap/commit/01011b3))
+- Add data folder to ignore ([04f6957](https://github.com/logotip4ik/keycap/commit/04f6957))
+- Add data folder to vite server and fs ignore ([c8885a3](https://github.com/logotip4ik/keycap/commit/c8885a3))
+
+### 🎨 Styles
+
+- Invert if-else statement ([303290f](https://github.com/logotip4ik/keycap/commit/303290f))
+- Move comment to correct line ([e1b8025](https://github.com/logotip4ik/keycap/commit/e1b8025))
+- Remove redundant whitespace ([efc3921](https://github.com/logotip4ik/keycap/commit/efc3921))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk <bogdankostyuk12@gmail.com>
+
 ## v3.7.1
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.7.0...v3.7.1)
