@@ -9495,7 +9495,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nuxt@npm:^3.8.2":
+"nuxt@npm:3.8.2":
   version: 3.8.2
   resolution: "nuxt@npm:3.8.2"
   dependencies:
@@ -9566,6 +9566,80 @@ __metadata:
     nuxi: bin/nuxt.mjs
     nuxt: bin/nuxt.mjs
   checksum: 6bf33d6e6a3d00e21ae98700f9c6321fa6044c67f634c09288bdf73d621f44f207ff618c28bd49cf9ca07142e70b7785f897ca9dda4a8e8df07154e6c362b14c
+  languageName: node
+  linkType: hard
+
+"nuxt@patch:nuxt@npm%3A3.8.2#~/.yarn/patches/nuxt-npm-3.8.2-853140f73e.patch":
+  version: 3.8.2
+  resolution: "nuxt@patch:nuxt@npm%3A3.8.2#~/.yarn/patches/nuxt-npm-3.8.2-853140f73e.patch::version=3.8.2&hash=07a99c"
+  dependencies:
+    "@nuxt/devalue": "npm:^2.0.2"
+    "@nuxt/devtools": "npm:^1.0.3"
+    "@nuxt/kit": "npm:3.8.2"
+    "@nuxt/schema": "npm:3.8.2"
+    "@nuxt/telemetry": "npm:^2.5.2"
+    "@nuxt/ui-templates": "npm:^1.3.1"
+    "@nuxt/vite-builder": "npm:3.8.2"
+    "@unhead/dom": "npm:^1.8.4"
+    "@unhead/ssr": "npm:^1.8.4"
+    "@unhead/vue": "npm:^1.8.4"
+    "@vue/shared": "npm:^3.3.8"
+    acorn: "npm:8.11.2"
+    c12: "npm:^1.5.1"
+    chokidar: "npm:^3.5.3"
+    cookie-es: "npm:^1.0.0"
+    defu: "npm:^6.1.3"
+    destr: "npm:^2.0.2"
+    devalue: "npm:^4.3.2"
+    esbuild: "npm:^0.19.6"
+    escape-string-regexp: "npm:^5.0.0"
+    estree-walker: "npm:^3.0.3"
+    fs-extra: "npm:^11.1.1"
+    globby: "npm:^14.0.0"
+    h3: "npm:^1.9.0"
+    hookable: "npm:^5.5.3"
+    jiti: "npm:^1.21.0"
+    klona: "npm:^2.0.6"
+    knitwork: "npm:^1.0.0"
+    magic-string: "npm:^0.30.5"
+    mlly: "npm:^1.4.2"
+    nitropack: "npm:^2.8.0"
+    nuxi: "npm:^3.10.0"
+    nypm: "npm:^0.3.3"
+    ofetch: "npm:^1.3.3"
+    ohash: "npm:^1.1.3"
+    pathe: "npm:^1.1.1"
+    perfect-debounce: "npm:^1.0.0"
+    pkg-types: "npm:^1.0.3"
+    radix3: "npm:^1.1.0"
+    scule: "npm:^1.1.0"
+    std-env: "npm:^3.5.0"
+    strip-literal: "npm:^1.3.0"
+    ufo: "npm:^1.3.2"
+    ultrahtml: "npm:^1.5.2"
+    uncrypto: "npm:^0.1.3"
+    unctx: "npm:^2.3.1"
+    unenv: "npm:^1.7.4"
+    unimport: "npm:^3.5.0"
+    unplugin: "npm:^1.5.1"
+    unplugin-vue-router: "npm:^0.7.0"
+    untyped: "npm:^1.4.0"
+    vue: "npm:^3.3.8"
+    vue-bundle-renderer: "npm:^2.0.0"
+    vue-devtools-stub: "npm:^0.1.0"
+    vue-router: "npm:^4.2.5"
+  peerDependencies:
+    "@parcel/watcher": ^2.1.0
+    "@types/node": ^14.18.0 || >=16.10.0
+  peerDependenciesMeta:
+    "@parcel/watcher":
+      optional: true
+    "@types/node":
+      optional: true
+  bin:
+    nuxi: bin/nuxt.mjs
+    nuxt: bin/nuxt.mjs
+  checksum: f970dee49b166c9043383baac9b85261659d788b4616642fff8b8fd97c7659bced0f96117270f48d01b51037f1e8876c0c50f18c32fd64998e5ac9a9e7c5da9b
   languageName: node
   linkType: hard
 
