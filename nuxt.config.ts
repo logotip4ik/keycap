@@ -137,7 +137,6 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@vite-pwa/nuxt',
     '@nuxtjs/fontaine',
-    'unplugin-ltsdi/nuxt',
   ],
 
   css: [
