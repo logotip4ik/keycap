@@ -32,8 +32,8 @@ export async function defineFuzzyWorker() {
     : new Worker(new URL('../workers/fuzzy.ts', import.meta.url), { type: 'module' });
 
   // Worker is broken in dev because it relies on SharedArrayBuffer, which is only available for
-  // cross origin isolated sites, which localhost is not. But even if the set appropriate headers
-  // for isolation, then workers will not be available on localhost + isolation
+  // cross origin isolated sites, which localhost is not. But even if i set appropriate headers
+  // for isolation, then workers will not be available on localhost
   if (import.meta.prod) {
     fuzzyWorker.value = coincident(worker, {
       // @ts-expect-error patched version without types
