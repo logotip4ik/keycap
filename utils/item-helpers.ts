@@ -73,7 +73,7 @@ export async function createFolder(folderName: string, self: FolderOrNote, paren
   foldersCache.set(newlyCreatedFolder.path, newlyCreatedFolder);
   offlineStorage.setItem?.(newlyCreatedFolder.path, newlyCreatedFolder);
   updateSubfolderInFolder(self, newlyCreatedFolder, parent);
-  fuzzyWorker.value?.refreshItemsCache();
+  fuzzyWorker.value?.addItemToCache(newlyCreatedFolder);
 
   showItem(newlyCreatedFolder);
 }
@@ -105,7 +105,7 @@ export async function createNote(noteName: string, self: FolderOrNote, parent: F
   notesCache.set(newlyCreatedNote.path, newlyCreatedNote);
   offlineStorage.setItem?.(newlyCreatedNote.path, newlyCreatedNote);
   updateNoteInFolder(self, newlyCreatedNote, parent);
-  fuzzyWorker.value?.refreshItemsCache();
+  fuzzyWorker.value?.addItemToCache(newlyCreatedNote);
 
   showItem(newlyCreatedNote);
 }
