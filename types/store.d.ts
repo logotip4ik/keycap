@@ -36,7 +36,7 @@ declare global {
     key: SearchActionValues
   }
 
-  export type FuzzyItem = Prettify<Pick<FolderOrNote, 'name' | 'path' | 'root'>>;
+  export type FuzzyItem = Prettify<Pick<FolderOrNote, 'name' | 'path'> & { root?: boolean }>;
 
   export interface FuzzyWorker {
     searchWithQuery: (query: string, maxLength = 4) => Array<FuzzyItem | CommandItem>
