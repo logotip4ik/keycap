@@ -8,6 +8,14 @@ if (import.meta.client) {
   if (navigator)
     isFallbackMode.value = !navigator.onLine;
 
-  window.addEventListener('online', () => isFallbackMode.value = false);
-  window.addEventListener('offline', () => isFallbackMode.value = true);
+  if (import.meta.dev) {
+    if (typeof window !== 'undefined') {
+      window.addEventListener('online', () => isFallbackMode.value = false);
+      window.addEventListener('offline', () => isFallbackMode.value = true);
+    }
+  }
+  else {
+    window.addEventListener('online', () => isFallbackMode.value = false);
+    window.addEventListener('offline', () => isFallbackMode.value = true);
+  }
 }
