@@ -23,9 +23,15 @@ if (import.meta.server) {
   useSeoMeta({
     titleTemplate: '%s - Keycap',
     title: note.value.name,
+
     ogTitle: note.value.name,
     ogDescription: `View "${note.value.name}" on Keycap`,
     ogUrl: url.toString(),
+
+    twitterTitle: note.value.name,
+    twitterDescription: `View "${note.value.name}" on Keycap`,
+    twitterCard: 'summary_large_image',
+    twitterCreator: '@bogdankostyuk_',
   }, { mode: 'server' });
 }
 </script>
