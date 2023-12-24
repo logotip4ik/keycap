@@ -97,7 +97,7 @@ export function useTiptap() {
   return { editor, isTyping, setContent, setOptions, onUpdate };
 }
 
-function withEditor(cb: (editor: Editor) => any) {
+function withEditor(cb: (editor: Editor) => void) {
   if (editor.value)
     return cb(editor.value);
 
@@ -121,8 +121,8 @@ function setContent(content: string) {
   );
 }
 
-function onUpdate(cb: (editor: Editor) => any) {
-  let updater: (() => any) | undefined;
+function onUpdate(cb: (editor: Editor) => void) {
+  let updater: (() => void) | undefined;
 
   withEditor((editor) => {
     updater = () => cb(editor);

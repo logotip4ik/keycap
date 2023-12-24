@@ -1,7 +1,7 @@
 <script setup lang="ts">
 defineProps<{
   state: SidebarState
-  onUpdateState: (newState: SidebarState) => any
+  onUpdateState: (newState: SidebarState) => void
 }>();
 
 const route = useRoute();

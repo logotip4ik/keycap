@@ -3,8 +3,8 @@ const props = defineProps<{
   item: FolderOrNote
   parent: FolderWithContents
   menuTarget: HTMLElement | null
-  onShowMenu: (target: HTMLElement) => any
-  onShouldHideSidebar: () => any
+  onShowMenu: (target: HTMLElement) => void
+  onShouldHideSidebar: () => void
 }>();
 
 const isFolder = 'root' in props.item;

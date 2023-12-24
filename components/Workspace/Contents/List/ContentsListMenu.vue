@@ -7,7 +7,7 @@ import type { Instance as PopperInstance } from '@popperjs/core';
 interface MenuAction {
   name: string
   needConfirmation?: boolean
-  handler: () => any | Promise<any>
+  handler: () => void | Promise<void>
 }
 
 const props = defineProps<{

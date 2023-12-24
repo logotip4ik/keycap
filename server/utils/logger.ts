@@ -1,7 +1,7 @@
 import type { H3Event } from 'h3';
 import type { RuntimeConfig } from 'nuxt/schema';
 
-export type LoggerData = Record<string, any | undefined>;
+export type LoggerData = Record<string, unknown | undefined>;
 
 export const LOG_LEVEL = {
   info: 'info',
@@ -47,14 +47,18 @@ class Logger {
 
     if (data.error) {
       data.error = Object.assign({}, data.error, {
+        // @ts-expect-error if there is something send it, otherwise it will be undefined
         message: data.error.message,
+        // @ts-expect-error if there is something send it, otherwise it will be undefined
         stack: data.error.stack,
       });
     }
 
     if (data.err) {
       data.err = Object.assign({}, data.err, {
+        // @ts-expect-error if there is something send it, otherwise it will be undefined
         message: data.err.message,
+        // @ts-expect-error if there is something send it, otherwise it will be undefined
         stack: data.err.stack,
       });
     }

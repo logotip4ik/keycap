@@ -17,7 +17,7 @@ export async function defineFuzzyWorker() {
 
   const fallbackWorker = new Worker(new URL('../workers/async-coincidence-fallback.ts', import.meta.url));
   const fallbackValueObject = { value: null as null | Promise<void> };
-  const fallbackAsyncWait = (buffer: any) => {
+  const fallbackAsyncWait = <T>(buffer: T) => {
     fallbackValueObject.value = new Promise((onmessage) => {
       fallbackWorker.onmessage = () => onmessage();
       fallbackWorker.postMessage(buffer);

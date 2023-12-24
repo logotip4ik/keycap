@@ -19,7 +19,7 @@ const placeholder = props.item.creating
     : 'new note name';
 
 function handleSubmit() {
-  let promise: Promise<any>;
+  let promise: Promise<unknown>;
   isLoading.value = true;
 
   if (props.item.creating) {

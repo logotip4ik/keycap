@@ -17,10 +17,13 @@ const jwtSecret = new TextEncoder().encode(process.env.JWT_SECRET || '');
 const jwtIssuer = process.env.JWT_ISSUER || 'test:keycap';
 const accessTokenName = import.meta.prod ? '__Host-keycap-user' : 'keycap-user';
 
-async function generateAccessToken(object: Record<string, any>): Promise<string> {
+async function generateAccessToken(object: Record<string, unknown>): Promise<string> {
   const now = Math.floor(Date.now() / 1000);
 
   const { id, ...rest } = object;
+
+  if (typeof id !== 'string')
+    throw new Error('id should be a string');
 
   return await new SignJWT(rest)
     .setProtectedHeader({ alg: 'HS256' })

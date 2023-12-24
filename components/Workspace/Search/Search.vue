@@ -66,17 +66,19 @@ async function openItem() {
   if (!actionName)
     return;
 
-  const focusActionItem = (delay = 1): any => setTimeout(() => {
-    const item = document.querySelector(`.contents__list a[aria-label*="${actionName}"]`) as HTMLAnchorElement;
+  const focusActionItem = (delay = 1): void => {
+    setTimeout(() => {
+      const item = document.querySelector(`.contents__list a[aria-label*="${actionName}"]`) as HTMLAnchorElement;
 
-    if (!item)
-      return focusActionItem(100);
+      if (!item)
+        return focusActionItem(100);
 
-    item.offsetParent?.scroll({
-      top: item.offsetTop - 8,
-      behavior: 'smooth', // the animation looks horrible in chrome
-    });
-  }, delay);
+      item.offsetParent?.scroll({
+        top: item.offsetTop - 8,
+        behavior: 'smooth', // the animation looks horrible in chrome
+      });
+    }, delay);
+  };
 
   focusActionItem();
 }

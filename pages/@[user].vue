@@ -19,7 +19,7 @@ mitt.on('search:show', () => isShowingSearch.value = true);
 
 const isNoteEmpty = computed(() => !route.params.note || route.params.note === BLANK_NOTE_NAME);
 
-let popstateOff: (() => any) | undefined;
+let popstateOff: (() => void) | undefined;
 watch(isShowingSearch, async (search) => {
   popstateOff && popstateOff();
 

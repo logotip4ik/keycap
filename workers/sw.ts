@@ -60,7 +60,7 @@ const manifestURLs = manifest.map(
     // @ts-expect-error taken from vite-pwa-org
     const url = new URL(entry.url, self.location);
     cacheEntries.push(new Request(url.href, {
-      credentials: 'same-origin' as any,
+      credentials: 'same-origin',
     }));
     return url.href;
   },

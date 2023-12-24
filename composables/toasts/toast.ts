@@ -5,7 +5,7 @@ export type ToastType = 'info' | 'loading';
 
 export interface ToastButton {
   text: MaybeRefOrGetter<string>
-  onClick: (instance: ToastInstance) => any
+  onClick: (instance: ToastInstance) => void
 }
 
 export interface ToastInstance {

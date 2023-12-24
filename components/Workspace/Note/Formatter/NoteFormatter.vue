@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ChainedCommands, Editor } from '@tiptap/core';
 import type { Level } from '@tiptap/extension-heading';
+import type { ResolvedPos } from '@tiptap/pm/model';
 
 const props = defineProps<{
   editor: Editor
@@ -162,13 +163,12 @@ useTinykeys({
 });
 
 // NOTE: this is needed for correct cycle effect of text formatting
-let prevAnchor: any;
+let prevAnchor: ResolvedPos | undefined;
 watch(() => props.editor.state.selection.$anchor, (anchor) => {
   const currentTextContent = anchor.node(anchor.depth).textContent;
   const prevTextContent = prevAnchor && prevAnchor.node(prevAnchor.depth).textContent;
 
-  const whitespaceChanged
-    = !!prevAnchor
+  const whitespaceChanged = !!prevAnchor
     && currentTextContent === ''
     && prevTextContent === ''
     && prevAnchor.pos !== anchor.pos;

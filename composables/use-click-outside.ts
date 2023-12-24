@@ -1,4 +1,4 @@
-export function useClickOutside(target: Ref<HTMLElement | null>, callback: (e: Event) => any) {
+export function useClickOutside(target: Ref<HTMLElement | null>, callback: (e: Event) => void) {
   if (import.meta.server)
     return;
 
@@ -7,7 +7,7 @@ export function useClickOutside(target: Ref<HTMLElement | null>, callback: (e: E
       callback(event);
   };
 
-  const cleanups: Array<() => any> = [];
+  const cleanups: Array<() => void> = [];
   const cleanup = () => {
     cleanups.forEach((fn) => fn());
     cleanups.length = 0;

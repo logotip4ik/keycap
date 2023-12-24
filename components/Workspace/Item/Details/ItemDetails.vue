@@ -53,7 +53,7 @@ function rememberHeight() {
   prevPopupHeight = itemDetailsEl.value!.clientHeight;
 }
 
-function transitionHeight(_: any, done: () => void) {
+function transitionHeight(_el: Element, done: () => void) {
   const newHeight = itemDetailsEl.value!.clientHeight;
 
   if (!prevPopupHeight)

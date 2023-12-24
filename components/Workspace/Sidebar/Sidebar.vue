@@ -7,7 +7,7 @@ const props = withDefaults(defineProps<{
   dir?: 'left' | 'right'
   name: string
   state: Ref<SidebarState>
-  onUpdateState: (newState: SidebarState) => any
+  onUpdateState: (newState: SidebarState) => void
 }>(), { dir: 'left' });
 
 const sidebar = shallowRef<HTMLDivElement | null>(null);
@@ -42,7 +42,7 @@ function hideIf(trigger: SidebarState) {
     props.onUpdateState('hidden');
 }
 
-let off: (() => any) | undefined;
+let off: (() => void) | undefined;
 watch(state, debounce((state: SidebarState) => {
   off && off();
 

@@ -9,7 +9,7 @@ withDefaults(defineProps<{
   pattern?: string
   required?: boolean
   value?: string
-  onUpdateValue?: (text: string) => any
+  onUpdateValue?: (text: string) => void
 }>(), {
   required: true,
 });
