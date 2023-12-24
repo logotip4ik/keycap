@@ -54,6 +54,7 @@ if (import.meta.server) {
     applicationName: 'Keycap',
     author: 'Bogdan Kostyuk',
     twitterCard: 'summary',
+    twitterCreator: '@bogdankostyuk_',
   });
 
   useHead({
