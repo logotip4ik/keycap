@@ -23,6 +23,24 @@ export default antfu({
   ...regexp.configs.recommended,
   plugins: { regexp },
 }, {
+  rules: {
+    'no-restricted-syntax': [
+      'error',
+      // Antfu default
+      'DebuggerStatement',
+      'LabeledStatement',
+      'WithStatement',
+      'TSEnumDeclaration[const=true]',
+      'TSExportAssignment',
+
+      // Do not allow emit
+      {
+        message: 'use props instead.',
+        selector: '[name=defineEmits]',
+      },
+    ],
+  },
+
   ignores: [
     'data',
     'node_modules',
