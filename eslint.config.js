@@ -40,7 +40,7 @@ export default antfu({
       },
     ],
   },
-
+}, {
   ignores: [
     'data',
     'node_modules',
