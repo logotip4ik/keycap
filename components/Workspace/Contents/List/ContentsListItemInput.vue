@@ -5,6 +5,7 @@ const props = defineProps<{
 }>();
 
 const state = useContentsSidebarState();
+const createToast = useToaster();
 
 const inputEl = shallowRef<HTMLInputElement | null>(null);
 const name = ref(props.item.name || '');
@@ -36,12 +37,10 @@ function handleSubmit() {
     return;
   }
 
-  promise.then(() => {
-    if (state.value === 'visible')
-      state.value = 'hidden';
-  }).finally(() => {
-    isLoading.value = false;
-  });
+  promise
+    .then(() => state.value = state.value === 'visible' ? 'hidden' : state.value)
+    .catch(() => createToast('Our servers must be sleeping right now. Please try again a bit later (-_-)'))
+    .finally(() => isLoading.value = false);
 }
 
 function handleReset() {
