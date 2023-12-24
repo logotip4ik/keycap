@@ -20,19 +20,22 @@ if (error.value || !note.value) {
 if (import.meta.server) {
   const url = getRequestURL(useRequestEvent());
 
-  useSeoMeta({
-    titleTemplate: '%s - Keycap',
-    title: note.value.name,
+  useServerSeoMeta({
+    title: makeTitle(note.value.name),
 
-    ogTitle: note.value.name,
+    ogTitle: makeTitle(note.value.name),
     ogDescription: `View "${note.value.name}" on Keycap`,
     ogUrl: url.toString(),
 
-    twitterTitle: note.value.name,
+    twitterTitle: makeTitle(note.value.name),
     twitterDescription: `View "${note.value.name}" on Keycap`,
     twitterCard: 'summary_large_image',
     twitterCreator: '@bogdankostyuk_',
-  }, { mode: 'server' });
+  });
+}
+
+function makeTitle(name: string) {
+  return `Note "${name}" - Keycap`;
 }
 </script>
 
