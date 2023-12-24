@@ -57,7 +57,7 @@ if (import.meta.server) {
     twitterCreator: '@bogdankostyuk_',
   });
 
-  useHead({
+  useServerHead({
     link: [
       {
         rel: 'preload',
