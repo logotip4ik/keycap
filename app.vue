@@ -3,6 +3,8 @@ import '~/polyfills/array-at';
 
 import parseDuration from 'parse-duration';
 
+import MonaSansURL from '~/assets/fonts/Mona-Sans/Mona-Sans.woff2?url';
+
 setupErrorLogging();
 
 // NOTE: should be removed from client bundle
@@ -59,13 +61,7 @@ if (import.meta.server) {
 
   useServerHead({
     link: [
-      {
-        rel: 'preload',
-        as: 'font',
-        type: 'font/woff2',
-        crossorigin: 'anonymous',
-        href: import('~/assets/fonts/Mona-Sans/Mona-Sans.woff2?url').then((url) => url.default),
-      },
+      { rel: 'preload', as: 'font', type: 'font/woff2', crossorigin: 'anonymous', href: MonaSansURL },
     ],
   });
 }
