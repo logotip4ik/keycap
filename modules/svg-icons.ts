@@ -36,8 +36,6 @@ export default defineNuxtModule({
         name: icon.name,
         kebabName: icon.kebabCaseName,
         filePath: dst,
-        prefetch: false,
-        preload: false,
       });
     }
 
