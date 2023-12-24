@@ -132,6 +132,8 @@ function showMenu(event: Event) {
     text-overflow: ellipsis;
 
     overflow: hidden;
+
+    width: 100%;
   }
 
   &__edit {
