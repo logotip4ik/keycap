@@ -8,6 +8,7 @@ const state = useContentsSidebarState();
 
 const inputEl = shallowRef<HTMLInputElement | null>(null);
 const name = ref(props.item.name || '');
+const isLoading = ref(false);
 
 const isFolder = 'root' in props.item;
 const placeholder = props.item.creating
@@ -18,6 +19,7 @@ const placeholder = props.item.creating
 
 function handleSubmit() {
   let promise: Promise<any>;
+  isLoading.value = true;
 
   if (props.item.creating) {
     const creationName = name.value.replace(/\//g, '');
@@ -37,6 +39,8 @@ function handleSubmit() {
   promise.then(() => {
     if (state.value === 'visible')
       state.value = 'hidden';
+  }).finally(() => {
+    isLoading.value = false;
   });
 }
 
@@ -56,8 +60,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <form class="list-item__form" @submit.prevent="handleSubmit" @reset.prevent="handleReset">
-    <label v-once class="list-item__form__label" for="contentsListItemInput">
+  <form
+    class="list-item__form"
+    aria-live="polite"
+    :aria-busy="isLoading"
+    @submit.prevent="handleSubmit"
+    @reset.prevent="handleReset"
+  >
+    <label v-once class="sr-only" for="contentsListItemInput">
       Item name (enter "/" at the end to create folder)
     </label>
     <input
@@ -70,23 +80,19 @@ onMounted(() => {
       minlength="2"
       :pattern="allowedClientItemNameRE.source"
       :placeholder="placeholder"
+      :disabled="isLoading"
       @blur="handleReset"
       @keydown.esc="handleReset"
     >
+
+    <span aria-hidden="true" class="list-item__form__spinner" />
   </form>
 </template>
 
 <style lang="scss">
 .list-item__form {
-  &__label {
-    position: absolute;
-
-    width: 0;
-    height: 0;
-
-    overflow: hidden;
-    pointer-events: none;
-  }
+  position: relative;
+  isolation: isolate;
 
   &__input {
     font-family: inherit;
@@ -103,11 +109,55 @@ onMounted(() => {
     border-radius: 0.225rem;
     background-color: hsla(var(--text-color-hsl), 0.025);
 
-    transition: outline-color .3s;
+    transition: outline-color .3s, color .3s;
 
     &:user-invalid {
       outline-color: var(--error-color);
     }
+
+    &:disabled {
+      color: hsla(var(--text-color-hsl), 0.5);
+    }
+  }
+
+  &__spinner {
+    --size: 1.5rem;
+
+    position: absolute;
+    top: calc(var(--pd-y) / 2);
+    right: calc(var(--pd-x) / 2);
+
+    width: var(--size);
+    height: var(--size);
+
+    opacity: 0;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    border-left-color: hsla(var(--text-color-hsl), 0.75);
+    border-right-color: hsla(var(--text-color-hsl), 0.75);
+
+    animation: spin 1s infinite linear;
+    transition: opacity 0.3s;
+  }
+
+  &[aria-busy="true"] {
+    .list-item__form__input {
+      filter: blur(1px);
+    }
+
+    .list-item__form__spinner {
+      opacity: 1;
+    }
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0)
+  }
+
+  to {
+    transform: rotate(1turn)
   }
 }
 </style>
