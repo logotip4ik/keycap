@@ -46,10 +46,10 @@ declare global {
   }
 
   export interface OfflineStorage {
-    setItem: <T = any>(key: string, value: T) => Promise<void>
-    getItem: <T = any>(key: string) => Promise<T | undefined>
+    setItem: <T = unknown>(key: string, value: T) => Promise<void>
+    getItem: <T = unknown>(key: string) => Promise<T | undefined>
     removeItem: (key: string) => Promise<void>
-    getAllItems: <T = any>() => Promise<Array<T>>
+    getAllItems: <T = unknown>() => Promise<Array<T>>
   }
 }
 

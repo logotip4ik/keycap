@@ -245,12 +245,15 @@ export async function deleteFolder(self: FolderOrNote, parent: FolderWithContent
 
   const itemPathToCheck = `${self.path}/`;
   offlineStorage.getAllItems?.()
-    .then((items: Array<FolderOrNote>) => {
+    .then((items) => {
       for (const item of items) {
-        if ('path' in item && !item.path.startsWith(itemPathToCheck))
+        if (!item
+          || typeof item !== 'object'
+          || !('path' in item)
+          || !(item as FolderOrNote).path.startsWith(itemPathToCheck))
           continue;
 
-        offlineStorage.removeItem?.(item.path);
+        offlineStorage.removeItem?.((item as FolderOrNote).path);
       }
     });
 
