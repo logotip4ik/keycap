@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { getRequestURL } from 'h3';
-
 const route = useRoute();
 
 const { data: note, error } = await useAsyncData('share', async () => {
@@ -18,14 +16,15 @@ if (error.value || !note.value) {
 }
 
 if (import.meta.server) {
-  const url = getRequestURL(useRequestEvent());
+  const { siteOrigin } = useRuntimeConfig().public;
+  const protocol = import.meta.prod ? 'https' : 'http';
 
   useServerSeoMeta({
     title: makeTitle(note.value.name),
 
     ogTitle: makeTitle(note.value.name),
     ogDescription: `View "${note.value.name}" on Keycap`,
-    ogUrl: url.toString(),
+    ogUrl: `${protocol}://${siteOrigin}${route.path}`,
 
     twitterTitle: makeTitle(note.value.name),
     twitterDescription: `View "${note.value.name}" on Keycap`,
