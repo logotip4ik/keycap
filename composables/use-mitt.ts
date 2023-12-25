@@ -15,11 +15,9 @@ const beseOn = emitter.on;
 emitter.on = (type, handler) => {
   beseOn(type, handler);
 
-  if (getCurrentInstance()) {
-    onScopeDispose(() => {
-      emitter.off(type, handler);
-    });
-  }
+  onScopeDispose(() => {
+    emitter.off(type, handler);
+  });
 };
 
 export function useMitt(): Emitter<Events> {
