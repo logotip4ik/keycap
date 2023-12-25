@@ -11,20 +11,20 @@ export default defineEventHandler(async (event) => {
 
   const prisma = getPrisma();
 
-  timer.start('db');
-
   // NOTE: maybe we should store view page in our's cache rather then vercel's isr ?
-
+  timer.start('db');
   await prisma.$transaction(async (tx) => {
     const shareToDelete = await tx.share.findFirst({
       where: { note: { path: notePath }, ownerId: user.id },
       select: { id: true, link: true },
     }).catch(async (err) => {
-      await event.context.logger.error({ err, msg: 'share.findFirst failed' });
+      await event.context.logger.error(({ err, msg: 'share.findFirst failed' }));
+
+      throw createError({ statusCode: 400 });
     });
 
     if (!shareToDelete)
-      throw createError({ statusCode: 400 });
+      throw createError({ statusCode: 404 });
 
     await tx.share.delete({
       where: { id: shareToDelete.id },
@@ -35,7 +35,6 @@ export default defineEventHandler(async (event) => {
       throw createError({ statusCode: 400 });
     });
   });
-
   timer.end();
 
   timer.appendHeader(event);

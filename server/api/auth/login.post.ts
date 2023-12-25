@@ -39,10 +39,9 @@ export default defineEventHandler(async (event) => {
   const isPasswordValid = await verifyPassword(user.password, body.password)
     .catch(async (err) => {
       await event.context.logger.error({ err, msg: 'password verification failed' });
-    });
 
-  if (isPasswordValid === undefined)
-    throw createError({ statusCode: 500 });
+      throw createError({ statusCode: 500 });
+    });
 
   if (isPasswordValid === false)
     throw createError({ statusCode: 400, statusMessage: 'email or password is incorrect' });

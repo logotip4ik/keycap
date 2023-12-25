@@ -16,16 +16,13 @@ export default defineEventHandler(async (event) => {
     select: selectParams,
   }).catch(async (err) => {
     await event.context.logger.error({ err, msg: 'folder.findFirst failed' });
+
+    throw createError({ statusCode: 400 });
   });
   timer.end();
 
-  if (!folder) {
-    throw createError({
-      // prisma will return null if nothing found
-      // thou, error catching will return undefined
-      statusCode: folder === null ? 404 : 400,
-    });
-  }
+  if (!folder)
+    throw createError({ statusCode: 404 });
 
   timer.appendHeader(event);
 

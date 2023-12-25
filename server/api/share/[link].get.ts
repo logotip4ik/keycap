@@ -14,6 +14,8 @@ export default defineEventHandler(async (event) => {
     where: { shares: { some: { link } } },
   }).catch(async (err) => {
     await event.context.logger.error({ err, msg: 'note.findFirst failed' });
+
+    throw createError({ statusCode: 400 });
   });
 
   if (!note)

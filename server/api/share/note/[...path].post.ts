@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
   const link = generateShareLink();
 
   timer.start('db');
-  const share = await prisma.$transaction(async (tx) => {
+  await prisma.$transaction(async (tx) => {
     const note = await tx.note.findFirst({
       where: { path: notePath, ownerId: user.id },
       select: { shares: { select: { id: true } } },
@@ -33,11 +33,10 @@ export default defineEventHandler(async (event) => {
     });
   }).catch(async (err) => {
     await event.context.logger.error({ err, msg: 'cannot create share' });
+
+    throw createError({ statusCode: 400 });
   });
   timer.end();
-
-  if (!share)
-    throw createError({ statusCode: 400 });
 
   timer.appendHeader(event);
 

@@ -36,17 +36,16 @@ export default defineEventHandler(async (event) => {
   const selectParams = getNoteSelectParamsFromEvent(event);
 
   timer.start('db');
-  const updatedNote = await prisma.note.update({
+  await prisma.note.update({
     data,
     where: { path: notePath, ownerId: user.id },
     select: selectParams,
   }).catch(async (err) => {
     await event.context.logger.error({ err, msg: 'note.update failed' });
+
+    throw createError({ statusCode: 400 });
   });
   timer.end();
-
-  if (!updatedNote)
-    throw createError({ statusCode: 400 });
 
   timer.appendHeader(event);
 

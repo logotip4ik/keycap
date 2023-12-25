@@ -12,16 +12,15 @@ export default defineEventHandler(async (event) => {
   const prisma = getPrisma();
 
   timer.start('db');
-  const note = await prisma.note.delete({
+  await prisma.note.delete({
     where: { path: notePath, ownerId: user.id },
     select: { id: true },
   }).catch(async (err) => {
     await event.context.logger.error({ err, msg: 'note.delete failed' });
+
+    throw createError({ statusCode: 400 });
   });
   timer.end();
-
-  if (!note)
-    throw createError({ statusCode: 400 });
 
   timer.appendHeader(event);
 

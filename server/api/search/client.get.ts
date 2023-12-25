@@ -33,12 +33,9 @@ export default defineEventHandler(async (event) => {
   ]).catch(async (err) => {
     await event.context.logger.error({ err, msg: '(note|folder).findMany failed' });
 
-    return [null, null];
+    throw createError({ statusCode: 400 });
   });
   timer.end();
-
-  if (!notes || !folders)
-    throw createError({ statusCode: 400 });
 
   timer.appendHeader(event);
 

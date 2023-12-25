@@ -42,11 +42,10 @@ export default defineEventHandler(async (event) => {
     select: selectParams,
   }).catch(async (err) => {
     await event.context.logger.error({ err, msg: 'folder.create failed' });
+
+    throw createError({ statusCode: 400 });
   });
   timer.end();
-
-  if (!folder)
-    throw createError({ statusCode: 400 });
 
   timer.appendHeader(event);
 

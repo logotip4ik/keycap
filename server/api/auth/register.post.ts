@@ -26,10 +26,9 @@ export default defineEventHandler(async (event) => {
   const hashedPassword = await hashPassword(body.password)
     .catch(async (err) => {
       await event.context.logger.error({ err, msg: 'password hashing failed' });
-    });
 
-  if (!hashedPassword)
-    throw createError({ statusCode: 500 });
+      throw createError({ statusCode: 500 });
+    });
 
   const user = await prisma.user.create({
     data: {
@@ -48,10 +47,9 @@ export default defineEventHandler(async (event) => {
     select: { id: true, email: true, username: true },
   }).catch(async (err) => {
     await event.context.logger.error({ err, msg: 'user.create failed' });
-  });
 
-  if (!user)
     throw createError({ statusCode: 400, statusMessage: 'user with this email or username might already exist' });
+  });
 
   await setAuthCookies(event, user);
 

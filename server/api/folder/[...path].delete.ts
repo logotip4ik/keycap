@@ -15,16 +15,15 @@ export default defineEventHandler(async (event) => {
     return {};
 
   timer.start('db');
-  const folder = await prisma.folder.delete({
+  await prisma.folder.delete({
     where: { path: folderPath, ownerId: user.id },
     select: { id: true },
   }).catch(async (err) => {
     await event.context.logger.error({ err, msg: 'folder.delete failed' });
+
+    throw createError({ statusCode: 400 });
   });
   timer.end();
-
-  if (!folder)
-    throw createError({ statusCode: 400 });
 
   timer.appendHeader(event);
 

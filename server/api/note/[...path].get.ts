@@ -18,16 +18,13 @@ export default defineEventHandler(async (event) => {
     select: selectParams,
   }).catch(async (err) => {
     await event.context.logger.error({ err, msg: 'note.findFirst failed' });
+
+    throw createError({ status: 400 });
   });
   timer.end();
 
-  if (!note) {
-    throw createError({
-      // prisma will return null if nothing found
-      // thou, error catching will return undefined
-      statusCode: note === null ? 404 : 400,
-    });
-  }
+  if (!note)
+    throw createError({ statusCode: 404 });
 
   timer.appendHeader(event);
 

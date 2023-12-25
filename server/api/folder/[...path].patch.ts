@@ -42,18 +42,17 @@ export default defineEventHandler(async (event) => {
   const replaceValue = `${newFolderPath}/`;
 
   timer.start('db');
-  const res = await prisma.$transaction([
+  await prisma.$transaction([
     prisma.$queryRaw`UPDATE "Folder" SET "name" = ${data.name}, "path" = ${newFolderPath}, "updatedAt" = ${now} WHERE ("Folder"."ownerId" = ${user.id} AND "Folder"."path"::text = ${folderPath})`,
 
     prisma.$queryRaw`UPDATE "Note" SET "path" = regexp_replace("path"::text, ${sqlFolderPathRegexp}, ${replaceValue}, 'c'), "updatedAt" = ${now} WHERE ("Note"."ownerId" = ${user.id} AND "Note"."path"::text LIKE ${sqlStartsWithFolderPath})`,
     prisma.$queryRaw`UPDATE "Folder" SET "path" = regexp_replace("path"::text, ${sqlFolderPathRegexp}, ${replaceValue}, 'c'), "updatedAt" = ${now} WHERE ("Folder"."ownerId" = ${user.id} AND "Folder"."path"::text LIKE ${sqlStartsWithFolderPath})`,
   ]).catch(async (err) => {
     await event.context.logger.error({ err }, 'rename folder failed');
+
+    throw createError({ statusCode: 400 });
   });
   timer.end();
-
-  if (!res)
-    throw createError({ statusCode: 400 });
 
   timer.appendHeader(event);
 
