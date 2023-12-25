@@ -1,4 +1,4 @@
-import { randomUUID } from 'node:crypto';
+import { randomUUID } from 'uncrypto';
 import { deleteCookie, getCookie, setCookie } from 'h3';
 import { SignJWT, jwtVerify } from 'jose';
 import bcrypt from '@node-rs/bcrypt';
@@ -8,7 +8,7 @@ import parseDuration from 'parse-duration';
 import type { H3Event } from 'h3';
 
 import { isJwtPayload } from './validators/jwt';
-import { toBigInt } from '.';
+import { toBigInt } from './index';
 
 import type { SafeUser } from '~/types/server';
 
