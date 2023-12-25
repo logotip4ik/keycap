@@ -58,7 +58,7 @@ onMounted(() => {
 
 <template>
   <Transition name="fade" appear>
-    <div v-if="!isFallbackMode" ref="fixedBox" class="inline-menu formatter">
+    <div v-show="!isFallbackMode" ref="fixedBox" class="inline-menu formatter">
       <slot />
     </div>
   </Transition>
