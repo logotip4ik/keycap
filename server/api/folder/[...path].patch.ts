@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
   // Shortcircuting as currently only folder name could be updated
   // But we don't require `name` prop in request body
   if (!data.name)
-    return { ok: true };
+    return sendNoContent(event);
 
   const now = new Date();
   const newFolderPath = makeNewItemPath(folderPath, data.name);
@@ -57,5 +57,5 @@ export default defineEventHandler(async (event) => {
 
   timer.appendHeader(event);
 
-  return { ok: true };
+  return sendNoContent(event);
 });
