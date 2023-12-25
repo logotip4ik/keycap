@@ -1,6 +1,39 @@
 # Changelog
 
 
+## v3.7.4
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.7.3...v3.7.4)
+
+### 🩹 Fixes
+
+- Throw only if id is not defined ([dec35025](https://github.com/logotip4ik/keycap/commit/dec35025))
+- Do not pre encode id ([0dd8badd](https://github.com/logotip4ik/keycap/commit/0dd8badd))
+
+### 💅 Refactors
+
+- Simplify search handling ([b39d76de](https://github.com/logotip4ik/keycap/commit/b39d76de))
+- Use `sendNoContent` instead of `{ ok: true }` ([c1624f5a](https://github.com/logotip4ik/keycap/commit/c1624f5a))
+
+### 🏡 Chore
+
+- **release:** V3.7.3 ([00f2c3ec](https://github.com/logotip4ik/keycap/commit/00f2c3ec))
+- Remove unused validator ([141626d3](https://github.com/logotip4ik/keycap/commit/141626d3))
+- Use uncrypto to generate randomUUID ([1d37401e](https://github.com/logotip4ik/keycap/commit/1d37401e))
+- Remove not needed global interface ([2233ca62](https://github.com/logotip4ik/keycap/commit/2233ca62))
+- Correctly type oauth users ([bbda6859](https://github.com/logotip4ik/keycap/commit/bbda6859))
+- Import `randomUUID` from `uncrypto` ([581c3974](https://github.com/logotip4ik/keycap/commit/581c3974))
+- Simplify error checking ([793ce8ec](https://github.com/logotip4ik/keycap/commit/793ce8ec))
+- Better cors handling ([1fa7ebf8](https://github.com/logotip4ik/keycap/commit/1fa7ebf8))
+- Remove async route rules ([8d21bb50](https://github.com/logotip4ik/keycap/commit/8d21bb50))
+- Do not proceed with oauth if user is defined ([03bc5948](https://github.com/logotip4ik/keycap/commit/03bc5948))
+- Add alias to root folder endpoint ([23dfc687](https://github.com/logotip4ik/keycap/commit/23dfc687))
+- Do not use `NuxtLink` for toolbox footer links ([9705c4ba](https://github.com/logotip4ik/keycap/commit/9705c4ba))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk <bogdankostyuk12@gmail.com>
+
 ## v3.7.3
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.7.2...v3.7.3)
