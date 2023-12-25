@@ -2,13 +2,10 @@ import { tinykeys } from 'tinykeys';
 
 import type { KeyBindingMap, KeyBindingOptions } from 'tinykeys';
 
-export function useTinykeys(shortcuts: KeyBindingMap, options: KeyBindingOptions = {}) {
+export function useTinykeys(shortcuts: KeyBindingMap, options?: KeyBindingOptions) {
   if (import.meta.server)
     return;
 
-  onMounted(() => {
-    const unregisterTinykeys = tinykeys(window, shortcuts, options);
-
-    onBeforeUnmount(() => unregisterTinykeys());
-  });
+  // TODO: this will be broken if we change target
+  onBeforeUnmount(tinykeys(window, shortcuts, options));
 };
