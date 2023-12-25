@@ -28,7 +28,7 @@ async function generateAccessToken(object: Record<string, unknown>): Promise<str
   return await new SignJWT(rest)
     .setProtectedHeader({ alg: 'HS256' })
     .setJti(randomUUID())
-    .setSubject(id.toString())
+    .setSubject(id as string)
     .setIssuedAt()
     .setExpirationTime(now + authExpiration)
     .setIssuer(jwtIssuer)
