@@ -1,4 +1,4 @@
-import { randomUUID } from 'node:crypto';
+import { randomUUID } from 'uncrypto';
 
 import type { Prisma } from '@prisma/client';
 import type { H3Event } from 'h3';
