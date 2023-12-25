@@ -1,6 +1,46 @@
 # Changelog
 
 
+## v3.7.3
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.7.2...v3.7.3)
+
+### 🩹 Fixes
+
+- Correct type for fuzzy item ([564bc8bf](https://github.com/logotip4ik/keycap/commit/564bc8bf))
+- Allow item name spanning full width ([0e132014](https://github.com/logotip4ik/keycap/commit/0e132014))
+- Use unknown as offline storage base return type ([9972b20b](https://github.com/logotip4ik/keycap/commit/9972b20b))
+- Separate rules overwrite and ignores sections ([2450c53f](https://github.com/logotip4ik/keycap/commit/2450c53f))
+
+### 🏡 Chore
+
+- **release:** V3.7.2 ([59b1b2b7](https://github.com/logotip4ik/keycap/commit/59b1b2b7))
+- Remove unused package ([f061b612](https://github.com/logotip4ik/keycap/commit/f061b612))
+- Patch nuxt module to correctly insert treeshake comments ([7f54a7b4](https://github.com/logotip4ik/keycap/commit/7f54a7b4))
+- Add created items to fuzzy worker rather then refreshing it ([4300c59b](https://github.com/logotip4ik/keycap/commit/4300c59b))
+- Minor comment fixes ([820a3af9](https://github.com/logotip4ik/keycap/commit/820a3af9))
+- Update deps ([ab6371b7](https://github.com/logotip4ik/keycap/commit/ab6371b7))
+- Fix typo ([7dedeb1a](https://github.com/logotip4ik/keycap/commit/7dedeb1a))
+- Enchance seo ([6afcd611](https://github.com/logotip4ik/keycap/commit/6afcd611))
+- Use same title for twitter og and site ([cf9977b3](https://github.com/logotip4ik/keycap/commit/cf9977b3))
+- Better og url resolution ([baa0a305](https://github.com/logotip4ik/keycap/commit/baa0a305))
+- Add twitter author prop ([9014a886](https://github.com/logotip4ik/keycap/commit/9014a886))
+- Use server head in server only block ([3a78bf34](https://github.com/logotip4ik/keycap/commit/3a78bf34))
+- Use static import for font url resolution ([58599f0b](https://github.com/logotip4ik/keycap/commit/58599f0b))
+- Use jpg image as og image ([660eae4b](https://github.com/logotip4ik/keycap/commit/660eae4b))
+- Allow prefetching and preloading icons components ([84f16e27](https://github.com/logotip4ik/keycap/commit/84f16e27))
+- Add loading indication for creating new item ([07affaf6](https://github.com/logotip4ik/keycap/commit/07affaf6))
+- Show toast if something went wrong ([0e16e80d](https://github.com/logotip4ik/keycap/commit/0e16e80d))
+- Remove dev error with window being undefined ([a5df925f](https://github.com/logotip4ik/keycap/commit/a5df925f))
+- Do not allow use of defineEmits ([426c67f8](https://github.com/logotip4ik/keycap/commit/426c67f8))
+- Reduce use of `any` ([b8b01c54](https://github.com/logotip4ik/keycap/commit/b8b01c54))
+- Remove unused error supression ([ad685d4e](https://github.com/logotip4ik/keycap/commit/ad685d4e))
+- Update eslint and node types ([154d5668](https://github.com/logotip4ik/keycap/commit/154d5668))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk <bogdankostyuk12@gmail.com>
+
 ## v3.7.2
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.7.1...v3.7.2)
