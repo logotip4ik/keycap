@@ -305,6 +305,15 @@ export default defineNuxtConfig({
       route: '/security.txt',
       handler: resolve('./server/routes/.well-known/security.txt.get.ts'),
       lazy: true,
+      method: 'get',
+      middleware: false,
+    },
+    {
+      route: '/api/folder',
+      handler: resolve('./server/api/folder/[...path].get.ts'),
+      lazy: true,
+      method: 'get',
+      middleware: false,
     },
   ],
 
