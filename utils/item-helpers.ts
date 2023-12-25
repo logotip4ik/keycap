@@ -120,7 +120,7 @@ export async function renameFolder(newName: string, self: FolderOrNote, parent: 
   const folderPathName = encodeURIComponent(self.name);
   const folderPath = currentFolderPath + folderPathName;
 
-  const res = await $fetch<QuickResponse>(`/api/folder${folderPath}`, { method: 'PATCH', body: newFolder })
+  const res = await $fetch<unknown>(`/api/folder${folderPath}`, { method: 'PATCH', body: newFolder })
     .catch(() => { updateSubfolderInFolder(self, { editing: false }, parent); });
 
   if (!res)
