@@ -24,7 +24,6 @@ function closeWithDelay(_event?: Event) {
   }, 0);
 }
 
-let afterSearchCallback: ((...args: Array<any>) => any) | null;
 function handleSearchInput(value: string) {
   value = value.trim();
   selectedResult.value = 0;
@@ -35,28 +34,16 @@ function handleSearchInput(value: string) {
   isLoadingResults.value = true;
 
   fuzzyWorker.value.searchWithQuery(value)
-    .then((entries: Array<FuzzyItem | CommandItem>) => {
-      results.value = entries;
-
-      afterSearchCallback && afterSearchCallback();
-    })
-    .finally(() => {
-      isLoadingResults.value = false;
-
-      afterSearchCallback = null;
-    });
+    .then((entries) => results.value = entries)
+    .finally(() => isLoadingResults.value = false);
 }
 
 async function openItem() {
   const list = resultsEl.value?.$el as HTMLUListElement | undefined;
   const result = list?.children[selectedResult.value];
 
-  if (!result) {
-    if (!afterSearchCallback)
-      afterSearchCallback = openItem;
-
+  if (!result)
     return;
-  };
 
   const actionEl = result.firstElementChild as HTMLAnchorElement | HTMLButtonElement;
   const actionName = actionEl.dataset.name;
@@ -66,21 +53,20 @@ async function openItem() {
   if (!actionName)
     return;
 
-  const focusActionItem = (delay = 1): void => {
-    setTimeout(() => {
-      const item = document.querySelector(`.contents__list a[aria-label*="${actionName}"]`) as HTMLAnchorElement;
+  for (let i = 0; i < 12; i++) {
+    await delay(i === 0 ? 1 : 100);
 
-      if (!item)
-        return focusActionItem(100);
+    const item = document.querySelector(`.contents__list a[aria-label*="${actionName}"]`) as HTMLAnchorElement | undefined;
 
+    if (item) {
       item.offsetParent?.scroll({
         top: item.offsetTop - 8,
         behavior: 'smooth', // the animation looks horrible in chrome
       });
-    }, delay);
-  };
 
-  focusActionItem();
+      break;
+    }
+  }
 }
 
 function changeSelectedResult(difference: number) {

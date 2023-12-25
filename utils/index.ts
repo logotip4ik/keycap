@@ -16,6 +16,13 @@ export function toBigInt(string: string): bigint {
   }
 }
 
+/**
+ * @param {number} time milliseconds
+ */
+export function delay(time: number) {
+  return new Promise((r) => setTimeout(r, time));
+}
+
 if (import.meta.vitest) {
   const { it, expect } = import.meta.vitest;
 
