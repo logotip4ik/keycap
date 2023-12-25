@@ -1,5 +1,5 @@
 import type { InternalApi } from 'nitropack';
-import type { H3Event } from 'h3';
+import type { H3CorsOptions, H3Event } from 'h3';
 
 import parseDuration from 'parse-duration';
 
@@ -41,16 +41,16 @@ const rules: Array<Rule> = [
   { path: '/api/oauth', handler: withoutUser },
 ];
 
+const corsOptions: H3CorsOptions = {
+  allowHeaders: CorsHeaders,
+  methods: CorsMethods,
+  origin: [CorsOrigin],
+  maxAge: parseDuration('24 hours', 's')?.toString(),
+};
+
 export default defineEventHandler(async (event) => {
-  if (isMethod(event, 'OPTIONS')) {
-    appendCorsPreflightHeaders(event, {
-      allowHeaders: CorsHeaders,
-      methods: CorsMethods,
-      origin: [CorsOrigin],
-      maxAge: parseDuration('24 hours', 's')?.toString(),
-    });
+  if (handleCors(event, corsOptions))
     return;
-  }
 
   const rule = rules.find((rule) => event.path.startsWith(rule.path));
 
