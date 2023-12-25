@@ -5,25 +5,12 @@ import parseDuration from 'parse-duration';
 
 import { CorsHeaders, CorsMethods, CorsOrigin } from '~/config/headers';
 
+// true | undefined | void - should pass, else - should disallow
+type RuleFunction = (event: H3Event) => boolean | undefined | void;
+
 interface Rule {
   path: keyof InternalApi | (string & NonNullable<unknown>)
   handler: RuleFunction
-}
-// true and undefined - shouldPass else - shouldDisallow
-type RuleFunction = (event: H3Event) => boolean | undefined | Promise<boolean | undefined | void>;
-
-function withoutUser(event: H3Event) {
-  const { oauthEnabled } = useRuntimeConfig().public;
-
-  if (!oauthEnabled)
-    throw createError({ statusCode: 404 });
-
-  const user = event.context.user;
-
-  if (!user)
-    return true;
-
-  return sendRedirect(event, `/@${user.username}`);
 }
 
 function withUserOnly(event: H3Event) {
@@ -37,8 +24,6 @@ const rules: Array<Rule> = [
   { path: '/api/recent', handler: withUserOnly },
   { path: '/api/users/me', handler: withUserOnly },
   { path: '/api/share/note', handler: withUserOnly },
-
-  { path: '/api/oauth', handler: withoutUser },
 ];
 
 const corsOptions: H3CorsOptions = {
@@ -57,10 +42,7 @@ export default defineEventHandler(async (event) => {
   if (!rule)
     return;
 
-  const shouldPass = await rule.handler(event);
-
-  if (event.handled)
-    return;
+  const shouldPass = rule.handler(event);
 
   if (shouldPass === false)
     throw createError({ statusCode: 401 });
