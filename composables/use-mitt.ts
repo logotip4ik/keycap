@@ -4,7 +4,6 @@ import mitt, { type Emitter } from 'mitt';
 type Events = {
   'save:note'?: Partial<{ force: boolean }>
   'cache:populated'?: Partial<object>
-  // will open note if there is one and folder otherwise
   'details:show'?: Partial<object>
   'search:show'?: Partial<object>
 };
