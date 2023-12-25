@@ -20,7 +20,7 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>) {
     scheduled = true;
   }
 
-  function focusLastElement() {
+  function tryFocusLastElement() {
     lastFocusedEl && lastFocusedEl.focus();
     lastFocusedEl = undefined;
   }
@@ -40,7 +40,7 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>) {
     stop();
 
     if (!el)
-      return focusLastElement();
+      return tryFocusLastElement();
 
     if (document.activeElement)
       lastFocusedEl = document.activeElement as HTMLElement;
@@ -77,7 +77,7 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>) {
 
   onScopeDispose(() => {
     stop();
-    focusLastElement();
+    tryFocusLastElement();
   });
 
   return stop;
