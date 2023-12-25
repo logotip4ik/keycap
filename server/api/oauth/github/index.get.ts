@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
   if (!query.code)
     return await sendOAuthRedirect(event, OAuthProvider.GitHub);
 
-  const githubUser = destr<GitHubUserRes>(query.socialUser) || await getGitHubUserWithEvent(event)
+  const githubUser: GitHubUserRes | undefined = destr<GitHubUserRes>(query.socialUser) || await getGitHubUserWithEvent(event)
     .catch(async (err) => {
       await event.context.logger.error({ err, msg: 'getGitHubUserWithEvent failed' });
     });
