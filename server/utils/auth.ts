@@ -22,13 +22,13 @@ async function generateAccessToken(object: Record<string, unknown>): Promise<str
 
   const { id, ...rest } = object;
 
-  if (typeof id !== 'string')
-    throw new Error('id should be a string');
+  if (!id)
+    throw new Error('id should be defined');
 
   return await new SignJWT(rest)
     .setProtectedHeader({ alg: 'HS256' })
     .setJti(randomUUID())
-    .setSubject(id)
+    .setSubject(id.toString())
     .setIssuedAt()
     .setExpirationTime(now + authExpiration)
     .setIssuer(jwtIssuer)
