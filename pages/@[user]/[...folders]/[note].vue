@@ -70,7 +70,7 @@ const { data: note, refresh, error } = await useAsyncData<NoteWithContent | unde
 });
 
 let abortControllerUpdate: AbortController | null;
-const throttledUpdate = useThrottleFn(updateNote, 1000, true, false); // enable trailing call and disable leading
+const throttledUpdate = useThrottleFn(updateNote, 1500, true, false); // enable trailing call and disable leading
 function updateNote(content: string) {
   // if no note was found in cache that means that it was deleted
   if (!notesCache.has(notePath.value))
