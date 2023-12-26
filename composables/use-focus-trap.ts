@@ -4,6 +4,8 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>) {
   if (import.meta.server)
     return;
 
+  const isSmallScreen = getIsSmallScreen();
+
   let lastFocusedEl: HTMLElement | undefined;
   let off: (() => void) | undefined;
   let observer: MutationObserver | undefined;
@@ -21,7 +23,9 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>) {
   }
 
   function tryFocusLastElement() {
-    lastFocusedEl && lastFocusedEl.focus();
+    if (!isSmallScreen && lastFocusedEl)
+      lastFocusedEl.focus();
+
     lastFocusedEl = undefined;
   }
 
