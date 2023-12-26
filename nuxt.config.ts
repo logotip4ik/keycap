@@ -44,9 +44,12 @@ export default defineNuxtConfig({
     writeEarlyHints: true,
     componentIslands: true,
     watcher: 'parcel',
-    typescriptBundlerResolution: true,
     headNext: true,
     appManifest: false,
+  },
+
+  future: {
+    typescriptBundlerResolution: true,
   },
 
   typescript: {
@@ -318,6 +321,7 @@ export default defineNuxtConfig({
     },
   ],
 
+  // @ts-expect-error idk what happend here
   fontMetrics: {
     fonts: [
       {
