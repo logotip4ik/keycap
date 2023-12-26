@@ -65,13 +65,6 @@ useTinykeys({
     updateContent();
   },
 });
-
-onBeforeUnmount(() => {
-  const html = editor.value?.getHTML();
-
-  if (html !== props.content)
-    updateContent(html);
-});
 </script>
 
 <template>
