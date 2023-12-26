@@ -75,7 +75,7 @@ onBeforeUnmount(() => popstateOff?.());
   <div id="workspace" class="workspace">
     <LazyWorkspaceToolbox />
 
-    <Transition name="fade" appear>
+    <Transition name="fade">
       <LazyWorkspaceWelcome v-if="isNoteEmpty" />
 
       <main v-else class="workspace__note">
