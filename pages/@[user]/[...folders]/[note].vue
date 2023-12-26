@@ -68,7 +68,6 @@ const { data: note, pending, refresh, error } = await useAsyncData<NoteWithConte
 }, {
   server: false,
   lazy: true,
-  immediate: false,
   deep: false,
 });
 
@@ -162,8 +161,6 @@ mitt.on('details:show', () => {
     // @ts-expect-error it will be okeeeeeey
     currentItemForDetails.value = note.value;
 });
-
-onBeforeMount(() => refresh());
 
 if (import.meta.client) {
   const off = on(document, 'visibilitychange', () => {
