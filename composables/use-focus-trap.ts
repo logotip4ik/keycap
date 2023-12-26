@@ -62,7 +62,8 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>) {
     });
 
     off = on(el, 'keydown', (e) => {
-      if (e.key !== 'Tab') return;
+      if (e.key !== 'Tab')
+        return;
 
       const focusableEls = getFocusableEls(el);
       const firstFocusableEl = focusableEls.at(0);

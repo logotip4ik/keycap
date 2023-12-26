@@ -1,5 +1,6 @@
 export default defineEventHandler(async (event) => {
-  if (event.context.user) return null;
+  if (event.context.user)
+    return null;
 
   const isOriginMismatch = checkOriginForMismatch(event);
 
@@ -8,9 +9,12 @@ export default defineEventHandler(async (event) => {
 
   const body = await readBody(event) || {};
 
-  if (body.email) body.email = body.email.trim();
-  if (body.username) body.username = body.username.trim().replace(/\s/g, '_');
-  if (body.password) body.password = body.password.trim();
+  if (body.email)
+    body.email = body.email.trim();
+  if (body.username)
+    body.username = body.username.trim().replace(/\s/g, '_');
+  if (body.password)
+    body.password = body.password.trim();
 
   const validation = useRegisterValidation(body);
 

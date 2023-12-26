@@ -42,7 +42,8 @@ const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefi
 
   $fetch(`/api/folder${folderApiPath.value}`, { signal: abortControllerGet.signal })
     .then((res) => {
-      if (!res) return;
+      if (!res)
+        return;
 
       const { data: fetchedFolder } = res;
       const wasCreatingItem = folder.value?.notes.some((item) => item.creating);
@@ -72,7 +73,8 @@ const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefi
 });
 
 const folderContents = computed(() => {
-  if (!folder.value) return [];
+  if (!folder.value)
+    return [];
 
   const notes = folder.value.notes || [];
   const subfolders = folder.value.subfolders || [];
@@ -81,7 +83,8 @@ const folderContents = computed(() => {
 });
 
 function showMenu(target: HTMLElement, item: FolderOrNote) {
-  if (isFallbackMode.value) return;
+  if (isFallbackMode.value)
+    return;
 
   menuOptions.item = item;
   menuOptions.target = target;

@@ -20,7 +20,8 @@ export const useOfflineStorage = () => offlineStorage;
 export function deleteNoteFromFolder(noteToDelete: NoteMinimal, parent: FolderWithContents) {
   const noteIdxToDelete = parent.notes.findIndex((note) => note.id === noteToDelete.id);
 
-  if (noteIdxToDelete === -1) return;
+  if (noteIdxToDelete === -1)
+    return;
 
   parent.notes.splice(noteIdxToDelete, 1);
 }
@@ -28,7 +29,8 @@ export function deleteNoteFromFolder(noteToDelete: NoteMinimal, parent: FolderWi
 export function deleteSubfolderFromFolder(subfolderToDelete: FolderMinimal, parent: FolderWithContents) {
   const folderIdxToDelete = parent.subfolders.findIndex((folder) => folder.id === subfolderToDelete.id);
 
-  if (folderIdxToDelete === -1) return;
+  if (folderIdxToDelete === -1)
+    return;
 
   parent.subfolders.splice(folderIdxToDelete, 1);
 }

@@ -23,7 +23,8 @@ export const ParseDurationTransformPlugin = createUnplugin(() => ({
     const statements = findStaticImports(code)
       .filter((i) => i.specifier === parseDurationSpecifier);
 
-    if (statements.length === 0) return;
+    if (statements.length === 0)
+      return;
 
     const contextMap: Context = {};
     const functionNames: Array<string> = [];
@@ -42,7 +43,8 @@ export const ParseDurationTransformPlugin = createUnplugin(() => ({
 
     walk(this.parse(code) as any, {
       enter(_node) {
-        if (_node.type !== 'CallExpression') return;
+        if (_node.type !== 'CallExpression')
+          return;
 
         const node = _node as SimpleCallExpression;
 

@@ -63,7 +63,8 @@ export async function removeAuthCookies(event: H3Event) {
 export async function getUserFromEvent(event: H3Event): Promise<SafeUser | null> {
   const accessToken = getCookie(event, accessTokenName);
 
-  if (!accessToken) return null;
+  if (!accessToken)
+    return null;
 
   const { payload } = await jwtVerify(accessToken, jwtSecret, { issuer: jwtIssuer })
     .catch(async (err) => {

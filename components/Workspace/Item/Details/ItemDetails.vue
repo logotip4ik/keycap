@@ -28,7 +28,8 @@ const { data: details, refresh } = useAsyncData(async () => {
 });
 
 const mergedDetails = computed(() => {
-  if (!details.value) return null;
+  if (!details.value)
+    return null;
 
   // NOTE: maybe use `options.tranform` from useAsyncData ?
   return {
@@ -81,7 +82,8 @@ const formatter = Intl.DateTimeFormat(undefined, {
   minute: '2-digit',
 });
 function formatDate(dateString?: Date | string) {
-  if (!dateString) return '';
+  if (!dateString)
+    return '';
 
   const date = new Date(dateString);
 
@@ -89,7 +91,8 @@ function formatDate(dateString?: Date | string) {
 }
 
 async function copyShareLink() {
-  if (!mergedDetails.value?.shares) return;
+  if (!mergedDetails.value?.shares)
+    return;
 
   const { protocol, host } = window.location;
   const link = mergedDetails.value?.shares.link;

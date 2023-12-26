@@ -13,7 +13,8 @@ export const commandActions: Record<Command['key'], Command['handler']> = {
     const contents = useContentsSidebarState();
     const folder = useNuxtApp()._asyncData.folder;
 
-    if (!folder) return;
+    if (!folder)
+      return;
 
     const folderData = folder.data as Ref<FolderWithContents>;
 

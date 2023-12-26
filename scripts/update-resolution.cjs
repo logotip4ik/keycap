@@ -15,11 +15,13 @@ async function updatePatches() {
   for (const [resolutionName, patch] of Object.entries(pkg.resolutions)) {
     const dep = deps.find(([name]) => resolutionName.includes(name));
 
-    if (!dep) continue;
+    if (!dep)
+      continue;
 
     const [resolutionVersion] = patch.match(patchVersion_RE) || [];
 
-    if (!resolutionName) continue;
+    if (!resolutionName)
+      continue;
 
     const normalizedDepVersion = dep[1].startsWith('^') ? dep[1].slice(1) : dep[1];
 

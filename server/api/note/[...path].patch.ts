@@ -17,8 +17,10 @@ export default defineEventHandler(async (event) => {
 
   const data = await readBody<UpdatableFields>(event) || {};
 
-  if (data.name) data.name = data.name.trim();
-  if (data.content) data.content = data.content.trim();
+  if (data.name)
+    data.name = data.name.trim();
+  if (data.content)
+    data.content = data.content.trim();
 
   const validation = useNoteUpdateValidation(data);
 

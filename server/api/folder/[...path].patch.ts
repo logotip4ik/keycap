@@ -17,7 +17,8 @@ export default defineEventHandler(async (event) => {
 
   const data = await readBody<UpdatableFields>(event) || {};
 
-  if (data.name) data.name = data.name.trim();
+  if (data.name)
+    data.name = data.name.trim();
 
   const validation = useFolderUpdateValidation(data);
 

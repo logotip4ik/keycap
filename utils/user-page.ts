@@ -62,7 +62,8 @@ export function getOfflineStorage() {
   let fallbackToast: ReturnType<typeof createToast>;
 
   watch(isFallbackMode, async (value) => {
-    if (!value) return;
+    if (!value)
+      return;
 
     if (!fallbackToast)
       fallbackToast = createToast('Fallback mode enabled. Populating cache from offline storage.');

@@ -2,7 +2,8 @@
 function handleClick() {
   const folder = useNuxtApp()._asyncData.folder;
 
-  if (!folder) return;
+  if (!folder)
+    return;
 
   const folderData = folder.data as Ref<FolderWithContents>;
 

@@ -9,8 +9,10 @@ export default defineEventHandler(async (event) => {
 
   const body = await readBody<TypeOf<typeof loginSchema> & { browserAction?: unknown }>(event) || {};
 
-  if (body.email) body.email = body.email.trim();
-  if (body.password) body.password = body.password.trim();
+  if (body.email)
+    body.email = body.email.trim();
+  if (body.password)
+    body.password = body.password.trim();
 
   const validation = useLoginValidation(body);
 
