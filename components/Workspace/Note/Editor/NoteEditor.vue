@@ -25,9 +25,9 @@ const {
 } = useTiptap();
 
 function updateContent(html?: string) {
-  const noteContent = editor.value?.isEmpty ? '' : (html || editor.value?.getHTML());
+  const content = editor.value?.isEmpty ? '' : (html || editor.value?.getHTML() || '');
 
-  props.onUpdate(noteContent || '');
+  props.onUpdate(content);
 }
 
 function hideBubbleMenu() {
@@ -41,24 +41,26 @@ watch(() => props.content, (content) => {
 
   if (editorContent !== content && !isTyping.value)
     setEditorContent(content);
-}, { immediate: true });
+}, { immediate: import.meta.client });
 
 watch(() => props.editable, (editable) => {
-  if (!editor.value) return;
+  if (!editor.value)
+    return;
 
   if (editor.value.options.editable !== editable)
     setEditorOptions({ editable });
-}, { immediate: true });
+}, { immediate: import.meta.client });
 
 mitt.on('save:note', () => updateContent());
 
-onContentUpdate(
-  debounce(() => updateContent(), 100),
-);
+// FIX:if user navigates right after keypress? then new content will be overwritten by user ?
+
+onContentUpdate(() => updateContent());
 
 useTinykeys({
   '$mod+s': (event) => {
-    if (!editor.value?.isFocused) return;
+    if (!editor.value?.isFocused)
+      return;
 
     event.preventDefault();
 
