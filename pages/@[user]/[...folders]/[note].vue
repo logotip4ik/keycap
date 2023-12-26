@@ -62,9 +62,7 @@ const { data: note, pending, refresh, error } = await useAsyncData<NoteWithConte
       loadingToast?.value?.remove();
     });
 
-  const notePath = `/${route.params.user}${noteApiPath.value}`;
-
-  return notesCache.get(notePath) || await offlineStorage.getItem?.(notePath);
+  return notesCache.get(notePath.value) || await offlineStorage.getItem?.(notePath.value);
 }, {
   server: false,
   lazy: true,
