@@ -16,7 +16,7 @@ function refreshAuth() {
     const user = useUser();
 
     const newUser = await $fetch('/api/users/me', { retry: 1 })
-      .catch(() => null);
+      .catch(NOOP);
 
     const isSameUser = newUser && newUser.data.username === user.value?.username;
 

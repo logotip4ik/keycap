@@ -9,7 +9,7 @@ export async function checkIfUsernameTaken(username: string) {
   const prisma = getPrisma();
 
   const user = await prisma.user.findFirst({ where: { username }, select: { username: true } })
-    .catch(() => null);
+    .catch(() => {});
 
   return !!user?.username;
 }

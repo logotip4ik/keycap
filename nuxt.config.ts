@@ -71,6 +71,7 @@ export default defineNuxtConfig({
     imports: [
       { from: 'rad-event-listener', name: 'on' },
       { from: 'perfect-debounce', name: 'debounce' },
+      { from: '@vue/shared', name: 'NOOP' },
     ],
   },
 

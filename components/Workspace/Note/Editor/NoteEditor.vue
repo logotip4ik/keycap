@@ -78,7 +78,7 @@ useTinykeys({
     >
       <WorkspaceNoteFormatter
         :editor="editor"
-        @hide="isSmallScreen ? () => null : hideBubbleMenu"
+        @hide="isSmallScreen ? NOOP : hideBubbleMenu"
       />
     </Component>
 

@@ -208,7 +208,7 @@ export async function deleteNote(self: FolderOrNote, parent: FolderWithContents)
   const notePath = currentFolderPath + notePathName;
 
   const res = await $fetch.raw(`/api/note${notePath}`, { method: 'DELETE' })
-    .catch(() => null);
+    .catch(NOOP);
 
   if (!res)
     return;
@@ -231,7 +231,7 @@ export async function deleteFolder(self: FolderOrNote, parent: FolderWithContent
   const folderPath = currentFolderPath + folderPathName;
 
   const res = await $fetch.raw<null>(`/api/folder${folderPath}`, { method: 'DELETE' })
-    .catch(() => null);
+    .catch(NOOP);
 
   if (!res)
     return;
@@ -271,9 +271,10 @@ export async function preloadItem(self: FolderOrNote) {
   const path = pathPrefix + currentFolderPath + pathName;
 
   const res = await $fetch<{ data: FolderWithContents | NoteMinimal }>(`/api/${path}`)
-    .catch(() => null);
+    .catch(NOOP);
 
-  if (!res) return;
+  if (!res)
+    return;
 
   const offlineStorage = useOfflineStorage();
   const notesCache = useNotesCache();
