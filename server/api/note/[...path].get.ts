@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
   }).catch(async (err) => {
     await event.context.logger.error({ err, msg: 'note.findFirst failed' });
 
-    throw createError({ status: 400 });
+    throw createError({ statusCode: 400 });
   });
   timer.end();
 
