@@ -120,10 +120,10 @@ kbd {
 
 .fade-enter-active {
   transition: opacity 0.3s * 2 ease;
-}
 
-.fade-enter-active.fast-fade {
-  transition-duration: 0.3s;
+  &.fast-fade {
+    transition-duration: 0.3s;
+  }
 }
 
 .fade-leave-active {
@@ -136,7 +136,7 @@ kbd {
 }
 
 .fade-enter-active.skeleton {
-  transition-delay: 0.25s;
+  transition-delay: 0.4s;
 }
 
 .sr-only {
