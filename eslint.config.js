@@ -13,8 +13,6 @@ export default antfu({
     'ts/no-shadow': 'off',
 
     'arrow-parens': ['error', 'always'],
-    'curly': ['error', 'multi-or-nest', 'consistent'],
-    'antfu/if-newline': 'off',
     'import/no-nodejs-modules': 'off',
     'yaml/no-empty-mapping-value': 'off',
     'node/prefer-global/process': ['error', 'always'],
