@@ -113,7 +113,6 @@ $breakpoint-one: $sidebar-breakpoint-one;
   width: 0;
   height: 100%;
 
-  will-change: width;
   transition: width var(--sidebar-tr-duration) var(--sidebar-tr-ease);
 
   @media (width > $breakpoint-one) {
@@ -157,7 +156,6 @@ $breakpoint-one: $sidebar-breakpoint-one;
     0px 0px 80px -20px rgba(var(--base-shadow-color), 0.05)
   ;
 
-  will-change: transform;
   transform-origin: left top;
   transition: transform var(--sidebar-tr-duration) var(--sidebar-tr-ease);
 
