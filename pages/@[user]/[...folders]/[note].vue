@@ -23,7 +23,7 @@ let loadingToast: RefToastInstance | undefined;
 let abortControllerGet: AbortController | null;
 let lastRefetch: number | undefined;
 
-const { data: note, pending, refresh, error } = await useAsyncData<NoteWithContent | undefined>('note', async () => {
+const { data: note, refresh, error } = await useAsyncData<NoteWithContent | undefined>('note', async () => {
   if (import.meta.server || !route.params.note || route.params.note === BLANK_NOTE_NAME)
     return;
 
@@ -72,28 +72,14 @@ const { data: note, pending, refresh, error } = await useAsyncData<NoteWithConte
 let abortControllerUpdate: AbortController | null;
 const throttledUpdate = useThrottleFn(updateNote, 1000, true, false); // enable trailing call and disable leading
 function updateNote(content: string) {
-  const updatingCurrentNote = notePath.value.replace('/', '/@') === window.location.pathname;
-
-  // send update request after get
-  if (pending.value && updatingCurrentNote) {
-    const stop = watch(pending, (pending) => {
-      if (!pending) {
-        updateNote(content);
-        stop();
-      }
-    });
-
-    return;
-  }
-
   // if no note was found in cache that means that it was deleted
-  if (!note.value || !notesCache.get(notePath.value))
+  if (!notesCache.has(notePath.value))
     return;
 
-  const newNote = { ...toRaw(note.value), content };
+  const newNote = { ...notesCache.get(notePath.value), content };
 
   // enables optimistic ui
-  notesCache.set(note.value.path, newNote);
+  notesCache.set(newNote.path, newNote);
 
   abortControllerUpdate?.abort();
   abortControllerUpdate = new AbortController();
@@ -104,10 +90,7 @@ function updateNote(content: string) {
     retry: 2,
     signal: abortControllerUpdate.signal,
   })
-    .then(() => {
-      if (note.value)
-        offlineStorage.setItem?.(note.value.path, newNote);
-    })
+    .then(() => offlineStorage.setItem?.(newNote.path, newNote))
     .catch((error) => console.warn(error));
 }
 
