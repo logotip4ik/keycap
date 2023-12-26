@@ -94,7 +94,7 @@ export function useTiptap() {
   if (!editor.value)
     initTiptap();
 
-  return { editor, isTyping, setContent, setOptions, onUpdate };
+  return { editor, isTyping, setContent, setOptions, onUpdate, withEditor };
 }
 
 function withEditor(cb: (editor: Editor) => void) {
