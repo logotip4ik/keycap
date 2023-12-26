@@ -79,7 +79,9 @@ onBeforeUnmount(() => popstateOff?.());
       <LazyWorkspaceWelcome v-if="isNoteEmpty" />
 
       <main v-else class="workspace__note">
-        <NuxtPage />
+        <NuxtPage
+          :transition="{ name: 'fade' }"
+        />
       </main>
     </Transition>
 
