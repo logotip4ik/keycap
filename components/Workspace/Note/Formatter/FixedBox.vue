@@ -57,11 +57,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <Transition name="fade" appear>
+  <WithFadeTransition appear>
     <div v-show="!isFallbackMode" ref="fixedBox" class="inline-menu formatter">
       <slot />
     </div>
-  </Transition>
+  </WithFadeTransition>
 </template>
 
 <style lang="scss">

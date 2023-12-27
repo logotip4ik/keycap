@@ -145,7 +145,7 @@ onBeforeUnmount(() => {
 
 <template>
   <Teleport :to="props.target.parentElement">
-    <Transition name="fade" appear>
+    <WithFadeTransition appear>
       <ul
         ref="menu"
         role="menu"
@@ -163,18 +163,18 @@ onBeforeUnmount(() => {
             @click="withEffects($event, action)"
             @pointerdown="withEffects($event, action)"
           >
-            <Transition name="fade">
+            <WithFadeTransition>
               <span v-if="currentlyConfirming !== key">
                 {{ action.name }}
               </span>
               <span v-else>
                 Hold to confirm
               </span>
-            </Transition>
+            </WithFadeTransition>
           </button>
         </li>
       </ul>
-    </Transition>
+    </WithFadeTransition>
   </Teleport>
 </template>
 

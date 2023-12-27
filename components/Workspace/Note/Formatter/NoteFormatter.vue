@@ -190,7 +190,7 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
 </script>
 
 <template>
-  <Transition name="fade" @before-leave="rememberContainerWidth" @enter="animateContainerWidth">
+  <WithFadeTransition @before-leave="rememberContainerWidth" @enter="animateContainerWidth">
     <div v-if="!isEditingLink" class="formatter__contents-wrapper">
       <button
         class="formatter__button"
@@ -291,7 +291,7 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
         <LazyIconBaselineCheck />
       </button>
     </form>
-  </Transition>
+  </WithFadeTransition>
 </template>
 
 <style lang="scss">

@@ -203,7 +203,7 @@ if (import.meta.client) {
 </script>
 
 <template>
-  <Transition name="fade">
+  <WithFadeTransition>
     <WorkspaceContentsListSkeleton
       v-if="!folder"
     />
@@ -225,7 +225,7 @@ if (import.meta.client) {
       @click.self="menuOptions.target = null"
     >
       <template v-for="item in folderContents" :key="item.id">
-        <Transition name="fade">
+        <WithFadeTransition>
           <li
             v-if="item.creating || item.editing"
             key="1"
@@ -250,10 +250,10 @@ if (import.meta.client) {
               @should-hide-sidebar="onUpdateState('hidden')"
             />
           </li>
-        </Transition>
+        </WithFadeTransition>
       </template>
     </TransitionGroup>
-  </Transition>
+  </WithFadeTransition>
 
   <LazyWorkspaceContentsListMenu
     v-if="menuOptions.item"

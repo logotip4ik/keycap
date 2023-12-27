@@ -148,8 +148,7 @@ useTinykeys({ Escape: closeWithDelay });
         </button>
       </form>
 
-      <Transition
-        name="fade"
+      <WithFadeTransition
         @enter="animateHeight"
         @leave="animateHeight"
         @before-enter="rememberHeight"
@@ -188,7 +187,7 @@ useTinykeys({ Escape: closeWithDelay });
             />
           </li>
         </TransitionGroup>
-      </Transition>
+      </WithFadeTransition>
     </div>
   </div>
 </template>

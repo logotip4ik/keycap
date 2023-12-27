@@ -39,7 +39,7 @@ const stop = watch(() => props.state, (state) => {
       Recent:
     </p>
 
-    <Transition name="fade">
+    <WithFadeTransition>
       <WorkspaceToolboxRecentSkeleton v-if="!recent" />
 
       <div v-else-if="recent.length === 0" class="toolbox__recent__empty">
@@ -60,7 +60,7 @@ const stop = watch(() => props.state, (state) => {
           </WorkspaceToolboxRecentItem>
         </li>
       </ul>
-    </Transition>
+    </WithFadeTransition>
   </div>
 </template>
 

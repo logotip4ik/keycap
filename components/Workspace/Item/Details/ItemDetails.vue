@@ -138,7 +138,7 @@ onBeforeMount(() => refresh());
         <LazyIconCloseRounded v-once class="item-details__close-button__icon" />
       </button>
 
-      <Transition name="fade" appear @before-leave="rememberHeight" @enter="transitionHeight">
+      <WithFadeTransition appear @before-leave="rememberHeight" @enter="transitionHeight">
         <WorkspaceItemDetailsSkeleton v-if="!mergedDetails" key="skeleton" />
 
         <!-- TODO: split into smaller components -->
@@ -164,12 +164,12 @@ onBeforeMount(() => refresh());
               :disabled="!mergedDetails.shares || isLoadingItemDetails"
               @click="copyShareLink"
             >
-              <Transition name="fade">
+              <WithFadeTransition>
                 <!-- NOTE: skeleton class add appear delay -->
                 <span v-if="isLoadingItemDetails" class="skeleton">Loading...</span>
                 <span v-else-if="mergedDetails.shares">{{ mergedDetails.shares.link }}</span>
                 <span v-else>Disabled</span>
-              </Transition>
+              </WithFadeTransition>
             </button>
 
             <input
@@ -188,14 +188,14 @@ onBeforeMount(() => refresh());
 
             <hr class="item-details__data__row__hr">
 
-            <Transition name="fade">
+            <WithFadeTransition>
               <p :key="data.value.value" class="item-details__data__row__value">
                 {{ data.value.value }}
               </p>
-            </Transition>
+            </WithFadeTransition>
           </div>
         </div>
-      </Transition>
+      </WithFadeTransition>
     </div>
   </div>
 </template>

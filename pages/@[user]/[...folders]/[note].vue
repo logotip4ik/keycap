@@ -164,7 +164,7 @@ if (import.meta.client) {
 </script>
 
 <template>
-  <Transition name="fade">
+  <WithFadeTransition>
     <!-- NOTE: This component should be wrapped inside client only, if note is rendered on server -->
     <WorkspaceNoteEditor
       v-if="note"
@@ -180,7 +180,7 @@ if (import.meta.client) {
       key="skeleton"
       class="workspace__note-editor"
     />
-  </Transition>
+  </WithFadeTransition>
 </template>
 
 <style lang="scss">

@@ -75,7 +75,7 @@ onBeforeUnmount(() => popstateOff?.());
   <div id="workspace" class="workspace">
     <LazyWorkspaceToolbox />
 
-    <Transition name="fade">
+    <WithFadeTransition>
       <LazyWorkspaceWelcome v-if="isNoteEmpty" />
 
       <main v-else class="workspace__note">
@@ -83,7 +83,7 @@ onBeforeUnmount(() => popstateOff?.());
           :transition="{ name: 'fade' }"
         />
       </main>
-    </Transition>
+    </WithFadeTransition>
 
     <LazyWorkspaceContents />
 
@@ -97,12 +97,12 @@ onBeforeUnmount(() => popstateOff?.());
     </Teleport>
 
     <Teleport to="body">
-      <Transition name="fade">
+      <WithFadeTransition>
         <LazyWorkspaceItemDetails
           v-if="currentItemForDetails"
           :item="currentItemForDetails"
         />
-      </Transition>
+      </WithFadeTransition>
     </Teleport>
   </div>
 </template>
