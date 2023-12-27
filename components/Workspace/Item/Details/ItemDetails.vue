@@ -141,8 +141,8 @@ onBeforeMount(() => refresh());
       <WithFadeTransition appear @before-leave="rememberHeight" @enter="transitionHeight">
         <WorkspaceItemDetailsSkeleton v-if="!mergedDetails" key="skeleton" />
 
-        <!-- TODO: split into smaller components -->
         <div v-else-if="mergedDetails" key="content" class="item-details__data">
+          <!-- TODO: split into smaller components -->
           <p
             v-once
             id="item-details-dialog-title"
@@ -164,8 +164,8 @@ onBeforeMount(() => refresh());
               :disabled="!mergedDetails.shares || isLoadingItemDetails"
               @click="copyShareLink"
             >
+              <!-- NOTE: skeleton class adds appear delay -->
               <WithFadeTransition>
-                <!-- NOTE: skeleton class add appear delay -->
                 <span v-if="isLoadingItemDetails" class="skeleton">Loading...</span>
                 <span v-else-if="mergedDetails.shares">{{ mergedDetails.shares.link }}</span>
                 <span v-else>Disabled</span>

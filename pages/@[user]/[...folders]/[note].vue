@@ -163,9 +163,10 @@ if (import.meta.client) {
 }
 </script>
 
+<!-- NOTE: NoteEditor component should be wrapped inside client only, if note is rendered on server -->
+
 <template>
   <WithFadeTransition>
-    <!-- NOTE: This component should be wrapped inside client only, if note is rendered on server -->
     <WorkspaceNoteEditor
       v-if="note"
       key="content"
