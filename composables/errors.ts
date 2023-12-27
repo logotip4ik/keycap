@@ -1,4 +1,5 @@
 import parseDuration from 'parse-duration';
+import type { H3Error } from 'h3';
 
 export function setupErrorLogging() {
   // TODO: use server logger ?
@@ -33,6 +34,35 @@ export function sendError(error: Error, properties?: Record<string, string>) {
   else
     console.log(payload); // eslint-disable-line no-console
 }
+
+export async function baseHandleError(error: Error | H3Error): Promise<boolean> {
+  const user = useUser();
+  const isFallbackMode = useFallbackMode();
+
+  if (error.message.includes('aborted'))
+    return true;
+
+  // @ts-expect-error there actually is statusCode
+  if (error.statusCode === 401 || !user.value) {
+    user.value = null;
+    await navigateTo('/login');
+    return true;
+  }
+
+  // @ts-expect-error there actually is statusCode
+  if (error.statusCode === 404) {
+    await navigateTo(`/@${user.value.username}`);
+    return true;
+  }
+
+  // Other network error ?
+  if (error.name === 'FetchError') {
+    sendError(error); // Try to send the error
+    isFallbackMode.value = true;
+  }
+
+  return false;
+};
 
 function getSessionId() {
   const key = 'device-identifier';

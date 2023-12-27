@@ -23,7 +23,7 @@ let loadingToast: ToastInstance | undefined;
 let abortControllerGet: AbortController | undefined;
 let lastRefetch: number | undefined;
 
-const { data: note, refresh, error } = await useAsyncData<NoteWithContent | undefined>('note', async () => {
+const { data: note, refresh } = await useAsyncData<NoteWithContent | undefined>('note', async () => {
   if (import.meta.server || !route.params.note || route.params.note === BLANK_NOTE_NAME)
     return;
 
@@ -57,8 +57,8 @@ const { data: note, refresh, error } = await useAsyncData<NoteWithContent | unde
       note.value = fetchedNote;
     })
     .catch((e) => {
-      error.value = e; // set error in async data, since request promise is not awaited
       handleError(e);
+      throw e;
     })
     .finally(() => {
       const multiplier = document.visibilityState === 'visible' ? 1 : 2;
@@ -102,36 +102,16 @@ function updateNote(content: string) {
 }
 
 async function handleError(error: Error) {
-  if (error.message.includes('aborted'))
-    return;
-
-  // @ts-expect-error there actually is statusCode
-  if (error.statusCode === 401 || !user.value) {
-    user.value = null;
-    await navigateTo('/login');
-    return;
-  }
-  // @ts-expect-error there actually is statusCode
-  if (error.statusCode === 404)
-    return await navigateTo(`/@${user.value.username}`);
-
-  // Other network error ?
-  if (error.name === 'FetchError') {
-    sendError(error);
-    isFallbackMode.value = true;
-  }
-
-  // But if folder was found in cache, then do nothing, just display it
-  if (note.value)
+  if (await baseHandleError(error) || note.value)
     return;
 
   // last chance to show user folder, if iterator in @[user].vue page hasn't yet set the foldersCache
   const offlineNote = await offlineStorage.getItem?.(notePath.value);
 
   if (!offlineNote || typeof offlineNote !== 'object') {
-    createToast(`Sorry ⊙︿⊙ We couldn't find offline copy for folder: "${route.params.note}"`);
+    createToast(`Sorry ⊙︿⊙ We couldn't find offline note copy: "${route.params.note}"`);
 
-    await navigateTo(`/@${user.value.username}`);
+    await navigateTo(`/@${user.value!.username}`);
 
     return;
   }

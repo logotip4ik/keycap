@@ -62,7 +62,10 @@ const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefi
       if (wasCreatingItem)
         preCreateItem(folder.value);
     })
-    .catch(handleError)
+    .catch((e) => {
+      handleError(e);
+      throw e;
+    })
     .finally(() => {
       const multiplier = document.visibilityState === 'visible' ? 1 : 2;
       pollingTimer = setTimeout(refresh, POLLING_TIME * multiplier);
@@ -98,27 +101,7 @@ function showMenu(target: HTMLElement, item: FolderOrNote) {
 }
 
 async function handleError(error: Error) {
-  if (error.message.includes('aborted'))
-    return;
-
-  // @ts-expect-error there actually is statusCode
-  if (error.statusCode === 401 || !user.value) {
-    user.value = null;
-    await navigateTo('/login');
-    return;
-  }
-  // @ts-expect-error there actually is statusCode
-  if (error.statusCode === 404)
-    return await navigateTo(`/@${user.value.username}`);
-
-  // Other network error ?
-  if (error.name === 'FetchError') {
-    sendError(error); // Try to send the error
-    isFallbackMode.value = true;
-  }
-
-  // But if folder was found in cache, then do nothing, just display it
-  if (folder.value)
+  if (await baseHandleError(error) || folder.value)
     return;
 
   // last chance to show user folder, if iterator in @[user].vue page hasn't yet set the foldersCache
@@ -127,7 +110,7 @@ async function handleError(error: Error) {
   if (!offlineFolder || typeof offlineFolder !== 'object') {
     createToast(`Sorry ⊙︿⊙ We couldn't find offline copy for folder: "${route.params.folders.at(-1)}"`);
 
-    await navigateTo(`/@${user.value.username}`);
+    await navigateTo(`/@${user.value!.username}`);
 
     return;
   }
