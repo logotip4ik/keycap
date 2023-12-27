@@ -20,8 +20,6 @@ const {
   editor,
   isTyping,
   onUpdate: onContentUpdate,
-  setOptions: setEditorOptions,
-  setContent: setEditorContent,
 } = useTiptap();
 
 function updateContent(html?: string) {
@@ -37,10 +35,13 @@ function hideBubbleMenu() {
 }
 
 watch(() => props.content, (content) => {
+  if (isTyping.value)
+    return;
+
   const editorContent = editor.value?.getHTML();
 
-  if (editorContent !== content && !isTyping.value)
-    setEditorContent(content);
+  if (editorContent !== content)
+    editor.value?.commands.setContent(content || '');
 }, { immediate: import.meta.client });
 
 watch(() => props.editable, (editable) => {
@@ -48,12 +49,10 @@ watch(() => props.editable, (editable) => {
     return;
 
   if (editor.value.options.editable !== editable)
-    setEditorOptions({ editable });
+    editor.value?.setOptions({ editable });
 }, { immediate: import.meta.client });
 
 mitt.on('save:note', () => updateContent());
-
-// FIX:if user navigates right after keypress? then new content will be overwritten by user ?
 
 onContentUpdate(() => updateContent());
 
@@ -67,6 +66,12 @@ useTinykeys({
     updateContent();
   },
 });
+
+// If user navigates right after keypress, `isTyping` could be true on next
+// render of NoteEditor component, and so content watcher will not update
+// editor's content. This prevents such case by explicitly setting `isTyping`
+// to false after unmounting
+onUnmounted(() => isTyping.value = false);
 </script>
 
 <template>
