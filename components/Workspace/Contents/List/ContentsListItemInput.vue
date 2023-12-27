@@ -95,11 +95,12 @@ onMounted(() => {
 
   &__input {
     font-family: inherit;
+    line-height: inherit;
     color: hsla(var(--text-color-hsl), 1);
 
     width: 100%;
 
-    padding: calc(var(--pd-y) * 0.7) calc(var(--pd-x));
+    padding: calc(var(--pd-y) * 0.75) calc(var(--pd-x));
 
     appearance: none;
     outline: 1px solid hsla(var(--selection-bg-color-hsl), 0.5);
