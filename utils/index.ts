@@ -1,3 +1,5 @@
+import type { NuxtApp } from '#app';
+
 export const stringifiedBigIntRE = /(\d{18})n/;
 export const allowedClientItemNameRE = /^[\w .&#!\|\-\u0404-\u0457]{2,50}\/?$/; // eslint-disable-line regexp/no-useless-escape
 // NOTE: do not forget to change same RE in nitro side
@@ -21,6 +23,13 @@ export function toBigInt(string: string): bigint {
  */
 export function delay(time: number) {
   return new Promise((r) => setTimeout(r, time));
+}
+
+export function getHydrationPromise(app?: NuxtApp) {
+  const nuxtApp = app || useNuxtApp();
+
+  return nuxtApp.isHydrating === true
+    && new Promise((r) => nuxtApp.hooks.hookOnce('app:suspense:resolve', r));
 }
 
 if (import.meta.vitest) {
