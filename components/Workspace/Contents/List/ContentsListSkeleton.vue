@@ -9,14 +9,10 @@
 
 .contents__skeleton {
   &__item {
-    width: 100%;
-    height: 2rem;
+    height: 1.75rem;
 
+    margin-top: 0.75rem;
     border-radius: 0.225rem;
-
-    &:not(:first-child) {
-      margin-top: 0.5rem;
-    }
 
     @for $i from 1 to 4 {
       &:nth-child(#{$i}) {
