@@ -40,8 +40,10 @@ const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefi
 
   lastRefetch = Date.now();
 
+  const hydrationPromise = getHydrationPromise();
+
   $fetch(`/api/folder${folderApiPath.value}`, { signal: abortControllerGet.signal })
-    .then((res) => {
+    .then(async (res) => {
       if (!res)
         return;
 
@@ -50,9 +52,12 @@ const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefi
 
       isFallbackMode.value = false;
 
-      folder.value = fetchedFolder;
       foldersCache.set(fetchedFolder.path, fetchedFolder);
       offlineStorage.setItem?.(fetchedFolder.path, fetchedFolder);
+
+      hydrationPromise && await hydrationPromise;
+
+      folder.value = fetchedFolder;
 
       if (wasCreatingItem)
         preCreateItem(folder.value);
@@ -62,6 +67,8 @@ const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefi
       const multiplier = document.visibilityState === 'visible' ? 1 : 2;
       pollingTimer = setTimeout(refresh, POLLING_TIME * multiplier);
     });
+
+  hydrationPromise && await hydrationPromise;
 
   return foldersCache.get(folderPath.value) || await offlineStorage.getItem?.(folderPath.value);
 }, {
