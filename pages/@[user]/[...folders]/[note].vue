@@ -19,8 +19,8 @@ const noteApiPath = computed(() => route.path.replace(`/@${route.params.user}`, 
 
 const POLLING_TIME = parseDuration('2 minutes')!;
 let pollingTimer: NodeJS.Timeout;
-let loadingToast: RefToastInstance | undefined;
-let abortControllerGet: AbortController | null;
+let loadingToast: ToastInstance | undefined;
+let abortControllerGet: AbortController | undefined;
 let lastRefetch: number | undefined;
 
 const { data: note, refresh, error } = await useAsyncData<NoteWithContent | undefined>('note', async () => {
@@ -59,7 +59,7 @@ const { data: note, refresh, error } = await useAsyncData<NoteWithContent | unde
       const multiplier = document.visibilityState === 'visible' ? 1 : 2;
       pollingTimer = setTimeout(refresh, POLLING_TIME * multiplier);
 
-      loadingToast?.value?.remove();
+      loadingToast?.remove();
     });
 
   return notesCache.get(notePath.value) || await offlineStorage.getItem?.(notePath.value);
@@ -155,7 +155,10 @@ if (import.meta.client) {
     off();
     clearTimeout(pollingTimer);
     abortControllerGet?.abort();
-    loadingToast?.value?.remove();
+    loadingToast?.remove();
+
+    abortControllerGet = undefined;
+    loadingToast = undefined;
   });
 }
 </script>

@@ -28,8 +28,10 @@ async function login() {
     password: passwordComponent.value?.$el.value,
   };
 
-  if (!data.email || !data.password)
-    return createToast('Fill all required fields');
+  if (!data.email || !data.password) {
+    createToast('Fill all required fields');
+    return;
+  }
 
   isLoading.value = true;
 

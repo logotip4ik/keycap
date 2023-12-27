@@ -32,8 +32,10 @@ async function register() {
     password: passwordComponent.value?.$el.value,
   };
 
-  if (!data.username || !data.email || !data.password)
-    return createToast('Fill all required fields');
+  if (!data.username || !data.email || !data.password) {
+    createToast('Fill all required fields');
+    return;
+  }
 
   isLoading.value = true;
 

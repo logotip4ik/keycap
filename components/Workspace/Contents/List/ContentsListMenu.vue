@@ -79,7 +79,7 @@ function preloadItemWithIndication() {
   });
 
   preloadItem(props.item)
-    .finally(() => loadingToast.value?.remove());
+    .finally(() => loadingToast.remove());
 
   props.onClose();
 }
