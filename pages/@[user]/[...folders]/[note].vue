@@ -39,17 +39,22 @@ const { data: note, refresh, error } = await useAsyncData<NoteWithContent | unde
     type: 'loading',
   });
 
+  const hydrationPromise = getHydrationPromise();
+
   $fetch(`/api/note${noteApiPath.value}`, { signal: abortControllerGet.signal })
-    .then((res) => {
+    .then(async (res) => {
       if (!res)
         return;
 
       const { data: fetchedNote } = res;
       isFallbackMode.value = false;
 
-      note.value = fetchedNote;
       notesCache.set(fetchedNote.path, fetchedNote);
       offlineStorage.setItem?.(fetchedNote.path, fetchedNote);
+
+      hydrationPromise && await hydrationPromise;
+
+      note.value = fetchedNote;
     })
     .catch((e) => {
       error.value = e; // set error in async data, since request promise is not awaited
@@ -61,6 +66,8 @@ const { data: note, refresh, error } = await useAsyncData<NoteWithContent | unde
 
       loadingToast?.remove();
     });
+
+  hydrationPromise && await hydrationPromise;
 
   return notesCache.get(notePath.value) || await offlineStorage.getItem?.(notePath.value);
 }, {
