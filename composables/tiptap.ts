@@ -1,4 +1,4 @@
-import { Editor, type EditorOptions } from '@tiptap/vue-3';
+import { Editor } from '@tiptap/vue-3';
 
 import Document from '@tiptap/extension-document';
 import Paragraph from '@tiptap/extension-paragraph';
@@ -21,14 +21,15 @@ import CodeBlock from '@tiptap/extension-code-block';
 import History from '@tiptap/extension-history';
 import Link from '@tiptap/extension-link';
 
-const editor = shallowRef<Editor | undefined>();
-const typingPromise = shallowRef<Promise<void> | undefined>();
-const isTyping = computed(() => !!typingPromise.value);
+import type { Editor as CoreEditor } from '@tiptap/core';
+import type { Transaction } from '@tiptap/pm/state';
 
-const debouncedClearTypingPromise = debounce(clearTypingPromise, 500);
-function clearTypingPromise() {
-  typingPromise.value = undefined;
-}
+const editor = shallowRef<Editor | undefined>();
+const isTyping = ref(false);
+
+const debouncedClearTyping = debounce(() => {
+  isTyping.value = false;
+}, 500);
 
 function initTiptap() {
   if (import.meta.server || editor.value)
@@ -41,7 +42,7 @@ function initTiptap() {
     editable: true,
     editorProps: {
       handleKeyDown() {
-        typingPromise.value = debouncedClearTypingPromise();
+        isTyping.value = !!debouncedClearTyping();
       },
     },
     extensions: [
@@ -94,7 +95,7 @@ export function useTiptap() {
   if (!editor.value)
     initTiptap();
 
-  return { editor, isTyping, setContent, setOptions, onUpdate, withEditor };
+  return { editor, isTyping, onUpdate, withEditor };
 }
 
 function withEditor(cb: (editor: Editor) => void) {
@@ -109,28 +110,8 @@ function withEditor(cb: (editor: Editor) => void) {
   });
 }
 
-function setOptions(options: Partial<EditorOptions>) {
-  withEditor(
-    (editor) => editor.setOptions(options),
-  );
-}
+function onUpdate(cb: (e: { editor: CoreEditor, transaction: Transaction }) => void) {
+  withEditor((editor) => editor.on('update', cb));
 
-function setContent(content: string) {
-  withEditor(
-    (editor) => editor.commands.setContent(content),
-  );
-}
-
-function onUpdate(cb: (editor: Editor) => void) {
-  let updater: (() => void) | undefined;
-
-  withEditor((editor) => {
-    updater = () => cb(editor);
-
-    editor.on('update', updater);
-  });
-
-  onScopeDispose(() => {
-    editor.value?.off('update', updater);
-  });
+  onScopeDispose(() => editor.value?.off('update', cb));
 }
