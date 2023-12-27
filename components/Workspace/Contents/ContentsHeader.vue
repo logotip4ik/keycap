@@ -38,7 +38,7 @@ const crumbs = computed(() => {
     <TransitionGroup
       tag="div"
       class="contents__header__name"
-      name="fade"
+      name="list"
     >
       <p
         v-for="(crumb, i) in crumbs"
