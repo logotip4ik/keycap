@@ -188,9 +188,11 @@ export default defineNuxtConfig({
 
   vite: {
     define: {
-      'import.meta.vitest': JSON.stringify(false),
-      'import.meta.dev': JSON.stringify(isDevelopment),
-      'import.meta.prod': JSON.stringify(isProduction),
+      'import.meta.vitest': false,
+      'import.meta.dev': isDevelopment,
+      'import.meta.prod': isProduction,
+
+      '__VUE_OPTIONS_API__': false,
 
       ...prefixedConfig,
     },
@@ -267,9 +269,9 @@ export default defineNuxtConfig({
       // https://github.com/danielroe/roe.dev/blob/main/nuxt.config.ts#L115
       'process.browser': false,
 
-      'import.meta.vitest': JSON.stringify(false),
-      'import.meta.dev': JSON.stringify(isDevelopment),
-      'import.meta.prod': JSON.stringify(isProduction),
+      'import.meta.vitest': false,
+      'import.meta.dev': isDevelopment,
+      'import.meta.prod': isProduction,
 
       ...prefixedConfig,
     },
