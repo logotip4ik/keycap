@@ -118,27 +118,6 @@ kbd {
   }
 }
 
-.fade-enter-active {
-  transition: opacity 0.3s * 2 ease;
-
-  &.fast-fade {
-    transition-duration: 0.3s;
-  }
-}
-
-.fade-leave-active {
-  display: none !important;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-
-.fade-enter-active.skeleton {
-  transition-delay: 0.4s;
-}
-
 .sr-only {
   border: none !important;
   height: 0 !important;
