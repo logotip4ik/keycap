@@ -205,10 +205,9 @@ if (import.meta.client) {
       No notes here yet (⌒‿⌒)
     </div>
 
-    <TransitionGroup
+    <WithListTransitionGroup
       v-else
       tag="ul"
-      name="list"
       class="contents__list"
       tabindex="-1"
       @contextmenu.self.prevent
@@ -242,7 +241,7 @@ if (import.meta.client) {
           </li>
         </WithFadeTransition>
       </template>
-    </TransitionGroup>
+    </WithListTransitionGroup>
   </WithFadeTransition>
 
   <LazyWorkspaceContentsListMenu

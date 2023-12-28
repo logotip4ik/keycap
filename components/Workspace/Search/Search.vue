@@ -163,11 +163,10 @@ useTinykeys({ Escape: closeWithDelay });
           </p>
         </div>
 
-        <TransitionGroup
+        <WithListTransitionGroup
           v-else-if="results.length !== 0"
           ref="resultsEl"
           tag="ul"
-          name="list"
           class="search__results"
           @enter="animateHeight"
           @leave="animateHeight"
@@ -186,7 +185,7 @@ useTinykeys({ Escape: closeWithDelay });
               @click="closeWithDelay"
             />
           </li>
-        </TransitionGroup>
+        </WithListTransitionGroup>
       </WithFadeTransition>
     </div>
   </div>

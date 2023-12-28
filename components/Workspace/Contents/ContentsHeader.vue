@@ -35,11 +35,7 @@ const crumbs = computed(() => {
 
 <template>
   <header class="contents__header">
-    <TransitionGroup
-      tag="div"
-      class="contents__header__name"
-      name="list"
-    >
+    <WithListTransitionGroup class="contents__header__name">
       <p
         v-for="(crumb, i) in crumbs"
         :key="crumb.name + crumb.href"
@@ -57,7 +53,7 @@ const crumbs = computed(() => {
           {{ crumb.name }}
         </NuxtLink>
       </p>
-    </TransitionGroup>
+    </WithListTransitionGroup>
 
     <button
       data-open-button
