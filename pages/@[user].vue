@@ -142,21 +142,4 @@ onBeforeUnmount(() => popstateOff?.());
     }
   }
 }
-
-.list-enter-active {
-  transition: opacity 0.3s * 2 ease;
-}
-
-.list-leave-active {
-  display: none !important;
-  transition-duration: 0s;
-}
-
-.list-move {
-  transition: transform 0.3s ease;
-}
-
-.list-enter-from {
-  opacity: 0;
-}
 </style>
