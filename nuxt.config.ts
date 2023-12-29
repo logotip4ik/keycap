@@ -156,8 +156,10 @@ export default defineNuxtConfig({
   },
 
   hooks: {
-    // minifies service worker
     'nitro:init': function (nitro) {
+      nitro.options.devStorage.root.ignore.push('**/data/**');
+
+      // minifies service worker
       if (isDevelopment)
         return;
 
@@ -231,11 +233,6 @@ export default defineNuxtConfig({
           ].join('\n'),
         },
       },
-    },
-
-    server: {
-      fs: { deny: ['**/data/**'] },
-      watch: { ignored: ['**/data/**'] },
     },
 
     $client: {
