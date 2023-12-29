@@ -60,7 +60,7 @@ const crumbs = computed(() => {
       class="contents__header__open-btn"
       :class="{ 'contents__header__open-btn--exposed': state === 'hidden' }"
       :aria-pressed="state === 'pinned'"
-      @click="onUpdateState(state === 'pinned' ? 'hidden' : 'pinned')"
+      @click="onUpdateState(unpinSidebar(state))"
       @mouseenter="state === 'hidden' && onUpdateState('visible')"
     >
       <LazyIconOutlineFolder class="contents__header__open-btn__icon" />

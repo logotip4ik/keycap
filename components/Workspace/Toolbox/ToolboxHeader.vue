@@ -14,7 +14,7 @@ const user = useUser();
       class="toolbox__header__open-btn"
       :class="{ 'toolbox__header__open-btn--exposed': state === 'hidden' }"
       :aria-pressed="state === 'pinned'"
-      @click="onUpdateState(state === 'pinned' ? 'hidden' : 'pinned')"
+      @click="onUpdateState(unpinSidebar(state))"
       @mouseenter="state === 'hidden' && onUpdateState('visible')"
     >
       <LazyIconMenuRounded class="toolbox__header__open-btn__icon" />

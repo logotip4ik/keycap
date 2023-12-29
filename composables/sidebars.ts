@@ -2,12 +2,32 @@ import { getCookie } from 'h3';
 
 export type SidebarState = 'hidden' | 'visible' | 'pinned';
 
-export function shouldUnpinSidebar(first: ReturnType<typeof makeSidebarState>, second: ReturnType<typeof makeSidebarState>) {
-  if (window.innerWidth < sidebarsBreakpoints.two && first.value === 'pinned' && second.value === 'pinned')
+export function shouldUnpinSidebar(first: MaybeRef<SidebarState>, second: MaybeRef<SidebarState>) {
+  if (
+    window.innerWidth < sidebarsBreakpoints.two
+    && unref(first) === 'pinned'
+    && unref(second) === 'pinned'
+  )
     return second;
 
-  if (window.innerWidth < sidebarsBreakpoints.one && second.value === 'pinned')
+  if (
+    window.innerWidth < sidebarsBreakpoints.one
+    && unref(second) === 'pinned'
+  )
     return second;
+}
+
+/**
+ * @description Takes into cosnideration window width. If there is enough room
+ *   for two it will return `visible`, so will not use the note space, but
+ *   still remain opened before mouse leaves the element
+ */
+export function unpinSidebar(state: MaybeRef<SidebarState>): SidebarState {
+  return unref(state) === 'pinned'
+    ? window.innerWidth >= sidebarsBreakpoints.one
+      ? 'visible'
+      : 'hidden'
+    : 'pinned';
 }
 
 export function useToolboxSidebarState() {
