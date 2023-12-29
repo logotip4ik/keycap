@@ -35,7 +35,7 @@ const sanitized = sanitizeHTML(props.content, {
     <p class="note-editor__empty">
       <span class="font-wide">Sadly note is empty :&lpar;</span>
       <br>
-      <small>No yet keycaps was pressed</small>
+      <small>No keycaps was pressed yet</small>
     </p>
   </div>
 </template>
