@@ -18,9 +18,9 @@ export function useContentsSidebarState() {
   return makeSidebarState('contents');
 }
 
+const stateWhitelist = ['hidden', 'visible', 'pinned'] satisfies Array<SidebarState>;
 export function makeSidebarState(key: string): Ref<SidebarState> {
   return useState<SidebarState>(key, () => {
-    const stateWhitelist = ['hidden', 'visible', 'pinned'] satisfies Array<SidebarState>;
     let stateCookieValue: SidebarState | undefined;
 
     if (import.meta.server) {
