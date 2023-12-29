@@ -5,7 +5,7 @@ defineProps<{
 </script>
 
 <template>
-  <div v-bind="$attrs" class="form__item" :class="{ 'form__item--actions': actions }">
+  <div class="form__item" :class="{ 'form__item--actions': actions }">
     <slot />
   </div>
 </template>
