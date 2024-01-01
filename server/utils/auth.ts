@@ -1,6 +1,7 @@
 import { randomUUID } from 'uncrypto';
 import { deleteCookie, getCookie, setCookie } from 'h3';
 import { SignJWT, jwtVerify } from 'jose';
+import { withoutProtocol } from 'ufo';
 import parseDuration from 'parse-duration';
 
 import type { H3Event } from 'h3';
@@ -76,9 +77,8 @@ export async function getUserFromEvent(event: H3Event): Promise<SafeUser | null>
 }
 
 export function checkOriginForMismatch(event: H3Event) {
-  const reqUrl = getRequestURL(event);
-  const origin = getHeader(event, 'origin');
+  const host = getRequestHost(event);
+  const origin = getRequestHeader(event, 'Origin') || '';
 
-  // https://github.com/sveltejs/kit/blob/21272ee81d915b1049c4ba1ab981427fac232e80/packages/kit/src/runtime/server/respond.js#L56
-  return reqUrl.origin !== origin;
+  return withoutProtocol(origin) !== host;
 }
