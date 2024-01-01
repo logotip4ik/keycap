@@ -1,6 +1,86 @@
 # Changelog
 
 
+## v3.8.0
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.7.4...v3.8.0)
+
+### 🚀 Enhancements
+
+- `getHydrationPromise` util ([f191cfb8](https://github.com/logotip4ik/keycap/commit/f191cfb8))
+
+### 🩹 Fixes
+
+- Do not refocus to last element if small screen ([6f1ea080](https://github.com/logotip4ik/keycap/commit/6f1ea080))
+- Remove content saving before unmounting ([46348704](https://github.com/logotip4ik/keycap/commit/46348704))
+- Show note editor skeleton with initial request ([c0510a2d](https://github.com/logotip4ik/keycap/commit/c0510a2d))
+- Content was not updated with navigation right after key press ([fbee007c](https://github.com/logotip4ik/keycap/commit/fbee007c))
+- Correct input size ([9196fa59](https://github.com/logotip4ik/keycap/commit/9196fa59))
+- Set and return note only after hydration ([8d559476](https://github.com/logotip4ik/keycap/commit/8d559476))
+- Set and return folder only after hydration ([335802d3](https://github.com/logotip4ik/keycap/commit/335802d3))
+- Remove chokidar error of permission denied ([99268f2c](https://github.com/logotip4ik/keycap/commit/99268f2c))
+
+### 💅 Refactors
+
+- Simplify note update logic ([4903a6cd](https://github.com/logotip4ik/keycap/commit/4903a6cd))
+- Bump throttling timeout ([6a2dbbde](https://github.com/logotip4ik/keycap/commit/6a2dbbde))
+- Use new `future` config to specify bundler resolution ([301e06c1](https://github.com/logotip4ik/keycap/commit/301e06c1))
+- Do not return ref to toasts instance ([8fb993be](https://github.com/logotip4ik/keycap/commit/8fb993be))
+- Simplify and remove not used code from tiptap ([4bc143a1](https://github.com/logotip4ik/keycap/commit/4bc143a1))
+- Optimize list transition styles ([b877fe4d](https://github.com/logotip4ik/keycap/commit/b877fe4d))
+- Export transition with fade effect to component ([86d9d312](https://github.com/logotip4ik/keycap/commit/86d9d312))
+- Use fade transition component ([38c87fb6](https://github.com/logotip4ik/keycap/commit/38c87fb6))
+- Export similar error handling code to function ([ff0e8e9f](https://github.com/logotip4ik/keycap/commit/ff0e8e9f))
+- Create wrapper for list transition group ([9376b362](https://github.com/logotip4ik/keycap/commit/9376b362))
+- Use list transition wrapper ([c4ff4a49](https://github.com/logotip4ik/keycap/commit/c4ff4a49))
+- Put sidebar into `visible` state on bigger screens after close button click ([4821e319](https://github.com/logotip4ik/keycap/commit/4821e319))
+
+### 🏡 Chore
+
+- **release:** V3.7.4 ([a9b0cff9](https://github.com/logotip4ik/keycap/commit/a9b0cff9))
+- Simplify tinykeys composable ([837d5faf](https://github.com/logotip4ik/keycap/commit/837d5faf))
+- Remove not needed check ([94924213](https://github.com/logotip4ik/keycap/commit/94924213))
+- Remove comment ([6b2c1e56](https://github.com/logotip4ik/keycap/commit/6b2c1e56))
+- Better function name ([45a3ec8a](https://github.com/logotip4ik/keycap/commit/45a3ec8a))
+- Hint vscode to use workspace typescript ([f1446315](https://github.com/logotip4ik/keycap/commit/f1446315))
+- Use `v-show` instead of `v-if` ([b64b4f81](https://github.com/logotip4ik/keycap/commit/b64b4f81))
+- Remove `will-change` rule ([fcbbd314](https://github.com/logotip4ik/keycap/commit/fcbbd314))
+- Remove appear from page component ([45d29be1](https://github.com/logotip4ik/keycap/commit/45d29be1))
+- Bump delay before showing skeleton ([a53aa29a](https://github.com/logotip4ik/keycap/commit/a53aa29a))
+- Update nuxt and vue ([1a168dd6](https://github.com/logotip4ik/keycap/commit/1a168dd6))
+- Remove vite resolution ([b0a2ead8](https://github.com/logotip4ik/keycap/commit/b0a2ead8))
+- Rely on nuxt to make initial fetch ([534206b0](https://github.com/logotip4ik/keycap/commit/534206b0))
+- Use already precomputed note path ([e50d5fb1](https://github.com/logotip4ik/keycap/commit/e50d5fb1))
+- Export `withEditor` function from tiptap ([483d7d28](https://github.com/logotip4ik/keycap/commit/483d7d28))
+- Use default rules for curly braces ([14bbe2ea](https://github.com/logotip4ik/keycap/commit/14bbe2ea))
+- Minor changes ([47500bcc](https://github.com/logotip4ik/keycap/commit/47500bcc))
+- Do not return anything from stub function ([20a0c582](https://github.com/logotip4ik/keycap/commit/20a0c582))
+- Use `statusCode` instead of `status` ([0623cb7a](https://github.com/logotip4ik/keycap/commit/0623cb7a))
+- Apply eslint rule ([e5a1b3c3](https://github.com/logotip4ik/keycap/commit/e5a1b3c3))
+- Make contents list skeleton a bit prettier ([a04dcd9d](https://github.com/logotip4ik/keycap/commit/a04dcd9d))
+- Use list transition for contents herader crumbs ([fddee8a0](https://github.com/logotip4ik/keycap/commit/fddee8a0))
+- Update vue ([3a9ba585](https://github.com/logotip4ik/keycap/commit/3a9ba585))
+- Disable vue options api ([f27f5b1c](https://github.com/logotip4ik/keycap/commit/f27f5b1c))
+- Remove comments from transition root ([38f0ef64](https://github.com/logotip4ik/keycap/commit/38f0ef64))
+- Add vim files to gitignore ([5173581e](https://github.com/logotip4ik/keycap/commit/5173581e))
+- Move list style to separate file ([b3635d25](https://github.com/logotip4ik/keycap/commit/b3635d25))
+- Remove vue 3.4.0 resolution ([d27dff5f](https://github.com/logotip4ik/keycap/commit/d27dff5f))
+- Use `mouse` events to track `leave` ([e4e1c1e8](https://github.com/logotip4ik/keycap/commit/e4e1c1e8))
+- Add bombardier binary to gitignore ([4cdd5c53](https://github.com/logotip4ik/keycap/commit/4cdd5c53))
+- Hoist static array ([a0be175e](https://github.com/logotip4ik/keycap/commit/a0be175e))
+- Remove not needed `v-bind="$attrs"` ([8387d5c4](https://github.com/logotip4ik/keycap/commit/8387d5c4))
+- Put `yet` in the end of sentence ([a0e84530](https://github.com/logotip4ik/keycap/commit/a0e84530))
+- Update deps ([97435409](https://github.com/logotip4ik/keycap/commit/97435409))
+- Update deps ([508d7ece](https://github.com/logotip4ik/keycap/commit/508d7ece))
+
+### 🎨 Styles
+
+- Oneline callback function ([51e8eee0](https://github.com/logotip4ik/keycap/commit/51e8eee0))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk <bogdankostyuk12@gmail.com>
+
 ## v3.7.4
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.7.3...v3.7.4)
