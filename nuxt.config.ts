@@ -320,7 +320,6 @@ export default defineNuxtConfig({
     },
   ],
 
-  // @ts-expect-error idk what happend here
   fontMetrics: {
     fonts: [
       {
