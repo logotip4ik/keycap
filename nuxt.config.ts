@@ -66,6 +66,16 @@ export default defineNuxtConfig({
   },
 
   imports: {
+    presets: [
+      {
+        from: '@vue/shared',
+        imports: [
+          'NOOP',
+          'invokeArrayFns',
+        ],
+      },
+    ],
+
     dirs: [
       resolve('./constants'),
       resolve('./composables/toasts'),
@@ -74,7 +84,6 @@ export default defineNuxtConfig({
     imports: [
       { from: 'rad-event-listener', name: 'on' },
       { from: 'perfect-debounce', name: 'debounce' },
-      { from: '@vue/shared', name: 'NOOP' },
     ],
   },
 
@@ -232,6 +241,7 @@ export default defineNuxtConfig({
       cssMinify: 'lightningcss',
       cssTarget: browserslistToEsbuild(),
       minify: isCI ? 'terser' : 'esbuild',
+      minify: false,
       terserOptions: isCI ? { // eslint-disable-line style/multiline-ternary
         compress: true,
         mangle: true,

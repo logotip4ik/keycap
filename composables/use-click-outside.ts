@@ -9,7 +9,7 @@ export function useClickOutside(target: Ref<HTMLElement | null>, callback: (e: E
 
   const cleanups: Array<() => void> = [];
   const cleanup = () => {
-    cleanups.forEach((fn) => fn());
+    invokeArrayFns(cleanups);
     cleanups.length = 0;
   };
 

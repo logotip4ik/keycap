@@ -43,13 +43,13 @@ function handleMobileScroll() {
 }
 
 onMounted(() => {
-  let cleanups = [
+  const cleanups = [
     on(window.visualViewport!, 'resize', debouncedKeyboardAppear),
     on(window.visualViewport!, 'scroll', handleMobileScroll),
   ];
   const cleanup = () => {
-    cleanups.forEach((cb) => cb());
-    cleanups = [];
+    invokeArrayFns(cleanups);
+    cleanups.length = 0;
   };
 
   onBeforeUnmount(cleanup);
