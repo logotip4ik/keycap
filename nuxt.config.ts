@@ -312,6 +312,13 @@ export default defineNuxtConfig({
     },
 
     imports: {
+      presets: [
+        {
+          from: resolve('./utils/keys.ts'),
+          imports: ['createKey', 'KeyPrefix'],
+        },
+      ],
+
       dirs: [
         resolve('./prisma'),
       ],
