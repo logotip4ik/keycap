@@ -1,9 +1,9 @@
 import { defineNuxtModule, useLogger } from '@nuxt/kit';
-import { randomUUID } from 'uncrypto';
 import Git from 'simple-git';
 import colors from 'picocolors';
 
 import { version } from '../package.json';
+import { KeyPrefix, createKey } from '../utils/keys';
 
 import type { BuildInfo, PrivateBuildInfo } from '~/types';
 
@@ -26,8 +26,7 @@ export default defineNuxtModule({
     };
 
     const privateBuildInfo: PrivateBuildInfo = {
-      // TODO: export to common key generation utility
-      id: `build_${randomUUID().replace(/-/g, '')}`,
+      id: createKey(KeyPrefix.Build),
     };
 
     nuxt.options.runtimeConfig.build = privateBuildInfo;

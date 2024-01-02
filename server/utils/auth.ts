@@ -1,4 +1,3 @@
-import { randomUUID } from 'uncrypto';
 import { deleteCookie, getCookie, setCookie } from 'h3';
 import { SignJWT, jwtVerify } from 'jose';
 import { withoutProtocol } from 'ufo';
@@ -26,7 +25,7 @@ async function generateAccessToken(object: Record<string, unknown>): Promise<str
 
   return await new SignJWT(rest)
     .setProtectedHeader({ alg: 'HS256' })
-    .setJti(randomUUID())
+    .setJti(createKey(KeyPrefix.Jwt))
     .setSubject(id as string)
     .setIssuedAt()
     .setExpirationTime(now + authExpiration)

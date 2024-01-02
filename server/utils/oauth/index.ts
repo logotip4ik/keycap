@@ -1,5 +1,3 @@
-import { randomUUID } from 'uncrypto';
-
 import type { Prisma } from '@prisma/client';
 import type { H3Event } from 'h3';
 
@@ -23,7 +21,7 @@ export function sendOAuthRedirect(event: H3Event, provider: OAuthProviderType) {
 
   const { public: config } = useRuntimeConfig();
 
-  const state = randomUUID();
+  const state = createKey(KeyPrefix.OAuthState);
   const protocol = import.meta.prod ? 'https://' : 'http://';
   const redirectUrl = new URL(`${providerConfig.authorizeEndpoint}`);
 
