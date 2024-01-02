@@ -42,18 +42,17 @@ function handleMobileScroll() {
   debouncedKeyboardAppear();
 }
 
-onMounted(() => {
+if (import.meta.client) {
   const cleanups = [
     on(window.visualViewport!, 'resize', debouncedKeyboardAppear),
     on(window.visualViewport!, 'scroll', handleMobileScroll),
   ];
-  const cleanup = () => {
+
+  onBeforeUnmount(() => {
     invokeArrayFns(cleanups);
     cleanups.length = 0;
-  };
-
-  onBeforeUnmount(cleanup);
-});
+  });
+};
 </script>
 
 <template>
