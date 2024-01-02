@@ -78,7 +78,18 @@ export default defineNuxtConfig({
     ],
   },
 
-  ignore: ['**/data/**'],
+  ignore: [
+    '**/data/**',
+    '**/benchmarks/**',
+    '**/.github/**',
+    '**/.vercel/**',
+    '**/.output/**',
+    '**/.vscode/**',
+    '**/.yarn/**',
+    '**/polyfills/**',
+    '**/scripts/**',
+    '**/unplugin/**',
+  ],
 
   runtimeConfig: {
     public: {
@@ -157,7 +168,20 @@ export default defineNuxtConfig({
 
   hooks: {
     'nitro:init': function (nitro) {
-      nitro.options.devStorage.root.ignore.push('**/data/**');
+      nitro.options.devStorage.root.ignore.push(
+        '**/data/**',
+        '**/.nuxt/**',
+        '**/benchmarks/**',
+        '**/.github/**',
+        '**/.vercel/**',
+        '**/.output/**',
+        '**/.vscode/**',
+        '**/.yarn/**',
+        '**/polyfills/**',
+        '**/scripts/**',
+        '**/server/**',
+        '**/unplugin/**',
+      );
 
       // minifies service worker
       if (isDevelopment)
