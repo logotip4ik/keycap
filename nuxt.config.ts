@@ -8,6 +8,7 @@ import RollupSucrase from '@rollup/plugin-sucrase';
 
 import { prefixedConfig } from './config/build';
 import { getHeaders } from './config/headers';
+import { tsConfig } from './config/typescript';
 import { breakpoints, sidebarsBreakpoints } from './constants/breakpoints';
 import { ParseDurationTransformPlugin } from './unplugin/parse-duration';
 
@@ -52,18 +53,7 @@ export default defineNuxtConfig({
     typescriptBundlerResolution: true,
   },
 
-  typescript: {
-    tsConfig: {
-      compilerOptions: {
-        types: ['vitest/importMeta'],
-      },
-      exclude: [
-        '../data',
-        '../benchmarks',
-        '../scripts',
-      ],
-    },
-  },
+  typescript: { tsConfig },
 
   imports: {
     presets: [
@@ -324,13 +314,7 @@ export default defineNuxtConfig({
       ],
     },
 
-    typescript: {
-      tsConfig: {
-        compilerOptions: {
-          types: ['vitest/importMeta'],
-        },
-      },
-    },
+    typescript: { tsConfig },
 
     esbuild: {
       options: {
