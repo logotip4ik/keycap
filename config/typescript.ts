@@ -9,6 +9,14 @@ export const tsConfig: TSConfig = {
     '../data',
     '../benchmarks',
     '../scripts',
+    '../.github',
+    '../.vercel',
+    '../.output',
+    '../.vscode',
+    '../.yarn',
     '../eslint.config.js',
+
+    // this folder has it's own tsconfig
+    '../workers',
   ],
 };
