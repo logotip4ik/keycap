@@ -3,7 +3,7 @@ import parseDuration from 'parse-duration';
 import browserslistToEsbuild from 'browserslist-to-esbuild';
 import { join } from 'pathe';
 import { createResolver } from '@nuxt/kit';
-import { isCI, isDevelopment, isProduction, isTest } from 'std-env';
+import { isCI, isDevelopment, isProduction, isTest, nodeENV } from 'std-env';
 import RollupSucrase from '@rollup/plugin-sucrase';
 
 import { prefixedConfig } from './config/build';
@@ -230,6 +230,8 @@ export default defineNuxtConfig({
 
       '__VUE_OPTIONS_API__': false,
 
+      'process.env.NODE_ENV': nodeENV,
+
       ...prefixedConfig,
     },
 
@@ -303,6 +305,8 @@ export default defineNuxtConfig({
       'import.meta.vitest': false,
       'import.meta.dev': isDevelopment,
       'import.meta.prod': isProduction,
+
+      'process.env.NODE_ENV': nodeENV,
 
       ...prefixedConfig,
     },
