@@ -15,11 +15,7 @@ const mitt = useMitt();
 const user = useUser();
 const { shortcuts } = useAppConfig();
 
-const folderApiPath = computed(() => {
-  return isArray(route.params.folders) && route.params.folders.length > 0
-    ? `/${route.params.folders.map(encodeURIComponent).join('/')}`
-    : '';
-});
+const folderApiPath = computed(() => getCurrentFolderPath(route));
 const folderPath = computed(() => `/${route.params.user}${folderApiPath.value}`);
 
 const menuOptions = shallowReactive({

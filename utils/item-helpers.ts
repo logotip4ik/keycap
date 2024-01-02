@@ -36,8 +36,8 @@ export function preCreateItem(folderToAppend: FolderWithContents, initialValues?
   folderToAppend.notes.unshift(noteValues);
 }
 
-export function getCurrentFolderPath() {
-  const route = useRoute();
+export function getCurrentFolderPath(_route?: ReturnType<typeof useRoute>) {
+  const route = _route || useRoute();
 
   return isArray(route.params.folders) && route.params.folders.length > 0
     ? `/${route.params.folders.map(encodeURIComponent).join('/')}/`
