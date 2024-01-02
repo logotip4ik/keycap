@@ -1,8 +1,9 @@
 import { getCookie } from 'h3';
+import type { MaybeRef } from 'vue';
 
 export type SidebarState = 'hidden' | 'visible' | 'pinned';
 
-export function shouldUnpinSidebar(first: MaybeRef<SidebarState>, second: MaybeRef<SidebarState>) {
+export function shouldUnpinSidebar<T extends MaybeRef<SidebarState>>(first: T, second: T): T | undefined {
   if (
     window.innerWidth < sidebarsBreakpoints.two
     && unref(first) === 'pinned'
