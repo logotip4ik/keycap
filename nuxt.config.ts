@@ -220,7 +220,7 @@ export default defineNuxtConfig({
 
       '__VUE_OPTIONS_API__': false,
 
-      'process.env.NODE_ENV': nodeENV,
+      'process.env.NODE_ENV': JSON.stringify(nodeENV),
 
       ...prefixedConfig,
     },
@@ -296,7 +296,7 @@ export default defineNuxtConfig({
       'import.meta.dev': isDevelopment,
       'import.meta.prod': isProduction,
 
-      'process.env.NODE_ENV': nodeENV,
+      'process.env.NODE_ENV': JSON.stringify(nodeENV),
 
       ...prefixedConfig,
     },
