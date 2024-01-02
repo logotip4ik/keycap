@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { OAuthProvider, usernameRE } from '~/server/utils';
 
+definePageMeta({
+  middleware: ['redirect-dashboard'],
+});
+
 if (import.meta.client) {
   throw createError({
     statusCode: 418,
@@ -8,12 +12,8 @@ if (import.meta.client) {
   });
 }
 
-const user = useUser();
 const event = useRequestEvent();
 const { query } = useRoute();
-
-if (user.value)
-  await navigateTo(`/@${user.value.username}`);
 
 if (!query.code || !query.provider) {
   await event.context.logger.error({ query, msg: 'not enough data for proceding with username' });
