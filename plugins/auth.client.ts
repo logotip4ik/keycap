@@ -4,6 +4,7 @@ const NEAR_HOUR = parseDuration('0.9 hour')!;
 
 export default defineNuxtPlugin({
   parallel: true,
+  env: { islands: false },
   setup() {
     refreshAuth();
     // TODO: clear interval and setUserOnClient if user logged out
