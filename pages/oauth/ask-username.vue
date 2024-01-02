@@ -24,7 +24,7 @@ if (!query.code || !query.provider) {
   });
 }
 
-const provider = Array.isArray(query.provider)
+const provider = isArray(query.provider)
   ? (query.provider[0] || '')
   : query.provider;
 

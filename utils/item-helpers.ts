@@ -39,7 +39,7 @@ export function preCreateItem(folderToAppend: FolderWithContents, initialValues?
 export function getCurrentFolderPath() {
   const route = useRoute();
 
-  return Array.isArray(route.params.folders) && route.params.folders.length > 0
+  return isArray(route.params.folders) && route.params.folders.length > 0
     ? `/${route.params.folders.map(encodeURIComponent).join('/')}/`
     : '/';
 }

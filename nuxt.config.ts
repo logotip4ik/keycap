@@ -72,6 +72,7 @@ export default defineNuxtConfig({
         imports: [
           'NOOP',
           'invokeArrayFns',
+          'isArray',
         ],
       },
     ],

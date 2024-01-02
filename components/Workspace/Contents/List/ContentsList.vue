@@ -16,7 +16,7 @@ const user = useUser();
 const { shortcuts } = useAppConfig();
 
 const folderApiPath = computed(() => {
-  return Array.isArray(route.params.folders) && route.params.folders.length > 0
+  return isArray(route.params.folders) && route.params.folders.length > 0
     ? `/${route.params.folders.map(encodeURIComponent).join('/')}`
     : '';
 });

@@ -9,7 +9,7 @@ const route = useRoute();
 interface Crumb { name: string, href: string }
 const crumbs = computed(() => {
   const folders = (
-    Array.isArray(route.params.folders)
+    isArray(route.params.folders)
       ? route.params.folders
       : [route.params.folders]
   )
