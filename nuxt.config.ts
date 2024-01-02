@@ -242,7 +242,6 @@ export default defineNuxtConfig({
       cssMinify: 'lightningcss',
       cssTarget: browserslistToEsbuild(),
       minify: isCI ? 'terser' : 'esbuild',
-      minify: false,
       terserOptions: isCI ? { // eslint-disable-line style/multiline-ternary
         compress: true,
         mangle: true,
