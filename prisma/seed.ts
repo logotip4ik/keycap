@@ -6,7 +6,7 @@ import { faker } from '@faker-js/faker';
 import type { Prisma } from '@prisma/client';
 
 import { getPrisma } from '.';
-import { hashPassword } from '~/server/utils/auth';
+import { hashPassword } from '~/server/utils/passwords';
 import { generateFolderPath, generateNotePath, generateRootFolderPath } from '~/server/utils';
 
 const prisma = getPrisma();
