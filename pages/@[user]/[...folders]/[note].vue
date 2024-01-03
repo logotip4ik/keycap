@@ -39,7 +39,7 @@ const { data: note, refresh } = await useAsyncData<NoteWithContent | undefined>(
     type: 'loading',
   });
 
-  const hydrationPromise = getHydrationPromise();
+  let hydrationPromise = getHydrationPromise();
 
   $fetch(`/api/note${noteApiPath.value}`, { signal: abortControllerGet.signal })
     .then(async (res) => {
@@ -53,6 +53,7 @@ const { data: note, refresh } = await useAsyncData<NoteWithContent | undefined>(
       offlineStorage.setItem?.(fetchedNote.path, fetchedNote);
 
       hydrationPromise && await hydrationPromise;
+      hydrationPromise = undefined;
 
       note.value = fetchedNote;
     })
@@ -68,6 +69,7 @@ const { data: note, refresh } = await useAsyncData<NoteWithContent | undefined>(
     });
 
   hydrationPromise && await hydrationPromise;
+  hydrationPromise = undefined;
 
   return notesCache.get(notePath.value) || await offlineStorage.getItem?.(notePath.value);
 }, {

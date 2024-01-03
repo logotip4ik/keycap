@@ -36,7 +36,7 @@ const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefi
 
   lastRefetch = Date.now();
 
-  const hydrationPromise = getHydrationPromise();
+  let hydrationPromise = getHydrationPromise();
 
   $fetch(`/api/folder${folderApiPath.value}`, { signal: abortControllerGet.signal })
     .then(async (res) => {
@@ -52,6 +52,7 @@ const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefi
       offlineStorage.setItem?.(fetchedFolder.path, fetchedFolder);
 
       hydrationPromise && await hydrationPromise;
+      hydrationPromise = undefined;
 
       folder.value = fetchedFolder;
 
@@ -68,6 +69,7 @@ const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefi
     });
 
   hydrationPromise && await hydrationPromise;
+  hydrationPromise = undefined;
 
   return foldersCache.get(folderPath.value) || await offlineStorage.getItem?.(folderPath.value);
 }, {
