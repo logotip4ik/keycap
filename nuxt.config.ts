@@ -62,6 +62,15 @@ export default defineNuxtConfig({
           'isArray',
         ],
       },
+      {
+        type: true,
+        from: resolve('./types/toasts.d.ts'),
+        imports: [
+          'ToastType',
+          'ToastButton',
+          'ToastInstance',
+        ],
+      },
     ],
 
     dirs: [
