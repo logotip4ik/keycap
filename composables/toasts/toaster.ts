@@ -1,4 +1,4 @@
-import type { ToastInstance } from './toast';
+import type { ToastInstance } from '~/types/toasts';
 
 export type ToastUserOptions = Partial<Omit<ToastInstance, 'id' | 'message' | 'remove' | 'el' | 'delete'>>;
 
@@ -33,9 +33,7 @@ function createToast(options: ToastUserOptions & { message: ToastInstance['messa
 
   const toastId = Math.floor(Math.random() * 9999999);
 
-  return new Toast({
-    ...options,
-
+  return {
     id: toastId,
     message: options.message,
     remove: () => {
@@ -44,5 +42,11 @@ function createToast(options: ToastUserOptions & { message: ToastInstance['messa
       else
         toasts.value = toasts.value.filter((toast) => toast.id !== toastId);
     },
-  });
+
+    priority: options.priority || 0,
+    duration: options.duration || 6000,
+    type: options.type || 'info',
+    buttons: options.buttons || [],
+    el: shallowRef(null),
+  };
 }
