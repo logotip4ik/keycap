@@ -25,7 +25,7 @@ export function delay(time: number) {
   return new Promise((r) => setTimeout(r, time));
 }
 
-export function getHydrationPromise(app?: NuxtApp) {
+export function getHydrationPromise(app?: NuxtApp): false | undefined | null | Promise<unknown> {
   const nuxtApp = app || useNuxtApp();
 
   return nuxtApp.isHydrating === true
