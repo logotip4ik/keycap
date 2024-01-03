@@ -1,5 +1,4 @@
 import type { H3Event } from 'h3';
-import type { RuntimeConfig } from 'nuxt/schema';
 
 export type LoggerData = Record<string, unknown | undefined>;
 
@@ -9,101 +8,28 @@ export const LOG_LEVEL = {
   error: 'error',
 } as const;
 
-class Logger {
-  #userAgent = 'keycap/server'; // official sdk sets `axiom-js/0.13.0` where 0.13.0 is version
-  #datasetEndpoint = '/v1/datasets';
-  #datasetUrl: string;
-
-  #client: typeof $fetch;
-  #data: LoggerData;
-  #config: RuntimeConfig['axiom'];
-
-  constructor(data: LoggerData, config: RuntimeConfig['axiom']) {
-    const headers: Record<string, string> = {
-      'Accept': 'application/json',
-      'Content-Type': 'application/x-ndjson',
-      'Authorization': `Bearer ${config.token}`,
-      'User-Agent': this.#userAgent,
-      'X-Axiom-Org-Id': config.orgId,
-    };
-
-    this.#data = data;
-    this.#config = config;
-    this.#datasetUrl = `${this.#datasetEndpoint}/${this.#config.dataset}/ingest`;
-
-    this.#client = $fetch.create({
-      headers,
-      method: 'POST',
-      baseURL: 'https://api.axiom.co',
-      ignoreResponseError: true,
-    });
-  }
-
-  async log(level: keyof typeof LOG_LEVEL, data: LoggerData) {
-    Object.assign(data, this.#data);
-
-    data.level = level;
-    data._time = new Date().toISOString();
-
-    if (data.error) {
-      data.error = Object.assign({}, data.error, {
-        // @ts-expect-error if there is something send it, otherwise it will be undefined
-        message: data.error.message,
-        // @ts-expect-error if there is something send it, otherwise it will be undefined
-        stack: data.error.stack,
-      });
-    }
-
-    if (data.err) {
-      data.err = Object.assign({}, data.err, {
-        // @ts-expect-error if there is something send it, otherwise it will be undefined
-        message: data.err.message,
-        // @ts-expect-error if there is something send it, otherwise it will be undefined
-        stack: data.err.stack,
-      });
-    }
-
-    // avg log is 369.543ms pretty long :(
-    await this.#client(this.#datasetUrl, { body: data })
-      .catch((err) => {
-        // eslint-disable-next-line no-console
-        console.log('that was unexpected', err);
-      });
-  }
-
-  async error(data: LoggerData | string, message?: string) {
-    data = typeof data === 'string' ? { msg: data } : data;
-
-    if (message)
-      data.msg = message;
-
-    await this.log(LOG_LEVEL.error, data);
-  }
-
-  async warn(data: LoggerData | string, message?: string) {
-    data = typeof data === 'string' ? { msg: data } : data;
-
-    if (message)
-      data.msg = message;
-
-    await this.log(LOG_LEVEL.warn, data);
-  }
-
-  async info(data: LoggerData | string, message?: string) {
-    data = typeof data === 'string' ? { msg: data } : data;
-
-    if (message)
-      data.msg = message;
-
-    await this.log(LOG_LEVEL.info, data);
-  }
-}
+let client: typeof $fetch;
 
 // NOTE: maybe we should keep only one instance of logger
 // but then we need to provide `event` on each log ?
 export function createLogger(event: H3Event) {
   const { axiom } = useRuntimeConfig();
   const [path, query] = event.path.split('?');
+
+  if (!client) {
+    client = $fetch.create({
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/x-ndjson',
+        'Authorization': `Bearer ${axiom.token}`,
+        'User-Agent': 'keycap/server',
+        'X-Axiom-Org-Id': axiom.orgId,
+      },
+      method: 'POST',
+      baseURL: 'https://api.axiom.co',
+      ignoreResponseError: true,
+    });
+  }
 
   const additionalData: LoggerData = {
     nitro: true,
@@ -114,5 +40,64 @@ export function createLogger(event: H3Event) {
     username: event.context.user?.username,
   };
 
-  return new Logger(additionalData, axiom);
+  const log = baseLog.bind(additionalData, axiom.dataset, additionalData);
+
+  return {
+    log,
+
+    async error(data: LoggerData | string, message?: string) {
+      data = typeof data === 'string' ? { msg: data } : data;
+
+      if (message)
+        data.msg = message;
+
+      await log(LOG_LEVEL.error, data);
+    },
+
+    async warn(data: LoggerData | string, message?: string) {
+      data = typeof data === 'string' ? { msg: data } : data;
+
+      if (message)
+        data.msg = message;
+
+      await this.log(LOG_LEVEL.warn, data);
+    },
+
+    async info(data: LoggerData | string, message?: string) {
+      data = typeof data === 'string' ? { msg: data } : data;
+
+      if (message)
+        data.msg = message;
+
+      await this.log(LOG_LEVEL.info, data);
+    },
+  };
+}
+
+async function baseLog(dataset: string, baseData: LoggerData, level: keyof typeof LOG_LEVEL, customData: LoggerData) {
+  const data = Object.assign({}, baseData, customData);
+
+  data.level = level;
+  data._time = new Date().toISOString();
+
+  if (data.err) {
+    data.err = Object.assign({}, data.err, {
+      message: (data.err as any).message,
+      stack: (data.err as any).stack,
+    });
+  }
+
+  if (data.error) {
+    data.error = Object.assign({}, data.error, {
+      message: (data.error as any).message,
+      stack: (data.error as any).stack,
+    });
+  }
+
+  // avg log is 369.543ms pretty long :(
+  await client(`/v1/datasets/${dataset}`, { body: data })
+    .catch((err) => {
+      // eslint-disable-next-line no-console
+      console.log('that was unexpected', err);
+    });
 }
