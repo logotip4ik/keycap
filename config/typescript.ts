@@ -15,6 +15,9 @@ export const tsConfig: TSConfig = {
     '../.vscode',
     '../.yarn',
     '../eslint.config.js',
+    '../archive',
+    '../prisma/migrations',
+    '../public',
 
     // this folder has it's own tsconfig
     '../workers',
