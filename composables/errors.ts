@@ -27,7 +27,7 @@ export function sendError(error: Error, properties?: Record<string, string>) {
   };
 
   if (properties)
-    Object.assign(payload.properties, properties);
+    extend(payload.properties, properties);
 
   if (import.meta.prod)
     navigator.sendBeacon(errors.url, JSON.stringify(payload));

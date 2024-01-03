@@ -31,7 +31,7 @@ export function preCreateItem(folderToAppend: FolderWithContents, initialValues?
   };
 
   if (initialValues)
-    Object.assign(noteValues, initialValues);
+    extend(noteValues, initialValues);
 
   folderToAppend.notes.unshift(noteValues);
 }
@@ -68,12 +68,12 @@ export async function createFolder(folderName: string, self: FolderOrNote, paren
   newlyCreatedFolder.creating = false;
   parent.subfolders.push(newlyCreatedFolder);
 
-  deleteNoteFromFolder(self, parent);
+  remove(parent.notes, self);
 
   foldersCache.set(newlyCreatedFolder.path, newlyCreatedFolder);
   offlineStorage.setItem?.(newlyCreatedFolder.path, newlyCreatedFolder);
-  updateSubfolderInFolder(self, newlyCreatedFolder, parent);
   fuzzyWorker.value?.addItemToCache(newlyCreatedFolder);
+  extend(self, newlyCreatedFolder);
 
   showItem(newlyCreatedFolder);
 }
@@ -104,24 +104,24 @@ export async function createNote(noteName: string, self: FolderOrNote, parent: F
 
   notesCache.set(newlyCreatedNote.path, newlyCreatedNote);
   offlineStorage.setItem?.(newlyCreatedNote.path, newlyCreatedNote);
-  updateNoteInFolder(self, newlyCreatedNote, parent);
   fuzzyWorker.value?.addItemToCache(newlyCreatedNote);
+  extend(self, newlyCreatedNote);
 
   showItem(newlyCreatedNote);
 }
 
-export async function renameFolder(newName: string, self: FolderOrNote, parent: FolderWithContents) {
+export async function renameFolder(newName: string, self: FolderOrNote) {
   const newFolder: Record<string, string | boolean> = { name: newName.trim() };
 
   if (!newFolder.name)
-    return updateSubfolderInFolder(self, { editing: false }, parent);
+    return extend(self, { editing: false });
 
   const currentFolderPath = getCurrentFolderPath();
   const folderPathName = encodeURIComponent(self.name);
   const folderPath = currentFolderPath + folderPathName;
 
   const res = await $fetch<unknown>(`/api/folder${folderPath}`, { method: 'PATCH', body: newFolder })
-    .catch(() => { updateSubfolderInFolder(self, { editing: false }, parent); });
+    .catch(() => { extend(self, { editing: false }); });
 
   if (!res)
     return;
@@ -140,7 +140,7 @@ export async function renameFolder(newName: string, self: FolderOrNote, parent: 
   foldersCache.remove(self.path);
   offlineStorage.removeItem?.(self.path);
 
-  updateSubfolderInFolder(self, newFolder, parent);
+  extend(self, newFolder);
   fuzzyWorker.value?.refreshItemsCache();
 
   const folderToCache = { ...toRaw(self), notes: [], subfolders: [] };
@@ -159,18 +159,18 @@ export async function renameFolder(newName: string, self: FolderOrNote, parent: 
   }
 }
 
-export async function renameNote(newName: string, self: FolderOrNote, parent: FolderWithContents) {
+export async function renameNote(newName: string, self: FolderOrNote) {
   const newNote: Record<string, string | boolean> = { name: newName.trim() };
 
   if (!newNote.name)
-    return updateNoteInFolder(self, { editing: false }, parent);
+    return extend(self, { editing: false });
 
   const currentFolderPath = getCurrentFolderPath();
   const notePathName = encodeURIComponent(self.name);
   const notePath = currentFolderPath + notePathName;
 
   const res = await $fetch(`/api/note${notePath}`, { method: 'PATCH', body: newNote })
-    .catch(() => { updateNoteInFolder(self, { editing: false }, parent); });
+    .catch(() => { extend(self, { editing: false }); });
 
   if (!res)
     return;
@@ -188,11 +188,11 @@ export async function renameNote(newName: string, self: FolderOrNote, parent: Fo
   notesCache.remove(self.path);
   offlineStorage.removeItem?.(self.path);
 
-  updateNoteInFolder(self, newNote, parent);
+  extend(self, newNote);
   fuzzyWorker.value?.refreshItemsCache();
 
   if (note) {
-    Object.assign(note, newNote);
+    extend(note, newNote);
 
     notesCache.set(note.path, note);
     offlineStorage.setItem?.(note.path, note);
@@ -221,8 +221,8 @@ export async function deleteNote(self: FolderOrNote, parent: FolderWithContents)
 
   notesCache.remove(self.path);
   offlineStorage.removeItem?.(self.path);
-  deleteNoteFromFolder(self, parent);
   fuzzyWorker.value?.refreshItemsCache();
+  remove(parent.notes, self);
 }
 
 export async function deleteFolder(self: FolderOrNote, parent: FolderWithContents) {
@@ -257,7 +257,7 @@ export async function deleteFolder(self: FolderOrNote, parent: FolderWithContent
       }
     });
 
-  deleteSubfolderFromFolder(self, parent);
+  remove(parent.subfolders, self);
   fuzzyWorker.value?.refreshItemsCache();
 }
 

@@ -31,7 +31,7 @@ function handleSubmit() {
   else if (props.item.editing) {
     const renameAction = isFolder ? renameFolder : renameNote;
 
-    promise = renameAction(name.value, props.item, props.parent);
+    promise = renameAction(name.value, props.item);
   }
   else {
     return;
@@ -45,11 +45,9 @@ function handleSubmit() {
 
 function handleReset() {
   if (props.item.creating)
-    return deleteNoteFromFolder(props.item, props.parent);
+    return remove(props.parent.notes, props.item);
 
-  const updateAction = isFolder ? updateSubfolderInFolder : updateNoteInFolder;
-
-  updateAction(props.item, { editing: false, creating: false }, props.parent);
+  extend(props.item, { editing: false, creating: false });
 }
 
 onMounted(() => {

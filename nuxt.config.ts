@@ -60,6 +60,8 @@ export default defineNuxtConfig({
           'NOOP',
           'invokeArrayFns',
           'isArray',
+          'extend',
+          'remove',
         ],
       },
       {

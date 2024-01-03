@@ -85,9 +85,7 @@ function preloadItemWithIndication() {
 }
 
 function renameItem() {
-  const updateItem = isFolder ? updateSubfolderInFolder : updateNoteInFolder;
-
-  updateItem(props.item, { editing: true }, props.parent);
+  extend(props.item, { editing: true });
 
   props.onClose();
 }
