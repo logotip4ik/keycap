@@ -1,5 +1,5 @@
 import { defineNuxtModule, useLogger } from '@nuxt/kit';
-import Git from 'simple-git';
+import { execa } from 'execa';
 import colors from 'picocolors';
 
 import { version } from '../package.json';
@@ -36,8 +36,8 @@ export default defineNuxtModule({
   },
 });
 
-const git = Git();
-
 async function getCommitSha(): Promise<string> {
-  return await git.revparse(['--short', 'HEAD']);
+  const { stdout } = await execa('git', ['rev-parse', '--short', 'HEAD']);
+
+  return stdout;
 }
