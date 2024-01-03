@@ -5,7 +5,7 @@ export type ToastUserOptions = Partial<Omit<ToastInstance, 'id' | 'message' | 'r
 const toasts = shallowRef<Array<ToastInstance>>([]);
 export const useToasts = () => toasts;
 
-function _createToast(message: ToastInstance['message'], options?: ToastUserOptions & { delay?: number }): ToastInstance {
+function addToQueue(message: ToastInstance['message'], options?: ToastUserOptions & { delay?: number }): ToastInstance {
   const timeout: { value: NodeJS.Timeout | null } = { value: null };
 
   const toast = createToast({ ...options, message, timeout });
@@ -24,7 +24,7 @@ function _createToast(message: ToastInstance['message'], options?: ToastUserOpti
 };
 
 export function useToaster() {
-  return _createToast;
+  return addToQueue;
 }
 
 function createToast(options: ToastUserOptions & { message: ToastInstance['message'], timeout: { value: NodeJS.Timeout | null } }): ToastInstance {
