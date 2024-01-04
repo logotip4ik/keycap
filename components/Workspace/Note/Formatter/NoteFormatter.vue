@@ -58,19 +58,14 @@ function animateContainerWidth(el: Element) {
 }
 
 function saveEditingLink() {
-  if (editingLink.value !== '') {
-    const mark = props.editor.schema.mark('link', { href: editingLink.value });
-
-    const { from, to } = props.editor.state.selection;
-    props.editor.view.dispatch(
-      props.editor.view.state.tr.addMark(from, to, mark),
-    );
+  if (editingLink.value.startsWith('http')) {
+    props.editor.commands.setLink({
+      href: editingLink.value,
+    });
   }
   else {
     props.editor.commands.unsetLink();
   }
-
-  isEditingLink.value = false;
 
   props.editor.commands.focus(prevSelection.end);
 }
