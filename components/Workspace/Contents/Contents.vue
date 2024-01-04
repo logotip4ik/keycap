@@ -24,13 +24,15 @@ function smartUpdateState(newState: SidebarState) {
   hideSidebarsIfNeeded();
 }
 
-// otherwise volar is yelling that state is not ref :(
-const data = {
-  dir: 'right' as const,
-  name: 'contents',
-  state: contentsState,
-  onUpdateState: updateState,
-};
+useTinykeys({
+  [shortcuts.contents]: (e) => {
+    e.preventDefault();
+
+    const nextState: SidebarState = contentsState.value === 'hidden' ? 'visible' : 'hidden';
+
+    smartUpdateState(nextState);
+  },
+});
 
 if (import.meta.client) {
   let prevWindowWidth = window.innerWidth;
@@ -44,20 +46,16 @@ if (import.meta.client) {
     }, 200)),
   );
 }
-
-useTinykeys({
-  [shortcuts.contents]: (e) => {
-    e.preventDefault();
-
-    const nextState: SidebarState = contentsState.value === 'hidden' ? 'visible' : 'hidden';
-
-    smartUpdateState(nextState);
-  },
-});
 </script>
 
 <template>
-  <WorkspaceSidebar v-bind="data" ref="sidebar">
+  <WorkspaceSidebar
+    ref="sidebar"
+    dir="right"
+    name="contents"
+    :state="contentsState"
+    @update-state="updateState"
+  >
     <WorkspaceContentsHeader
       :state="contentsState"
       @update-state="smartUpdateState"

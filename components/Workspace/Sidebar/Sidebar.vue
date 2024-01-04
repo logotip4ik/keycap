@@ -6,7 +6,7 @@ type FocusableElement = HTMLAnchorElement | HTMLButtonElement;
 const props = withDefaults(defineProps<{
   dir?: 'left' | 'right'
   name: string
-  state: Ref<SidebarState>
+  state: SidebarState
   onUpdateState: (newState: SidebarState) => void
 }>(), { dir: 'left' });
 

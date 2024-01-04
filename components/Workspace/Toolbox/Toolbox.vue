@@ -24,13 +24,15 @@ function smartUpdateState(newState: SidebarState) {
   hideSidebarsIfNeeded();
 }
 
-// otherwise volar is yelling that state is not ref :(
-const data = {
-  name: 'toolbox',
-  class: 'toolbox',
-  state: toolboxState,
-  onUpdateState: updateState,
-};
+useTinykeys({
+  [shortcuts.toolbox]: (e) => {
+    e.preventDefault();
+
+    const nextState: SidebarState = toolboxState.value === 'hidden' ? 'visible' : 'hidden';
+
+    smartUpdateState(nextState);
+  },
+});
 
 if (import.meta.client) {
   let prevWindowWidth = window.innerWidth;
@@ -44,20 +46,16 @@ if (import.meta.client) {
     }, 225)), // intentionally larger debounce time to hide toolbox first
   );
 };
-
-useTinykeys({
-  [shortcuts.toolbox]: (e) => {
-    e.preventDefault();
-
-    const nextState: SidebarState = toolboxState.value === 'hidden' ? 'visible' : 'hidden';
-
-    smartUpdateState(nextState);
-  },
-});
 </script>
 
 <template>
-  <WorkspaceSidebar v-bind="data" ref="sidebar">
+  <WorkspaceSidebar
+    ref="sidebar"
+    name="toolbox"
+    class="toolbox"
+    :state="toolboxState"
+    @update-state="updateState"
+  >
     <!-- TODO: add fade ? animation when entering. Something like iphone quick settings menu -->
     <WorkspaceToolboxHeader
       :state="toolboxState"
