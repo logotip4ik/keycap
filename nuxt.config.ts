@@ -77,6 +77,7 @@ export default defineNuxtConfig({
 
     dirs: [
       resolve('./constants'),
+      resolve('./composables/tiptap'),
     ],
 
     imports: [
