@@ -5,7 +5,6 @@ import type { ResolvedPos } from '@tiptap/pm/model';
 
 const props = defineProps<{
   editor: Editor
-  onHide: () => void
 }>();
 
 const LinkInputPlaceholder = {
@@ -19,6 +18,7 @@ const editingLink = ref('');
 
 let prevListItem: string | undefined;
 let prevHeadingLevel: number | undefined;
+const prevSelection = { start: -1, end: -1 };
 
 let prevContainerWidth: number;
 function rememberContainerWidth(el: Element) {
@@ -46,6 +46,9 @@ function animateContainerWidth(el: Element) {
   editingLink.value = activeUrl;
   linkInputPlaceholder.value = activeUrl ? LinkInputPlaceholder.MADE_EMPTY : LinkInputPlaceholder.INITIALLY_EMPTY;
 
+  prevSelection.start = props.editor.state.selection.from;
+  prevSelection.end = props.editor.state.selection.to;
+
   nextTick(() => {
     const input = el.querySelector('input');
 
@@ -55,10 +58,6 @@ function animateContainerWidth(el: Element) {
 }
 
 function saveEditingLink() {
-  const currentLinkUrl = props.editor.isActive('link')
-    ? props.editor.getAttributes('link').href
-    : '';
-
   if (editingLink.value !== '') {
     const mark = props.editor.schema.mark('link', { href: editingLink.value });
 
@@ -73,8 +72,21 @@ function saveEditingLink() {
 
   isEditingLink.value = false;
 
-  if (currentLinkUrl !== editingLink.value)
-    props.onHide();
+  props.editor.commands.focus(prevSelection.end);
+}
+
+function hideLinkInput() {
+  isEditingLink.value = false;
+
+  props
+    .editor
+    .chain()
+    .focus()
+    .setTextSelection({
+      from: prevSelection.start,
+      to: prevSelection.end,
+    })
+    .run();
 }
 
 function toggleHeading() {
@@ -284,7 +296,7 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
         class="formatter__input"
         :placeholder="linkInputPlaceholder"
         enterkeyhint="done"
-        @keydown.esc="isEditingLink = false"
+        @keydown.esc="hideLinkInput"
       >
 
       <button class="formatter__button" type="submit">

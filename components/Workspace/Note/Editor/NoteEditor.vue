@@ -28,12 +28,6 @@ function updateContent(html?: string) {
   props.onUpdate(content);
 }
 
-function hideBubbleMenu() {
-  const { from } = editor.value!.state.selection;
-
-  editor.value!.commands.focus(from, { scrollIntoView: false });
-}
-
 watch(() => props.content, (content) => {
   if (isTyping.value)
     return;
@@ -81,10 +75,7 @@ onUnmounted(() => isTyping.value = false);
       v-if="editor"
       :editor="editor"
     >
-      <WorkspaceNoteFormatter
-        :editor="editor"
-        @hide="isSmallScreen ? NOOP : hideBubbleMenu"
-      />
+      <WorkspaceNoteFormatter :editor="editor" />
     </Component>
 
     <EditorContent class="note-editor" :editor="editor" />
