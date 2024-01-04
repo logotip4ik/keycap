@@ -19,17 +19,16 @@ import TaskItem from '@tiptap/extension-task-item';
 import BubbleMenuPlugin from '@tiptap/extension-bubble-menu';
 import CodeBlock from '@tiptap/extension-code-block';
 import History from '@tiptap/extension-history';
-import Link from '@tiptap/extension-link';
 
 import type { Editor as CoreEditor } from '@tiptap/core';
 import type { Transaction } from '@tiptap/pm/state';
 
+import { Link } from './extensions/link';
+
 const editor = shallowRef<Editor | undefined>();
 const isTyping = ref(false);
 
-const debouncedClearTyping = debounce(() => {
-  isTyping.value = false;
-}, 500);
+const debouncedClearTyping = debounce(() => isTyping.value = false, 500);
 
 function initTiptap() {
   if (import.meta.server || editor.value)
