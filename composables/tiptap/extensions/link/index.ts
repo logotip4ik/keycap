@@ -1,5 +1,7 @@
-import { Mark, type PasteRuleMatch, markPasteRule, mergeAttributes } from '@tiptap/core';
+import { Mark, type PasteRuleMatch, mergeAttributes } from '@tiptap/core';
 
+import { PasteRule } from '@tiptap/core';
+import type { MarkType } from '@tiptap/pm/model';
 import { autolink } from './helpers/autolink';
 import { clickHandler } from './helpers/clickHandler';
 import { find, getItemNameFromHref, isWorkspaceHref } from './helpers/linker';
@@ -110,23 +112,7 @@ export const Link = Mark.create<LinkOptions>({
   },
 
   addPasteRules() {
-    return [
-      markPasteRule({
-        find: (text) => find(text)
-          .map((link) => ({
-            text: link.value,
-            index: link.start,
-            data: link,
-            replaceWith: link.value.startsWith(window.location.origin) && isWorkspaceHref(link.value)
-              ? getItemNameFromHref(link.value)
-              : undefined,
-          } satisfies PasteRuleMatch)),
-        type: this.type,
-        getAttributes: (match) => ({
-          href: match.data?.href,
-        }),
-      }),
-    ];
+    return makePasteRules({ type: this.type });
   },
 
   addProseMirrorPlugins() {
@@ -136,3 +122,38 @@ export const Link = Mark.create<LinkOptions>({
     ];
   },
 });
+
+function makePasteRules(config: { type: MarkType }) {
+  return [
+    new PasteRule({
+      find: (text) => find(text)
+        .map((link): PasteRuleMatch => ({
+          index: link.start,
+          text: link.href,
+          data: link,
+        })),
+      handler: ({ match, state, range }) => {
+        const attrs = { href: match[0] };
+        const isInnerLink = attrs.href.startsWith(window.location.origin) && isWorkspaceHref(attrs.href);
+
+        const { tr } = state;
+
+        const markStart = range.from;
+        let markEnd = markStart + attrs.href.length;
+
+        if (isInnerLink) {
+          const itemName = getItemNameFromHref(attrs.href);
+
+          tr.deleteRange(markStart, markEnd);
+          tr.insertText(`${itemName} `, markStart);
+
+          markEnd = markStart + itemName.length;
+        }
+
+        tr.addMark(markStart, markEnd, config.type.create(attrs));
+
+        tr.removeStoredMark(config.type);
+      },
+    }),
+  ];
+}
