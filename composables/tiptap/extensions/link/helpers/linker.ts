@@ -26,6 +26,10 @@ export function find(text: string) {
   return links;
 }
 
+/**
+ * **Always** combine with check for correct origin!
+ * @param {string} href full href or pathname
+ */
 export function isWorkspaceHref(href: string) {
   const user = useUser();
 
