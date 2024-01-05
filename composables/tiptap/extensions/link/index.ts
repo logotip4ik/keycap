@@ -1,8 +1,8 @@
-import { Mark, markPasteRule, mergeAttributes } from '@tiptap/core';
+import { Mark, markPasteRule, mergeAttributes, type PasteRuleMatch } from '@tiptap/core';
 
 import { autolink } from './helpers/autolink';
 import { clickHandler } from './helpers/clickHandler';
-import { find } from './helpers/linker';
+import { find, getItemNameFromHref, isWorkspaceHref } from './helpers/linker';
 
 export interface LinkOptions {
   HTMLAttributes: Record<string, any>
@@ -72,13 +72,13 @@ export const Link = Mark.create<LinkOptions>({
       return ['a', mergeAttributes(this.options.HTMLAttributes, { ...HTMLAttributes, href: '' }), 0];
     }
 
-    if (HTMLAttributes.href?.startsWith(window.location.origin)) {
-      const user = useUser();
-
-      if (user.value && HTMLAttributes.href?.includes(`/@${user.value.username}`))
-        HTMLAttributes['data-inner'] = true
+    if (
+      HTMLAttributes.href?.startsWith(window.location.origin)
+      && isWorkspaceHref(HTMLAttributes.href)
+    ) {
+      HTMLAttributes['data-inner'] = true
     }
-    
+
     return ['a', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0];
   },
 
@@ -114,11 +114,19 @@ export const Link = Mark.create<LinkOptions>({
     return [
       markPasteRule({
         find: (text) => find(text)
-          .map((link) => ({
+          .map((link) => {
+            const result: PasteRuleMatch = {
             text: link.value,
             index: link.start,
             data: link,
-          })),
+          }
+
+          if (result.text.startsWith(window.location.origin) && isWorkspaceHref(result.text)) {
+            result.replaceWith = getItemNameFromHref(link.value)
+          }
+
+          return result
+        }),
         type: this.type,
         getAttributes: (match) => ({
           href: match.data?.href,
