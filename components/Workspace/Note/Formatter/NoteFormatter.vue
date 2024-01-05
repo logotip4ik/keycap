@@ -67,10 +67,6 @@ function saveEditingLink() {
     props.editor.commands.unsetLink();
   }
 
-  props.editor.commands.focus(prevSelection.end);
-}
-
-function hideLinkInput() {
   isEditingLink.value = false;
 
   props
@@ -291,7 +287,7 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
         class="formatter__input"
         :placeholder="linkInputPlaceholder"
         enterkeyhint="done"
-        @keydown.esc="hideLinkInput"
+        @keydown.esc="saveEditingLink"
       >
 
       <button class="formatter__button" type="submit">
