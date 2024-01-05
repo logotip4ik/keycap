@@ -1,4 +1,4 @@
-import { Mark, markPasteRule, mergeAttributes, type PasteRuleMatch } from '@tiptap/core';
+import { Mark, type PasteRuleMatch, markPasteRule, mergeAttributes } from '@tiptap/core';
 
 import { autolink } from './helpers/autolink';
 import { clickHandler } from './helpers/clickHandler';
@@ -75,9 +75,8 @@ export const Link = Mark.create<LinkOptions>({
     if (
       HTMLAttributes.href?.startsWith(window.location.origin)
       && isWorkspaceHref(HTMLAttributes.href)
-    ) {
-      HTMLAttributes['data-inner'] = true
-    }
+    )
+      HTMLAttributes['data-inner'] = true;
 
     return ['a', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0];
   },
@@ -114,19 +113,14 @@ export const Link = Mark.create<LinkOptions>({
     return [
       markPasteRule({
         find: (text) => find(text)
-          .map((link) => {
-            const result: PasteRuleMatch = {
+          .map((link) => ({
             text: link.value,
             index: link.start,
             data: link,
-          }
-
-          if (result.text.startsWith(window.location.origin) && isWorkspaceHref(result.text)) {
-            result.replaceWith = getItemNameFromHref(link.value)
-          }
-
-          return result
-        }),
+            replaceWith: link.value.startsWith(window.location.origin) && isWorkspaceHref(link.value)
+              ? getItemNameFromHref(link.value)
+              : undefined,
+          } satisfies PasteRuleMatch)),
         type: this.type,
         getAttributes: (match) => ({
           href: match.data?.href,

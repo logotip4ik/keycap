@@ -74,13 +74,13 @@ onUnmounted(() => {
   if (editor.value && 'history$' in editor.value.state) {
     const history = editor.value.state.history$ as any;
 
-    history.done.eventCount = 0
-    history.done.items.values.length = 0
+    history.done.eventCount = 0;
+    history.done.items.values.length = 0;
 
-    history.undone.eventCount = 0
-    history.undone.items.values.length = 0
+    history.undone.eventCount = 0;
+    history.undone.items.values.length = 0;
 
-    history.prevTime += 10000
+    history.prevTime += 10000;
   }
 });
 </script>
