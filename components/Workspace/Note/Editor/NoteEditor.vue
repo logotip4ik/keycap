@@ -29,13 +29,13 @@ function updateContent(html?: string) {
 }
 
 watch(() => props.content, (content) => {
-  if (isTyping.value)
+  if (isTyping.value || !editor.value)
     return;
 
-  const editorContent = editor.value?.getHTML();
+  const editorContent = editor.value.getHTML();
 
   if (editorContent !== content)
-    editor.value?.commands.setContent(content || '');
+    editor.value.commands.setContent(content || '');
 }, { immediate: import.meta.client });
 
 watch(() => props.editable, (editable) => {
@@ -61,11 +61,28 @@ useTinykeys({
   },
 });
 
-// If user navigates right after keypress, `isTyping` could be true on next
-// render of NoteEditor component, and so content watcher will not update
-// editor's content. This prevents such case by explicitly setting `isTyping`
-// to false after unmounting
-onUnmounted(() => isTyping.value = false);
+onUnmounted(() => {
+  // If user navigates right after keypress, `isTyping` could be true on next
+  // render of NoteEditor component, and so content watcher will not update
+  // editor's content. This prevents such case by explicitly setting `isTyping`
+  // to false after unmounting
+  isTyping.value = false;
+
+  // prevent resuse of history between documents
+  // probably the worst implementation
+  // should have just created new instance of tiptap ?
+  if (editor.value && 'history$' in editor.value.state) {
+    const history = editor.value.state.history$ as any;
+
+    history.done.eventCount = 0
+    history.done.items.values.length = 0
+
+    history.undone.eventCount = 0
+    history.undone.items.values.length = 0
+
+    history.prevTime += 10000
+  }
+});
 </script>
 
 <template>
