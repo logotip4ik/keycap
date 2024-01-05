@@ -57,18 +57,7 @@ function animateContainerWidth(el: Element) {
   });
 }
 
-function saveEditingLink() {
-  if (editingLink.value.startsWith('http')) {
-    props.editor.commands.setLink({
-      href: editingLink.value,
-    });
-  }
-  else {
-    props.editor.commands.unsetLink();
-  }
-
-  isEditingLink.value = false;
-
+function resetSelection() {
   props
     .editor
     .chain()
@@ -78,6 +67,21 @@ function saveEditingLink() {
       to: prevSelection.end,
     })
     .run();
+}
+
+function saveEditingLink() {
+  isEditingLink.value = false;
+
+  if (editingLink.value.startsWith('http')) {
+    props.editor.commands.setLink({
+      href: editingLink.value,
+    });
+  }
+  else {
+    props.editor.commands.unsetLink();
+  }
+
+  resetSelection();
 }
 
 function toggleHeading() {
@@ -167,6 +171,9 @@ useTinykeys({
     event.preventDefault();
 
     isEditingLink.value = !isEditingLink.value;
+
+    if (!isEditingLink.value)
+      resetSelection();
   },
 });
 
