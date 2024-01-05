@@ -16,4 +16,14 @@ export const findChildren = proxy;
 export const VueRenderer = proxy;
 export const BubbleMenu = proxy;
 
+export const Mark = proxy;
+export const Plugin = proxy;
+export const PluginKey = proxy;
+
+export const combineTransactionSteps = proxy;
+export const findChildrenInRange = proxy;
+export const getChangedRanges = proxy;
+export const getMarksBetween = proxy;
+export const markPasteRule = proxy;
+
 export { proxy as default };
