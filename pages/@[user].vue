@@ -46,6 +46,14 @@ useHead({
 });
 
 useTinykeys({
+  [shortcuts.edit]: (event) => {
+    if (isNoteEmpty.value)
+      return;
+
+    event.preventDefault();
+    useTiptap().editor.value?.commands.focus();
+  },
+
   [shortcuts.search]: (event) => {
     event.preventDefault();
 

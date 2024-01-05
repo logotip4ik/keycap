@@ -2,6 +2,7 @@
 const { shortcuts } = useAppConfig();
 
 const shortcutsDescription = {
+  edit: 'Focus Editor',
   new: 'Create new note or folder',
   search: 'Show search',
   contents: 'Open contents sidebar',
@@ -36,11 +37,14 @@ function humanizeShortcut(shortcut: string) {
 
 <style lang="scss">
 .welcome__shortcuts {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  justify-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
   gap: 1.75rem;
+
+  width: 90%;
+  max-width: $breakpoint-tablet - 100px;
 
   margin-bottom: -5vh;
   margin-bottom: -5svh;
