@@ -67,11 +67,15 @@ export const Link = Mark.create<LinkOptions>({
 
   renderHTML({ HTMLAttributes }) {
     // False positive; we're explicitly checking for javascript: links to ignore them
-
     if (HTMLAttributes.href?.startsWith('javascript:')) {
       // strip out the href
       return ['a', mergeAttributes(this.options.HTMLAttributes, { ...HTMLAttributes, href: '' }), 0];
     }
+
+    if (HTMLAttributes.href?.startsWith(window.location.origin)) {
+      HTMLAttributes['data-inner'] = true
+    }
+    
     return ['a', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0];
   },
 

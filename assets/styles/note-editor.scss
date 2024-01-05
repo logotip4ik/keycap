@@ -138,6 +138,21 @@
     a {
       color: currentColor;
       cursor: pointer;
+      
+      &[data-inner=true] {
+        --op: 0.5;
+
+        text-decoration-color: hsla(var(--text-color-hsl), var(--op));
+        text-decoration-style: dashed;
+
+        &::before,
+        &::after {
+          opacity: var(--op);
+        }
+
+        &::before { content: '[' }
+        &::after { content: ']' }
+      }
     }
 
     blockquote {
