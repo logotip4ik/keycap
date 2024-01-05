@@ -73,7 +73,10 @@ export const Link = Mark.create<LinkOptions>({
     }
 
     if (HTMLAttributes.href?.startsWith(window.location.origin)) {
-      HTMLAttributes['data-inner'] = true
+      const user = useUser();
+
+      if (user.value && HTMLAttributes.href?.includes(`/@${user.value.username}`))
+        HTMLAttributes['data-inner'] = true
     }
     
     return ['a', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0];
