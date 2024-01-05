@@ -13,7 +13,6 @@ import { find } from './linker';
 
 interface AutolinkOptions {
   type: MarkType
-  validate?: (url: string) => boolean
 };
 
 export function autolink(options: AutolinkOptions): Plugin {
@@ -30,7 +29,7 @@ export function autolink(options: AutolinkOptions): Plugin {
       const transform = combineTransactionSteps(oldState.doc, [...transactions]);
       const changes = getChangedRanges(transform);
 
-      changes.forEach(({ newRange }) => {
+      for (const { newRange } of changes) {
         // Now let’s see if we can add new links.
         const nodesInChangedRanges = findChildrenInRange(
           newState.doc,
@@ -65,51 +64,43 @@ export function autolink(options: AutolinkOptions): Plugin {
           );
         }
 
-        if (textBlock && textBeforeWhitespace) {
-          const wordsBeforeWhitespace = textBeforeWhitespace.split(' ').filter((s) => s !== '');
+        if (!textBlock || !textBeforeWhitespace)
+          continue;
 
-          if (wordsBeforeWhitespace.length <= 0)
-            return false;
+        const wordsBeforeWhitespace = textBeforeWhitespace.split(' ').filter((s) => s !== '');
 
-          const lastWordBeforeSpace = wordsBeforeWhitespace[wordsBeforeWhitespace.length - 1];
-          const lastWordAndBlockOffset = textBlock.pos + textBeforeWhitespace.lastIndexOf(lastWordBeforeSpace);
+        if (wordsBeforeWhitespace.length <= 0)
+          continue;
 
-          if (!lastWordBeforeSpace)
-            return false;
+        const lastWordBeforeSpace = wordsBeforeWhitespace[wordsBeforeWhitespace.length - 1];
+        const lastWordAndBlockOffset = textBlock.pos + textBeforeWhitespace.lastIndexOf(lastWordBeforeSpace);
 
-          find(lastWordBeforeSpace)
-            // Calculate link position.
-            .map((link) => ({
-              ...link,
-              from: lastWordAndBlockOffset + link.start + 1,
-              to: lastWordAndBlockOffset + link.end + 1,
-            }))
-            // ignore link inside code mark
-            .filter((link) => {
-              if (!newState.schema.marks.code)
-                return true;
+        if (!lastWordBeforeSpace)
+          continue;
 
-              return !newState.doc.rangeHasMark(
-                link.from,
-                link.to,
-                newState.schema.marks.code,
-              );
-            })
-            // Add link mark.
-            .forEach((link) => {
-              if (getMarksBetween(link.from, link.to, newState.doc).some((item) => item.mark.type === options.type))
-                return;
+        const links = find(lastWordBeforeSpace);
+        for (const link of links) {
+          const from = lastWordAndBlockOffset + link.start + 1;
+          const to = lastWordAndBlockOffset + link.end + 1;
 
-              tr.addMark(
-                link.from,
-                link.to,
-                options.type.create({
-                  href: link.href,
-                }),
-              );
-            });
+          if (
+            (
+              newState.schema.marks.code
+              && newState.doc.rangeHasMark(from, to, newState.schema.marks.code)
+            )
+            || getMarksBetween(from, to, newState.doc).some((item) => item.mark.type === options.type)
+          )
+            continue;
+
+          tr.addMark(
+            from,
+            to,
+            options.type.create({
+              href: link.href,
+            }),
+          );
         }
-      });
+      }
 
       if (!tr.steps.length)
         return;
