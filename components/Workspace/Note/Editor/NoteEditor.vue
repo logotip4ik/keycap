@@ -81,6 +81,8 @@ onUnmounted(() => {
     history.undone.items.values.length = 0;
 
     history.prevTime += 10000;
+
+    editor.value.commands.clearContent();
   }
 });
 </script>
