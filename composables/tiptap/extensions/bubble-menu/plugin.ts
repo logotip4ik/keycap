@@ -9,10 +9,10 @@ import type { Editor } from '@tiptap/core';
 import type { EditorState } from '@tiptap/pm/state';
 import type { EditorView } from '@tiptap/pm/view';
 
+import { offset, shift } from '@floating-ui/core';
 import { computePosition } from '@floating-ui/dom';
 
 import type { ComputePositionConfig } from '@floating-ui/dom';
-import { offset, shift } from '@floating-ui/core';
 
 export interface BubbleMenuPluginProps {
   pluginKey: PluginKey | string
