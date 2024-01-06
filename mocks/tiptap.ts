@@ -19,6 +19,7 @@ export const BubbleMenu = proxy;
 export const Mark = proxy;
 export const Plugin = proxy;
 export const PluginKey = proxy;
+export const PasteRule = proxy;
 
 export const combineTransactionSteps = proxy;
 export const findChildrenInRange = proxy;
