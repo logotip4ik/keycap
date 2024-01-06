@@ -16,7 +16,6 @@ import Code from '@tiptap/extension-code';
 import Placeholder from '@tiptap/extension-placeholder';
 import TaskList from '@tiptap/extension-task-list';
 import TaskItem from '@tiptap/extension-task-item';
-import BubbleMenuPlugin from '@tiptap/extension-bubble-menu';
 import CodeBlock from '@tiptap/extension-code-block';
 import History from '@tiptap/extension-history';
 
@@ -24,6 +23,7 @@ import type { Editor as CoreEditor } from '@tiptap/core';
 import type { Transaction } from '@tiptap/pm/state';
 
 import { Link } from './extensions/link';
+import { BubbleMenu } from './extensions/bubble-menu';
 
 const editor = shallowRef<Editor | undefined>();
 const isTyping = ref(false);
@@ -63,7 +63,7 @@ function initTiptap() {
       Link,
       TaskList,
       TaskItem,
-      BubbleMenuPlugin,
+      BubbleMenu,
       Code.configure({
         HTMLAttributes: {
           autocomplete: 'off',

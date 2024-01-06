@@ -1,34 +1,51 @@
 <script setup lang="ts">
-import 'tippy.js/dist/tippy.css';
-import 'tippy.js/animations/shift-away.css';
-
-import { BubbleMenu } from '@tiptap/vue-3';
-
 import type { Editor } from '@tiptap/core';
-import type { Props as TippyProps } from 'tippy.js';
 
-defineProps<{
+import { BubbleMenuPlugin } from '~/composables/tiptap/extensions/bubble-menu/plugin';
+
+const props = defineProps<{
   editor: Editor
 }>();
 
-const tippyOptions: Partial<TippyProps> = {
-  zIndex: 2,
-  duration: [50, 150],
-  theme: 'adaptive',
-  animation: 'shift-away',
-  arrow: false,
-};
+const BubblePluginKey = 'bubbleMenu';
+const bubble = ref<HTMLElement | null>(null);
+
+onMounted(() => {
+  if (!bubble.value)
+    return;
+
+  props.editor.registerPlugin(
+    BubbleMenuPlugin({
+      pluginKey: BubblePluginKey,
+      editor: props.editor,
+      element: bubble.value,
+    }),
+  );
+});
+
+onBeforeUnmount(() => {
+  props.editor.unregisterPlugin(BubblePluginKey);
+});
 </script>
 
 <template>
-  <BubbleMenu :editor="editor" :tippy-options="tippyOptions" class="formatter">
+  <div ref="bubble" class="formatter floating">
     <slot />
-  </BubbleMenu>
+  </div>
 </template>
 
 <style lang="scss">
-.tippy-box[data-theme~='adaptive'] {
+.floating {
   --base-shadow-color: 0, 0, 0;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+
+  width: max-content;
+
+  padding: 0.325rem;
 
   background-color: hsla(var(--surface-color-hsl), 0.95);
   border: 1px solid hsla(var(--text-color-hsl), 0.125);
@@ -47,9 +64,5 @@ const tippyOptions: Partial<TippyProps> = {
 
     backdrop-filter: blur(12px);
   }
-}
-
-.tippy-content {
-  padding: 0.325rem;
 }
 </style>
