@@ -27,7 +27,7 @@ function updateFocusableElements() {
 
 function updateTabindexForFocusableElements(currentState: SidebarState) {
   for (const el of focusableElements.value) {
-    if (typeof el.dataset.openButton !== 'undefined')
+    if (el.dataset.openButton !== undefined)
       continue;
 
     if (currentState === 'hidden')
