@@ -45,8 +45,6 @@ export function getCurrentFolderPath(_route?: ReturnType<typeof useRoute>) {
 }
 
 export async function createFolder(folderName: string, self: FolderOrNote, parent: FolderWithContents) {
-  const createToast = useToaster();
-
   const currentFolderPath = getCurrentFolderPath();
   const newFolderPathName = encodeURIComponent(folderName.trim());
   const newFolderPath = currentFolderPath + newFolderPathName;
@@ -54,8 +52,7 @@ export async function createFolder(folderName: string, self: FolderOrNote, paren
   const res = await $fetch<{ data: FolderWithContents }>(`/api/folder${newFolderPath}`, {
     method: 'POST',
     body: { name: folderName, parentId: parent.id },
-  })
-    .catch((err) => { createToast(err.data.statusMessage); });
+  });
 
   if (!res)
     return;
@@ -79,8 +76,6 @@ export async function createFolder(folderName: string, self: FolderOrNote, paren
 }
 
 export async function createNote(noteName: string, self: FolderOrNote, parent: FolderWithContents) {
-  const createToast = useToaster();
-
   const currentFolderPath = getCurrentFolderPath();
   const newNotePathName = encodeURIComponent(noteName.trim());
   const newNotePath = currentFolderPath + newNotePathName;
@@ -88,8 +83,7 @@ export async function createNote(noteName: string, self: FolderOrNote, parent: F
   const res = await $fetch<{ data: NoteWithContent }>(`/api/note${newNotePath}`, {
     method: 'POST',
     body: { name: noteName, parentId: parent.id },
-  })
-    .catch((err) => { createToast(err.data.statusMessage); }); // TODO: show to user more pleasing error
+  });
 
   if (!res)
     return;
@@ -121,7 +115,11 @@ export async function renameFolder(newName: string, self: FolderOrNote) {
   const folderPath = currentFolderPath + folderPathName;
 
   const res = await $fetch<unknown>(`/api/folder${folderPath}`, { method: 'PATCH', body: newFolder })
-    .catch(() => { extend(self, { editing: false }); });
+    .catch((error) => {
+      extend(self, { editing: false });
+
+      throw error;
+    });
 
   if (!res)
     return;
@@ -170,7 +168,10 @@ export async function renameNote(newName: string, self: FolderOrNote) {
   const notePath = currentFolderPath + notePathName;
 
   const res = await $fetch(`/api/note${notePath}`, { method: 'PATCH', body: newNote })
-    .catch(() => { extend(self, { editing: false }); });
+    .catch((error) => {
+      extend(self, { editing: false });
+      throw error;
+    });
 
   if (!res)
     return;
@@ -207,8 +208,7 @@ export async function deleteNote(self: FolderOrNote, parent: FolderWithContents)
   const notePathName = encodeURIComponent(self.name);
   const notePath = currentFolderPath + notePathName;
 
-  const res = await $fetch.raw(`/api/note${notePath}`, { method: 'DELETE' })
-    .catch(NOOP);
+  const res = await $fetch.raw(`/api/note${notePath}`, { method: 'DELETE' });
 
   if (!res)
     return;
@@ -230,8 +230,7 @@ export async function deleteFolder(self: FolderOrNote, parent: FolderWithContent
   const folderPathName = encodeURIComponent(self.name);
   const folderPath = currentFolderPath + folderPathName;
 
-  const res = await $fetch.raw<null>(`/api/folder${folderPath}`, { method: 'DELETE' })
-    .catch(NOOP);
+  const res = await $fetch.raw<null>(`/api/folder${folderPath}`, { method: 'DELETE' });
 
   if (!res)
     return;
@@ -270,8 +269,7 @@ export async function preloadItem(self: FolderOrNote) {
   const pathName = encodeURIComponent(self.name);
   const path = pathPrefix + currentFolderPath + pathName;
 
-  const res = await $fetch<{ data: FolderWithContents | NoteMinimal }>(`/api/${path}`)
-    .catch(NOOP);
+  const res = await $fetch<{ data: FolderWithContents | NoteMinimal }>(`/api/${path}`);
 
   if (!res)
     return;
