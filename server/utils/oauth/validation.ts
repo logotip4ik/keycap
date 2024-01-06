@@ -15,7 +15,7 @@ export async function assertNoOAuthErrors(event: H3Event) {
 
     await event.context.logger.error({ msg: 'undefined provider' });
 
-    throw createError({ statusCode: 418, statusMessage: 'i a coffeepot' });
+    throw createError({ statusCode: 418, message: 'i a coffeepot' });
   }
 
   const query = getQuery(event);
@@ -25,7 +25,7 @@ export async function assertNoOAuthErrors(event: H3Event) {
 
     await event.context.logger.error({ err: query.error, msg: 'oauth failed' });
 
-    throw createError({ statusCode: 418, statusMessage: decodeURIComponent(query.error.toString()) });
+    throw createError({ statusCode: 418, message: decodeURIComponent(query.error.toString()) });
   }
 
   if (typeof query.state === 'string' && query.state !== getCookie(event, 'state')) {

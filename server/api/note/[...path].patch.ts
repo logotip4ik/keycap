@@ -27,7 +27,7 @@ export default defineEventHandler(async (event) => {
   if (!validation.ok) {
     throw createError({
       statusCode: 400,
-      statusMessage: `${validation.errors[0].dataPath.split('.').at(-1)} ${validation.errors[0].message}`,
+      message: `${validation.errors[0].dataPath.split('.').at(-1)} ${validation.errors[0].message}`,
     });
   }
 

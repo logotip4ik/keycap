@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
   if (!validation.ok) {
     throw createError({
       statusCode: 400,
-      statusMessage: `${validation.errors[0].dataPath.split('.').at(-1)} ${validation.errors[0].message}`,
+      message: `${validation.errors[0].dataPath.split('.').at(-1)} ${validation.errors[0].message}`,
     });
   }
 
@@ -52,7 +52,7 @@ export default defineEventHandler(async (event) => {
   }).catch(async (err) => {
     await event.context.logger.error({ err, msg: 'user.create failed' });
 
-    throw createError({ statusCode: 400, statusMessage: 'user with this email or username might already exist' });
+    throw createError({ statusCode: 400, message: 'user with this email or username might already exist' });
   });
 
   await setAuthCookies(event, user);
