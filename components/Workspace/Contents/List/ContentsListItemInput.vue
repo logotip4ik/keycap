@@ -39,7 +39,7 @@ function handleSubmit() {
 
   promise
     .then(() => state.value = state.value === 'visible' ? 'hidden' : state.value)
-    .catch(() => createToast('Our servers must be sleeping right now. Please try again a bit later (-_-)'))
+    .catch((error) => createToast(error.data.message || 'Our servers must be sleeping right now. Please try again a bit later (-_-)'))
     .finally(() => isLoading.value = false);
 }
 
