@@ -43,6 +43,13 @@ export default defineEventHandler(async (event) => {
     where: { path: notePath, ownerId: user.id },
     select: selectParams,
   }).catch(async (err) => {
+    if (err.code === PrismaError.UniqueConstraintViolation) {
+      throw createError({
+        message: 'Note with such name already exists',
+        statusCode: 400,
+      });
+    }
+
     await event.context.logger.error({ err, msg: 'note.update failed' });
 
     throw createError({ statusCode: 400 });

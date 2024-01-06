@@ -29,7 +29,7 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  // Shortcircuting as currently only folder name could be updated
+  // Short-circuiting as currently only folder name could be updated
   // But we don't require `name` prop in request body
   if (!data.name)
     return sendNoContent(event);
@@ -50,6 +50,13 @@ export default defineEventHandler(async (event) => {
     prisma.$queryRaw`UPDATE "Folder" SET "path" = regexp_replace("path"::text, ${sqlFolderPathRegexp}, ${replaceValue}, 'c'), "updatedAt" = ${now} WHERE ("Folder"."ownerId" = ${user.id} AND "Folder"."path"::text LIKE ${sqlStartsWithFolderPath})`,
   ]).catch(async (err) => {
     await event.context.logger.error({ err }, 'rename folder failed');
+
+    if (err.code === PrismaError.RawQueryError) {
+      throw createError({
+        message: 'Folder with such name already exists',
+        statusCode: 400,
+      });
+    }
 
     throw createError({ statusCode: 400 });
   });
