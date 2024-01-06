@@ -9,7 +9,7 @@ import type { Editor } from '@tiptap/core';
 import type { EditorState } from '@tiptap/pm/state';
 import type { EditorView } from '@tiptap/pm/view';
 
-import { offset, shift } from '@floating-ui/core';
+import { flip, offset, shift } from '@floating-ui/core';
 import { computePosition } from '@floating-ui/dom';
 
 import type { ComputePositionConfig } from '@floating-ui/dom';
@@ -108,6 +108,7 @@ export class BubbleMenuView {
       middleware: [
         offset(8),
         shift({ padding: 8 }),
+        flip(),
       ],
     };
   }
