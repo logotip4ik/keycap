@@ -79,7 +79,7 @@ function preloadItemWithIndication() {
   });
 
   preloadItem(props.item)
-    .catch(() => createToast('Our servers must be sleeping right now. Please try again a bit later (-_-)'))
+    .catch(() => createToast(ERROR_MESSAGES.DEFAULT))
     .finally(() => loadingToast.remove());
 
   props.onClose();
@@ -107,7 +107,7 @@ function deleteItem() {
   const deleteItem = isFolder ? deleteFolder : deleteNote;
 
   deleteItem(props.item, props.parent)
-    .catch(() => createToast('Our servers must be sleeping right now. Please try again a bit later (-_-)'))
+    .catch(() => createToast(ERROR_MESSAGES.DEFAULT))
     .finally(() => loadingToast.remove());
 
   props.onClose();
