@@ -107,22 +107,11 @@ export async function createNote(noteName: string, self: FolderOrNote, parent: F
 export async function renameFolder(newName: string, self: FolderOrNote) {
   const newFolder: Record<string, string | boolean> = { name: newName.trim() };
 
-  if (!newFolder.name)
-    return extend(self, { editing: false });
-
   const currentFolderPath = getCurrentFolderPath();
   const folderPathName = encodeURIComponent(self.name);
   const folderPath = currentFolderPath + folderPathName;
 
-  const res = await $fetch<unknown>(`/api/folder${folderPath}`, { method: 'PATCH', body: newFolder })
-    .catch((error) => {
-      extend(self, { editing: false });
-
-      throw error;
-    });
-
-  if (!res)
-    return;
+  await $fetch<unknown>(`/api/folder${folderPath}`, { method: 'PATCH', body: newFolder });
 
   const notesCache = useNotesCache();
   const foldersCache = useFoldersCache();
@@ -160,21 +149,11 @@ export async function renameFolder(newName: string, self: FolderOrNote) {
 export async function renameNote(newName: string, self: FolderOrNote) {
   const newNote: Record<string, string | boolean> = { name: newName.trim() };
 
-  if (!newNote.name)
-    return extend(self, { editing: false });
-
   const currentFolderPath = getCurrentFolderPath();
   const notePathName = encodeURIComponent(self.name);
   const notePath = currentFolderPath + notePathName;
 
-  const res = await $fetch(`/api/note${notePath}`, { method: 'PATCH', body: newNote })
-    .catch((error) => {
-      extend(self, { editing: false });
-      throw error;
-    });
-
-  if (!res)
-    return;
+  await $fetch(`/api/note${notePath}`, { method: 'PATCH', body: newNote });
 
   const notesCache = useNotesCache();
   const offlineStorage = useOfflineStorage();
