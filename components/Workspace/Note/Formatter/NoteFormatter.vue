@@ -320,8 +320,6 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
     align-items: center;
     justify-content: flex-start;
     gap: var(--items-spacing);
-
-    transition-delay: .1s;
   }
 
   &__input {
