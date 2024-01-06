@@ -46,7 +46,7 @@
   "typescript.tsdk": "node_modules/typescript/lib",
 
   "files.watcherExclude": {
-    "**/.git/**": true,
+    "**/.git/objects/**": true,
     "**/node_modules/**": true,
     "**/data/**": true,
     "**/benchmarks/**": true,
