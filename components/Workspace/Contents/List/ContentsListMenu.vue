@@ -79,6 +79,7 @@ function preloadItemWithIndication() {
   });
 
   preloadItem(props.item)
+    .catch(() => createToast('Our servers must be sleeping right now. Please try again a bit later (-_-)'))
     .finally(() => loadingToast.remove());
 
   props.onClose();
@@ -97,9 +98,17 @@ function showDetails() {
 }
 
 function deleteItem() {
+  const loadingToast = createToast(`Deleting "${props.item.name}"`, {
+    delay: 250,
+    duration: parseDuration('0.5 minute'),
+    type: 'loading',
+  });
+
   const deleteItem = isFolder ? deleteFolder : deleteNote;
 
-  deleteItem(props.item, props.parent);
+  deleteItem(props.item, props.parent)
+    .catch(() => createToast('Our servers must be sleeping right now. Please try again a bit later (-_-)'))
+    .finally(() => loadingToast.remove());
 
   props.onClose();
 }
