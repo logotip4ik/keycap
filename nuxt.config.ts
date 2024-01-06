@@ -324,6 +324,10 @@ export default defineNuxtConfig({
       dirs: [
         resolve('./prisma'),
       ],
+
+      imports: [
+        { from: 'prisma-error-enum', name: 'PrismaError' },
+      ],
     },
 
     typescript: { tsConfig },
