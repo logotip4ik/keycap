@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { createPopper } from '@popperjs/core';
 import parseDuration from 'parse-duration';
 
-import type { Instance as PopperInstance } from '@popperjs/core';
+import { flip, offset } from '@floating-ui/core';
+import { computePosition } from '@floating-ui/dom';
 
 interface MenuAction {
   name: string
@@ -21,7 +21,7 @@ const createToast = useToaster();
 const detailsItem = useCurrentItemForDetails();
 
 const isFolder = 'root' in props.item;
-const popperInstance = shallowRef<null | PopperInstance>(null);
+
 const menu = shallowRef<null | HTMLElement>(null);
 const currentlyConfirming = ref(-1); // You can confirm one at a time
 
@@ -121,22 +121,28 @@ useTinykeys({
   Escape: () => props.onClose(),
 });
 
-onMounted(() => {
-  popperInstance.value = createPopper(props.target, menu.value!, {
+onMounted(async () => {
+  props.target.classList.add('selected');
+
+  if (!menu.value)
+    return;
+
+  const { x, y } = await computePosition(props.target, menu.value, {
     placement: 'bottom-start',
-    modifiers: [
-      { name: 'offset', options: { offset: [12, 4] } },
+    middleware: [
+      offset(4),
+      flip(),
     ],
   });
 
-  props.target.classList.add('selected');
+  menu.value.style.top = `${y}px`;
+  menu.value.style.left = `${x}px`;
 });
 
 onBeforeUnmount(() => {
   cleanup?.();
   cleanup = null;
 
-  popperInstance.value?.destroy();
   props.target.classList.remove('selected');
 });
 </script>
@@ -181,6 +187,9 @@ onBeforeUnmount(() => {
   --base-color-saturation: 0.0;
   --base-shadow-color: 0, 0, 0;
 
+  position: absolute;
+  top: 0;
+  left: 0;
   z-index: 2;
 
   color: hsla(var(--text-color-hsl), 0.7);
