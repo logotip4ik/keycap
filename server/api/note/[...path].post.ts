@@ -39,6 +39,13 @@ export default defineEventHandler(async (event) => {
     },
     select: selectParams,
   }).catch(async (err) => {
+    if (err.code === PrismaError.UniqueConstraintViolation) {
+      throw createError({
+        message: 'Note with such name already exists',
+        statusCode: 400,
+      });
+    }
+
     await event.context.logger.error({ err, msg: 'note.create failed' });
 
     throw createError({ statusCode: 400 });
