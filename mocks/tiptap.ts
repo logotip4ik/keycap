@@ -26,5 +26,8 @@ export const findChildrenInRange = proxy;
 export const getChangedRanges = proxy;
 export const getMarksBetween = proxy;
 export const markPasteRule = proxy;
+export const isTextSelection = proxy;
+export const isNodeSelection = proxy;
+export const posToDOMRect = proxy;
 
 export { proxy as default };
