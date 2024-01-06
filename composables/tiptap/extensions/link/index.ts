@@ -139,18 +139,21 @@ function makePasteRules(config: { type: MarkType }) {
         const { tr } = state;
 
         const markStart = range.from;
-        let markEnd = markStart + attrs.href.length;
+        const markEnd = markStart + attrs.href.length;
 
         if (isInnerLink) {
-          const itemName = getItemNameFromHref(attrs.href);
-
-          tr.deleteRange(markStart, markEnd);
-          tr.insertText(`${itemName} `, markStart);
-
-          markEnd = markStart + itemName.length;
+          tr.replaceRangeWith(
+            markStart,
+            markEnd,
+            state.schema.text(
+              getItemNameFromHref(attrs.href),
+              [config.type.create(attrs)],
+            ),
+          );
         }
-
-        tr.addMark(markStart, markEnd, config.type.create(attrs));
+        else {
+          tr.addMark(markStart, markEnd, config.type.create(attrs));
+        }
 
         tr.removeStoredMark(config.type);
       },
