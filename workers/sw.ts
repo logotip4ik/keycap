@@ -1,6 +1,6 @@
+import { NetworkOnly, Strategy } from 'workbox-strategies';
 import { cacheNames, clientsClaim } from 'workbox-core';
-import { registerRoute } from 'workbox-routing';
-import { Strategy } from 'workbox-strategies';
+import { registerRoute, setDefaultHandler } from 'workbox-routing';
 import { cleanupOutdatedCaches } from 'workbox-precaching';
 import type { StrategyHandler } from 'workbox-strategies';
 import type { ManifestEntry } from 'workbox-build';
@@ -31,27 +31,9 @@ class CacheNetworkRace extends Strategy {
   }
 }
 
-function buildStrategy(): Strategy {
-  return new CacheNetworkRace();
-}
-
-const denylist = [
-  /^\/$/,
-  /^\/?about$/,
-  /^\/?login$/,
-  /^\/?register$/,
-
-  /^\/api\//,
-  // exclude sw: if the user navigates to it, fallback to index.html
-  /^\/sw.js$/,
-  // exclude webmanifest: has its own cache
-  /^\/site.webmanifest$/,
-];
-
 // TODO: somehow add current user page to cache. Like
 // /@test, so it could actually work without internet
-const manifest = (self.__WB_MANIFEST as Array<ManifestEntry>)
-  .filter((entry) => !denylist.some((deny) => deny.test(entry.url)));
+const manifest = self.__WB_MANIFEST as Array<ManifestEntry>;
 
 const cacheEntries: Array<RequestInfo> = [];
 
@@ -68,9 +50,8 @@ const manifestURLs = manifest.map(
 
 self.addEventListener('install', (event: ExtendableEvent) => {
   event.waitUntil(
-    caches.open(cacheName).then((cache) => {
-      return cache.addAll(cacheEntries);
-    }),
+    caches.open(cacheName)
+      .then((cache) => cache.addAll(cacheEntries)),
   );
 });
 
@@ -87,20 +68,30 @@ self.addEventListener('activate', (event: ExtendableEvent) => {
   );
 });
 
-registerRoute(
-  ({ url, sameOrigin }) =>
-    sameOrigin && (
-      manifestURLs.includes(url.href)
-      || url.pathname.startsWith('/api/search/client',
-      )
-    ),
-  buildStrategy(),
-);
-
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING')
     self.skipWaiting();
 });
+
+registerRoute(
+  ({ url }) => manifestURLs.includes(url.href),
+  new CacheNetworkRace(),
+);
+
+setDefaultHandler(new NetworkOnly());
+
+// TODO: add app-shell for network errors ?
+// // fallback to app-shell for document request
+// setCatchHandler(({ event }): Promise<Response> => {
+//   switch (event.request.destination) {
+//     case 'document':
+//       return caches.match(fallback).then((r) => {
+//         return r ? Promise.resolve(r) : Promise.resolve(Response.error())
+//       })
+//     default:
+//       return Promise.resolve(Response.error())
+//   }
+// })
 
 clientsClaim();
 cleanupOutdatedCaches();
