@@ -34,9 +34,13 @@
 }
 
 html {
-  -moz-text-size-adjust: none;
-  -webkit-text-size-adjust: none;
-  text-size-adjust: none;
+  -moz-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+
   tab-size: 4;
 }
 
