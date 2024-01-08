@@ -133,15 +133,19 @@ mitt.on('details:show', () => {
 });
 
 if (import.meta.client) {
-  const off = on(document, 'visibilitychange', () => {
+  const offVisibility = on(document, 'visibilitychange', () => {
     const timeDiff = Date.now() - (lastRefetch || 0);
 
     if (document.visibilityState === 'visible' && timeDiff > parseDuration('10 seconds')!)
       refresh();
   });
 
+  // MDN: Indicates if the document is loading from a cache
+  const offPageShow = on(window, "pageshow", (event) => event.persisted && refresh());
+
   onBeforeUnmount(() => {
-    off();
+    offPageShow();
+    offVisibility();
     clearTimeout(pollingTimer);
     abortControllerGet?.abort();
     loadingToast?.remove();
