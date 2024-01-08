@@ -89,7 +89,7 @@ function isRelative(url: string) {
       width: 1.5rem;
       height: auto;
 
-      margin-right: var(--spacing);
+      margin-right: calc(var(--spacing) / 1.5);
 
       opacity: 0.65;
 
