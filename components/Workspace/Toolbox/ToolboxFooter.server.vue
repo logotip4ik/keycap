@@ -2,7 +2,6 @@
 const currentYear = new Date().getFullYear();
 
 const links = [
-  { href: '/logout', name: 'Log Out' },
   { href: 'https://github.com/logotip4ik/keycap', name: 'GitHub' },
   { href: 'https://bogdankostyuk.xyz', name: 'Author' },
   { href: 'mailto:contact@bogdankostyuk.xyz', name: 'Contact Us' },
@@ -31,6 +30,19 @@ function isRelative(url: string) {
     </p>
 
     <ul class="toolbox__footer__links">
+      <li class="toolbox__footer__links__item">
+        <form
+          method="post"
+          action="/logout"
+        >
+          <button
+            class="toolbox__footer__links__item__link"
+          >
+            Log Out
+          </button>
+        </form>
+      </li>
+
       <li
         v-for="(link, idx) in links"
         :key="idx"
@@ -105,6 +117,9 @@ function isRelative(url: string) {
         text-decoration: underline dashed 1px hsla(var(--selection-bg-color-hsl), 1);
         text-underline-offset: 3px;
 
+        cursor: pointer;
+        border: none;
+        background-color: transparent;
         transition: color var(--sidebar-tr-duration);
 
         @media (hover: hover) {
@@ -115,6 +130,11 @@ function isRelative(url: string) {
           color: var(--text-color);
 
           transition-duration: 0.1s;
+        }
+
+        &:focus-visible {
+          outline: 2px solid hsla(var(--selection-bg-color-hsl), 1);
+          outline-offset: 1px;
         }
       }
     }
