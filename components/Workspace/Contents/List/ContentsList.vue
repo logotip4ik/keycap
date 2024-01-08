@@ -116,6 +116,31 @@ async function handleError(error: Error) {
   folder.value = offlineFolder as FolderWithContents;
 }
 
+function handleArrowsPress(event: KeyboardEvent) {
+  const diff = event.key === 'ArrowUp'
+    ? -1
+    : event.key === 'ArrowDown'
+      ? +1
+      : 0;
+
+  const listElement = (event.target as HTMLElement).offsetParent;
+
+  if (!diff || !listElement)
+    return;
+
+  const currentIdx = Array.from(listElement.children)
+    .findIndex((node) =>
+      // event.target will be anchor tag, but it is wrapped in li, which is list element child
+      node === (event.target as HTMLElement).parentElement,
+    );
+
+  const newSelectedResult = (currentIdx + diff) % listElement.childElementCount;
+  const loopedNewSelectedResult = newSelectedResult < 0 ? listElement.childElementCount - 1 : newSelectedResult;
+  const elementToFocus = listElement.children[loopedNewSelectedResult].firstElementChild as HTMLElement | undefined;
+
+  elementToFocus && elementToFocus.focus();
+}
+
 watch(() => props.state, (state, oldState) => {
   if (
     state !== 'hidden'
@@ -210,6 +235,7 @@ if (import.meta.client) {
       tabindex="-1"
       @contextmenu.self.prevent
       @click.self="menuOptions.target = null"
+      @keydown.capture.passive="handleArrowsPress"
     >
       <template v-for="item in folderContents" :key="item.id">
         <WithFadeTransition>
@@ -282,6 +308,7 @@ if (import.meta.client) {
 
   scrollbar-width: thin;
   scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-background);
+
   &::-webkit-scrollbar {
     width: 0.5rem;
 
