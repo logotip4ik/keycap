@@ -8,13 +8,13 @@ import { githubConfig } from '~/server/utils/oauth/github';
 import type { OAuthProviderConfig } from '~/types/oauth';
 import type { NormalizedSocialUser, OAuthProvider as OAuthProviderType, SafeUser } from '~/types/server';
 
-const providersCongfig: Record<OAuthProviderType, OAuthProviderConfig> = {
+const providersConfig: Record<OAuthProviderType, OAuthProviderConfig> = {
   [OAuthProvider.GitHub]: githubConfig,
   [OAuthProvider.Google]: googleConfig,
 };
 
 export function sendOAuthRedirect(event: H3Event, provider: OAuthProviderType) {
-  const providerConfig = providersCongfig[provider];
+  const providerConfig = providersConfig[provider];
 
   if (!providerConfig)
     throw new Error(`incorrect provider option: ${provider}`);
