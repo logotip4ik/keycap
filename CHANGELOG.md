@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v3.9.2
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.9.1...v3.9.2)
+
+### 🏡 Chore
+
+- **release:** V3.9.1 ([e4abf317](https://github.com/logotip4ik/keycap/commit/e4abf317))
+- Handle arrow up and down key on list ([036917de](https://github.com/logotip4ik/keycap/commit/036917de))
+- Fix typo ([9c81a1fe](https://github.com/logotip4ik/keycap/commit/9c81a1fe))
+- Try refreshing note content after cached page show ([34c0d235](https://github.com/logotip4ik/keycap/commit/34c0d235))
+- Make logout a post route ([9bab35f1](https://github.com/logotip4ik/keycap/commit/9bab35f1))
+- Make logout a form with post request ([a17b0efc](https://github.com/logotip4ik/keycap/commit/a17b0efc))
+- Put logo closer to text ([d4aa15f3](https://github.com/logotip4ik/keycap/commit/d4aa15f3))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk <bogdankostyuk12@gmail.com>
+
 ## v3.9.1
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.9.0...v3.9.1)
