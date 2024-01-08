@@ -29,6 +29,8 @@ declare module '@tiptap/core' {
   }
 }
 
+export const validLinkStartRE = /^https?:\/\//;
+
 /**
  * All credits to original Link extension
  * https://github.com/ueberdosis/tiptap/tree/main/packages/extension-link
@@ -68,11 +70,8 @@ export const Link = Mark.create<LinkOptions>({
   },
 
   renderHTML({ HTMLAttributes }) {
-    // False positive; we're explicitly checking for javascript: links to ignore them
-    if (HTMLAttributes.href?.startsWith('javascript:')) {
-      // strip out the href
+    if (!HTMLAttributes.href || !validLinkStartRE.test(HTMLAttributes.href))
       return ['a', mergeAttributes(this.options.HTMLAttributes, { ...HTMLAttributes, href: '' }), 0];
-    }
 
     if (
       HTMLAttributes.href?.startsWith(window.location.origin)
