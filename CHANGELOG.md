@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v3.9.1
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.9.0...v3.9.1)
+
+### 🩹 Fixes
+
+- Correct endpoint for ingesting data ([fc46179b](https://github.com/logotip4ik/keycap/commit/fc46179b))
+
+### 🏡 Chore
+
+- **release:** V3.9.0 ([2de7fd5b](https://github.com/logotip4ik/keycap/commit/2de7fd5b))
+- Fix typo ([5c0a863d](https://github.com/logotip4ik/keycap/commit/5c0a863d))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk <bogdankostyuk12@gmail.com>
+
 ## v3.9.0
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.8.0...v3.9.0)
