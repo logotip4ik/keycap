@@ -1,6 +1,127 @@
 # Changelog
 
 
+## v3.9.0
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.8.0...v3.9.0)
+
+### 🚀 Enhancements
+
+- Export function for creating keys ([be93b709](https://github.com/logotip4ik/keycap/commit/be93b709))
+
+### 🩹 Fixes
+
+- Infer arguments types for correct return type ([c3eb98a9](https://github.com/logotip4ik/keycap/commit/c3eb98a9))
+- Remove path resolving from node modules ([a7552048](https://github.com/logotip4ik/keycap/commit/a7552048))
+- Replace `NODE_ENV` with string rather then value ([26728713](https://github.com/logotip4ik/keycap/commit/26728713))
+- Chop last slash from path ([6664c753](https://github.com/logotip4ik/keycap/commit/6664c753))
+- Reset history after closing document ([f9c5c6ba](https://github.com/logotip4ik/keycap/commit/f9c5c6ba))
+- Add formatter animation ([eb929ba2](https://github.com/logotip4ik/keycap/commit/eb929ba2))
+- Actually use cache-network strategy for assets ([cd90fedf](https://github.com/logotip4ik/keycap/commit/cd90fedf))
+
+### 💅 Refactors
+
+- Create object instead of classes ([46903940](https://github.com/logotip4ik/keycap/commit/46903940))
+- Use custom link extension ([67720770](https://github.com/logotip4ik/keycap/commit/67720770))
+- Better selection and focus management ([185475f2](https://github.com/logotip4ik/keycap/commit/185475f2))
+- Use link extension methods to create links ([92d1c1fd](https://github.com/logotip4ik/keycap/commit/92d1c1fd))
+- Inner links ([de650cf1](https://github.com/logotip4ik/keycap/commit/de650cf1))
+- Accept sidebar as string rather then ref ([e1f3fd93](https://github.com/logotip4ik/keycap/commit/e1f3fd93))
+- Rewrite pasted inner link with note or folder name ([19ffdd2f](https://github.com/logotip4ik/keycap/commit/19ffdd2f))
+- Use forof loops ([2ab1b682](https://github.com/logotip4ik/keycap/commit/2ab1b682))
+- Retain selection even after adding/removing link ([78bcdf07](https://github.com/logotip4ik/keycap/commit/78bcdf07))
+- Also reset selection after shortcut ([86c18ac7](https://github.com/logotip4ik/keycap/commit/86c18ac7))
+- Add global shortcut to focus editor ([71acca4e](https://github.com/logotip4ik/keycap/commit/71acca4e))
+- Make shortcuts a server component ([3fe35cc4](https://github.com/logotip4ik/keycap/commit/3fe35cc4))
+- Custom paste handler for link ([55dfc504](https://github.com/logotip4ik/keycap/commit/55dfc504))
+- Use `replaceRangeWith` instead of manual deleting and inserting ([9c5cc7ae](https://github.com/logotip4ik/keycap/commit/9c5cc7ae))
+- Custom bubble menu plugin ([bf1823c1](https://github.com/logotip4ik/keycap/commit/bf1823c1))
+- Use floating ui instead of popper ([20a2adac](https://github.com/logotip4ik/keycap/commit/20a2adac))
+- Do not handle errors in items helpers ([9b36908c](https://github.com/logotip4ik/keycap/commit/9b36908c))
+- Catch and log error when creating item ([1f6b96ce](https://github.com/logotip4ik/keycap/commit/1f6b96ce))
+- Remove not needed code ([9354bf42](https://github.com/logotip4ik/keycap/commit/9354bf42))
+
+### 🏡 Chore
+
+- **release:** V3.8.0 ([9028edf1](https://github.com/logotip4ik/keycap/commit/9028edf1))
+- Remove expect error directive ([5a0c53e2](https://github.com/logotip4ik/keycap/commit/5a0c53e2))
+- Split password hashing functions and imports into separate file ([be1ead81](https://github.com/logotip4ik/keycap/commit/be1ead81))
+- Better origin mismatch check ([7b9b53ac](https://github.com/logotip4ik/keycap/commit/7b9b53ac))
+- Rename client plugin to match server name ([4073740d](https://github.com/logotip4ik/keycap/commit/4073740d))
+- Use middleware to redirect to dashboard ([5a6999b3](https://github.com/logotip4ik/keycap/commit/5a6999b3))
+- Disable auth.client plugin for plugins ([ac248fe7](https://github.com/logotip4ik/keycap/commit/ac248fe7))
+- Ignore some folders to boost perf ([6ffe26c7](https://github.com/logotip4ik/keycap/commit/6ffe26c7))
+- Update path for hashPassword function ([e87ce79a](https://github.com/logotip4ik/keycap/commit/e87ce79a))
+- Remove patch from `rad-event-listener` ([d34a2586](https://github.com/logotip4ik/keycap/commit/d34a2586))
+- Use `invokeArrayFns` from `@vue/shared` ([fdcef866](https://github.com/logotip4ik/keycap/commit/fdcef866))
+- Use `import.meta.client` instead of `onMounted` hook ([e75999b4](https://github.com/logotip4ik/keycap/commit/e75999b4))
+- Import and use `isArray` function from `@vue/shared` ([593179ef](https://github.com/logotip4ik/keycap/commit/593179ef))
+- Enable back minification ([87cbf200](https://github.com/logotip4ik/keycap/commit/87cbf200))
+- Reuse function for getting folder path ([80ab8ab8](https://github.com/logotip4ik/keycap/commit/80ab8ab8))
+- Statically replace `NODE_ENV` ([71dde8a9](https://github.com/logotip4ik/keycap/commit/71dde8a9))
+- Make keys generation function auto-importable for nitro ([244e90f1](https://github.com/logotip4ik/keycap/commit/244e90f1))
+- Use `createKey` function to generate ids ([2ecc2932](https://github.com/logotip4ik/keycap/commit/2ecc2932))
+- Merge and export nitro and nuxt  typescript config ([b65946db](https://github.com/logotip4ik/keycap/commit/b65946db))
+- Exclude more not needed folders ([8ea15d01](https://github.com/logotip4ik/keycap/commit/8ea15d01))
+- Use `resolve` from pathe ([0e462848](https://github.com/logotip4ik/keycap/commit/0e462848))
+- Use regexp to validate share link ([8f443010](https://github.com/logotip4ik/keycap/commit/8f443010))
+- Move toaster out of folder ([35eccc69](https://github.com/logotip4ik/keycap/commit/35eccc69))
+- Rename function ([c203eca0](https://github.com/logotip4ik/keycap/commit/c203eca0))
+- Little pref gains by not using classes ([e2e3866b](https://github.com/logotip4ik/keycap/commit/e2e3866b))
+- Auto import toast types ([11fb70c8](https://github.com/logotip4ik/keycap/commit/11fb70c8))
+- Use `extend` and `remove` functions from vue/shared ([0cb64d3a](https://github.com/logotip4ik/keycap/commit/0cb64d3a))
+- Disable mocking node modules in client side ([cb78ad7b](https://github.com/logotip4ik/keycap/commit/cb78ad7b))
+- Allow hydration promise to be reassigned with falsy types ([8334f238](https://github.com/logotip4ik/keycap/commit/8334f238))
+- Delete hydration promise after first await ([2e2dd563](https://github.com/logotip4ik/keycap/commit/2e2dd563))
+- Another batch of folders to ignore ([5e8f314e](https://github.com/logotip4ik/keycap/commit/5e8f314e))
+- Use `execa` instead of `simple-git` ([f3058640](https://github.com/logotip4ik/keycap/commit/f3058640))
+- Move tiptap file to tiptap subfolder ([784f54e6](https://github.com/logotip4ik/keycap/commit/784f54e6))
+- Add tiptap subfolder to autoimport ([641e67ee](https://github.com/logotip4ik/keycap/commit/641e67ee))
+- Unwatch node modules and data folders ([9ad570fc](https://github.com/logotip4ik/keycap/commit/9ad570fc))
+- Another batch of files to ignore ([57dcfda3](https://github.com/logotip4ik/keycap/commit/57dcfda3))
+- Align mocks with new link extension ([9c76956e](https://github.com/logotip4ik/keycap/commit/9c76956e))
+- Lower max history depth ([394db729](https://github.com/logotip4ik/keycap/commit/394db729))
+- Style inner links differently ([7f5cb8c4](https://github.com/logotip4ik/keycap/commit/7f5cb8c4))
+- Add additional check for user workspace ([bfa170af](https://github.com/logotip4ik/keycap/commit/bfa170af))
+- Tell vue that shortcuts will not change ([4ab80e03](https://github.com/logotip4ik/keycap/commit/4ab80e03))
+- Add note to function ([f10d7000](https://github.com/logotip4ik/keycap/commit/f10d7000))
+- Align mocks with link extension ([cf926cbc](https://github.com/logotip4ik/keycap/commit/cf926cbc))
+- Update deps ([101e4185](https://github.com/logotip4ik/keycap/commit/101e4185))
+- Unwatch only git objects ([04ba0400](https://github.com/logotip4ik/keycap/commit/04ba0400))
+- Clear editor content on unmount ([f96a363e](https://github.com/logotip4ik/keycap/commit/f96a363e))
+- Patch nuxt to remove `ohash` from client bundle ([604b0d33](https://github.com/logotip4ik/keycap/commit/604b0d33))
+- Remove transition delay ([f27dd344](https://github.com/logotip4ik/keycap/commit/f27dd344))
+- Install floating-ui/dom ([7b470ac4](https://github.com/logotip4ik/keycap/commit/7b470ac4))
+- Add flip middleware for bubble menu ([b0d76892](https://github.com/logotip4ik/keycap/commit/b0d76892))
+- Install enum for matching prisma errors ([64beccb1](https://github.com/logotip4ik/keycap/commit/64beccb1))
+- Auto import PrismaError enum ([c6cbf0ac](https://github.com/logotip4ik/keycap/commit/c6cbf0ac))
+- Add function mocks for bubble menu plugin ([486b7a9f](https://github.com/logotip4ik/keycap/commit/486b7a9f))
+- Add message if unique constrain failed ([4bde91be](https://github.com/logotip4ik/keycap/commit/4bde91be))
+- Pass error message via `message` prop ([b9fd4ad3](https://github.com/logotip4ik/keycap/commit/b9fd4ad3))
+- Provide error message for some error codes ([fe09045e](https://github.com/logotip4ik/keycap/commit/fe09045e))
+- Handle item-helpers functions errors ([942a1983](https://github.com/logotip4ik/keycap/commit/942a1983))
+- Export error message into separate variable ([ec62bbe8](https://github.com/logotip4ik/keycap/commit/ec62bbe8))
+- Show correct error message in login and register page ([0c69fbd7](https://github.com/logotip4ik/keycap/commit/0c69fbd7))
+- Resolve workbox-window to esm version ([42493fce](https://github.com/logotip4ik/keycap/commit/42493fce))
+- Update hash function in patch to use triple equals ([7a317a25](https://github.com/logotip4ik/keycap/commit/7a317a25))
+- Directly compare with `undefined` ([23c2b75e](https://github.com/logotip4ik/keycap/commit/23c2b75e))
+- Optimize legibility ([95e9104c](https://github.com/logotip4ik/keycap/commit/95e9104c))
+
+### 🎨 Styles
+
+- Add empty line at the end ([8bea26f1](https://github.com/logotip4ik/keycap/commit/8bea26f1))
+- Format with eslint ([d2e71dcd](https://github.com/logotip4ik/keycap/commit/d2e71dcd))
+- Move floating imports closer to each other ([9e85e880](https://github.com/logotip4ik/keycap/commit/9e85e880))
+- Remove duplicate whitespace ([50c9e29e](https://github.com/logotip4ik/keycap/commit/50c9e29e))
+
+### 🤖 CI
+
+- Bump the actions/setup-node ([#17](https://github.com/logotip4ik/keycap/pull/17))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk <bogdankostyuk12@gmail.com>
+
 ## v3.8.0
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.7.4...v3.8.0)
