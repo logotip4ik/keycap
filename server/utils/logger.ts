@@ -8,28 +8,11 @@ export const LOG_LEVEL = {
   error: 'error',
 } as const;
 
-let client: typeof $fetch;
+let client: typeof $fetch | undefined;
 
-// NOTE: maybe we should keep only one instance of logger
-// but then we need to provide `event` on each log ?
 export function createLogger(event: H3Event) {
   const { axiom } = useRuntimeConfig();
   const [path, query] = event.path.split('?');
-
-  if (!client) {
-    client = $fetch.create({
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/x-ndjson',
-        'Authorization': `Bearer ${axiom.token}`,
-        'User-Agent': 'keycap/server',
-        'X-Axiom-Org-Id': axiom.orgId,
-      },
-      method: 'POST',
-      baseURL: 'https://api.axiom.co',
-      ignoreResponseError: true,
-    });
-  }
 
   const additionalData: LoggerData = {
     nitro: true,
@@ -40,7 +23,7 @@ export function createLogger(event: H3Event) {
     username: event.context.user?.username,
   };
 
-  const log = baseLog.bind(additionalData, axiom.dataset, additionalData);
+  const log = baseLog.bind(undefined, axiom, additionalData);
 
   return {
     log,
@@ -60,7 +43,7 @@ export function createLogger(event: H3Event) {
       if (message)
         data.msg = message;
 
-      await this.log(LOG_LEVEL.warn, data);
+      await log(LOG_LEVEL.warn, data);
     },
 
     async info(data: LoggerData | string, message?: string) {
@@ -69,12 +52,17 @@ export function createLogger(event: H3Event) {
       if (message)
         data.msg = message;
 
-      await this.log(LOG_LEVEL.info, data);
+      await log(LOG_LEVEL.info, data);
     },
   };
 }
 
-async function baseLog(dataset: string, baseData: LoggerData, level: keyof typeof LOG_LEVEL, customData: LoggerData) {
+async function baseLog(
+  axiom: ReturnType<typeof useRuntimeConfig>['axiom'],
+  baseData: LoggerData,
+  level: keyof typeof LOG_LEVEL,
+  customData: LoggerData,
+) {
   const data = Object.assign({}, baseData, customData);
 
   data.level = level;
@@ -94,8 +82,22 @@ async function baseLog(dataset: string, baseData: LoggerData, level: keyof typeo
     });
   }
 
+  if (!client) {
+    client = $fetch.create({
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/x-ndjson',
+        'Authorization': `Bearer ${axiom.token}`,
+        'User-Agent': serverUserAgent,
+        'X-Axiom-Org-Id': axiom.orgId,
+      },
+      method: 'POST',
+      baseURL: 'https://api.axiom.co',
+    });
+  }
+
   // avg log is 369.543ms pretty long :(
-  await client(`/v1/datasets/${dataset}`, { body: data })
+  await client(`/v1/datasets/${axiom.dataset}/ingest`, { body: data })
     .catch((err) => {
       // eslint-disable-next-line no-console
       console.log('that was unexpected', err);
