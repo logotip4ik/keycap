@@ -1,6 +1,6 @@
 import type { H3Event } from 'h3';
 
-const proviersMap = {
+const providersMap = {
   '/api/oauth/github': OAuthProvider.GitHub,
   '/api/oauth/google': OAuthProvider.Google,
 };
@@ -8,7 +8,7 @@ const proviersMap = {
 export async function assertNoOAuthErrors(event: H3Event) {
   const pathWithoutQuery = event.path.split('?')[0];
 
-  const provider = proviersMap[pathWithoutQuery as keyof typeof proviersMap];
+  const provider = providersMap[pathWithoutQuery as keyof typeof providersMap];
 
   if (!provider) {
     deleteCookie(event, 'state');
