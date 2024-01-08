@@ -69,7 +69,7 @@ function resetSelection() {
     .run();
 }
 
-function saveEditingLink() {
+function trySaveEditingLink() {
   isEditingLink.value = false;
 
   if (editingLink.value.startsWith('http')) {
@@ -287,14 +287,14 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
       </button>
     </div>
 
-    <form v-else class="formatter__contents-wrapper" @submit.prevent="saveEditingLink">
+    <form v-else class="formatter__contents-wrapper" @submit.prevent="trySaveEditingLink">
       <input
         v-model="editingLink"
         type="url"
         class="formatter__input"
         :placeholder="linkInputPlaceholder"
         enterkeyhint="done"
-        @keydown.esc="saveEditingLink"
+        @keydown.esc="trySaveEditingLink"
       >
 
       <button class="formatter__button" type="submit">
