@@ -4,6 +4,7 @@ import { withoutProtocol } from 'ufo';
 import parseDuration from 'parse-duration';
 
 import type { H3Event } from 'h3';
+import type { CookieSerializeOptions } from 'cookie-es';
 
 import { isJwtPayload } from './validators/jwt';
 import { toBigInt } from './index';
@@ -14,6 +15,15 @@ const authExpiration = parseDuration('3 days', 'second')!;
 const jwtSecret = new TextEncoder().encode(process.env.JWT_SECRET || '');
 const jwtIssuer = process.env.JWT_ISSUER || 'test:keycap';
 const accessTokenName = import.meta.prod ? '__Host-keycap-user' : 'keycap-user';
+
+// https://web.dev/first-party-cookie-recipes/#the-good-first-party-cookie-recipe
+const authSerializeOptions: CookieSerializeOptions = {
+  path: '/',
+  sameSite: 'lax',
+  httpOnly: true,
+  secure: import.meta.prod,
+  maxAge: authExpiration,
+};
 
 async function generateAccessToken(object: Record<string, unknown>): Promise<string> {
   const now = Math.floor(Date.now() / 1000);
@@ -36,18 +46,11 @@ async function generateAccessToken(object: Record<string, unknown>): Promise<str
 export async function setAuthCookies(event: H3Event, user: SafeUser) {
   const accessToken = await generateAccessToken(user);
 
-  // https://web.dev/first-party-cookie-recipes/#the-good-first-party-cookie-recipe
-  setCookie(event, accessTokenName, accessToken, {
-    path: '/',
-    sameSite: 'lax',
-    httpOnly: true,
-    secure: import.meta.prod,
-    maxAge: authExpiration,
-  });
+  setCookie(event, accessTokenName, accessToken, authSerializeOptions);
 }
 
 export async function removeAuthCookies(event: H3Event) {
-  deleteCookie(event, accessTokenName);
+  deleteCookie(event, accessTokenName, authSerializeOptions);
 }
 
 export async function getUserFromEvent(event: H3Event): Promise<SafeUser | null> {
