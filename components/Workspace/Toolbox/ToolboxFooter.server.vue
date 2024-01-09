@@ -2,6 +2,7 @@
 const currentYear = new Date().getFullYear();
 
 const links = [
+  { href: '/logout', name: 'Log Out' },
   { href: 'https://github.com/logotip4ik/keycap', name: 'GitHub' },
   { href: 'https://bogdankostyuk.xyz', name: 'Author' },
   { href: 'mailto:contact@bogdankostyuk.xyz', name: 'Contact Us' },
@@ -30,19 +31,6 @@ function isRelative(url: string) {
     </p>
 
     <ul class="toolbox__footer__links">
-      <li class="toolbox__footer__links__item">
-        <form
-          method="post"
-          action="/logout"
-        >
-          <button
-            class="toolbox__footer__links__item__link"
-          >
-            Log Out
-          </button>
-        </form>
-      </li>
-
       <li
         v-for="(link, idx) in links"
         :key="idx"
