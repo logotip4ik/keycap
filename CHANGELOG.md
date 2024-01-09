@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v3.9.3
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.9.2...v3.9.3)
+
+### 🩹 Fixes
+
+- Use same serialize options for deletion ([216a9da2](https://github.com/logotip4ik/keycap/commit/216a9da2))
+
+### 🏡 Chore
+
+- **release:** V3.9.2 ([6dcff5af](https://github.com/logotip4ik/keycap/commit/6dcff5af))
+- Add proper link validation for rendering ([2fa51f56](https://github.com/logotip4ik/keycap/commit/2fa51f56))
+- Rename function ([2d70acdf](https://github.com/logotip4ik/keycap/commit/2d70acdf))
+- Make logout a post route" ([c79f5c6c](https://github.com/logotip4ik/keycap/commit/c79f5c6c))
+- Make logout a form with post request" ([98da452a](https://github.com/logotip4ik/keycap/commit/98da452a))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk <bogdankostyuk12@gmail.com>
+
 ## v3.9.2
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.9.1...v3.9.2)
