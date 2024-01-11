@@ -19,12 +19,6 @@ const searchEl = computed(() => searchComp.value?.$el as HTMLElement | undefined
 
 defineExpose({ input: inputEl });
 
-function closeWithDelay(_event?: Event) {
-  setTimeout(() => {
-    props.onClose();
-  }, 0);
-}
-
 function handleSearchInput(value: string) {
   value = value.trim();
   selected.value = 0;
@@ -73,11 +67,11 @@ function changeSelectedResult(difference: number) {
 watch(searchInput, debounce(handleSearchInput, 100));
 
 useFocusTrap(searchEl);
-useTinykeys({ Escape: closeWithDelay });
+useTinykeys({ Escape: props.onClose });
 </script>
 
 <template>
-  <WithBackdrop class="search__wrapper" @click.self="closeWithDelay">
+  <WithBackdrop class="search__wrapper" @click.self="props.onClose">
     <KModal ref="searchComp" class="search">
       <form class="search__form" @submit.prevent="openItem">
         <!-- TODO: split into smaller components -->
@@ -107,7 +101,7 @@ useTinykeys({ Escape: closeWithDelay });
         <button
           type="reset"
           class="search__form__cancel"
-          @click="closeWithDelay"
+          @click="props.onClose"
         >
           <LazyIconCloseRounded class="search__form__cancel__icon" />
         </button>
@@ -126,7 +120,7 @@ useTinykeys({ Escape: closeWithDelay });
             :item="item"
             :selected="selected === idx"
             @focus="selected = idx"
-            @click="closeWithDelay"
+            @click.passive="props.onClose"
           />
         </li>
       </WorkspaceSearchList>
