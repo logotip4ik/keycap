@@ -1,4 +1,4 @@
-export function useClickOutside(target: Ref<HTMLElement | null>, callback: (e: Event) => void) {
+export function useClickOutside(target: Ref<HTMLElement | null | undefined>, callback: (e: Event) => void) {
   if (import.meta.server)
     return;
 
