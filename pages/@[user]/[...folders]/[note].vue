@@ -46,7 +46,7 @@ const { data: note, refresh } = await useAsyncData<NoteWithContent | undefined>(
       if (!res)
         return;
 
-      const { data: fetchedNote } = res;
+      const { data: fetchedNote } = res as { data: NoteWithContent };
       isFallbackMode.value = false;
 
       notesCache.set(fetchedNote.path, fetchedNote);

@@ -35,13 +35,11 @@ export default defineEventHandler(async (event) => {
   if (data.name)
     data.path = makeNewItemPath(notePath, data.name);
 
-  const selectParams = getNoteSelectParamsFromEvent(event);
-
   timer.start('db');
   await prisma.note.update({
     data,
     where: { path: notePath, ownerId: user.id },
-    select: selectParams,
+    select: { id: true },
   }).catch(async (err) => {
     if (err.code === PrismaError.UniqueConstraintViolation) {
       throw createError({

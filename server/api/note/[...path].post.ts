@@ -25,8 +25,6 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const selectParams = getNoteSelectParamsFromEvent(event);
-
   timer.start('db');
   const note = await prisma.note.create({
     data: {
@@ -37,7 +35,12 @@ export default defineEventHandler(async (event) => {
       owner: { connect: { id: user.id } },
       parent: { connect: { id: toBigInt(body.parentId) } },
     },
-    select: selectParams,
+    select: {
+      id: true,
+      name: true,
+      content: true,
+      path: true,
+    },
   }).catch(async (err) => {
     if (err.code === PrismaError.UniqueConstraintViolation) {
       throw createError({

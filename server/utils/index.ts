@@ -31,28 +31,6 @@ export function makeNewItemPath(currentPath: string, newName: string): string {
   return currentPath.replace(currentItemNameRE, encodeURIComponent(newName));
 }
 
-export function getNoteSelectParamsFromEvent(event: H3Event): Prisma.NoteSelect {
-  const query = getQuery(event);
-
-  const isDetailsRequest = query.details !== undefined;
-
-  const defaultSelects = { id: true, name: true, content: true, path: true };
-
-  if (isMethod(event, 'GET') && isDetailsRequest) {
-    return {
-      // TODO: ability to add multiple shares to one note ?
-      shares: { take: 1, select: { link: true, updatedAt: true, createdAt: true } },
-      updatedAt: true,
-      createdAt: true,
-    };
-  }
-
-  if (isMethod(event, 'PATCH'))
-    return { id: true };
-
-  return defaultSelects;
-}
-
 export function getFolderSelectParamsFromEvent(event: H3Event): Prisma.FolderSelect {
   const query = getQuery(event);
 

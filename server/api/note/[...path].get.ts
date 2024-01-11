@@ -1,3 +1,20 @@
+import type { Prisma } from '@prisma/client';
+
+export const selectors = defineNoteSelectors({
+  default: {
+    id: true,
+    name: true,
+    path: true,
+    content: true,
+  },
+
+  details: {
+    shares: { take: 1, select: { link: true } },
+    updatedAt: true,
+    createdAt: true,
+  },
+});
+
 export default defineEventHandler(async (event) => {
   const user = event.context.user!;
   const timer = event.context.timer!;
@@ -10,17 +27,20 @@ export default defineEventHandler(async (event) => {
   const notePath = generateNotePath(user.username, path);
 
   const prisma = getPrisma();
-  const selectParams = getNoteSelectParamsFromEvent(event);
+  const selectType: keyof typeof selectors = getQuery(event).details !== undefined
+    ? 'details'
+    : 'default';
 
   timer.start('db');
   const note = await prisma.note.findFirst({
     where: { path: notePath, ownerId: user.id },
-    select: selectParams,
-  }).catch(async (err) => {
-    await event.context.logger.error({ err, msg: 'note.findFirst failed' });
+    select: selectors[selectType],
+  })
+    .catch(async (err) => {
+      await event.context.logger.error({ err, msg: 'note.findFirst failed' });
 
-    throw createError({ statusCode: 400 });
-  });
+      throw createError({ statusCode: 400 });
+    });
   timer.end();
 
   if (!note)
@@ -28,5 +48,10 @@ export default defineEventHandler(async (event) => {
 
   timer.appendHeader(event);
 
-  return { data: note };
+  return {
+    data: note as (
+      Prisma.NoteGetPayload<{ select: typeof selectors['default'] }>
+      | Prisma.NoteGetPayload<{ select: typeof selectors['details'] }>
+    ),
+  };
 });
