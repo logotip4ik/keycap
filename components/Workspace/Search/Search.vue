@@ -135,7 +135,7 @@ useTinykeys({ Escape: props.onClose });
   padding: 0.5rem;
 
   @media (max-width: $breakpoint-tablet) {
-    padding:  1.5rem;
+    padding: 1.5rem;
   }
 
   &__wrapper {
