@@ -74,7 +74,6 @@ useTinykeys({ Escape: props.onClose });
   <WithBackdrop class="search__wrapper" @click.self="props.onClose">
     <KModal ref="searchComp" class="search">
       <form class="search__form" @submit.prevent="openItem">
-        <!-- TODO: split into smaller components -->
         <WorkspaceSearchInput
           ref="inputEl"
           :value="searchInput"
