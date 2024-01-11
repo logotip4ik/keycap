@@ -288,9 +288,13 @@ useTinykeys({ Escape: props.onClose });
   }
 }
 
+.search-fade-enter-active {
+  transition: opacity 0.075s;
+}
+
 .search-fade-leave-active,
 .search-fade-leave-active .search {
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  transition: opacity 0.125s ease, transform 0.15s ease;
 }
 
 .search-fade-enter-from,
@@ -303,14 +307,6 @@ useTinykeys({ Escape: props.onClose });
 }
 
 @media (width <= $breakpoint-tablet) {
-  .search-fade-enter-active {
-    transition: opacity 0.25s ease;
-  }
-
-  .search-fade-leave-active {
-    transition-duration: 0s;
-  }
-
   .search-fade-leave-to {
     .search {
       transform: none;
