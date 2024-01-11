@@ -14,7 +14,8 @@ const isResultsEmpty = ref(false);
 const typeaheadResult = computed<FuzzyItem | CommandItem | null>(() => results.value[selectedResult.value] || null);
 
 const inputEl = shallowRef<HTMLElement | null>(null);
-const searchEl = shallowRef<HTMLElement | null>(null);
+const searchComp = shallowRef<ComponentPublicInstance | null>(null);
+const searchEl = computed(() => searchComp.value?.$el as HTMLElement | undefined);
 
 defineExpose({ input: inputEl });
 
@@ -114,7 +115,7 @@ useTinykeys({ Escape: closeWithDelay });
 
 <template>
   <WithBackdrop class="search__wrapper" @click.self="closeWithDelay">
-    <div ref="searchEl" class="search">
+    <KModal ref="searchComp" class="search">
       <form class="search__form" @submit.prevent="openItem">
         <!-- TODO: split into smaller components -->
         <WorkspaceSearchInput
@@ -187,40 +188,18 @@ useTinykeys({ Escape: closeWithDelay });
           </li>
         </WithListTransitionGroup>
       </WithFadeTransition>
-    </div>
+    </KModal>
   </WithBackdrop>
 </template>
 
 <style lang="scss">
 .search {
-  width: 90%;
   max-width: 575px;
 
   margin: 0 auto;
   padding: 0.5rem;
 
-  border: 1px solid hsla(var(--text-color-hsl), 0.2);
-  border-radius: 0.5rem;
-  background-color: var(--surface-color);
-  box-shadow:
-      1.3px 2.7px 5.3px rgba(0, 0, 0, 0.02),
-      4.5px 8.9px 17.9px rgba(0, 0, 0, 0.03),
-      20px 40px 80px rgba(0, 0, 0, 0.05);
-
-  overflow: hidden;
-
-  @supports (backdrop-filter: blur(1px)) {
-    backdrop-filter: blur(5px);
-    background-color: hsla(var(--surface-color-hsl), 0.5);
-  }
-
   @media (max-width: $breakpoint-tablet) {
-    width: 100%;
-    max-width: unset;
-
-    height: 100%;
-
-    border-radius: 0;
     padding:  1.5rem;
   }
 

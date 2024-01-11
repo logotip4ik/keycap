@@ -5,7 +5,8 @@ const currentItemForDetails = useCurrentItemForDetails();
 const createToast = useToaster();
 
 const isLoadingItemDetails = ref(false);
-const itemDetailsEl = shallowRef<HTMLElement | null>(null);
+const itemDetailsComp = shallowRef<ComponentPublicInstance | null>(null);
+const itemDetailsEl = computed(() => itemDetailsComp.value?.$el as HTMLElement | undefined);
 
 const path = props.item.path.split('/').slice(2).join('/');
 
@@ -125,14 +126,11 @@ onBeforeMount(() => refresh());
 
 <template>
   <WithBackdrop class="item-details__wrapper fast-fade">
-    <div
+    <KModal
       id="item-details"
-      ref="itemDetailsEl"
-      role="dialog"
+      ref="itemDetailsComp"
       class="item-details"
-      aria-modal="true"
       aria-labelledby="item-details-dialog-title"
-      tabindex="0"
     >
       <button class="item-details__close-button" @click="unsetCurrentDetailsItem">
         <LazyIconCloseRounded v-once class="item-details__close-button__icon" />
@@ -196,7 +194,7 @@ onBeforeMount(() => refresh());
           </div>
         </div>
       </WithFadeTransition>
-    </div>
+    </KModal>
   </WithBackdrop>
 </template>
 
@@ -205,33 +203,12 @@ onBeforeMount(() => refresh());
   position: relative;
   z-index: 1;
 
-  width: 90%;
   max-width: $breakpoint-tablet;
 
   padding: 2rem 1.25rem 1.5rem;
 
-  border-radius: 0.5rem;
-  border: 1px solid hsla(var(--text-color-hsl), 0.1);
-  background-color: rgba(var(--surface-color-hsl), 0.98);
-  box-shadow:
-    inset -1px -1px 0.1rem rgba($color: #000000, $alpha: 0.025),
-    1.3px 1.3px 5.3px rgba(0, 0, 0, 0.028),
-    4.5px 4.5px 17.9px rgba(0, 0, 0, 0.042),
-    20px 20px 80px rgba(0, 0, 0, 0.07);
-
-  @supports (backdrop-filter: blur(1px)) {
-    backdrop-filter: blur(5px);
-    background-color: hsla(var(--surface-color-hsl), 0.5);
-  }
-
   @media (max-width: $breakpoint-tablet) {
-    width: 100%;
-    max-width: unset;
-
     padding-block-start: 3rem;
-
-    border: none;
-    border-radius: 0;
   }
 
   &__wrapper {
