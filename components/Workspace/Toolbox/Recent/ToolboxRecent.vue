@@ -11,7 +11,7 @@ let pollingTimer: NodeJS.Timeout | undefined;
 
 const { data: recent, refresh } = await useAsyncData('recent', async () => {
   clearTimeout(pollingTimer);
-  preloadComponents('WorkspaceToolboxRecentItem');
+  preloadComponents('ToolboxRecentItem');
 
   const recent = await $fetch('/api/recent');
   pollingTimer = setTimeout(refresh, POLLING_TIME);

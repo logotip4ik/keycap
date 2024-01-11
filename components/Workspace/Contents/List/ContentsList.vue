@@ -188,9 +188,9 @@ onMounted(() => {
     requestIdleCallback(() => {
       // Do we need this, if service worker already should have cached this items ?
       preloadComponents([
-        'WorkspaceContentsListItem',
-        'WorkspaceContentsListItemInput',
-        'WorkspaceContentsListMenu',
+        'ContentsListItem',
+        'ContentsListItemInput',
+        'ContentsListMenu',
       ]);
     });
   }, 550);
