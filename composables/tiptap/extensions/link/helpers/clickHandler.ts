@@ -10,7 +10,7 @@ export function clickHandler(_options: ClickHandlerOptions): Plugin {
   return new Plugin({
     key: new PluginKey('handleClickLink'),
     props: {
-      handleClick: (view, pos, event) => {
+      handleClick: (_view, _pos, event) => {
         if (event.button !== 0)
           return false;
 
@@ -22,7 +22,7 @@ export function clickHandler(_options: ClickHandlerOptions): Plugin {
           a = a.parentNode as HTMLElement;
         }
 
-        if (!els.find((value) => value.nodeName === 'A'))
+        if (!els.some((value) => value.nodeName === 'A'))
           return false;
 
         const link = event.target as HTMLLinkElement;

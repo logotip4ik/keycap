@@ -35,9 +35,9 @@ export default defineEventHandler(async (event) => {
 
   const folderPath = generateFolderPath(user.username, path);
 
-  const selectType: keyof typeof selectors = getQuery(event).details !== undefined
-    ? 'details'
-    : 'default';
+  const selectType: keyof typeof selectors = getQuery(event).details === undefined
+    ? 'default'
+    : 'details';
 
   timer.start('db');
   const folder = await prisma.folder.findFirst({

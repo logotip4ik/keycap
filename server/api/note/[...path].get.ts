@@ -27,9 +27,9 @@ export default defineEventHandler(async (event) => {
   const notePath = generateNotePath(user.username, path);
 
   const prisma = getPrisma();
-  const selectType: keyof typeof selectors = getQuery(event).details !== undefined
-    ? 'details'
-    : 'default';
+  const selectType: keyof typeof selectors = getQuery(event).details === undefined
+    ? 'default'
+    : 'details';
 
   timer.start('db');
   const note = await prisma.note.findFirst({

@@ -35,9 +35,9 @@ watch(isShowingSearch, async (search) => {
 });
 
 useHead({
-  title: () => !isNoteEmpty.value
-    ? (route.params.note as string)
-    : ((route.params.folders && route.params.folders.at(-1)) || ''),
+  title: () => isNoteEmpty.value
+    ? ((route.params.folders && route.params.folders.at(-1)) || '')
+    : (route.params.note as string),
   titleTemplate: (name) => {
     return name
       ? `${name} | ${user.value!.username} - Keycap`
@@ -65,7 +65,7 @@ useTinykeys({
 });
 
 onMounted(() => {
-  if (typeof route.query.search !== 'undefined')
+  if (route.query.search !== undefined)
     isShowingSearch.value = true;
 
   [preloadDashboardComponents, defineFuzzyWorker]

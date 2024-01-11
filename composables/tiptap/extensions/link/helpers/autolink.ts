@@ -51,7 +51,7 @@ export function autolink(options: AutolinkOptions): Plugin {
           );
         }
         else if (
-          nodesInChangedRanges.length
+          nodesInChangedRanges.length > 0
           // We want to make sure to include the block seperator argument to treat hard breaks like spaces.
           && newState.doc.textBetween(newRange.from, newRange.to, ' ', ' ').endsWith(' ')
         ) {
@@ -102,7 +102,7 @@ export function autolink(options: AutolinkOptions): Plugin {
         }
       }
 
-      if (!tr.steps.length)
+      if (tr.steps.length === 0)
         return;
 
       return tr;

@@ -24,7 +24,7 @@ function handleSubmit() {
 
   if (props.item.creating) {
     const creationName = name.value.replace(/\//g, '');
-    const createAction = creationName.length !== name.value.length ? createFolder : createNote;
+    const createAction = creationName.length === name.value.length ? createNote : createFolder;
 
     promise = createAction(creationName, props.item, props.parent);
   }
