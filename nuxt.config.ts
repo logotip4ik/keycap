@@ -43,7 +43,6 @@ export default defineNuxtConfig({
     componentIslands: true,
     watcher: 'parcel',
     headNext: true,
-    appManifest: false,
   },
 
   future: {
