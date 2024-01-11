@@ -38,7 +38,11 @@ function handleSubmit() {
   }
 
   promise
-    .then(() => state.value = state.value === 'visible' ? 'hidden' : state.value)
+    .then(() => {
+      state.value = state.value === 'visible' ? 'hidden' : state.value;
+
+      useTiptap().withEditor((editor) => editor.commands.focus());
+    })
     .catch((error) => createToast(error.data.message || ERROR_MESSAGES.DEFAULT))
     .finally(() => isLoading.value = false);
 }
