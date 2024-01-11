@@ -124,7 +124,7 @@ onBeforeMount(() => refresh());
 </script>
 
 <template>
-  <div class="item-details__wrapper fast-fade">
+  <WithBackdrop class="item-details__wrapper fast-fade">
     <div
       id="item-details"
       ref="itemDetailsEl"
@@ -197,7 +197,7 @@ onBeforeMount(() => refresh());
         </div>
       </WithFadeTransition>
     </div>
-  </div>
+  </WithBackdrop>
 </template>
 
 <style lang="scss">
@@ -239,23 +239,8 @@ onBeforeMount(() => refresh());
     justify-content: center;
     align-items: center;
 
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 3;
-
-    width: 100%;
-    height: 100%;
-
-    background-color: hsla(var(--surface-color-hsl), 0.9);
-
     @media (max-width: $breakpoint-tablet) {
       align-items: stretch;
-    }
-
-    @supports (backdrop-filter: blur(1px)) {
-      background-color: hsla(var(--surface-color-hsl), 0.25);
-      backdrop-filter: blur(8px);
     }
   }
 

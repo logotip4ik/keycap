@@ -113,7 +113,7 @@ useTinykeys({ Escape: closeWithDelay });
 </script>
 
 <template>
-  <div class="search-wrapper" @click.self="closeWithDelay">
+  <WithBackdrop class="search__wrapper" @click.self="closeWithDelay">
     <div ref="searchEl" class="search">
       <form class="search__form" @submit.prevent="openItem">
         <!-- TODO: split into smaller components -->
@@ -188,7 +188,7 @@ useTinykeys({ Escape: closeWithDelay });
         </WithListTransitionGroup>
       </WithFadeTransition>
     </div>
-  </div>
+  </WithBackdrop>
 </template>
 
 <style lang="scss">
@@ -224,19 +224,8 @@ useTinykeys({ Escape: closeWithDelay });
     padding:  1.5rem;
   }
 
-  &-wrapper {
-    position: fixed;
-    inset:0;
-    z-index: 10;
-
+  &__wrapper {
     padding-top: 33vh;
-
-    background-color: hsla(var(--surface-color-hsl), 0.9);
-
-    @supports (backdrop-filter: blur(1px)) {
-      background-color: hsla(var(--surface-color-hsl), 0.25);
-      backdrop-filter: blur(8px);
-    }
 
     @media (max-width: $breakpoint-tablet) {
       padding-top: 0;
