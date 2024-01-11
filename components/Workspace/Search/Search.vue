@@ -6,12 +6,12 @@ const props = defineProps<{
 const fuzzyWorker = useFuzzyWorker();
 
 const results = shallowRef<Array<FuzzyItem | CommandItem>>([]);
-const resultsEl = shallowRef<ComponentPublicInstance<HTMLUListElement> | null>(null);
-const isLoadingResults = ref(false);
-const selectedResult = ref(0);
+const resultsState = ref<'idle' | 'empty'>('idle');
+
+const selected = ref(0);
+const selectedResult = computed<FuzzyItem | CommandItem | undefined>(() => results.value[selected.value]);
+
 const searchInput = ref('');
-const isResultsEmpty = ref(false);
-const typeaheadResult = computed<FuzzyItem | CommandItem | null>(() => results.value[selectedResult.value] || null);
 
 const inputEl = shallowRef<HTMLElement | null>(null);
 const searchComp = shallowRef<ComponentPublicInstance | null>(null);
@@ -27,87 +27,50 @@ function closeWithDelay(_event?: Event) {
 
 function handleSearchInput(value: string) {
   value = value.trim();
-  selectedResult.value = 0;
+  selected.value = 0;
 
   if (value.length < 1 || !fuzzyWorker.value)
     return results.value = [];
 
-  isLoadingResults.value = true;
-
   fuzzyWorker.value.searchWithQuery(value)
-    .then((entries) => results.value = entries)
-    .finally(() => isLoadingResults.value = false);
+    .then((entries) => {
+      results.value = entries;
+      // if results are empty and user has cleared input, then display as idle
+      // else, show results
+      resultsState.value = entries.length === 0
+        ? (value.length === 0 ? 'idle' : 'empty')
+        : 'idle';
+    });
 }
 
 async function openItem() {
-  const list = resultsEl.value?.$el as HTMLUListElement | undefined;
-  const result = list?.children[selectedResult.value];
+  const result = selectedResult.value;
 
   if (!result)
     return;
 
-  const actionEl = result.firstElementChild as HTMLAnchorElement | HTMLButtonElement;
-  const actionName = actionEl.dataset.name;
+  // is command
+  if ('key' in result) {
+    const action = commandActions[result.key];
 
-  actionEl.click();
-
-  if (!actionName)
-    return;
-
-  for (let i = 0; i < 12; i++) {
-    await delay(i === 0 ? 1 : 100);
-
-    const item = document.querySelector(`.contents__list a[aria-label*="${actionName}"]`) as HTMLAnchorElement | undefined;
-
-    if (item) {
-      item.offsetParent?.scroll({
-        top: item.offsetTop - 8,
-        behavior: 'smooth', // the animation looks horrible in chrome
-      });
-
-      break;
-    }
+    action && action();
   }
+  else {
+    await navigateTo(
+      generateItemPath(result),
+    );
+  }
+
+  props.onClose();
 }
 
 function changeSelectedResult(difference: number) {
-  const newSelectedResult = (selectedResult.value + difference) % results.value.length;
+  const newSelectedResult = (selected.value + difference) % results.value.length;
 
-  selectedResult.value = newSelectedResult < 0 ? results.value.length - 1 : newSelectedResult;
+  selected.value = newSelectedResult < 0 ? results.value.length - 1 : newSelectedResult;
 }
-
-watch([searchInput, isLoadingResults, results], debounce(([value, isLoading, results]) => {
-  if (!value || isLoading)
-    return isResultsEmpty.value = false;
-
-  isResultsEmpty.value = value.length !== 0 && results.length === 0;
-}, 125));
 
 watch(searchInput, debounce(handleSearchInput, 100));
-
-let prevHeight: number;
-let prevAnimation: Animation | null;
-function rememberHeight() {
-  if (searchEl.value)
-    prevHeight = searchEl.value.clientHeight;
-}
-
-function animateHeight() {
-  if (!searchEl.value)
-    return;
-
-  if (prevAnimation)
-    prevAnimation.cancel();
-
-  const currentHeight = searchEl.value.clientHeight;
-
-  prevAnimation = searchEl.value.animate([
-    { height: `${prevHeight}px` },
-    { height: `${currentHeight}px` },
-  ], { duration: 225, easing: 'cubic-bezier(0.33, 1, 0.68, 1)' });
-
-  prevAnimation.addEventListener('finish', () => prevAnimation = null);
-}
 
 useFocusTrap(searchEl);
 useTinykeys({ Escape: closeWithDelay });
@@ -124,15 +87,16 @@ useTinykeys({ Escape: closeWithDelay });
           class="search__form__input"
           placeholder="Search or enter / for commands"
           @update-value="searchInput = $event"
+          @keydown.enter.prevent="openItem"
           @keydown.up.prevent="changeSelectedResult(-1)"
           @keydown.down.prevent="changeSelectedResult(+1)"
         />
 
-        <p v-show="typeaheadResult" class="search__form__typeahead">
+        <p v-show="selectedResult" class="search__form__typeahead">
           <span class="search__form__typeahead__input-clone">{{ searchInput }}</span>
           <span class="search__form__typeahead__result">&nbsp;-
-            <template v-if="typeaheadResult?.name.toLowerCase() !== searchInput.toLowerCase()">
-              {{ typeaheadResult?.name }}
+            <template v-if="selectedResult?.name.toLowerCase() !== searchInput.toLowerCase()">
+              {{ selectedResult?.name }}
             </template>
             <template v-else>
               open
@@ -149,45 +113,23 @@ useTinykeys({ Escape: closeWithDelay });
         </button>
       </form>
 
-      <WithFadeTransition
-        @enter="animateHeight"
-        @leave="animateHeight"
-        @before-enter="rememberHeight"
-        @before-leave="rememberHeight"
+      <WorkspaceSearchList
+        :state="resultsState"
+        :animate-el="searchEl"
       >
-        <div
-          v-if="isResultsEmpty"
-          class="search__no-results"
+        <li
+          v-for="(item, idx) in results"
+          :key="item.name + (item as FuzzyItem).path"
+          class="search__results__item"
         >
-          <p class="search__no-results__text">
-            Nothing found...
-          </p>
-        </div>
-
-        <WithListTransitionGroup
-          v-else-if="results.length !== 0"
-          ref="resultsEl"
-          tag="ul"
-          class="search__results"
-          @enter="animateHeight"
-          @leave="animateHeight"
-          @before-enter="rememberHeight"
-          @before-leave="rememberHeight"
-        >
-          <li
-            v-for="(item, idx) in results"
-            :key="item.name + (item as FuzzyItem).path"
-            class="search__results__item"
-          >
-            <WorkspaceSearchItem
-              :item="item"
-              :selected="selectedResult === idx"
-              @focus="selectedResult = idx"
-              @click="closeWithDelay"
-            />
-          </li>
-        </WithListTransitionGroup>
-      </WithFadeTransition>
+          <WorkspaceSearchItem
+            :item="item"
+            :selected="selected === idx"
+            @focus="selected = idx"
+            @click="closeWithDelay"
+          />
+        </li>
+      </WorkspaceSearchList>
     </KModal>
   </WithBackdrop>
 </template>
@@ -258,7 +200,7 @@ useTinykeys({ Escape: closeWithDelay });
         display: none;
       }
 
-      // vue isn't as fast as browser, so hiding typeahead if input is empty
+      /* vue isn't as fast as browser, so hiding typeahead if input is empty */
       &:placeholder-shown + .search__form__typeahead {
         opacity: 0;
       }
