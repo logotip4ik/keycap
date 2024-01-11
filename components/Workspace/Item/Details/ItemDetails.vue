@@ -139,10 +139,9 @@ onBeforeMount(() => refresh());
       <WithFadeTransition appear @before-leave="rememberHeight" @enter="transitionHeight">
         <WorkspaceItemDetailsSkeleton v-if="!mergedDetails" key="skeleton" />
 
-        <div v-else-if="mergedDetails" key="content" class="item-details__data">
+        <div v-else key="content" class="item-details__data">
           <!-- TODO: split into smaller components -->
           <p
-            v-once
             id="item-details-dialog-title"
             class="item-details__data__title"
             :aria-label="`Details: ${mergedDetails.name}`"
