@@ -28,8 +28,6 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const selectParams = getFolderSelectParamsFromEvent(event);
-
   timer.start('db');
   const folder = await prisma.folder.create({
     data: {
@@ -39,27 +37,35 @@ export default defineEventHandler(async (event) => {
       parent: { connect: { id: toBigInt(body.parentId) } },
     },
 
-    select: selectParams,
-  }).catch(async (err) => {
-    if (err.code === PrismaError.UniqueConstraintViolation) {
-      throw createError({
-        message: 'Folder with such name already exists',
-        statusCode: 400,
-      });
-    }
+    select: {
+      id: true,
+      name: true,
+      path: true,
+      root: true,
+    },
+  })
+    .catch(async (err) => {
+      if (err.code === PrismaError.UniqueConstraintViolation) {
+        throw createError({
+          message: 'Folder with such name already exists',
+          statusCode: 400,
+        });
+      }
 
-    await event.context.logger.error({ err, msg: 'folder.create failed' });
+      await event.context.logger.error({ err, msg: 'folder.create failed' });
 
-    throw createError({ statusCode: 400 });
-  });
+      throw createError({ statusCode: 400 });
+    });
   timer.end();
 
   timer.appendHeader(event);
 
   setResponseStatus(event, 201);
 
-  folder.notes ||= [];
-  folder.subfolders ||= [];
+  (folder as typeof folder & FolderContents).notes ||= [];
+  (folder as typeof folder & FolderContents).subfolders ||= [];
 
-  return { data: folder };
+  return {
+    data: folder as typeof folder & FolderContents,
+  };
 });

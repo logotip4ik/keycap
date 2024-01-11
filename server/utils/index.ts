@@ -1,9 +1,6 @@
 import { SocialAuth } from '@prisma/client';
 import { withLeadingSlash, withoutTrailingSlash } from 'ufo';
 
-import type { H3Event } from 'h3';
-import type { Prisma } from '@prisma/client';
-
 // escaping `-` and `|` because it is used on client side and browsers don't like it unescaped
 // NOTE: do not forget to change same RE in client side
 export const allowedItemNameRE = /^[\w .&#!|\-\u0404-\u0457]{2,50}$/;
@@ -29,40 +26,6 @@ export function generateRootFolderPath(username: string) {
 
 export function makeNewItemPath(currentPath: string, newName: string): string {
   return currentPath.replace(currentItemNameRE, encodeURIComponent(newName));
-}
-
-export function getFolderSelectParamsFromEvent(event: H3Event): Prisma.FolderSelect {
-  const query = getQuery(event);
-
-  const isDetailsRequest = query.details !== undefined;
-
-  const defaultSelects = { id: true, name: true, path: true, root: true };
-
-  if (isMethod(event, 'GET')) {
-    if (isDetailsRequest) {
-      return { updatedAt: true, createdAt: true };
-    }
-    else {
-      return {
-        ...defaultSelects,
-
-        notes: {
-          select: { id: true, name: true, path: true },
-          orderBy: { name: 'asc' },
-        },
-
-        subfolders: {
-          select: { ...defaultSelects },
-          orderBy: { name: 'asc' },
-        },
-      };
-    }
-  }
-
-  if (isMethod(event, 'PATCH'))
-    return { id: true };
-
-  return defaultSelects;
 }
 
 if (import.meta.vitest) {

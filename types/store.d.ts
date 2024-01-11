@@ -22,10 +22,11 @@ declare global {
   export type NoteWithContent = Prettify<NoteMinimal & Pick<Note, 'content'>>;
 
   export type FolderMinimal = Prettify<Serialize<Pick<Folder, 'id' | 'name' | 'path' | 'root'> & ItemMetatags>>;
-  export type FolderWithContents = Prettify<FolderMinimal & {
+  export interface FolderContents {
     notes: Array<NoteMinimal>
     subfolders: Array<FolderMinimal>
-  }>;
+  };
+  export type FolderWithContents = Prettify<FolderMinimal & FolderContents>;
 
   export type FolderOrNote = Prettify<FolderMinimal & NoteMinimal>;
 

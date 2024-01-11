@@ -43,7 +43,7 @@ const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefi
       if (!res)
         return;
 
-      const { data: fetchedFolder } = res;
+      const { data: fetchedFolder } = res as { data: FolderWithContents };
       const wasCreatingItem = folder.value?.notes.some((item) => item.creating);
 
       isFallbackMode.value = false;
