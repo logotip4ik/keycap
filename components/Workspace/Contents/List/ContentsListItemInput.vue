@@ -6,6 +6,7 @@ const props = defineProps<{
 
 const state = useContentsSidebarState();
 const createToast = useToaster();
+const isSmallScreen = getIsSmallScreen();
 
 const inputEl = shallowRef<HTMLInputElement | null>(null);
 const name = ref(props.item.name || '');
@@ -39,7 +40,9 @@ function handleSubmit() {
 
   promise
     .then(() => {
-      state.value = state.value === 'visible' ? 'hidden' : state.value;
+      state.value = isSmallScreen
+        ? 'hidden'
+        : (state.value === 'visible' ? 'hidden' : state.value);
 
       useTiptap().withEditor((editor) => editor.commands.focus());
     })
