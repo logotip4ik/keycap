@@ -4,7 +4,7 @@ const props = defineProps<{
   onUpdateValue: (v: string) => void
 }>();
 
-function updateModelValue(event: Event) {
+function updateValue(event: Event) {
   props.onUpdateValue((event.target as HTMLInputElement).value);
 }
 </script>
@@ -26,6 +26,6 @@ function updateModelValue(event: Event) {
     placeholder="Search or enter / for commands"
     maxlength="64"
     :value="value"
-    @input="updateModelValue"
+    @input="updateValue"
   >
 </template>
