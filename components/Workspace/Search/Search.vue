@@ -23,8 +23,11 @@ function handleSearchInput(value: string) {
   value = value.trim();
   selected.value = 0;
 
-  if (value.length === 0 || !fuzzyWorker.value)
-    return results.value = [];
+  if (value.length === 0 || !fuzzyWorker.value) {
+    results.value = [];
+    resultsState.value = 'idle';
+    return;
+  }
 
   fuzzyWorker.value.searchWithQuery(value)
     .then((entries) => {
