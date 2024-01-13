@@ -272,6 +272,13 @@ export default defineNuxtConfig({
       },
     },
 
+    server: {
+      fs: {
+        // https://github.com/vitejs/vite/pull/15279
+        cachedChecks: true,
+      },
+    },
+
     $client: {
       build: {
         rollupOptions: {
