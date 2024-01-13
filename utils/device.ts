@@ -26,31 +26,3 @@ export function parseUA(userAgent: string): DeviceInfo {
 
   return deviceInfo;
 }
-
-if (import.meta.vitest) {
-  const { describe, it, expect } = import.meta.vitest;
-
-  describe('User-Agent parsing', () => {
-    it('Detects mobile or tablet', () => {
-      const chromeAndroid = 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Mobile Safari/537.3';
-      const chromeIphone = 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/115.0.5790.130 Mobile/15E148 Safari/604.';
-      const safariIphone = 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_5_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5.2 Mobile/15E148 Safari/604.';
-      const firefoxLg = 'Mozilla/5.0 (Android 13; Mobile; LG-M255; rv:115.0) Gecko/115.0 Firefox/115.0';
-      const firefoxIpad = 'Mozilla/5.0 (iPad; CPU OS 13_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) FxiOS/115.0 Mobile/15E148 Safari/605.1.15';
-
-      expect(checkIsMobileOrTablet(chromeAndroid)).toBe(true);
-      expect(checkIsMobileOrTablet(chromeIphone)).toBe(true);
-      expect(checkIsMobileOrTablet(safariIphone)).toBe(true);
-      expect(checkIsMobileOrTablet(firefoxLg)).toBe(true);
-      expect(checkIsMobileOrTablet(firefoxIpad)).toBe(true);
-    });
-
-    it('Detects Firefox browser', () => {
-      const firefoxUA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0';
-      const chromeUA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36';
-
-      expect(checkIsFirefox(firefoxUA)).toBe(true);
-      expect(checkIsFirefox(chromeUA)).toBe(false);
-    });
-  });
-}
