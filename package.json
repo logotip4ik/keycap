@@ -27,7 +27,7 @@
     "@types/sanitize-html": "^2.9.5",
     "eslint": "^8.56.0",
     "normalize.css": "^8.0.1",
-    "nuxt": "patch:nuxt@npm%3A3.9.1#~/.yarn/patches/nuxt-npm-3.9.1-653985ec64.patch",
+    "nuxt": "^3.9.1",
     "prisma": "^5.7.1",
     "sass": "^1.69.7",
     "typescript": "^5.3.3"
@@ -154,7 +154,7 @@
     "@tiptap/core": "patch:@tiptap/core@npm%3A2.1.13#./.yarn/patches/@tiptap-core-npm-2.0.4-25bd396515.patch",
     "@tiptap/extension-link": "patch:@tiptap/extension-link@npm%3A2.1.13#./.yarn/patches/@tiptap-extension-link-npm-2.1.12-41f7b88f1d.patch",
     "tinykeys": "patch:tinykeys@npm%3A2.1.0#./.yarn/patches/tinykeys-npm-2.1.0-819feeaed0.patch",
-    "nuxt@npm:^3.9.0": "patch:nuxt@npm%3A3.9.1#~/.yarn/patches/nuxt-npm-3.9.1-653985ec64.patch",
+    "nuxt": "patch:nuxt@npm%3A3.9.1#~/.yarn/patches/nuxt-npm-3.9.1-653985ec64.patch",
     "workbox-window": "npm:@vite-pwa/workbox-window@latest"
   },
   "prisma": {
