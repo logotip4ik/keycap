@@ -122,19 +122,22 @@ function toggleHeading() {
   prevHeadingLevel = -1;
 }
 
+const lists = ['bulletList', 'orderedList', 'taskList'];
 function toggleListItem() {
   let actionIdx = 0;
 
-  const commands = props.editor!.chain().focus();
+  const commands = props.editor.chain().focus();
 
-  ['bulletList', 'orderedList', 'taskList'].forEach((list, i) => {
-    if (props.editor.isActive(list)) {
+  for (let i = 0; i < lists.length; i++) {
+    const list = lists[i];
+
+    if (props.editor.isActive((list))) {
       if (prevListItem === undefined)
         prevListItem = list;
 
       actionIdx = i + 1;
     }
-  });
+  }
 
   if (prevListItem && prevListItem !== 'auto') {
     if (prevListItem === 'taskList')

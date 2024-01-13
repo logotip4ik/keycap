@@ -30,4 +30,4 @@ export const isTextSelection = proxy;
 export const isNodeSelection = proxy;
 export const posToDOMRect = proxy;
 
-export { proxy as default };
+export default proxy;

@@ -7,7 +7,7 @@ import { clickHandler } from './helpers/clickHandler';
 import { find, getItemNameFromHref, isWorkspaceHref } from './helpers/linker';
 
 export interface LinkOptions {
-  HTMLAttributes: Record<string, any>
+  HTMLAttributes: Record<string, unknown>
 }
 
 declare module '@tiptap/core' {

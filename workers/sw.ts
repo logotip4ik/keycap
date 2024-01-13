@@ -59,10 +59,10 @@ self.addEventListener('activate', (event: ExtendableEvent) => {
   event.waitUntil(
     caches.open(cacheName).then((cache) => {
       cache.keys().then((keys) => {
-        keys.forEach((request) => {
+        for (const request of keys) {
           if (!manifestURLs.includes(request.url))
             cache.delete(request);
-        });
+        }
       });
     }),
   );

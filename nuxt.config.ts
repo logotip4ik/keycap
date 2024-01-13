@@ -208,7 +208,7 @@ export default defineNuxtConfig({
         const { publicDir } = nitro.options.output;
 
         const swPath = join(publicDir, 'sw.js');
-        const swSource = await fsp.readFile(swPath, 'utf-8');
+        const swSource = await fsp.readFile(swPath, 'utf8');
         const swMinified = await terser.minify(swSource, {
           compress: true,
           mangle: true,
