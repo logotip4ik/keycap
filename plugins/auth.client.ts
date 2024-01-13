@@ -7,7 +7,7 @@ export default defineNuxtPlugin({
   env: { islands: false },
   setup() {
     refreshAuth();
-    // TODO: clear interval and setUserOnClient if user logged out
+
     setInterval(refreshAuth, NEAR_HOUR);
   },
 });
