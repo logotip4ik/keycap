@@ -11,7 +11,7 @@ import {
 const props = defineProps<{
   content: string
   editable: boolean
-  onUpdate: (content: string) => void
+  onUpdate: (content: string, force?: boolean) => void
 }>();
 
 const mitt = useMitt();
@@ -22,10 +22,10 @@ const {
   onUpdate: onContentUpdate,
 } = useTiptap();
 
-function updateContent(html?: string) {
-  const content = editor.value?.isEmpty ? '' : (html || editor.value?.getHTML() || '');
+function updateContent(force?: boolean) {
+  const content = editor.value?.isEmpty ? '' : editor.value?.getHTML();
 
-  props.onUpdate(content);
+  props.onUpdate(content || '', force);
 }
 
 watch(() => props.content, (content) => {
