@@ -72,16 +72,19 @@ export default defineNuxtConfig({
           'ToastInstance',
         ],
       },
+      {
+        from: 'rad-event-listener',
+        imports: ['on'],
+      },
+      {
+        from: 'perfect-debounce',
+        imports: ['debounce'],
+      },
     ],
 
     dirs: [
       resolve('./constants'),
       resolve('./composables/tiptap'),
-    ],
-
-    imports: [
-      { from: 'rad-event-listener', name: 'on' },
-      { from: 'perfect-debounce', name: 'debounce' },
     ],
   },
 
@@ -325,14 +328,14 @@ export default defineNuxtConfig({
           from: resolve('./utils/keys.ts'),
           imports: ['createKey', 'KeyPrefix'],
         },
+        {
+          from: 'prisma-error-enum',
+          imports: ['PrismaError'],
+        },
       ],
 
       dirs: [
         resolve('./prisma'),
-      ],
-
-      imports: [
-        { from: 'prisma-error-enum', name: 'PrismaError' },
       ],
     },
 
