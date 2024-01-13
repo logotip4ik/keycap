@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import parseDuration from 'parse-duration';
-
 type FocusableElement = HTMLAnchorElement | HTMLButtonElement;
 
 const props = withDefaults(defineProps<{

@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import '~/polyfills/array-at';
 
-import parseDuration from 'parse-duration';
-
 import MonaSansURL from '~/assets/fonts/Mona-Sans/Mona-Sans.woff2?url';
 
 setupErrorLogging();

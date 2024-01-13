@@ -1,4 +1,3 @@
-import parseDuration from 'parse-duration';
 import type { H3Error } from 'h3';
 
 export function setupErrorLogging() {

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import parseDuration from 'parse-duration';
-
 const props = defineProps<{
   state: SidebarState
   onUpdateState: (newState: SidebarState) => void

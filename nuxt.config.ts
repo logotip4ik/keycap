@@ -9,7 +9,7 @@ import { prefixedConfig } from './config/build';
 import { getHeaders } from './config/headers';
 import { tsConfig } from './config/typescript';
 import { breakpoints, sidebarsBreakpoints } from './constants/breakpoints';
-import { ParseDurationTransformPlugin } from './unplugin/parse-duration';
+import { ParseDurationTransformPlugin, parseDurationFunctionName } from './unplugin/parse-duration';
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
@@ -85,6 +85,14 @@ export default defineNuxtConfig({
     dirs: [
       resolve('./constants'),
       resolve('./composables/tiptap'),
+    ],
+
+    imports: [
+      {
+        from: 'parse-duration',
+        name: 'default',
+        as: parseDurationFunctionName,
+      },
     ],
   },
 
@@ -336,6 +344,14 @@ export default defineNuxtConfig({
 
       dirs: [
         resolve('./prisma'),
+      ],
+
+      imports: [
+        {
+          from: 'parse-duration',
+          name: 'default',
+          as: parseDurationFunctionName,
+        },
       ],
     },
 

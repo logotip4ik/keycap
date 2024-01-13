@@ -1,5 +1,3 @@
-import parseDuration from 'parse-duration';
-
 const NEAR_HOUR = parseDuration('0.9 hour')!;
 
 export default defineNuxtPlugin({

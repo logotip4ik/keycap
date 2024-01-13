@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import parseDuration from 'parse-duration';
-
 import { flip, offset } from '@floating-ui/core';
 import { computePosition } from '@floating-ui/dom';
 

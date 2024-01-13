@@ -1,8 +1,6 @@
 import type { InternalApi } from 'nitropack';
 import type { H3CorsOptions, H3Event } from 'h3';
 
-import parseDuration from 'parse-duration';
-
 import { CorsHeaders, CorsMethods, CorsOrigin } from '~/config/headers';
 
 // true | undefined | void - should pass, else - should disallow

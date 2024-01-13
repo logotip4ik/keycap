@@ -1,5 +1,3 @@
-import parseDuration from 'parse-duration';
-
 export async function checkIfUsernameTaken(username: string) {
   if (!username)
     return false;

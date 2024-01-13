@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import parseDuration from 'parse-duration';
-
 definePageMeta({
   scrollToTop: true,
 });

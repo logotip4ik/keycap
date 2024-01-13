@@ -1,5 +1,3 @@
-import parseDuration from 'parse-duration';
-
 export async function getRecentForUser(user: { id: bigint, username: string }) {
   const prisma = getPrisma();
 

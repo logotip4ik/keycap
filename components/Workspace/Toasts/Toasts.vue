@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import parseDuration from 'parse-duration';
-
 const toasts = useToasts();
 
 const toasterEl = shallowRef<null | ComponentPublicInstance<HTMLElement>>(null);

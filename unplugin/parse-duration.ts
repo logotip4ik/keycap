@@ -1,7 +1,6 @@
 import { createContext, runInContext } from 'node:vm';
 import { pathToFileURL } from 'node:url';
 
-import type { Context } from 'node:vm';
 import type { SimpleCallExpression } from 'estree';
 
 import MagicString from 'magic-string';
@@ -9,35 +8,24 @@ import parseDuration from 'parse-duration';
 import { createUnplugin } from 'unplugin';
 import { walk } from 'estree-walker';
 import { parseQuery, parseURL } from 'ufo';
-import { findStaticImports, parseStaticImport } from 'mlly';
 
-const parseDurationSpecifier = 'parse-duration';
+export const parseDurationFunctionName = 'parseDuration';
+const parseDurationFunctionCall = /parseDuration\(/;
 
 export const ParseDurationTransformPlugin = createUnplugin(() => ({
   name: 'ParseDurationTransformPlugin',
+
   transformInclude: isVueOrJs,
+
+  enforce: 'post',
+
   transform(code, id) {
-    if (!code.includes(parseDurationSpecifier))
+    if (!parseDurationFunctionCall.test(code))
       return;
 
-    const statements = findStaticImports(code)
-      .filter((i) => i.specifier === parseDurationSpecifier);
-
-    if (statements.length === 0)
-      return;
-
-    const contextMap: Context = {};
-    const functionNames: Array<string> = [];
-
-    for (const i of statements.flatMap((i) => parseStaticImport(i))) {
-      if (i.defaultImport) {
-        functionNames.push(i.defaultImport);
-
-        contextMap[i.defaultImport] = parseDuration;
-      }
-    }
-
-    const context = createContext(contextMap);
+    const context = createContext({
+      parseDuration,
+    });
 
     const s = new MagicString(code);
 
@@ -48,7 +36,7 @@ export const ParseDurationTransformPlugin = createUnplugin(() => ({
 
         const node = _node as SimpleCallExpression;
 
-        if (!functionNames.includes((node.callee as any).name))
+        if ((node.callee as any).name !== parseDurationFunctionName)
           return;
 
         const { start, end } = node as any as { start: number, end: number };

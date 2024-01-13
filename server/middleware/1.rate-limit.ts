@@ -1,5 +1,4 @@
 import RateLimiter from 'lambda-rate-limiter';
-import parseDuration from 'parse-duration';
 
 import type { RateLimiter as RateLimiterI } from 'lambda-rate-limiter';
 

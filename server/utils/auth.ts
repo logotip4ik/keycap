@@ -1,7 +1,6 @@
 import { deleteCookie, getCookie, setCookie } from 'h3';
 import { SignJWT, jwtVerify } from 'jose';
 import { withoutProtocol } from 'ufo';
-import parseDuration from 'parse-duration';
 
 import type { H3Event } from 'h3';
 import type { CookieSerializeOptions } from 'cookie-es';
