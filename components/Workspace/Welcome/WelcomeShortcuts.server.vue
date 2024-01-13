@@ -1,6 +1,8 @@
 <script setup lang="ts">
 const { shortcuts } = useAppConfig();
 
+const userAgent = useRequestHeader('user-agent');
+
 const shortcutsDescription = {
   edit: 'Focus Editor',
   new: 'Create new note or folder',
@@ -9,9 +11,10 @@ const shortcutsDescription = {
   toolbox: 'Open toolbox sidebar',
 } satisfies Record<keyof typeof shortcuts, string>;
 
+const ModKey = userAgent && checkIsSafari(userAgent) ? 'Cmd' : 'Ctrl';
+
 function humanizeShortcut(shortcut: string) {
-  // TODO: use `Cmd` for safari
-  return shortcut.replace(/\$mod/g, 'Ctrl').replace(/Key/g, '');
+  return shortcut.replace(/\$mod/g, ModKey).replace(/Key/g, '');
 }
 </script>
 
