@@ -16,7 +16,7 @@ if (error.value || !note.value) {
 }
 
 if (import.meta.server) {
-  const { siteOrigin } = useRuntimeConfig().public;
+  const { site } = useRuntimeConfig().public;
   const protocol = import.meta.prod ? 'https' : 'http';
 
   useServerSeoMeta({
@@ -24,7 +24,7 @@ if (import.meta.server) {
 
     ogTitle: makeTitle(note.value.name),
     ogDescription: `View "${note.value.name}" on Keycap`,
-    ogUrl: `${protocol}://${siteOrigin}${route.path}`,
+    ogUrl: `${protocol}://${site}${route.path}`,
 
     twitterTitle: makeTitle(note.value.name),
     twitterDescription: `View "${note.value.name}" on Keycap`,

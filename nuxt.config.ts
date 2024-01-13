@@ -103,7 +103,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      siteOrigin: '',
+      site: '',
 
       oauthEnabled: false,
 

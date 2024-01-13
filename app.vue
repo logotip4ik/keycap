@@ -40,7 +40,7 @@ useHead({
 });
 
 if (import.meta.server) {
-  const { siteOrigin } = useRuntimeConfig().public;
+  const { site } = useRuntimeConfig().public;
 
   const protocol = import.meta.prod ? 'https' : 'http';
 
@@ -48,10 +48,10 @@ if (import.meta.server) {
     title: 'Keycap - Better Notes',
     ogTitle: 'Keycap - Better Notes',
     ogDescription: 'Better then just notes ❤. Synced between your devices, simple, fast and purple.',
-    ogImage: `${protocol}://${siteOrigin}/og-image.min.jpg`,
+    ogImage: `${protocol}://${site}/og-image.min.jpg`,
     ogImageWidth: 1200,
     ogImageHeight: 630,
-    ogUrl: `${protocol}://${siteOrigin}`,
+    ogUrl: `${protocol}://${site}`,
     robots: { none: true },
     applicationName: 'Keycap',
     author: 'Bogdan Kostyuk',

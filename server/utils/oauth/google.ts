@@ -40,7 +40,7 @@ export async function getGoogleUserWithEvent(event: H3Event) {
       client_id: config.oauth.clientId,
       client_secret: config.oauth.clientSecret,
       grant_type: 'authorization_code',
-      redirect_uri: `${protocol}${useRuntimeConfig().public.siteOrigin}/api/oauth/google`,
+      redirect_uri: `${protocol}${useRuntimeConfig().public.site}/api/oauth/google`,
     },
   });
 

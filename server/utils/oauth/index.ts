@@ -19,7 +19,7 @@ export function sendOAuthRedirect(event: H3Event, provider: OAuthProviderType) {
   if (!providerConfig)
     throw new Error(`incorrect provider option: ${provider}`);
 
-  const { public: config } = useRuntimeConfig();
+  const { site } = useRuntimeConfig().public;
 
   const state = createKey(KeyPrefix.OAuthState);
   const protocol = import.meta.prod ? 'https://' : 'http://';
@@ -35,7 +35,7 @@ export function sendOAuthRedirect(event: H3Event, provider: OAuthProviderType) {
   redirectUrl.searchParams.set('response_type', 'code');
   redirectUrl.searchParams.set('response_mode', 'query');
   redirectUrl.searchParams.set('scope', providerConfig.scope);
-  redirectUrl.searchParams.set('redirect_uri', `${protocol}${config.siteOrigin}/api/oauth/${provider.toLowerCase()}`);
+  redirectUrl.searchParams.set('redirect_uri', `${protocol}${site}/api/oauth/${provider.toLowerCase()}`);
 
   if (providerConfig.options) {
     for (const key of Object.keys(providerConfig.options))
