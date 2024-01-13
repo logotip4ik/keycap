@@ -126,7 +126,7 @@ onBeforeMount(() => refresh());
 
 <template>
   <WithBackdrop class="item-details__wrapper fast-fade">
-    <KModal
+    <WorkspaceModal
       id="item-details"
       ref="itemDetailsComp"
       class="item-details"
@@ -193,7 +193,7 @@ onBeforeMount(() => refresh());
           </div>
         </div>
       </WithFadeTransition>
-    </KModal>
+    </WorkspaceModal>
   </WithBackdrop>
 </template>
 

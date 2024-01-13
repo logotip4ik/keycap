@@ -75,7 +75,7 @@ useTinykeys({ Escape: props.onClose });
 
 <template>
   <WithBackdrop class="search__wrapper" @click.self="props.onClose">
-    <KModal ref="searchComp" class="search">
+    <WorkspaceModal ref="searchComp" class="search">
       <form class="search__form" @submit.prevent="openItem">
         <WorkspaceSearchInput
           ref="inputEl"
@@ -126,7 +126,7 @@ useTinykeys({ Escape: props.onClose });
           />
         </li>
       </WorkspaceSearchList>
-    </KModal>
+    </WorkspaceModal>
   </WithBackdrop>
 </template>
 
