@@ -100,7 +100,7 @@ function updateNote(content: string) {
     signal: abortControllerUpdate.signal,
   })
     .then(() => offlineStorage.setItem?.(newNote.path, newNote))
-    .catch((error) => console.warn(error));
+    .catch(sendError);
 }
 
 async function handleError(error: Error) {
