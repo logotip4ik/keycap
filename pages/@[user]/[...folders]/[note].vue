@@ -79,8 +79,8 @@ const { data: note, refresh } = await useAsyncData<NoteWithContent | undefined>(
 });
 
 let abortControllerUpdate: AbortController | null;
-const throttledUpdate = useThrottleFn(updateNote, 1500, true, false); // enable trailing call and disable leading
-function updateNote(content: string) {
+const throttledNoteUpdate = useThrottleFn(forceUpdateNote, 1500, true, false); // enable trailing call and disable leading
+function forceUpdateNote(content: string) {
   // if no note was found in cache that means that it was deleted
   if (!notesCache.has(notePath.value))
     return;
@@ -101,6 +101,12 @@ function updateNote(content: string) {
   })
     .then(() => offlineStorage.setItem?.(newNote.path, newNote))
     .catch(sendError);
+}
+
+function updateNote(content: string, force?: boolean) {
+  const update = force ? forceUpdateNote : throttledNoteUpdate;
+
+  update(content);
 }
 
 async function handleError(error: Error) {
@@ -166,7 +172,7 @@ if (import.meta.client) {
       class="workspace__note-editor"
       :content="note.content || ''"
       :editable="!isFallbackMode && !!note"
-      @update="throttledUpdate"
+      @update="updateNote"
     />
 
     <WorkspaceNoteEditorSkeleton
