@@ -412,7 +412,7 @@ export default defineNuxtConfig({
     },
 
     nitro: {
-      minify: true,
+      minify: isCI,
 
       rollupConfig: {
         // @ts-expect-error probably broken types
