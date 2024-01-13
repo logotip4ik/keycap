@@ -241,9 +241,9 @@ export default defineNuxtConfig({
     },
 
     build: {
-      target: 'esnext',
       cssMinify: 'lightningcss',
       cssTarget: browserslistToEsbuild(),
+      target: 'esnext',
       minify: isCI ? 'terser' : 'esbuild',
       terserOptions: isCI ? { // eslint-disable-line style/multiline-ternary
         compress: true,
