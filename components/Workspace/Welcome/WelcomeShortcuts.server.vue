@@ -11,7 +11,7 @@ const shortcutsDescription = {
   toolbox: 'Open toolbox sidebar',
 } satisfies Record<keyof typeof shortcuts, string>;
 
-const ModKey = userAgent && checkIsSafari(userAgent) ? 'Cmd' : 'Ctrl';
+const ModKey = userAgent && isSafari(userAgent) ? 'Cmd' : 'Ctrl';
 
 function humanizeShortcut(shortcut: string) {
   return shortcut.replace(/\$mod/g, ModKey).replace(/Key/g, '');

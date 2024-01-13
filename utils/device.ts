@@ -6,23 +6,21 @@ const MOBILE_OR_TABLET2_RE = /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|a
 const IS_FIREFOX_RE = /firefox|iceweasel|fxios/i;
 const IS_SAFARI_RE = /safari|applewebkit/i;
 
-export function checkIsMobileOrTablet(a: string): boolean {
+export function isMobileOrTablet(a: string): boolean {
   return MOBILE_OR_TABLET1_RE.test(a) || MOBILE_OR_TABLET2_RE.test((a || '').slice(0, 4));
 }
 
-export function checkIsFirefox(a: string): boolean {
+export function isFirefox(a: string): boolean {
   return IS_FIREFOX_RE.test(a);
 }
 
-export function checkIsSafari(a: string): boolean {
+export function isSafari(a: string): boolean {
   return IS_SAFARI_RE.test(a);
 }
 
 export function parseUA(userAgent: string): DeviceInfo {
-  const deviceInfo: DeviceInfo = {
-    isMobileOrTablet: checkIsMobileOrTablet(userAgent),
-    isFirefox: checkIsFirefox(userAgent),
-  };
-
-  return deviceInfo;
+  return {
+    isFirefox: isFirefox(userAgent),
+    isMobileOrTablet: isMobileOrTablet(userAgent),
+  } satisfies DeviceInfo;
 }

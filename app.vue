@@ -33,7 +33,7 @@ useHead({
     class: {
       'firefox': import.meta.server
         ? device!.isFirefox
-        : checkIsFirefox(navigator.userAgent),
+        : isFirefox(navigator.userAgent),
       'phone-or-tablet': isSmallScreen,
     },
   },
