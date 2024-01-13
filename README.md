@@ -9,7 +9,7 @@ Simple note-taking app with support for markdown. Share your thoughts with other
 
 ## Why?
 
-After months of using Windows and Android, I found out that notes aren't syncing. Plus there wasn't support for markdown. But you can ask why build something similar to the Notion? and the answer will be pretty simple. With this project, I developed my skills and I hope it will load much faster than notion 🙃
+After months of using Windows and Android, I found out that notes aren't syncing and there isn't any support for markdown. But you may ask, Why build another Notion? and the answer will be pretty simple. With this project, I developed my skills and learned something new. Also, Keycap will load much faster than Notion, and it won't update itself in the most unsuitable time 🙃.
 
 ## Stack
 
