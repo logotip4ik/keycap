@@ -42,7 +42,7 @@ if (import.meta.server) {
 
   const protocol = import.meta.prod ? 'https' : 'http';
 
-  useSeoMeta({
+  useServerSeoMeta({
     title: 'Keycap - Better Notes',
     ogTitle: 'Keycap - Better Notes',
     ogDescription: 'Better then just notes ❤. Synced between your devices, simple, fast and purple.',
