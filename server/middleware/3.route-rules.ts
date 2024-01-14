@@ -28,7 +28,7 @@ const corsOptions: H3CorsOptions = {
   allowHeaders: CorsHeaders,
   methods: CorsMethods,
   origin: [CorsOrigin],
-  maxAge: parseDuration('24 hours', 's')!.toString(),
+  maxAge: `${parseDuration('24 hours', 's')}`,
 };
 
 export default defineEventHandler(async (event) => {
