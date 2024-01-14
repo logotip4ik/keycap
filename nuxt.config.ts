@@ -1,4 +1,3 @@
-import UnheadVite from '@unhead/addons/vite';
 import parseDuration from 'parse-duration';
 import browserslistToEsbuild from 'browserslist-to-esbuild';
 import { join, resolve } from 'pathe';
@@ -425,7 +424,6 @@ export default defineNuxtConfig({
   $production: {
     vite: {
       plugins: [
-        UnheadVite(),
         ParseDurationTransformPlugin.vite(),
       ],
     },
