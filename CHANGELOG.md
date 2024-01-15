@@ -1,6 +1,70 @@
 # Changelog
 
 
+## v3.9.4
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.9.3...v3.9.4)
+
+### 💅 Refactors
+
+- Export simular component into backdrop ([d48c4d32](https://github.com/logotip4ik/keycap/commit/d48c4d32))
+- Export modal element into component ([745005bb](https://github.com/logotip4ik/keycap/commit/745005bb))
+- Make search list separate component ([112b5630](https://github.com/logotip4ik/keycap/commit/112b5630))
+- More precise response types ([f8b3d5da](https://github.com/logotip4ik/keycap/commit/f8b3d5da))
+- More precise folder response types ([76b4b335](https://github.com/logotip4ik/keycap/commit/76b4b335))
+- Hide contents sidebar after creation on small screens ([c2d52c69](https://github.com/logotip4ik/keycap/commit/c2d52c69))
+- Specify correct component names to preload ([7b71a41f](https://github.com/logotip4ik/keycap/commit/7b71a41f))
+- Allow skipping throttling when updating note ([32bbe7c7](https://github.com/logotip4ik/keycap/commit/32bbe7c7))
+- Rename siteOrigin to site ([66e1922f](https://github.com/logotip4ik/keycap/commit/66e1922f))
+- Use different mod key for safari ([bb515abe](https://github.com/logotip4ik/keycap/commit/bb515abe))
+- Remove `check` prefix from device utils functions ([f4f580fa](https://github.com/logotip4ik/keycap/commit/f4f580fa))
+- Auto import parseDuration function and replace it in build time ([91f02696](https://github.com/logotip4ik/keycap/commit/91f02696))
+- Rename KModal to WorkspaceModal ([c21e399a](https://github.com/logotip4ik/keycap/commit/c21e399a))
+- Use string templates to transform number into string ([93db6d89](https://github.com/logotip4ik/keycap/commit/93db6d89))
+- Remove not needed variable and client function call ([9858ec64](https://github.com/logotip4ik/keycap/commit/9858ec64))
+
+### 📖 Documentation
+
+- Update motivation text ([26c00863](https://github.com/logotip4ik/keycap/commit/26c00863))
+
+### 🏡 Chore
+
+- **release:** V3.9.3 ([ec0082d7](https://github.com/logotip4ik/keycap/commit/ec0082d7))
+- Allow undefined to be target value ([bd7520fa](https://github.com/logotip4ik/keycap/commit/bd7520fa))
+- Use close function directly ([1297b93a](https://github.com/logotip4ik/keycap/commit/1297b93a))
+- Use else instead of else-if ([42de04ab](https://github.com/logotip4ik/keycap/commit/42de04ab))
+- Enable nuxt app manifest ([66c0741a](https://github.com/logotip4ik/keycap/commit/66c0741a))
+- Fix oxlint pedantic warnings ([931a2b66](https://github.com/logotip4ik/keycap/commit/931a2b66))
+- Focus editor after creating item ([03b5f243](https://github.com/logotip4ik/keycap/commit/03b5f243))
+- Remove todo ([ee0064ee](https://github.com/logotip4ik/keycap/commit/ee0064ee))
+- Add small enter and speed up leave anim search animaton ([2f9d00d7](https://github.com/logotip4ik/keycap/commit/2f9d00d7))
+- Reset result state to idle with empty use query ([2709b291](https://github.com/logotip4ik/keycap/commit/2709b291))
+- Rename function ([352cfc86](https://github.com/logotip4ik/keycap/commit/352cfc86))
+- Patch to latest nuxt version ([f7e159c3](https://github.com/logotip4ik/keycap/commit/f7e159c3))
+- Remove link extension from dependecies ([a3afc2f8](https://github.com/logotip4ik/keycap/commit/a3afc2f8))
+- Update deps ([ec85c534](https://github.com/logotip4ik/keycap/commit/ec85c534))
+- Enable cached checks for dev server ([3ebdd436](https://github.com/logotip4ik/keycap/commit/3ebdd436))
+- Fix some of oxlint warnings ([76cce390](https://github.com/logotip4ik/keycap/commit/76cce390))
+- Try sending error when update note failed ([0553974a](https://github.com/logotip4ik/keycap/commit/0553974a))
+- Allow editor marking update event as forced ([f2c2de11](https://github.com/logotip4ik/keycap/commit/f2c2de11))
+- Do not minify server in local build ([e8bc1f6e](https://github.com/logotip4ik/keycap/commit/e8bc1f6e))
+- Always use imports presets ([6b4fca9e](https://github.com/logotip4ik/keycap/commit/6b4fca9e))
+- Remove todo ([e353483f](https://github.com/logotip4ik/keycap/commit/e353483f))
+- Rename regex constants ([ca1a7fe5](https://github.com/logotip4ik/keycap/commit/ca1a7fe5))
+- Remove user-agent detection testing ([83ade918](https://github.com/logotip4ik/keycap/commit/83ade918))
+- Do not use optional chainning for parseDuration ([90dd0bc0](https://github.com/logotip4ik/keycap/commit/90dd0bc0))
+- Use server seo meta ([2968a03e](https://github.com/logotip4ik/keycap/commit/2968a03e))
+- Remove not needed unhead addons plugin ([c3d3a3fe](https://github.com/logotip4ik/keycap/commit/c3d3a3fe))
+
+### 🎨 Styles
+
+- Remove double space ([9363a921](https://github.com/logotip4ik/keycap/commit/9363a921))
+- Move js target closer to js minification option ([311f298b](https://github.com/logotip4ik/keycap/commit/311f298b))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk <bogdankostyuk12@gmail.com>
+
 ## v3.9.3
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.9.2...v3.9.3)
