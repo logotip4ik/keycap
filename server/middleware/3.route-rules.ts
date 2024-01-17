@@ -1,7 +1,5 @@
 import type { InternalApi } from 'nitropack';
-import type { H3CorsOptions, H3Event } from 'h3';
-
-import { CorsHeaders, CorsMethods, CorsOrigin } from '~/config/headers';
+import type { H3Event } from 'h3';
 
 // true | undefined | void - should pass, else - should disallow
 type RuleFunction = (event: H3Event) => boolean | undefined | void;
@@ -24,16 +22,9 @@ const rules: Array<Rule> = [
   { path: '/api/share/note', handler: withUserOnly },
 ];
 
-const corsOptions: H3CorsOptions = {
-  allowHeaders: CorsHeaders,
-  methods: CorsMethods,
-  origin: [CorsOrigin],
-  maxAge: `${parseDuration('24 hours', 's')}`,
-};
-
 export default defineEventHandler(async (event) => {
-  if (handleCors(event, corsOptions))
-    return;
+  if (isPreflightRequest(event))
+    return null;
 
   const rule = rules.find((rule) => event.path.startsWith(rule.path));
 
