@@ -1,6 +1,6 @@
-import { NetworkOnly, Strategy } from 'workbox-strategies';
+import { Strategy } from 'workbox-strategies';
 import { cacheNames, clientsClaim } from 'workbox-core';
-import { registerRoute, setDefaultHandler } from 'workbox-routing';
+import { registerRoute } from 'workbox-routing';
 import { cleanupOutdatedCaches } from 'workbox-precaching';
 import type { StrategyHandler } from 'workbox-strategies';
 import type { ManifestEntry } from 'workbox-build';
@@ -77,8 +77,6 @@ registerRoute(
   ({ url }) => manifestURLs.includes(url.href),
   new CacheNetworkRace(),
 );
-
-setDefaultHandler(new NetworkOnly());
 
 // TODO: add app-shell for network errors ?
 // // fallback to app-shell for document request
