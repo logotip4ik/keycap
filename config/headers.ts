@@ -5,7 +5,7 @@ import type { HTTPMethod } from 'h3';
 
 const SIX_MONTHS_IN_SECONDS = parseDuration('0.5 year', 'second')!;
 
-export const CorsOrigin = process.env.NUXT_PUBLIC_SITE_ORIGIN || '*';
+export const CorsOrigin = process.env.NUXT_PUBLIC_SITE || '*';
 export const CorsMethods = ['GET', 'OPTIONS', 'PATCH', 'POST', 'DELETE'] satisfies Array<HTTPMethod>;
 export const CorsHeaders = ['Origin', 'Content-Type', 'Accept'];
 
