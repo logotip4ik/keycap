@@ -43,7 +43,7 @@ export const defaultHeaders: Record<string, string | undefined> = {
   'Keep-Alive': '5',
   'Referrer-Policy': 'origin-when-cross-origin, strict-origin-when-cross-origin',
   'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
-  'Vary': 'Accept-Encoding, Accept, X-Requested-With, X-Authorized',
+  'Vary': 'Origin, Accept-Encoding, Accept, X-Requested-With, X-Authorized',
   ...(isProduction ? cspHeaders : {}),
 };
 
