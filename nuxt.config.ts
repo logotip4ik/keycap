@@ -183,10 +183,6 @@ export default defineNuxtConfig({
     transpile: ['tinykeys'],
   },
 
-  // TODO: remove error expectation when https://github.com/nuxt/nuxt/pull/25028 released
-  // @ts-expect-error not yet implemented
-  unenv: false,
-
   hooks: {
     'nitro:init': function (nitro) {
       nitro.options.devStorage.root.ignore.push(
