@@ -1,0 +1,101 @@
+diff --git a/dist/app/components/nuxt-island.js b/dist/app/components/nuxt-island.js
+index 285860bccc67ca12647946f1638476dc05b66a80..ba84df28ae6b85a0bb0b785fbad8e617a8ba06c8 100644
+--- a/dist/app/components/nuxt-island.js
++++ b/dist/app/components/nuxt-island.js
+@@ -1,6 +1,5 @@
+ import { Fragment, Teleport, computed, createStaticVNode, createVNode, defineComponent, getCurrentInstance, h, nextTick, onMounted, ref, toRaw, watch, withMemo } from "vue";
+ import { debounce } from "perfect-debounce";
+-import { hash } from "ohash";
+ import { appendResponseHeader } from "h3";
+ import { useHead } from "@unhead/vue";
+ import { randomUUID } from "uncrypto";
+@@ -10,6 +9,56 @@ import { useNuxtApp, useRuntimeConfig } from "../nuxt.js";
+ import { prerenderRoutes, useRequestEvent } from "../composables/ssr.js";
+ import { getFragmentHTML } from "./utils.js";
+ import { remoteComponentIslands, selectiveClient } from "#build/nuxt.config.mjs";
++
++// https://gist.github.com/hyamamoto/fd435505d29ebfa3d9716fd2be8d42f0?permalink_comment_id=3586164#gistcomment-3586164
++function hashString(s) {
++  let h = 0, i = s.length;
++  while (i > 0) {
++    h = (h << 5) - h + s.charCodeAt(--i) | 0;
++  }
++  return h;
++}
++
++// https://github.com/shuding/stable-hash
++const table = new WeakMap()
++let counter = 0
++function hash(arg) {
++  const type = typeof arg
++  const constructor = arg && arg.constructor
++  const isDate = constructor === Date
++
++  if (Object(arg) === arg && !isDate && constructor != RegExp) {
++    let result = table.get(arg)
++    if (result) return result
++    result = ++counter + "~"
++    table.set(arg, result)
++    let index
++
++    if (constructor === Array) {
++      // Array.
++      result = "@"
++      for (index = 0; index < arg.length; index++) {
++        result += hash(arg[index]) + ","
++      }
++      table.set(arg, result)
++    } else if (constructor === Object) {
++      // Object, sort keys.
++      result = "#"
++      const keys = Object.keys(arg).sort()
++      while ((index = keys.pop()) !== undefined) {
++        if (arg[index] !== undefined) {
++          result += index + ":" + hash(arg[index]) + ","
++        }
++      }
++      table.set(arg, result)
++    }
++    return result
++  }
++  if (isDate) return arg.toJSON()
++  if (type === "symbol") return arg.toString()
++  return type === "string" ? JSON.stringify(arg) : "" + arg
++}
++
+ const pKey = "_islandPromises";
+ const SSR_UID_RE = /data-island-uid="([^"]*)"/;
+ const DATA_ISLAND_UID_RE = /data-island-uid(="")?(?!="[^"])/g;
+@@ -68,7 +117,7 @@ export default defineComponent({
+     const config = useRuntimeConfig();
+     const nuxtApp = useNuxtApp();
+     const filteredProps = computed(() => props.props ? Object.fromEntries(Object.entries(props.props).filter(([key2]) => !key2.startsWith("data-v-"))) : {});
+-    const hashId = computed(() => hash([props.name, filteredProps.value, props.context, props.source]));
++    const hashId = computed(() => hashString(hash([props.name, filteredProps.value, props.context, props.source])));
+     const instance = getCurrentInstance();
+     const event = useRequestEvent();
+     const eventFetch = import.meta.server ? event.fetch : import.meta.dev ? $fetch.raw : globalThis.fetch;
+diff --git a/dist/index.mjs b/dist/index.mjs
+index 00aaa666db615de4ab45d1d7955bd695caf7e284..1f888919908c770c3e2f219199f32904db7c3264 100644
+--- a/dist/index.mjs
++++ b/dist/index.mjs
+@@ -2440,19 +2440,6 @@ function addDeclarationTemplates(ctx, options) {
+         return;
+       }
+       let path = resolveAlias(from);
+-      if (!isAbsolute(path)) {
+-        path = await tryResolveModule(from, nuxt.options.modulesDir).then(async (r2) => {
+-          if (!r2) {
+-            return r2;
+-          }
+-          const { dir, name } = parseNodeModulePath(r2);
+-          if (!dir || !name) {
+-            return r2;
+-          }
+-          const subpath = await lookupNodeModuleSubpath(r2);
+-          return join(dir, name, subpath || "");
+-        }) ?? path;
+-      }
+       if (isAbsolute(path)) {
+         path = relative(join(nuxt.options.buildDir, "types"), path);
+       }
