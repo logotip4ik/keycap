@@ -23,7 +23,7 @@ export async function assertNoOAuthErrors(event: H3Event) {
   if (query.error) {
     deleteCookie(event, 'state');
 
-    await event.context.logger.error({ err: query.error, msg: 'oauth failed' });
+    await event.context.logger.error({ err: new Error(query.error.toString()), msg: 'oauth failed' });
 
     throw createError({ statusCode: 418, message: decodeURIComponent(query.error.toString()) });
   }
