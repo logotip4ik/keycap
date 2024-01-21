@@ -7,22 +7,22 @@ const sortedToasts = computed(() =>
   toasts.value.sort((a, b) => a.priority - b.priority),
 );
 
-let toasterElClientRect: DOMRect | null;
+let toasterElClientRect: DOMRect | undefined;
 const ANIMATION_DURATION = parseDuration('0.3s')!;
 function preservePositionAndSize(el: Element) {
   const elClientRect = el.getBoundingClientRect();
 
-  toasterElClientRect = toasterElClientRect || toasterEl.value!.$el.getBoundingClientRect();
+  if (!toasterElClientRect)
+    toasterElClientRect = toasterEl.value!.$el.getBoundingClientRect();
 
   const relativeBottomPos = (toasterElClientRect!.bottom - elClientRect.bottom);
-  const correctElWidth = Math.max((el as HTMLElement).offsetWidth, elClientRect.width);
 
-  (el as HTMLElement).style.setProperty('--prev-bottom', `${relativeBottomPos}px`);
-  (el as HTMLElement).style.setProperty('--prev-width', `${correctElWidth}px`);
+  (el as HTMLElement).style.setProperty('bottom', `${relativeBottomPos}px`);
+  (el as HTMLElement).style.setProperty('width', `${elClientRect.width}px`);
 }
 
 function handleResize() {
-  toasterElClientRect = null;
+  toasterElClientRect = undefined;
 }
 
 if (import.meta.client) {
@@ -43,11 +43,10 @@ if (import.meta.client) {
       @before-leave="preservePositionAndSize"
     >
       <WorkspaceToastsItem
-        v-for="(toast, i) in sortedToasts"
+        v-for="toast in sortedToasts"
         :key="toast.id"
         :toast="toast"
         :animation-duration="ANIMATION_DURATION"
-        :data-has-top-sibling="!!sortedToasts[i - 1]"
       />
     </TransitionGroup>
   </Teleport>
@@ -84,27 +83,22 @@ if (import.meta.client) {
 }
 
 .toast-enter-active {
-  --initial-pos: 0px, -0.75rem, 0px;
   --ease-out-cubic: cubic-bezier(0.33, 1, 0.68, 1);
 
   z-index: -1;
 
   transform-origin: bottom center;
-
   transition: transform 0.3s var(--ease-out-cubic), opacity 0.3s;
+}
 
-  [data-icon] {
-    transition: opacity 0.4s;
-  }
+.toast-enter-from {
+  transform: scale(0.95);
 }
 
 .toast-leave-active {
   position: absolute;
-  bottom: var(--prev-bottom);
   right: 0;
   z-index: -1;
-
-  width: var(--prev-width);
 
   transition: transform 0.3s, opacity 0.3s;
 
@@ -114,28 +108,17 @@ if (import.meta.client) {
   }
 }
 
-.toast-enter-active[data-has-top-sibling="false"] {
-  --initial-pos: 0px, 0px, 0px;
-
-  transform-origin: center center;
-}
-
-.toast-move {
-  transition-duration: 0.3s;
-}
-
-.toast-enter-from {
-  transform: scale(0.95) translate3d(var(--initial-pos));
-}
-
 .toast-leave-to {
   transform: scale(0.975);
 }
 
 .toast-enter-from,
-.toast-enter-from [data-icon],
 .toast-leave-to {
   opacity: 0;
   filter: blur(2px);
+}
+
+.toast-move {
+  transition-duration: 0.3s;
 }
 </style>
