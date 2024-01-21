@@ -16,7 +16,7 @@ const event = useRequestEvent();
 const { query } = useRoute();
 
 if (!query.code || !query.provider) {
-  await event.context.logger.error({ query, msg: 'not enough data for proceding with username' });
+  await event.context.logger.error({ query, msg: 'not enough data for proceeding with username' });
 
   throw createError({
     statusCode: 400,
