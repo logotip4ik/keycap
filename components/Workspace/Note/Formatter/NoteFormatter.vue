@@ -22,11 +22,11 @@ const prevSelection = { start: -1, end: -1 };
 
 let prevContainerWidth: number;
 function rememberContainerWidth(el: Element) {
-  prevContainerWidth = el.parentElement?.offsetWidth || 0;
+  prevContainerWidth = getElementWidth(el.parentElement);
 }
 
 function animateContainerWidth(el: Element) {
-  const currentContainerWidth = el.parentElement?.offsetWidth || 0;
+  const currentContainerWidth = getElementWidth(el.parentElement);
   const containerWidthDiff = Math.abs(prevContainerWidth - currentContainerWidth);
 
   if (containerWidthDiff > 2) {
