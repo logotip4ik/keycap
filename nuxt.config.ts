@@ -1,7 +1,7 @@
 import parseDuration from 'parse-duration';
 import browserslistToEsbuild from 'browserslist-to-esbuild';
 import { join, resolve } from 'pathe';
-import { isCI, isDevelopment, isProduction, isTest, nodeENV } from 'std-env';
+import { isCI, isDevelopment, isProduction, nodeENV } from 'std-env';
 import RollupSucrase from '@rollup/plugin-sucrase';
 
 import { prefixedConfig } from './config/build';
@@ -165,7 +165,6 @@ export default defineNuxtConfig({
   },
 
   modules: [
-    isTest && 'nuxt-vitest',
     '@vueuse/nuxt',
     '@vite-pwa/nuxt',
     '@nuxtjs/fontaine',
