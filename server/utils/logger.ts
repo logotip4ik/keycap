@@ -5,7 +5,11 @@ export enum LogLevel {
   Warn = 'warn',
   Error = 'error',
 }
-export type LoggerData = Record<string, unknown | undefined> & { msg?: string | undefined };
+export interface LoggerData extends Record<string, unknown | undefined> {
+  msg?: string | undefined
+  err?: Error | undefined
+  error?: Error | undefined
+}
 export interface Logger {
   log(level: LogLevel, data: LoggerData): Promise<void>
   error(data: LoggerData | string): Promise<void>
