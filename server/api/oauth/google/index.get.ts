@@ -24,7 +24,10 @@ export default defineEventHandler(async (event) => {
   const userValidation = useSocialUserValidator(googleUser);
 
   if (!userValidation.ok) {
-    await event.context.logger.error({ err: userValidation.errors, msg: 'social user validation failed' });
+    await event.context.logger.error({
+      errors: userValidation.errors,
+      msg: 'social user validation failed',
+    });
 
     return await sendRedirect(event, '/');
   }

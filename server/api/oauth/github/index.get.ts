@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
   await assertNoOAuthErrors(event);
 
   // This means that user was redirected here to actually sign in
-  // with social accout, so this technically is not an error
+  // with social account, so this technically is not an error
   if (!query.code)
     return await sendOAuthRedirect(event, OAuthProvider.GitHub);
 
@@ -26,7 +26,10 @@ export default defineEventHandler(async (event) => {
   const userValidation = useSocialUserValidator(githubUser);
 
   if (!userValidation.ok) {
-    await event.context.logger.error({ err: userValidation.errors, msg: 'social user validation failed' });
+    await event.context.logger.error({
+      errors: userValidation.errors,
+      msg: 'social user validation failed',
+    });
 
     return await sendRedirect(event, '/');
   }
