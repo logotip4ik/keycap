@@ -8,6 +8,7 @@ import type { GitHubAuthRes, GitHubUserEmailRes, GitHubUserRes } from '~/types/s
 const config: OAuthProviderConfig = {
   oauth: useRuntimeConfig().github,
 
+  name: 'github',
   scope: 'user:email',
   authorizeEndpoint: 'https://github.com/login/oauth/authorize',
   tokenEndpoint: 'https://github.com/login/oauth/access_token',

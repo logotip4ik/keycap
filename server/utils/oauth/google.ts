@@ -8,6 +8,7 @@ import type { GoogleAuthRes, GoogleUserRes } from '~/types/server-google';
 const config: OAuthProviderConfig = {
   oauth: useRuntimeConfig().google,
 
+  name: 'google',
   scope: 'email',
   authorizeEndpoint: 'https://accounts.google.com/o/oauth2/v2/auth',
   tokenEndpoint: 'https://oauth2.googleapis.com/token',

@@ -4,6 +4,8 @@ export interface OAuthProviderConfig {
     clientSecret: string
   }
 
+  name: string
+
   authorizeEndpoint: string
   tokenEndpoint: string
   scope: string
