@@ -20,7 +20,7 @@ const searchEl = computed(() => searchComp.value?.$el as HTMLElement | undefined
 defineExpose({ input: inputEl });
 
 function handleSearchInput(value: string) {
-  value = value.trim();
+  value = value.trimStart();
   selected.value = 0;
 
   if (value.length === 0 || !fuzzyWorker.value) {
