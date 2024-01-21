@@ -1,23 +1,28 @@
 import type { Prisma } from '@prisma/client';
 import type { H3Event } from 'h3';
+import type { QueryObject } from 'ufo';
 
-import { OAuthProvider } from '~/server/utils/index';
-import { googleConfig } from '~/server/utils/oauth/google';
-import { githubConfig } from '~/server/utils/oauth/github';
+import type { NormalizedSocialUser, SafeUser } from '~/types/server';
 
-import type { OAuthProviderConfig } from '~/types/oauth';
-import type { NormalizedSocialUser, OAuthProvider as OAuthProviderType, SafeUser } from '~/types/server';
+export const providerPathToConfigMap = {
+  '/api/oauth/github': githubConfig,
+  '/api/oauth/google': googleConfig,
+} as const;
 
-const providersConfig: Record<OAuthProviderType, OAuthProviderConfig> = {
-  [OAuthProvider.GitHub]: githubConfig,
-  [OAuthProvider.Google]: googleConfig,
-};
+export function sendOAuthRedirectIfNeeded(event: H3Event, _query?: QueryObject): boolean {
+  const query = _query || getQuery(event)!;
 
-export function sendOAuthRedirect(event: H3Event, provider: OAuthProviderType) {
-  const providerConfig = providersConfig[provider];
+  // This means that user was redirected here to actually sign in
+  // with social account, so this technically is not an error
+  // if ((!query.code || !query.state) && !query.error)
+  if (query.error || (query.state && query.code))
+    return false;
+
+  const pathWithoutQuery = event.path.split('?')[0] as keyof typeof providerPathToConfigMap;
+  const providerConfig = providerPathToConfigMap[pathWithoutQuery];
 
   if (!providerConfig)
-    throw new Error(`incorrect provider option: ${provider}`);
+    throw createError({ statusCode: 418, message: 'i a coffeepot' });
 
   const { site } = useRuntimeConfig().public;
 
@@ -35,14 +40,16 @@ export function sendOAuthRedirect(event: H3Event, provider: OAuthProviderType) {
   redirectUrl.searchParams.set('response_type', 'code');
   redirectUrl.searchParams.set('response_mode', 'query');
   redirectUrl.searchParams.set('scope', providerConfig.scope);
-  redirectUrl.searchParams.set('redirect_uri', `${protocol}${site}/api/oauth/${provider.toLowerCase()}`);
+  redirectUrl.searchParams.set('redirect_uri', `${protocol}${site}/api/oauth/${providerConfig.name}`);
 
   if (providerConfig.options) {
-    for (const key of Object.keys(providerConfig.options))
+    for (const key in providerConfig.options)
       redirectUrl.searchParams.set(key, providerConfig.options[key]);
   }
 
-  return sendRedirect(event, redirectUrl.toString());
+  sendRedirect(event, redirectUrl.toString());
+
+  return true;
 }
 
 export async function updateOrCreateUserFromSocialAuth(normalizedUser: NormalizedSocialUser) {

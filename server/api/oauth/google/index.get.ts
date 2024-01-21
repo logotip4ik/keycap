@@ -11,10 +11,10 @@ export default defineEventHandler(async (event) => {
 
   const query = getQuery(event);
 
-  await assertNoOAuthErrors(event);
+  if (sendOAuthRedirectIfNeeded(event, query))
+    return;
 
-  if (!query.code)
-    return await sendOAuthRedirect(event, OAuthProvider.Google);
+  await assertNoOAuthErrors(event, query);
 
   const googleUser: GoogleUserRes | undefined = destr<GoogleUserRes>(query.socialUser) || await getGoogleUserWithEvent(event)
     .catch(async (err) => {
@@ -84,6 +84,8 @@ export default defineEventHandler(async (event) => {
 
   if (!user)
     return await sendRedirect(event, '/');
+
+  deleteCookie(event, 'state');
 
   await Promise.all([
     setAuthCookies(event, user),

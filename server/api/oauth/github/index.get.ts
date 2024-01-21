@@ -11,12 +11,12 @@ export default defineEventHandler(async (event) => {
 
   const query = getQuery(event);
 
-  await assertNoOAuthErrors(event);
-
   // This means that user was redirected here to actually sign in
   // with social account, so this technically is not an error
-  if (!query.code)
-    return await sendOAuthRedirect(event, OAuthProvider.GitHub);
+  if (sendOAuthRedirectIfNeeded(event, query))
+    return;
+
+  await assertNoOAuthErrors(event, query);
 
   const githubUser: GitHubUserRes | undefined = destr<GitHubUserRes>(query.socialUser) || await getGitHubUserWithEvent(event)
     .catch(async (err) => {
@@ -88,6 +88,8 @@ export default defineEventHandler(async (event) => {
 
   if (!user)
     return await sendRedirect(event, '/');
+
+  deleteCookie(event, 'state');
 
   await Promise.all([
     setAuthCookies(event, user),
