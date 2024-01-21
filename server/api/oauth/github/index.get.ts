@@ -71,14 +71,11 @@ export default defineEventHandler(async (event) => {
       query.socialUser = githubUser;
       query.usernameTaken = validation.ok && await checkIfUsernameTakenCached(username!) ? username : '';
 
-      // NOTE: this basically makes infinate loop
+      // NOTE: this basically makes infinite loop
       // to force user to input correct username
       return await sendRedirect(event, withQuery('/oauth/ask-username', query));
     }
   }
-
-  // clear oauth state cookie
-  deleteCookie(event, 'state');
 
   user = await updateOrCreateUserFromSocialAuth(
     normalizeGitHubUser(githubUser, { username }),
