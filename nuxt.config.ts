@@ -385,6 +385,7 @@ export default defineNuxtConfig({
     },
   ],
 
+  // @ts-expect-error broken types ?
   fontMetrics: {
     fonts: [
       {
