@@ -49,20 +49,24 @@ export function sendOAuthRedirectIfNeeded(event: H3Event, _query?: QueryObject):
   return true;
 }
 
-export async function updateOrCreateUserFromSocialAuth(normalizedUser: NormalizedSocialUser) {
+export async function updateOrCreateUserFromSocialAuth(user: NormalizedSocialUser): Promise<SafeUser> {
   const prisma = getPrisma();
 
   const social: Prisma.OAuthCreateWithoutUserInput = {
-    id: normalizedUser.id,
-    type: normalizedUser.type,
+    id: user.id,
+    type: user.type,
   };
 
-  const defaultUserSelect: Prisma.UserSelect = { id: true, email: true, username: true };
+  const defaultUserSelect: Prisma.UserSelect = {
+    id: true,
+    email: true,
+    username: true
+  };
 
-  const user = await prisma.$transaction(async (tx) => {
+  return await prisma.$transaction(async (tx) => {
     let dbUser = await tx.user.findFirst({
       select: defaultUserSelect,
-      where: { username: normalizedUser.username },
+      where: { username: user.username },
     });
 
     if (dbUser) {
@@ -72,7 +76,7 @@ export async function updateOrCreateUserFromSocialAuth(normalizedUser: Normalize
         data: {
           socials: {
             connectOrCreate: {
-              where: { id: normalizedUser.id },
+              where: { id: user.id },
               create: social,
             },
           },
@@ -83,14 +87,14 @@ export async function updateOrCreateUserFromSocialAuth(normalizedUser: Normalize
       dbUser = await tx.user.create({
         select: defaultUserSelect,
         data: {
-          email: normalizedUser.email,
-          username: normalizedUser.username,
+          email: user.email,
+          username: user.username,
 
           folders: {
             create: {
-              name: `${normalizedUser.username}'s workspace`,
+              name: `${user.username}'s workspace`,
               root: true,
-              path: generateRootFolderPath(normalizedUser.username),
+              path: generateRootFolderPath(user.username),
             },
           },
 
@@ -101,6 +105,4 @@ export async function updateOrCreateUserFromSocialAuth(normalizedUser: Normalize
 
     return dbUser;
   });
-
-  return user as SafeUser;
 }
