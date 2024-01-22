@@ -12,9 +12,6 @@ export const providerPathToConfigMap = {
 export function sendOAuthRedirectIfNeeded(event: H3Event, _query?: QueryObject): boolean {
   const query = _query || getQuery(event)!;
 
-  // This means that user was redirected here to actually sign in
-  // with social account, so this technically is not an error
-  // if ((!query.code || !query.state) && !query.error)
   if (query.error || (query.state && query.code))
     return false;
 
