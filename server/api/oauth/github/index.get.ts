@@ -86,10 +86,10 @@ export default defineEventHandler(async (event) => {
       return null;
     });
 
+  deleteCookie(event, 'state');
+
   if (!user)
     return await sendRedirect(event, '/');
-
-  deleteCookie(event, 'state');
 
   await Promise.all([
     setAuthCookies(event, user),
