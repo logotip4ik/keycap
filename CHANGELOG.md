@@ -1,6 +1,48 @@
 # Changelog
 
 
+## v3.9.5
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.9.4...v3.9.5)
+
+### 🩹 Fixes
+
+- Use correct env variable for cors origin ([8f8a5c63](https://github.com/logotip4ik/keycap/commit/8f8a5c63))
+- Correct error value ([c002ea6d](https://github.com/logotip4ik/keycap/commit/c002ea6d))
+- Don't remove state cookie until user finished authentication process ([4546d202](https://github.com/logotip4ik/keycap/commit/4546d202))
+
+### 💅 Refactors
+
+- Use object filed to specify message ([afd843a5](https://github.com/logotip4ik/keycap/commit/afd843a5))
+- Simplify log function ([35d3a8ba](https://github.com/logotip4ik/keycap/commit/35d3a8ba))
+- Type what error values could be ([017b03e5](https://github.com/logotip4ik/keycap/commit/017b03e5))
+- Send all validation errors if validation failed ([cd993d7d](https://github.com/logotip4ik/keycap/commit/cd993d7d))
+- Delete oauth state cookie in validator ([39e6a550](https://github.com/logotip4ik/keycap/commit/39e6a550))
+- Automatically send oauth redirect and delete state cookie at the end of authentication ([b13bc3a6](https://github.com/logotip4ik/keycap/commit/b13bc3a6))
+- Simplify toast styles ([1a155c72](https://github.com/logotip4ik/keycap/commit/1a155c72))
+- Use function for getting correct element width ([a6980a9c](https://github.com/logotip4ik/keycap/commit/a6980a9c))
+
+### 🏡 Chore
+
+- **release:** V3.9.4 ([3438fea6](https://github.com/logotip4ik/keycap/commit/3438fea6))
+- Provide env example ([312ecec8](https://github.com/logotip4ik/keycap/commit/312ecec8))
+- Add origin header to vary ([51c6f18d](https://github.com/logotip4ik/keycap/commit/51c6f18d))
+- Return no content at preflight requests ([d21af449](https://github.com/logotip4ik/keycap/commit/d21af449))
+- Remove default proxing through service worker ([88f80d81](https://github.com/logotip4ik/keycap/commit/88f80d81))
+- Add `skeleton` class to contents list skeleton element ([e37ff3cb](https://github.com/logotip4ik/keycap/commit/e37ff3cb))
+- Update deps ([7f266c32](https://github.com/logotip4ik/keycap/commit/7f266c32))
+- Add missing patch file ([e3ec5835](https://github.com/logotip4ik/keycap/commit/e3ec5835))
+- Remove not needed unenv property ([27ad78ea](https://github.com/logotip4ik/keycap/commit/27ad78ea))
+- Fix typo ([26e0c706](https://github.com/logotip4ik/keycap/commit/26e0c706))
+- Add error expectation ([563b1401](https://github.com/logotip4ik/keycap/commit/563b1401))
+- Specify provider name in provider config ([8aa3f931](https://github.com/logotip4ik/keycap/commit/8aa3f931))
+- Only trim start of the input ([45f53642](https://github.com/logotip4ik/keycap/commit/45f53642))
+- Remove not needed vitest module injection ([2eb25bdd](https://github.com/logotip4ik/keycap/commit/2eb25bdd))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk <bogdankostyuk12@gmail.com>
+
 ## v3.9.4
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.9.3...v3.9.4)
