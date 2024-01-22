@@ -71,7 +71,7 @@ export async function updateOrCreateUserFromSocialAuth(user: NormalizedSocialUse
 
     if (dbUser) {
       await tx.user.update({
-        select: null,
+        select: { email: true },
         where: { id: dbUser.id },
         data: {
           socials: {
