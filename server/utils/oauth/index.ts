@@ -60,7 +60,7 @@ export async function updateOrCreateUserFromSocialAuth(user: NormalizedSocialUse
   const defaultUserSelect: Prisma.UserSelect = {
     id: true,
     email: true,
-    username: true
+    username: true,
   };
 
   return await prisma.$transaction(async (tx) => {
