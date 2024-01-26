@@ -5,9 +5,6 @@ import { withoutProtocol } from 'ufo';
 import type { H3Event } from 'h3';
 import type { CookieSerializeOptions } from 'cookie-es';
 
-import { isJwtPayload } from './validators/jwt';
-import { toBigInt } from './index';
-
 import type { SafeUser } from '~/types/server';
 
 const authExpiration = parseDuration('3 days', 'second')!;
