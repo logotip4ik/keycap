@@ -243,6 +243,9 @@ export default defineNuxtConfig({
 
     resolve: {
       extensions: ['.mjs', '.js', '.ts', '.json'],
+      alias: {
+        ohash: resolve('./mocks/ohash.ts'),
+      },
     },
 
     build: {
