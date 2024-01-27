@@ -19,21 +19,20 @@ export interface BubbleMenuPluginProps {
   editor: Editor
   element: HTMLElement
   updateDelay?: number
-  shouldShow?:
-    | ((props: {
-      editor: Editor
-      view: EditorView
-      state: EditorState
-      oldState?: EditorState
-      from: number
-      to: number
-    }) => boolean)
-    | null
 }
 
 export type BubbleMenuViewProps = BubbleMenuPluginProps & {
   view: EditorView
 };
+
+interface ShouldShowProps {
+  editor: Editor
+  view: EditorView
+  state: EditorState
+  oldState?: EditorState
+  from: number
+  to: number
+}
 
 export class BubbleMenuView {
   public editor: Editor;
@@ -51,47 +50,16 @@ export class BubbleMenuView {
 
   private updateDebounceTimer: number | undefined;
 
-  public shouldShow: Exclude<BubbleMenuPluginProps['shouldShow'], null> = ({
-    view,
-    state,
-    from,
-    to,
-  }) => {
-    const { doc, selection } = state;
-    const { empty } = selection;
-
-    // Sometime check for `empty` is not enough.
-    // Doubleclick an empty paragraph returns a node size of 2.
-    // So we check also for an empty text size.
-    const isEmptyTextBlock = doc.textBetween(from, to).length === 0 && isTextSelection(state.selection);
-
-    // When clicking on a element inside the bubble menu the editor "blur" event
-    // is called and the bubble menu item is focussed. In this case we should
-    // consider the menu as part of the editor and keep showing the menu
-    const isChildOfMenu = this.element.contains(document.activeElement);
-
-    const hasEditorFocus = view.hasFocus() || isChildOfMenu;
-
-    if (!hasEditorFocus || empty || isEmptyTextBlock || !this.editor.isEditable)
-      return false;
-
-    return true;
-  };
-
   constructor({
     editor,
     element,
     view,
     updateDelay = 150,
-    shouldShow,
   }: BubbleMenuViewProps) {
     this.editor = editor;
     this.element = element;
     this.view = view;
     this.updateDelay = updateDelay;
-
-    if (shouldShow)
-      this.shouldShow = shouldShow;
 
     this.element.addEventListener('mousedown', this.mousedownHandler, { capture: true });
     this.view.dom.addEventListener('dragstart', this.dragstartHandler);
@@ -113,20 +81,20 @@ export class BubbleMenuView {
     };
   }
 
-  mousedownHandler = () => {
+  mousedownHandler() {
     this.preventHide = true;
-  };
+  }
 
-  dragstartHandler = () => {
+  dragstartHandler() {
     this.hide();
-  };
+  }
 
-  focusHandler = () => {
+  focusHandler() {
     // we use `setTimeout` to make sure `selection` is already updated
     setTimeout(() => this.update(this.editor.view));
-  };
+  }
 
-  blurHandler = ({ event }: { event: FocusEvent }) => {
+  blurHandler({ event }: { event: FocusEvent }) {
     if (this.preventHide) {
       this.preventHide = false;
 
@@ -154,7 +122,7 @@ export class BubbleMenuView {
     this.updateHandler(view, selectionChanged, docChanged, oldState);
   }
 
-  handleDebouncedUpdate = (view: EditorView, oldState?: EditorState) => {
+  handleDebouncedUpdate(view: EditorView, oldState?: EditorState) {
     const selectionChanged = !oldState?.selection.eq(view.state.selection);
     const docChanged = !oldState?.doc.eq(view.state.doc);
 
@@ -183,7 +151,7 @@ export class BubbleMenuView {
     const from = Math.min(...ranges.map((range) => range.$from.pos));
     const to = Math.max(...ranges.map((range) => range.$to.pos));
 
-    const shouldShow = this.shouldShow?.({
+    const shouldShow = this.shouldShow({
       editor: this.editor,
       view,
       state,
@@ -199,7 +167,7 @@ export class BubbleMenuView {
     }
 
     const shouldAnimate = this.element.style.visibility === 'visible';
-    this.element.style.transitionDuration = shouldAnimate ? '0.2s' : '0s';
+    this.element.style.transitionDuration = shouldAnimate ? '.4s' : '0s';
 
     computePosition(
       this.floatingReferenceEl,
@@ -245,6 +213,33 @@ export class BubbleMenuView {
     }
 
     return posToDOMRect(this.editor.view, from, to);
+  }
+
+  shouldShow({
+    view,
+    state,
+    from,
+    to,
+  }: ShouldShowProps) {
+    const { doc, selection } = state;
+    const { empty } = selection;
+
+    // Sometime check for `empty` is not enough.
+    // Doubleclick an empty paragraph returns a node size of 2.
+    // So we check also for an empty text size.
+    const isEmptyTextBlock = doc.textBetween(from, to).length === 0 && isTextSelection(state.selection);
+
+    // When clicking on a element inside the bubble menu the editor "blur" event
+    // is called and the bubble menu item is focussed. In this case we should
+    // consider the menu as part of the editor and keep showing the menu
+    const isChildOfMenu = this.element.contains(document.activeElement);
+
+    const hasEditorFocus = view.hasFocus() || isChildOfMenu;
+
+    if (!hasEditorFocus || empty || isEmptyTextBlock || !this.editor.isEditable)
+      return false;
+
+    return true;
   }
 
   destroy() {
