@@ -108,7 +108,7 @@ async function login() {
           type="submit"
           :loading="isLoading"
         >
-          Sign in
+          Continue Keycaping
         </FormButton>
 
         <template v-if="oauthEnabled">

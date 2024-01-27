@@ -133,7 +133,7 @@ async function register() {
           type="submit"
           :loading="isLoading"
         >
-          Register
+          Start Keycaping
         </FormButton>
 
         <template v-if="oauthEnabled">
