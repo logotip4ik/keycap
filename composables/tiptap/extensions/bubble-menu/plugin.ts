@@ -61,10 +61,10 @@ export class BubbleMenuView {
     this.view = view;
     this.updateDelay = updateDelay;
 
-    this.element.addEventListener('mousedown', this.mousedownHandler, { capture: true });
-    this.view.dom.addEventListener('dragstart', this.dragstartHandler);
-    this.editor.on('focus', this.focusHandler);
-    this.editor.on('blur', this.blurHandler);
+    this.element.addEventListener('mousedown', this.mousedownHandler.bind(this), { capture: true });
+    this.view.dom.addEventListener('dragstart', this.dragstartHandler.bind(this));
+    this.editor.on('focus', this.focusHandler.bind(this));
+    this.editor.on('blur', this.blurHandler.bind(this));
 
     this.hide();
 
