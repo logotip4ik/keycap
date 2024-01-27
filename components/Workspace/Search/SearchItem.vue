@@ -42,7 +42,7 @@ async function handleActionClick() {
   </NuxtLink>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .search-item {
   display: flex;
   justify-content: flex-start;
