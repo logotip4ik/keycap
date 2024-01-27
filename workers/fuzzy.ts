@@ -2,13 +2,16 @@ import coincident from 'coincident';
 import { expose } from 'comlink';
 import { commandScore as getScore } from '@superhuman/command-score';
 
-import { transliterateFromEnglish, transliterateToEnglish } from '~/utils/transliterate';
 import { commandActionsMin as commandsCache } from '~/utils/menu';
+import { transliterateFromEnglish, transliterateToEnglish } from '~/utils/transliterate';
 
 const itemsCache = new Map<string, FuzzyItem>();
 
-function addItem(item: FuzzyItem, identifier?: string) {
-  itemsCache.set(identifier || decodeURIComponent(item.path), item);
+function addItem(item: FuzzyItem) {
+  // truncate before first slash part /test/abc -> abc
+  const identifier = decodeURIComponent(item.path.replace(/\/\w+\//, ''));
+
+  itemsCache.set(identifier, item);
 }
 
 function search(query: string, maxLength = 4): Array<FuzzyItem | CommandItem> {
@@ -57,10 +60,8 @@ async function populateItemsCache() {
 
   itemsCache.clear();
 
-  for (const item of items.data || []) {
-    // truncate before first slash part /test/abc -> abc
-    addItem(item, decodeURIComponent(item.path.replace(/\/\w+\//, '')));
-  }
+  for (const item of items.data || [])
+    addItem(item);
 }
 
 populateItemsCache();
