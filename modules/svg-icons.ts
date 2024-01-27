@@ -1,15 +1,18 @@
 import { readFile, readdir } from 'node:fs/promises';
-import { addComponent, addTemplate, addTypeTemplate, defineNuxtModule } from '@nuxt/kit';
+import { addComponent, addTemplate, addTypeTemplate, defineNuxtModule, useLogger } from '@nuxt/kit';
 import { resolve } from 'pathe';
 import { camelCase, pascalCase } from 'scule';
 import { optimize as optimizeSvg } from 'svgo';
 import { compileTemplate } from 'vue/compiler-sfc';
+import colors from 'picocolors';
 
 export default defineNuxtModule({
   meta: {
     name: 'svg-icons',
   },
   async setup(_options, nuxt) {
+    const logger = useLogger('svg icons');
+
     const prefix = 'icon';
     const svgDir = resolve(nuxt.options.srcDir, './assets/svg');
     const svgs = await readdir(svgDir);
@@ -38,6 +41,8 @@ export default defineNuxtModule({
         filePath: dst,
       });
     }
+
+    logger.success(`Created ${colors.cyan(svgs.length)} icons`);
 
     addTypeTemplate({
       write: true,
