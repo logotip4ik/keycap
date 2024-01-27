@@ -7,8 +7,8 @@ import { commandActionsMin as commandsCache } from '~/utils/menu';
 
 const itemsCache = new Map<string, FuzzyItem>();
 
-function addItem(item: FuzzyItem) {
-  itemsCache.set(item.path, item);
+function addItem(item: FuzzyItem, identifier?: string) {
+  itemsCache.set(identifier || decodeURIComponent(item.path), item);
 }
 
 function addItems(items: Array<FuzzyItem>) {
@@ -28,8 +28,8 @@ function search(query: string, maxLength = 4): Array<FuzzyItem | CommandItem> {
   const results = [];
   const cache = isCommand ? commandsCache : itemsCache;
 
-  for (const [, value] of cache) {
-    const score = getScore(value.name, query);
+  for (const [key, value] of cache) {
+    const score = getScore(isCommand ? value.name : key as string, query);
 
     if (score > 0)
       results.push({ score, value });
@@ -62,7 +62,10 @@ async function populateItemsCache() {
 
   itemsCache.clear();
 
-  addItems(items.data || []);
+  for (const item of items.data || []) {
+    // truncate before first slash part /test/abc -> abc
+    addItem(item, decodeURIComponent(item.path.replace(/\/\w+\//, '')));
+  }
 }
 
 populateItemsCache();
@@ -82,6 +85,3 @@ if (import.meta.prod) {
 else {
   expose(fuzzyInterface);
 }
-
-if (import.meta.hot)
-  import.meta.hot.accept();
