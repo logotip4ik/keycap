@@ -1,18 +1,18 @@
 <template>
-  <div class="skeleton">
-    <p class="skeleton__heading skeleton-bg" />
+  <div class="skeleton editor-skeleton">
+    <p class="editor-skeleton__heading skeleton-bg" />
 
-    <p class="skeleton__text skeleton-bg" />
-    <p class="skeleton__text skeleton-bg" />
-    <p class="skeleton__text skeleton-bg" />
-    <p class="skeleton__text skeleton-bg" />
+    <p class="editor-skeleton__text skeleton-bg" />
+    <p class="editor-skeleton__text skeleton-bg" />
+    <p class="editor-skeleton__text skeleton-bg" />
+    <p class="editor-skeleton__text skeleton-bg" />
   </div>
 </template>
 
 <style lang="scss">
 @use "sass:math";
 
-.skeleton {
+.editor-skeleton {
   padding: 20vh 1.5rem 25vh;
 
   &__heading,
