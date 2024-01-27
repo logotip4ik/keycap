@@ -42,7 +42,6 @@ declare global {
   export interface FuzzyWorker {
     searchWithQuery: (query: string, maxLength = 4) => Array<FuzzyItem | CommandItem>
     addItemToCache: (item: FuzzyItem) => void
-    addItemsToCache: (items: Array<FuzzyItem>) => void
     refreshItemsCache: () => Promise<void>
   }
 

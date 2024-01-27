@@ -11,11 +11,6 @@ function addItem(item: FuzzyItem, identifier?: string) {
   itemsCache.set(identifier || decodeURIComponent(item.path), item);
 }
 
-function addItems(items: Array<FuzzyItem>) {
-  for (const item of items)
-    itemsCache.set(item.path, item);
-}
-
 function search(query: string, maxLength = 4): Array<FuzzyItem | CommandItem> {
   // See https://stackblitz.com/edit/node-ezlzug?file=index.js&view=editor and run `node index.js`
   // but in `real world`? fuzzaldrin was a bit slower plus had much more bigger bundle footprint
@@ -73,7 +68,6 @@ populateItemsCache();
 const fuzzyInterface: FuzzyWorker = {
   searchWithQuery: searchWithTransliteration,
   addItemToCache: addItem,
-  addItemsToCache: addItems,
   refreshItemsCache: populateItemsCache,
 };
 
