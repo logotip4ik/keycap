@@ -40,6 +40,7 @@ function initTiptap() {
     autofocus: !isSmallScreen && 'start', // disable auto focus on small screens
     editable: true,
     editorProps: {
+      attributes: { spellcheck: 'false' },
       handleKeyDown() {
         isTyping.value = !!debouncedClearTyping();
       },
