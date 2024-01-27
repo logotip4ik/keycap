@@ -25,7 +25,7 @@ async function handleActionClick() {
 
   const action = commandActions[props.item.key];
 
-  action && await action();
+  action && action();
 }
 </script>
 
