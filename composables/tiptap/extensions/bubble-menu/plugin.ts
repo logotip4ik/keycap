@@ -54,7 +54,7 @@ export class BubbleMenuView {
     editor,
     element,
     view,
-    updateDelay = 150,
+    updateDelay = 75,
   }: BubbleMenuViewProps) {
     this.editor = editor;
     this.element = element;
@@ -137,7 +137,7 @@ export class BubbleMenuView {
     }, this.updateDelay);
   };
 
-  updateHandler = (view: EditorView, selectionChanged: boolean, docChanged: boolean, oldState?: EditorState) => {
+  updateHandler(view: EditorView, selectionChanged: boolean, docChanged: boolean, oldState?: EditorState) {
     const { state, composing } = view;
     const { selection } = state;
 
@@ -167,7 +167,7 @@ export class BubbleMenuView {
     }
 
     const shouldAnimate = this.element.style.visibility === 'visible';
-    this.element.style.transitionDuration = shouldAnimate ? '.4s' : '0s';
+    this.element.style.transitionDuration = shouldAnimate ? '.3s' : '0s';
 
     computePosition(
       this.floatingReferenceEl,
