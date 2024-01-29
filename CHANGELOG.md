@@ -1,6 +1,52 @@
 # Changelog
 
 
+## v3.9.6
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.9.5...v3.9.6)
+
+### 🩹 Fixes
+
+- Do not clear content on unmounted ([4565e223](https://github.com/logotip4ik/keycap/commit/4565e223))
+- Provide correct context to event handlers ([55a891eb](https://github.com/logotip4ik/keycap/commit/55a891eb))
+
+### 💅 Refactors
+
+- Mock ohash function rather then patching nuxt ([a9e933a1](https://github.com/logotip4ik/keycap/commit/a9e933a1))
+- Get back to patching nuxt to remove ohash dependency from island component ([2a3e299e](https://github.com/logotip4ik/keycap/commit/2a3e299e))
+- Use already resolved user from nitro's middleware ([ac8f29c3](https://github.com/logotip4ik/keycap/commit/ac8f29c3))
+- Ability to create route groups ([145ce741](https://github.com/logotip4ik/keycap/commit/145ce741))
+- Use truncated item path for fuzzy searching ([0b3e0ade](https://github.com/logotip4ik/keycap/commit/0b3e0ade))
+- Always make custom identifier for each fuzzy item ([2a7d37bc](https://github.com/logotip4ik/keycap/commit/2a7d37bc))
+
+### 🏡 Chore
+
+- **release:** V3.9.5 ([6a4b82e8](https://github.com/logotip4ik/keycap/commit/6a4b82e8))
+- Delete oauth state cooke even if failed to connect or create user ([c7be6f2e](https://github.com/logotip4ik/keycap/commit/c7be6f2e))
+- Remove not needed comment ([aae0dc72](https://github.com/logotip4ik/keycap/commit/aae0dc72))
+- Rename function arg and directly return transaction result ([c3f4beb0](https://github.com/logotip4ik/keycap/commit/c3f4beb0))
+- Minimize user select after update ([18438c60](https://github.com/logotip4ik/keycap/commit/18438c60))
+- Specify node version ([109b080d](https://github.com/logotip4ik/keycap/commit/109b080d))
+- Remove auto imported things ([bbc66072](https://github.com/logotip4ik/keycap/commit/bbc66072))
+- Move nuxt patch to resolutions section ([7f51c2cd](https://github.com/logotip4ik/keycap/commit/7f51c2cd))
+- Remove not appropriate size limit entry ([a33ff9d8](https://github.com/logotip4ik/keycap/commit/a33ff9d8))
+- Update deps ([7b09ed1e](https://github.com/logotip4ik/keycap/commit/7b09ed1e))
+- Lower code font size ([4d396ea7](https://github.com/logotip4ik/keycap/commit/4d396ea7))
+- Use themed continue and start buttons texts ([191d235c](https://github.com/logotip4ik/keycap/commit/191d235c))
+- Add logger with total icons count to `svg-icons` module ([09f9253d](https://github.com/logotip4ik/keycap/commit/09f9253d))
+- Use scoped class for editor skeleton stylings ([0429ddb5](https://github.com/logotip4ik/keycap/commit/0429ddb5))
+- Disable spell check for editor ([5da7c558](https://github.com/logotip4ik/keycap/commit/5da7c558))
+- Make `shouldShow` mandatory for bubble menu view ([238721c0](https://github.com/logotip4ik/keycap/commit/238721c0))
+- Make bubble box move faster ([a552296a](https://github.com/logotip4ik/keycap/commit/a552296a))
+- Remove not used fuzzy worker function ([decf3cc6](https://github.com/logotip4ik/keycap/commit/decf3cc6))
+- Remove not needed `await` ([6ecd5578](https://github.com/logotip4ik/keycap/commit/6ecd5578))
+- Remove not needed scope for styles ([d5228312](https://github.com/logotip4ik/keycap/commit/d5228312))
+- Remove not used function ([c5b2023b](https://github.com/logotip4ik/keycap/commit/c5b2023b))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.9.5
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.9.4...v3.9.5)
