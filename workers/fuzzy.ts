@@ -5,6 +5,7 @@ import { commandScore as getScore } from '@superhuman/command-score';
 import { commandActionsMin as commandsCache } from '~/utils/menu';
 import { transliterateFromEnglish, transliterateToEnglish } from '~/utils/transliterate';
 
+const DEFAULT_RESULTS_COUNT = 5;
 const itemsCache = new Map<string, FuzzyItem>();
 
 function addItem(item: FuzzyItem) {
@@ -14,7 +15,7 @@ function addItem(item: FuzzyItem) {
   itemsCache.set(identifier, item);
 }
 
-function search(query: string, resultsCount = 5): Array<FuzzyItem | CommandItem> {
+function search(query: string, resultsCount = DEFAULT_RESULTS_COUNT): Array<FuzzyItem | CommandItem> {
   // See https://stackblitz.com/edit/node-ezlzug?file=index.js&view=editor and run `node index.js`
   // but in `real world`? fuzzaldrin was a bit slower plus had much more bigger bundle footprint
 
@@ -42,13 +43,13 @@ function search(query: string, resultsCount = 5): Array<FuzzyItem | CommandItem>
     .slice(0, resultsCount);
 }
 
-function searchWithTransliteration(query: string, maxLength = 4): Array<FuzzyItem | CommandItem> {
-  let result = search(query, maxLength);
+function searchWithTransliteration(query: string, resultsCount = DEFAULT_RESULTS_COUNT): Array<FuzzyItem | CommandItem> {
+  let result = search(query, resultsCount);
 
   if (result.length === 0) {
     const transliterator = (query.codePointAt(0) || 0) > 127 ? transliterateToEnglish : transliterateFromEnglish;
 
-    result = search(transliterator(query), maxLength);
+    result = search(transliterator(query), resultsCount);
   }
 
   return result;
