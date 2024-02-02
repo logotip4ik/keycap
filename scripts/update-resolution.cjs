@@ -33,7 +33,7 @@ async function updatePatches() {
     pkg.resolutions[resolutionName] = newPatch;
   }
 
-  const newPkg = `${JSON.stringify(pkg, null, 2)}\n`;
+  const newPkg = JSON.stringify(pkg, null, 2);
 
   await fsp.writeFile(pkgDir, newPkg);
 }
