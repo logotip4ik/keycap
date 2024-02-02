@@ -14,7 +14,7 @@ function addItem(item: FuzzyItem) {
   itemsCache.set(identifier, item);
 }
 
-function search(query: string, maxLength = 4): Array<FuzzyItem | CommandItem> {
+function search(query: string, resultsCount = 5): Array<FuzzyItem | CommandItem> {
   // See https://stackblitz.com/edit/node-ezlzug?file=index.js&view=editor and run `node index.js`
   // but in `real world`? fuzzaldrin was a bit slower plus had much more bigger bundle footprint
 
@@ -39,7 +39,7 @@ function search(query: string, maxLength = 4): Array<FuzzyItem | CommandItem> {
   return results
     .sort((a, b) => b.score - a.score)
     .map((suggestion) => suggestion.value)
-    .slice(0, maxLength);
+    .slice(0, resultsCount);
 }
 
 function searchWithTransliteration(query: string, maxLength = 4): Array<FuzzyItem | CommandItem> {
