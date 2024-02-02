@@ -20,6 +20,16 @@
 <style lang="scss">
 @use "sass:math";
 
+.skeleton__heading {
+  width: (random(54) + 24)+#{'%'};
+  height: 2rem;
+
+  margin: 0;
+  margin-block: 0.75rem 2.625rem;
+
+  border-radius: 0.15rem;
+}
+
 .skeleton__row {
   $numberOfItems: 3;
 
@@ -28,7 +38,7 @@
   align-items: center;
 
   & + & {
-    margin-top: 0.8rem;
+    margin-top: 1.125rem;
   }
 
   &__text,
