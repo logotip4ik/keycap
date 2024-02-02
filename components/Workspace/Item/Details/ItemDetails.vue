@@ -26,23 +26,16 @@ const { data: details, refresh } = useAsyncData(async () => {
   lazy: true,
   server: false,
   immediate: false,
-});
-
-const mergedDetails = computed(() => {
-  if (!details.value)
-    return null;
-
-  // NOTE: maybe use `options.tranform` from useAsyncData ?
-  return {
+  transform: (details) => ({
+    ...details,
     name: props.item.name,
-    ...details.value,
-    shares: details.value.shares?.[0],
-  };
+    shares: details.shares?.[0],
+  }),
 });
 
 const rowsData = [
-  { title: 'Last update', value: computed(() => formatDate(mergedDetails.value?.updatedAt)) },
-  { title: 'Created at', value: computed(() => formatDate(mergedDetails.value?.createdAt)) },
+  { title: 'Last update', value: computed(() => formatDate(details.value?.updatedAt)) },
+  { title: 'Created at', value: computed(() => formatDate(details.value?.createdAt)) },
 ];
 
 function unsetCurrentDetailsItem() {
@@ -92,11 +85,11 @@ function formatDate(dateString?: Date | string) {
 }
 
 async function copyShareLink() {
-  if (!mergedDetails.value?.shares)
+  if (!details.value?.shares)
     return;
 
   const { protocol, host } = window.location;
-  const link = mergedDetails.value?.shares.link;
+  const link = details.value?.shares.link;
 
   await navigator.clipboard.writeText(`${protocol}//${host}/view/${link}`);
 
@@ -137,16 +130,16 @@ onBeforeMount(() => refresh());
       </button>
 
       <WithFadeTransition appear @before-leave="rememberHeight" @enter="transitionHeight">
-        <WorkspaceItemDetailsSkeleton v-if="!mergedDetails" key="skeleton" />
+        <WorkspaceItemDetailsSkeleton v-if="!details" key="skeleton" />
 
         <div v-else key="content" class="item-details__data">
           <!-- TODO: split into smaller components -->
           <p
             id="item-details-dialog-title"
             class="item-details__data__title"
-            :aria-label="`Details: ${mergedDetails.name}`"
+            :aria-label="`Details: ${details.name}`"
           >
-            {{ mergedDetails.name }}
+            {{ details.name }}
           </p>
 
           <div v-if="!isFolder" class="item-details__data__row item-details__data__row--share">
@@ -158,23 +151,23 @@ onBeforeMount(() => refresh());
 
             <button
               class="item-details__data__row__share-link"
-              :disabled="!mergedDetails.shares || isLoadingItemDetails"
+              :disabled="!details.shares || isLoadingItemDetails"
               @click="copyShareLink"
             >
               <!-- NOTE: skeleton class adds appear delay -->
               <WithFadeTransition>
                 <span v-if="isLoadingItemDetails" class="skeleton">Loading...</span>
-                <span v-else-if="mergedDetails.shares">{{ mergedDetails.shares.link }}</span>
+                <span v-else-if="details.shares">{{ details.shares.link }}</span>
                 <span v-else>Disabled</span>
               </WithFadeTransition>
             </button>
 
             <input
-              :checked="!!mergedDetails.shares"
+              :checked="!!details.shares"
               :readonly="isLoadingItemDetails"
               type="checkbox"
               class="item-details__data__row__checkbox"
-              @input="debouncedToggleShareLink(!mergedDetails?.shares)"
+              @input="debouncedToggleShareLink(!details?.shares)"
             >
           </div>
 
