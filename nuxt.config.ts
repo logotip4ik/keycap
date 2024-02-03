@@ -44,10 +44,6 @@ export default defineNuxtConfig({
     headNext: true,
   },
 
-  future: {
-    typescriptBundlerResolution: true,
-  },
-
   typescript: { tsConfig },
 
   imports: {
