@@ -1,6 +1,34 @@
 # Changelog
 
 
+## v3.9.7
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.9.6...v3.9.7)
+
+### 🩹 Fixes
+
+- Add heading styles to item details skeleton ([a7792cac](https://github.com/logotip4ik/keycap/commit/a7792cac))
+- Use correct results count in transliteration search ([c9e81e66](https://github.com/logotip4ik/keycap/commit/c9e81e66))
+
+### 💅 Refactors
+
+- Use trasnform prop from async data to include additional data ([9275957d](https://github.com/logotip4ik/keycap/commit/9275957d))
+
+### 🏡 Chore
+
+- **release:** V3.9.6 ([fbfb2f37](https://github.com/logotip4ik/keycap/commit/fbfb2f37))
+- Bump default fuzzy results count ([e04e0adf](https://github.com/logotip4ik/keycap/commit/e04e0adf))
+- Don't add new line at the end when updating resolutions ([ee92c61b](https://github.com/logotip4ik/keycap/commit/ee92c61b))
+- Update deps and patch tiptap/core with minified inlined styles ([40ded5b1](https://github.com/logotip4ik/keycap/commit/40ded5b1))
+- Move tiptap patch to resolutions ([0d86d917](https://github.com/logotip4ik/keycap/commit/0d86d917))
+- Remove not used patches ([8dfebf3a](https://github.com/logotip4ik/keycap/commit/8dfebf3a))
+- Also update packge versions in resolutions ([165732c7](https://github.com/logotip4ik/keycap/commit/165732c7))
+- Remove not needed future prop ([c35fc95c](https://github.com/logotip4ik/keycap/commit/c35fc95c))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.9.6
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.9.5...v3.9.6)
