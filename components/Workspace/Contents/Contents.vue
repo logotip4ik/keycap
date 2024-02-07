@@ -4,22 +4,22 @@ import type SidebarVue from '~/components/Sidebar/Sidebar.vue';
 const sidebar = shallowRef<InstanceType<typeof SidebarVue>>();
 
 const { shortcuts } = useAppConfig();
-const contentsState = useContentsSidebarState();
-const toolboxState = useToolboxSidebarState();
+const { visibility: contentsVisibility } = useContentsSidebar();
+const { visibility: toolboxVisibility } = useToolboxSidebar();
 
 function updateState(newState: SidebarState) {
-  contentsState.value = newState;
+  contentsVisibility.value = newState;
 }
 
 function hideSidebarsIfNeeded() {
-  const sidebar = shouldUnpinSidebar(contentsState, toolboxState);
+  const sidebar = shouldUnpinSidebar(contentsVisibility, toolboxVisibility);
 
   if (sidebar)
     sidebar.value = 'hidden';
 }
 
 function smartUpdateState(newState: SidebarState) {
-  contentsState.value = newState;
+  contentsVisibility.value = newState;
 
   hideSidebarsIfNeeded();
 }
@@ -28,9 +28,11 @@ useTinykeys({
   [shortcuts.contents]: (e) => {
     e.preventDefault();
 
-    const nextState: SidebarState = contentsState.value === 'hidden' ? 'visible' : 'hidden';
-
-    smartUpdateState(nextState);
+    smartUpdateState(
+      contentsVisibility.value === 'hidden'
+        ? 'visible'
+        : 'hidden',
+    );
   },
 });
 
@@ -53,11 +55,11 @@ if (import.meta.client) {
     ref="sidebar"
     dir="right"
     name="contents"
-    :state="contentsState"
+    :state="contentsVisibility"
     @update-state="updateState"
   >
     <WorkspaceContentsHeader
-      :state="contentsState"
+      :state="contentsVisibility"
       @update-state="smartUpdateState"
     />
 
@@ -66,7 +68,7 @@ if (import.meta.client) {
     <hr>
 
     <WorkspaceContentsList
-      :state="contentsState"
+      :state="contentsVisibility"
       @update-state="smartUpdateState"
     />
   </WorkspaceSidebar>

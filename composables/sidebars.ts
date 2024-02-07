@@ -31,16 +31,20 @@ export function unpinSidebar(state: MaybeRef<SidebarState>): SidebarState {
     : 'pinned';
 }
 
-export function useToolboxSidebarState() {
-  return makeSidebarState('toolbox');
+export function useToolboxSidebar() {
+  return {
+    visibility: makeSidebarVisibility('toolbox'),
+  };
 }
 
-export function useContentsSidebarState() {
-  return makeSidebarState('contents');
+export function useContentsSidebar() {
+  return {
+    visibility: makeSidebarVisibility('contents'),
+  };
 }
 
 const stateWhitelist = ['hidden', 'visible', 'pinned'] satisfies Array<SidebarState>;
-export function makeSidebarState(key: string): Ref<SidebarState> {
+export function makeSidebarVisibility(key: string): Ref<SidebarState> {
   return useState<SidebarState>(key, () => {
     let stateCookieValue: SidebarState | undefined;
 

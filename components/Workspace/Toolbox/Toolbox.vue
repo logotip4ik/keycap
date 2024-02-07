@@ -2,24 +2,24 @@
 import type SidebarVue from '../Sidebar/Sidebar.vue';
 
 const { shortcuts } = useAppConfig();
-const toolboxState = useToolboxSidebarState();
-const contentsState = useContentsSidebarState();
+const { visibility: toolboxVisibility } = useToolboxSidebar();
+const { visibility: contentsVisibility } = useContentsSidebar();
 
 const sidebar = shallowRef<InstanceType<typeof SidebarVue>>();
 
 function updateState(newState: SidebarState) {
-  toolboxState.value = newState;
+  toolboxVisibility.value = newState;
 }
 
 function hideSidebarsIfNeeded() {
-  const sidebar = shouldUnpinSidebar(toolboxState, contentsState);
+  const sidebar = shouldUnpinSidebar(toolboxVisibility, contentsVisibility);
 
   if (sidebar)
     sidebar.value = 'hidden';
 }
 
 function smartUpdateState(newState: SidebarState) {
-  toolboxState.value = newState;
+  toolboxVisibility.value = newState;
 
   hideSidebarsIfNeeded();
 }
@@ -28,9 +28,11 @@ useTinykeys({
   [shortcuts.toolbox]: (e) => {
     e.preventDefault();
 
-    const nextState: SidebarState = toolboxState.value === 'hidden' ? 'visible' : 'hidden';
-
-    smartUpdateState(nextState);
+    smartUpdateState(
+      toolboxVisibility.value === 'hidden'
+        ? 'visible'
+        : 'hidden',
+    );
   },
 });
 
@@ -53,24 +55,24 @@ if (import.meta.client) {
     ref="sidebar"
     name="toolbox"
     class="toolbox"
-    :state="toolboxState"
+    :state="toolboxVisibility"
     @update-state="updateState"
   >
     <!-- TODO: add fade ? animation when entering. Something like iphone quick settings menu -->
     <WorkspaceToolboxHeader
-      :state="toolboxState"
+      :state="toolboxVisibility"
       @update-state="smartUpdateState"
     />
 
     <WorkspaceToolboxUtils
-      :state="toolboxState"
+      :state="toolboxVisibility"
       @update-state="smartUpdateState"
     />
 
     <hr>
 
     <WorkspaceToolboxRecent
-      :state="toolboxState"
+      :state="toolboxVisibility"
       @update-state="smartUpdateState"
     />
 

@@ -4,7 +4,7 @@ const props = defineProps<{
   parent: FolderWithContents
 }>();
 
-const state = useContentsSidebarState();
+const { visibility } = useContentsSidebar();
 const createToast = useToaster();
 const isSmallScreen = getIsSmallScreen();
 
@@ -40,9 +40,9 @@ function handleSubmit() {
 
   promise
     .then(() => {
-      state.value = isSmallScreen
+      visibility.value = isSmallScreen
         ? 'hidden'
-        : (state.value === 'visible' ? 'hidden' : state.value);
+        : (visibility.value === 'visible' ? 'hidden' : visibility.value);
 
       useTiptap().withEditor((editor) => editor.commands.focus());
     })

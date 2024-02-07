@@ -4,13 +4,13 @@ const props = defineProps<{
 }>();
 
 const isSmallScreen = getIsSmallScreen();
-const toolboxSidebarState = useToolboxSidebarState();
+const { visibility: toolbox } = useToolboxSidebar();
 
 const itemHref = computed(() => generateItemPath(props.item));
 
 function unpinIfNeeded() {
   if (isSmallScreen)
-    toolboxSidebarState.value = 'hidden';
+    toolbox.value = 'hidden';
 }
 </script>
 

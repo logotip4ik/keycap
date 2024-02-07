@@ -10,7 +10,7 @@ const props = defineProps<{
 const isFolder = 'root' in props.item;
 
 const route = useRoute();
-const contentsSidebarState = useContentsSidebarState();
+const { visibility: contentsVisibility } = useContentsSidebar();
 const isSmallScreen = getIsSmallScreen();
 
 const link = shallowRef<ComponentPublicInstance | null>(null);
@@ -20,7 +20,7 @@ const isActive = computed(() => itemHref.value === route.path);
 
 function unpinIfNeeded() {
   if (isSmallScreen && !isFolder)
-    contentsSidebarState.value = 'hidden';
+    contentsVisibility.value = 'hidden';
 }
 
 function showMenu(event: Event) {
