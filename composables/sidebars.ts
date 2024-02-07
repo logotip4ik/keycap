@@ -45,7 +45,7 @@ export function makeSidebarState(key: string): Ref<SidebarState> {
     let stateCookieValue: SidebarState | undefined;
 
     if (import.meta.server) {
-      const event = useRequestEvent();
+      const event = useRequestEvent()!;
 
       stateCookieValue = getCookie(event, key) as SidebarState;
     }

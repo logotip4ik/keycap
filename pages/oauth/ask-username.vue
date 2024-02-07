@@ -12,7 +12,7 @@ if (import.meta.client) {
   });
 }
 
-const event = useRequestEvent();
+const event = useRequestEvent()!;
 const { query } = useRoute();
 
 if (!query.code || !query.provider) {
