@@ -19,7 +19,7 @@ export function shouldUnpinSidebar<T extends MaybeRef<SidebarState>>(first: T, s
 }
 
 /**
- * @description Takes into cosnideration window width. If there is enough room
+ * @description Takes into consideration window width. If there is enough room
  *   for two it will return `visible`, so will not use the note space, but
  *   still remain opened before mouse leaves the element
  */
