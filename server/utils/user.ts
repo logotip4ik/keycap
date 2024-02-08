@@ -1,4 +1,4 @@
-const USER_CACHE_BASE = 'user';
+export const USER_CACHE_BASE = 'user';
 
 export enum UserCacheGroup {
   Recent = 'recent',
@@ -37,7 +37,10 @@ async function checkIfUsernameTaken_(username: string) {
 
   const prisma = getPrisma();
 
-  const user = await prisma.user.findFirst({ where: { username }, select: { username: true } })
+  const user = await prisma.user.findFirst({
+    where: { username },
+    select: { username: true },
+  })
     .catch(() => {});
 
   return !!user?.username;

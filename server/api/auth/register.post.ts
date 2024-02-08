@@ -25,6 +25,13 @@ export default defineEventHandler(async (event) => {
     });
   }
 
+  if (await checkIfUsernameTaken(body.username)) {
+    throw createError({
+      statusCode: 400,
+      message: 'Sorry... But this username is already taken',
+    });
+  }
+
   const prisma = getPrisma();
 
   const hashedPassword = await hashPassword(body.password)
@@ -55,7 +62,11 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, message: 'user with this email or username might already exist' });
   });
 
-  await setAuthCookies(event, user);
+  await Promise.all([
+    setAuthCookies(event, user),
+    useStorage(USER_CACHE_BASE)
+      .setItem(getUserCacheKey(user.username, UserCacheGroup.Taken), true),
+  ]);
 
   if (body.browserAction !== undefined)
     return sendRedirect(event, `/@${user.username}`);
