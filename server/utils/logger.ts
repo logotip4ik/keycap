@@ -11,10 +11,10 @@ export interface LoggerData extends Record<string, unknown | undefined> {
   error?: Error | undefined
 }
 export interface Logger {
-  log(level: LogLevel, data: LoggerData): Promise<void>
-  error(data: LoggerData | string): Promise<void>
-  warn(data: LoggerData | string): Promise<void>
-  info(data: LoggerData | string): Promise<void>
+  log: (level: LogLevel, data: LoggerData) => Promise<void>
+  error: (data: LoggerData | string) => Promise<void>
+  warn: (data: LoggerData | string) => Promise<void>
+  info: (data: LoggerData | string) => Promise<void>
 }
 
 let client: typeof $fetch | undefined;
