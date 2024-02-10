@@ -64,8 +64,10 @@ export default defineEventHandler(async (event) => {
 
   await Promise.all([
     setAuthCookies(event, user),
-    useStorage(USER_CACHE_BASE)
-      .setItem(getUserCacheKey(user.username, UserCacheGroup.Taken), true),
+    updateCacheEntry(
+      getUserCacheKey(user.username, UserCacheName.Taken),
+      true,
+    ),
   ]);
 
   if (body.browserAction !== undefined)

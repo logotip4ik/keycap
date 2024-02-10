@@ -1,32 +1,41 @@
-export const USER_CACHE_BASE = 'user';
+import { sha256base64 } from 'ohash';
 
-export enum UserCacheGroup {
+export const USER_CACHE_GROUP = 'user';
+
+export enum UserCacheName {
   Recent = 'recent',
   Taken = 'taken',
 }
 
-export function getUserCacheKey(username: string, group: UserCacheGroup) {
+export function getUserCacheKey(username: string, cacheName?: UserCacheName) {
   if (!username)
     throw new Error('unexpected empty username');
-  if (!group)
-    throw new Error('unexpected empty group');
 
-  return `${username.trim()}:${group}`;
+  const usernameHash = sha256base64(username.trim());
+
+  if (!cacheName)
+    return usernameHash;
+
+  return `cache:${USER_CACHE_GROUP}:${cacheName}:${usernameHash}.json`;
 }
 
 export const checkIfUsernameTaken = defineCachedFunction(checkIfUsernameTaken_, {
-  base: USER_CACHE_BASE,
+  group: USER_CACHE_GROUP,
+  name: UserCacheName.Taken,
+
   swr: true,
   maxAge: parseDuration('6 months', 'second'),
-  getKey: (username: Parameters<typeof checkIfUsernameTaken_>[0]) => getUserCacheKey(username, UserCacheGroup.Taken),
+  getKey: (username: Parameters<typeof checkIfUsernameTaken_>[0]) => getUserCacheKey(username),
 });
 
 export const getRecentForUser = defineCachedFunction(getRecentForUser_, {
-  base: USER_CACHE_BASE,
+  group: USER_CACHE_GROUP,
+  name: UserCacheName.Recent,
+
   swr: true,
   maxAge: parseDuration('5 minutes', 's'),
   staleMaxAge: parseDuration('30 minutes', 's'),
-  getKey: (user: Parameters<typeof getRecentForUser_>[0]) => getUserCacheKey(user.username, UserCacheGroup.Recent),
+  getKey: (user: Parameters<typeof getRecentForUser_>[0]) => getUserCacheKey(user.username),
 });
 
 async function checkIfUsernameTaken_(username: string) {

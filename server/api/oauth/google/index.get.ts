@@ -72,8 +72,7 @@ export default defineEventHandler(async (event) => {
       return await sendRedirect(event, withQuery('/oauth/ask-username', query));
     }
 
-    const userCache = useStorage(USER_CACHE_BASE);
-    await userCache.setItem(getUserCacheKey(username, UserCacheGroup.Taken), true);
+    await updateCacheEntry(getUserCacheKey(username, UserCacheName.Taken), true);
   }
 
   user = await updateOrCreateUserFromSocialAuth(
@@ -90,7 +89,7 @@ export default defineEventHandler(async (event) => {
   if (!user)
     return await sendRedirect(event, '/');
 
-  setAuthCookies(event, user);
+  await setAuthCookies(event, user);
 
   return await sendRedirect(event, `/@${user.username}`);
 });
