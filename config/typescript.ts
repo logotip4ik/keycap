@@ -3,6 +3,7 @@ import type { TSConfig } from 'pkg-types';
 export const tsConfig: TSConfig = {
   compilerOptions: {
     types: ['vitest/importMeta'],
+    moduleDetection: 'force',
   },
 
   exclude: [
