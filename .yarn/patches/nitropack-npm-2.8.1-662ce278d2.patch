@@ -1,0 +1,14 @@
+diff --git a/dist/runtime/cache.mjs b/dist/runtime/cache.mjs
+index 87e3fefb087427b0e7fbb3a8ce5a2cd159848315..10adee8935a1293476a72f811aae7f2d598b2636 100644
+--- a/dist/runtime/cache.mjs
++++ b/dist/runtime/cache.mjs
+@@ -54,7 +54,8 @@ export function defineCachedFunction(fn, opts = {}) {
+         entry.integrity = integrity;
+         delete pending[key];
+         if (validate(entry) !== false) {
+-          const promise = useStorage().setItem(cacheKey, entry).catch((error) => {
++          const ttl = opts.staleMaxAge || opts.maxAge
++          const promise = useStorage().setItem(cacheKey, entry, ttl ? { ttl } : undefined).catch((error) => {
+             console.error(`[nitro] [cache] Cache write error.`, error);
+             useNitroApp().captureError(error, { event, tags: ["cache"] });
+           });
