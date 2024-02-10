@@ -16,7 +16,6 @@ export const BubbleMenu = Extension.create<BubbleMenuOptions>({
       tippyOptions: {},
       pluginKey: 'bubbleMenu',
       updateDelay: undefined,
-      shouldShow: null,
     };
   },
 
@@ -30,7 +29,6 @@ export const BubbleMenu = Extension.create<BubbleMenuOptions>({
         editor: this.editor,
         element: this.options.element,
         updateDelay: this.options.updateDelay,
-        shouldShow: this.options.shouldShow,
       }),
     ];
   },
