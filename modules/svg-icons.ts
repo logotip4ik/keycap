@@ -11,7 +11,7 @@ export default defineNuxtModule({
     name: 'svg-icons',
   },
   async setup(_options, nuxt) {
-    const logger = useLogger('svg icons');
+    const logger = useLogger('svg-icons');
 
     const prefix = 'icon';
     const svgDir = resolve(nuxt.options.srcDir, './assets/svg');
