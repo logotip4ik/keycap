@@ -110,10 +110,17 @@ export default defineNuxtConfig({
 
       oauthEnabled: false,
 
+      turnstileSiteKey: '',
+
       errors: {
         url: '',
         apiKey: '',
       },
+    },
+
+    turnstile: {
+      secret: '',
+      endpoint: 'https://challenges.cloudflare.com/turnstile/v0/siteverify',
     },
 
     github: {
