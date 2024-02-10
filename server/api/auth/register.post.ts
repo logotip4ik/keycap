@@ -1,3 +1,5 @@
+import type { TypeOf } from 'suretype';
+
 export default defineEventHandler(async (event) => {
   if (event.context.user)
     return null;
@@ -7,7 +9,7 @@ export default defineEventHandler(async (event) => {
   if (isOriginMismatch)
     throw createError({ statusCode: 403 });
 
-  const body = await readBody(event) || {};
+  const body = await readBody<TypeOf<typeof registerSchema>>(event) || {};
 
   if (body.email)
     body.email = body.email.trim();
@@ -18,6 +20,7 @@ export default defineEventHandler(async (event) => {
 
   const validation = useRegisterValidation(body);
 
+  // TODO: add data to error and match schemaPath with client inputs to highlight wrong inputs
   if (!validation.ok) {
     throw createError({
       statusCode: 400,
@@ -25,10 +28,22 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  if (await checkIfUsernameTaken(body.username)) {
+  const [usernameTaken, captchaValid] = await Promise.all([
+    checkIfUsernameTaken(body.username),
+    validateTurnstileReponse(body['cf-turnstile-response']),
+  ]);
+
+  if (usernameTaken) {
     throw createError({
       statusCode: 400,
       message: 'Sorry... But this username is already taken',
+    });
+  }
+
+  if (!captchaValid) {
+    throw createError({
+      statusCode: 422,
+      message: 'Verification failed. Maybe try reloading the page ?',
     });
   }
 

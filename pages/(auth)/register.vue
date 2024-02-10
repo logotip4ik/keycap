@@ -7,7 +7,7 @@ definePageMeta({
   middleware: ['redirect-dashboard'],
 });
 
-const { oauthEnabled } = useRuntimeConfig().public;
+const { oauthEnabled, turnstileSiteKey } = useRuntimeConfig().public;
 const user = useUser();
 const createToast = useToaster();
 
@@ -26,14 +26,20 @@ watch(
 );
 
 async function register() {
-  const data = {
-    username: usernameComponent.value?.$el.value,
-    email: emailComponent.value?.$el.value,
-    password: passwordComponent.value?.$el.value,
+  const data: Record<string, string | undefined> = {
+    'username': usernameComponent.value?.$el.value,
+    'email': emailComponent.value?.$el.value,
+    'password': passwordComponent.value?.$el.value,
+    'cf-turnstile-response': window.turnstile?.getResponse(),
   };
 
   if (!data.username || !data.email || !data.password) {
     createToast('Fill all required fields');
+    return;
+  }
+
+  if (!data['cf-turnstile-response']) {
+    createToast('Verification failed. Maybe try reloading the page ?');
     return;
   }
 
@@ -42,9 +48,38 @@ async function register() {
   preloadRouteComponents('/a');
 
   $fetch('/api/auth/register', { method: 'POST', body: data })
-    .then((res) => res && (user.value = res.data))
-    .catch((error) => createToast(error.data.message || ERROR_MESSAGES.DEFAULT))
+    .then((res) => {
+      if (!res)
+        return;
+
+      window.turnstile?.remove();
+      user.value = res.data;
+    })
+    .catch((error) => {
+      window.turnstile?.reset();
+      createToast(error.data.message || ERROR_MESSAGES.DEFAULT);
+    })
     .finally(() => isLoading.value = false);
+}
+
+useHead({
+  script: [
+    {
+      src: 'https://challenges.cloudflare.com/turnstile/v0/api.js',
+      async: true,
+      defer: true,
+    },
+  ],
+});
+
+declare global {
+  interface Window {
+    turnstile?: {
+      reset: () => void
+      remove: () => void
+      getResponse: () => string
+    }
+  }
 }
 </script>
 
@@ -148,7 +183,11 @@ async function register() {
           </FormButtonSocial>
         </template>
       </FormItem>
-    </form>
+
+      <FormItem>
+        <div class="cf-turnstile" :data-sitekey="turnstileSiteKey" />
+      </FormItem>
+    </Form>
   </main>
 </template>
 
