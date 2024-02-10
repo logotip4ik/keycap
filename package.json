@@ -8,7 +8,6 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare && prisma generate",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "typecheck": "npx -p vue-tsc@latest -p typescript@latest vue-tsc --noEmit",
