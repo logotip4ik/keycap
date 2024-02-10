@@ -14,6 +14,7 @@ export async function updateCacheEntry(key: string, value: any) {
     return;
   }
 
+  // NOTE: idk how it handles arrays
   if (typeof value === 'object')
     entry.value = defu(entry.value, value);
   else
