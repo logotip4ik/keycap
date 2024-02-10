@@ -259,10 +259,12 @@ export default defineNuxtConfig({
     },
 
     optimizeDeps: {
+      holdUntilCrawlEnd: false,
       include: ['@superhuman/command-score'],
     },
 
     css: {
+      preprocessorMaxWorkers: true,
       preprocessorOptions: {
         scss: {
           additionalData: [
@@ -270,13 +272,6 @@ export default defineNuxtConfig({
             Object.entries(sidebarsBreakpoints).map(([key, value]) => `$sidebar-breakpoint-${key}: ${value}px;`).join('\n'),
           ].join('\n'),
         },
-      },
-    },
-
-    server: {
-      fs: {
-        // https://github.com/vitejs/vite/pull/15279
-        cachedChecks: true,
       },
     },
 
