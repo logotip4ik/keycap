@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
   if (isOriginMismatch)
     throw createError({ statusCode: 403 });
 
-  const body = await readBody<TypeOf<typeof loginSchema> & { browserAction?: unknown }>(event) || {};
+  const body = await readBody<TypeOf<typeof loginSchema>>(event) || {};
 
   if (body.email)
     body.email = body.email.trim();
