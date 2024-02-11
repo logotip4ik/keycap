@@ -1,7 +1,7 @@
 import { isCI } from 'std-env';
 import parseDuration from 'parse-duration';
 
-import type { HTTPMethod } from 'h3';
+import type { HTTPHeaderName, HTTPMethod } from 'h3';
 
 const SIX_MONTHS_IN_SECONDS = parseDuration('0.5 year', 'second')!;
 
@@ -14,7 +14,7 @@ export const corsHeaders = {
   'Access-Control-Allow-Methods': CorsMethods.join(', '),
   'Access-Control-Allow-Headers': CorsHeaders.join(', '),
   'Access-Control-Max-Age': parseDuration('24 hours', 's')?.toString(),
-} satisfies Record<string, string | undefined>;
+} satisfies HeaderObject;
 
 export const cspHeaders = {
   'Content-Security-Policy': [
@@ -24,10 +24,9 @@ export const cspHeaders = {
     'style-src \'self\' \'unsafe-inline\'',
     'object-src \'none\'',
     'frame-src https://challenges.cloudflare.com',
-    'require-trusted-types-for \'script\'',
     'upgrade-insecure-requests',
   ].join('; '),
-} satisfies Record<string, string>;
+} satisfies HeaderObject;
 
 // basically helmet defaults with some customizations
 export const defaultHeaders = {
@@ -47,7 +46,7 @@ export const defaultHeaders = {
   'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
   'Vary': 'Origin, Accept-Encoding, Accept, X-Requested-With, X-Authorized',
   ...(isCI ? cspHeaders : {}),
-} satisfies Record<string, string>;
+} satisfies HeaderObject;
 
 export interface NoteViewHeaderOptions {
   isr: number
@@ -56,6 +55,7 @@ export interface NoteViewHeaderOptions {
    */
   staleWhileRevalidate?: number
 }
+type HeaderObject = Partial<Record<HTTPHeaderName, string | undefined>>;
 export type HeadersType = 'default' | 'assets' | 'api' | 'api-info' | 'webmanifest';
 export type HeadersOptions = NoteViewHeaderOptions | unknown;
 
