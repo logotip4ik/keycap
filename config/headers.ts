@@ -20,9 +20,10 @@ export const cspHeaders: Record<string, string | undefined> = {
   'Content-Security-Policy': [
     'default-src \'self\'',
     'connect-src \'self\' https:',
-    'script-src \'self\' \'unsafe-inline\'',
+    'script-src \'self\' \'unsafe-inline\' https://challenges.cloudflare.com',
     'style-src \'self\' \'unsafe-inline\'',
     'object-src \'none\'',
+    'frame-src https://challenges.cloudflare.com',
     'upgrade-insecure-requests',
   ].join('; '),
 };
