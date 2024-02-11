@@ -5,6 +5,7 @@ import MonaSansURL from '~/assets/fonts/Mona-Sans/Mona-Sans.woff2?url';
 
 setupErrorLogging();
 
+const { site } = useRuntimeConfig().public;
 const userAgent = useRequestHeader('user-agent');
 
 const isSmallScreen = import.meta.server
@@ -33,20 +34,21 @@ useServerHead({
   ],
 });
 
-const { site } = useRuntimeConfig().public;
 const protocol = import.meta.prod ? 'https' : 'http';
-
 useServerSeoMeta({
   title: 'Keycap - Better Notes',
   ogTitle: 'Keycap - Better Notes',
+
   ogDescription: 'Better then just notes ❤. Synced between your devices, simple, fast and purple.',
   ogImage: `${protocol}://${site}/og-image.min.jpg`,
   ogImageWidth: 1200,
   ogImageHeight: 630,
   ogUrl: `${protocol}://${site}`,
+
   robots: { none: true },
   applicationName: 'Keycap',
   author: 'Bogdan Kostyuk',
+
   twitterCard: 'summary',
   twitterCreator: '@bogdankostyuk_',
   twitterImage: `${protocol}://${site}/og-image.min.jpg`,

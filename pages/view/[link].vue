@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const route = useRoute();
+const { site } = useRuntimeConfig().public;
 
 const { data: note, error } = await useAsyncData('share', async () => {
   // TODO: why res in unknown ?
@@ -15,27 +16,14 @@ if (error.value || !note.value) {
   });
 }
 
-if (import.meta.server) {
-  const { site } = useRuntimeConfig().public;
-  const protocol = import.meta.prod ? 'https' : 'http';
+const protocol = import.meta.prod ? 'https' : 'http';
+useServerSeoMeta({
+  title: `Note "${note.value.name}" - Keycap`,
 
-  useServerSeoMeta({
-    title: makeTitle(note.value.name),
-
-    ogTitle: makeTitle(note.value.name),
-    ogDescription: `View "${note.value.name}" on Keycap`,
-    ogUrl: `${protocol}://${site}${route.path}`,
-
-    twitterTitle: makeTitle(note.value.name),
-    twitterDescription: `View "${note.value.name}" on Keycap`,
-    twitterCard: 'summary_large_image',
-    twitterCreator: '@bogdankostyuk_',
-  });
-}
-
-function makeTitle(name: string) {
-  return `Note "${name}" - Keycap`;
-}
+  ogTitle: `Note "${note.value.name}" - Keycap`,
+  ogDescription: `View "${note.value.name}" on Keycap`,
+  ogUrl: `${protocol}://${site}${route.path}`,
+});
 </script>
 
 <template>
