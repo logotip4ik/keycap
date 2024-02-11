@@ -1,4 +1,4 @@
-import { isDevelopment, isProduction } from 'std-env';
+import { isCI } from 'std-env';
 import parseDuration from 'parse-duration';
 
 import type { HTTPMethod } from 'h3';
@@ -46,7 +46,7 @@ export const defaultHeaders = {
   'Referrer-Policy': 'origin-when-cross-origin, strict-origin-when-cross-origin',
   'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
   'Vary': 'Origin, Accept-Encoding, Accept, X-Requested-With, X-Authorized',
-  ...(isProduction ? cspHeaders : {}),
+  ...(isCI ? cspHeaders : {}),
 } satisfies Record<string, string>;
 
 export interface NoteViewHeaderOptions {
@@ -68,7 +68,7 @@ export function getHeaders(
 
   const headers = { };
 
-  if (isDevelopment)
+  if (!isCI)
     return headers;
 
   Object.assign(headers, defaultHeaders);
