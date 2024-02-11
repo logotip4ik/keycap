@@ -1,10 +1,7 @@
 export default defineEventHandler(async (event) => {
   const link = getRouterParam(event, 'link');
 
-  if (!link)
-    throw createError({ statusCode: 400 });
-
-  if (!isShareLinkValid(link))
+  if (!link || !isShareLinkValid(link))
     throw createError({ statusCode: 400 });
 
   const prisma = getPrisma();
