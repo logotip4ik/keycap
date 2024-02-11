@@ -9,14 +9,14 @@ export const CorsOrigin = process.env.NUXT_PUBLIC_SITE || '*';
 export const CorsMethods = ['GET', 'OPTIONS', 'PATCH', 'POST', 'DELETE'] satisfies Array<HTTPMethod>;
 export const CorsHeaders = ['Origin', 'Content-Type', 'Accept'];
 
-export const corsHeaders: Record<string, string | undefined> = {
+export const corsHeaders = {
   'Access-Control-Allow-Origin': CorsOrigin,
   'Access-Control-Allow-Methods': CorsMethods.join(', '),
   'Access-Control-Allow-Headers': CorsHeaders.join(', '),
   'Access-Control-Max-Age': parseDuration('24 hours', 's')?.toString(),
-};
+} satisfies Record<string, string | undefined>;
 
-export const cspHeaders: Record<string, string | undefined> = {
+export const cspHeaders = {
   'Content-Security-Policy': [
     'default-src \'self\'',
     'connect-src \'self\' https:',
@@ -24,12 +24,13 @@ export const cspHeaders: Record<string, string | undefined> = {
     'style-src \'self\' \'unsafe-inline\'',
     'object-src \'none\'',
     'frame-src https://challenges.cloudflare.com',
+    'require-trusted-types-for \'script\'',
     'upgrade-insecure-requests',
   ].join('; '),
-};
+} satisfies Record<string, string>;
 
 // basically helmet defaults with some customizations
-export const defaultHeaders: Record<string, string | undefined> = {
+export const defaultHeaders = {
   'Cross-Origin-Embedder-Policy': 'require-corp',
   'Cross-Origin-Opener-Policy': 'same-origin',
   'Cross-Origin-Resource-Policy': 'same-origin',
@@ -46,7 +47,7 @@ export const defaultHeaders: Record<string, string | undefined> = {
   'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
   'Vary': 'Origin, Accept-Encoding, Accept, X-Requested-With, X-Authorized',
   ...(isProduction ? cspHeaders : {}),
-};
+} satisfies Record<string, string>;
 
 export interface NoteViewHeaderOptions {
   isr: number
