@@ -1,6 +1,49 @@
 # Changelog
 
 
+## v3.9.8
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.9.7...v3.9.8)
+
+### 💅 Refactors
+
+- Rename sidebar composables and return object with visibility prop as sidebar state ([7c1e1e16](https://github.com/logotip4ik/keycap/commit/7c1e1e16))
+- Move get user recent to users file and rework caching ([2bc9c0cd](https://github.com/logotip4ik/keycap/commit/2bc9c0cd))
+- Mark username as taken after successfull registration ([a9b4a2ea](https://github.com/logotip4ik/keycap/commit/a9b4a2ea))
+- Better caching ([abf2d1cc](https://github.com/logotip4ik/keycap/commit/abf2d1cc))
+- Try using storage native ttl ([b1c3519e](https://github.com/logotip4ik/keycap/commit/b1c3519e))
+- Add turnstile captch verification for registeration with email and password ([cca60db5](https://github.com/logotip4ik/keycap/commit/cca60db5))
+
+### 🏡 Chore
+
+- **release:** V3.9.7 ([4da8480a](https://github.com/logotip4ik/keycap/commit/4da8480a))
+- Update deps ([5ecd57c8](https://github.com/logotip4ik/keycap/commit/5ecd57c8))
+- Fix typo ([2f309f1b](https://github.com/logotip4ik/keycap/commit/2f309f1b))
+- Explicitly tell that event is present ([b9276e49](https://github.com/logotip4ik/keycap/commit/b9276e49))
+- Rename user functions file to use singular name ([8f2e66b4](https://github.com/logotip4ik/keycap/commit/8f2e66b4))
+- Resolve vite to 5.1.0 ([8ee774b9](https://github.com/logotip4ik/keycap/commit/8ee774b9))
+- Enable some of vite 5.1 features ([4a47e361](https://github.com/logotip4ik/keycap/commit/4a47e361))
+- Use suretype to include browserAction as optional field in body ([e58619c5](https://github.com/logotip4ik/keycap/commit/e58619c5))
+- Add turnstile related runtime config ([6d395f60](https://github.com/logotip4ik/keycap/commit/6d395f60))
+- Update example env file ([5372034b](https://github.com/logotip4ik/keycap/commit/5372034b))
+- Add warning note for future me ([ec7544c9](https://github.com/logotip4ik/keycap/commit/ec7544c9))
+- Actually include nitro patch in lock file ([b4461913](https://github.com/logotip4ik/keycap/commit/b4461913))
+- Update package manager ([dca76322](https://github.com/logotip4ik/keycap/commit/dca76322))
+- Set moduleDetection to force ([d8fc9a60](https://github.com/logotip4ik/keycap/commit/d8fc9a60))
+- Remove not used option ([87cad4d9](https://github.com/logotip4ik/keycap/commit/87cad4d9))
+- Remove post install hook ([2a4269d2](https://github.com/logotip4ik/keycap/commit/2a4269d2))
+- Do not use whitespaces in logger names ([9a7d0b2c](https://github.com/logotip4ik/keycap/commit/9a7d0b2c))
+- Do not use large image for twitter card ([28143c35](https://github.com/logotip4ik/keycap/commit/28143c35))
+- Group if checks ([112eeceb](https://github.com/logotip4ik/keycap/commit/112eeceb))
+- Add turnstile to allowed csp origins ([6397c91a](https://github.com/logotip4ik/keycap/commit/6397c91a))
+- Add 'require-trusted-types' to csp config ([cd7dd3bf](https://github.com/logotip4ik/keycap/commit/cd7dd3bf))
+- Use ci to check for production or development ([7dd5a521](https://github.com/logotip4ik/keycap/commit/7dd5a521))
+- Add 'require-trusted-types' to csp config" ([fe4e83a3](https://github.com/logotip4ik/keycap/commit/fe4e83a3))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.9.7
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.9.6...v3.9.7)
