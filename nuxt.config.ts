@@ -118,9 +118,14 @@ export default defineNuxtConfig({
     public: {
       site: '',
 
-      oauthEnabled: false,
+      turnstile: {
+        siteKey: '',
+      },
 
-      turnstileSiteKey: '',
+      features: {
+        oauth: false,
+        turnstile: false,
+      },
 
       errors: {
         url: '',

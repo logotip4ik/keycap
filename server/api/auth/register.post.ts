@@ -28,9 +28,11 @@ export default defineEventHandler(async (event) => {
     });
   }
 
+  const { features } = useRuntimeConfig(event).public;
+
   const [usernameTaken, captchaValid] = await Promise.all([
     checkIfUsernameTaken(body.username),
-    validateTurnstileReponse(body['cf-turnstile-response']),
+    features.turnstile ? validateTurnstileReponse(body['cf-turnstile-response']) : true,
   ]);
 
   if (usernameTaken) {

@@ -1,4 +1,4 @@
-export async function validateTurnstileReponse(response: string) {
+export async function validateTurnstileReponse(response: string | undefined) {
   const { secret, endpoint } = useRuntimeConfig().turnstile;
 
   const validation = await $fetch<{ success: boolean }>(endpoint, {

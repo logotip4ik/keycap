@@ -7,7 +7,7 @@ definePageMeta({
   middleware: ['redirect-dashboard'],
 });
 
-const { oauthEnabled, turnstileSiteKey } = useRuntimeConfig().public;
+const { features, turnstile } = useRuntimeConfig().public;
 const user = useUser();
 const createToast = useToaster();
 
@@ -26,11 +26,10 @@ watch(
 );
 
 async function register() {
-  const data: Record<string, string | undefined> = {
-    'username': usernameComponent.value?.$el.value,
-    'email': emailComponent.value?.$el.value,
-    'password': passwordComponent.value?.$el.value,
-    'cf-turnstile-response': window.turnstile?.getResponse(),
+  const data: Record<string, string> = {
+    username: usernameComponent.value?.$el.value,
+    email: emailComponent.value?.$el.value,
+    password: passwordComponent.value?.$el.value,
   };
 
   if (!data.username || !data.email || !data.password) {
@@ -38,9 +37,15 @@ async function register() {
     return;
   }
 
-  if (!data['cf-turnstile-response']) {
-    createToast('Verification failed. Maybe try reloading the page ?');
-    return;
+  if (features.turnstile) {
+    const turnstileResponse = window.turnstile?.getResponse();
+
+    if (!turnstileResponse) {
+      createToast('Verification failed. Maybe try reloading the page ?');
+      return;
+    }
+
+    data['cf-turnstile-response'] = turnstileResponse;
   }
 
   isLoading.value = true;
@@ -65,7 +70,7 @@ async function register() {
 useHead({
   script: [
     {
-      src: 'https://challenges.cloudflare.com/turnstile/v0/api.js',
+      src: () => features.turnstile ? 'https://challenges.cloudflare.com/turnstile/v0/api.js' : undefined,
       async: true,
       defer: true,
     },
@@ -171,7 +176,7 @@ declare global {
           Start Keycaping
         </FormButton>
 
-        <template v-if="oauthEnabled">
+        <template v-if="features.oauth">
           <FormHr />
 
           <FormButtonSocial
@@ -184,8 +189,8 @@ declare global {
         </template>
       </FormItem>
 
-      <FormItem>
-        <div class="cf-turnstile" :data-sitekey="turnstileSiteKey" />
+      <FormItem v-if="features.turnstile">
+        <div class="cf-turnstile" :data-sitekey="turnstile.siteKey" />
       </FormItem>
     </Form>
   </main>
