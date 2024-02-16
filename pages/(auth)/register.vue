@@ -7,7 +7,10 @@ definePageMeta({
   middleware: ['redirect-dashboard'],
 });
 
-const { features, turnstile } = useRuntimeConfig().public;
+const oauthEnabled = import.meta.config.oauthEnabled;
+const turnstileEnabled = import.meta.config.turnstileEnabled;
+
+const { turnstile } = useRuntimeConfig().public;
 const user = useUser();
 const createToast = useToaster();
 
@@ -37,7 +40,7 @@ async function register() {
     return;
   }
 
-  if (features.turnstile) {
+  if (turnstileEnabled) {
     const turnstileResponse = window.turnstile?.getResponse();
 
     if (!turnstileResponse) {
@@ -67,15 +70,17 @@ async function register() {
     .finally(() => isLoading.value = false);
 }
 
-useHead({
-  script: [
-    {
-      src: () => features.turnstile ? 'https://challenges.cloudflare.com/turnstile/v0/api.js' : undefined,
-      async: true,
-      defer: true,
-    },
-  ],
-});
+if (turnstileEnabled) {
+  useHead({
+    script: [
+      {
+        src: 'https://challenges.cloudflare.com/turnstile/v0/api.js',
+        async: true,
+        defer: true,
+      },
+    ],
+  });
+}
 
 declare global {
   interface Window {
@@ -176,7 +181,7 @@ declare global {
           Start Keycaping
         </FormButton>
 
-        <template v-if="features.oauth">
+        <template v-if="oauthEnabled">
           <FormHr />
 
           <FormButtonSocial
@@ -189,7 +194,7 @@ declare global {
         </template>
       </FormItem>
 
-      <FormItem v-if="features.turnstile">
+      <FormItem v-if="turnstileEnabled">
         <div class="cf-turnstile" :data-sitekey="turnstile.siteKey" />
       </FormItem>
     </Form>

@@ -122,10 +122,7 @@ export default defineNuxtConfig({
         siteKey: '',
       },
 
-      features: {
-        oauth: false,
-        turnstile: false,
-      },
+      features: {},
 
       errors: {
         url: '',

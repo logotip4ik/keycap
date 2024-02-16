@@ -5,9 +5,9 @@ definePageMeta({
   middleware: ['redirect-dashboard'],
 });
 
-const { features } = useRuntimeConfig().public;
 const user = useUser();
 const createToast = useToaster();
+const oauthEnabled = import.meta.config.oauthEnabled;
 
 const emailComponent = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);
 const passwordComponent = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);
@@ -111,7 +111,7 @@ async function login() {
           Continue Keycaping
         </FormButton>
 
-        <template v-if="features.oauth">
+        <template v-if="oauthEnabled">
           <FormHr />
 
           <FormButtonSocial
