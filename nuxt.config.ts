@@ -8,6 +8,7 @@ import { prefixedConfig } from './config/build';
 import { getHeaders } from './config/headers';
 import { tsConfig } from './config/typescript';
 import { breakpoints, sidebarsBreakpoints } from './constants/breakpoints';
+import { inlinableStylesRE, nodeModulesRE } from './constants/build';
 import { ParseDurationTransformPlugin, parseDurationFunctionName } from './unplugin/parse-duration';
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
@@ -42,6 +43,15 @@ export default defineNuxtConfig({
     componentIslands: true,
     watcher: 'parcel',
     headNext: true,
+  },
+
+  features: {
+    inlineStyles: (id) => {
+      if (!id || nodeModulesRE.test(id))
+        return false;
+
+      return inlinableStylesRE.some((re) => re.test(id));
+    },
   },
 
   typescript: { tsConfig },
