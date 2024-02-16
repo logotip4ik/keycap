@@ -10,9 +10,9 @@ definePageMeta({
 const oauthEnabled = import.meta.config.oauthEnabled;
 const turnstileEnabled = import.meta.config.turnstileEnabled;
 
-const { turnstile } = useRuntimeConfig().public;
 const user = useUser();
 const createToast = useToaster();
+const { turnstile } = useRuntimeConfig().public;
 
 const usernameComponent = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);
 const emailComponent = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);

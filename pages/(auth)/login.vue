@@ -5,9 +5,10 @@ definePageMeta({
   middleware: ['redirect-dashboard'],
 });
 
+const oauthEnabled = import.meta.config.oauthEnabled;
+
 const user = useUser();
 const createToast = useToaster();
-const oauthEnabled = import.meta.config.oauthEnabled;
 
 const emailComponent = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);
 const passwordComponent = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);
