@@ -54,7 +54,6 @@ if (import.meta.client) {
   <WorkspaceSidebar
     ref="sidebar"
     name="toolbox"
-    class="toolbox"
     :state="toolboxVisibility"
     @update-state="updateState"
   >
@@ -79,11 +78,3 @@ if (import.meta.client) {
     <WorkspaceToolboxFooter />
   </WorkspaceSidebar>
 </template>
-
-<style lang="scss">
-@media (width > $sidebar-breakpoint-one) {
-  .toolbox {
-    width: calc(var(--sidebar-width) - var(--mr-x));
-  }
-}
-</style>
