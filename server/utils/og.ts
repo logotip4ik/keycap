@@ -10,12 +10,12 @@ export function getOgCacheKey(identifier: string, cacheName?: OgCacheName) {
   if (!identifier)
     throw new Error('unexpected empty username');
 
-  const usernameHash = sha256base64(identifier.trim());
+  const identifierHash = sha256base64(identifier.trim());
 
   if (!cacheName)
-    return usernameHash;
+    return identifierHash;
 
-  return `cache:${OG_CACHE_GROUP}:${cacheName}:${usernameHash}.json`;
+  return `cache:${OG_CACHE_GROUP}:${cacheName}:${identifierHash}.json`;
 }
 
 export const getNoteDetailsByLink = defineCachedFunction(getNoteDetailsByLink_, {
