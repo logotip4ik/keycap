@@ -1,0 +1,165 @@
+diff --git a/dist/shared.cjs.js b/dist/shared.cjs.js
+index c402ce8301cf68957eccde94cb2cfc1a9dd051b2..369f2a1045e16cc8e2764285899748ba4322f765 100644
+--- a/dist/shared.cjs.js
++++ b/dist/shared.cjs.js
+@@ -363,44 +363,13 @@ function isRenderableAttrValue(value) {
+   return type === "string" || type === "number" || type === "boolean";
+ }
+ 
+-const escapeRE = /["'&<>]/;
+ function escapeHtml(string) {
+-  const str = "" + string;
+-  const match = escapeRE.exec(str);
+-  if (!match) {
+-    return str;
+-  }
+-  let html = "";
+-  let escaped;
+-  let index;
+-  let lastIndex = 0;
+-  for (index = match.index; index < str.length; index++) {
+-    switch (str.charCodeAt(index)) {
+-      case 34:
+-        escaped = "&quot;";
+-        break;
+-      case 38:
+-        escaped = "&amp;";
+-        break;
+-      case 39:
+-        escaped = "&#39;";
+-        break;
+-      case 60:
+-        escaped = "&lt;";
+-        break;
+-      case 62:
+-        escaped = "&gt;";
+-        break;
+-      default:
+-        continue;
+-    }
+-    if (lastIndex !== index) {
+-      html += str.slice(lastIndex, index);
+-    }
+-    lastIndex = index + 1;
+-    html += escaped;
+-  }
+-  return lastIndex !== index ? html + str.slice(lastIndex, index) : html;
++  return string
++    .replaceAll('&', '&amp;')
++    .replaceAll('<', '&lt;')
++    .replaceAll('>', '&gt;')
++    .replaceAll("'", '&apos;')
++    .replaceAll('"', '&quot;');
+ }
+ const commentStripRE = /^-?>|<!--|-->|--!>|<!-$/g;
+ function escapeHtmlComment(src) {
+diff --git a/dist/shared.cjs.prod.js b/dist/shared.cjs.prod.js
+index cbd0099be2b3fdc4d9726fb5016b2647dfa8aeb4..9b06076f9e0d6b1b55cf842cb2ff47de36117504 100644
+--- a/dist/shared.cjs.prod.js
++++ b/dist/shared.cjs.prod.js
+@@ -363,44 +363,13 @@ function isRenderableAttrValue(value) {
+   return type === "string" || type === "number" || type === "boolean";
+ }
+ 
+-const escapeRE = /["'&<>]/;
+ function escapeHtml(string) {
+-  const str = "" + string;
+-  const match = escapeRE.exec(str);
+-  if (!match) {
+-    return str;
+-  }
+-  let html = "";
+-  let escaped;
+-  let index;
+-  let lastIndex = 0;
+-  for (index = match.index; index < str.length; index++) {
+-    switch (str.charCodeAt(index)) {
+-      case 34:
+-        escaped = "&quot;";
+-        break;
+-      case 38:
+-        escaped = "&amp;";
+-        break;
+-      case 39:
+-        escaped = "&#39;";
+-        break;
+-      case 60:
+-        escaped = "&lt;";
+-        break;
+-      case 62:
+-        escaped = "&gt;";
+-        break;
+-      default:
+-        continue;
+-    }
+-    if (lastIndex !== index) {
+-      html += str.slice(lastIndex, index);
+-    }
+-    lastIndex = index + 1;
+-    html += escaped;
+-  }
+-  return lastIndex !== index ? html + str.slice(lastIndex, index) : html;
++  return string
++    .replaceAll('&', '&amp;')
++    .replaceAll('<', '&lt;')
++    .replaceAll('>', '&gt;')
++    .replaceAll("'", '&apos;')
++    .replaceAll('"', '&quot;');
+ }
+ const commentStripRE = /^-?>|<!--|-->|--!>|<!-$/g;
+ function escapeHtmlComment(src) {
+diff --git a/dist/shared.esm-bundler.js b/dist/shared.esm-bundler.js
+index 55859447a898574056da540c6dd46671767bd7b1..eedc7035a51c23bd6e31f189f6e066797695c6a4 100644
+--- a/dist/shared.esm-bundler.js
++++ b/dist/shared.esm-bundler.js
+@@ -359,44 +359,13 @@ function isRenderableAttrValue(value) {
+   return type === "string" || type === "number" || type === "boolean";
+ }
+ 
+-const escapeRE = /["'&<>]/;
+ function escapeHtml(string) {
+-  const str = "" + string;
+-  const match = escapeRE.exec(str);
+-  if (!match) {
+-    return str;
+-  }
+-  let html = "";
+-  let escaped;
+-  let index;
+-  let lastIndex = 0;
+-  for (index = match.index; index < str.length; index++) {
+-    switch (str.charCodeAt(index)) {
+-      case 34:
+-        escaped = "&quot;";
+-        break;
+-      case 38:
+-        escaped = "&amp;";
+-        break;
+-      case 39:
+-        escaped = "&#39;";
+-        break;
+-      case 60:
+-        escaped = "&lt;";
+-        break;
+-      case 62:
+-        escaped = "&gt;";
+-        break;
+-      default:
+-        continue;
+-    }
+-    if (lastIndex !== index) {
+-      html += str.slice(lastIndex, index);
+-    }
+-    lastIndex = index + 1;
+-    html += escaped;
+-  }
+-  return lastIndex !== index ? html + str.slice(lastIndex, index) : html;
++  return string
++    .replaceAll('&', '&amp;')
++    .replaceAll('<', '&lt;')
++    .replaceAll('>', '&gt;')
++    .replaceAll("'", '&apos;')
++    .replaceAll('"', '&quot;');
+ }
+ const commentStripRE = /^-?>|<!--|-->|--!>|<!-$/g;
+ function escapeHtmlComment(src) {
