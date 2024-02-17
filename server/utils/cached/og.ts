@@ -8,7 +8,7 @@ export enum OgCacheName {
 
 export function getOgCacheKey(identifier: string, cacheName?: OgCacheName) {
   if (!identifier)
-    throw new Error('unexpected empty username');
+    throw new Error('unexpected empty identifier');
 
   const identifierHash = sha256base64(identifier.trim());
 
