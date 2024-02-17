@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const currentYear = new Date().getFullYear();
+const { build } = useRuntimeConfig().public;
 
 const links = [
   { href: '/logout', name: 'Log Out' },
@@ -27,7 +27,7 @@ function isRelative(url: string) {
         fetchpriority="low"
         loading="lazy"
       >
-      Keycap © {{ currentYear }}
+      Keycap © 2024 <span class="toolbox__footer__title__version">({{ build.version }})</span>
     </p>
 
     <ul class="toolbox__footer__links">
@@ -82,6 +82,10 @@ function isRelative(url: string) {
       opacity: 0.65;
 
       transform: translateY(-2%);
+    }
+
+    &__version {
+      margin-left: auto;
     }
   }
 
