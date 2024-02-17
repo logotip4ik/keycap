@@ -1,6 +1,6 @@
 const textLineRE = /\{\{line(\d)\}\}/g;
 // https://antfu.me/posts/break-lines-in-js
-const splitLineLengthRE = /(.{0,20})(?:\s|$)/g;
+const splitByLineLengthRE = /(.{0,20})(?:\s|$)/g;
 
 export default defineEventHandler(async (event) => {
   const link = getRouterParam(event, 'link');
@@ -25,17 +25,17 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  let nameLines = noteDetails.name.split(splitLineLengthRE).filter(Boolean);
+  let textLines = noteDetails.name.split(splitByLineLengthRE).filter(Boolean);
 
-  if (nameLines.length > 2) {
-    nameLines = nameLines.slice(0, 2);
-    nameLines[nameLines.length - 1] = `${nameLines.at(-1)}...`;
+  if (textLines.length > 2) {
+    textLines = textLines.slice(0, 2);
+    textLines[textLines.length - 1] = `${textLines.at(-1)}...`;
   }
 
   setResponseHeader(event, 'Content-Type', 'image/svg+xml');
 
   return image.replace(
     textLineRE,
-    (_, i) => nameLines[Number.parseInt(i) - 1] || '',
+    (_, i) => textLines[Number.parseInt(i) - 1] || '',
   );
 });
