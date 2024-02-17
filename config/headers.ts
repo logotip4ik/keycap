@@ -142,7 +142,7 @@ export function getHeaders(
         'Content-Security-Policy': [
           'default-src \'none\'',
           'style-src \'unsafe-inline\'',
-          'img-src data:',
+          'img-src \'self\' data:',
           'font-src data:',
           'upgrade-insecure-requests',
         ].join('; '),
