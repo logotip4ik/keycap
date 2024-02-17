@@ -1,4 +1,5 @@
 const textLineRE = /\{\{line(\d)\}\}/g;
+// https://antfu.me/posts/break-lines-in-js
 const splitLineLengthRE = /(.{0,20})(?:\s|$)/g;
 
 export default defineEventHandler(async (event) => {
@@ -17,8 +18,12 @@ export default defineEventHandler(async (event) => {
   if (!image)
     throw createError({ statusCode: 500 });
 
-  if (!noteDetails)
-    throw createError({ statusCode: 404, message: 'Seems like this link is expired' });
+  if (!noteDetails) {
+    throw createError({
+      statusCode: 404,
+      message: 'Seems like this link is expired',
+    });
+  }
 
   let nameLines = noteDetails.name.split(splitLineLengthRE).filter(Boolean);
 
