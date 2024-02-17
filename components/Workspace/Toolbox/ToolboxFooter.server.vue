@@ -27,7 +27,7 @@ function isRelative(url: string) {
         fetchpriority="low"
         loading="lazy"
       >
-      Keycap © 2024 <span class="toolbox__footer__title__version">({{ build.version }})</span>
+      Keycap © 2024 <span class="toolbox__footer__title__version">{{ build.version }}</span>
     </p>
 
     <ul class="toolbox__footer__links">
