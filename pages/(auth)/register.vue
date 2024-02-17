@@ -53,7 +53,7 @@ async function register() {
 
   isLoading.value = true;
 
-  preloadRouteComponents('/a');
+  preloadRouteComponents('/@a');
 
   $fetch('/api/auth/register', { method: 'POST', body: data })
     .then((res) => {
