@@ -23,7 +23,7 @@ export const cspHeaders = {
   'Content-Security-Policy': [
     'default-src \'self\'',
     'connect-src \'self\' https:',
-    `script-src 'self' 'unsafe-inline'${turnstileEnabled ? ' https://challenges.cloudflare.com' : ''}`,
+    `script-src 'self' 'unsafe-inline' ${turnstileEnabled ? 'https://challenges.cloudflare.com' : ''}`.trim(),
     'style-src \'self\' \'unsafe-inline\'',
     'object-src \'none\'',
     turnstileEnabled && 'frame-src https://challenges.cloudflare.com',
