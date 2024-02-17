@@ -1,7 +1,5 @@
 import { compile, v } from 'suretype';
 
-import { usernameRE } from '~/server/utils';
-
 export const usernameSchema = v
   .string()
   .matches(usernameRE)

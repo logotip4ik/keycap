@@ -1,4 +1,3 @@
-import { deleteCookie, getCookie, setCookie } from 'h3';
 import { SignJWT, jwtVerify } from 'jose';
 import { withoutProtocol } from 'ufo';
 

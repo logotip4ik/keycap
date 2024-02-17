@@ -1,7 +1,5 @@
 import { compile, v } from 'suretype';
 
-import { usernameSchema } from '~/server/utils/validators/user';
-
 export const jwtPayloadSchema = v.object({
   sub: v.string().matches(stringifiedBigIntRE).minLength(19).required(),
   email: v.string().format('email').required(),
