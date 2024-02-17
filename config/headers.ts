@@ -4,8 +4,6 @@ import parseDuration from 'parse-duration';
 
 import type { HTTPHeaderName, HTTPMethod } from 'h3';
 
-const SIX_MONTHS_IN_SECONDS = parseDuration('0.5 year', 'second')!;
-
 const turnstileEnabled = destr(process.env.FEATURE_TURNSTILE) === true;
 
 export const CorsOrigin = process.env.NUXT_PUBLIC_SITE || '*';
@@ -59,7 +57,7 @@ export interface NoteViewHeaderOptions {
   staleWhileRevalidate?: number
 }
 type HeaderObject = Partial<Record<HTTPHeaderName, string | undefined>>;
-export type HeadersType = 'default' | 'assets' | 'api' | 'api-info' | 'webmanifest';
+export type HeadersType = 'default' | 'assets' | 'api' | 'api-info' | 'webmanifest' | 'og';
 export type HeadersOptions = NoteViewHeaderOptions | unknown;
 
 export function getHeaders(
@@ -69,52 +67,90 @@ export function getHeaders(
     ? headersOptions.type
     : (headersOptions ?? 'default');
 
-  const headers = { };
+  const headers: HeaderObject = { };
 
   if (!isCI)
     return headers;
 
   Object.assign(headers, defaultHeaders);
 
-  if (type === 'assets') {
-    const assetsCacheOptions: CacheControlHeaderOptions = {
-      private: false,
-      immutable: true,
-      maxAge: SIX_MONTHS_IN_SECONDS,
-      staleWhileRevalidate: SIX_MONTHS_IN_SECONDS,
-    };
+  switch (type) {
+    case 'assets': {
+      const halfAYear = parseDuration('0.5 year', 'second')!;
 
-    Object.assign(headers, makeCacheControlHeader(assetsCacheOptions));
+      const assetsCacheOptions = {
+        private: false,
+        immutable: true,
+        maxAge: halfAYear,
+        staleWhileRevalidate: halfAYear,
+      } satisfies CacheControlHeaderOptions;
 
-    assetsCacheOptions.CDN = true;
+      Object.assign(headers, makeCacheControlHeader(assetsCacheOptions));
 
-    Object.assign(headers, makeCacheControlHeader(assetsCacheOptions));
-  }
+      Object.assign(headers, makeCacheControlHeader({
+        ...assetsCacheOptions,
+        CDN: true,
+      }));
 
-  else if (type === 'api') {
-    Object.assign(headers, corsHeaders);
-    Object.assign(headers, makeCacheControlHeader({
-      private: true,
-      maxAge: 1,
-    }));
-  }
+      break;
+    }
 
-  else if (type === 'api-info') {
-    Object.assign(headers, corsHeaders);
-    Object.assign(headers, makeCacheControlHeader({
-      private: false,
-      maxAge: parseDuration('1 hour', 'second')!,
-      staleWhileRevalidate: parseDuration('1 day', 'second')!,
-      CDN: true,
-    }));
-  }
+    case 'api': {
+      Object.assign(headers, corsHeaders);
+      Object.assign(headers, makeCacheControlHeader({
+        private: true,
+        maxAge: 1,
+      }));
 
-  else if (type === 'webmanifest') {
-    Object.assign(headers, makeCacheControlHeader({
-      private: true,
-      maxAge: 0,
-      mustRevalidate: true,
-    }));
+      break;
+    }
+
+    case 'api-info': {
+      Object.assign(headers, corsHeaders);
+      Object.assign(headers, makeCacheControlHeader({
+        private: false,
+        maxAge: parseDuration('1 hour', 'second')!,
+        staleWhileRevalidate: parseDuration('1 day', 'second')!,
+        CDN: true,
+      }));
+
+      break;
+    }
+
+    case 'webmanifest': {
+      Object.assign(headers, makeCacheControlHeader({
+        private: true,
+        maxAge: 0,
+        mustRevalidate: true,
+      }));
+
+      break;
+    }
+
+    case 'og': {
+      const ogCacheOptions = {
+        private: false,
+        immutable: true,
+        maxAge: parseDuration('1 week', 's')!,
+        staleWhileRevalidate: parseDuration('1 month', 's')!,
+      } satisfies CacheControlHeaderOptions;
+
+      Object.assign(headers, makeCacheControlHeader(ogCacheOptions));
+      Object.assign(headers, makeCacheControlHeader({
+        ...ogCacheOptions,
+        CDN: true,
+      }));
+
+      headers['Content-Security-Policy'] = [
+        'default-src \'none\'',
+        'style-src \'unsafe-inline\'',
+        'img-src \'self\' data:',
+        'font-src data:',
+        'upgrade-insecure-requests',
+      ].join('; ');
+
+      break;
+    }
   }
 
   return headers;

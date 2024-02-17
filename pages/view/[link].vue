@@ -23,6 +23,11 @@ useServerSeoMeta({
   ogTitle: `Note "${note.value.name}" - Keycap`,
   ogDescription: `View "${note.value.name}" on Keycap`,
   ogUrl: `${protocol}://${site}${route.path}`,
+  ogImage: `${protocol}://${site}/og${route.path}`,
+
+  twitterCard: 'summary_large_image',
+  twitterImage: `${protocol}://${site}/og${route.path}`,
+  twitterImageAlt: `Note "${note.value.name}" - Keycap`,
 });
 </script>
 

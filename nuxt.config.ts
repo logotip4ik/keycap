@@ -169,9 +169,12 @@ export default defineNuxtConfig({
       headers: getHeaders('api-info'),
     },
 
+    '/og/**': { headers: getHeaders('og') },
+
+    '/site.webmanifest': { headers: getHeaders('webmanifest') },
+
     // this would be great https://github.com/unjs/nitro/issues/603#issuecomment-1415826732
     '/view/**': { isr: parseDuration('15 minutes', 'second') },
-    '/site.webmanifest': { headers: getHeaders('webmanifest') },
 
     '/': { prerender: true },
     '/about': { prerender: true },
