@@ -36,6 +36,6 @@ export default defineEventHandler(async (event) => {
 
   return image.replace(
     textLineRE,
-    (_, i) => textLines[Number.parseInt(i) - 1] || '',
+    (_, i) => escapeHtml(textLines[Number.parseInt(i) - 1] || ''),
   );
 });
