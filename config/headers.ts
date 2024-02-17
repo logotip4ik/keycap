@@ -1,9 +1,12 @@
 import { isCI } from 'std-env';
+import { destr } from 'destr';
 import parseDuration from 'parse-duration';
 
 import type { HTTPHeaderName, HTTPMethod } from 'h3';
 
 const SIX_MONTHS_IN_SECONDS = parseDuration('0.5 year', 'second')!;
+
+const turnstileEnabled = destr(process.env.FEATURE_TURNSTILE) === true;
 
 export const CorsOrigin = process.env.NUXT_PUBLIC_SITE || '*';
 export const CorsMethods = ['GET', 'OPTIONS', 'PATCH', 'POST', 'DELETE'] satisfies Array<HTTPMethod>;
@@ -20,12 +23,12 @@ export const cspHeaders = {
   'Content-Security-Policy': [
     'default-src \'self\'',
     'connect-src \'self\' https:',
-    'script-src \'self\' \'unsafe-inline\' https://challenges.cloudflare.com',
+    `script-src 'self' 'unsafe-inline'${turnstileEnabled ? ' https://challenges.cloudflare.com' : ''}`,
     'style-src \'self\' \'unsafe-inline\'',
     'object-src \'none\'',
-    'frame-src https://challenges.cloudflare.com',
+    turnstileEnabled && 'frame-src https://challenges.cloudflare.com',
     'upgrade-insecure-requests',
-  ].join('; '),
+  ].filter(Boolean).join('; '),
 } satisfies HeaderObject;
 
 // basically helmet defaults with some customizations
