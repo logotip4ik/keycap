@@ -51,9 +51,7 @@ export const defaultHeaders = {
 
 export interface NoteViewHeaderOptions {
   isr: number
-  /**
-   * @default isr
-   */
+  /** @default isr */
   staleWhileRevalidate?: number
 }
 type HeaderObject = Partial<Record<HTTPHeaderName, string | undefined>>;
