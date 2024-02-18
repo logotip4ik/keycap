@@ -15,6 +15,7 @@ function addItem(item: FuzzyItem) {
   itemsCache.set(identifier, item);
 }
 
+const arrayWithString = [''];
 function search(query: string, resultsCount = DEFAULT_RESULTS_COUNT): Array<FuzzyItem | CommandItem> {
   // See https://stackblitz.com/edit/node-ezlzug?file=index.js&view=editor and run `node index.js`
   // but in `real world`? fuzzaldrin was a bit slower plus had much more bigger bundle footprint
@@ -22,7 +23,7 @@ function search(query: string, resultsCount = DEFAULT_RESULTS_COUNT): Array<Fuzz
   const isCommand = query[0] === '/';
 
   if (isCommand)
-    query = (query.match(/\w+/) || [''])[0];
+    query = (query.match(/\w+/) || arrayWithString)[0];
 
   const results = [];
   const cache = isCommand ? commandsCache : itemsCache;
