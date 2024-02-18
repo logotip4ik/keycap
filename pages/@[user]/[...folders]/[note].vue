@@ -139,7 +139,7 @@ if (import.meta.client) {
       refresh();
   });
 
-  // MDN: Indicates if the document is loading from a cache
+  // MDN: `event.persisted` indicates if the document is loading from a cache
   const offPageShow = on(window, 'pageshow', (event) => event.persisted && refresh());
 
   onBeforeUnmount(() => {
