@@ -5,8 +5,6 @@ import colors from 'picocolors';
 import { version } from '../package.json';
 import { KeyPrefix, createKey } from '../utils/keys';
 
-import type { BuildInfo, PrivateBuildInfo } from '~/types';
-
 export default defineNuxtModule({
   meta: {
     name: 'build-env',
@@ -19,20 +17,18 @@ export default defineNuxtModule({
 
     const commit = await getCommitSha();
 
-    const buildInfo: BuildInfo = {
+    const uniqueBuildId = createKey(KeyPrefix.Build);
+    nuxt.options.runtimeConfig.build = {
+      id: uniqueBuildId,
+    };
+
+    nuxt.options.runtimeConfig.public.build = {
       time: Date.now(),
       commit,
       version: `v${version}`,
     };
 
-    const privateBuildInfo: PrivateBuildInfo = {
-      id: createKey(KeyPrefix.Build),
-    };
-
-    nuxt.options.runtimeConfig.build = privateBuildInfo;
-    nuxt.options.runtimeConfig.public.build = buildInfo;
-
-    logger.info(`Unique build.id: ${colors.bold(colors.cyan(privateBuildInfo.id))}`);
+    logger.info(`Unique build.id: ${colors.bold(colors.cyan(uniqueBuildId))}`);
   },
 });
 
