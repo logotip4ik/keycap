@@ -1,9 +1,13 @@
 import LRUCache from 'hashlru';
 
+import type { Serialize } from 'nitropack';
 import type { Remote } from 'comlink';
+
+import type { SafeUser } from '~/types/server';
 
 export const useCurrentItemForDetails = () => useState<FolderOrNote | null>(() => null);
 export const useRootFolderContents = () => useState<FolderWithContents | null>(() => null);
+export const useUser = () => useState<Serialize<SafeUser> | null>('user', () => null);
 
 const notesCache = LRUCache(100);
 export const useNotesCache = () => notesCache;
