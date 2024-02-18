@@ -43,33 +43,11 @@ export async function defineFuzzyWorker() {
   }
 }
 
-export function getOfflineStorage() {
-  const createToast = useToaster();
-  const isFallbackMode = useFallbackMode();
-
-  const offlineStorage = {
+export function getOfflineStorage(): OfflineStorage {
+  return {
     setItem: set,
     getItem: get,
     removeItem: del,
     getAllItems: values,
   };
-
-  let fallbackToast: ReturnType<typeof createToast>;
-
-  watch(isFallbackMode, async (value) => {
-    if (!value) {
-      fallbackToast?.remove();
-      return;
-    }
-
-    if (!fallbackToast)
-      fallbackToast = createToast('Fallback mode enabled. Populating cache from offline storage.');
-
-    // We previously were populating user cache from offline storage
-    // but, now folder or note will try fetching it's contents from
-    // cache then from offline storage, so there is no need to do
-    // population ahead of time
-  }, { immediate: true });
-
-  return offlineStorage;
 }
