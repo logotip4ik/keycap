@@ -22,5 +22,5 @@ export function parseUA(userAgent: string): DeviceInfo {
   return {
     isFirefox: isFirefox(userAgent),
     isMobileOrTablet: isMobileOrTablet(userAgent),
-  } satisfies DeviceInfo;
+  };
 }
