@@ -125,12 +125,6 @@ async function handleError(error: Error) {
   note.value = offlineNote as NoteWithContent;
 }
 
-// User is already at latest change of current note
-// mitt.on('cache:populated', () => {
-//   if (!note.value)
-//     note.value = notesCache.get(notePath.value) || null;
-// });
-
 mitt.on('details:show', () => {
   if (note.value)
     // @ts-expect-error it will be okeeeeeey

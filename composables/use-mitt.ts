@@ -3,7 +3,6 @@ import mitt, { type Emitter } from 'mitt';
 // eslint-disable-next-line ts/consistent-type-definitions
 type Events = {
   'save:note'?: Partial<{ force: boolean }>
-  'cache:populated'?: Partial<object>
   'details:show'?: Partial<object>
   'search:show'?: Partial<object>
 };

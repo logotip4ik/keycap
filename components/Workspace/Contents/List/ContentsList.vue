@@ -9,7 +9,6 @@ const isFallbackMode = useFallbackMode();
 const foldersCache = useFoldersCache();
 const offlineStorage = useOfflineStorage();
 const createToast = useToaster();
-const mitt = useMitt();
 const user = useUser();
 const { shortcuts } = useAppConfig();
 
@@ -147,11 +146,6 @@ watch(() => props.state, (state, oldState) => {
   )
     return refresh();
 }, { immediate: import.meta.client });
-
-// User is already at latest change of current note
-// mitt.on('cache:populated', () => {
-//   folder.value = foldersCache.get(folderPath.value) || null;
-// });
 
 // TODO: rework details trigger ?
 // mitt.on('details:show', () => {
