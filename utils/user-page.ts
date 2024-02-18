@@ -4,8 +4,6 @@ import { wrap as comlink } from 'comlink';
 import type { Remote } from 'comlink';
 
 export function preloadDashboardComponents() {
-  prefetchComponents('WorkspaceSearch');
-
   const blankNotePath = `/@a/${BLANK_NOTE_NAME}`;
   preloadRouteComponents(blankNotePath);
 }

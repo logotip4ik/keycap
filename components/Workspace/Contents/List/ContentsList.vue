@@ -181,19 +181,6 @@ useTinykeys({
   },
 });
 
-onMounted(() => {
-  setTimeout(() => {
-    requestIdleCallback(() => {
-      // Do we need this, if service worker already should have cached this items ?
-      preloadComponents([
-        'ContentsListItem',
-        'ContentsListItemInput',
-        'ContentsListMenu',
-      ]);
-    });
-  }, 550);
-});
-
 if (import.meta.client) {
   const offVisibilityChange = on(document, 'visibilitychange', () => {
     const timeDiff = Date.now() - (lastRefetch || 0);
