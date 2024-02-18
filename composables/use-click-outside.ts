@@ -2,16 +2,16 @@ export function useClickOutside(target: Ref<HTMLElement | null | undefined>, cal
   if (import.meta.server)
     return;
 
-  const listener = (event: MouseEvent) => {
+  function listener(event: MouseEvent) {
     if (!target.value?.contains(event.target as HTMLElement))
       callback(event);
-  };
+  }
 
   const cleanups: Array<() => void> = [];
-  const cleanup = () => {
+  function cleanup() {
     invokeArrayFns(cleanups);
     cleanups.length = 0;
-  };
+  }
 
   const stopWatch = watch(target, (target) => {
     cleanup();
@@ -25,10 +25,10 @@ export function useClickOutside(target: Ref<HTMLElement | null | undefined>, cal
     );
   }, { immediate: true, flush: 'post' });
 
-  const stop = () => {
+  function stop() {
     stopWatch();
     cleanup();
-  };
+  }
 
   onScopeDispose(stop);
 
