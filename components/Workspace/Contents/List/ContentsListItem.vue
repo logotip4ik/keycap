@@ -7,7 +7,7 @@ const props = defineProps<{
   onShouldHideSidebar: () => void
 }>();
 
-const isFolder = 'root' in props.item;
+const isFolder = checkIsFolder(props.item);
 
 const route = useRoute();
 const { visibility: contentsVisibility } = useContentsSidebar();

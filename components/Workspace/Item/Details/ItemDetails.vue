@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const props = defineProps<{ item: NoteMinimal }>();
+const props = defineProps<{ item: NoteMinimal | FolderMinimal }>();
 
 const currentItemForDetails = useCurrentItemForDetails();
 const createToast = useToaster();
@@ -10,7 +10,7 @@ const itemDetailsEl = computed(() => itemDetailsComp.value?.$el as HTMLElement |
 
 const path = props.item.path.split('/').slice(2).join('/');
 
-const isFolder = 'root' in props.item;
+const isFolder = checkIsFolder(props.item);
 
 type ItemDetails = Prettify<ItemMetadata & Partial<NoteShare>>;
 

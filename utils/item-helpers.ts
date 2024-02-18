@@ -3,12 +3,15 @@ import escapeRE from 'escape-string-regexp';
 import type { RouteLocationRaw } from 'vue-router';
 import type { NavigateToOptions } from '#app/composables/router';
 
+export function checkIsFolder(item: Record<string, unknown>): item is FolderWithContents {
+  return 'root' in item;
+}
+
 type ItemWithPath = Record<string, unknown> & { root?: boolean, path: string };
 export function generateItemPath(item: ItemWithPath): RouteLocationRaw {
-  const isFolder = 'root' in item;
   let path = item.path.replace('/', '/@');
 
-  if (isFolder)
+  if (checkIsFolder(item))
     path += `/${BLANK_NOTE_NAME}`;
 
   return path;
@@ -138,7 +141,7 @@ export async function renameFolder(newName: string, self: FolderOrNote) {
     const itemsToRename = folder.notes.concat(folder.subfolders);
 
     for (const item of itemsToRename) {
-      const cache = 'root' in item ? foldersCache : notesCache;
+      const cache = checkIsFolder(item) ? foldersCache : notesCache;
 
       cache.remove(item.path);
       offlineStorage.removeItem?.(item.path);
@@ -241,7 +244,7 @@ export async function deleteFolder(self: FolderOrNote, parent: FolderWithContent
 
 // NOTE: Refactor all functions above to use this approach ?
 export async function preloadItem(self: FolderOrNote) {
-  const isFolder = 'root' in self;
+  const isFolder = checkIsFolder(self);
 
   const currentFolderPath = getCurrentFolderPath();
   const pathPrefix = isFolder ? 'folder' : 'note';

@@ -12,7 +12,7 @@ const inputEl = shallowRef<HTMLInputElement | null>(null);
 const name = ref(props.item.name || '');
 const isLoading = ref(false);
 
-const isFolder = 'root' in props.item;
+const isFolder = checkIsFolder(props.item);
 const placeholder = props.item.creating
   ? 'note or folder/'
   : isFolder
