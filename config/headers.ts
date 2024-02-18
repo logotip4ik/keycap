@@ -86,7 +86,6 @@ export function getHeaders(
       } satisfies CacheControlHeaderOptions;
 
       Object.assign(headers, makeCacheControlHeader(assetsCacheOptions));
-
       Object.assign(headers, makeCacheControlHeader({
         ...assetsCacheOptions,
         CDN: true,
