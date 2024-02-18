@@ -20,7 +20,7 @@ export default defineNuxtModule({
     const commit = await getCommitSha();
 
     const buildInfo: BuildInfo = {
-      time: +Date.now(),
+      time: Date.now(),
       commit,
       version: `v${version}`,
     };
