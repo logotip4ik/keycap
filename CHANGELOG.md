@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v3.10.2
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.10.1...v3.10.2)
+
+### 🩹 Fixes
+
+- Allow cross origin requests for og images ([a06d3332](https://github.com/logotip4ik/keycap/commit/a06d3332))
+
+### 🏡 Chore
+
+- **release:** V3.10.1 ([18648f77](https://github.com/logotip4ik/keycap/commit/18648f77))
+- Apply faster html escape with string check ([0a672862](https://github.com/logotip4ik/keycap/commit/0a672862))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.10.1
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.10.0...v3.10.1)
