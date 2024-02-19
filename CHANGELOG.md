@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.10.1
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.10.0...v3.10.1)
+
+### 🩹 Fixes
+
+- Remove vue/shared patch ([749f4da2](https://github.com/logotip4ik/keycap/commit/749f4da2))
+
+### 🏡 Chore
+
+- **release:** V3.10.0 ([1d970cd1](https://github.com/logotip4ik/keycap/commit/1d970cd1))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.10.0
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.9.8...v3.10.0)
