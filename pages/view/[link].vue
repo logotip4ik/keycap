@@ -18,16 +18,15 @@ if (error.value || !note.value) {
 
 const protocol = import.meta.prod ? 'https' : 'http';
 useServerSeoMeta({
-  title: `Note "${note.value.name}" - Keycap`,
+  title: `View on Keycap - ${note.value.name}`,
 
-  ogTitle: `Note "${note.value.name}" - Keycap`,
-  ogDescription: `View "${note.value.name}" on Keycap`,
+  ogTitle: `View on Keycap - ${note.value.name}`,
   ogUrl: `${protocol}://${site}${route.path}`,
   ogImage: `${protocol}://${site}/og${route.path}`,
 
   twitterCard: 'summary_large_image',
   twitterImage: `${protocol}://${site}/og${route.path}`,
-  twitterImageAlt: `Note "${note.value.name}" - Keycap`,
+  twitterImageAlt: `${note.value.name} - Keycap`,
 });
 </script>
 
