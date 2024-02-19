@@ -1,5 +1,5 @@
 diff --git a/dist/shared.cjs.js b/dist/shared.cjs.js
-index c402ce8301cf68957eccde94cb2cfc1a9dd051b2..369f2a1045e16cc8e2764285899748ba4322f765 100644
+index c402ce8301cf68957eccde94cb2cfc1a9dd051b2..14e7cbe4827dc849c675dada079c1ec1747cb849 100644
 --- a/dist/shared.cjs.js
 +++ b/dist/shared.cjs.js
 @@ -363,44 +363,13 @@ function isRenderableAttrValue(value) {
@@ -7,7 +7,7 @@ index c402ce8301cf68957eccde94cb2cfc1a9dd051b2..369f2a1045e16cc8e2764285899748ba
  }
  
 -const escapeRE = /["'&<>]/;
- function escapeHtml(string) {
+-function escapeHtml(string) {
 -  const str = "" + string;
 -  const match = escapeRE.exec(str);
 -  if (!match) {
@@ -44,8 +44,9 @@ index c402ce8301cf68957eccde94cb2cfc1a9dd051b2..369f2a1045e16cc8e2764285899748ba
 -    html += escaped;
 -  }
 -  return lastIndex !== index ? html + str.slice(lastIndex, index) : html;
-+  return string
-+    .replaceAll('&', '&amp;')
++function escapeHtml(s) {
++  const v = typeof s === 'string' ? s : s.toString();
++  return v.replaceAll('&', '&amp;')
 +    .replaceAll('<', '&lt;')
 +    .replaceAll('>', '&gt;')
 +    .replaceAll("'", '&apos;')
@@ -54,7 +55,7 @@ index c402ce8301cf68957eccde94cb2cfc1a9dd051b2..369f2a1045e16cc8e2764285899748ba
  const commentStripRE = /^-?>|<!--|-->|--!>|<!-$/g;
  function escapeHtmlComment(src) {
 diff --git a/dist/shared.cjs.prod.js b/dist/shared.cjs.prod.js
-index cbd0099be2b3fdc4d9726fb5016b2647dfa8aeb4..9b06076f9e0d6b1b55cf842cb2ff47de36117504 100644
+index cbd0099be2b3fdc4d9726fb5016b2647dfa8aeb4..3962368592cb95443275af7ea4c16ff79021b89d 100644
 --- a/dist/shared.cjs.prod.js
 +++ b/dist/shared.cjs.prod.js
 @@ -363,44 +363,13 @@ function isRenderableAttrValue(value) {
@@ -62,7 +63,7 @@ index cbd0099be2b3fdc4d9726fb5016b2647dfa8aeb4..9b06076f9e0d6b1b55cf842cb2ff47de
  }
  
 -const escapeRE = /["'&<>]/;
- function escapeHtml(string) {
+-function escapeHtml(string) {
 -  const str = "" + string;
 -  const match = escapeRE.exec(str);
 -  if (!match) {
@@ -99,8 +100,9 @@ index cbd0099be2b3fdc4d9726fb5016b2647dfa8aeb4..9b06076f9e0d6b1b55cf842cb2ff47de
 -    html += escaped;
 -  }
 -  return lastIndex !== index ? html + str.slice(lastIndex, index) : html;
-+  return string
-+    .replaceAll('&', '&amp;')
++function escapeHtml(s) {
++  const v = typeof s === 'string' ? s : s.toString();
++  return v.replaceAll('&', '&amp;')
 +    .replaceAll('<', '&lt;')
 +    .replaceAll('>', '&gt;')
 +    .replaceAll("'", '&apos;')
@@ -109,7 +111,7 @@ index cbd0099be2b3fdc4d9726fb5016b2647dfa8aeb4..9b06076f9e0d6b1b55cf842cb2ff47de
  const commentStripRE = /^-?>|<!--|-->|--!>|<!-$/g;
  function escapeHtmlComment(src) {
 diff --git a/dist/shared.esm-bundler.js b/dist/shared.esm-bundler.js
-index 55859447a898574056da540c6dd46671767bd7b1..eedc7035a51c23bd6e31f189f6e066797695c6a4 100644
+index 55859447a898574056da540c6dd46671767bd7b1..50ed087c5266497c7d5fda39c7054c301b03ee44 100644
 --- a/dist/shared.esm-bundler.js
 +++ b/dist/shared.esm-bundler.js
 @@ -359,44 +359,13 @@ function isRenderableAttrValue(value) {
@@ -117,7 +119,7 @@ index 55859447a898574056da540c6dd46671767bd7b1..eedc7035a51c23bd6e31f189f6e06679
  }
  
 -const escapeRE = /["'&<>]/;
- function escapeHtml(string) {
+-function escapeHtml(string) {
 -  const str = "" + string;
 -  const match = escapeRE.exec(str);
 -  if (!match) {
@@ -154,8 +156,9 @@ index 55859447a898574056da540c6dd46671767bd7b1..eedc7035a51c23bd6e31f189f6e06679
 -    html += escaped;
 -  }
 -  return lastIndex !== index ? html + str.slice(lastIndex, index) : html;
-+  return string
-+    .replaceAll('&', '&amp;')
++function escapeHtml(s) {
++  const v = typeof s === 'string' ? s : s.toString();
++  return v.replaceAll('&', '&amp;')
 +    .replaceAll('<', '&lt;')
 +    .replaceAll('>', '&gt;')
 +    .replaceAll("'", '&apos;')
