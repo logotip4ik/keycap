@@ -138,6 +138,7 @@ export function getHeaders(
         CDN: true,
       }));
 
+      headers['Cross-Origin-Resource-Policy'] = 'cross-origin';
       headers['Content-Security-Policy'] = [
         'default-src \'none\'',
         'style-src \'unsafe-inline\'',
