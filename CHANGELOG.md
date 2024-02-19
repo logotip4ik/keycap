@@ -1,6 +1,65 @@
 # Changelog
 
 
+## v3.10.0
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.9.8...v3.10.0)
+
+### 🚀 Enhancements
+
+- View og image ([#18](https://github.com/logotip4ik/keycap/pull/18))
+
+### 🩹 Fixes
+
+- Correct preloading link ([868809c3](https://github.com/logotip4ik/keycap/commit/868809c3))
+
+### 💅 Refactors
+
+- Allow marking oauth and turnstile as feature flags ([c0443a0f](https://github.com/logotip4ik/keycap/commit/c0443a0f))
+- Move current features to build time flags ([cf1a80b4](https://github.com/logotip4ik/keycap/commit/cf1a80b4))
+- Move feature flags to build time flags ([fd800edc](https://github.com/logotip4ik/keycap/commit/fd800edc))
+- Do not add turnstile host to csp if turnstile is not enabled ([c1ae217e](https://github.com/logotip4ik/keycap/commit/c1ae217e))
+- Show build version in toolbox and remove dynamic copyright year ([13f18ba9](https://github.com/logotip4ik/keycap/commit/13f18ba9))
+- Do not change toolbox width ([7470eec8](https://github.com/logotip4ik/keycap/commit/7470eec8))
+
+### 🏡 Chore
+
+- **release:** V3.9.8 ([3fde3f06](https://github.com/logotip4ik/keycap/commit/3fde3f06))
+- Inline only some of styles ([cfc58e7a](https://github.com/logotip4ik/keycap/commit/cfc58e7a))
+- Update deps ([125afe4f](https://github.com/logotip4ik/keycap/commit/125afe4f))
+- Remove not needed imports ([29dfc6db](https://github.com/logotip4ik/keycap/commit/29dfc6db))
+- Remove braces from version ([e9588815](https://github.com/logotip4ik/keycap/commit/e9588815))
+- Patch `@vue/shared` with faster html escaping ([ad454b54](https://github.com/logotip4ik/keycap/commit/ad454b54))
+- Remove component preloading ([2dbbbec7](https://github.com/logotip4ik/keycap/commit/2dbbbec7))
+- Move useUser composable to store ([d9975c92](https://github.com/logotip4ik/keycap/commit/d9975c92))
+- Remove not used composable ([c20a8f78](https://github.com/logotip4ik/keycap/commit/c20a8f78))
+- Better description wording ([64be6b98](https://github.com/logotip4ik/keycap/commit/64be6b98))
+- Use normal functions instead of arrow ([6251eecd](https://github.com/logotip4ik/keycap/commit/6251eecd))
+- Remove not used mock ([ad94b7d6](https://github.com/logotip4ik/keycap/commit/ad94b7d6))
+- Remove not needed number conversion ([691ef89f](https://github.com/logotip4ik/keycap/commit/691ef89f))
+- Do not update folder and note after cache population ([911d16f0](https://github.com/logotip4ik/keycap/commit/911d16f0))
+- Remove cache population from offline storage in fallback mode ([dca7a438](https://github.com/logotip4ik/keycap/commit/dca7a438))
+- Better description wording ([37cd4624](https://github.com/logotip4ik/keycap/commit/37cd4624))
+- Do not show fallback message and return offlineStorage directly ([effb6204](https://github.com/logotip4ik/keycap/commit/effb6204))
+- Remove another object type check ([d53b5ef9](https://github.com/logotip4ik/keycap/commit/d53b5ef9))
+- Export check for folder object into function ([fa3608f4](https://github.com/logotip4ik/keycap/commit/fa3608f4))
+- Do not iterate over empty string ([27dd164e](https://github.com/logotip4ik/keycap/commit/27dd164e))
+- Hoist static array ([177f0645](https://github.com/logotip4ik/keycap/commit/177f0645))
+- Enable ts `isolatedModules` ([d331e494](https://github.com/logotip4ik/keycap/commit/d331e494))
+- Add import for tests to pass ([89ff9dbc](https://github.com/logotip4ik/keycap/commit/89ff9dbc))
+- Run nuxt prepare before testing ([88654fb2](https://github.com/logotip4ik/keycap/commit/88654fb2))
+
+### 🎨 Styles
+
+- Add space after rule ([8b3af1b6](https://github.com/logotip4ik/keycap/commit/8b3af1b6))
+- Remove blank line ([62aaedd8](https://github.com/logotip4ik/keycap/commit/62aaedd8))
+- Oneline jsdoc ([c23471cb](https://github.com/logotip4ik/keycap/commit/c23471cb))
+- Directly assign runtime config values ([03ac995c](https://github.com/logotip4ik/keycap/commit/03ac995c))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.9.8
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.9.7...v3.9.8)
