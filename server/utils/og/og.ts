@@ -1,15 +1,27 @@
+import { join } from 'pathe';
+
 import type { ResvgRenderOptions } from '@resvg/resvg-js';
 
+// @ts-expect-error virtual file
+import { publicPath } from '#resolved-paths';
+
 const resvgOptions = {
-  fitTo: { mode: 'original' },
-  font: { loadSystemFonts: false },
   logLevel: import.meta.dev ? 'info' : 'off',
+  fitTo: { mode: 'original' },
+  font: {
+    loadSystemFonts: false,
+    fontFiles: [
+      join(publicPath, 'MonaSans-Regular.ttf'),
+    ],
+  },
 } satisfies ResvgRenderOptions;
 
 export async function generatePngFromSvg(svg: string) {
   const { renderAsync } = await import('@resvg/resvg-js');
 
-  return await renderAsync(svg, resvgOptions);
+  const image = await renderAsync(svg, resvgOptions);
+
+  return image.asPng();
 }
 
 export type TemplateName = 'view';
