@@ -217,10 +217,12 @@ export default defineNuxtConfig({
         '**/unplugin/**',
       );
 
-      // minifies service worker
       if (isDevelopment)
         return;
 
+      delete nitro.options.storage.data;
+
+      // minifies service worker
       const terserPromise = import('terser');
       const fspPromise = import('node:fs/promises');
 
