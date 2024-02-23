@@ -279,6 +279,9 @@ export default defineNuxtConfig({
 
       rollupOptions: {
         treeshake: 'recommended',
+        output: {
+          generatedCode: 'es2015',
+        },
       },
     },
 
@@ -337,6 +340,12 @@ export default defineNuxtConfig({
       'process.env.NODE_ENV': JSON.stringify(nodeENV),
 
       ...prefixedConfig,
+    },
+
+    rollupConfig: {
+      output: {
+        generatedCode: 'es2015',
+      },
     },
 
     imports: {
