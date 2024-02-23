@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <main v-once class="index">
+  <div class="index">
     <!-- TODO: actually craft landing page -->
 
     <NavLogin />
@@ -10,7 +10,7 @@
     <PagesIndexHero />
 
     <PagesIndexBuildInfo />
-  </main>
+  </div>
 </template>
 
 <style lang="scss">
