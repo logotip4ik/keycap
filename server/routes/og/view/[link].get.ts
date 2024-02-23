@@ -2,6 +2,7 @@ const textLineRE = /\{\{line(\d)\}\}/g;
 // https://antfu.me/posts/break-lines-in-js
 const splitByLineLengthRE = /(.{0,20})(?:\s|$)/g;
 
+let _svgTemplate: string | undefined;
 export default defineEventHandler(async (event) => {
   const link = getRouterParam(event, 'link');
 
@@ -10,12 +11,12 @@ export default defineEventHandler(async (event) => {
 
   const storage = useStorage('assets:server');
 
-  const [image, noteDetails] = await Promise.all([
-    storage.getItem<string>('view-og-image.svg'),
+  const [svgTemplate, noteDetails] = await Promise.all([
+    _svgTemplate || storage.getItem<string>('view-og-image.svg'),
     getNoteDetailsByLink(link),
   ]);
 
-  if (!image)
+  if (!svgTemplate)
     throw createError({ statusCode: 500 });
 
   if (!noteDetails) {
@@ -24,6 +25,10 @@ export default defineEventHandler(async (event) => {
       message: 'Seems like this link is expired',
     });
   }
+
+  // cache template as it is not gonna change
+  if (!_svgTemplate)
+    _svgTemplate = svgTemplate;
 
   let textLines = noteDetails.name.split(splitByLineLengthRE).filter(Boolean);
 
@@ -34,7 +39,7 @@ export default defineEventHandler(async (event) => {
 
   setResponseHeader(event, 'Content-Type', 'image/svg+xml');
 
-  return image.replace(
+  return svgTemplate.replace(
     textLineRE,
     (_, i) => {
       const text = textLines[Number.parseInt(i) - 1];
