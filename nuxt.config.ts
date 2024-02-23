@@ -382,13 +382,13 @@ export default defineNuxtConfig({
       },
     },
 
-    storage: {
+    storage: isCI ? { // eslint-disable-line style/multiline-ternary
       cache: {
         driver: 'redis',
         url: process.env.REDIS_URL,
         tls: true,
       },
-    },
+    } : undefined,
   },
 
   serverHandlers: [
