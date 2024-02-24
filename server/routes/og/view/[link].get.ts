@@ -1,5 +1,3 @@
-// https://antfu.me/posts/break-lines-in-js
-const splitByLineLengthRE = /(.{0,20})(?:\s|$)/g;
 const textLineRE = /\{\{line(\d)\}\}/g;
 
 export default defineEventHandler(async (event) => {
@@ -20,12 +18,7 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  let textLines = noteDetails.name.split(splitByLineLengthRE).filter(Boolean);
-
-  if (textLines.length > 2) {
-    textLines = textLines.slice(0, 2);
-    textLines[textLines.length - 1] = `${textLines.at(-1)}...`;
-  }
+  const textLines = splitTextByLineWidth(noteDetails.name, 2);
 
   setResponseHeader(event, 'Content-Type', 'image/png');
 
