@@ -59,7 +59,7 @@ function initTiptap() {
       Italic,
       Strike,
       History.configure({
-        depth: 25,
+        depth: 100,
       }),
       Link,
       TaskList,
