@@ -47,8 +47,8 @@ function initTiptap() {
     },
     extensions: [
       Document,
-      Text,
       Paragraph,
+      Text,
       Blockquote,
       BulletList,
       HardBreak,
