@@ -1,4 +1,4 @@
-const urlRE_G = /(?<!\+)https?:\/\/(?:www\.)?(?:[-\w.]+?[.@][a-zA-Z\d]{2,}|localhost)(?:[-\w.:%+~#*$!?&/=@]*?(?:,(?!\s))*?)*/g;
+const urlRE = /(?<!\+)https?:\/\/(?:www\.)?(?:[-\w.]+?[.@][a-zA-Z\d]{2,}|localhost)(?:[-\w.:%+~#*$!?&/=@]*?(?:,(?!\s))*?)*/g;
 
 export interface Link {
   type: string
@@ -13,11 +13,11 @@ export function find(text: string) {
   let res;
 
   // eslint-disable-next-line no-cond-assign
-  while ((res = urlRE_G.exec(text)) !== null) {
+  while ((res = urlRE.exec(text)) !== null) {
     links.push({
       type: 'url',
       start: res.index,
-      end: urlRE_G.lastIndex,
+      end: urlRE.lastIndex,
       href: res[0],
       value: res[0],
     });
