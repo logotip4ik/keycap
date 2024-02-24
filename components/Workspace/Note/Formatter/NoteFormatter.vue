@@ -335,6 +335,25 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
         <template #default="{ tooltipId }">
           <button
             class="formatter__button"
+            :class="{ 'formatter__button--active': editor.isActive('strike') }"
+            aria-label="strike through"
+            :aria-pressed="editor.isActive('strike')"
+            :aria-describedby="tooltipId"
+            @click="editor!.chain().focus().toggleStrike().run()"
+          >
+            <LazyIconStrikeThrough />
+          </button>
+        </template>
+
+        <template #tooltip>
+          <kbd>Ctrl+Shift+S</kbd>
+        </template>
+      </WithTooltip>
+
+      <WithTooltip>
+        <template #default="{ tooltipId }">
+          <button
+            class="formatter__button"
             :class="{ 'formatter__button--active': editor.isActive('link') }"
             aria-label="toggle link"
             :aria-pressed="editor.isActive('link')"
@@ -473,7 +492,7 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
     @media (max-width: $breakpoint-tablet) {
       --size-basis: calc(2.25rem + 1.5vw);
 
-      @media (max-width: 365px) {
+      @media (max-width: 400px) {
         --size-basis: 2.25rem;
       }
     }
