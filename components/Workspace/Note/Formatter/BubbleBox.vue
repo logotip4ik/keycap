@@ -49,6 +49,7 @@ onBeforeUnmount(() => {
 
   background-color: hsla(var(--surface-color-hsl), 0.95);
   border: 1px solid hsla(var(--text-color-hsl), 0.125);
+  border-radius: 0.175rem;
   box-shadow:
     1px 1.7px 5.3px rgba(var(--base-shadow-color), 0.032),
     3.4px 5.6px 17.9px rgba(var(--base-shadow-color), 0.048),
