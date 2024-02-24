@@ -78,6 +78,8 @@
       font-size: 1rem;
       line-height: 1.5;
       color: hsla(var(--text-color-hsl), 0.75);
+
+      max-width: 44ch;
     }
   }
 

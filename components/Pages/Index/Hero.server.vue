@@ -16,9 +16,9 @@ const { build } = useRuntimeConfig().public;
         </h1>
 
         <p class="index__header__subtitle">
-          Another note taking webapp ❤.
+          Better then notes ❤️.
           <br>
-          Simple, fast and purple.
+          Synced between your devices, simple, fast, shareable and purple.
         </p>
       </header>
     </WithBlob>
