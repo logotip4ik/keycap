@@ -2,7 +2,6 @@
 import type { ChainedCommands, Editor } from '@tiptap/core';
 import type { Level } from '@tiptap/extension-heading';
 import type { ResolvedPos } from '@tiptap/pm/model';
-import type { describe } from 'node:test';
 
 const props = defineProps<{
   editor: Editor
