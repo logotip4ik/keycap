@@ -83,12 +83,15 @@ a {
 }
 
 kbd {
+  display: inline-block;
+
   font-size: 0.9em;
 
-  padding: 0.25rem 0.5rem;
+  padding: 0.125rem 0.5rem;
 
   background: hsla(var(--text-color-hsl), 0.075);
   border: 1px solid hsla(var(--text-color-hsl), 0.125);
+  border-right-width: 2px;
   border-bottom: 3px solid hsla(var(--text-color-hsl), 0.125);
   border-radius: 0.25rem;
 }

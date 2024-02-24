@@ -80,7 +80,6 @@ function humanizeShortcut(shortcut: string) {
 
     &__shortcut {
       font-size: 90%;
-      line-height: 2;
 
       white-space: nowrap;
 
