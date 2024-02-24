@@ -3,14 +3,11 @@ import type { ChainedCommands, Editor } from '@tiptap/core';
 import type { Level } from '@tiptap/extension-heading';
 import type { ResolvedPos } from '@tiptap/pm/model';
 
+import { LinkInputPlaceholder, marks } from './config';
+
 const props = defineProps<{
   editor: Editor
 }>();
-
-const LinkInputPlaceholder = {
-  INITIALLY_EMPTY: 'hit enter to show menu',
-  MADE_EMPTY: 'hit enter to remove link',
-};
 
 const linkInputPlaceholder = ref(LinkInputPlaceholder.INITIALLY_EMPTY);
 const isEditingLink = ref(false);
@@ -274,98 +271,22 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
 
       <div class="formatter__vr" aria-hidden="true" />
 
-      <WithTooltip>
+      <WithTooltip v-for="(mark, i) in marks" :key="i">
         <template #default="{ tooltipId }">
           <button
             class="formatter__button"
-            :class="{ 'formatter__button--active': editor.isActive('bold') }"
-            aria-label="toggle bold"
-            :aria-pressed="editor.isActive('bold')"
+            :class="{ 'formatter__button--active': mark.isActive(editor) }"
+            :aria-label="mark.ariaLabel"
+            :aria-pressed="mark.isActive(editor)"
             :aria-describedby="tooltipId"
-            @click="editor!.chain().focus().toggleBold().run()"
+            @click="mark.onClick ? mark.onClick(editor) : (isEditingLink = !isEditingLink)"
           >
-            <LazyIconBaselineFormatBold />
+            <Component :is="mark.icon" />
           </button>
         </template>
 
         <template #tooltip>
-          <kbd>Ctrl+b</kbd>
-        </template>
-      </WithTooltip>
-
-      <WithTooltip>
-        <template #default="{ tooltipId }">
-          <button
-            class="formatter__button"
-            :class="{ 'formatter__button--active': editor.isActive('italic') }"
-            aria-label="toggle italic"
-            :aria-pressed="editor.isActive('italic')"
-            :aria-describedby="tooltipId"
-            @click="editor!.chain().focus().toggleItalic().run()"
-          >
-            <LazyIconBaselineFormatItalic />
-          </button>
-        </template>
-
-        <template #tooltip>
-          <kbd>Ctrl+i</kbd>
-        </template>
-      </WithTooltip>
-
-      <WithTooltip>
-        <template #default="{ tooltipId }">
-          <button
-            class="formatter__button"
-            :class="{ 'formatter__button--active': editor.isActive('code') }"
-            aria-label="toggle code"
-            :aria-pressed="editor.isActive('code')"
-            :aria-describedby="tooltipId"
-            @click="editor!.chain().focus().toggleCode().run()"
-          >
-            <LazyIconBaselineCode />
-          </button>
-        </template>
-
-        <template #tooltip>
-          <kbd>Ctrl+e</kbd>
-        </template>
-      </WithTooltip>
-
-      <WithTooltip>
-        <template #default="{ tooltipId }">
-          <button
-            class="formatter__button"
-            :class="{ 'formatter__button--active': editor.isActive('strike') }"
-            aria-label="strike through"
-            :aria-pressed="editor.isActive('strike')"
-            :aria-describedby="tooltipId"
-            @click="editor!.chain().focus().toggleStrike().run()"
-          >
-            <LazyIconStrikeThrough />
-          </button>
-        </template>
-
-        <template #tooltip>
-          <kbd>Ctrl+Shift+S</kbd>
-        </template>
-      </WithTooltip>
-
-      <WithTooltip>
-        <template #default="{ tooltipId }">
-          <button
-            class="formatter__button"
-            :class="{ 'formatter__button--active': editor.isActive('link') }"
-            aria-label="toggle link"
-            :aria-pressed="editor.isActive('link')"
-            :aria-describedby="tooltipId"
-            @click="(isEditingLink = !isEditingLink)"
-          >
-            <LazyIconBaselineLink />
-          </button>
-        </template>
-
-        <template #tooltip>
-          <kbd>Ctrl+l</kbd>
+          <kbd>{{ mark.shortcut }}</kbd>
         </template>
       </WithTooltip>
     </div>
@@ -413,8 +334,8 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
     line-height: 0.5;
     color: var(--text-color);
 
-    width: 100vw;
-    max-width: 27ch;
+    width: 95vw;
+    max-width: 35ch;
 
     padding: 0 0.5rem;
 
