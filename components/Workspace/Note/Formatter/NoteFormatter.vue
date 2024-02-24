@@ -2,6 +2,7 @@
 import type { ChainedCommands, Editor } from '@tiptap/core';
 import type { Level } from '@tiptap/extension-heading';
 import type { ResolvedPos } from '@tiptap/pm/model';
+import type { describe } from 'node:test';
 
 const props = defineProps<{
   editor: Editor
@@ -205,89 +206,150 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
 <template>
   <WithFadeTransition @before-leave="rememberContainerWidth" @enter="animateContainerWidth">
     <div v-if="!isEditingLink" class="formatter__contents-wrapper">
-      <button
-        class="formatter__button"
-        :class="{ 'formatter__button--active': editor.isActive('heading') }"
-        :aria-pressed="editor.isActive('heading')"
-        aria-label="cycle heading"
-        @click="toggleHeading"
-      >
-        <LazyIconHeading1 v-if="editor.isActive('heading', { level: 1 })" />
-        <LazyIconHeading2 v-else-if="editor.isActive('heading', { level: 2 })" />
-        <LazyIconHeading3 v-else-if="editor.isActive('heading', { level: 3 })" />
-        <LazyIconHeading1 v-else />
-      </button>
+      <WithTooltip>
+        <template #default="{ tooltipId }">
+          <button
+            class="formatter__button"
+            :class="{ 'formatter__button--active': editor.isActive('heading') }"
+            aria-label="cycle heading"
+            :aria-pressed="editor.isActive('heading')"
+            :aria-describedby="tooltipId"
+            @click="toggleHeading"
+          >
+            <LazyIconHeading1 v-if="editor.isActive('heading', { level: 1 })" />
+            <LazyIconHeading2 v-else-if="editor.isActive('heading', { level: 2 })" />
+            <LazyIconHeading3 v-else-if="editor.isActive('heading', { level: 3 })" />
+            <LazyIconHeading1 v-else />
+          </button>
+        </template>
 
-      <button
-        class="formatter__button"
-        :class="{
-          'formatter__button--active':
-            editor.isActive('taskItem') || editor.isActive('listItem'),
-        }"
-        :aria-pressed="editor.isActive('taskItem') || editor.isActive('listItem')"
-        aria-label="cycle list"
-        @click="toggleListItem"
-      >
-        <LazyIconList />
-      </button>
+        <template #tooltip>
+          <!-- TODO: show different number depending on current heading level -->
+          <kbd>Ctrl+Alt+1</kbd>
+        </template>
+      </WithTooltip>
 
-      <button
-        class="formatter__button"
-        :class="{
-          'formatter__button--active': editor.isActive('blockquote'),
-        }"
-        :aria-pressed="editor.isActive('blockquote')"
-        aria-label="toggle blockquote"
-        @click="editor.chain().focus().toggleBlockquote().run()"
-      >
-        <LazyIconDoubleQuotesR />
-      </button>
+      <WithTooltip>
+        <template #default="{ tooltipId }">
+          <button
+            class="formatter__button"
+            :class="{
+              'formatter__button--active':
+                editor.isActive('taskItem') || editor.isActive('listItem'),
+            }"
+            aria-label="cycle list"
+            :aria-pressed="editor.isActive('taskItem') || editor.isActive('listItem')"
+            :aria-describedby="tooltipId"
+            @click="toggleListItem"
+          >
+            <LazyIconList />
+          </button>
+        </template>
+
+        <template #tooltip>
+          <kbd>Ctrl+Shift+8</kbd>
+        </template>
+      </WithTooltip>
+
+      <WithTooltip>
+        <template #default="{ tooltipId }">
+          <button
+            class="formatter__button"
+            :class="{
+              'formatter__button--active': editor.isActive('blockquote'),
+            }"
+            aria-label="toggle blockquote"
+            :aria-pressed="editor.isActive('blockquote')"
+            :aria-describe="tooltipId"
+            @click="editor.chain().focus().toggleBlockquote().run()"
+          >
+            <LazyIconDoubleQuotesR />
+          </button>
+        </template>
+
+        <template #tooltip>
+          <!-- TODO: why this shortcut doesn't work ? -->
+          <kbd>Ctrl+Shift+B</kbd>
+        </template>
+      </WithTooltip>
 
       <div class="formatter__vr" aria-hidden="true" />
 
-      <button
-        title="CTRL+B"
-        class="formatter__button"
-        :class="{ 'formatter__button--active': editor.isActive('bold') }"
-        :aria-pressed="editor.isActive('bold')"
-        aria-label="toggle bold"
-        @click="editor!.chain().focus().toggleBold().run()"
-      >
-        <LazyIconBaselineFormatBold />
-      </button>
+      <WithTooltip>
+        <template #default="{ tooltipId }">
+          <button
+            class="formatter__button"
+            :class="{ 'formatter__button--active': editor.isActive('bold') }"
+            aria-label="toggle bold"
+            :aria-pressed="editor.isActive('bold')"
+            :aria-describedby="tooltipId"
+            @click="editor!.chain().focus().toggleBold().run()"
+          >
+            <LazyIconBaselineFormatBold />
+          </button>
+        </template>
 
-      <button
-        title="CTRL+I"
-        class="formatter__button"
-        :class="{ 'formatter__button--active': editor.isActive('italic') }"
-        :aria-pressed="editor.isActive('italic')"
-        aria-label="toggle italic"
-        @click="editor!.chain().focus().toggleItalic().run()"
-      >
-        <LazyIconBaselineFormatItalic />
-      </button>
+        <template #tooltip>
+          <kbd>Ctrl+b</kbd>
+        </template>
+      </WithTooltip>
 
-      <button
-        title="CTRL+E"
-        class="formatter__button"
-        :class="{ 'formatter__button--active': editor.isActive('code') }"
-        :aria-pressed="editor.isActive('code')"
-        aria-label="toggle code"
-        @click="editor!.chain().focus().toggleCode().run()"
-      >
-        <LazyIconBaselineCode />
-      </button>
+      <WithTooltip>
+        <template #default="{ tooltipId }">
+          <button
+            class="formatter__button"
+            :class="{ 'formatter__button--active': editor.isActive('italic') }"
+            aria-label="toggle italic"
+            :aria-pressed="editor.isActive('italic')"
+            :aria-describedby="tooltipId"
+            @click="editor!.chain().focus().toggleItalic().run()"
+          >
+            <LazyIconBaselineFormatItalic />
+          </button>
+        </template>
 
-      <button
-        title="CTRL+L"
-        class="formatter__button"
-        :class="{ 'formatter__button--active': editor.isActive('link') }"
-        :aria-pressed="editor.isActive('link')"
-        aria-label="toggle link"
-        @click="(isEditingLink = !isEditingLink)"
-      >
-        <LazyIconBaselineLink />
-      </button>
+        <template #tooltip>
+          <kbd>Ctrl+i</kbd>
+        </template>
+      </WithTooltip>
+
+      <WithTooltip>
+        <template #default="{ tooltipId }">
+          <button
+            class="formatter__button"
+            :class="{ 'formatter__button--active': editor.isActive('code') }"
+            aria-label="toggle code"
+            :aria-pressed="editor.isActive('code')"
+            :aria-describedby="tooltipId"
+            @click="editor!.chain().focus().toggleCode().run()"
+          >
+            <LazyIconBaselineCode />
+          </button>
+        </template>
+
+        <template #tooltip>
+          <kbd>Ctrl+e</kbd>
+        </template>
+      </WithTooltip>
+
+      <WithTooltip>
+        <template #default="{ tooltipId }">
+          <button
+            class="formatter__button"
+            :class="{ 'formatter__button--active': editor.isActive('link') }"
+            aria-label="toggle link"
+            :aria-pressed="editor.isActive('link')"
+            :aria-describedby="tooltipId"
+            @click="(isEditingLink = !isEditingLink)"
+          >
+            <LazyIconBaselineLink />
+          </button>
+        </template>
+
+        <template #tooltip>
+          <kbd>Ctrl+l</kbd>
+        </template>
+      </WithTooltip>
     </div>
 
     <form v-else class="formatter__contents-wrapper" @submit.prevent="trySaveEditingLink">
