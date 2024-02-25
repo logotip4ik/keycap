@@ -14,7 +14,9 @@ export default defineNuxtModule({
       write: true,
       filename: 'resolved-paths.mjs',
       getContents: ({ nuxt }) => {
-        const publicPath = isDevelopment ? join(nuxt.options.rootDir, nuxt.options.dir.public) : publicDir;
+        const publicPath = isDevelopment
+          ? join(nuxt.options.rootDir, nuxt.options.dir.public)
+          : publicDir;
 
         return `export const publicPath = '${publicPath}'`;
       },
