@@ -3,9 +3,13 @@ import { join } from 'pathe';
 import type { ResvgRenderOptions } from '@resvg/resvg-js';
 
 // @ts-expect-error virtual file
-import { publicPath } from '#resolved-paths';
+import { buildDir, publicPath } from '#resolved-paths';
 
-console.log({ publicPath });
+console.log({
+  cwd: process.cwd(),
+  publicPath,
+  buildDir,
+});
 
 const resvgOptions = {
   logLevel: import.meta.dev ? 'info' : 'off',

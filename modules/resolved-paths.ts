@@ -7,9 +7,11 @@ export default defineNuxtModule({
     const logger = useLogger('route-groups');
 
     let publicDir: string;
+    let buildDir: string;
 
     nuxt.hook('nitro:init', (nitro) => {
       publicDir = nitro.options.output.publicDir;
+      buildDir = nitro.options.buildDir;
     });
 
     const { dst } = addTemplate({
@@ -22,7 +24,10 @@ export default defineNuxtModule({
 
         logger.info(`Resolved public path: ${publicPath}`);
 
-        return `export const publicPath = '${publicPath}'`;
+        return [
+          `export const buildDir = '${buildDir}'`,
+          `export const publicPath = '${publicPath}'`,
+        ].join('\n');
       },
     });
 
