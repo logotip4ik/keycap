@@ -1,3 +1,5 @@
+import { escapeHtml } from '@vue/shared';
+
 const textLineRE = /\{\{line(\d)\}\}/g;
 
 export default defineEventHandler(async (event) => {

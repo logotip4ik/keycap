@@ -28,16 +28,6 @@ export function makeNewItemPath(currentPath: string, newName: string): string {
   return currentPath.replace(currentItemNameRE, encodeURIComponent(newName));
 }
 
-export function escapeHtml(v: string) {
-  // Perf demo: https://stackblitz.com/edit/vitejs-vite-eatpjl?file=main.js&terminal=dev
-  return v
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('\'', '&apos;')
-    .replaceAll('"', '&quot;');
-}
-
 if (import.meta.vitest) {
   const { describe, it, expect } = import.meta.vitest;
 
