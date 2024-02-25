@@ -8,9 +8,14 @@ export default defineEventHandler(async (event) => {
   if (!link || !isShareLinkValid(link))
     throw createError({ statusCode: 400 });
 
+  const prisma = getPrisma();
+
   const [svgTemplate, noteDetails] = await Promise.all([
     getOgTemplate('view'),
-    getNoteDetailsByLink(link),
+    prisma.note.findFirst({
+      select: { name: true },
+      where: { shares: { some: { link } } },
+    }),
   ]);
 
   if (!noteDetails) {
