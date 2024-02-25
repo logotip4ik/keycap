@@ -1,0 +1,76 @@
+diff --git a/esm/bridge.js b/esm/bridge.js
+index a397ed0abb6c36c197c88be220c8af1ef73a8a53..b6cd260f184c0cb29f6c8077efb4dc7249f68798 100644
+--- a/esm/bridge.js
++++ b/esm/bridge.js
+@@ -12,18 +12,6 @@ let {SharedArrayBuffer, window} = globalThis;
+ let {notify, wait, waitAsync} = Atomics;
+ let postPatched = null;
+ 
+-// This is needed for some version of Firefox
+-if (!waitAsync) {
+-  waitAsync = buffer => ({
+-    value: new Promise(onmessage => {
+-      // encodeURIComponent('onmessage=({data:b})=>(Atomics.wait(b,0),postMessage(0))')
+-      let w = new Worker('data:application/javascript,onmessage%3D(%7Bdata%3Ab%7D)%3D%3E(Atomics.wait(b%2C0)%2CpostMessage(0))');
+-      w.onmessage = onmessage;
+-      w.postMessage(buffer);
+-    })
+-  });
+-}
+-
+ // Monkey-patch SharedArrayBuffer if needed
+ try {
+   new SharedArrayBuffer(4);
+@@ -84,4 +72,20 @@ catch (_) {
+   }
+ }
+ 
+-export {SharedArrayBuffer, isArray, notify, postPatched, wait, waitAsync};
++function waitAsyncWithFallback(fallback) {
++  // This is needed for all versions of Firefox 
++  if (!waitAsync) {
++    waitAsync = fallback || (buffer => ({
++      value: new Promise(onmessage => {
++        // encodeURIComponent('onmessage=({data:b})=>(Atomics.wait(b,0),postMessage(0))')
++        let w = new Worker('data:application/javascript,onmessage%3D(%7Bdata%3Ab%7D)%3D%3E(Atomics.wait(b%2C0)%2CpostMessage(0))');
++        w.onmessage = onmessage;
++        w.postMessage(buffer);
++      })
++    }));
++  }
++
++  return waitAsync
++}
++
++export {SharedArrayBuffer, isArray, notify, postPatched, wait, waitAsyncWithFallback};
+diff --git a/esm/index.js b/esm/index.js
+index 1d0f53a140a5719c04ec0ad55a0b16964f9625ab..d28e24b74b65f543ae617afde8b8bc647c003521 100644
+--- a/esm/index.js
++++ b/esm/index.js
+@@ -5,7 +5,7 @@ import {FUNCTION} from 'proxy-target/types';
+ import {CHANNEL} from './channel.js';
+ import {GET, HAS, SET} from './shared/traps.js';
+ 
+-import {SharedArrayBuffer, isArray, notify, postPatched, wait, waitAsync} from './bridge.js';
++import {SharedArrayBuffer, isArray, notify, postPatched, wait, waitAsyncWithFallback} from './bridge.js';
+ 
+ // just minifier friendly for Blob Workers' cases
+ const {Int32Array, Map, Uint16Array} = globalThis;
+@@ -42,7 +42,7 @@ let uid = 0;
+  * @param {{parse: (serialized: string) => any, stringify: (serializable: any) => string, transform?: (value:any) => any, interrupt?: () => void | Interrupt}} [JSON] an optional `JSON` like interface to `parse` or `stringify` content with extra `transform` ability.
+  * @returns {ProxyHandler<globalThis> | ProxyHandler<Worker>}
+  */
+-const coincident = (self, {parse = JSON.parse, stringify = JSON.stringify, transform, interrupt} = JSON) => {
++const coincident = (self, {parse = JSON.parse, stringify = JSON.stringify, transform, interrupt, fallbackAsyncWait} = JSON) => {
+   // create a Proxy once for the given context (globalThis or Worker instance)
+   if (!context.has(self)) {
+     // ensure no SAB gets a chance to pass through this call
+@@ -57,7 +57,7 @@ const coincident = (self, {parse = JSON.parse, stringify = JSON.stringify, trans
+     // automatically uses sync wait (worker -> main)
+     // or fallback to async wait (main -> worker)
+     const waitFor = (isAsync, sb) => isAsync ?
+-      waitAsync(sb, 0) :
++      waitAsyncWithFallback(fallbackAsyncWait)(sb, 0) :
+       ((handler ? waitInterrupt(sb, delay, handler) : wait(sb, 0)), syncResult);
+ 
+     // prevent Harakiri https://github.com/WebReflection/coincident/issues/18

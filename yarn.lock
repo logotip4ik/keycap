@@ -5583,7 +5583,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"coincident@npm:^1.2.2":
+"coincident@npm:1.2.2":
   version: 1.2.2
   resolution: "coincident@npm:1.2.2"
   dependencies:
@@ -5596,6 +5596,22 @@ __metadata:
     ws:
       optional: true
   checksum: 10/19023a2f6f582c182ad39c45a2dd05d2f5a385cc2166551e4f2f29a399a9d0ca3945365b0ed338aa44c870d1a1fd33cded9d2ecf9b28a827962bb96ace3085c3
+  languageName: node
+  linkType: hard
+
+"coincident@patch:coincident@npm%3A1.2.2#~/.yarn/patches/coincident-npm-1.2.2-c8ea01ebb8.patch":
+  version: 1.2.2
+  resolution: "coincident@patch:coincident@npm%3A1.2.2#~/.yarn/patches/coincident-npm-1.2.2-c8ea01ebb8.patch::version=1.2.2&hash=fc047d"
+  dependencies:
+    "@ungap/structured-clone": "npm:^1.2.0"
+    "@ungap/with-resolvers": "npm:^0.1.0"
+    gc-hook: "npm:^0.3.1"
+    proxy-target: "npm:^3.0.1"
+    ws: "npm:^8.16.0"
+  dependenciesMeta:
+    ws:
+      optional: true
+  checksum: 10/888ebadd639f1242a76fcd4fdf0cb5d0aaec7b0d573279ceaaa58037e77cdc98328dd9360f54d3f0490263d381f8b0c366f5cb9288d9d68c9500afdedd0a8bd8
   languageName: node
   linkType: hard
 
