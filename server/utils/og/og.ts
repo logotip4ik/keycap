@@ -1,18 +1,14 @@
-import { join } from 'pathe';
-
 import type { ResvgRenderOptions } from '@resvg/resvg-js';
 
-// @ts-expect-error virtual file
-import { publicPath } from '#resolved-paths';
+// @ts-expect-error idk how to type this
+import MonaSansUrl from './MonaSans-Regular.ttf';
 
 const resvgOptions = {
   logLevel: import.meta.dev ? 'info' : 'off',
   fitTo: { mode: 'original' },
   font: {
     loadSystemFonts: false,
-    fontFiles: [
-      join(publicPath, 'MonaSans-Regular.ttf'),
-    ],
+    fontFiles: [MonaSansUrl],
   },
 } satisfies ResvgRenderOptions;
 
