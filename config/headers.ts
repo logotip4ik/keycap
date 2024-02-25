@@ -139,13 +139,6 @@ export function getHeaders(
       }));
 
       headers['Cross-Origin-Resource-Policy'] = 'cross-origin';
-      headers['Content-Security-Policy'] = [
-        'default-src \'none\'',
-        'style-src \'unsafe-inline\'',
-        'img-src \'self\' data:',
-        'font-src data:',
-        'upgrade-insecure-requests',
-      ].join('; ');
 
       break;
     }
@@ -158,13 +151,9 @@ export interface CacheControlHeaderOptions {
   private: boolean
   immutable?: boolean
   mustRevalidate?: boolean
-  /**
-   * in seconds
-   */
+  /** in seconds */
   maxAge: number
-  /**
-   * in seconds
-   */
+  /** in seconds */
   staleWhileRevalidate?: number
   CDN?: boolean | 'vc' | 'cf'
 }
