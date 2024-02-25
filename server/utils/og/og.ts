@@ -10,7 +10,7 @@ console.log({
   cwd: process.cwd(),
   publicPath,
   buildDir,
-  dir: fs.readdirSync(process.cwd()),
+  dir: fs.readdirSync(join(process.cwd(), '../..')),
 });
 
 const resvgOptions = {
@@ -19,7 +19,7 @@ const resvgOptions = {
   font: {
     loadSystemFonts: false,
     fontFiles: [
-      join(publicPath, 'MonaSans-Regular.ttf'),
+      import.meta.prod ? '../../static/MonaSans-Regular.ttf' : '',
     ],
   },
 } satisfies ResvgRenderOptions;
