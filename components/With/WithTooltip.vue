@@ -3,6 +3,8 @@ import parseDuration from 'parse-duration';
 
 defineProps<{ tooltip?: string }>();
 
+const isSmallScreen = getIsSmallScreen();
+
 const shouldShow = ref(false);
 const target = shallowRef<HTMLElement | null>(null);
 const tooltipEl = shallowRef<HTMLElement | null>(null);
@@ -21,11 +23,16 @@ watch(target, (target) => {
 
   cleanups.push(
     on(target, 'mouseenter', showWithTimeout, handlerOptions),
-    on(target, 'focus', showWithTimeout, handlerOptions),
-
     on(target, 'mouseleave', hideAndClearTimeout, handlerOptions),
-    on(target, 'blur', hideAndClearTimeout, handlerOptions),
+
   );
+
+  if (!isSmallScreen) {
+    cleanups.push(
+      on(target, 'focus', showWithTimeout, handlerOptions),
+      on(target, 'blur', hideAndClearTimeout, handlerOptions),
+    );
+  }
 });
 
 watch(shouldShow, async (shouldShow) => {
