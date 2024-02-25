@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const textLines = splitTextByLineWidth(noteDetails.name, 2);
+  const textLines = splitOgText(noteDetails.name, 2);
 
   setResponseHeader(event, 'Content-Type', 'image/png');
 

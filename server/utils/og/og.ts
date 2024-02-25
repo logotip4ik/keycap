@@ -39,7 +39,7 @@ export async function getOgTemplate(name: TemplateName) {
 // https://antfu.me/posts/break-lines-in-js
 const maxLineLength = 20;
 const splitByLineLengthRE = new RegExp(`(.{0,${maxLineLength}})(?:\\s|$)`);
-export function splitTextByLineWidth(text: string, maxLines?: number) {
+export function splitOgText(text: string, maxLines?: number) {
   let lines: Array<string> = [];
 
   text = text.trim();
@@ -71,7 +71,7 @@ if (import.meta.vitest) {
     it('should split normal words', () => {
       const text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
 
-      expect(splitTextByLineWidth(text)).toStrictEqual([
+      expect(splitOgText(text)).toStrictEqual([
         'Lorem ipsum dolor',
         'sit amet,',
         'consectetur',
@@ -82,7 +82,7 @@ if (import.meta.vitest) {
     it('should split one long word', () => {
       const text = 'a'.repeat(50);
 
-      expect(splitTextByLineWidth(text)).toStrictEqual([
+      expect(splitOgText(text)).toStrictEqual([
         'aaaaaaaaaaaaaaaaaaaa',
         'aaaaaaaaaaaaaaaaaaaa',
         'aaaaaaaaaa',
@@ -92,7 +92,7 @@ if (import.meta.vitest) {
     it('should split words and take into accout max lines', () => {
       const text = 'a'.repeat(50);
 
-      expect(splitTextByLineWidth(text, 2)).toStrictEqual([
+      expect(splitOgText(text, 2)).toStrictEqual([
         'aaaaaaaaaaaaaaaaaaaa',
         'aaaaaaaaaaaaaaaaaaaa...',
       ]);
