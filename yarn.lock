@@ -3751,12 +3751,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-bold@npm:^2.2.4":
+"@tiptap/extension-bold@npm:2.2.4":
   version: 2.2.4
   resolution: "@tiptap/extension-bold@npm:2.2.4"
   peerDependencies:
     "@tiptap/core": ^2.0.0
   checksum: 10/5d4896b5d8f22e9a3d6d0bd3933c2d91694636db30a2d6ef5d05ccb9bad04e7347d1d84cf60400950cdbb0c74861d6fe186f20c866d707cfd0a02681698a1fdf
+  languageName: node
+  linkType: hard
+
+"@tiptap/extension-bold@patch:@tiptap/extension-bold@npm%3A2.2.4#~/.yarn/patches/@tiptap-extension-bold-npm-2.2.4-2d09dcdbd7.patch":
+  version: 2.2.4
+  resolution: "@tiptap/extension-bold@patch:@tiptap/extension-bold@npm%3A2.2.4#~/.yarn/patches/@tiptap-extension-bold-npm-2.2.4-2d09dcdbd7.patch::version=2.2.4&hash=f3e391"
+  peerDependencies:
+    "@tiptap/core": ^2.0.0
+  checksum: 10/5827029a3f660eda6cd67826f7cde593dd37c51abf5e8a22d523ec90777de786ed2d22bfbcb90c20dfefeb909f376689bebf964fd4b7888c4e2537ed8d160438
   languageName: node
   linkType: hard
 
