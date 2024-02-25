@@ -12,7 +12,7 @@ export interface MarkButton {
   ariaLabel: string
   shortcut: string
   isActive: (e: Editor) => boolean
-  /** @description empty click handler acts as **toggling link form */
+  /** @description empty click handler acts as __toggling link form__ */
   onClick?: (e: Editor) => any
 }
 
