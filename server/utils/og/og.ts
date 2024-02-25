@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import { join } from 'pathe';
 
 import type { ResvgRenderOptions } from '@resvg/resvg-js';
@@ -9,6 +10,7 @@ console.log({
   cwd: process.cwd(),
   publicPath,
   buildDir,
+  dir: fs.readdirSync(process.cwd()),
 });
 
 const resvgOptions = {
