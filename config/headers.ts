@@ -21,7 +21,7 @@ export const cspHeaders = {
   'Content-Security-Policy': [
     'default-src \'self\'',
     'connect-src \'self\' https:',
-    `script-src 'self' 'unsafe-inline' 'sha256-a8370c36478d3b76039efb53600b8ba7dfb5c0603371c6d9207557573933bc33' ${turnstileEnabled ? 'https://challenges.cloudflare.com' : ''}`.trim(),
+    `script-src 'self' 'sha256-a8370c36478d3b76039efb53600b8ba7dfb5c0603371c6d9207557573933bc33' 'unsafe-inline' ${turnstileEnabled ? 'https://challenges.cloudflare.com' : ''}`.trim(),
     'style-src \'self\' \'unsafe-inline\'',
     'object-src \'none\'',
     turnstileEnabled && 'frame-src https://challenges.cloudflare.com',
