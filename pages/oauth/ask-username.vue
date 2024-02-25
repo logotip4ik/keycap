@@ -33,6 +33,7 @@ const normalizedProvider = OAuthProvider[provider as keyof typeof OAuthProvider 
 if (!normalizedProvider) {
   await event.context.logger.warn('someone is messing with oauth');
 
+  // TODO: create issue on error params does not match h3 ?
   throw createError({
     statusCode: 400,
     statusMessage: 'Go home. Please.',
