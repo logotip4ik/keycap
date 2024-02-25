@@ -6,6 +6,8 @@ import { commandActionsMin as commandsCache } from '~/utils/menu';
 import { transliterateFromEnglish, transliterateToEnglish } from '~/utils/transliterate';
 
 const DEFAULT_RESULTS_COUNT = 5;
+const wordRE = /\w+/;
+const arrayWithString = [''];
 const itemsCache = new Map<string, FuzzyItem>();
 
 function addItem(item: FuzzyItem) {
@@ -15,7 +17,6 @@ function addItem(item: FuzzyItem) {
   itemsCache.set(identifier, item);
 }
 
-const arrayWithString = [''];
 function search(query: string, resultsCount = DEFAULT_RESULTS_COUNT): Array<FuzzyItem | CommandItem> {
   // See https://stackblitz.com/edit/node-ezlzug?file=index.js&view=editor and run `node index.js`
   // but in `real world`? fuzzaldrin was a bit slower plus had much more bigger bundle footprint
@@ -23,7 +24,7 @@ function search(query: string, resultsCount = DEFAULT_RESULTS_COUNT): Array<Fuzz
   const isCommand = query[0] === '/';
 
   if (isCommand)
-    query = (query.match(/\w+/) || arrayWithString)[0];
+    query = (query.match(wordRE) || arrayWithString)[0];
 
   const results = [];
   const cache = isCommand ? commandsCache : itemsCache;
@@ -40,8 +41,8 @@ function search(query: string, resultsCount = DEFAULT_RESULTS_COUNT): Array<Fuzz
 
   return results
     .sort((a, b) => b.score - a.score)
-    .map((suggestion) => suggestion.value)
-    .slice(0, resultsCount);
+    .slice(0, resultsCount)
+    .map((suggestion) => suggestion.value);
 }
 
 function searchWithTransliteration(query: string, resultsCount = DEFAULT_RESULTS_COUNT): Array<FuzzyItem | CommandItem> {
