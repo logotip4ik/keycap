@@ -264,7 +264,6 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
         </template>
 
         <template #tooltip>
-          <!-- TODO: why this shortcut doesn't work ? -->
           <kbd>Ctrl+Shift+B</kbd>
         </template>
       </WithTooltip>
