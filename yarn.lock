@@ -5583,35 +5583,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"coincident@npm:1.1.0":
-  version: 1.1.0
-  resolution: "coincident@npm:1.1.0"
+"coincident@npm:^1.2.2":
+  version: 1.2.2
+  resolution: "coincident@npm:1.2.2"
   dependencies:
     "@ungap/structured-clone": "npm:^1.2.0"
     "@ungap/with-resolvers": "npm:^0.1.0"
-    gc-hook: "npm:^0.2.5"
+    gc-hook: "npm:^0.3.1"
     proxy-target: "npm:^3.0.1"
-    ws: "npm:^8.14.2"
+    ws: "npm:^8.16.0"
   dependenciesMeta:
     ws:
       optional: true
-  checksum: 10/faf190a4019892539d4cde35e7537399a98fcdf9738ac6cd7f838973b3dc49263223c3009f71110a91340bc4ece492e7877991b342dda8910a1b5707ca4f054e
-  languageName: node
-  linkType: hard
-
-"coincident@patch:coincident@npm%3A1.1.0#~/.yarn/patches/coincident-npm-1.1.0-02cde43e6f.patch":
-  version: 1.1.0
-  resolution: "coincident@patch:coincident@npm%3A1.1.0#~/.yarn/patches/coincident-npm-1.1.0-02cde43e6f.patch::version=1.1.0&hash=0cd26e"
-  dependencies:
-    "@ungap/structured-clone": "npm:^1.2.0"
-    "@ungap/with-resolvers": "npm:^0.1.0"
-    gc-hook: "npm:^0.2.5"
-    proxy-target: "npm:^3.0.1"
-    ws: "npm:^8.14.2"
-  dependenciesMeta:
-    ws:
-      optional: true
-  checksum: 10/e3ef02ff6de9f9201de80520c2763c5b5d585f07c12f149b978315464c6d6392e5113bf6be3d082002312391d5ae7ef18db24b25ff5d0e662431792f812d09ab
+  checksum: 10/19023a2f6f582c182ad39c45a2dd05d2f5a385cc2166551e4f2f29a399a9d0ca3945365b0ed338aa44c870d1a1fd33cded9d2ecf9b28a827962bb96ace3085c3
   languageName: node
   linkType: hard
 
@@ -7447,10 +7431,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"gc-hook@npm:^0.2.5":
-  version: 0.2.5
-  resolution: "gc-hook@npm:0.2.5"
-  checksum: 10/6903156f0da895d89232d1d12af18b6b7435a0ac8125aa1b90af1479a4d3236fc5521bdd929184989bfc65102a95e93e48d2e596d50b11cbfa18411e607f659d
+"gc-hook@npm:^0.3.1":
+  version: 0.3.1
+  resolution: "gc-hook@npm:0.3.1"
+  checksum: 10/4d0e8a62e7df46e3a3656c9f8123d0ba5fea5377f3d8075225f3a39583f14bed114593f24c2b5c7b81605e273f15207d2ab27d90e2916741d4f336f17bd5122e
   languageName: node
   linkType: hard
 
@@ -8641,7 +8625,7 @@ __metadata:
     "@vueuse/core": "npm:^10.8.0"
     "@vueuse/nuxt": "npm:^10.8.0"
     browserslist-to-esbuild: "npm:^2.1.1"
-    coincident: "patch:coincident@npm%3A1.1.0#~/.yarn/patches/coincident-npm-1.1.0-02cde43e6f.patch"
+    coincident: "npm:^1.2.2"
     comlink: "npm:^4.4.1"
     decomment: "npm:^0.9.5"
     escape-string-regexp: "npm:^5.0.0"
@@ -13966,7 +13950,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ws@npm:^8.14.2, ws@npm:^8.16.0":
+"ws@npm:^8.16.0":
   version: 8.16.0
   resolution: "ws@npm:8.16.0"
   peerDependencies:
