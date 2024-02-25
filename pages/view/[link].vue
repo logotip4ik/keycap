@@ -11,8 +11,9 @@ const { data: note, error } = await useAsyncData('share', async () => {
 
 if (error.value || !note.value) {
   throw createError({
-    statusCode: 404,
-    statusMessage: `nothing found with link: ${route.params.link}`,
+    // @ts-expect-error broken types
+    status: 404,
+    message: `nothing found with link: ${route.params.link}`,
   });
 }
 

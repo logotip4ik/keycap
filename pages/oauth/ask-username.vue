@@ -7,8 +7,9 @@ definePageMeta({
 
 if (import.meta.client) {
   throw createError({
-    statusCode: 418,
-    statusMessage: 'this page should not run on client',
+    // @ts-expect-error broken types
+    status: 418,
+    message: 'this page should not run on client',
   });
 }
 
@@ -19,8 +20,9 @@ if (!query.code || !query.provider) {
   await event.context.logger.error({ query, msg: 'not enough data for proceeding with username' });
 
   throw createError({
-    statusCode: 400,
-    statusMessage: 'not enough data',
+    // @ts-expect-error broken types
+    status: 400,
+    message: 'not enough data',
   });
 }
 
@@ -33,10 +35,10 @@ const normalizedProvider = OAuthProvider[provider as keyof typeof OAuthProvider 
 if (!normalizedProvider) {
   await event.context.logger.warn('someone is messing with oauth');
 
-  // TODO: create issue on error params does not match h3 ?
   throw createError({
-    statusCode: 400,
-    statusMessage: 'Go home. Please.',
+    // @ts-expect-error broken types
+    status: 400,
+    message: 'Go home. Please.',
   });
 }
 
