@@ -1,9 +1,11 @@
-import { addTemplate, defineNuxtModule } from '@nuxt/kit';
+import { addTemplate, defineNuxtModule, useLogger } from '@nuxt/kit';
 import { isDevelopment } from 'std-env';
 import { join } from 'pathe';
 
 export default defineNuxtModule({
   async setup(_, nuxt) {
+    const logger = useLogger('route-groups');
+
     let publicDir: string;
 
     nuxt.hook('nitro:init', (nitro) => {
@@ -17,6 +19,8 @@ export default defineNuxtModule({
         const publicPath = isDevelopment
           ? join(nuxt.options.rootDir, nuxt.options.dir.public)
           : publicDir;
+
+        logger.info(`Resolved public path: ${publicPath}`);
 
         return `export const publicPath = '${publicPath}'`;
       },

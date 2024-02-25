@@ -5,6 +5,8 @@ import type { ResvgRenderOptions } from '@resvg/resvg-js';
 // @ts-expect-error virtual file
 import { publicPath } from '#resolved-paths';
 
+console.log({ publicPath });
+
 const resvgOptions = {
   logLevel: import.meta.dev ? 'info' : 'off',
   fitTo: { mode: 'original' },
