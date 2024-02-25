@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
   const path = getRouterParam(event, 'path');
 
   if (!path)
-    throw createError({ statusCode: 400 });
+    throw createError({ status: 400 });
 
   // NOTE: path is actually is not required param for body
   // just to reuse object and thus improve perf, i think it
@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
 
   if (!validation.ok) {
     throw createError({
-      statusCode: 400,
+      status: 400,
       message: `${validation.errors[0].dataPath.split('.').at(-1)} ${validation.errors[0].message}`,
     });
   }
@@ -47,14 +47,14 @@ export default defineEventHandler(async (event) => {
     .catch(async (err) => {
       if (err.code === PrismaError.UniqueConstraintViolation) {
         throw createError({
+          status: 400,
           message: 'Folder with such name already exists',
-          statusCode: 400,
         });
       }
 
       await event.context.logger.error({ err, msg: 'folder.create failed' });
 
-      throw createError({ statusCode: 400 });
+      throw createError({ status: 400 });
     });
   timer.end();
 

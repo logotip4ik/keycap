@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
   const path = getRouterParam(event, 'path');
 
   if (!path)
-    throw createError({ statusCode: 400 });
+    throw createError({ status: 400 });
 
   const notePath = generateNotePath(user.username, path);
 
@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
   }).catch(async (err) => {
     await event.context.logger.error({ err, msg: 'note.delete failed' });
 
-    throw createError({ statusCode: 400 });
+    throw createError({ status: 400 });
   });
   timer.end();
 

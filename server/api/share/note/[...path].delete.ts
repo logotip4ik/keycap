@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
   const path = getRouterParam(event, 'path');
 
   if (!path)
-    throw createError({ statusCode: 400 });
+    throw createError({ status: 400 });
 
   const notePath = generateNotePath(user.username, path);
 
@@ -20,11 +20,11 @@ export default defineEventHandler(async (event) => {
     }).catch(async (err) => {
       await event.context.logger.error(({ err, msg: 'share.findFirst failed' }));
 
-      throw createError({ statusCode: 400 });
+      throw createError({ status: 400 });
     });
 
     if (!shareToDelete)
-      throw createError({ statusCode: 404 });
+      throw createError({ status: 404 });
 
     await tx.share.delete({
       where: { id: shareToDelete.id },
@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
     }).catch(async (err) => {
       await event.context.logger.error({ err, msg: 'share.delete failed' });
 
-      throw createError({ statusCode: 400 });
+      throw createError({ status: 400 });
     });
   });
   timer.end();

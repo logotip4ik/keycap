@@ -13,7 +13,7 @@ export async function assertNoOAuthErrors(event: H3Event, _query?: QueryObject) 
 
     await event.context.logger.error({ err: new Error(query.error.toString()), msg: 'oauth failed' });
 
-    throw createError({ statusCode: 418, message: decodeURIComponent(query.error.toString()) });
+    throw createError({ status: 418, message: decodeURIComponent(query.error.toString()) });
   }
 
   if (typeof query.state !== 'string' || query.state !== getCookie(event, 'state')) {
@@ -23,6 +23,6 @@ export async function assertNoOAuthErrors(event: H3Event, _query?: QueryObject) 
 
     await event.context.logger.error({ msg: 'someone is messing with authentication', identifier });
 
-    throw createError({ statusCode: 422 });
+    throw createError({ status: 422 });
   }
 }

@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
   const isOriginMismatch = checkOriginForMismatch(event);
 
   if (isOriginMismatch)
-    throw createError({ statusCode: 403 });
+    throw createError({ status: 403 });
 
   const body = await readBody<TypeOf<typeof loginSchema>>(event) || {};
 
@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
 
   if (!validation.ok) {
     throw createError({
-      statusCode: 400,
+      status: 400,
       message: `${validation.errors[0].dataPath.split('.').at(-1)} ${validation.errors[0].message}`,
     });
   }
@@ -33,20 +33,20 @@ export default defineEventHandler(async (event) => {
   });
 
   if (!user)
-    throw createError({ statusCode: 400, message: 'email or password is incorrect' });
+    throw createError({ status: 400, message: 'email or password is incorrect' });
 
   if (!user.password)
-    throw createError({ statusCode: 400, message: 'this account uses social auth' });
+    throw createError({ status: 400, message: 'this account uses social auth' });
 
   const isPasswordValid = await verifyPassword(user.password, body.password)
     .catch(async (err) => {
       await event.context.logger.error({ err, msg: 'password verification failed' });
 
-      throw createError({ statusCode: 500 });
+      throw createError({ status: 500 });
     });
 
   if (isPasswordValid === false)
-    throw createError({ statusCode: 400, message: 'email or password is incorrect' });
+    throw createError({ status: 400, message: 'email or password is incorrect' });
 
   // $2 - bcrypt
   if (user.password.startsWith('$2')) {

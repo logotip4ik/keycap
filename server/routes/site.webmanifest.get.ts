@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
   const manifest: typeof Webmanifest | null = await storage.getItem('webmanifest.json');
 
   if (!manifest)
-    throw createError({ statusCode: 500 });
+    throw createError({ status: 500 });
 
   if (user)
     manifest.start_url = `/@${user.username}`;

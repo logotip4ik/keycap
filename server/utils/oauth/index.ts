@@ -19,7 +19,7 @@ export function sendOAuthRedirectIfNeeded(event: H3Event, _query?: QueryObject):
   const providerConfig = providerPathToConfigMap[pathWithoutQuery];
 
   if (!providerConfig)
-    throw createError({ statusCode: 418, message: 'i a coffeepot' });
+    throw createError({ status: 418, message: 'i a coffeepot' });
 
   const { site } = useRuntimeConfig().public;
 

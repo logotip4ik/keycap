@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
   const link = getRouterParam(event, 'link');
 
   if (!link || !isShareLinkValid(link))
-    throw createError({ statusCode: 400 });
+    throw createError({ status: 400 });
 
   const prisma = getPrisma();
 
@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
 
   if (!noteDetails) {
     throw createError({
-      statusCode: 404,
+      status: 404,
       message: 'Seems like this link is expired',
     });
   }

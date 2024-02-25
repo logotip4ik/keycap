@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
   const isOriginMismatch = checkOriginForMismatch(event);
 
   if (isOriginMismatch)
-    throw createError({ statusCode: 403 });
+    throw createError({ status: 403 });
 
   const body = await readBody<TypeOf<typeof registerSchema>>(event) || {};
 
@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
   // TODO: add data to error and match schemaPath with client inputs to highlight wrong inputs
   if (!validation.ok) {
     throw createError({
-      statusCode: 400,
+      status: 400,
       message: `${validation.errors[0].dataPath.split('.').at(-1)} ${validation.errors[0].message}`,
     });
   }
@@ -35,14 +35,14 @@ export default defineEventHandler(async (event) => {
 
   if (usernameTaken) {
     throw createError({
-      statusCode: 400,
+      status: 400,
       message: 'Sorry... But this username is already taken',
     });
   }
 
   if (!captchaValid) {
     throw createError({
-      statusCode: 422,
+      status: 422,
       message: 'Verification failed. Maybe try reloading the page ?',
     });
   }
@@ -53,7 +53,7 @@ export default defineEventHandler(async (event) => {
     .catch(async (err) => {
       await event.context.logger.error({ err, msg: 'password hashing failed' });
 
-      throw createError({ statusCode: 500 });
+      throw createError({ status: 500 });
     });
 
   const user = await prisma.user.create({
@@ -74,7 +74,7 @@ export default defineEventHandler(async (event) => {
   }).catch(async (err) => {
     await event.context.logger.error({ err, msg: 'user.create failed' });
 
-    throw createError({ statusCode: 400, message: 'user with this email or username might already exist' });
+    throw createError({ status: 400, message: 'user with this email or username might already exist' });
   });
 
   await Promise.all([

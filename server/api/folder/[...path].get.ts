@@ -46,12 +46,12 @@ export default defineEventHandler(async (event) => {
   }).catch(async (err) => {
     await event.context.logger.error({ err, msg: 'folder.findFirst failed' });
 
-    throw createError({ statusCode: 400 });
+    throw createError({ status: 400 });
   });
   timer.end();
 
   if (!folder)
-    throw createError({ statusCode: 404 });
+    throw createError({ status: 404 });
 
   timer.appendHeader(event);
 

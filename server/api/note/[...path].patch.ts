@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
   const path = getRouterParam(event, 'path');
 
   if (!path)
-    throw createError({ statusCode: 400 });
+    throw createError({ status: 400 });
 
   const notePath = generateNotePath(user.username, path);
 
@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
 
   if (!validation.ok) {
     throw createError({
-      statusCode: 400,
+      status: 400,
       message: `${validation.errors[0].dataPath.split('.').at(-1)} ${validation.errors[0].message}`,
     });
   }
@@ -43,14 +43,14 @@ export default defineEventHandler(async (event) => {
   }).catch(async (err) => {
     if (err.code === PrismaError.UniqueConstraintViolation) {
       throw createError({
+        status: 400,
         message: 'Note with such name already exists',
-        statusCode: 400,
       });
     }
 
     await event.context.logger.error({ err, msg: 'note.update failed' });
 
-    throw createError({ statusCode: 400 });
+    throw createError({ status: 400 });
   });
   timer.end();
 

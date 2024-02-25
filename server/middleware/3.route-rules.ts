@@ -34,5 +34,5 @@ export default defineEventHandler(async (event) => {
   const shouldPass = rule.handler(event);
 
   if (shouldPass === false)
-    throw createError({ statusCode: 401 });
+    throw createError({ status: 401 });
 });

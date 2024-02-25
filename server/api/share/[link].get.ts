@@ -2,7 +2,7 @@ export default defineEventHandler(async (event) => {
   const link = getRouterParam(event, 'link');
 
   if (!link || !isShareLinkValid(link))
-    throw createError({ statusCode: 400 });
+    throw createError({ status: 400 });
 
   const prisma = getPrisma();
 
@@ -12,11 +12,11 @@ export default defineEventHandler(async (event) => {
   }).catch(async (err) => {
     await event.context.logger.error({ err, msg: 'note.findFirst failed' });
 
-    throw createError({ statusCode: 400 });
+    throw createError({ status: 400 });
   });
 
   if (!note)
-    throw createError({ statusCode: 404 });
+    throw createError({ status: 404 });
 
   return { data: note };
 });
