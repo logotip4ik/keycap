@@ -3,6 +3,7 @@ import browserslistToEsbuild from 'browserslist-to-esbuild';
 import { join, resolve } from 'pathe';
 import { isCI, isDevelopment, isProduction, nodeENV } from 'std-env';
 import RollupSucrase from '@rollup/plugin-sucrase';
+import PluginUrl from '@rollup/plugin-url';
 
 import { prefixedConfig } from './config/build';
 import { getHeaders } from './config/headers';
@@ -346,6 +347,14 @@ export default defineNuxtConfig({
       output: {
         generatedCode: 'es2015',
       },
+      // @ts-expect-error broken types
+      plugins: [
+        PluginUrl({
+          limit: 0,
+          include: ['**/*.ttf'],
+          fileName: '[name][extname]',
+        }),
+      ],
     },
 
     imports: {
@@ -451,7 +460,6 @@ export default defineNuxtConfig({
       minify: isCI,
 
       rollupConfig: {
-        // @ts-expect-error probably broken types
         plugins: [
           // NOTE: it results in smaller server size and faster builds. Neat ¯\_(ツ)_/¯
           RollupSucrase({

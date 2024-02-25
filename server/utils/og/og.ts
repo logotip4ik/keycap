@@ -1,26 +1,16 @@
-import fs from 'node:fs';
-import { join } from 'pathe';
-
 import type { ResvgRenderOptions } from '@resvg/resvg-js';
+
+import MonaSansUrl from './MonaSans-Regular.ttf';
 
 // @ts-expect-error virtual file
 import { buildDir, publicPath } from '#resolved-paths';
-
-console.log({
-  cwd: process.cwd(),
-  publicPath,
-  buildDir,
-  dir: fs.readdirSync(join(process.cwd(), '../..')),
-});
 
 const resvgOptions = {
   logLevel: import.meta.dev ? 'info' : 'off',
   fitTo: { mode: 'original' },
   font: {
     loadSystemFonts: false,
-    fontFiles: [
-      import.meta.prod ? '../../static/MonaSans-Regular.ttf' : '',
-    ],
+    fontFiles: [MonaSansUrl],
   },
 } satisfies ResvgRenderOptions;
 
