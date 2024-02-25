@@ -1,6 +1,6 @@
 import { addTemplate, defineNuxtModule, useLogger } from '@nuxt/kit';
 import { isDevelopment } from 'std-env';
-import { join } from 'pathe';
+import { join, relative } from 'pathe';
 
 export default defineNuxtModule({
   async setup(_, nuxt) {
@@ -18,7 +18,7 @@ export default defineNuxtModule({
       getContents: ({ nuxt }) => {
         const publicPath = isDevelopment
           ? join(nuxt.options.rootDir, nuxt.options.dir.public)
-          : publicDir;
+          : relative(process.cwd(), publicDir);
 
         logger.info(`Resolved public path: ${publicPath}`);
 
