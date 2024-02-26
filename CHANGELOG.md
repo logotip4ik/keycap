@@ -1,6 +1,83 @@
 # Changelog
 
 
+## v3.11.0
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.10.2...v3.11.0)
+
+### 🚀 Enhancements
+
+- With-tooltip component ([ba2aefa8](https://github.com/logotip4ik/keycap/commit/ba2aefa8))
+
+### 🩹 Fixes
+
+- Return buffer from generatePng function and load mona sans font ([066e43f9](https://github.com/logotip4ik/keycap/commit/066e43f9))
+- Add strike through formatter button ([150d1219](https://github.com/logotip4ik/keycap/commit/150d1219))
+- Markdown in jsdoc ([11a377fe](https://github.com/logotip4ik/keycap/commit/11a377fe))
+
+### 💅 Refactors
+
+- Og utils ([286722e1](https://github.com/logotip4ik/keycap/commit/286722e1))
+- Module for getting path to public folder at runtime ([17b4fd27](https://github.com/logotip4ik/keycap/commit/17b4fd27))
+- Use og utils to generate png image ([4f2bb30c](https://github.com/logotip4ik/keycap/commit/4f2bb30c))
+- Move mark buttons to formatter config file ([29ea9a11](https://github.com/logotip4ik/keycap/commit/29ea9a11))
+- Hoist static re and reduce number of iterations ([5d47fca9](https://github.com/logotip4ik/keycap/commit/5d47fca9))
+- Omit use of cache in og image generation ([ee64c5f7](https://github.com/logotip4ik/keycap/commit/ee64c5f7))
+- Use `status` instead of `statusCode` ([d884d748](https://github.com/logotip4ik/keycap/commit/d884d748))
+
+### 🏡 Chore
+
+- **release:** V3.10.2 ([b1a72de4](https://github.com/logotip4ik/keycap/commit/b1a72de4))
+- Better title for view route ([2588f152](https://github.com/logotip4ik/keycap/commit/2588f152))
+- Remove second div wrapper ([ad884f74](https://github.com/logotip4ik/keycap/commit/ad884f74))
+- Use div for page root ([35d2e64a](https://github.com/logotip4ik/keycap/commit/35d2e64a))
+- Optimize a bit svg template ([e18bdd71](https://github.com/logotip4ik/keycap/commit/e18bdd71))
+- Cache svg template ([2bba1500](https://github.com/logotip4ik/keycap/commit/2bba1500))
+- Delete not used nitro storage driver ([9a34db7a](https://github.com/logotip4ik/keycap/commit/9a34db7a))
+- Allow rollup generating es2015 code ([b597311d](https://github.com/logotip4ik/keycap/commit/b597311d))
+- Do not use redis cache until ci ([d749b80e](https://github.com/logotip4ik/keycap/commit/d749b80e))
+- Initialize prisma connection on nitro startup ([8c72697c](https://github.com/logotip4ik/keycap/commit/8c72697c))
+- Delete not used file ([00c3b8f6](https://github.com/logotip4ik/keycap/commit/00c3b8f6))
+- Install resvg to generate png for og routes ([47b56feb](https://github.com/logotip4ik/keycap/commit/47b56feb))
+- Better og assets structure ([96e03e80](https://github.com/logotip4ik/keycap/commit/96e03e80))
+- Remove font definition as resvg does not support @font-face rule ([e3117833](https://github.com/logotip4ik/keycap/commit/e3117833))
+- Put regular mona sans font in public folder ([f13718e3](https://github.com/logotip4ik/keycap/commit/f13718e3))
+- Use correct font name for mona sans ([867f46d5](https://github.com/logotip4ik/keycap/commit/867f46d5))
+- Update deps ([f7c3dae6](https://github.com/logotip4ik/keycap/commit/f7c3dae6))
+- Update keycap description wording ([11c04df2](https://github.com/logotip4ik/keycap/commit/11c04df2))
+- Move text splitting to og utils ([f202ea24](https://github.com/logotip4ik/keycap/commit/f202ea24))
+- Add border-radius to bubble box ([10639f51](https://github.com/logotip4ik/keycap/commit/10639f51))
+- Better kdb styles ([6a6ace98](https://github.com/logotip4ik/keycap/commit/6a6ace98))
+- Bump editor history depth ([a3429b04](https://github.com/logotip4ik/keycap/commit/a3429b04))
+- Add tooltips for formatter buttons ([958fecc3](https://github.com/logotip4ik/keycap/commit/958fecc3))
+- Remove _G prefix from regexp ([e5c3230a](https://github.com/logotip4ik/keycap/commit/e5c3230a))
+- Correct node order ([13a4a026](https://github.com/logotip4ik/keycap/commit/13a4a026))
+- Remove not used import ([d5766e34](https://github.com/logotip4ik/keycap/commit/d5766e34))
+- Rename splitting text function ([9922974d](https://github.com/logotip4ik/keycap/commit/9922974d))
+- Use escapeHtml from vue/shared ([7efa69a9](https://github.com/logotip4ik/keycap/commit/7efa69a9))
+- Rename public-dir module ([aa2a31d6](https://github.com/logotip4ik/keycap/commit/aa2a31d6))
+- Add todo ([e8c57709](https://github.com/logotip4ik/keycap/commit/e8c57709))
+- Do not override csp for og route ([8ea9355b](https://github.com/logotip4ik/keycap/commit/8ea9355b))
+- Use h3 advised error params and supress type error ([fc6b6d15](https://github.com/logotip4ik/keycap/commit/fc6b6d15))
+- Patch tiptap bold extension to remove overlapping shortcuts ([bd7aa302](https://github.com/logotip4ik/keycap/commit/bd7aa302))
+- Remove vite resolution ([b64dda71](https://github.com/logotip4ik/keycap/commit/b64dda71))
+- Do not initiate prisma connection on nitro startup ([95ef6a4e](https://github.com/logotip4ik/keycap/commit/95ef6a4e))
+- Move coincident patch to resolutions ([7a295f6e](https://github.com/logotip4ik/keycap/commit/7a295f6e))
+- Make different patch to remove use of `data:` in worker ([0670d14a](https://github.com/logotip4ik/keycap/commit/0670d14a))
+- Remove not used module ([48539cb9](https://github.com/logotip4ik/keycap/commit/48539cb9))
+- Do not add focus and blur event handlers on small screens ([90589ea9](https://github.com/logotip4ik/keycap/commit/90589ea9))
+- Remove note ([f9306a47](https://github.com/logotip4ik/keycap/commit/f9306a47))
+- Remove not needed import mock ([8366b8f9](https://github.com/logotip4ik/keycap/commit/8366b8f9))
+
+### 🎨 Styles
+
+- Merge similar imports ([3092769b](https://github.com/logotip4ik/keycap/commit/3092769b))
+- Break oneline ternary ([951edb00](https://github.com/logotip4ik/keycap/commit/951edb00))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.10.2
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.10.1...v3.10.2)
