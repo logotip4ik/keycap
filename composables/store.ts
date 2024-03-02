@@ -8,10 +8,10 @@ import type { SafeUser } from '~/types/server';
 export const useCurrentItemForDetails = () => useState<FolderOrNote | null>(() => null);
 export const useUser = () => useState<Serialize<SafeUser> | null>('user', () => null);
 
-const notesCache = LRUCache(100);
+const notesCache = LRUCache(20);
 export const useNotesCache = () => notesCache;
 
-const foldersCache = LRUCache(25);
+const foldersCache = LRUCache(5);
 export const useFoldersCache = () => foldersCache;
 
 const fuzzyWorker = shallowRef<null | Prettify<Remote<FuzzyWorker>>>(null);
