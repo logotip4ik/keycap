@@ -6,7 +6,7 @@ const LIMIT = Math.floor((INTERVAL * 2) / 1000); // two per second
 // NOTE: https://lihbr.com/posts/rate-limiting-without-overhead-netlify-or-vercel-functions
 // cool article that describes problem about rate limiting in serverless functions
 export default defineEventHandler(async (event) => {
-  if (event.path?.startsWith('/api')) {
+  if (!import.meta.config.benchmarking && event.path?.startsWith('/api')) {
     const rateLimit = getRateLimiter();
     const identifier = getRequestIP(event, { xForwardedFor: true });
 
