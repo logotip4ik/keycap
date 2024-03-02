@@ -57,7 +57,7 @@ onBeforeUnmount(() => {
   ;
 
   @media (prefers-color-scheme: dark) {
-    --base-shadow-color: 200, 200, 200;
+    --base-shadow-color: 180, 180, 180;
   }
 
   @supports (backdrop-filter: blur(1px)) {
