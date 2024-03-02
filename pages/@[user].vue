@@ -65,11 +65,9 @@ useTinykeys({
 });
 
 onMounted(() => {
-  if (route.query.search !== undefined)
-    isShowingSearch.value = true;
+  isShowingSearch.value = route.query.search !== undefined;
 
-  [preloadDashboardComponents, defineFuzzyWorker]
-    .map((cb) => requestIdleCallback(cb));
+  prepareWorkspace();
 
   if (import.meta.dev)
     // @ts-expect-error this should not be defined

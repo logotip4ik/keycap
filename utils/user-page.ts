@@ -3,6 +3,25 @@ import { wrap as comlink } from 'comlink';
 
 import type { Remote } from 'comlink';
 
+const UPDATE_WORKER_DELAY = parseDuration('1.5s')!;
+const initCallbacks = [
+  defineFuzzyWorker,
+  preloadDashboardComponents,
+  () => import('~/utils/sw-controller')
+    .then(({ registerSW }) => registerSW()),
+];
+export function prepareWorkspace() {
+  requestIdleCallback(() => {
+    invokeArrayFns(initCallbacks);
+
+    setTimeout(async () => {
+      const { registerSWToasts } = await import('~/utils/sw-controller');
+
+      requestIdleCallback(registerSWToasts);
+    }, UPDATE_WORKER_DELAY);
+  });
+}
+
 export function preloadDashboardComponents() {
   const blankNotePath = `/@a/${BLANK_NOTE_NAME}`;
   preloadRouteComponents(blankNotePath);
