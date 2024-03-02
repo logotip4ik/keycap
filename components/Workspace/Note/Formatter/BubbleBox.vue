@@ -47,7 +47,6 @@ onBeforeUnmount(() => {
 
   padding: 0.325rem;
 
-  background-color: hsla(var(--surface-color-hsl), 0.95);
   border: 1px solid hsla(var(--text-color-hsl), 0.125);
   border-radius: 0.175rem;
   box-shadow:
@@ -56,14 +55,21 @@ onBeforeUnmount(() => {
     15px 25px 80px rgba(var(--base-shadow-color), 0.08)
   ;
 
-  @media (prefers-color-scheme: dark) {
-    --base-shadow-color: 180, 180, 180;
-  }
+  &::before {
+    content: '';
 
-  @supports (backdrop-filter: blur(1px)) {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+
+    border-radius: inherit;
     background-color: hsla(var(--surface-color-hsl), 0.25);
 
     backdrop-filter: blur(12px);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    --base-shadow-color: 180, 180, 180;
   }
 }
 </style>
