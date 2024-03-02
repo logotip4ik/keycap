@@ -24,6 +24,5 @@ export default defineEventHandler(async (event) => {
 
   timer.appendHeader(event);
 
-  // nitro will automatically set status to 204 as no content
   return sendNoContent(event);
 });
