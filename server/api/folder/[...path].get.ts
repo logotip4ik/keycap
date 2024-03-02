@@ -1,6 +1,6 @@
 import type { Prisma } from '@prisma/client';
 
-export const selectors = defineFolderSelectors({
+export const selectors = definePrismaSelectors<Prisma.FolderSelect>({
   default: {
     id: true,
     name: true,

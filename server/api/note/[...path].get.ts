@@ -1,6 +1,6 @@
 import type { Prisma } from '@prisma/client';
 
-export const selectors = defineNoteSelectors({
+export const selectors = definePrismaSelectors<Prisma.NoteSelect>({
   default: {
     id: true,
     name: true,
