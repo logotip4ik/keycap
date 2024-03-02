@@ -34,9 +34,10 @@
 }
 
 html {
-  -moz-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
+  // Already included by normalize.css
+  // -moz-text-size-adjust: 100%;
+  // -webkit-text-size-adjust: 100%;
+  // text-size-adjust: 100%;
 
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
