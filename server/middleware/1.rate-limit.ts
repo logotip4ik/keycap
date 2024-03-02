@@ -1,7 +1,5 @@
 import RateLimiter from 'lambda-rate-limiter';
 
-import type { RateLimiter as RateLimiterI } from 'lambda-rate-limiter';
-
 const INTERVAL = parseDuration('1 minute')!;
 const LIMIT = Math.floor((INTERVAL * 2) / 1000); // two per second
 
@@ -39,5 +37,5 @@ function getRateLimiter() {
 
 declare global {
   // eslint-disable-next-line vars-on-top, no-var
-  var rateLimiter: RateLimiterI;
+  var rateLimiter: ReturnType<typeof RateLimiter>;
 }
