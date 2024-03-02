@@ -368,6 +368,11 @@ export default defineNuxtConfig({
           from: 'prisma-error-enum',
           imports: ['PrismaError'],
         },
+        {
+          type: true,
+          from: 'type-fest',
+          imports: ['ValueOf'],
+        },
       ],
 
       dirs: [
