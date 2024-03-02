@@ -42,11 +42,14 @@ though `node-postgres` isn't well suited for serverless. So to see Kysely outper
 
 ### Load testing with Bombardier
 
-test command:
+Firstly build the project in bench config: `yarn build:bench`, then test command itself:
 
 ```sh
 bombardier http://localhost:3000/api/notes/main -l -d 60s -c 300
 ```
+
+> [!NOTE]
+> Don't forget to download the [bombardier](https://github.com/codesenberg/bombardier)
 
 <details>
 <summary>Kysely</summary>
