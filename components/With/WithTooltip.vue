@@ -35,16 +35,28 @@ watch(target, (target) => {
   }
 });
 
+const floating = {
+  computePosition: undefined as typeof import('@floating-ui/dom').computePosition | undefined,
+  offset: undefined as typeof import('@floating-ui/dom').offset | undefined,
+  shift: undefined as typeof import('@floating-ui/dom').shift | undefined,
+};
 watch(shouldShow, async (shouldShow) => {
   if (!shouldShow || !target.value || !tooltipEl.value)
     return;
 
-  const { computePosition, shift, offset } = await import('@floating-ui/dom');
-  const { x, y } = await computePosition(target.value, tooltipEl.value, {
+  if (!floating.computePosition || !floating.shift || !floating.offset) {
+    const { computePosition, shift, offset } = await import('@floating-ui/dom');
+
+    floating.computePosition = computePosition;
+    floating.shift = shift;
+    floating.offset = offset;
+  }
+
+  const { x, y } = await floating.computePosition(target.value, tooltipEl.value, {
     placement: 'bottom',
     middleware: [
-      offset(4),
-      shift({ padding: 8 }),
+      floating.offset(4),
+      floating.shift({ padding: 8 }),
     ],
   });
 
