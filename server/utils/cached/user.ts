@@ -2,12 +2,12 @@ import { sha256base64 } from 'ohash';
 
 export const USER_CACHE_GROUP = 'user';
 
-export enum UserCacheName {
-  Recent = 'recent',
-  Taken = 'taken',
-}
+export const UserCacheName = {
+  Recent: 'recent',
+  Taken: 'taken',
+} as const;
 
-export function getUserCacheKey(username: string, cacheName?: UserCacheName) {
+export function getUserCacheKey(username: string, cacheName?: ValueOf<typeof UserCacheName>) {
   if (!username)
     throw new Error('unexpected empty username');
 

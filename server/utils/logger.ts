@@ -1,17 +1,18 @@
 import type { H3Event } from 'h3';
 
-export enum LogLevel {
-  Info = 'info',
-  Warn = 'warn',
-  Error = 'error',
-}
+export const LogLevel = {
+  Info: 'info',
+  Warn: 'warn',
+  Error: 'error',
+} as const;
+
 export interface LoggerData extends Record<string, unknown | undefined> {
   msg?: string | undefined
   err?: Error | undefined
   error?: Error | undefined
 }
 export interface Logger {
-  log: (level: LogLevel, data: LoggerData) => Promise<void>
+  log: (level: ValueOf<typeof LogLevel>, data: LoggerData) => Promise<void>
   error: (data: LoggerData | string) => Promise<void>
   warn: (data: LoggerData | string) => Promise<void>
   info: (data: LoggerData | string) => Promise<void>
@@ -33,7 +34,7 @@ export function createLogger(event: H3Event) {
   };
 
   const logger: Logger = {
-    async log(level: LogLevel, data: LoggerData) {
+    async log(level: ValueOf<typeof LogLevel>, data: LoggerData) {
       await baseLog(axiom, baseData, level, data);
     },
 

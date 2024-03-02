@@ -1,23 +1,17 @@
 import { customAlphabet } from 'nanoid';
+import type { ValueOf } from 'type-fest';
 
 export const nanoid = customAlphabet('123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz', 24);
-export enum KeyPrefix {
-  Build,
-  Jwt,
-  OAuthState,
-  Link,
-}
+export const KeyPrefix = {
+  Build: 'build',
+  Jwt: 'jwt',
+  OAuthState: 'oauth_state',
+  Link: 'link',
+} as const;
 
-const prefixes: Record<KeyPrefix, string> = {
-  [KeyPrefix.Build]: 'build',
-  [KeyPrefix.Jwt]: 'jwt',
-  [KeyPrefix.OAuthState]: 'oauth_state',
-  [KeyPrefix.Link]: 'link',
-};
-
-export function createKey(prefix: KeyPrefix, size?: number) {
+export function createKey(prefix: ValueOf<typeof KeyPrefix>, size?: number) {
   if (typeof size === 'number' && size < 12)
     throw new Error('key length is too small');
 
-  return `${prefixes[prefix]}_${nanoid(size)}`;
+  return `${prefix}_${nanoid(size)}`;
 }
