@@ -30,7 +30,13 @@ useServerHead({
   },
 
   link: [
-    { rel: 'preload', as: 'font', type: 'font/woff2', crossorigin: 'anonymous', href: MonaSansURL },
+    {
+      rel: 'preload',
+      as: 'font',
+      type: 'font/woff2',
+      crossorigin: 'anonymous',
+      href: MonaSansURL,
+    },
   ],
 });
 
@@ -54,18 +60,6 @@ useServerSeoMeta({
   twitterImage: `${protocol}://${site}/og-image.min.jpg`,
   twitterImageAlt: 'Keycap',
 });
-
-if (import.meta.client) {
-  const UPDATE_WORKER_DELAY = parseDuration('1.5s')!;
-
-  setTimeout(() => {
-    requestIdleCallback(async () => {
-      const { updateServiceWorker } = await import('~/utils/sw-controller');
-
-      requestIdleCallback(updateServiceWorker);
-    });
-  }, UPDATE_WORKER_DELAY);
-}
 </script>
 
 <template>
