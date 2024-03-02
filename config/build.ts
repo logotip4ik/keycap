@@ -1,14 +1,18 @@
 import { destr } from 'destr';
 
 export interface Config {
-  // config variables that will be replaced at build time
   oauthEnabled: boolean
   turnstileEnabled: boolean
+
+  benchmarking: boolean
 }
 
+// config variables that will be replaced at build time
 export const config: Config = {
   oauthEnabled: destr(process.env.FEATURE_OAUTH) || false,
   turnstileEnabled: destr(process.env.FEATURE_TURNSTILE) || false,
+
+  benchmarking: destr(process.env.BENCHMARKING) || false,
 };
 
 export const prefixedConfig = Object.fromEntries(
