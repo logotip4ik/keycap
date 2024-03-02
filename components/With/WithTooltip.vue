@@ -8,7 +8,7 @@ const isSmallScreen = getIsSmallScreen();
 const shouldShow = ref(false);
 const target = shallowRef<HTMLElement | null>(null);
 const tooltipEl = shallowRef<HTMLElement | null>(null);
-const tooltipId = (Math.random() * 1_000_000).toFixed(0);
+const tooltipId = (Math.random() * 1_000_000_000).toFixed(0);
 
 const timeoutToShowTooltip = parseDuration('0.75s')!;
 const cleanups: Array<() => any> = [];
