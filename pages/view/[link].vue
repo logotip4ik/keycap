@@ -60,7 +60,7 @@ useServerSeoMeta({
 
   max-width: 1200px;
 
-  padding: 25vh 0 0;
+  padding: 30vh 0 0;
   margin: 0 auto;
 
   .nav {
