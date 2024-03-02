@@ -1,14 +1,3 @@
-interface Info {
-  commit: string
-  version: string
-  build_time: string
-
-  /** @private */
-  users?: number
-  /** @private */
-  notes?: number
-}
-
 export default defineEventHandler(async (event) => {
   const { build, public: config } = useRuntimeConfig();
 
@@ -38,3 +27,14 @@ export default defineEventHandler(async (event) => {
 
   return info;
 });
+
+interface Info {
+  commit: string
+  version: string
+  build_time: string
+
+  /** @private */
+  users?: number
+  /** @private */
+  notes?: number
+}
