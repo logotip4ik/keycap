@@ -11,6 +11,7 @@ import { tsConfig } from './config/typescript';
 import { breakpoints, sidebarsBreakpoints } from './constants/breakpoints';
 import { inlinableStylesRE, nodeModulesRE } from './constants/build';
 import { ParseDurationTransformPlugin, parseDurationFunctionName } from './unplugin/parse-duration';
+import { PrismaSeletorTransformPlugin } from './unplugin/prisma-selectors';
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
@@ -459,6 +460,7 @@ export default defineNuxtConfig({
     vite: {
       plugins: [
         ParseDurationTransformPlugin.vite(),
+        PrismaSeletorTransformPlugin.vite(),
       ],
     },
 
@@ -475,6 +477,7 @@ export default defineNuxtConfig({
             ],
           }),
           ParseDurationTransformPlugin.rollup(),
+          PrismaSeletorTransformPlugin.rollup(),
         ],
       },
     },
