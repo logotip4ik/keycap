@@ -21,7 +21,6 @@ export const PrismaSeletorTransformPlugin = createUnplugin(() => ({
   transform(code, id) {
     if (!selectorFunctionCall.test(code))
       return;
-    console.log('transforming', id);
 
     const s = new MagicString(code);
 
