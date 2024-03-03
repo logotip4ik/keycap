@@ -7,7 +7,10 @@ class Timer {
   #results = '';
 
   start(name: string, desc?: string) {
-    name = name.replace(/\s/g, '-');
+    if (import.meta.dev && name.includes(' ')) {
+      console.warn('timer name should not contain a whitespace');
+      name = name.replace(/\s/g, '-');
+    }
 
     this.#timersStack.push({
       name,
@@ -20,7 +23,8 @@ class Timer {
     let timer: TimerPoint;
 
     if (name) {
-      name = name.replace(/\s/g, '-');
+      if (import.meta.dev)
+        name = name.replace(/\s/g, '-');
 
       const timerIdx = this.#timersStack.findIndex((timer) => timer.name === name);
 
@@ -36,16 +40,13 @@ class Timer {
       timer = this.#timersStack.pop()!;
     }
 
-    const result = [
-      timer.name,
-      timer.desc && `desc="${timer.desc}"`,
-      `dur=${performance.now() - timer.start}`,
-    ].filter(Boolean);
-
     if (this.#results.length > 0)
       this.#results += ',';
 
-    this.#results += result.join(';');
+    const dur = performance.now() - timer.start;
+    this.#results += timer.desc
+      ? `${timer.name};desc=${timer.desc};dur=${dur}`
+      : `${timer.name};dur=${dur}`;
   }
 
   getResults() {
