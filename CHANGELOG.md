@@ -1,6 +1,61 @@
 # Changelog
 
 
+## v3.11.1
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.11.0...v3.11.1)
+
+### 🩹 Fixes
+
+- Move with-blob styles to global ([cd2bd7b8](https://github.com/logotip4ik/keycap/commit/cd2bd7b8))
+- Set root font size to 1rem ([ba65b8ee](https://github.com/logotip4ik/keycap/commit/ba65b8ee))
+- Mount backdrop blur on pseudo element to allow nested blurs ([e423595b](https://github.com/logotip4ik/keycap/commit/e423595b))
+
+### 💅 Refactors
+
+- Move init callbacks into separate function ([241d0892](https://github.com/logotip4ik/keycap/commit/241d0892))
+- Remove use of enums ([f2736a40](https://github.com/logotip4ik/keycap/commit/f2736a40))
+- Create generic function to create prisma seletors ([b2d9cb18](https://github.com/logotip4ik/keycap/commit/b2d9cb18))
+- Omit creating not used array and check for whitespace only in dev mode ([26cc6b00](https://github.com/logotip4ik/keycap/commit/26cc6b00))
+- Check for if jwt is valid only if jwt is verified ([3de5031c](https://github.com/logotip4ik/keycap/commit/3de5031c))
+
+### 📖 Documentation
+
+- Add more info on how to bench keycap ([d06a30b6](https://github.com/logotip4ik/keycap/commit/d06a30b6))
+
+### 🏡 Chore
+
+- **release:** V3.11.0 ([8411c064](https://github.com/logotip4ik/keycap/commit/8411c064))
+- Update deps ([1d847290](https://github.com/logotip4ik/keycap/commit/1d847290))
+- Lower shadow brightness ([0ab6ef54](https://github.com/logotip4ik/keycap/commit/0ab6ef54))
+- Lower lru cache size ([56807188](https://github.com/logotip4ik/keycap/commit/56807188))
+- Do not check service worker for update in app.vue ([2b271488](https://github.com/logotip4ik/keycap/commit/2b271488))
+- Do not include double rules ([07486a67](https://github.com/logotip4ik/keycap/commit/07486a67))
+- Put note view a bit lower ([07c5e9b5](https://github.com/logotip4ik/keycap/commit/07c5e9b5))
+- Cache floating functions ([914fab20](https://github.com/logotip4ik/keycap/commit/914fab20))
+- Bump size of tooltip id ([48701a5e](https://github.com/logotip4ik/keycap/commit/48701a5e))
+- Add benchmarking config key ([53933611](https://github.com/logotip4ik/keycap/commit/53933611))
+- Remove double ratelimiter import ([92f55504](https://github.com/logotip4ik/keycap/commit/92f55504))
+- Disable rate limiting in benchmarking ([ec61f7d3](https://github.com/logotip4ik/keycap/commit/ec61f7d3))
+- Add bench build script ([d912afd7](https://github.com/logotip4ik/keycap/commit/d912afd7))
+- Install type-fest and add auto import ([73cd3005](https://github.com/logotip4ik/keycap/commit/73cd3005))
+- Remove note ([2dc391ad](https://github.com/logotip4ik/keycap/commit/2dc391ad))
+- Remove not needed parseDuration import ([9054c32a](https://github.com/logotip4ik/keycap/commit/9054c32a))
+- Remove defining selector function call in prod build ([41c9bd86](https://github.com/logotip4ik/keycap/commit/41c9bd86))
+- Remove console.log ([b10cd6dc](https://github.com/logotip4ik/keycap/commit/b10cd6dc))
+
+### 🎨 Styles
+
+- Move interface below function ([a0809567](https://github.com/logotip4ik/keycap/commit/a0809567))
+
+### 🤖 CI
+
+- Bump the actions group with 1 update ([#19](https://github.com/logotip4ik/keycap/pull/19))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.11.0
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.10.2...v3.11.0)
