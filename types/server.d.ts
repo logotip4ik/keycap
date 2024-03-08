@@ -1,6 +1,5 @@
 import type { User } from '@prisma/client';
 import type { createTimer } from '~/server/utils/timers';
-import type { createLogger } from '~/server/utils/logger';
 import type { OAuthProvider } from '~/server/utils/oauth';
 
 export type SafeUser = Prettify<Pick<User, 'id' | 'email' | 'username'>>;
