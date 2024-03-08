@@ -65,7 +65,7 @@ export async function getGitHubUserWithEvent(event: H3Event) {
     const primaryEmail = emails.find((email) => email.primary) || emails[0];
 
     if (!primaryEmail)
-      throw new Error('was not able to gather user email');
+      throw new Error('unable to gather user email');
 
     user.email = primaryEmail.email;
   }
