@@ -1,4 +1,5 @@
 import type { H3Event } from 'h3';
+import type { ValueOf } from 'type-fest';
 
 export const LogLevel = {
   Info: 'info',

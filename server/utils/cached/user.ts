@@ -1,5 +1,7 @@
 import { sha256base64 } from 'ohash';
 
+import type { ValueOf } from 'type-fest';
+
 export const USER_CACHE_GROUP = 'user';
 
 export const UserCacheName = {
