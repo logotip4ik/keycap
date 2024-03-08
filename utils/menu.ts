@@ -27,8 +27,7 @@ export const commandActions: Record<Command['key'], Command['handler']> = {
       contentsVisibility.value = 'visible';
   },
   [SearchAction.Refresh]: () => {
-    refreshNuxtData('note');
-    refreshNuxtData('folder');
+    refreshNuxtData(['note', 'folder']);
   },
   [SearchAction.RefreshNote]: () => {
     refreshNuxtData('note');
