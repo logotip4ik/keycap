@@ -20,13 +20,13 @@ export default defineEventHandler(async (event) => {
 
   const githubUser: GitHubUserRes | undefined = destr<GitHubUserRes>(query.socialUser) || await getGitHubUserWithEvent(event)
     .catch(async (err) => {
-      await event.context.logger.error({ err, msg: 'getGitHubUserWithEvent failed' });
+      await logger.error(event, { err, msg: 'getGitHubUserWithEvent failed' });
     });
 
   const userValidation = useSocialUserValidator(githubUser);
 
   if (!userValidation.ok) {
-    await event.context.logger.error({
+    await logger.error(event, {
       errors: userValidation.errors,
       msg: 'social user validation failed',
     });
@@ -83,7 +83,7 @@ export default defineEventHandler(async (event) => {
     normalizeGitHubUser(githubUser, { username }),
   )
     .catch(async (err) => {
-      await event.context.logger.error({ err, msg: 'updateOrCreateUserFromSocialAuth failed' });
+      await logger.error(event, { err, msg: 'updateOrCreateUserFromSocialAuth failed' });
 
       return null;
     });

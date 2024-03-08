@@ -56,7 +56,7 @@ export async function getUserFromEvent(event: H3Event): Promise<SafeUser | null>
 
   const jwt = await jwtVerify(accessToken, jwtSecret, { issuer: jwtIssuer })
     .catch(async (err) => {
-      await event.context.logger.error({ err, msg: 'jwt verification failed' });
+      await logger.error(event, { err, msg: 'jwt verification failed' });
     });
 
   if (jwt && isJwtPayload(jwt.payload)) {

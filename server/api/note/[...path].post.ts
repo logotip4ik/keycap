@@ -49,7 +49,7 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    await event.context.logger.error({ err, msg: 'note.create failed' });
+    await logger.error(event, { err, msg: 'note.create failed' });
 
     throw createError({ status: 400 });
   });

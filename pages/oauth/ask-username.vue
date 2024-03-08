@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { OAuthProvider, usernameRE } from '~/server/utils';
+import { logger } from '~/server/utils/logger';
 
 definePageMeta({
   middleware: ['redirect-dashboard'],
@@ -17,7 +18,7 @@ const event = useRequestEvent()!;
 const { query } = useRoute();
 
 if (!query.code || !query.provider) {
-  await event.context.logger.error({ query, msg: 'not enough data for proceeding with username' });
+  await logger.error(event, { query, msg: 'not enough data for proceeding with username' });
 
   throw createError({
     // @ts-expect-error broken types
@@ -33,7 +34,7 @@ const provider = isArray(query.provider)
 const normalizedProvider = OAuthProvider[provider as keyof typeof OAuthProvider || ''];
 
 if (!normalizedProvider) {
-  await event.context.logger.warn('someone is messing with oauth');
+  await logger.warn(event, 'someone is messing with oauth');
 
   throw createError({
     // @ts-expect-error broken types

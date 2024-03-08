@@ -44,7 +44,7 @@ export default defineEventHandler(async (event) => {
     where: { path: folderPath, ownerId: user.id },
     select: selectors[selectType],
   }).catch(async (err) => {
-    await event.context.logger.error({ err, msg: 'folder.findFirst failed' });
+    await logger.error(event, { err, msg: 'folder.findFirst failed' });
 
     throw createError({ status: 400 });
   });

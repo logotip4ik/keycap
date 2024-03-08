@@ -151,6 +151,7 @@ export default defineNuxtConfig({
       token: '',
       orgId: '',
       dataset: '',
+      baseUrl: 'https://api.axiom.co',
     },
   },
 

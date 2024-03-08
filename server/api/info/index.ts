@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
       prisma.user.count(),
       prisma.note.count(),
     ]).catch(async (err) => {
-      await event.context.logger.error({ err, msg: '(user|note).count failed' });
+      await logger.error(event, { err, msg: '(user|note).count failed' });
 
       return [null, null];
     });

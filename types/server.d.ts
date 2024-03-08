@@ -9,7 +9,6 @@ export declare module 'h3' {
   interface H3EventContext {
     user?: SafeUser | null
     timer?: ReturnType<typeof createTimer>
-    logger: ReturnType<typeof createLogger>
   }
 }
 

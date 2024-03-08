@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
       },
     });
   }).catch(async (err) => {
-    await event.context.logger.error({ err, msg: 'cannot create share' });
+    await logger.error(event, { err, msg: 'cannot create share' });
 
     throw createError({ status: 400 });
   });

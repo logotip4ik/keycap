@@ -29,7 +29,7 @@ export default defineEventHandler(async (event) => {
     where: { email: body.email },
     select: { id: true, email: true, username: true, password: true },
   }).catch(async (err) => {
-    await event.context.logger.error({ err, msg: 'user.findUnique failed' });
+    await logger.error(event, { err, msg: 'user.findUnique failed' });
   });
 
   if (!user)
@@ -40,7 +40,7 @@ export default defineEventHandler(async (event) => {
 
   const isPasswordValid = await verifyPassword(user.password, body.password)
     .catch(async (err) => {
-      await event.context.logger.error({ err, msg: 'password verification failed' });
+      await logger.error(event, { err, msg: 'password verification failed' });
 
       throw createError({ status: 500 });
     });

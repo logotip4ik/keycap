@@ -51,7 +51,7 @@ export default defineEventHandler(async (event) => {
 
   const hashedPassword = await hashPassword(body.password)
     .catch(async (err) => {
-      await event.context.logger.error({ err, msg: 'password hashing failed' });
+      await logger.error(event, { err, msg: 'password hashing failed' });
 
       throw createError({ status: 500 });
     });
@@ -72,7 +72,7 @@ export default defineEventHandler(async (event) => {
 
     select: { id: true, email: true, username: true },
   }).catch(async (err) => {
-    await event.context.logger.error({ err, msg: 'user.create failed' });
+    await logger.error(event, { err, msg: 'user.create failed' });
 
     throw createError({ status: 400, message: 'user with this email or username might already exist' });
   });

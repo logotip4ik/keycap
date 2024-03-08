@@ -48,7 +48,7 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    await event.context.logger.error({ err, msg: 'note.update failed' });
+    await logger.error(event, { err, msg: 'note.update failed' });
 
     throw createError({ status: 400 });
   });

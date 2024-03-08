@@ -18,13 +18,13 @@ export default defineEventHandler(async (event) => {
 
   const googleUser: GoogleUserRes | undefined = destr<GoogleUserRes>(query.socialUser) || await getGoogleUserWithEvent(event)
     .catch(async (err) => {
-      await event.context.logger.error({ err, msg: 'getGoogleUserWithEvent failed' });
+      await logger.error(event, { err, msg: 'getGoogleUserWithEvent failed' });
     });
 
   const userValidation = useSocialUserValidator(googleUser);
 
   if (!userValidation.ok) {
-    await event.context.logger.error({
+    await logger.error(event, {
       errors: userValidation.errors,
       msg: 'social user validation failed',
     });
@@ -79,7 +79,7 @@ export default defineEventHandler(async (event) => {
     normalizeGoogleUser(googleUser, { username }),
   )
     .catch(async (err) => {
-      await event.context.logger.error({ err, msg: 'updateOrCreateUserFromSocialAuth failed' });
+      await logger.error(event, { err, msg: 'updateOrCreateUserFromSocialAuth failed' });
 
       return null;
     });

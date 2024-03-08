@@ -49,7 +49,7 @@ export default defineEventHandler(async (event) => {
     prisma.$queryRaw`UPDATE "Note" SET "path" = regexp_replace("path"::text, ${sqlFolderPathRegexp}, ${replaceValue}, 'c'), "updatedAt" = ${now} WHERE ("Note"."ownerId" = ${user.id} AND "Note"."path"::text LIKE ${sqlStartsWithFolderPath})`,
     prisma.$queryRaw`UPDATE "Folder" SET "path" = regexp_replace("path"::text, ${sqlFolderPathRegexp}, ${replaceValue}, 'c'), "updatedAt" = ${now} WHERE ("Folder"."ownerId" = ${user.id} AND "Folder"."path"::text LIKE ${sqlStartsWithFolderPath})`,
   ]).catch(async (err) => {
-    await event.context.logger.error({ err, msg: 'rename folder failed' });
+    await logger.error(event, { err, msg: 'rename folder failed' });
 
     if (err.code === PrismaError.RawQueryError) {
       throw createError({

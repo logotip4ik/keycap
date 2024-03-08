@@ -7,97 +7,87 @@ export const LogLevel = {
   Error: 'error',
 } as const;
 
+const logDefaults = {
+  nitro: true,
+  env: process.env.VERCEL_ENV || 'development',
+};
+
 export interface LoggerData extends Record<string, unknown | undefined> {
   msg?: string | undefined
   err?: Error | undefined
   error?: Error | undefined
 }
 export interface Logger {
-  log: (level: ValueOf<typeof LogLevel>, data: LoggerData) => Promise<void>
-  error: (data: LoggerData | string) => Promise<void>
-  warn: (data: LoggerData | string) => Promise<void>
-  info: (data: LoggerData | string) => Promise<void>
+  error: (event: H3Event, data: LoggerData | string) => Promise<void>
+  warn: (event: H3Event, data: LoggerData | string) => Promise<void>
+  info: (event: H3Event, data: LoggerData | string) => Promise<void>
 }
 
 let client: typeof $fetch | undefined;
+function getAxiomClient(axiom: ReturnType<typeof useRuntimeConfig>['axiom']) {
+  if (client)
+    return client;
 
-export function createLogger(event: H3Event) {
-  const { axiom } = useRuntimeConfig();
-  const [path, query] = event.path.split('?');
-
-  const baseData: LoggerData = {
-    nitro: true,
-    env: process.env.VERCEL_ENV || 'development',
-
-    path,
-    query,
-    username: event.context.user?.username,
-  };
-
-  const logger: Logger = {
-    async log(level: ValueOf<typeof LogLevel>, data: LoggerData) {
-      await baseLog(axiom, baseData, level, data);
+  client = $fetch.create({
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/x-ndjson',
+      'Authorization': `Bearer ${axiom.token}`,
+      'User-Agent': serverUserAgent,
+      'X-Axiom-Org-Id': axiom.orgId,
     },
+    method: 'POST',
+    baseURL: axiom.baseUrl,
+  });
 
-    async error(data: LoggerData | string) {
-      await logger.log(LogLevel.Error, typeof data === 'string' ? { msg: data } : data);
-    },
-
-    async warn(data: LoggerData | string) {
-      await logger.log(LogLevel.Warn, typeof data === 'string' ? { msg: data } : data);
-    },
-
-    async info(data: LoggerData | string) {
-      await logger.log(LogLevel.Info, typeof data === 'string' ? { msg: data } : data);
-    },
-  };
-
-  return logger;
+  return client;
 }
 
-async function baseLog(
-  axiom: ReturnType<typeof useRuntimeConfig>['axiom'],
-  baseData: LoggerData,
-  level: 'info' | 'warn' | 'error',
-  customData: LoggerData = {},
-) {
-  const data = Object.assign({}, baseData, customData);
+async function log(event: H3Event, level: ValueOf<typeof LogLevel>, data: LoggerData) {
+  const [path, query] = event.path.split('?');
 
-  data.level = level;
-  data._time = new Date().toISOString();
+  Object.assign(data, logDefaults, {
+    path,
+    query,
+    user: event.context.user,
+
+    level,
+    _time: new Date().toISOString(),
+  });
 
   if (data.err) {
-    data.err = Object.assign({}, data.err, {
+    data.err = Object.assign(Object.create(null), data.err, {
       message: (data.err as any).message,
       stack: (data.err as any).stack,
     });
   }
-
-  if (data.error) {
-    data.error = Object.assign({}, data.error, {
+  else if (data.error) {
+    data.error = Object.assign(Object.create(null), data.error, {
       message: (data.error as any).message,
       stack: (data.error as any).stack,
     });
   }
 
-  if (!client) {
-    client = $fetch.create({
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/x-ndjson',
-        'Authorization': `Bearer ${axiom.token}`,
-        'User-Agent': serverUserAgent,
-        'X-Axiom-Org-Id': axiom.orgId,
-      },
-      method: 'POST',
-      baseURL: 'https://api.axiom.co',
-    });
-  }
+  const { axiom } = useRuntimeConfig();
+  const client = getAxiomClient(axiom);
 
-  // avg log is 369.543ms pretty long :(
   await client(`/v1/datasets/${axiom.dataset}/ingest`, { body: data })
     .catch((err) => {
       // eslint-disable-next-line no-console
       console.log('that was unexpected', err);
     });
 }
+
+export const logger = {
+  async error(event: H3Event, data: LoggerData | string) {
+    await log(event, LogLevel.Error, typeof data === 'string' ? { msg: data } : data);
+  },
+
+  async warn(event: H3Event, data: LoggerData | string) {
+    await log(event, LogLevel.Warn, typeof data === 'string' ? { msg: data } : data);
+  },
+
+  async info(event: H3Event, data: LoggerData | string) {
+    await log(event, LogLevel.Info, typeof data === 'string' ? { msg: data } : data);
+  },
+} satisfies Logger;

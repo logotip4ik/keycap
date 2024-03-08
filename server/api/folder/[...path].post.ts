@@ -52,7 +52,7 @@ export default defineEventHandler(async (event) => {
         });
       }
 
-      await event.context.logger.error({ err, msg: 'folder.create failed' });
+      await logger.error(event, { err, msg: 'folder.create failed' });
 
       throw createError({ status: 400 });
     });

@@ -37,7 +37,7 @@ export default defineEventHandler(async (event) => {
     select: selectors[selectType],
   })
     .catch(async (err) => {
-      await event.context.logger.error({ err, msg: 'note.findFirst failed' });
+      await logger.error(event, { err, msg: 'note.findFirst failed' });
 
       throw createError({ status: 400 });
     });

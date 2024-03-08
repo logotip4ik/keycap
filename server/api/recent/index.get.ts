@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
   timer.start('db');
   const recent = await getRecentForUser(user)
     .catch(async (err) => {
-      await event.context.logger.error({ err, msg: 'note.findMany failed' });
+      await logger.error(event, { err, msg: 'note.findMany failed' });
     });
   timer.end();
 

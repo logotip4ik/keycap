@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
       where: { note: { path: notePath }, ownerId: user.id },
       select: { id: true, link: true },
     }).catch(async (err) => {
-      await event.context.logger.error(({ err, msg: 'share.findFirst failed' }));
+      await logger.error(event, { err, msg: 'share.findFirst failed' });
 
       throw createError({ status: 400 });
     });
@@ -30,7 +30,7 @@ export default defineEventHandler(async (event) => {
       where: { id: shareToDelete.id },
       select: { id: true },
     }).catch(async (err) => {
-      await event.context.logger.error({ err, msg: 'share.delete failed' });
+      await logger.error(event, { err, msg: 'share.delete failed' });
 
       throw createError({ status: 400 });
     });

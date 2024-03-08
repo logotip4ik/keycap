@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
       select: { name: true, path: true, root: true },
     }),
   ]).catch(async (err) => {
-    await event.context.logger.error({ err, msg: '(note|folder).findMany failed' });
+    await logger.error(event, { err, msg: '(note|folder).findMany failed' });
 
     throw createError({ status: 400 });
   });
