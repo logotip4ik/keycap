@@ -4,7 +4,7 @@ import type { ResvgRenderOptions } from '@resvg/resvg-js';
 import MonaSansUrl from './MonaSans-Regular.ttf';
 
 const resvgOptions = {
-  logLevel: import.meta.dev ? 'info' : 'off',
+  logLevel: import.meta.dev ? 'info' : 'error',
   fitTo: { mode: 'original' },
   font: {
     loadSystemFonts: false,
