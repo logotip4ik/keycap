@@ -347,6 +347,7 @@ export default defineNuxtConfig({
     },
 
     rollupConfig: {
+      treeshake: 'recommended',
       output: {
         generatedCode: 'es2015',
       },
@@ -390,7 +391,6 @@ export default defineNuxtConfig({
     esbuild: {
       options: {
         target: 'esnext',
-        treeShaking: true,
       },
     },
 
