@@ -1,5 +1,4 @@
 import { SignJWT, jwtVerify } from 'jose';
-import { withoutProtocol } from 'ufo';
 
 import type { H3Event } from 'h3';
 import type { CookieSerializeOptions } from 'cookie-es';
@@ -10,6 +9,7 @@ const authExpiration = parseDuration('3 days', 'second')!;
 const jwtSecret = new TextEncoder().encode(process.env.JWT_SECRET || '');
 const jwtIssuer = process.env.JWT_ISSUER || 'test:keycap';
 const accessTokenName = import.meta.prod ? '__Host-keycap-user' : 'keycap-user';
+const validOrigin = (import.meta.prod ? 'https://' : 'http://') + process.env.NUXT_PUBLIC_SITE;
 
 // https://web.dev/first-party-cookie-recipes/#the-good-first-party-cookie-recipe
 const authSerializeOptions: CookieSerializeOptions = {
@@ -71,9 +71,8 @@ export async function getUserFromEvent(event: H3Event): Promise<SafeUser | null>
   }
 }
 
-export function checkOriginForMismatch(event: H3Event) {
-  const host = getRequestHost(event);
-  const origin = getRequestHeader(event, 'Origin') || '';
+export function isOriginMismatched(event: H3Event) {
+  const origin = getRequestHeader(event, 'Origin');
 
-  return withoutProtocol(origin) !== host;
+  return origin !== validOrigin;
 }

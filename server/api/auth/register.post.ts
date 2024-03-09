@@ -4,11 +4,6 @@ export default defineEventHandler(async (event) => {
   if (event.context.user)
     return null;
 
-  const isOriginMismatch = checkOriginForMismatch(event);
-
-  if (isOriginMismatch)
-    throw createError({ status: 403 });
-
   const body = await readBody<TypeOf<typeof registerSchema>>(event) || {};
 
   if (body.email)

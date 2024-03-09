@@ -2,11 +2,6 @@ import type { TypeOf } from 'suretype';
 import type { SafeUser } from '~/types/server';
 
 export default defineEventHandler(async (event) => {
-  const isOriginMismatch = checkOriginForMismatch(event);
-
-  if (isOriginMismatch)
-    throw createError({ status: 403 });
-
   const body = await readBody<TypeOf<typeof loginSchema>>(event) || {};
 
   if (body.email)

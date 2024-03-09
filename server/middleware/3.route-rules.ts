@@ -26,6 +26,12 @@ export default defineEventHandler(async (event) => {
   if (isPreflightRequest(event))
     return null;
 
+  if (
+    event.method !== 'GET'
+    && isOriginMismatched(event)
+  )
+    throw createError({ status: 403 });
+
   const rule = rules.find((rule) => event.path.startsWith(rule.path));
 
   if (!rule)
