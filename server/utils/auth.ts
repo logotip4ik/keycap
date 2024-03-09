@@ -9,7 +9,6 @@ const authExpiration = parseDuration('3 days', 'second')!;
 const jwtSecret = new TextEncoder().encode(process.env.JWT_SECRET || '');
 const jwtIssuer = process.env.JWT_ISSUER || 'test:keycap';
 const accessTokenName = import.meta.prod ? '__Host-keycap-user' : 'keycap-user';
-const validOrigin = (import.meta.prod ? 'https://' : 'http://') + process.env.NUXT_PUBLIC_SITE;
 
 // https://web.dev/first-party-cookie-recipes/#the-good-first-party-cookie-recipe
 const authSerializeOptions: CookieSerializeOptions = {
@@ -70,6 +69,11 @@ export async function getUserFromEvent(event: H3Event): Promise<SafeUser | null>
     return null;
   }
 }
+
+const protocol = import.meta.prod ? 'https://' : 'http://';
+const validOrigin = import.meta.config.vercelEnv === 'production'
+  ? protocol + process.env.NUXT_PUBLIC_SITE
+  : protocol + process.env.VERCEL_URL;
 
 export function isOriginMismatched(event: H3Event) {
   const origin = getRequestHeader(event, 'Origin');
