@@ -1,10 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import type { ResvgRenderOptions } from '@resvg/resvg-js';
 
-// @ts-expect-error idk how to type this
 import MonaSansUrl from './assets/fonts/MonaSans-Regular.ttf';
-
-// @ts-expect-error idk how to type this
 import ViewTemplateUrl from './assets/templates/view.svg';
 
 const resvgOptions = {
