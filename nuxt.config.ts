@@ -3,7 +3,7 @@ import browserslistToEsbuild from 'browserslist-to-esbuild';
 import { join, resolve } from 'pathe';
 import { isCI, isDevelopment, isProduction, nodeENV } from 'std-env';
 import RollupSucrase from '@rollup/plugin-sucrase';
-import PluginUrl from '@rollup/plugin-url';
+import RollupUrl from '@rollup/plugin-url';
 
 import { prefixedConfig } from './config/build';
 import { getHeaders } from './config/headers';
@@ -353,10 +353,14 @@ export default defineNuxtConfig({
       },
       // @ts-expect-error broken types
       plugins: [
-        PluginUrl({
+        RollupUrl({
           limit: 0,
-          include: ['**/*.ttf'],
-          fileName: '[name][extname]',
+          include: [
+            '**/*.ttf',
+            '**/*.svg',
+          ],
+          fileName: isProduction ? '[name][extname]' : '[dirname][name][extname]',
+          sourceDir: isDevelopment ? process.cwd() : undefined,
         }),
       ],
     },
