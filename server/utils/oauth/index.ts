@@ -25,7 +25,7 @@ export function sendOAuthRedirectIfNeeded(event: H3Event, _query?: QueryObject):
 
   const state = createKey(KeyPrefix.OAuthState);
   const protocol = import.meta.prod ? 'https://' : 'http://';
-  const redirectUrl = new URL(`${providerConfig.authorizeEndpoint}`);
+  const redirectUrl = new URL(providerConfig.authorizeEndpoint);
 
   setCookie(event, 'state', state, {
     path: '/',
