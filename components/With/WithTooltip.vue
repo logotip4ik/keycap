@@ -58,10 +58,8 @@ watch(shouldShow, async (shouldShow) => {
     ],
   });
 
-  Object.assign(tooltipEl.value.style, {
-    top: `${y}px`,
-    left: `${x}px`,
-  });
+  tooltipEl.value.style.left = `${x}px`;
+  tooltipEl.value.style.top = `${y}px`;
 });
 
 function showWithTimeout() {
