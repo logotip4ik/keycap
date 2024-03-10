@@ -1,6 +1,7 @@
 import type { Prisma } from '@prisma/client';
 import type { H3Event } from 'h3';
 import type { QueryObject } from 'ufo';
+import type { CookieSerializeOptions } from 'cookie-es';
 
 import type { NormalizedSocialUser, SafeUser } from '~/types/server';
 
@@ -8,6 +9,13 @@ export const providerPathToConfigMap = {
   '/api/oauth/github': githubConfig,
   '/api/oauth/google': googleConfig,
 } as const;
+
+const stateSerializeOptions = {
+  path: '/',
+  httpOnly: true,
+  secure: import.meta.prod,
+  sameSite: 'lax',
+} satisfies CookieSerializeOptions;
 
 export function sendOAuthRedirectIfNeeded(event: H3Event, _query?: QueryObject): boolean {
   const query = _query || getQuery(event)!;
@@ -27,10 +35,7 @@ export function sendOAuthRedirectIfNeeded(event: H3Event, _query?: QueryObject):
   const protocol = import.meta.prod ? 'https://' : 'http://';
   const redirectUrl = new URL(providerConfig.authorizeEndpoint);
 
-  setCookie(event, 'state', state, {
-    path: '/',
-    httpOnly: true,
-  });
+  setCookie(event, 'state', state, stateSerializeOptions);
 
   redirectUrl.searchParams.set('state', state);
   redirectUrl.searchParams.set('client_id', providerConfig.oauth.clientId);
