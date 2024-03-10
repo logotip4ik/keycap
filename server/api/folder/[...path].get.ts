@@ -10,11 +10,13 @@ export const selectors = definePrismaSelectors<Prisma.FolderSelect>({
     notes: {
       select: { id: true, name: true, path: true },
       orderBy: { name: 'asc' },
+      take: 50,
     },
 
     subfolders: {
       select: { id: true, name: true, path: true, root: true },
       orderBy: { name: 'asc' },
+      take: 25,
     },
   },
 
