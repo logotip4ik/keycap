@@ -1,6 +1,44 @@
 # Changelog
 
 
+## v3.11.2
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.11.1...v3.11.2)
+
+### 🩹 Fixes
+
+- Check for different origin on preview deployment ([22a770f8](https://github.com/logotip4ik/keycap/commit/22a770f8))
+
+### 💅 Refactors
+
+- Do not auto import valueof ([acab018d](https://github.com/logotip4ik/keycap/commit/acab018d))
+- Use only one logger instance ([6c17c176](https://github.com/logotip4ik/keycap/commit/6c17c176))
+- Check for origin mismatch for every non get request ([5ac4fde3](https://github.com/logotip4ik/keycap/commit/5ac4fde3))
+- Rely on fs to load og templates ([1c11ccdb](https://github.com/logotip4ik/keycap/commit/1c11ccdb))
+
+### 🏡 Chore
+
+- **release:** V3.11.1 ([60612daa](https://github.com/logotip4ik/keycap/commit/60612daa))
+- Use one function call to refresh two caches ([15a66516](https://github.com/logotip4ik/keycap/commit/15a66516))
+- Log resvg errors in prod ([e0dc4cf0](https://github.com/logotip4ik/keycap/commit/e0dc4cf0))
+- Better error wording ([e9fc3fa3](https://github.com/logotip4ik/keycap/commit/e9fc3fa3))
+- Update deps ([bbeebe98](https://github.com/logotip4ik/keycap/commit/bbeebe98))
+- Add more entries to vercel ignore list ([22281c36](https://github.com/logotip4ik/keycap/commit/22281c36))
+- Use treeshaking from rollup to build nitro ([cc8d0807](https://github.com/logotip4ik/keycap/commit/cc8d0807))
+- Unpin patched nitropack and bump lock file ([442fa80c](https://github.com/logotip4ik/keycap/commit/442fa80c))
+- Again bump yarn lock to update nitropack ([c2636356](https://github.com/logotip4ik/keycap/commit/c2636356))
+- Bump yarn ([4bcab5de](https://github.com/logotip4ik/keycap/commit/4bcab5de))
+- Add ts shims for importing svg and ttf files ([fcf97529](https://github.com/logotip4ik/keycap/commit/fcf97529))
+- Update lock file ([dc4b45e2](https://github.com/logotip4ik/keycap/commit/dc4b45e2))
+- Directly assign left and top values for tooltip ([36869573](https://github.com/logotip4ik/keycap/commit/36869573))
+- Remove not needed string conversion ([872d3c23](https://github.com/logotip4ik/keycap/commit/872d3c23))
+- Limit max notes and subfolders query number ([4fda421c](https://github.com/logotip4ik/keycap/commit/4fda421c))
+- Enhance security of oauth state cookie ([12ac2103](https://github.com/logotip4ik/keycap/commit/12ac2103))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.11.1
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.11.0...v3.11.1)
