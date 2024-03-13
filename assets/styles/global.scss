@@ -8,12 +8,12 @@
   --hsl-primary-color: 253;
 
   --task-list-indicator-color: hsl(var(--hsl-primary-color), 70%, 70%);
-  
+
   --surface-color-hsl: var(--hsl-primary-color), 10%, 99%;
   --text-color-hsl: var(--hsl-primary-color), 5%, 17%;
   --selection-bg-color-hsl: var(--hsl-primary-color), 65%, 85%; // NOTE: maybe change color
   --error-color-hsl: 0, 75%, 75%;
-  
+
   --surface-color: hsl(var(--surface-color-hsl));
   --text-color: hsl(var(--text-color-hsl));
   --selection-bg-color: hsl(var(--selection-bg-color-hsl));
