@@ -9333,6 +9333,8 @@ __metadata:
     hashlru: "patch:hashlru@npm%3A2.3.0#~/.yarn/patches/hashlru-npm-2.3.0-8267692d49.patch"
     idb-keyval: "npm:^6.2.1"
     jose: "npm:^5.2.3"
+    kysely: "npm:^0.27.3"
+    kysely-postgres-js: "npm:^2.0.0"
     lambda-rate-limiter: "npm:^4.0.0"
     lightningcss: "npm:^1.24.1"
     magic-string: "npm:^0.30.8"
@@ -9342,6 +9344,7 @@ __metadata:
     nuxt: "npm:^3.10.3"
     nuxt-vitest: "npm:^0.11.5"
     parse-duration: "npm:^1.1.0"
+    postgres: "npm:^3.4.3"
     prisma: "npm:^5.11.0"
     prisma-error-enum: "npm:^0.1.3"
     prisma-kysely: "npm:^1.8.0"
@@ -9401,6 +9404,23 @@ __metadata:
   version: 1.8.0
   resolution: "kolorist@npm:1.8.0"
   checksum: 10/71d5d122951cc65f2f14c3e1d7f8fd91694b374647d4f6deec3816d018cd04a44edd9578d93e00c82c2053b925e5d30a0565746c4171f4ca9fce1a13bd5f3315
+  languageName: node
+  linkType: hard
+
+"kysely-postgres-js@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "kysely-postgres-js@npm:2.0.0"
+  peerDependencies:
+    kysely: ">= 0.24.0 < 1"
+    postgres: ">= 3.4.0 < 4"
+  checksum: 10/323715bb9ce0ff22f34d87cb96cc3b9bf3c593b9d4a0b95976b127caf0b8e87f129da74f7598cc5b19fab01a36dee24cd589865bb3b788333fd69e0da0096e09
+  languageName: node
+  linkType: hard
+
+"kysely@npm:^0.27.3":
+  version: 0.27.3
+  resolution: "kysely@npm:0.27.3"
+  checksum: 10/baa0b7219dc2ccf85be7931098f0b49f60d39ee61a11d455c32919694e42de2e96f7d8179a8d35755ea40877a4b9eb02e8f45817c1997c3ad1c7dec533ef3586
   languageName: node
   linkType: hard
 
@@ -11816,6 +11836,13 @@ __metadata:
     picocolors: "npm:^1.0.0"
     source-map-js: "npm:^1.0.2"
   checksum: 10/93a7ce50cd6188f5f486a9ca98950ad27c19dfed996c45c414fa242944497e4d084a8760d3537f078630226f2bd3c6ab84b813b488740f4432e7c7039cd73a20
+  languageName: node
+  linkType: hard
+
+"postgres@npm:^3.4.3":
+  version: 3.4.3
+  resolution: "postgres@npm:3.4.3"
+  checksum: 10/13603374a0f3fcc228f69fb7db64f9faaf42ad9eb6df8a76632162b0bbbe78e30a22b4b7c8b4dcc80275502b42c9b053bf9defbe5898358c84909ff8ad620225
   languageName: node
   linkType: hard
 
