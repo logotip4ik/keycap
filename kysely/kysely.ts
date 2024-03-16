@@ -11,7 +11,9 @@ export function getKysely() {
 
     globalThis.__kysely = new Kysely<Database>({
       dialect: new PostgresJSDialect({
-        postgres: postgres(process.env.DATABASE_URL),
+        postgres: import.meta.dev
+          ? postgres(process.env.DATABASE_URL, { database: 'postgres' })
+          : postgres(process.env.DATABASE_URL),
       }),
     });
   }
