@@ -27,8 +27,9 @@ export default defineEventHandler(async (event) => {
     return null;
 
   if (
-    event.method !== 'GET'
-    && isOriginMismatched(event)
+    import.meta.prod
+      && event.method !== 'GET'
+      && isOriginMismatched(event)
   )
     throw createError({ status: 403 });
 
