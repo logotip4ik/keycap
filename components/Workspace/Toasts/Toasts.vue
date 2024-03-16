@@ -4,7 +4,7 @@ const toasts = useToasts();
 const toasterEl = shallowRef<null | ComponentPublicInstance<HTMLElement>>(null);
 
 const sortedToasts = computed(() =>
-  toasts.value.sort((a, b) => a.priority - b.priority),
+  toasts.value.slice().sort((a, b) => a.priority - b.priority),
 );
 
 let toasterElClientRect: DOMRect | undefined;
