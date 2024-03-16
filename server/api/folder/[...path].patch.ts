@@ -56,7 +56,7 @@ export default defineEventHandler(async (event) => {
 
       tx.updateTable('Folder')
         .where('ownerId', '=', user.id)
-        .where('path', 'like', `${folderPath}%`)
+        .where('path', 'like', `${folderPath}/%`)
         .set((eb) => ({
           updatedAt: now,
           path: sql`regexp_replace(${eb.ref('path')}, ${folderPathReplacementRE}, ${newFolderPath}, 'c')`,
