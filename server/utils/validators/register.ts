@@ -6,6 +6,6 @@ export const registerSchema = v.object({
   'password': v.string().minLength(8).required(),
   'cf-turnstile-response': import.meta.config.turnstileEnabled ? v.string().required() : v.string(),
   'browserAction': v.boolean(),
-});
+}).additional(false);
 
 export const useRegisterValidation = compile(registerSchema);
