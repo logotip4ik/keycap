@@ -68,6 +68,11 @@ async function log(event: H3Event, level: ValueOf<typeof LogLevel>, data: Logger
     });
   }
 
+  if (import.meta.dev) {
+    // eslint-disable-next-line no-console
+    return console.log(data);
+  }
+
   const { axiom } = useRuntimeConfig();
   const client = getAxiomClient(axiom);
 
