@@ -1,7 +1,7 @@
 import { compile, v } from 'suretype';
 
 export const jwtPayloadSchema = v.object({
-  sub: v.string().matches(stringifiedBigIntRE).minLength(19).required(),
+  sub: v.string().minLength(18).maxLength(18).matches(stringifiedBigIntRE).required(),
   email: v.string().format('email').required(),
   username: usernameSchema,
 }).additional(false);

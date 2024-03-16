@@ -60,7 +60,7 @@ export async function getUserFromEvent(event: H3Event): Promise<SafeUser | null>
 
   if (jwt && isJwtPayload(jwt.payload)) {
     return {
-      id: toBigInt(jwt.payload.sub),
+      id: jwt.payload.sub,
       email: jwt.payload.email,
       username: jwt.payload.username,
     };
