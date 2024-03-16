@@ -372,6 +372,10 @@ export default defineNuxtConfig({
           imports: ['createKey', 'KeyPrefix'],
         },
         {
+          from: resolve('./kysely/kysely.ts'),
+          imports: ['getKysely'],
+        },
+        {
           from: 'prisma-error-enum',
           imports: ['PrismaError'],
         },
