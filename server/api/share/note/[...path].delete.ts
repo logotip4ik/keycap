@@ -9,31 +9,26 @@ export default defineEventHandler(async (event) => {
 
   const notePath = generateNotePath(user.username, path);
 
-  const prisma = getPrisma();
+  const kysely = getKysely();
 
-  // NOTE: maybe we should store view page in our's cache rather then vercel's isr ?
   timer.start('db');
-  await prisma.$transaction(async (tx) => {
-    const shareToDelete = await tx.share.findFirst({
-      where: { note: { path: notePath }, ownerId: user.id },
-      select: { id: true, link: true },
-    }).catch(async (err) => {
-      await logger.error(event, { err, msg: 'share.findFirst failed' });
-
-      throw createError({ status: 400 });
-    });
+  await kysely.transaction().execute(async (tx) => {
+    const shareToDelete = await tx
+      .selectFrom('Note')
+      .rightJoin('Share', 'Share.noteId', 'Note.id')
+      .select('Share.id')
+      .where('Note.path', '=', notePath)
+      .where('Note.ownerId', '=', user.id)
+      .where('Share.ownerId', '=', user.id)
+      .executeTakeFirst();
 
     if (!shareToDelete)
       throw createError({ status: 404 });
 
-    await tx.share.delete({
-      where: { id: shareToDelete.id },
-      select: { id: true },
-    }).catch(async (err) => {
-      await logger.error(event, { err, msg: 'share.delete failed' });
-
-      throw createError({ status: 400 });
-    });
+    await tx
+      .deleteFrom('Share')
+      .where('id', '=', shareToDelete.id)
+      .execute();
   });
   timer.end();
 

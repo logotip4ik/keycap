@@ -1,12 +1,10 @@
 import type { TypeOf } from 'suretype';
 
-type UpdatableFields = Partial<TypeOf<typeof noteUpdateSchema> & { path: string }>;
+type UpdatableFields = Partial<TypeOf<typeof noteUpdateSchema> & { path: string, updatedAt: Date }>;
 
 export default defineEventHandler(async (event) => {
   const user = event.context.user!;
   const timer = event.context.timer!;
-
-  const prisma = getPrisma();
 
   const path = getRouterParam(event, 'path');
 
@@ -17,9 +15,9 @@ export default defineEventHandler(async (event) => {
 
   const data = await readBody<UpdatableFields>(event) || {};
 
-  if (data.name)
+  if (typeof data.name === 'string')
     data.name = data.name.trim();
-  if (data.content)
+  if (typeof data.content === 'string')
     data.content = data.content.trim();
 
   const validation = useNoteUpdateValidation(data);
@@ -31,27 +29,33 @@ export default defineEventHandler(async (event) => {
     });
   }
 
+  data.updatedAt = new Date();
+
   // if user updates note name we also need to update its path
   if (data.name)
     data.path = makeNewItemPath(notePath, data.name);
 
+  const kysely = getKysely();
+
   timer.start('db');
-  await prisma.note.update({
-    data,
-    where: { path: notePath, ownerId: user.id },
-    select: { id: true },
-  }).catch(async (err) => {
-    if (err.code === PrismaError.UniqueConstraintViolation) {
-      throw createError({
-        status: 400,
-        message: 'Note with such name already exists',
-      });
-    }
+  await kysely
+    .updateTable('Note')
+    .where('path', '=', notePath)
+    .where('ownerId', '=', user.id)
+    .set(data)
+    .execute()
+    .catch(async (err) => {
+      if (err.code === PrismaError.UniqueConstraintViolation) {
+        throw createError({
+          status: 400,
+          message: 'Note with such name already exists',
+        });
+      }
 
-    await logger.error(event, { err, msg: 'note.update failed' });
+      await logger.error(event, { err, msg: 'note.update failed' });
 
-    throw createError({ status: 400 });
-  });
+      throw createError({ status: 400 });
+    });
   timer.end();
 
   timer.appendHeader(event);

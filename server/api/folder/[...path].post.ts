@@ -4,8 +4,6 @@ export default defineEventHandler(async (event) => {
   const user = event.context.user!;
   const timer = event.context.timer!;
 
-  const prisma = getPrisma();
-
   const path = getRouterParam(event, 'path');
 
   if (!path)
@@ -16,7 +14,9 @@ export default defineEventHandler(async (event) => {
   // is better to type body as create schema and later set path
   const body = await readBody<TypeOf<typeof folderCreateSchema>>(event) || {};
 
-  body.name = body.name?.trim();
+  if (typeof body.name === 'string')
+    body.name = body.name.trim();
+
   body.path = generateFolderPath(user.username, path);
 
   const validation = useFolderCreateValidation(body);
@@ -28,22 +28,20 @@ export default defineEventHandler(async (event) => {
     });
   }
 
+  const kysely = getKysely();
+
   timer.start('db');
-  const folder = await prisma.folder.create({
-    data: {
+  const folder = await kysely
+    .insertInto('Folder')
+    .values({
       name: body.name,
       path: body.path,
-      owner: { connect: { email: user.email } },
-      parent: { connect: { id: toBigInt(body.parentId) } },
-    },
-
-    select: {
-      id: true,
-      name: true,
-      path: true,
-      root: true,
-    },
-  })
+      ownerId: user.id,
+      parentId: body.parentId,
+      updatedAt: new Date(),
+    })
+    .returning(['id', 'name', 'path', 'root'])
+    .executeTakeFirst()
     .catch(async (err) => {
       if (err.code === PrismaError.UniqueConstraintViolation) {
         throw createError({
@@ -59,6 +57,9 @@ export default defineEventHandler(async (event) => {
   timer.end();
 
   timer.appendHeader(event);
+
+  if (!folder)
+    throw createError({ status: 500 });
 
   setResponseStatus(event, 201);
 

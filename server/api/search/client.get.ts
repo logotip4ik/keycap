@@ -2,39 +2,40 @@ export default defineEventHandler(async (event) => {
   const user = event.context.user!;
   const timer = event.context.timer!;
 
-  const prisma = getPrisma();
+  const skip = 0;
+  const select = 75;
 
-  const query = getQuery(event) || {};
+  // TODO ?
+  // if (query.skip && !Number.isNaN(query.skip))
+  //   skip = Number(query.skip);
+  // if (query.select && !Number.isNaN(query.select))
+  //   select = Number(query.select);
 
-  let skip = 0;
-  let select = 75;
-
-  if (query.skip && !Number.isNaN(query.skip))
-    skip = Number(query.skip);
-  if (query.select && !Number.isNaN(query.select))
-    select = Number(query.select);
-
-  const pathToSearch = `/${user.username}`;
+  const kysely = getKysely();
 
   timer.start('db');
-  const [notes, folders] = await Promise.all([
-    prisma.note.findMany({
-      skip,
-      where: { path: { startsWith: pathToSearch }, ownerId: user.id },
-      take: Math.round(select * 0.75),
-      select: { name: true, path: true },
-    }),
-    prisma.folder.findMany({
-      skip,
-      where: { path: { startsWith: pathToSearch }, ownerId: user.id },
-      take: Math.round(select * 0.25),
-      select: { name: true, path: true, root: true },
-    }),
-  ]).catch(async (err) => {
-    await logger.error(event, { err, msg: '(note|folder).findMany failed' });
+  const [notes, folders] = await kysely
+    .transaction()
+    .execute(async (tx) => await Promise.all([
+      tx.selectFrom('Note')
+        .where('ownerId', '=', user.id)
+        .select(['name', 'path'])
+        .offset(skip)
+        .limit(Math.round(select * 0.75))
+        .execute(),
 
-    throw createError({ status: 400 });
-  });
+      tx.selectFrom('Folder')
+        .where('ownerId', '=', user.id)
+        .select(['name', 'path', 'root'])
+        .offset(skip)
+        .limit(Math.round(select * 0.25))
+        .execute(),
+    ]))
+    .catch(async (err) => {
+      await logger.error(event, { err, msg: '(note|folder).findMany failed' });
+
+      throw createError({ status: 400 });
+    });
   timer.end();
 
   timer.appendHeader(event);

@@ -1,16 +1,18 @@
 import type { TypeOf } from 'suretype';
 
+import type { SafeUser } from '~/types/server';
+
 export default defineEventHandler(async (event) => {
   if (event.context.user)
     return null;
 
   const body = await readBody<TypeOf<typeof registerSchema>>(event) || {};
 
-  if (body.email)
+  if (typeof body.email === 'string')
     body.email = body.email.trim();
-  if (body.username)
+  if (typeof body.username === 'string')
     body.username = body.username.trim().replace(/\s/g, '_');
-  if (body.password)
+  if (typeof body.password === 'string')
     body.password = body.password.trim();
 
   const validation = useRegisterValidation(body);
@@ -42,8 +44,6 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const prisma = getPrisma();
-
   const hashedPassword = await hashPassword(body.password)
     .catch(async (err) => {
       await logger.error(event, { err, msg: 'password hashing failed' });
@@ -51,26 +51,44 @@ export default defineEventHandler(async (event) => {
       throw createError({ status: 500 });
     });
 
-  const user = await prisma.user.create({
-    data: {
-      email: body.email,
-      username: body.username,
-      password: hashedPassword,
-      folders: {
-        create: {
-          name: `${body.username}'s workspace`,
-          root: true,
-          path: generateRootFolderPath(body.username),
-        },
-      },
-    },
+  const kysely = getKysely();
 
-    select: { id: true, email: true, username: true },
-  }).catch(async (err) => {
-    await logger.error(event, { err, msg: 'user.create failed' });
+  const user = await kysely.transaction().execute(async (tx) => {
+    const user = await tx
+      .insertInto('User')
+      .values({
+        email: body.email,
+        username: body.username,
+        password: hashedPassword,
+        updatedAt: new Date(),
+      })
+      .returning(['id'])
+      .executeTakeFirst();
 
-    throw createError({ status: 400, message: 'user with this email or username might already exist' });
-  });
+    if (!user)
+      throw createError({ status: 400, message: 'user with this email or username might already exist' });
+
+    await tx
+      .insertInto('Folder')
+      .values({
+        name: `${body.username}'s workspace'`,
+        root: true,
+        path: generateRootFolderPath(body.username),
+        ownerId: user.id,
+        updatedAt: new Date(),
+      })
+      .execute();
+
+    (user as SafeUser).email = body.email;
+    (user as SafeUser).username = body.username;
+
+    return user as SafeUser;
+  })
+    .catch(async (err) => {
+      await logger.error(event, { err, msg: 'user.create failed' });
+
+      throw createError({ status: 500 });
+    });
 
   await Promise.all([
     setAuthCookies(event, user),

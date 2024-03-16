@@ -1,55 +1,25 @@
-import type { Prisma } from '@prisma/client';
-
-export const selectors = definePrismaSelectors<Prisma.FolderSelect>({
-  default: {
-    id: true,
-    name: true,
-    path: true,
-    root: true,
-
-    notes: {
-      select: { id: true, name: true, path: true },
-      orderBy: { name: 'asc' },
-      take: 50,
-    },
-
-    subfolders: {
-      select: { id: true, name: true, path: true, root: true },
-      orderBy: { name: 'asc' },
-      take: 25,
-    },
-  },
-
-  details: {
-    updatedAt: true,
-    createdAt: true,
-  },
-});
+import { jsonArrayFrom } from 'kysely/helpers/postgres';
 
 export default defineEventHandler(async (event) => {
   const user = event.context.user!;
   const timer = event.context.timer!;
-
-  const prisma = getPrisma();
 
   // empty string represents root folder
   const path = getRouterParam(event, 'path') || '';
 
   const folderPath = generateFolderPath(user.username, path);
 
-  const selectType: keyof typeof selectors = getQuery(event).details === undefined
-    ? 'default'
-    : 'details';
+  const selectFunction = getQuery(event).details === undefined
+    ? selectFolder
+    : selectFolderDetails;
 
   timer.start('db');
-  const folder = await prisma.folder.findFirst({
-    where: { path: folderPath, ownerId: user.id },
-    select: selectors[selectType],
-  }).catch(async (err) => {
-    await logger.error(event, { err, msg: 'folder.findFirst failed' });
+  const folder = await selectFunction(folderPath, user.id)
+    .catch(async (err) => {
+      await logger.error(event, { err, msg: 'folder.findFirst failed' });
 
-    throw createError({ status: 400 });
-  });
+      throw createError({ status: 400 });
+    });
   timer.end();
 
   if (!folder)
@@ -57,10 +27,48 @@ export default defineEventHandler(async (event) => {
 
   timer.appendHeader(event);
 
-  return {
-    data: folder as (
-      Prisma.FolderGetPayload<{ select: typeof selectors['default'] }>
-      | Prisma.FolderGetPayload<{ select: typeof selectors['details'] }>
-    ),
-  };
+  return { data: folder };
 });
+
+async function selectFolder(path: string, ownerId: string) {
+  const kysely = getKysely();
+
+  return await kysely
+    .selectFrom('Folder')
+    .where('path', '=', path)
+    .where('ownerId', '=', ownerId)
+    .select((eb) => [
+      'id',
+      'name',
+      'path',
+      'root',
+      jsonArrayFrom(
+        eb.selectFrom('Note')
+          .select(['Note.id', 'Note.name', 'Note.path'])
+          .whereRef('Folder.id', '=', 'Note.parentId')
+          .where('Note.ownerId', '=', ownerId)
+          .limit(50),
+      )
+        .as('notes'),
+      jsonArrayFrom(
+        eb.selectFrom('Folder as Subfolder')
+          .select(['id', 'name', 'path', 'root'])
+          .where('ownerId', '=', ownerId)
+          .whereRef('Subfolder.parentId', '=', 'Folder.id')
+          .limit(25),
+      )
+        .as('subfolders'),
+    ])
+    .executeTakeFirst();
+}
+
+async function selectFolderDetails(path: string, ownerId: string) {
+  const kysely = getKysely();
+
+  return await kysely
+    .selectFrom('Folder')
+    .select(['updatedAt', 'createdAt'])
+    .where('path', '=', path)
+    .where('ownerId', '=', ownerId)
+    .executeTakeFirst();
+}

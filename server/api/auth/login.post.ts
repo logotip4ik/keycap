@@ -4,9 +4,9 @@ import type { SafeUser } from '~/types/server';
 export default defineEventHandler(async (event) => {
   const body = await readBody<TypeOf<typeof loginSchema>>(event) || {};
 
-  if (body.email)
+  if (typeof body.email === 'string')
     body.email = body.email.trim();
-  if (body.password)
+  if (typeof body.password === 'string')
     body.password = body.password.trim();
 
   const validation = useLoginValidation(body);
@@ -18,14 +18,13 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const prisma = getPrisma();
+  const kysely = getKysely();
 
-  const user = await prisma.user.findUnique({
-    where: { email: body.email },
-    select: { id: true, email: true, username: true, password: true },
-  }).catch(async (err) => {
-    await logger.error(event, { err, msg: 'user.findUnique failed' });
-  });
+  const user = await kysely
+    .selectFrom('User')
+    .where('email', '=', body.email)
+    .select(['id', 'email', 'username', 'password'])
+    .executeTakeFirst();
 
   if (!user)
     throw createError({ status: 400, message: 'email or password is incorrect' });
@@ -47,7 +46,11 @@ export default defineEventHandler(async (event) => {
   if (user.password.startsWith('$2')) {
     const rehashedPassword = await hashPassword(body.password);
 
-    await prisma.user.update({ where: { id: user.id }, data: { password: rehashedPassword } });
+    await kysely
+      .updateTable('User')
+      .set({ password: rehashedPassword })
+      .where('id', '=', user.id)
+      .execute();
   }
 
   const safeUser: SafeUser = { id: user.id, username: user.username, email: user.email };

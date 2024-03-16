@@ -8,14 +8,16 @@ export default defineEventHandler(async (event) => {
   if (!link || !isShareLinkValid(link))
     throw createError({ status: 400 });
 
-  const prisma = getPrisma();
+  const kysely = getKysely();
 
   const [svgTemplate, noteDetails] = await Promise.all([
     getOgTemplate('view'),
-    prisma.note.findFirst({
-      select: { name: true },
-      where: { shares: { some: { link } } },
-    }),
+    kysely
+      .selectFrom('Share')
+      .where('Share.link', '=', link)
+      .rightJoin('Note', 'Note.id', 'Share.noteId')
+      .select('Note.name')
+      .executeTakeFirst(),
   ]);
 
   if (!noteDetails) {
