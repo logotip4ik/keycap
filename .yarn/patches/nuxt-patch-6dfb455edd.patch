@@ -1,0 +1,24 @@
+diff --git a/dist/index.mjs b/dist/index.mjs
+index 04d7b930d2148c24a3ac4d9f2151f78e5e9e0cd7..09b9549ee716f10cb67c7406d444da31fe4db77b 100644
+--- a/dist/index.mjs
++++ b/dist/index.mjs
+@@ -2687,19 +2687,6 @@ function addDeclarationTemplates(ctx, options) {
+         return;
+       }
+       let path = resolveAlias(from);
+-      if (!isAbsolute(path)) {
+-        path = await tryResolveModule(from, nuxt.options.modulesDir).then(async (r2) => {
+-          if (!r2) {
+-            return r2;
+-          }
+-          const { dir, name } = parseNodeModulePath(r2);
+-          if (!dir || !name) {
+-            return r2;
+-          }
+-          const subpath = await lookupNodeModuleSubpath(r2);
+-          return join(dir, name, subpath || "");
+-        }) ?? path;
+-      }
+       if (existsSync(path) && !await isDirectory$1(path)) {
+         path = path.replace(SUPPORTED_EXTENSION_RE, "");
+       }
