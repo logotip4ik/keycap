@@ -52,7 +52,7 @@ export default defineEventHandler(async (event) => {
           updatedAt: now,
           path: newFolderPath,
         })
-        .execute(),
+        .executeTakeFirstOrThrow(),
 
       tx.updateTable('Folder')
         .where('ownerId', '=', user.id)
