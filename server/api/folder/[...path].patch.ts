@@ -1,4 +1,5 @@
 import { sql } from 'kysely';
+import postgres from 'postgres';
 import escapeRE from 'escape-string-regexp';
 
 import type { TypeOf } from 'suretype';
@@ -74,14 +75,17 @@ export default defineEventHandler(async (event) => {
         .execute(),
     ]);
   }).catch(async (err) => {
-    await logger.error(event, { err, msg: 'rename folder failed' });
-
-    if (err.code === PrismaError.RawQueryError) {
+    if (
+      err instanceof postgres.PostgresError
+      && err.code === PostgresErrorCode.PG_UNIQUE_VIOLATION
+    ) {
       throw createError({
         status: 400,
         message: 'Folder with such name already exists',
       });
     }
+
+    await logger.error(event, { err, msg: 'folder.update failed' });
 
     throw createError({ status: 400 });
   });

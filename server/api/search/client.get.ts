@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
         .execute(),
     ]))
     .catch(async (err) => {
-      await logger.error(event, { err, msg: '(note|folder).findMany failed' });
+      await logger.error(event, { err, msg: 'search.client failed' });
 
       throw createError({ status: 400 });
     });

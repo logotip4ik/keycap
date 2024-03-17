@@ -28,7 +28,12 @@ export default defineEventHandler(async (event) => {
     await tx
       .deleteFrom('Share')
       .where('id', '=', shareToDelete.id)
-      .execute();
+      .execute()
+      .catch(async (err) => {
+        await logger.error(event, { err, msg: 'share.note.delete failed (can\'t delete share)' });
+
+        throw createError({ status: 400 });
+      });
   });
   timer.end();
 

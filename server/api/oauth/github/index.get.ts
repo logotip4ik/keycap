@@ -48,7 +48,11 @@ export default defineEventHandler(async (event) => {
         ]),
       ]))
       .select(['User.id', 'User.email', 'User.username'])
-      .executeTakeFirst();
+      .executeTakeFirst()
+      .catch(async (err) => {
+        await logger.error(event, { err, msg: 'oauth.github.findUser failed' });
+        return undefined;
+      });
   }
 
   let username: string;
@@ -80,9 +84,9 @@ export default defineEventHandler(async (event) => {
     normalizeGitHubUser(githubUser, { username }),
   )
     .catch(async (err) => {
-      await logger.error(event, { err, msg: 'updateOrCreateUserFromSocialAuth failed' });
+      await logger.error(event, { err, msg: 'oauth.github.updateOrCreateUser failed' });
 
-      return null;
+      return undefined;
     });
 
   deleteCookie(event, 'state');

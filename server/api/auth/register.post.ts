@@ -1,3 +1,5 @@
+import postgres from 'postgres';
+
 import type { TypeOf } from 'suretype';
 
 import type { SafeUser } from '~/types/server';
@@ -64,14 +66,21 @@ export default defineEventHandler(async (event) => {
         updatedAt: now,
       })
       .returning(['id'])
-      .executeTakeFirst();
-
-    if (!user) {
-      throw createError({
-        status: 400,
-        message: 'user with this email or username might already exist',
+      .executeTakeFirst()
+      .catch((error) => {
+        if (
+          error instanceof postgres.PostgresError
+          && error.code === PostgresErrorCode.PG_UNIQUE_VIOLATION
+        ) {
+          throw createError({
+            status: 400,
+            message: 'user with this email or username might already exist',
+          });
+        }
       });
-    }
+
+    if (!user)
+      throw createError({ status: 500 });
 
     await tx
       .insertInto('Folder')

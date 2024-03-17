@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
   timer.start('db');
   const folder = await selectFunction(folderPath, user.id)
     .catch(async (err) => {
-      await logger.error(event, { err, msg: 'folder.findFirst failed' });
+      await logger.error(event, { err, msg: 'folder.get failed' });
 
       throw createError({ status: 400 });
     });

@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
   timer.start('db');
   const note = await selectFunction(notePath, user.id)
     .catch(async (err) => {
-      await logger.error(event, { err, msg: 'note.findFirst failed' });
+      await logger.error(event, { err, msg: 'note.get failed' });
 
       throw createError({ status: 400 });
     });

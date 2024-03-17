@@ -39,7 +39,7 @@ export default defineEventHandler(async (event) => {
       })
       .executeTakeFirst()
       .catch(async (err) => {
-        await logger.error(event, { err, msg: 'cannot create share' });
+        await logger.error(event, { err, msg: 'share.note.post failed (can\'t create share)' });
 
         throw createError({ status: 400 });
       });

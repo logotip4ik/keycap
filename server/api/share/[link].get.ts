@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
     .select(['Note.name', 'Note.content', 'Note.updatedAt', 'Note.createdAt'])
     .executeTakeFirst()
     .catch(async (err) => {
-      await logger.error(event, { err, msg: 'note.findFirst failed' });
+      await logger.error(event, { err, msg: 'sharedNote.get failed' });
 
       throw createError({ status: 400 });
     });

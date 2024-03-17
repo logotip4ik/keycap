@@ -1,3 +1,5 @@
+import postgres from 'postgres';
+
 import type { TypeOf } from 'suretype';
 
 export default defineEventHandler(async (event) => {
@@ -39,7 +41,10 @@ export default defineEventHandler(async (event) => {
     .returning(['id', 'name', 'content', 'path'])
     .executeTakeFirst()
     .catch(async (err) => {
-      if (err.code === PrismaError.UniqueConstraintViolation) {
+      if (
+        err instanceof postgres.PostgresError
+        && err.code === PostgresErrorCode.PG_UNIQUE_VIOLATION
+      ) {
         throw createError({
           status: 400,
           message: 'Note with such name already exists',

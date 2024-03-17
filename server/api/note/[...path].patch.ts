@@ -1,3 +1,5 @@
+import postgres from 'postgres';
+
 import type { TypeOf } from 'suretype';
 
 type UpdatableFields = Partial<TypeOf<typeof noteUpdateSchema> & { path: string, updatedAt: Date }>;
@@ -45,7 +47,10 @@ export default defineEventHandler(async (event) => {
     .set(data)
     .execute()
     .catch(async (err) => {
-      if (err.code === PrismaError.UniqueConstraintViolation) {
+      if (
+        err instanceof postgres.PostgresError
+        && err.code === PostgresErrorCode.PG_UNIQUE_VIOLATION
+      ) {
         throw createError({
           status: 400,
           message: 'Note with such name already exists',
