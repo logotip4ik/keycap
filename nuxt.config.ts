@@ -389,7 +389,7 @@ export default defineNuxtConfig({
         },
         {
           from: '@drdgvhbh/postgres-error-codes',
-          name: 'default',
+          name: '*',
           as: 'PostgresErrorCode',
         },
       ],
