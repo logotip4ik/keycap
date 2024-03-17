@@ -2,14 +2,14 @@ import { Kysely } from 'kysely';
 import { PostgresJSDialect } from 'kysely-postgres-js';
 import postgres from 'postgres';
 
-import type { DB as Database } from './db/types';
+import type { DB } from './db/types';
 
 export function getKysely() {
   if (!globalThis.__kysely) {
     if (!process.env.DATABASE_URL)
       throw new Error('DATABASE_URL must be defined');
 
-    globalThis.__kysely = new Kysely<Database>({
+    globalThis.__kysely = new Kysely<DB>({
       dialect: new PostgresJSDialect({
         postgres: import.meta.dev
           ? postgres(process.env.DATABASE_URL, { database: 'postgres' })
@@ -23,5 +23,5 @@ export function getKysely() {
 
 declare global {
   // eslint-disable-next-line vars-on-top, no-var
-  var __kysely: Kysely<Database>;
+  var __kysely: Kysely<DB>;
 }
