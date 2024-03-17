@@ -8,7 +8,6 @@ definePageMeta({
 
 if (import.meta.client) {
   throw createError({
-    // @ts-expect-error broken types
     status: 418,
     message: 'this page should not run on client',
   });
@@ -21,7 +20,6 @@ if (!query.code || !query.provider) {
   await logger.error(event, { query, msg: 'not enough data for proceeding with username' });
 
   throw createError({
-    // @ts-expect-error broken types
     status: 400,
     message: 'not enough data',
   });
@@ -37,7 +35,6 @@ if (!normalizedProvider) {
   await logger.warn(event, 'someone is messing with oauth');
 
   throw createError({
-    // @ts-expect-error broken types
     status: 400,
     message: 'Go home. Please.',
   });
