@@ -85,8 +85,8 @@ export async function updateOrCreateUserFromSocialAuth(socialAuth: NormalizedSoc
           .values({
             id: socialAuth.id,
             type: socialAuth.type,
-            updatedAt: now,
             userId: dbUser.id,
+            updatedAt: now,
           })
           .executeTakeFirstOrThrow();
       }
