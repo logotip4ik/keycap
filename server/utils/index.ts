@@ -1,5 +1,6 @@
-import { SocialAuth } from '@prisma/client';
 import { withLeadingSlash, withoutTrailingSlash } from 'ufo';
+
+import { SocialAuth } from '~/kysely/db/types';
 
 // escaping `-` and `|` because it is used on client side and browsers don't like it unescaped
 // NOTE: do not forget to change same RE in client side
