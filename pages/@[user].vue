@@ -93,7 +93,7 @@ onBeforeUnmount(() => popstateOff?.());
 
     <LazyWorkspaceContents />
 
-    <Teleport to="body">
+    <Teleport to="#teleports">
       <Transition name="search-fade">
         <LazyWorkspaceSearch
           v-if="isShowingSearch"
@@ -102,7 +102,7 @@ onBeforeUnmount(() => popstateOff?.());
       </Transition>
     </Teleport>
 
-    <Teleport to="body">
+    <Teleport to="#teleports">
       <WithFadeTransition>
         <LazyWorkspaceItemDetails
           v-if="currentItemForDetails"

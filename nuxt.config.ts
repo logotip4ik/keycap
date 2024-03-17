@@ -42,7 +42,6 @@ export default defineNuxtConfig({
 
   experimental: {
     writeEarlyHints: true,
-    componentIslands: true,
     watcher: 'parcel',
     headNext: true,
   },

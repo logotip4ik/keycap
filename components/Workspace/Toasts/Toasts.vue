@@ -33,7 +33,7 @@ if (import.meta.client) {
 </script>
 
 <template>
-  <Teleport to="body">
+  <Teleport to="#teleports">
     <TransitionGroup
       ref="toasterEl"
       class="toasts"
