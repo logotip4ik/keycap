@@ -52,7 +52,7 @@ async function selectFolder(path: string, ownerId: string) {
         .as('notes'),
       jsonArrayFrom(
         eb.selectFrom('Folder as Subfolder')
-          .select(['id', 'name', 'path', 'root'])
+          .select(['Subfolder.id', 'Subfolder.name', 'Subfolder.path', 'Subfolder.root'])
           .where('ownerId', '=', ownerId)
           .whereRef('Subfolder.parentId', '=', 'Folder.id')
           .limit(25),
