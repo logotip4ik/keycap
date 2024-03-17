@@ -253,7 +253,6 @@ export default defineNuxtConfig({
 
   vite: {
     define: {
-      'import.meta.vitest': false,
       'import.meta.dev': isDevelopment,
       'import.meta.prod': isProduction,
 
@@ -336,7 +335,6 @@ export default defineNuxtConfig({
       // https://github.com/danielroe/roe.dev/blob/main/nuxt.config.ts#L115
       'process.browser': false,
 
-      'import.meta.vitest': false,
       'import.meta.dev': isDevelopment,
       'import.meta.prod': isProduction,
 
@@ -462,6 +460,10 @@ export default defineNuxtConfig({
 
   $production: {
     vite: {
+      define: {
+        'import.meta.vitest': false,
+      },
+
       plugins: [
         ParseDurationTransformPlugin.vite(),
         PrismaSeletorTransformPlugin.vite(),
@@ -470,6 +472,10 @@ export default defineNuxtConfig({
 
     nitro: {
       minify: isCI,
+
+      replace: {
+        'import.meta.vitest': false,
+      },
 
       rollupConfig: {
         plugins: [
