@@ -76,14 +76,24 @@ export default defineEventHandler(async (event) => {
     await updateCacheEntry(getUserCacheKey(username, UserCacheName.Taken), true);
   }
 
-  user = await updateOrCreateUserFromSocialAuth(
-    normalizeGoogleUser(googleUser, { username }),
-  )
-    .catch(async (err) => {
-      await logger.error(event, { err, msg: 'oauth.google.updateOrCreateUser failed' });
+  const normalizedSocialUser = normalizeGoogleUser(googleUser, { username });
 
-      return undefined;
-    });
+  if (user) {
+    await updateUserWithSocialAuth(user.id, normalizedSocialUser)
+      .catch(async (err) => {
+        await logger.error(event, { err, msg: 'oauth.google.updateUser failed' });
+
+        return undefined;
+      });
+  }
+  else {
+    user = await createUserWithSocialAuth(normalizedSocialUser)
+      .catch(async (err) => {
+        await logger.error(event, { err, msg: 'oauth.google.createUser failed' });
+
+        return undefined;
+      });
+  }
 
   deleteCookie(event, 'state');
 

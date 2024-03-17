@@ -55,77 +55,70 @@ export function sendOAuthRedirectIfNeeded(event: H3Event, _query?: QueryObject):
   return true;
 }
 
-export async function updateOrCreateUserFromSocialAuth(socialAuth: NormalizedSocialUser): Promise<SafeUser> {
+export async function createUserWithSocialAuth(socialAuth: NormalizedSocialUser) {
   const kysely = getKysely();
-
   const now = new Date();
 
   return await kysely.transaction().execute(async (tx) => {
     const dbUser = await tx
-      .selectFrom('User')
-      .where('email', '=', socialAuth.email)
-      .select((eb) => [
-        'User.id',
-        'User.email',
-        'User.username',
-        jsonObjectFrom(
-          eb.selectFrom('OAuth')
-            .where('OAuth.id', '=', socialAuth.id)
-            .where('OAuth.type', '=', socialAuth.type)
-            .whereRef('OAuth.userId', '=', 'User.id')
-            .select(['OAuth.id']),
-        ).as('oauth'),
-      ])
+      .insertInto('User')
+      .values({
+        username: socialAuth.username,
+        email: socialAuth.email,
+        updatedAt: now,
+      })
+      .returning(['User.id', 'User.email', 'User.username'])
+      .executeTakeFirstOrThrow();
+
+    await Promise.all([
+      tx.insertInto('Folder')
+        .values({
+          name: `${socialAuth.username}'s workspace`,
+          root: true,
+          path: generateRootFolderPath(socialAuth.username),
+          updatedAt: now,
+          ownerId: dbUser.id,
+        })
+        .executeTakeFirstOrThrow(),
+
+      tx.insertInto('OAuth')
+        .values({
+          id: socialAuth.id,
+          type: socialAuth.type,
+          updatedAt: now,
+          userId: dbUser.id,
+        })
+        .executeTakeFirstOrThrow(),
+    ]);
+
+    return dbUser;
+  });
+}
+
+export async function updateUserWithSocialAuth(userId: string, socialAuth: NormalizedSocialUser) {
+  const kysely = getKysely();
+  const now = new Date();
+
+  return await kysely.transaction().execute(async (tx) => {
+    const oauth = await tx
+      .selectFrom('OAuth')
+      .where('id', '=', socialAuth.id)
+      .where('type', '=', socialAuth.type)
+      .where('userId', '=', userId)
+      .select('id')
       .executeTakeFirst();
 
-    if (dbUser) {
-      if (!dbUser.oauth) {
-        await tx
-          .insertInto('OAuth')
-          .values({
-            id: socialAuth.id,
-            type: socialAuth.type,
-            userId: dbUser.id,
-            updatedAt: now,
-          })
-          .executeTakeFirstOrThrow();
-      }
+    if (oauth)
+      return;
 
-      return dbUser as SafeUser;
-    }
-    else {
-      const dbUser = await tx
-        .insertInto('User')
-        .values({
-          username: socialAuth.username,
-          email: socialAuth.email,
-          updatedAt: now,
-        })
-        .returning(['User.id', 'User.email', 'User.username'])
-        .executeTakeFirstOrThrow();
-
-      await Promise.all([
-        tx.insertInto('Folder')
-          .values({
-            name: `${socialAuth.username}'s workspace`,
-            root: true,
-            path: generateRootFolderPath(socialAuth.username),
-            updatedAt: now,
-            ownerId: dbUser.id,
-          })
-          .executeTakeFirstOrThrow(),
-
-        tx.insertInto('OAuth')
-          .values({
-            id: socialAuth.id,
-            type: socialAuth.type,
-            updatedAt: now,
-            userId: dbUser.id,
-          })
-          .executeTakeFirstOrThrow(),
-      ]);
-
-      return dbUser;
-    }
+    await tx
+      .insertInto('OAuth')
+      .values({
+        id: socialAuth.id,
+        type: socialAuth.type,
+        userId,
+        updatedAt: now,
+      })
+      .executeTakeFirstOrThrow();
   });
 }

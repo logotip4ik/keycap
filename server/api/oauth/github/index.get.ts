@@ -80,14 +80,24 @@ export default defineEventHandler(async (event) => {
     await updateCacheEntry(getUserCacheKey(username, UserCacheName.Taken), true);
   }
 
-  user = await updateOrCreateUserFromSocialAuth(
-    normalizeGitHubUser(githubUser, { username }),
-  )
-    .catch(async (err) => {
-      await logger.error(event, { err, msg: 'oauth.github.updateOrCreateUser failed' });
+  const normalizedSocialUser = normalizeGitHubUser(githubUser, { username });
 
-      return undefined;
-    });
+  if (user) {
+    await updateUserWithSocialAuth(user.id, normalizedSocialUser)
+      .catch(async (err) => {
+        await logger.error(event, { err, msg: 'oauth.github.updateUser failed' });
+
+        return undefined;
+      });
+  }
+  else {
+    user = await createUserWithSocialAuth(normalizedSocialUser)
+      .catch(async (err) => {
+        await logger.error(event, { err, msg: 'oauth.github.createUser failed' });
+
+        return undefined;
+      });
+  }
 
   deleteCookie(event, 'state');
 
