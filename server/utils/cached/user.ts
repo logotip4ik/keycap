@@ -51,6 +51,7 @@ async function checkIfUsernameTaken_(username: string) {
   const user = await kysely
     .selectFrom('User')
     .where('username', '=', username)
+    .select('username')
     .executeTakeFirst();
 
   return user !== undefined;
