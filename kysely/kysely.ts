@@ -10,6 +10,7 @@ export function getKysely() {
       throw new Error('DATABASE_URL must be defined');
 
     globalThis.__kysely = new Kysely<DB>({
+      log: import.meta.dev ? ['query', 'error'] : ['error'],
       dialect: new PostgresJSDialect({
         postgres: import.meta.dev
           ? postgres(process.env.DATABASE_URL, { database: 'postgres' })
