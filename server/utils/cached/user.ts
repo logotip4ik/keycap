@@ -59,6 +59,7 @@ async function checkIfUsernameTaken_(username: string) {
 async function getRecentForUser_(user: { id: string, username: string }) {
   const kysely = getKysely();
 
+  // TODO: more advanced recent algorithm :P
   return await kysely
     .selectFrom('Note')
     .where('ownerId', '=', user.id)
