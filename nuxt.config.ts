@@ -372,8 +372,8 @@ export default defineNuxtConfig({
           imports: ['createKey', 'KeyPrefix'],
         },
         {
-          from: 'prisma-error-enum',
-          imports: ['PrismaError'],
+          from: resolve('./kysely/kysely.ts'),
+          imports: ['getKysely'],
         },
       ],
 
@@ -386,6 +386,11 @@ export default defineNuxtConfig({
           from: 'parse-duration',
           name: 'default',
           as: parseDurationFunctionName,
+        },
+        {
+          from: '@drdgvhbh/postgres-error-codes',
+          name: '*',
+          as: 'PostgresErrorCode',
         },
       ],
     },

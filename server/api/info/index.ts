@@ -8,21 +8,28 @@ export default defineEventHandler(async (event) => {
   };
 
   if (getQuery(event)[build.id] !== undefined) {
-    const prisma = getPrisma();
+    const kysely = getKysely();
 
-    const [users, notes] = await Promise.all([
-      prisma.user.count(),
-      prisma.note.count(),
-    ]).catch(async (err) => {
-      await logger.error(event, { err, msg: '(user|note).count failed' });
+    const [users, notes] = await kysely
+      .transaction()
+      .execute(async (tx) => await Promise.all([
+        tx.selectFrom('User')
+          .select((eb) => eb.fn.countAll<string>().as('count'))
+          .executeTakeFirstOrThrow(),
 
-      return [null, null];
-    });
+        tx.selectFrom('Note')
+          .select((eb) => eb.fn.countAll<string>().as('count'))
+          .executeTakeFirstOrThrow(),
+      ])).catch(async (err) => {
+        await logger.error(event, { err, msg: 'info failed' });
+
+        return [null, null];
+      });
 
     if (users)
-      info.users = users;
+      info.users = Number(users.count);
     if (notes)
-      info.notes = notes;
+      info.notes = Number(notes.count);
   }
 
   return info;

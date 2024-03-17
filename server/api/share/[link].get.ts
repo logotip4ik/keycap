@@ -4,16 +4,19 @@ export default defineEventHandler(async (event) => {
   if (!link || !isShareLinkValid(link))
     throw createError({ status: 400 });
 
-  const prisma = getPrisma();
+  const kysely = getKysely();
 
-  const note = await prisma.note.findFirst({
-    select: { name: true, content: true, updatedAt: true, createdAt: true },
-    where: { shares: { some: { link } } },
-  }).catch(async (err) => {
-    await logger.error(event, { err, msg: 'note.findFirst failed' });
+  const note = await kysely
+    .selectFrom('Share')
+    .where('link', '=', link)
+    .rightJoin('Note', 'Note.id', 'Share.noteId')
+    .select(['Note.name', 'Note.content', 'Note.updatedAt', 'Note.createdAt'])
+    .executeTakeFirst()
+    .catch(async (err) => {
+      await logger.error(event, { err, msg: 'sharedNote.get failed' });
 
-    throw createError({ status: 400 });
-  });
+      throw createError({ status: 400 });
+    });
 
   if (!note)
     throw createError({ status: 404 });

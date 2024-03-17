@@ -46,25 +46,26 @@ async function checkIfUsernameTaken_(username: string) {
 
   username = username.trim();
 
-  const prisma = getPrisma();
+  const kysely = getKysely();
 
-  const user = await prisma.user.findFirst({
-    where: { username },
-    select: { username: true },
-  })
-    .catch(() => {});
+  const user = await kysely
+    .selectFrom('User')
+    .where('username', '=', username)
+    .select('username')
+    .executeTakeFirst();
 
-  return !!user?.username;
+  return user !== undefined;
 }
 
-async function getRecentForUser_(user: { id: bigint, username: string }) {
-  const prisma = getPrisma();
+async function getRecentForUser_(user: { id: string, username: string }) {
+  const kysely = getKysely();
 
   // TODO: more advanced recent algorithm :P
-  return await prisma.note.findMany({
-    where: { ownerId: user.id },
-    select: { id: true, name: true, path: true },
-    take: 4,
-    orderBy: { updatedAt: 'desc' },
-  });
+  return await kysely
+    .selectFrom('Note')
+    .where('ownerId', '=', user.id)
+    .select(['id', 'name', 'path'])
+    .limit(4)
+    .orderBy('updatedAt desc')
+    .execute();
 }

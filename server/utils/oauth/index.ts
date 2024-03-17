@@ -1,9 +1,8 @@
-import type { Prisma } from '@prisma/client';
 import type { H3Event } from 'h3';
 import type { QueryObject } from 'ufo';
 import type { CookieSerializeOptions } from 'cookie-es';
 
-import type { NormalizedSocialUser, SafeUser } from '~/types/server';
+import type { NormalizedSocialUser } from '~/types/server';
 
 export const providerPathToConfigMap = {
   '/api/oauth/github': githubConfig,
@@ -54,60 +53,69 @@ export function sendOAuthRedirectIfNeeded(event: H3Event, _query?: QueryObject):
   return true;
 }
 
-export async function updateOrCreateUserFromSocialAuth(user: NormalizedSocialUser): Promise<SafeUser> {
-  const prisma = getPrisma();
+export async function createUserWithSocialAuth(socialAuth: NormalizedSocialUser) {
+  const kysely = getKysely();
+  const now = new Date();
 
-  const social: Prisma.OAuthCreateWithoutUserInput = {
-    id: user.id,
-    type: user.type,
-  };
+  return await kysely.transaction().execute(async (tx) => {
+    const dbUser = await tx
+      .insertInto('User')
+      .values({
+        username: socialAuth.username,
+        email: socialAuth.email,
+        updatedAt: now,
+      })
+      .returning(['User.id', 'User.email', 'User.username'])
+      .executeTakeFirstOrThrow();
 
-  const defaultUserSelect: Prisma.UserSelect = {
-    id: true,
-    email: true,
-    username: true,
-  };
+    await Promise.all([
+      tx.insertInto('Folder')
+        .values({
+          name: `${socialAuth.username}'s workspace`,
+          root: true,
+          path: generateRootFolderPath(socialAuth.username),
+          ownerId: dbUser.id,
+          updatedAt: now,
+        })
+        .executeTakeFirstOrThrow(),
 
-  return await prisma.$transaction(async (tx) => {
-    let dbUser = await tx.user.findFirst({
-      select: defaultUserSelect,
-      where: { username: user.username },
-    });
-
-    if (dbUser) {
-      await tx.user.update({
-        select: { email: true },
-        where: { id: dbUser.id },
-        data: {
-          socials: {
-            connectOrCreate: {
-              where: { id: user.id },
-              create: social,
-            },
-          },
-        },
-      });
-    }
-    else {
-      dbUser = await tx.user.create({
-        select: defaultUserSelect,
-        data: {
-          email: user.email,
-          username: user.username,
-
-          folders: {
-            create: {
-              name: `${user.username}'s workspace`,
-              root: true,
-              path: generateRootFolderPath(user.username),
-            },
-          },
-
-          socials: { create: social },
-        },
-      });
-    }
+      tx.insertInto('OAuth')
+        .values({
+          id: socialAuth.id,
+          type: socialAuth.type,
+          userId: dbUser.id,
+          updatedAt: now,
+        })
+        .executeTakeFirstOrThrow(),
+    ]);
 
     return dbUser;
+  });
+}
+
+export async function updateUserWithSocialAuth(userId: string, socialAuth: NormalizedSocialUser) {
+  const kysely = getKysely();
+
+  return await kysely.transaction().execute(async (tx) => {
+    const oauth = await tx
+      .selectFrom('OAuth')
+      .where('id', '=', socialAuth.id)
+      .where('type', '=', socialAuth.type)
+      .where('userId', '=', userId)
+      .select('id')
+      .executeTakeFirst();
+
+    if (oauth)
+      return;
+
+    await tx
+      .insertInto('OAuth')
+      .values({
+        id: socialAuth.id,
+        type: socialAuth.type,
+        userId,
+        updatedAt: new Date(),
+      })
+      .executeTakeFirstOrThrow();
   });
 }

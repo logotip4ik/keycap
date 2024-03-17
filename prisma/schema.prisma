@@ -6,6 +6,11 @@ generator client {
   previewFeatures = ["relationJoins"]
 }
 
+generator kysely {
+  provider = "prisma-kysely"
+  output = "../kysely/db"
+}
+
 datasource db {
   provider = "cockroachdb"
   url      = env("DATABASE_URL")

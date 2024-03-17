@@ -34,24 +34,25 @@ export default defineEventHandler(async (event) => {
     return await sendRedirect(event, '/');
   }
 
-  const prisma = getPrisma();
-
   if (!query.socialUser) {
-    const userSelect = { id: true, email: true, username: true };
+    const kysely = getKysely();
 
-    const [oauth, dbUser] = await Promise.all([
-      prisma.oAuth.findFirst({
-        where: { id: githubUser.id.toString() },
-        select: { user: { select: userSelect } },
-      }),
-
-      prisma.user.findFirst({
-        where: { email: githubUser.email },
-        select: userSelect,
-      }),
-    ]);
-
-    user = oauth?.user || dbUser || null;
+    user = await kysely
+      .selectFrom('User')
+      .leftJoin('OAuth', 'OAuth.userId', 'User.id')
+      .where((eb) => eb.or([
+        eb('User.email', '=', githubUser.email),
+        eb.and([
+          eb('OAuth.id', '=', githubUser.id.toString()),
+          eb('OAuth.type', '=', OAuthProvider.GitHub),
+        ]),
+      ]))
+      .select(['User.id', 'User.email', 'User.username'])
+      .executeTakeFirst()
+      .catch(async (err) => {
+        await logger.error(event, { err, msg: 'oauth.github.findUser failed' });
+        return undefined;
+      });
   }
 
   let username: string;
@@ -79,14 +80,24 @@ export default defineEventHandler(async (event) => {
     await updateCacheEntry(getUserCacheKey(username, UserCacheName.Taken), true);
   }
 
-  user = await updateOrCreateUserFromSocialAuth(
-    normalizeGitHubUser(githubUser, { username }),
-  )
-    .catch(async (err) => {
-      await logger.error(event, { err, msg: 'updateOrCreateUserFromSocialAuth failed' });
+  const normalizedSocialUser = normalizeGitHubUser(githubUser, { username });
 
-      return null;
-    });
+  if (user) {
+    await updateUserWithSocialAuth(user.id, normalizedSocialUser)
+      .catch(async (err) => {
+        await logger.error(event, { err, msg: 'oauth.github.updateUser failed' });
+
+        return undefined;
+      });
+  }
+  else {
+    user = await createUserWithSocialAuth(normalizedSocialUser)
+      .catch(async (err) => {
+        await logger.error(event, { err, msg: 'oauth.github.createUser failed' });
+
+        return undefined;
+      });
+  }
 
   deleteCookie(event, 'state');
 

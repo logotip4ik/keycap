@@ -1,3 +1,7 @@
+import { sql } from 'kysely';
+import postgres from 'postgres';
+import escapeRE from 'escape-string-regexp';
+
 import type { TypeOf } from 'suretype';
 
 type UpdatableFields = TypeOf<typeof folderUpdateSchema>;
@@ -5,8 +9,6 @@ type UpdatableFields = TypeOf<typeof folderUpdateSchema>;
 export default defineEventHandler(async (event) => {
   const user = event.context.user!;
   const timer = event.context.timer!;
-
-  const prisma = getPrisma();
 
   const path = getRouterParam(event, 'path');
 
@@ -17,7 +19,7 @@ export default defineEventHandler(async (event) => {
 
   const data = await readBody<UpdatableFields>(event) || {};
 
-  if (data.name)
+  if (typeof data.name === 'string')
     data.name = data.name.trim();
 
   const validation = useFolderUpdateValidation(data);
@@ -34,29 +36,56 @@ export default defineEventHandler(async (event) => {
   if (!data.name)
     return sendNoContent(event);
 
+  const kysely = getKysely();
+
   const now = new Date();
+  const folderPathReplacementRE = `^${escapeRE(folderPath)}`;
   const newFolderPath = makeNewItemPath(folderPath, data.name);
 
-  const sqlStartsWithFolderPath = `${folderPath}/%`;
-  const sqlFolderPathRegexp = `^${folderPath}/`;
-
-  const replaceValue = `${newFolderPath}/`;
-
   timer.start('db');
-  await prisma.$transaction([
-    prisma.$queryRaw`UPDATE "Folder" SET "name" = ${data.name}, "path" = ${newFolderPath}, "updatedAt" = ${now} WHERE ("Folder"."ownerId" = ${user.id} AND "Folder"."path"::text = ${folderPath})`,
+  await kysely.transaction().execute(async (tx) => {
+    await Promise.all([
+      tx.updateTable('Folder')
+        .where('ownerId', '=', user.id)
+        .where('path', '=', folderPath)
+        .set({
+          name: data.name,
+          updatedAt: now,
+          path: newFolderPath,
+        })
+        .executeTakeFirstOrThrow(),
 
-    prisma.$queryRaw`UPDATE "Note" SET "path" = regexp_replace("path"::text, ${sqlFolderPathRegexp}, ${replaceValue}, 'c'), "updatedAt" = ${now} WHERE ("Note"."ownerId" = ${user.id} AND "Note"."path"::text LIKE ${sqlStartsWithFolderPath})`,
-    prisma.$queryRaw`UPDATE "Folder" SET "path" = regexp_replace("path"::text, ${sqlFolderPathRegexp}, ${replaceValue}, 'c'), "updatedAt" = ${now} WHERE ("Folder"."ownerId" = ${user.id} AND "Folder"."path"::text LIKE ${sqlStartsWithFolderPath})`,
-  ]).catch(async (err) => {
-    await logger.error(event, { err, msg: 'rename folder failed' });
+      tx.updateTable('Folder')
+        .where('ownerId', '=', user.id)
+        .where('path', 'like', `${folderPath}/%`)
+        .set((eb) => ({
+          updatedAt: now,
+          path: sql`regexp_replace(${eb.ref('path')}, ${folderPathReplacementRE}, ${newFolderPath}, 'c')`,
+        }))
+        .execute(),
 
-    if (err.code === PrismaError.RawQueryError) {
+      tx
+        .updateTable('Note')
+        .where('ownerId', '=', user.id)
+        .where('path', 'like', `${folderPath}/%`)
+        .set((eb) => ({
+          updatedAt: now,
+          path: sql`regexp_replace(${eb.ref('path')}, ${folderPathReplacementRE}, ${newFolderPath}, 'c')`,
+        }))
+        .execute(),
+    ]);
+  }).catch(async (err) => {
+    if (
+      err instanceof postgres.PostgresError
+      && err.code === PostgresErrorCode.PG_UNIQUE_VIOLATION
+    ) {
       throw createError({
         status: 400,
         message: 'Folder with such name already exists',
       });
     }
+
+    await logger.error(event, { err, msg: 'folder.update failed' });
 
     throw createError({ status: 400 });
   });

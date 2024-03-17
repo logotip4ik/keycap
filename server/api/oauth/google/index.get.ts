@@ -32,24 +32,25 @@ export default defineEventHandler(async (event) => {
     return await sendRedirect(event, '/');
   }
 
-  const prisma = getPrisma();
-
   if (!query.socialUser) {
-    const userSelect = { id: true, email: true, username: true };
+    const kysely = getKysely();
 
-    const [oauth, dbUser] = await Promise.all([
-      prisma.oAuth.findFirst({
-        where: { id: googleUser.id },
-        select: { user: { select: userSelect } },
-      }),
-
-      prisma.user.findFirst({
-        where: { email: googleUser.email },
-        select: userSelect,
-      }),
-    ]);
-
-    user = oauth?.user || dbUser || null;
+    user = await kysely
+      .selectFrom('User')
+      .leftJoin('OAuth', 'OAuth.userId', 'User.id')
+      .where((eb) => eb.or([
+        eb('User.email', '=', googleUser.email),
+        eb.and([
+          eb('OAuth.id', '=', googleUser.id),
+          eb('OAuth.type', '=', OAuthProvider.Google),
+        ]),
+      ]))
+      .select(['User.id', 'User.email', 'User.username'])
+      .executeTakeFirst()
+      .catch(async (err) => {
+        await logger.error(event, { err, msg: 'oauth.google.findUser failed' });
+        return undefined;
+      });
   }
 
   let username: string;
@@ -75,14 +76,24 @@ export default defineEventHandler(async (event) => {
     await updateCacheEntry(getUserCacheKey(username, UserCacheName.Taken), true);
   }
 
-  user = await updateOrCreateUserFromSocialAuth(
-    normalizeGoogleUser(googleUser, { username }),
-  )
-    .catch(async (err) => {
-      await logger.error(event, { err, msg: 'updateOrCreateUserFromSocialAuth failed' });
+  const normalizedSocialUser = normalizeGoogleUser(googleUser, { username });
 
-      return null;
-    });
+  if (user) {
+    await updateUserWithSocialAuth(user.id, normalizedSocialUser)
+      .catch(async (err) => {
+        await logger.error(event, { err, msg: 'oauth.google.updateUser failed' });
+
+        return undefined;
+      });
+  }
+  else {
+    user = await createUserWithSocialAuth(normalizedSocialUser)
+      .catch(async (err) => {
+        await logger.error(event, { err, msg: 'oauth.google.createUser failed' });
+
+        return undefined;
+      });
+  }
 
   deleteCookie(event, 'state');
 

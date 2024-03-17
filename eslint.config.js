@@ -48,6 +48,7 @@ export default antfu({
     '.yarn/',
     'archive',
     'prisma/migrations',
+    'kysely/db',
     'public',
     'docker-compose.*',
     'package.json',

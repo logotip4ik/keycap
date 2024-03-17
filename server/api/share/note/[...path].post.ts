@@ -9,32 +9,42 @@ export default defineEventHandler(async (event) => {
 
   const notePath = generateNotePath(user.username, path);
 
-  const prisma = getPrisma();
-
-  const link = generateShareLink();
+  const kysely = getKysely();
 
   timer.start('db');
-  await prisma.$transaction(async (tx) => {
-    const note = await tx.note.findFirst({
-      where: { path: notePath, ownerId: user.id },
-      select: { shares: { select: { id: true } } },
-    });
+  const share = await kysely.transaction().execute(async (tx) => {
+    const note = await tx
+      .selectFrom('Note')
+      .leftJoin('Share', 'Share.noteId', 'Note.id')
+      .where('Note.path', '=', notePath)
+      .where('Note.ownerId', '=', user.id)
+      .select(['Note.id', 'Share.link'])
+      .executeTakeFirst();
 
-    if (note?.shares && note?.shares.length > 0)
-      return note.shares[0];
+    if (!note)
+      throw createError({ status: 404 });
 
-    return await tx.share.create({
-      select: { id: true },
-      data: {
+    if (note.link)
+      return note as { link: string };
+
+    const link = generateShareLink();
+
+    await tx
+      .insertInto('Share')
+      .values({
         link,
-        note: { connect: { path: notePath } },
-        owner: { connect: { id: user.id } },
-      },
-    });
-  }).catch(async (err) => {
-    await logger.error(event, { err, msg: 'cannot create share' });
+        noteId: note.id,
+        ownerId: user.id,
+        updatedAt: new Date(),
+      })
+      .executeTakeFirst()
+      .catch(async (err) => {
+        await logger.error(event, { err, msg: 'share.note.post failed (can\'t create share)' });
 
-    throw createError({ status: 400 });
+        throw createError({ status: 400 });
+      });
+
+    return { link };
   });
   timer.end();
 
@@ -42,5 +52,9 @@ export default defineEventHandler(async (event) => {
 
   setResponseStatus(event, 201);
 
-  return { data: { link } };
+  return {
+    data: {
+      link: share.link,
+    },
+  };
 });
