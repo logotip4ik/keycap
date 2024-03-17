@@ -57,7 +57,7 @@ async function selectNoteDetails(path: string, ownerId: string) {
         eb.selectFrom('Share')
           .where('ownerId', '=', ownerId)
           .whereRef('noteId', '=', 'Note.id')
-          .select(['link'])
+          .select('Share.link')
           .limit(1),
       ).as('shares'),
     ])
