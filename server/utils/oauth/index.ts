@@ -1,10 +1,8 @@
-import { jsonObjectFrom } from 'kysely/helpers/postgres';
-
 import type { H3Event } from 'h3';
 import type { QueryObject } from 'ufo';
 import type { CookieSerializeOptions } from 'cookie-es';
 
-import type { NormalizedSocialUser, SafeUser } from '~/types/server';
+import type { NormalizedSocialUser } from '~/types/server';
 
 export const providerPathToConfigMap = {
   '/api/oauth/github': githubConfig,
