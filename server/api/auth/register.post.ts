@@ -52,6 +52,7 @@ export default defineEventHandler(async (event) => {
     });
 
   const kysely = getKysely();
+  const now = new Date();
 
   const user = await kysely.transaction().execute(async (tx) => {
     const user = await tx
@@ -60,13 +61,17 @@ export default defineEventHandler(async (event) => {
         email: body.email,
         username: body.username,
         password: hashedPassword,
-        updatedAt: new Date(),
+        updatedAt: now,
       })
       .returning(['id'])
       .executeTakeFirst();
 
-    if (!user)
-      throw createError({ status: 400, message: 'user with this email or username might already exist' });
+    if (!user) {
+      throw createError({
+        status: 400,
+        message: 'user with this email or username might already exist',
+      });
+    }
 
     await tx
       .insertInto('Folder')
@@ -75,7 +80,7 @@ export default defineEventHandler(async (event) => {
         root: true,
         path: generateRootFolderPath(body.username),
         ownerId: user.id,
-        updatedAt: new Date(),
+        updatedAt: now,
       })
       .execute();
 
@@ -83,12 +88,7 @@ export default defineEventHandler(async (event) => {
     (user as SafeUser).username = body.username;
 
     return user as SafeUser;
-  })
-    .catch(async (err) => {
-      await logger.error(event, { err, msg: 'user.create failed' });
-
-      throw createError({ status: 500 });
-    });
+  });
 
   await Promise.all([
     setAuthCookies(event, user),
