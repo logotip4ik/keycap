@@ -74,8 +74,8 @@ export async function createUserWithSocialAuth(socialAuth: NormalizedSocialUser)
           name: `${socialAuth.username}'s workspace`,
           root: true,
           path: generateRootFolderPath(socialAuth.username),
-          updatedAt: now,
           ownerId: dbUser.id,
+          updatedAt: now,
         })
         .executeTakeFirstOrThrow(),
 
@@ -83,8 +83,8 @@ export async function createUserWithSocialAuth(socialAuth: NormalizedSocialUser)
         .values({
           id: socialAuth.id,
           type: socialAuth.type,
-          updatedAt: now,
           userId: dbUser.id,
+          updatedAt: now,
         })
         .executeTakeFirstOrThrow(),
     ]);
@@ -95,7 +95,6 @@ export async function createUserWithSocialAuth(socialAuth: NormalizedSocialUser)
 
 export async function updateUserWithSocialAuth(userId: string, socialAuth: NormalizedSocialUser) {
   const kysely = getKysely();
-  const now = new Date();
 
   return await kysely.transaction().execute(async (tx) => {
     const oauth = await tx
@@ -115,7 +114,7 @@ export async function updateUserWithSocialAuth(userId: string, socialAuth: Norma
         id: socialAuth.id,
         type: socialAuth.type,
         userId,
-        updatedAt: now,
+        updatedAt: new Date(),
       })
       .executeTakeFirstOrThrow();
   });
