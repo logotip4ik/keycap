@@ -1,4 +1,5 @@
-import type { Prisma } from '@prisma/client';
+import { jsonObjectFrom } from 'kysely/helpers/postgres';
+
 import type { H3Event } from 'h3';
 import type { QueryObject } from 'ufo';
 import type { CookieSerializeOptions } from 'cookie-es';
@@ -54,60 +55,77 @@ export function sendOAuthRedirectIfNeeded(event: H3Event, _query?: QueryObject):
   return true;
 }
 
-export async function updateOrCreateUserFromSocialAuth(user: NormalizedSocialUser): Promise<SafeUser> {
-  const prisma = getPrisma();
+export async function updateOrCreateUserFromSocialAuth(socialAuth: NormalizedSocialUser): Promise<SafeUser> {
+  const kysely = getKysely();
 
-  const social: Prisma.OAuthCreateWithoutUserInput = {
-    id: user.id,
-    type: user.type,
-  };
+  const now = new Date();
 
-  const defaultUserSelect: Prisma.UserSelect = {
-    id: true,
-    email: true,
-    username: true,
-  };
-
-  return await prisma.$transaction(async (tx) => {
-    let dbUser = await tx.user.findFirst({
-      select: defaultUserSelect,
-      where: { username: user.username },
-    });
+  return await kysely.transaction().execute(async (tx) => {
+    const dbUser = await tx
+      .selectFrom('User')
+      .where('email', '=', socialAuth.email)
+      .select((eb) => [
+        'User.id',
+        'User.email',
+        'User.username',
+        jsonObjectFrom(
+          eb.selectFrom('OAuth')
+            .where('OAuth.id', '=', socialAuth.id)
+            .where('OAuth.type', '=', socialAuth.type)
+            .whereRef('OAuth.userId', '=', 'User.id')
+            .select(['OAuth.id']),
+        ).as('oauth'),
+      ])
+      .executeTakeFirst();
 
     if (dbUser) {
-      await tx.user.update({
-        select: { email: true },
-        where: { id: dbUser.id },
-        data: {
-          socials: {
-            connectOrCreate: {
-              where: { id: user.id },
-              create: social,
-            },
-          },
-        },
-      });
+      if (!dbUser.oauth) {
+        await tx
+          .insertInto('OAuth')
+          .values({
+            id: socialAuth.id,
+            type: socialAuth.type,
+            updatedAt: now,
+            userId: dbUser.id,
+          })
+          .executeTakeFirstOrThrow();
+      }
+
+      return dbUser as SafeUser;
     }
     else {
-      dbUser = await tx.user.create({
-        select: defaultUserSelect,
-        data: {
-          email: user.email,
-          username: user.username,
+      const dbUser = await tx
+        .insertInto('User')
+        .values({
+          username: socialAuth.username,
+          email: socialAuth.email,
+          updatedAt: now,
+        })
+        .returning(['User.id', 'User.email', 'User.username'])
+        .executeTakeFirstOrThrow();
 
-          folders: {
-            create: {
-              name: `${user.username}'s workspace`,
-              root: true,
-              path: generateRootFolderPath(user.username),
-            },
-          },
+      await Promise.all([
+        tx.insertInto('Folder')
+          .values({
+            name: `${socialAuth.username}'s workspace`,
+            root: true,
+            path: generateRootFolderPath(socialAuth.username),
+            updatedAt: now,
+            ownerId: dbUser.id,
+          })
+          .executeTakeFirstOrThrow(),
 
-          socials: { create: social },
-        },
-      });
+        tx.insertInto('OAuth')
+          .values({
+            id: socialAuth.id,
+            type: socialAuth.type,
+            updatedAt: now,
+            userId: dbUser.id,
+          })
+          .executeTakeFirstOrThrow(),
+      ]);
+
+      return dbUser;
     }
-
-    return dbUser;
   });
 }
