@@ -29,9 +29,7 @@ export default defineEventHandler(async (event) => {
 
   timer.appendHeader(event);
 
-  return {
-    data: note,
-  };
+  return { data: note };
 });
 
 async function selectNote(path: string, ownerId: string) {
