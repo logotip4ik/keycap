@@ -15,13 +15,13 @@ export default defineEventHandler(async (event) => {
       .execute(async (tx) => await Promise.all([
         tx.selectFrom('User')
           .select((eb) => eb.fn.countAll<string>().as('count'))
-          .executeTakeFirst(),
+          .executeTakeFirstOrThrow(),
 
         tx.selectFrom('Note')
           .select((eb) => eb.fn.countAll<string>().as('count'))
-          .executeTakeFirst(),
+          .executeTakeFirstOrThrow(),
       ])).catch(async (err) => {
-        await logger.error(event, { err, msg: '(user|note).count failed' });
+        await logger.error(event, { err, msg: 'info failed' });
 
         return [null, null];
       });

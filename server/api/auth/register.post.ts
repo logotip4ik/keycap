@@ -91,12 +91,16 @@ export default defineEventHandler(async (event) => {
         ownerId: user.id,
         updatedAt: now,
       })
-      .execute();
+      .executeTakeFirst();
 
     (user as SafeUser).email = body.email;
     (user as SafeUser).username = body.username;
 
     return user as SafeUser;
+  }).catch(async (err) => {
+    await logger.error(event, { err, msg: 'auth.register failed' });
+
+    throw err;
   });
 
   await Promise.all([

@@ -24,7 +24,10 @@ export default defineEventHandler(async (event) => {
     .selectFrom('User')
     .where('email', '=', body.email)
     .select(['id', 'email', 'username', 'password'])
-    .executeTakeFirst();
+    .executeTakeFirst()
+    .catch(async (err) => {
+      await logger.error(event, { err, msg: 'auth.login failed (can\'t fetch user)' });
+    });
 
   if (!user)
     throw createError({ status: 400, message: 'email or password is incorrect' });
@@ -50,7 +53,10 @@ export default defineEventHandler(async (event) => {
       .updateTable('User')
       .set({ password: rehashedPassword })
       .where('id', '=', user.id)
-      .execute();
+      .execute()
+      .catch(async (err) => {
+        await logger.error(event, { err, msg: 'auth.login failed (can\'t update user password)' });
+      });
   }
 
   const safeUser: SafeUser = { id: user.id, username: user.username, email: user.email };
