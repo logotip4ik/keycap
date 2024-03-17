@@ -1625,6 +1625,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@drdgvhbh/postgres-error-codes@npm:^0.0.6":
+  version: 0.0.6
+  resolution: "@drdgvhbh/postgres-error-codes@npm:0.0.6"
+  checksum: 10/fe4abda57ee95e5ee3500d81cdd27aedb47ade6a70fef0d3c1c3365d2e3dcae538f47752178545da7eb658428968b0ec0ae3fb4bb92256b90a4a407f1d3b6b8d
+  languageName: node
+  linkType: hard
+
 "@emnapi/core@npm:^0.45.0":
   version: 0.45.0
   resolution: "@emnapi/core@npm:0.45.0"
@@ -9275,6 +9282,7 @@ __metadata:
   resolution: "keycap@workspace:."
   dependencies:
     "@antfu/eslint-config": "npm:^2.8.3"
+    "@drdgvhbh/postgres-error-codes": "npm:^0.0.6"
     "@faker-js/faker": "npm:^8.4.1"
     "@floating-ui/dom": "npm:^1.6.3"
     "@node-rs/argon2": "npm:^1.8.0"
@@ -9345,7 +9353,6 @@ __metadata:
     nuxt-vitest: "npm:^0.11.5"
     parse-duration: "npm:^1.1.0"
     postgres: "npm:^3.4.3"
-    postgres-error-codes: "npm:^0.0.3"
     prisma: "npm:^5.11.0"
     prisma-kysely: "npm:^1.8.0"
     rad-event-listener: "npm:^0.2.4"
@@ -11913,13 +11920,6 @@ __metadata:
     picocolors: "npm:^1.0.0"
     source-map-js: "npm:^1.0.2"
   checksum: 10/93a7ce50cd6188f5f486a9ca98950ad27c19dfed996c45c414fa242944497e4d084a8760d3537f078630226f2bd3c6ab84b813b488740f4432e7c7039cd73a20
-  languageName: node
-  linkType: hard
-
-"postgres-error-codes@npm:^0.0.3":
-  version: 0.0.3
-  resolution: "postgres-error-codes@npm:0.0.3"
-  checksum: 10/3f90a0868944059bacddeeb2fbc76fef6e6213015fa683fa19d2ccf713314077ac58033f3c9109ca945f301caeee9c979a7e817c452c13f0fba9d593b7fa54b8
   languageName: node
   linkType: hard
 
