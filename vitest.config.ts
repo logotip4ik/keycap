@@ -1,13 +1,13 @@
 import { defaultExclude } from 'vitest/config';
-import { defineVitestConfig as defineConfig } from 'nuxt-vitest/config';
+import { defineVitestConfig } from '@nuxt/test-utils/config';
 
-export default defineConfig({
+export default defineVitestConfig({
   test: {
     setupFiles: ['./server/test/stub-nitro.ts'],
 
     includeSource: [
-      'server/**/*.{js,ts}',
-      'utils/**/*.{js,ts}',
+      'server/**/*.ts',
+      'utils/**/*.ts',
     ],
 
     exclude: [
