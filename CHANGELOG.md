@@ -1,6 +1,34 @@
 # Changelog
 
 
+## v3.11.3
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.11.2...v3.11.3)
+
+### 🩹 Fixes
+
+- Copy toasts before sorting to omit side effects ([27e973e6](https://github.com/logotip4ik/keycap/commit/27e973e6))
+- Define meta.vitest only in prod ([7ff12f36](https://github.com/logotip4ik/keycap/commit/7ff12f36))
+
+### 💅 Refactors
+
+- Migrate to kysely ([#20](https://github.com/logotip4ik/keycap/pull/20))
+- Use 3.11 features ([844c96aa](https://github.com/logotip4ik/keycap/commit/844c96aa))
+- Migrate to nuxt/test-utils ([7709a91f](https://github.com/logotip4ik/keycap/commit/7709a91f))
+
+### 🏡 Chore
+
+- **release:** V3.11.2 ([257d8494](https://github.com/logotip4ik/keycap/commit/257d8494))
+- Update deps ([905b8040](https://github.com/logotip4ik/keycap/commit/905b8040))
+- Remove empty tabs ([68549e5d](https://github.com/logotip4ik/keycap/commit/68549e5d))
+- Update and repatch nuxt ([ee035439](https://github.com/logotip4ik/keycap/commit/ee035439))
+- Remove not needed error expectations ([7b3670c2](https://github.com/logotip4ik/keycap/commit/7b3670c2))
+- Remove kysely benchmark ([c3a9c3a8](https://github.com/logotip4ik/keycap/commit/c3a9c3a8))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.11.2
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.11.1...v3.11.2)
