@@ -27,6 +27,9 @@
     --selection-bg-color-hsl: var(--hsl-primary-color), 35%, 35%;
     --error-color-hsl: 0, 75%, 55%;
   }
+
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/color-scheme#declaring_color_scheme_preferences
+  color-scheme: light dark;
 }
 
 ::selection {
@@ -53,7 +56,6 @@ body {
 
   background-color: var(--surface-color);
 
-  color-scheme: light dark;
   overscroll-behavior: none;
 }
 
