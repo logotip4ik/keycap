@@ -3,7 +3,7 @@ export default defineEventHandler(async (event) => {
   const timer = event.context.timer!;
 
   timer.start('db');
-  const recent = await getRecentForUser(user)
+  const recent = await getRecentForUser(event, user)
     .catch(async (err) => {
       await logger.error(event, { err, msg: 'recent failed' });
     });

@@ -1,3 +1,4 @@
+import type { H3Event } from 'h3';
 import { sha256base64 } from 'ohash';
 
 import type { ValueOf } from 'type-fest';
@@ -27,7 +28,7 @@ export const checkIfUsernameTaken = defineCachedFunction(checkIfUsernameTaken_, 
 
   swr: true,
   maxAge: parseDuration('6 months', 'second'),
-  getKey: (username: Parameters<typeof checkIfUsernameTaken_>[0]) => getUserCacheKey(username),
+  getKey: (...params: Parameters<typeof checkIfUsernameTaken_>) => getUserCacheKey(params[1]),
 });
 
 export const getRecentForUser = defineCachedFunction(getRecentForUser_, {
@@ -37,10 +38,10 @@ export const getRecentForUser = defineCachedFunction(getRecentForUser_, {
   swr: true,
   maxAge: parseDuration('5 minutes', 's'),
   staleMaxAge: parseDuration('30 minutes', 's'),
-  getKey: (user: Parameters<typeof getRecentForUser_>[0]) => getUserCacheKey(user.username),
+  getKey: (...params: Parameters<typeof getRecentForUser_>) => getUserCacheKey(params[1].username),
 });
 
-async function checkIfUsernameTaken_(username: string) {
+async function checkIfUsernameTaken_(_event: H3Event, username: string) {
   if (!username)
     return false;
 
@@ -57,7 +58,7 @@ async function checkIfUsernameTaken_(username: string) {
   return user !== undefined;
 }
 
-async function getRecentForUser_(user: { id: string, username: string }) {
+async function getRecentForUser_(_event: H3Event, user: { id: string, username: string }) {
   const kysely = getKysely();
 
   // TODO: more advanced recent algorithm :P

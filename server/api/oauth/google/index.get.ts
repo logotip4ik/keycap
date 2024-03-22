@@ -62,13 +62,13 @@ export default defineEventHandler(async (event) => {
     username = query.username?.toString().trim() || '';
 
     const validation = useUsernameValidator(username);
-    const isUsernameValid = validation.ok && !(await checkIfUsernameTaken(username!));
+    const isUsernameValid = validation.ok && !(await checkIfUsernameTaken(event, username!));
 
     if (!isUsernameValid) {
       query.provider = OAuthProvider.Google;
       query.username = undefined;
       query.socialUser = googleUser;
-      query.usernameTaken = validation.ok && await checkIfUsernameTaken(username!) ? username : '';
+      query.usernameTaken = validation.ok && await checkIfUsernameTaken(event, username!) ? username : '';
 
       return await sendRedirect(event, withQuery('/oauth/ask-username', query));
     }
