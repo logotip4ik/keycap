@@ -45,7 +45,7 @@ After months of using Windows and Android, I found out that notes aren't syncing
 - Tested node vs bun vs deno perf, and results are quite interesting (testing command `bombardier -c 200 -d 60s -la`):
     1. So the most performant is node, +-80000 rps, but it has little memory leak...
     2. Bun takes second place with +-79000 rps, although it's memory is rock solid
-    3. Last one is deno, +-75000 rps (it is still very good result), but it also has a memory leak, so V8 is doing some weird stuff here ¯\_(ツ)_/¯
+    3. Last one is deno, +-75000 rps (it is still very good result), but it also has a memory leak, so V8 is doing some weird stuff here ¯\\_(ツ)_/¯
 
 ### Load testing with Bombardier
 
