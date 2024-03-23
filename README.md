@@ -14,7 +14,7 @@ After months of using Windows and Android, I found out that notes aren't syncing
 ## Stack
 
 - [Nuxt](https://nuxt.com/)
-- [Prisma](https://prisma.io/)
+- [Kysely](https://kysely.dev/)
 - [Cockroach DB](https://www.cockroachlabs.com/product/)
 
 ## Todo
@@ -37,8 +37,15 @@ After months of using Windows and Android, I found out that notes aren't syncing
 - [Prisma vs Kysely (my benchmark)](./benchmarks/prisma-vs-kysely/README.md)
   tldr: in queries without joins prisma is not that far, but in larger queries, Kysely has usually more than 100 ops/s difference
 
-[Rewrite with kysely](https://github.com/logotip4ik/keycap/tree/feat/kysely). Kysely is slightly faster in a development environment,
-though `node-postgres` isn't well suited for serverless. So to see Kysely outperforms Prisma you will need much more traffic than a few visitors in a week.
+<!-- [Rewrite with kysely](https://github.com/logotip4ik/keycap/tree/feat/kysely). Kysely is slightly faster in a development environment, -->
+<!-- though `node-postgres` isn't well suited for serverless. So to see Kysely outperforms Prisma you will need much more traffic than a few visitors in a week. -->
+
+- With migrating to kysely, the overall memory usage dropped significantly (something like -100mb)
+
+- Tested node vs bun vs deno perf, and results are quite interesting (testing command `bombardier -c 200 -d 60s -la`):
+    1. So the most performant is node, +-80000 rps, but it has little memory leak...
+    2. Bun takes second place with +-79000 rps, although it's memory is rock solid
+    3. Last one is deno, +-75000 rps (it is still very good result), but it also has a memory leak, so V8 is doing some weird stuff here ¯\_(ツ)_/¯
 
 ### Load testing with Bombardier
 
