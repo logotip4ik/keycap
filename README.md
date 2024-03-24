@@ -42,14 +42,14 @@ After months of using Windows and Android, I found out that notes aren't syncing
 
 - With migrating to kysely, the overall memory usage dropped significantly (something like -100mb)
 
-- Tested node vs bun vs deno perf, and results are quite interesting (testing command `bombardier -c 200 -d 60s -la`):
+- Tested node vs bun vs deno perf, and results are quite interesting (testing command `bombardier -c 200 -d 60s -la`, Fedora):
     1. So the most performant is node, +-80000 rps, but it has little memory leak...
     2. Bun takes second place with +-79000 rps, although it's memory is rock solid
     3. Last one is deno, +-75000 rps (it is still very good result), but it also has a memory leak, so V8 is doing some weird stuff here ¯\\_(ツ)_/¯
 
 ### Load testing with Bombardier
 
-Firstly build the project in bench config: `yarn build:bench`, then test command itself:
+Firstly build the project in bench config: `yarn build:bench`, then test command itself (tested on Windows):
 
 ```sh
 bombardier http://localhost:3000/api/notes/main -l -d 60s -c 300
