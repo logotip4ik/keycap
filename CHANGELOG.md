@@ -1,6 +1,32 @@
 # Changelog
 
 
+## v3.11.4
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.11.3...v3.11.4)
+
+### 🩹 Fixes
+
+- Pass event as first arg to cached functions ([0c984de8](https://github.com/logotip4ik/keycap/commit/0c984de8))
+- Move color-scheme rule to root element ([17b90394](https://github.com/logotip4ik/keycap/commit/17b90394))
+
+### 📖 Documentation
+
+- Mention kysely in stack and add runtime perf comparison ([081bcfa9](https://github.com/logotip4ik/keycap/commit/081bcfa9))
+- Escape backslash ([3ab34e59](https://github.com/logotip4ik/keycap/commit/3ab34e59))
+- Clarify testing platform ([662ddf04](https://github.com/logotip4ik/keycap/commit/662ddf04))
+
+### 🏡 Chore
+
+- **release:** V3.11.3 ([3e62ae51](https://github.com/logotip4ik/keycap/commit/3e62ae51))
+- Update deps ([92a09610](https://github.com/logotip4ik/keycap/commit/92a09610))
+- Do not override env connection database ([17cb695f](https://github.com/logotip4ik/keycap/commit/17cb695f))
+- Disable origin check for benchmarking ([6e3340c9](https://github.com/logotip4ik/keycap/commit/6e3340c9))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.11.3
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.11.2...v3.11.3)
