@@ -19,7 +19,7 @@ const authSerializeOptions: CookieSerializeOptions = {
   maxAge: authExpiration,
 };
 
-async function generateAccessToken(object: Record<string, unknown>): Promise<string> {
+function generateAccessToken(object: Record<string, unknown>): Promise<string> {
   const now = Math.floor(Date.now() / 1000);
 
   const { id, ...rest } = object;
@@ -27,7 +27,7 @@ async function generateAccessToken(object: Record<string, unknown>): Promise<str
   if (!id)
     throw new Error('id should be defined');
 
-  return await new SignJWT(rest)
+  return new SignJWT(rest)
     .setProtectedHeader({ alg: 'HS256' })
     .setJti(createKey(KeyPrefix.Jwt))
     .setSubject(id as string)

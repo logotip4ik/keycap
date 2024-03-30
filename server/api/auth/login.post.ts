@@ -67,7 +67,7 @@ export default defineEventHandler(async (event) => {
   await setAuthCookies(event, safeUser);
 
   if (body.browserAction !== undefined)
-    return await sendRedirect(event, `/@${safeUser.username}`);
+    return sendRedirect(event, `/@${safeUser.username}`);
 
   return { data: safeUser };
 });

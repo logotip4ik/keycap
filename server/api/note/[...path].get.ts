@@ -32,10 +32,10 @@ export default defineEventHandler(async (event) => {
   return { data: note };
 });
 
-async function selectNote(path: string, ownerId: string) {
+function selectNote(path: string, ownerId: string) {
   const kysely = getKysely();
 
-  return await kysely
+  return kysely
     .selectFrom('Note')
     .where('path', '=', path)
     .where('ownerId', '=', ownerId)
@@ -43,10 +43,10 @@ async function selectNote(path: string, ownerId: string) {
     .executeTakeFirst();
 }
 
-async function selectNoteDetails(path: string, ownerId: string) {
+function selectNoteDetails(path: string, ownerId: string) {
   const kysely = getKysely();
 
-  return await kysely
+  return kysely
     .selectFrom('Note')
     .where('path', '=', path)
     .where('ownerId', '=', ownerId)

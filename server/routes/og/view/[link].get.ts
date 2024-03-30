@@ -40,5 +40,5 @@ export default defineEventHandler(async (event) => {
     },
   );
 
-  return await generatePngFromSvg(svg);
+  return generatePngFromSvg(svg);
 });

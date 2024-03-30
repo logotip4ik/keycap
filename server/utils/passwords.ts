@@ -9,13 +9,13 @@ function getArgon2Options(): argon2.Options {
   };
 }
 
-export async function hashPassword(pass: string): Promise<string> {
-  return await argon2.hash(pass, getArgon2Options());
+export function hashPassword(pass: string): Promise<string> {
+  return argon2.hash(pass, getArgon2Options());
 }
 
-export async function verifyPassword(hashedPass: string, pass: string): Promise<boolean> {
+export function verifyPassword(hashedPass: string, pass: string): Promise<boolean> {
   if (hashedPass.startsWith('$argon2'))
-    return await argon2.verify(hashedPass, pass, getArgon2Options());
+    return argon2.verify(hashedPass, pass, getArgon2Options());
 
-  return await bcrypt.compare(pass, hashedPass);
+  return bcrypt.compare(pass, hashedPass);
 }

@@ -58,11 +58,11 @@ async function checkIfUsernameTaken_(_event: H3Event, username: string) {
   return user !== undefined;
 }
 
-async function getRecentForUser_(_event: H3Event, user: { id: string, username: string }) {
+function getRecentForUser_(_event: H3Event, user: { id: string, username: string }) {
   const kysely = getKysely();
 
   // TODO: more advanced recent algorithm :P
-  return await kysely
+  return kysely
     .selectFrom('Note')
     .where('ownerId', '=', user.id)
     .select(['id', 'name', 'path'])

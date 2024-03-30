@@ -30,10 +30,10 @@ export default defineEventHandler(async (event) => {
   return { data: folder };
 });
 
-async function selectFolder(path: string, ownerId: string) {
+function selectFolder(path: string, ownerId: string) {
   const kysely = getKysely();
 
-  return await kysely
+  return kysely
     .selectFrom('Folder')
     .where('path', '=', path)
     .where('ownerId', '=', ownerId)
@@ -64,10 +64,10 @@ async function selectFolder(path: string, ownerId: string) {
     .executeTakeFirst();
 }
 
-async function selectFolderDetails(path: string, ownerId: string) {
+function selectFolderDetails(path: string, ownerId: string) {
   const kysely = getKysely();
 
-  return await kysely
+  return kysely
     .selectFrom('Folder')
     .select(['updatedAt', 'createdAt'])
     .where('path', '=', path)

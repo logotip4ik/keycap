@@ -53,11 +53,11 @@ export function sendOAuthRedirectIfNeeded(event: H3Event, _query?: QueryObject):
   return true;
 }
 
-export async function createUserWithSocialAuth(socialAuth: NormalizedSocialUser) {
+export function createUserWithSocialAuth(socialAuth: NormalizedSocialUser) {
   const kysely = getKysely();
   const now = new Date();
 
-  return await kysely.transaction().execute(async (tx) => {
+  return kysely.transaction().execute(async (tx) => {
     const dbUser = await tx
       .insertInto('User')
       .values({
@@ -93,10 +93,10 @@ export async function createUserWithSocialAuth(socialAuth: NormalizedSocialUser)
   });
 }
 
-export async function updateUserWithSocialAuth(userId: string, socialAuth: NormalizedSocialUser) {
+export function updateUserWithSocialAuth(userId: string, socialAuth: NormalizedSocialUser) {
   const kysely = getKysely();
 
-  return await kysely.transaction().execute(async (tx) => {
+  return kysely.transaction().execute(async (tx) => {
     const oauth = await tx
       .selectFrom('OAuth')
       .where('id', '=', socialAuth.id)

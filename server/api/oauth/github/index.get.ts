@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
       msg: 'social user validation failed',
     });
 
-    return await sendRedirect(event, '/');
+    return sendRedirect(event, '/');
   }
 
   if (!query.socialUser) {
@@ -75,7 +75,7 @@ export default defineEventHandler(async (event) => {
 
       // NOTE: this basically makes infinite loop
       // to force user to input correct username
-      return await sendRedirect(event, withQuery('/oauth/ask-username', query));
+      return sendRedirect(event, withQuery('/oauth/ask-username', query));
     }
 
     await updateCacheEntry(getUserCacheKey(username, UserCacheName.Taken), true);
@@ -103,9 +103,9 @@ export default defineEventHandler(async (event) => {
   deleteCookie(event, 'state');
 
   if (!user)
-    return await sendRedirect(event, '/');
+    return sendRedirect(event, '/');
 
   await setAuthCookies(event, user);
 
-  return await sendRedirect(event, `/@${user.username}`);
+  return sendRedirect(event, `/@${user.username}`);
 });
