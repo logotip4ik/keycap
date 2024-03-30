@@ -42,10 +42,8 @@ export const Link = Mark.create<LinkOptions>({
   priority: 1000,
 
   keepOnSplit: false,
-
-  inclusive() {
-    return true;
-  },
+  inclusive: false,
+  exitable: true,
 
   addOptions() {
     return {
