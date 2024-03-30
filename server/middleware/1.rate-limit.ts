@@ -1,41 +1,39 @@
-import RateLimiter from 'lambda-rate-limiter';
+import { RateLimitManager } from '@sapphire/ratelimits';
 
 const INTERVAL = parseDuration('1 minute')!;
 const LIMIT = Math.floor((INTERVAL * 2) / 1000); // two per second
 
-// NOTE: https://lihbr.com/posts/rate-limiting-without-overhead-netlify-or-vercel-functions
-// cool article that describes problem about rate limiting in serverless functions
 export default defineEventHandler(async (event) => {
   if (!import.meta.config.benchmarking && event.path?.startsWith('/api')) {
-    const rateLimit = getRateLimiter();
+    const limiter = getRateLimiter();
     const identifier = getRequestIP(event, { xForwardedFor: true });
 
-    const used = await rateLimit(LIMIT, identifier!).catch(() => LIMIT + LIMIT);
+    const rateLimit = limiter.acquire(identifier!);
 
-    if (used > LIMIT) {
+    if (rateLimit.limited) {
       throw createError({
         status: 429,
         message: 'Too many requests',
       });
     }
 
-    setHeader(event, 'X-RateLimit-Limit', LIMIT.toString());
-    setHeader(event, 'X-RateLimit-Remaining', (LIMIT - used).toString());
+    rateLimit.consume();
+
+    setHeader(event, 'X-RateLimit-Limit', LIMIT);
+    setHeader(event, 'X-RateLimit-Remaining', rateLimit.remaining);
   }
 });
 
+// NOTE: https://lihbr.com/posts/rate-limiting-without-overhead-netlify-or-vercel-functions
+// cool article that describes problem about rate limiting in serverless functions
 function getRateLimiter() {
-  if (!globalThis.rateLimiter) {
-    globalThis.rateLimiter = RateLimiter({
-      interval: INTERVAL,
-      uniqueTokenPerInterval: LIMIT,
-    });
-  }
+  if (!globalThis.rateLimiter)
+    globalThis.rateLimiter = new RateLimitManager(INTERVAL, LIMIT);
 
-  return globalThis.rateLimiter.check;
+  return globalThis.rateLimiter;
 }
 
 declare global {
   // eslint-disable-next-line vars-on-top, no-var
-  var rateLimiter: ReturnType<typeof RateLimiter>;
+  var rateLimiter: RateLimitManager<string>;
 }
