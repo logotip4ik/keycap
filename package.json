@@ -169,10 +169,6 @@
   },
   "size-limit": [
     {
-      "name": "entry",
-      "path": ".output/public/_nuxt/entry.*.js"
-    },
-    {
       "name": "js",
       "path": ".output/public/_nuxt/*.js"
     },
@@ -182,7 +178,7 @@
     },
     {
       "name": "server",
-      "path": ".output/server/**/*.mjs"
+      "path": ".output/server/**/*"
     }
   ]
 }
