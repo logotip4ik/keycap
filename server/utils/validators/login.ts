@@ -1,9 +1,14 @@
-import { compile, v } from 'suretype';
+import { FormatRegistry, Type } from '@sinclair/typebox';
+import { TypeCompiler } from '@sinclair/typebox/compiler';
 
-export const loginSchema = v.object({
-  email: v.string().format('email').required(),
-  password: v.string().minLength(8).required(),
-  browserAction: v.boolean(),
-}).additional(false);
+FormatRegistry.Set('email', (value) => emailRE.test(value));
 
-export const useLoginValidation = compile(loginSchema);
+export const loginSchema = Type.Object({
+  email: Type.String({ format: 'email' }),
+  password: Type.String({ minLength: 8 }),
+  browserAction: Type.Optional(
+    Type.Boolean(),
+  ),
+}, { additionalProperties: false });
+
+export const loginValidator = TypeCompiler.Compile(loginSchema);

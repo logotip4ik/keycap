@@ -1,15 +1,15 @@
-import { compile, v } from 'suretype';
+import { Type } from '@sinclair/typebox';
+import { TypeCompiler } from '@sinclair/typebox/compiler';
 
 import { usernameRE } from '~/server/utils';
 
-export const usernameSchema = v
-  .string()
-  .matches(usernameRE)
-  .minLength(3)
-  .maxLength(16)
-  .required();
+export const usernameSchema = Type.String({
+  minLength: 3,
+  maxLength: 16,
+  pattern: usernameRE.source,
+});
 
-export const useUsernameValidator = compile(usernameSchema);
+export const usernameValidator = TypeCompiler.Compile(usernameSchema);
 
 if (import.meta.vitest) {
   const { describe, it, expect } = import.meta.vitest;
@@ -18,33 +18,33 @@ if (import.meta.vitest) {
     it('disallows spaces', () => {
       const username = 'userna me';
 
-      const validation = useUsernameValidator(username);
+      const validation = usernameValidator.Check(username);
 
-      expect(validation.ok).toBe(false);
+      expect(validation).toBe(false);
     });
 
     it('should be valid case', () => {
       const username = 'something';
 
-      const validation = useUsernameValidator(username);
+      const validation = usernameValidator.Check(username);
 
-      expect(validation.ok).toBe(true);
+      expect(validation).toBe(true);
     });
 
     it('allows alphanumeric values', () => {
       const username = 'li.34t-h3s';
 
-      const validation = useUsernameValidator(username);
+      const validation = usernameValidator.Check(username);
 
-      expect(validation.ok).toBe(true);
+      expect(validation).toBe(true);
     });
 
     it('disallows empty values', () => {
       const username = '';
 
-      const validation = useUsernameValidator(username);
+      const validation = usernameValidator.Check(username);
 
-      expect(validation.ok).toBe(false);
+      expect(validation).toBe(false);
     });
   });
 }

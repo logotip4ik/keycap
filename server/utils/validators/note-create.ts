@@ -1,9 +1,10 @@
-import { compile, v } from 'suretype';
+import { Type } from '@sinclair/typebox';
+import { TypeCompiler } from '@sinclair/typebox/compiler';
 
-export const noteCreateSchema = v.object({
-  name: v.string().minLength(2).maxLength(50).matches(allowedItemNameRE).required(),
-  path: v.string().minLength(7).required(), // minLength 7 because - min username - 3 chars and min note name - 2 + 2 slashes
-  parentId: v.string().minLength(18).maxLength(18).matches(stringifiedBigIntRE).required(),
-}).additional(false);
+export const noteCreateSchema = Type.Object({
+  name: Type.String({ minLength: 2, maxLength: 50, pattern: allowedItemNameRE.source }),
+  path: Type.String({ minLength: 7 }),
+  parentId: Type.String({ minLength: 18, maxLength: 18, pattern: stringifiedBigIntRE.source }),
+}, { additionalProperties: false });
 
-export const useNoteCreateValidation = compile(noteCreateSchema);
+export const noteCreateValidator = TypeCompiler.Compile(noteCreateSchema);

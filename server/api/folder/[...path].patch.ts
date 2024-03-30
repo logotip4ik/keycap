@@ -2,9 +2,9 @@ import { sql } from 'kysely';
 import postgres from 'postgres';
 import escapeRE from 'escape-string-regexp';
 
-import type { TypeOf } from 'suretype';
+import type { Static } from '@sinclair/typebox';
 
-type UpdatableFields = TypeOf<typeof folderUpdateSchema>;
+type UpdatableFields = Static<typeof folderUpdateSchema>;
 
 export default defineEventHandler(async (event) => {
   const user = event.context.user!;
@@ -22,12 +22,12 @@ export default defineEventHandler(async (event) => {
   if (typeof data.name === 'string')
     data.name = data.name.trim();
 
-  const validation = useFolderUpdateValidation(data);
+  const error = folderUpdateValidator.Errors(data).First();
 
-  if (!validation.ok) {
+  if (error) {
     throw createError({
       status: 400,
-      message: `${validation.errors[0].dataPath.split('.').at(-1)} ${validation.errors[0].message}`,
+      message: formatTypboxError(error),
     });
   }
 

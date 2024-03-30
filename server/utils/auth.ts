@@ -55,7 +55,7 @@ export async function getUserFromEvent(event: H3Event): Promise<SafeUser | null>
 
   const jwt = await jwtVerify(accessToken, jwtSecret, { issuer: jwtIssuer });
 
-  if (jwt && isJwtPayload(jwt.payload)) {
+  if (jwt && jwtPayloadValidator.Check(jwt.payload)) {
     return {
       id: jwt.payload.sub,
       email: jwt.payload.email,

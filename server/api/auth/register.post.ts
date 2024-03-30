@@ -1,14 +1,15 @@
 import postgres from 'postgres';
 
-import type { TypeOf } from 'suretype';
-
+import type { Static } from '@sinclair/typebox';
 import type { SafeUser } from '~/types/server';
+
+type RegisterFields = Static<typeof registerSchema>;
 
 export default defineEventHandler(async (event) => {
   if (event.context.user)
     return null;
 
-  const body = await readBody<TypeOf<typeof registerSchema>>(event) || {};
+  const body = await readBody<RegisterFields>(event) || {};
 
   if (typeof body.email === 'string')
     body.email = body.email.trim();
@@ -17,13 +18,13 @@ export default defineEventHandler(async (event) => {
   if (typeof body.password === 'string')
     body.password = body.password.trim();
 
-  const validation = useRegisterValidation(body);
+  const error = registerValidator.Errors(body).First();
 
   // TODO: add data to error and match schemaPath with client inputs to highlight wrong inputs
-  if (!validation.ok) {
+  if (error) {
     throw createError({
       status: 400,
-      message: `${validation.errors[0].dataPath.split('.').at(-1)} ${validation.errors[0].message}`,
+      message: formatTypboxError(error),
     });
   }
 

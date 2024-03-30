@@ -1,11 +1,18 @@
-import { compile, v } from 'suretype';
+import { FormatRegistry, Type } from '@sinclair/typebox';
+import { TypeCompiler } from '@sinclair/typebox/compiler';
 
-export const registerSchema = v.object({
+FormatRegistry.Set('email', (value) => emailRE.test(value));
+
+export const registerSchema = Type.Object({
   'username': usernameSchema,
-  'email': v.string().format('email').required(),
-  'password': v.string().minLength(8).required(),
-  'cf-turnstile-response': import.meta.config.turnstileEnabled ? v.string().required() : v.string(),
-  'browserAction': v.boolean(),
-}).additional(false);
+  'email': Type.String({ format: 'email' }),
+  'password': Type.String({ minLength: 8 }),
+  'cf-turnstile-response': import.meta.config.turnstileEnabled
+    ? Type.String()
+    : Type.Optional(Type.String()),
+  'browserAction': Type.Optional(
+    Type.Boolean(),
+  ),
+});
 
-export const useRegisterValidation = compile(registerSchema);
+export const registerValidator = TypeCompiler.Compile(registerSchema);

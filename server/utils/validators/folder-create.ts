@@ -1,9 +1,10 @@
-import { compile, v } from 'suretype';
+import { Type } from '@sinclair/typebox';
+import { TypeCompiler } from '@sinclair/typebox/compiler';
 
-export const folderCreateSchema = v.object({
-  name: v.string().minLength(2).maxLength(50).matches(allowedItemNameRE).required(),
-  path: v.string().minLength(7).required(), // minLength 7 because - min username - 3 chars and min folder name - 2 + 2 slashes
-  parentId: v.string().minLength(18).maxLength(18).matches(stringifiedBigIntRE).required(),
-}).additional(false);
+export const folderCreateSchema = Type.Object({
+  name: Type.String({ minLength: 2, maxLength: 50, pattern: allowedItemNameRE.source }),
+  path: Type.String({ minLength: 7 }),
+  parentId: Type.String({ minLength: 18, maxLength: 18, pattern: stringifiedBigIntRE.source }),
+}, { additionalProperties: false });
 
-export const useFolderCreateValidation = compile(folderCreateSchema);
+export const folderCreateValidator = TypeCompiler.Compile(folderCreateSchema);

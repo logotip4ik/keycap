@@ -7,6 +7,7 @@ import { SocialAuth } from '~/kysely/db/types';
 export const allowedItemNameRE = /^[\w .&#!|\-\u0404-\u0457]{2,50}$/;
 export const currentItemNameRE = /[\w%.!]+$/;
 export const usernameRE = /^[\w.\-]{3,16}$/;
+export const emailRE = /^[\w!#$%&'*+/=?^`{|}~-]+(?:\.[\w!#$%&'*+/=?^`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i;
 export const OAuthProvider = SocialAuth;
 export const serverUserAgent = import.meta.prod ? process.env.SERVER_NAME || 'Keycap' : `${process.env.SERVER_NAME || 'Keycap'} Dev`;
 

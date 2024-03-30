@@ -1,6 +1,8 @@
 import postgres from 'postgres';
 
-import type { TypeOf } from 'suretype';
+import type { Static } from '@sinclair/typebox';
+
+type FolderCreateFields = Static<typeof folderCreateSchema>;
 
 export default defineEventHandler(async (event) => {
   const user = event.context.user!;
@@ -14,19 +16,19 @@ export default defineEventHandler(async (event) => {
   // NOTE: path is actually is not required param for body
   // just to reuse object and thus improve perf, i think it
   // is better to type body as create schema and later set path
-  const body = await readBody<TypeOf<typeof folderCreateSchema>>(event) || {};
+  const body = await readBody<FolderCreateFields>(event) || {};
 
   if (typeof body.name === 'string')
     body.name = body.name.trim();
 
   body.path = generateFolderPath(user.username, path);
 
-  const validation = useFolderCreateValidation(body);
+  const error = folderCreateValidator.Errors(body).First();
 
-  if (!validation.ok) {
+  if (error) {
     throw createError({
       status: 400,
-      message: `${validation.errors[0].dataPath.split('.').at(-1)} ${validation.errors[0].message}`,
+      message: formatTypboxError(error),
     });
   }
 

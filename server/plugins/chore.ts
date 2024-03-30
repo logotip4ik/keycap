@@ -1,5 +1,3 @@
-import { setSuretypeOptions } from 'suretype';
-
 import '~/polyfills/array-at';
 
 function toJSON(this: bigint) {
@@ -17,7 +15,5 @@ Object.defineProperty(
     configurable: true,
   },
 );
-
-setSuretypeOptions({ colors: false, location: false });
 
 export default defineNitroPlugin(() => undefined);

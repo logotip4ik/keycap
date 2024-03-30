@@ -1,15 +1,20 @@
-import { compile, v } from 'suretype';
+import { FormatRegistry, Type } from '@sinclair/typebox';
+import { TypeCompiler } from '@sinclair/typebox/compiler';
 
-export const socialUserSchema = v.object({
-  id: v.anyOf([
-    v.string().numeric().minLength(21).maxLength(21),
-    v.number().gte(0),
-  ]).required(),
+// import is needed for vitest ?
+import { emailRE } from '~/server/utils/index';
 
-  email: v.string().format('email').required(),
-}).additional(true);
+FormatRegistry.Set('email', (value) => emailRE.test(value));
 
-export const useSocialUserValidator = compile(socialUserSchema);
+export const socialUserSchema = Type.Object({
+  id: Type.Union([
+    Type.String({ minLength: 21, maxLength: 21, pattern: '[\\d]{21}' }),
+    Type.Number({ minimum: 0 }),
+  ]),
+  email: Type.String({ format: 'email' }),
+}, { additionalProperties: true });
+
+export const socialUserValidator = TypeCompiler.Compile(socialUserSchema);
 
 if (import.meta.vitest) {
   const { describe, it, expect } = import.meta.vitest;
@@ -22,9 +27,9 @@ if (import.meta.vitest) {
         foo: 'bar',
       };
 
-      const validation = useSocialUserValidator(user);
+      const validation = socialUserValidator.Check(user);
 
-      expect(validation.ok).toBe(true);
+      expect(validation).toBe(true);
     });
 
     it('github like user', () => {
@@ -34,9 +39,9 @@ if (import.meta.vitest) {
         foo: 'bar',
       };
 
-      const validation = useSocialUserValidator(user);
+      const validation = socialUserValidator.Check(user);
 
-      expect(validation.ok).toBe(true);
+      expect(validation).toBe(true);
     });
 
     it('broken user', () => {
@@ -45,9 +50,9 @@ if (import.meta.vitest) {
         email: 'some@email.com',
       };
 
-      const validation = useSocialUserValidator(user);
+      const validation = socialUserValidator.Check(user);
 
-      expect(validation.ok).toBe(false);
+      expect(validation).toBe(false);
     });
   });
 }

@@ -21,11 +21,12 @@ export default defineEventHandler(async (event) => {
       await logger.error(event, { err, msg: 'getGoogleUserWithEvent failed' });
     });
 
-  const userValidation = useSocialUserValidator(googleUser);
+  const errors = socialUserValidator.Errors(googleUser);
+  const firstError = errors.First();
 
-  if (!userValidation.ok) {
+  if (firstError) {
     await logger.error(event, {
-      errors: userValidation.errors,
+      errors: [firstError, ...errors],
       msg: 'social user validation failed',
     });
 
@@ -61,14 +62,14 @@ export default defineEventHandler(async (event) => {
   else {
     username = query.username?.toString().trim() || '';
 
-    const validation = useUsernameValidator(username);
-    const isUsernameValid = validation.ok && !(await checkIfUsernameTaken(event, username!));
+    const error = usernameValidator.Check(username);
+    const isUsernameValid = !error && !(await checkIfUsernameTaken(event, username!));
 
     if (!isUsernameValid) {
       query.provider = OAuthProvider.Google;
       query.username = undefined;
       query.socialUser = googleUser;
-      query.usernameTaken = validation.ok && await checkIfUsernameTaken(event, username!) ? username : '';
+      query.usernameTaken = !error && await checkIfUsernameTaken(event, username!) ? username : '';
 
       return await sendRedirect(event, withQuery('/oauth/ask-username', query));
     }

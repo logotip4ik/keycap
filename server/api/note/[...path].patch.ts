@@ -1,8 +1,11 @@
 import postgres from 'postgres';
 
-import type { TypeOf } from 'suretype';
+import type { Static } from '@sinclair/typebox';
 
-type UpdatableFields = Partial<TypeOf<typeof noteUpdateSchema> & { path: string, updatedAt: Date }>;
+interface UpdatableFields extends Static<typeof noteUpdateSchema> {
+  path?: string
+  updatedAt?: Date
+}
 
 export default defineEventHandler(async (event) => {
   const user = event.context.user!;
@@ -22,12 +25,12 @@ export default defineEventHandler(async (event) => {
   if (typeof data.content === 'string')
     data.content = data.content.trim();
 
-  const validation = useNoteUpdateValidation(data);
+  const error = noteUpdateValidator.Errors(data).First();
 
-  if (!validation.ok) {
+  if (error) {
     throw createError({
       status: 400,
-      message: `${validation.errors[0].dataPath.split('.').at(-1)} ${validation.errors[0].message}`,
+      message: formatTypboxError(error),
     });
   }
 

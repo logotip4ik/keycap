@@ -1,9 +1,12 @@
-import { compile, v } from 'suretype';
+import { FormatRegistry, Type } from '@sinclair/typebox';
+import { TypeCompiler } from '@sinclair/typebox/compiler';
 
-export const jwtPayloadSchema = v.object({
-  sub: v.string().minLength(18).maxLength(18).matches(stringifiedBigIntRE).required(),
-  email: v.string().format('email').required(),
+FormatRegistry.Set('email', (value) => emailRE.test(value));
+
+export const jwtPayloadSchema = Type.Object({
+  sub: Type.String({ minLength: 18, maxLength: 18, pattern: stringifiedBigIntRE.source }),
+  email: Type.String({ format: 'email' }),
   username: usernameSchema,
-}).additional(true);
+}, { additionalProperties: true });
 
-export const isJwtPayload = compile(jwtPayloadSchema, { simple: true });
+export const jwtPayloadValidator = TypeCompiler.Compile(jwtPayloadSchema);

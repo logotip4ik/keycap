@@ -23,11 +23,12 @@ export default defineEventHandler(async (event) => {
       await logger.error(event, { err, msg: 'getGitHubUserWithEvent failed' });
     });
 
-  const userValidation = useSocialUserValidator(githubUser);
+  const errors = socialUserValidator.Errors(githubUser);
+  const firstError = errors.First();
 
-  if (!userValidation.ok) {
+  if (firstError) {
     await logger.error(event, {
-      errors: userValidation.errors,
+      errors: [firstError, ...errors],
       msg: 'social user validation failed',
     });
 
@@ -63,14 +64,14 @@ export default defineEventHandler(async (event) => {
   else {
     username = query.username?.toString().trim() || '';
 
-    const validation = useUsernameValidator(username);
-    const isUsernameValid = validation.ok && !(await checkIfUsernameTaken(event, username!));
+    const error = usernameValidator.Check(username);
+    const isUsernameValid = !error && !(await checkIfUsernameTaken(event, username!));
 
     if (!isUsernameValid) {
       query.provider = OAuthProvider.GitHub;
       query.username = undefined;
       query.socialUser = githubUser;
-      query.usernameTaken = validation.ok && await checkIfUsernameTaken(event, username!) ? username : '';
+      query.usernameTaken = !error && await checkIfUsernameTaken(event, username!) ? username : '';
 
       // NOTE: this basically makes infinite loop
       // to force user to input correct username

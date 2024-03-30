@@ -1,20 +1,23 @@
-import type { TypeOf } from 'suretype';
+import type { Static } from '@sinclair/typebox';
+
 import type { SafeUser } from '~/types/server';
 
+type LoginFields = Static<typeof loginSchema>;
+
 export default defineEventHandler(async (event) => {
-  const body = await readBody<TypeOf<typeof loginSchema>>(event) || {};
+  const body = await readBody<LoginFields>(event) || {};
 
   if (typeof body.email === 'string')
     body.email = body.email.trim();
   if (typeof body.password === 'string')
     body.password = body.password.trim();
 
-  const validation = useLoginValidation(body);
+  const error = loginValidator.Errors(body).First();
 
-  if (!validation.ok) {
+  if (error) {
     throw createError({
       status: 400,
-      message: `${validation.errors[0].dataPath.split('.').at(-1)} ${validation.errors[0].message}`,
+      message: formatTypboxError(error),
     });
   }
 

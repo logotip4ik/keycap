@@ -1,6 +1,6 @@
 import postgres from 'postgres';
 
-import type { TypeOf } from 'suretype';
+import type { Static } from '@sinclair/typebox';
 
 export default defineEventHandler(async (event) => {
   const user = event.context.user!;
@@ -11,17 +11,17 @@ export default defineEventHandler(async (event) => {
   if (!path)
     throw createError({ status: 400 });
 
-  const body = await readBody<TypeOf<typeof noteCreateSchema>>(event) || {};
+  const body = await readBody<Static<typeof noteCreateSchema>>(event) || {};
 
   body.name = body.name?.trim();
   body.path = generateNotePath(user.username, path);
 
-  const validation = useNoteCreateValidation(body);
+  const error = noteCreateValidator.Errors(body).First();
 
-  if (!validation.ok) {
+  if (error) {
     throw createError({
       status: 400,
-      message: `${validation.errors[0].dataPath.split('.').at(-1)} ${validation.errors[0].message}`,
+      message: formatTypboxError(error),
     });
   }
 
