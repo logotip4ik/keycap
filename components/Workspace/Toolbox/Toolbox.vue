@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type SidebarVue from '../Sidebar/Sidebar.vue';
+import type { WorkspaceSidebar } from '#components';
+
+const sidebar = shallowRef<InstanceType<typeof WorkspaceSidebar>>();
 
 const { shortcuts } = useAppConfig();
 const { visibility: toolboxVisibility } = useToolboxSidebar();
 const { visibility: contentsVisibility } = useContentsSidebar();
-
-const sidebar = shallowRef<InstanceType<typeof SidebarVue>>();
 
 function updateState(newState: SidebarState) {
   toolboxVisibility.value = newState;
