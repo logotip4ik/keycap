@@ -47,6 +47,7 @@ async function selectFolder(path: string, ownerId: string) {
           .select(['Note.id', 'Note.name', 'Note.path'])
           .whereRef('Folder.id', '=', 'Note.parentId')
           .where('Note.ownerId', '=', ownerId)
+          .orderBy('name asc')
           .limit(50),
       )
         .as('notes'),
@@ -55,6 +56,7 @@ async function selectFolder(path: string, ownerId: string) {
           .select(['Subfolder.id', 'Subfolder.name', 'Subfolder.path', 'Subfolder.root'])
           .where('ownerId', '=', ownerId)
           .whereRef('Subfolder.parentId', '=', 'Folder.id')
+          .orderBy('name asc')
           .limit(25),
       )
         .as('subfolders'),
