@@ -2,6 +2,8 @@ import postgres from 'postgres';
 
 import type { Static } from '@sinclair/typebox';
 
+type NoteCreateFields = Static<typeof noteCreateSchema>;
+
 export default defineEventHandler(async (event) => {
   const user = event.context.user!;
   const timer = event.context.timer!;
@@ -11,7 +13,7 @@ export default defineEventHandler(async (event) => {
   if (!path)
     throw createError({ status: 400 });
 
-  const body = await readBody<Static<typeof noteCreateSchema>>(event) || {};
+  const body = await readBody<NoteCreateFields>(event) || {};
 
   body.name = body.name?.trim();
   body.path = generateNotePath(user.username, path);

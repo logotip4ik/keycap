@@ -4,7 +4,7 @@ import escapeRE from 'escape-string-regexp';
 
 import type { Static } from '@sinclair/typebox';
 
-type UpdatableFields = Static<typeof folderUpdateSchema>;
+type FolderUpdateFields = Static<typeof folderUpdateSchema>;
 
 export default defineEventHandler(async (event) => {
   const user = event.context.user!;
@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
 
   const folderPath = generateFolderPath(user.username, path);
 
-  const data = await readBody<UpdatableFields>(event) || {};
+  const data = await readBody<FolderUpdateFields>(event) || {};
 
   if (typeof data.name === 'string')
     data.name = data.name.trim();

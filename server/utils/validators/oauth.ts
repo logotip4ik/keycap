@@ -8,7 +8,7 @@ FormatRegistry.Set('email', (value) => emailRE.test(value));
 
 export const socialUserSchema = Type.Object({
   id: Type.Union([
-    Type.String({ minLength: 21, maxLength: 21, pattern: '[\\d]{21}' }),
+    Type.String({ minLength: 21, maxLength: 21, pattern: '^[\\d]{21}$' }),
     Type.Number({ minimum: 0 }),
   ]),
   email: Type.String({ format: 'email' }),

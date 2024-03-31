@@ -2,7 +2,7 @@ import postgres from 'postgres';
 
 import type { Static } from '@sinclair/typebox';
 
-interface UpdatableFields extends Static<typeof noteUpdateSchema> {
+interface NoteUpdateFields extends Static<typeof noteUpdateSchema> {
   path?: string
   updatedAt?: Date
 }
@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
 
   const notePath = generateNotePath(user.username, path);
 
-  const data = await readBody<UpdatableFields>(event) || {};
+  const data = await readBody<NoteUpdateFields>(event) || {};
 
   if (typeof data.name === 'string')
     data.name = data.name.trim();
