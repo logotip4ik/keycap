@@ -47,8 +47,9 @@ useHead({
 
 useTinykeys({
   [shortcuts.edit]: (event) => {
-    if (isNoteEmpty.value)
+    if (isNoteEmpty.value) {
       return;
+    }
 
     event.preventDefault();
     useTiptap().editor.value?.commands.focus();
@@ -57,8 +58,9 @@ useTinykeys({
   [shortcuts.search]: (event) => {
     event.preventDefault();
 
-    if (currentItemForDetails.value)
+    if (currentItemForDetails.value) {
       currentItemForDetails.value = null;
+    }
 
     isShowingSearch.value = !isShowingSearch.value;
   },
@@ -69,9 +71,10 @@ onMounted(() => {
 
   prepareWorkspace();
 
-  if (import.meta.dev)
+  if (import.meta.dev) {
     // @ts-expect-error this should not be defined
     window.$createToast = useToaster();
+  }
 });
 
 onBeforeUnmount(() => popstateOff?.());

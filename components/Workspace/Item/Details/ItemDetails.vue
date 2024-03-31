@@ -51,13 +51,15 @@ function rememberHeight() {
 function transitionHeight(_el: Element, done: () => void) {
   const newHeight = itemDetailsEl.value!.clientHeight;
 
-  if (!prevPopupHeight)
+  if (!prevPopupHeight) {
     return;
+  }
 
   const heightDifference = Math.abs(prevPopupHeight - newHeight);
 
-  if (heightDifference < 2)
+  if (heightDifference < 2) {
     return;
+  }
 
   const animation = itemDetailsEl.value!.animate([
     { height: `${prevPopupHeight}px` },
@@ -76,8 +78,9 @@ const formatter = Intl.DateTimeFormat(undefined, {
   minute: '2-digit',
 });
 function formatDate(dateString?: Date | string) {
-  if (!dateString)
+  if (!dateString) {
     return '';
+  }
 
   const date = new Date(dateString);
 
@@ -85,8 +88,9 @@ function formatDate(dateString?: Date | string) {
 }
 
 async function copyShareLink() {
-  if (!details.value?.shares)
+  if (!details.value?.shares) {
     return;
+  }
 
   const { protocol, host } = window.location;
   const link = details.value?.shares.link;
@@ -98,8 +102,9 @@ async function copyShareLink() {
 
 const debouncedToggleShareLink = debounce(toggleShareLink, 250);
 function toggleShareLink(isCreateRequest: boolean) {
-  if (isLoadingItemDetails.value)
+  if (isLoadingItemDetails.value) {
     return;
+  }
 
   isLoadingItemDetails.value = true;
 

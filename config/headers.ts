@@ -67,8 +67,9 @@ export function getHeaders(
 
   const headers: HeaderObject = { };
 
-  if (!isCI)
+  if (!isCI) {
     return headers;
+  }
 
   Object.assign(headers, defaultHeaders);
 
@@ -162,27 +163,33 @@ export function makeCacheControlHeader(opts: CacheControlHeaderOptions) {
 
   values.push(opts.private ? 'private' : 'public');
 
-  if (opts.immutable === true)
+  if (opts.immutable === true) {
     values.push('immutable');
+  }
 
   values.push(`max-age=${opts.maxAge}`);
 
-  if (opts.staleWhileRevalidate)
+  if (opts.staleWhileRevalidate) {
     values.push(`stale-while-revalidate=${opts.staleWhileRevalidate}`);
+  }
 
-  if (opts.mustRevalidate)
+  if (opts.mustRevalidate) {
     values.push(`must-revalidate`);
+  }
 
   const headerName = ['Cache', 'Control'];
 
-  if (opts.CDN)
+  if (opts.CDN) {
     headerName.unshift('CDN');
+  }
 
-  if (opts.CDN === 'cf')
+  if (opts.CDN === 'cf') {
     headerName.unshift('Cloudflare');
+  }
 
-  if (opts.CDN === 'vc')
+  if (opts.CDN === 'vc') {
     headerName.unshift('Vercel');
+  }
 
   return {
     [headerName.join('-')]: values.join(', '),

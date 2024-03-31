@@ -4,6 +4,9 @@ import * as regexp from 'eslint-plugin-regexp';
 export default antfu({
   stylistic: {
     quotes: 'single',
+    overrides: {
+      curly: ['error', 'all'],
+    },
   },
 
   rules: {
@@ -12,7 +15,6 @@ export default antfu({
     'ts/array-type': ['error', { default: 'generic' }],
     'ts/no-shadow': 'off',
 
-    'arrow-parens': ['error', 'always'],
     'import/no-nodejs-modules': 'off',
     'yaml/no-empty-mapping-value': 'off',
     'node/prefer-global/process': ['error', 'always'],

@@ -24,8 +24,9 @@ class CacheNetworkRace extends Strategy {
         const [fetchAndCachePutResult, cacheMatchResult] = results;
         if (fetchAndCachePutResult.status === 'rejected'
           && (cacheMatchResult.status === 'rejected' || !cacheMatchResult.value)
-        )
+        ) {
           reject(fetchAndCachePutResult.reason);
+        }
       });
     });
   }
@@ -60,8 +61,9 @@ self.addEventListener('activate', (event: ExtendableEvent) => {
     caches.open(cacheName).then((cache) => {
       cache.keys().then((keys) => {
         for (const request of keys) {
-          if (!manifestURLs.includes(request.url))
+          if (!manifestURLs.includes(request.url)) {
             cache.delete(request);
+          }
         }
       });
     }),
@@ -69,8 +71,9 @@ self.addEventListener('activate', (event: ExtendableEvent) => {
 });
 
 self.addEventListener('message', (event) => {
-  if (event.data && event.data.type === 'SKIP_WAITING')
+  if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
+  }
 });
 
 registerRoute(

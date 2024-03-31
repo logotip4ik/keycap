@@ -31,8 +31,9 @@ const enToUkLetters = Object.fromEntries(
 export function transliterate(str: string, map: Record<string, string>) {
   let newString = '';
 
-  for (const char of str)
+  for (const char of str) {
     newString += map[char] || char;
+  }
 
   return newString;
 }

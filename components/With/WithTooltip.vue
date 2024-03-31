@@ -16,8 +16,9 @@ let timeout: NodeJS.Timeout | undefined;
 watch(target, (target) => {
   cleanup();
 
-  if (!target)
+  if (!target) {
     return;
+  }
 
   cleanups.push(
     on(target, 'mouseenter', showWithTimeout, handlerOptions),
@@ -39,8 +40,9 @@ const floating = {
   shift: undefined as typeof import('@floating-ui/dom').shift | undefined,
 };
 watch(shouldShow, async (shouldShow) => {
-  if (!shouldShow || !target.value || !tooltipEl.value)
+  if (!shouldShow || !target.value || !tooltipEl.value) {
     return;
+  }
 
   if (!floating.computePosition || !floating.shift || !floating.offset) {
     const { computePosition, shift, offset } = await import('@floating-ui/dom');
@@ -79,8 +81,9 @@ function cleanup() {
 onMounted(() => {
   const instance = getCurrentInstance();
 
-  if (!instance)
+  if (!instance) {
     return;
+  }
 
   target.value = (instance.vnode.el as HTMLElement).nextElementSibling as HTMLElement | null;
 });

@@ -12,8 +12,9 @@ const ANIMATION_DURATION = parseDuration('0.3s')!;
 function preservePositionAndSize(el: Element) {
   const elClientRect = el.getBoundingClientRect();
 
-  if (!toasterElClientRect)
+  if (!toasterElClientRect) {
     toasterElClientRect = toasterEl.value!.$el.getBoundingClientRect();
+  }
 
   const relativeBottomPos = (toasterElClientRect!.bottom - elClientRect.bottom);
 

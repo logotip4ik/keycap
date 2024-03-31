@@ -9,8 +9,9 @@ const { visibility: toolbox } = useToolboxSidebar();
 const itemHref = computed(() => generateItemPath(props.item));
 
 function unpinIfNeeded() {
-  if (isSmallScreen)
+  if (isSmallScreen) {
     toolbox.value = 'hidden';
+  }
 }
 </script>
 

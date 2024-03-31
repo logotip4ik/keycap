@@ -14,8 +14,9 @@ function updateState(newState: SidebarState) {
 function hideSidebarsIfNeeded() {
   const sidebar = shouldUnpinSidebar(toolboxVisibility, contentsVisibility);
 
-  if (sidebar)
+  if (sidebar) {
     sidebar.value = 'hidden';
+  }
 }
 
 function smartUpdateState(newState: SidebarState) {
@@ -41,8 +42,9 @@ if (import.meta.client) {
 
   onBeforeUnmount(
     on(window, 'resize', debounce(() => {
-      if (prevWindowWidth !== window.innerWidth)
+      if (prevWindowWidth !== window.innerWidth) {
         return hideSidebarsIfNeeded();
+      }
 
       prevWindowWidth = window.innerWidth;
     }, 225)), // intentionally larger debounce time to hide toolbox first

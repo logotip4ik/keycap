@@ -15,8 +15,9 @@ const state = toRef(props, 'state');
 defineExpose({ el: sidebar });
 
 function updateFocusableElements() {
-  if (!sidebar.value)
+  if (!sidebar.value) {
     return;
+  }
 
   const elements = Array.from(sidebar.value.querySelectorAll<FocusableElement>('a, button'));
 
@@ -25,19 +26,21 @@ function updateFocusableElements() {
 
 function updateTabindexForFocusableElements(currentState: SidebarState) {
   for (const el of focusableElements.value) {
-    if (el.dataset.openButton !== undefined)
+    if (el.dataset.openButton !== undefined) {
       continue;
+    }
 
-    if (currentState === 'hidden')
+    if (currentState === 'hidden') {
       el.setAttribute('tabindex', '-1');
-    else
-      el.removeAttribute('tabindex');
+    }
+    else { el.removeAttribute('tabindex'); }
   }
 }
 
 function hideIf(trigger: SidebarState) {
-  if (state.value === trigger)
+  if (state.value === trigger) {
     props.onUpdateState('hidden');
+  }
 }
 
 let off: (() => void) | undefined;

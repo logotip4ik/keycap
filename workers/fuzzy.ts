@@ -23,8 +23,9 @@ function search(query: string, resultsCount = DEFAULT_RESULTS_COUNT): Array<Fuzz
 
   const isCommand = query[0] === '/';
 
-  if (isCommand)
+  if (isCommand) {
     query = (query.match(wordRE) || arrayWithString)[0];
+  }
 
   const results = [];
   const cache = isCommand ? commandsCache : itemsCache;
@@ -32,12 +33,14 @@ function search(query: string, resultsCount = DEFAULT_RESULTS_COUNT): Array<Fuzz
   for (const [key, value] of cache) {
     const score = getScore(isCommand ? value.name : key as string, query);
 
-    if (score > 0)
+    if (score > 0) {
       results.push({ score, value });
+    }
   }
 
-  if (results.length === 0)
+  if (results.length === 0) {
     return [];
+  }
 
   return results
     .sort((a, b) => b.score - a.score)
@@ -63,8 +66,9 @@ async function populateItemsCache() {
 
   itemsCache.clear();
 
-  for (const item of items.data || [])
+  for (const item of items.data || []) {
     addItem(item);
+  }
 }
 
 populateItemsCache();

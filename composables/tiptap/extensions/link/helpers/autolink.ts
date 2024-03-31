@@ -22,8 +22,9 @@ export function autolink(options: AutolinkOptions): Plugin {
       const docChanges = transactions.some((transaction) => transaction.docChanged) && !oldState.doc.eq(newState.doc);
       const preventAutolink = transactions.some((transaction) => transaction.getMeta('preventAutolink'));
 
-      if (!docChanges || preventAutolink)
+      if (!docChanges || preventAutolink) {
         return;
+      }
 
       const { tr } = newState;
       const transform = combineTransactionSteps(oldState.doc, [...transactions]);
@@ -64,19 +65,22 @@ export function autolink(options: AutolinkOptions): Plugin {
           );
         }
 
-        if (!textBlock || !textBeforeWhitespace)
+        if (!textBlock || !textBeforeWhitespace) {
           continue;
+        }
 
         const wordsBeforeWhitespace = textBeforeWhitespace.split(' ').filter((s) => s !== '');
 
-        if (wordsBeforeWhitespace.length <= 0)
+        if (wordsBeforeWhitespace.length <= 0) {
           continue;
+        }
 
         const lastWordBeforeSpace = wordsBeforeWhitespace[wordsBeforeWhitespace.length - 1];
         const lastWordAndBlockOffset = textBlock.pos + textBeforeWhitespace.lastIndexOf(lastWordBeforeSpace);
 
-        if (!lastWordBeforeSpace)
+        if (!lastWordBeforeSpace) {
           continue;
+        }
 
         const links = find(lastWordBeforeSpace);
         for (const link of links) {
@@ -89,8 +93,9 @@ export function autolink(options: AutolinkOptions): Plugin {
               && newState.doc.rangeHasMark(from, to, newState.schema.marks.code)
             )
             || getMarksBetween(from, to, newState.doc).some((item) => item.mark.type === options.type)
-          )
+          ) {
             continue;
+          }
 
           tr.addMark(
             from,
@@ -102,8 +107,9 @@ export function autolink(options: AutolinkOptions): Plugin {
         }
       }
 
-      if (tr.steps.length === 0)
+      if (tr.steps.length === 0) {
         return;
+      }
 
       return tr;
     },

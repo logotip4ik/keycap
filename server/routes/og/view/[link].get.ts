@@ -5,8 +5,9 @@ const textLineRE = /\{\{line(\d)\}\}/g;
 export default defineEventHandler(async (event) => {
   const link = getRouterParam(event, 'link');
 
-  if (!link || !isShareLinkValid(link))
+  if (!link || !isShareLinkValid(link)) {
     throw createError({ status: 400 });
+  }
 
   const kysely = getKysely();
 

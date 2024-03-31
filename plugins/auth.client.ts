@@ -19,8 +19,9 @@ function refreshAuth() {
 
     const isSameUser = newUser && newUser.data.username === user.value?.username;
 
-    if (!newUser || isSameUser)
+    if (!newUser || isSameUser) {
       return;
+    }
 
     user.value = newUser.data;
   });

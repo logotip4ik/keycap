@@ -15,8 +15,9 @@ let prevAnimation: Animation | null;
 function handleKeyboardAppear() {
   const viewport = window.visualViewport;
 
-  if (!fixedBox.value || !viewport || prevAnimation)
+  if (!fixedBox.value || !viewport || prevAnimation) {
     return;
+  }
 
   const formatterPosition = window.innerHeight
     - viewport.offsetTop

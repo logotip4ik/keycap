@@ -57,8 +57,9 @@ async function register() {
 
   $fetch('/api/auth/register', { method: 'POST', body: data })
     .then((res) => {
-      if (!res)
+      if (!res) {
         return;
+      }
 
       window.turnstile?.remove();
       user.value = res.data;

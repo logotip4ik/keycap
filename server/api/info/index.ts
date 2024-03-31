@@ -26,10 +26,12 @@ export default defineEventHandler(async (event) => {
         return [null, null];
       });
 
-    if (users)
+    if (users) {
       info.users = Number(users.count);
-    if (notes)
+    }
+    if (notes) {
       info.notes = Number(notes.count);
+    }
   }
 
   return info;

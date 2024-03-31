@@ -19,16 +19,15 @@ const itemHref = computed(() => generateItemPath(props.item));
 const isActive = computed(() => itemHref.value === route.path);
 
 function unpinIfNeeded() {
-  if (isSmallScreen && !isFolder)
+  if (isSmallScreen && !isFolder) {
     contentsVisibility.value = 'hidden';
+  }
 }
 
 function showMenu(event: Event) {
-  if (!link.value)
+  if (!link.value || props.menuTarget === link.value.$el) {
     return;
-
-  if (props.menuTarget === link.value.$el)
-    return;
+  }
 
   props.onShowMenu(link.value.$el);
 

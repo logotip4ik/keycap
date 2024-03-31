@@ -12,15 +12,17 @@ export default defineEventHandler(async (event) => {
 
   const path = getRouterParam(event, 'path');
 
-  if (!path)
+  if (!path) {
     throw createError({ status: 400 });
+  }
 
   const folderPath = generateFolderPath(user.username, path);
 
   const data = await readBody<FolderUpdateFields>(event) || {};
 
-  if (typeof data.name === 'string')
+  if (typeof data.name === 'string') {
     data.name = data.name.trim();
+  }
 
   const error = folderUpdateValidator.Errors(data).First();
 
@@ -33,8 +35,9 @@ export default defineEventHandler(async (event) => {
 
   // Short-circuiting as currently only folder name could be updated
   // But we don't require `name` prop in request body
-  if (!data.name)
+  if (!data.name) {
     return sendNoContent(event);
+  }
 
   const kysely = getKysely();
 

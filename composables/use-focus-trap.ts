@@ -1,8 +1,9 @@
 const TABBABLE_ELs = 'input:not([disabled]),select:not([disabled]),textarea:not([disabled]),a[href],button:not([disabled]),[tabindex="0"],audio[controls],video[controls],[contenteditable]:not([contenteditable="false"])';
 
 export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>) {
-  if (import.meta.server)
+  if (import.meta.server) {
     return;
+  }
 
   const isSmallScreen = getIsSmallScreen();
 
@@ -23,8 +24,9 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>) {
   }
 
   function tryFocusLastElement() {
-    if (!isSmallScreen && lastFocusedEl)
+    if (!isSmallScreen && lastFocusedEl) {
       lastFocusedEl.focus();
+    }
 
     lastFocusedEl = undefined;
   }
@@ -43,11 +45,13 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>) {
   watch(() => unref(el), (el) => {
     stop();
 
-    if (!el)
+    if (!el) {
       return tryFocusLastElement();
+    }
 
-    if (document.activeElement)
+    if (document.activeElement) {
       lastFocusedEl = document.activeElement as HTMLElement;
+    }
 
     getFocusableEls(el)[0].focus();
 
@@ -62,8 +66,9 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>) {
     });
 
     off = on(el, 'keydown', (e) => {
-      if (e.key !== 'Tab')
+      if (e.key !== 'Tab') {
         return;
+      }
 
       const focusableEls = getFocusableEls(el);
       const firstFocusableEl = focusableEls.at(0);

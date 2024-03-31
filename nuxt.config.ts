@@ -47,8 +47,9 @@ export default defineNuxtConfig({
 
   features: {
     inlineStyles: (id) => {
-      if (!id || nodeModulesRE.test(id))
+      if (!id || nodeModulesRE.test(id)) {
         return false;
+      }
 
       return inlinableStylesRE.some((re) => re.test(id));
     },
@@ -219,8 +220,9 @@ export default defineNuxtConfig({
         '**/unplugin/**',
       );
 
-      if (isDevelopment)
+      if (isDevelopment) {
         return;
+      }
 
       delete nitro.options.storage.data;
 
@@ -319,10 +321,12 @@ export default defineNuxtConfig({
           name: 'mock',
           enforce: 'pre',
           resolveId(id) {
-            if (/(?:^|\/)@tiptap\//.test(id))
+            if (/(?:^|\/)@tiptap\//.test(id)) {
               return resolve('./mocks/tiptap.ts');
-            if (/(?:^|\/)prosemirror/.test(id))
+            }
+            if (/(?:^|\/)prosemirror/.test(id)) {
               return resolve('./mocks/prosemirror.ts');
+            }
           },
         },
       ],

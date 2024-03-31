@@ -13,18 +13,21 @@ export const commandActions: Record<Command['key'], Command['handler']> = {
     const { visibility: contentsVisibility } = useContentsSidebar();
     const folder = useNuxtApp()._asyncData.folder;
 
-    if (!folder)
+    if (!folder) {
       return;
+    }
 
     const folderData = folder.data as Ref<FolderWithContents>;
 
-    if (!folderData.value)
+    if (!folderData.value) {
       return;
+    }
 
     preCreateItem(folderData.value, args ? { name: args.join(' ') } : undefined);
 
-    if (contentsVisibility.value === 'hidden')
+    if (contentsVisibility.value === 'hidden') {
       contentsVisibility.value = 'visible';
+    }
   },
   [SearchAction.Refresh]: () => {
     refreshNuxtData(['note', 'folder']);

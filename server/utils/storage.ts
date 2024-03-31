@@ -16,10 +16,12 @@ export async function updateCacheEntry(key: string, value: any) {
   }
 
   // NOTE: idk how it handles arrays
-  if (typeof value === 'object')
+  if (typeof value === 'object') {
     entry.value = defu(entry.value, value);
-  else
+  }
+  else {
     entry.value = value;
+  }
 
   entry.mtime = Date.now();
 

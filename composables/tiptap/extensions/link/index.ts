@@ -69,14 +69,16 @@ export const Link = Mark.create<LinkOptions>({
   },
 
   renderHTML({ HTMLAttributes }) {
-    if (!HTMLAttributes.href || !validLinkStartRE.test(HTMLAttributes.href))
+    if (!HTMLAttributes.href || !validLinkStartRE.test(HTMLAttributes.href)) {
       return ['a', mergeAttributes(this.options.HTMLAttributes, { ...HTMLAttributes, href: '' }), 0];
+    }
 
     if (
       HTMLAttributes.href?.startsWith(window.location.origin)
       && isWorkspaceHref(HTMLAttributes.href)
-    )
+    ) {
       HTMLAttributes['data-inner'] = true;
+    }
 
     return ['a', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0];
   },

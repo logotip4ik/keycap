@@ -30,8 +30,9 @@ const utils: Array<Util> = [
 
 let prevHeight: number;
 function rememberHeight() {
-  if (!utilsEl.value)
+  if (!utilsEl.value) {
     return;
+  }
 
   prevHeight = utilsEl.value.$el.clientHeight;
 }
@@ -46,8 +47,9 @@ function transitionHeight() {
 }
 
 function hideIfNeeded() {
-  if (isSmallScreen && props.state === 'pinned')
+  if (isSmallScreen && props.state === 'pinned') {
     props.onUpdateState('hidden');
+  }
 }
 </script>
 

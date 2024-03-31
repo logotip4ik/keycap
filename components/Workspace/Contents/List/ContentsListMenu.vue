@@ -35,8 +35,9 @@ let cleanup: null | (() => void);
 const confirmDuration = parseDuration('5 seconds')!;
 
 function withEffects(event: Event, action: MenuAction) {
-  if (event.type === 'click' && !action.needConfirmation)
+  if (event.type === 'click' && !action.needConfirmation) {
     return action.handler();
+  }
 
   if (event.type === 'pointerdown' && action.needConfirmation) {
     const targetCancelEvents = ['pointerup', 'pointerleave', 'touchend', 'touchcancel'];
@@ -53,8 +54,9 @@ function withEffects(event: Event, action: MenuAction) {
       animation.cancel?.();
       currentlyConfirming.value = -1;
 
-      for (const eventType of targetCancelEvents)
+      for (const eventType of targetCancelEvents) {
         target.removeEventListener(eventType, cleanup!);
+      }
     };
 
     animation.addEventListener('finish', () => {
@@ -64,8 +66,9 @@ function withEffects(event: Event, action: MenuAction) {
       cleanup = null;
     });
 
-    for (const eventType of targetCancelEvents)
+    for (const eventType of targetCancelEvents) {
       target.addEventListener(eventType, cleanup);
+    }
   }
 }
 
@@ -114,8 +117,9 @@ function deleteItem() {
 function openNewTab() {
   let itemPath = props.item.path.replace('/', '/@');
 
-  if (isFolder)
+  if (isFolder) {
     itemPath += `/${BLANK_NOTE_NAME}`;
+  }
 
   window.open(itemPath, 'target=_blank');
 
@@ -131,8 +135,9 @@ useTinykeys({
 onMounted(async () => {
   props.target.classList.add('selected');
 
-  if (!menu.value)
+  if (!menu.value) {
     return;
+  }
 
   const { x, y } = await computePosition(props.target, menu.value, {
     placement: 'bottom-start',

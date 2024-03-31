@@ -11,13 +11,15 @@ export const UserCacheName = {
 } as const;
 
 export function getUserCacheKey(username: string, cacheName?: ValueOf<typeof UserCacheName>) {
-  if (!username)
+  if (!username) {
     throw new Error('unexpected empty username');
+  }
 
   const usernameHash = sha256base64(username.trim());
 
-  if (!cacheName)
+  if (!cacheName) {
     return usernameHash;
+  }
 
   return `cache:${USER_CACHE_GROUP}:${cacheName}:${usernameHash}.json`;
 }
@@ -42,8 +44,9 @@ export const getRecentForUser = defineCachedFunction(getRecentForUser_, {
 });
 
 async function checkIfUsernameTaken_(_event: H3Event, username: string) {
-  if (!username)
+  if (!username) {
     return false;
+  }
 
   username = username.trim();
 

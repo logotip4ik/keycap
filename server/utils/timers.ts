@@ -27,25 +27,29 @@ class Timer {
     let timer: TimerPoint;
 
     if (name) {
-      if (import.meta.dev)
+      if (import.meta.dev) {
         name = name.replace(/\s/g, '-');
+      }
 
       const timerIdx = this.#timersStack.findIndex((timer) => timer.name === name);
 
-      if (timerIdx === -1)
+      if (timerIdx === -1) {
         return;
+      }
 
       timer = this.#timersStack.splice(timerIdx, 1)[0];
     }
     else {
-      if (this.#timersStack.length === 0)
+      if (this.#timersStack.length === 0) {
         return;
+      }
 
       timer = this.#timersStack.pop()!;
     }
 
-    if (this.#results.length > 0)
+    if (this.#results.length > 0) {
       this.#results += ',';
+    }
 
     const dur = performance.now() - timer.start;
     this.#results += timer.desc

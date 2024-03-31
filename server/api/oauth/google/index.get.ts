@@ -6,13 +6,15 @@ import type { GoogleUserRes } from '~/types/server-google';
 export default defineEventHandler(async (event) => {
   let user = event.context.user;
 
-  if (user)
+  if (user) {
     return sendRedirect(event, `/@${user.username}`);
+  }
 
   const query = getQuery(event);
 
-  if (sendOAuthRedirectIfNeeded(event, query))
+  if (sendOAuthRedirectIfNeeded(event, query)) {
     return;
+  }
 
   await assertNoOAuthErrors(event, query);
 
@@ -98,8 +100,9 @@ export default defineEventHandler(async (event) => {
 
   deleteCookie(event, 'state');
 
-  if (!user)
+  if (!user) {
     return sendRedirect(event, '/');
+  }
 
   await setAuthCookies(event, user);
 

@@ -22,8 +22,9 @@ let abortControllerGet: AbortController | undefined;
 let lastRefetch: number | undefined;
 
 const { data: note, refresh } = await useAsyncData<NoteWithContent | undefined>('note', async () => {
-  if (import.meta.server || !route.params.note || route.params.note === BLANK_NOTE_NAME)
+  if (import.meta.server || !route.params.note || route.params.note === BLANK_NOTE_NAME) {
     return;
+  }
 
   clearTimeout(pollingTimer);
 
@@ -41,8 +42,9 @@ const { data: note, refresh } = await useAsyncData<NoteWithContent | undefined>(
 
   $fetch(`/api/note${noteApiPath.value}`, { signal: abortControllerGet.signal })
     .then(async (res) => {
-      if (!res)
+      if (!res) {
         return;
+      }
 
       const { data: fetchedNote } = res as { data: NoteWithContent };
       isFallbackMode.value = false;
@@ -80,8 +82,9 @@ let abortControllerUpdate: AbortController | null;
 const throttledNoteUpdate = useThrottleFn(forceUpdateNote, 1500, true, false); // enable trailing call and disable leading
 function forceUpdateNote(content: string) {
   // if no note was found in cache that means that it was deleted
-  if (!notesCache.has(notePath.value))
+  if (!notesCache.has(notePath.value)) {
     return;
+  }
 
   const newNote = { ...notesCache.get(notePath.value), content };
 
@@ -108,8 +111,9 @@ function updateNote(content: string, force?: boolean) {
 }
 
 async function handleError(error: Error) {
-  if (await baseHandleError(error) || note.value)
+  if (await baseHandleError(error) || note.value) {
     return;
+  }
 
   // last chance to show user folder, if iterator in @[user].vue page hasn't yet set the foldersCache
   const offlineNote = await offlineStorage.getItem?.(notePath.value);
@@ -126,17 +130,19 @@ async function handleError(error: Error) {
 }
 
 mitt.on('details:show', () => {
-  if (note.value)
+  if (note.value) {
     // @ts-expect-error it will be okeeeeeey
     currentItemForDetails.value = note.value;
+  }
 });
 
 if (import.meta.client) {
   const offVisibility = on(document, 'visibilitychange', () => {
     const timeDiff = Date.now() - (lastRefetch || 0);
 
-    if (document.visibilityState === 'visible' && timeDiff > parseDuration('10 seconds')!)
+    if (document.visibilityState === 'visible' && timeDiff > parseDuration('10 seconds')!) {
       refresh();
+    }
   });
 
   // MDN: `event.persisted` indicates if the document is loading from a cache

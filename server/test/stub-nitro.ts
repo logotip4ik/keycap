@@ -9,5 +9,6 @@ const stubs = {
   emailRE,
 } as const;
 
-for (const [name, stub] of Object.entries(stubs))
+for (const [name, stub] of Object.entries(stubs)) {
   vitest.stubGlobal(name, stub);
+}

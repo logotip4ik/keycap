@@ -10,16 +10,18 @@ export default defineEventHandler(async (event) => {
 
   const path = getRouterParam(event, 'path');
 
-  if (!path)
+  if (!path) {
     throw createError({ status: 400 });
+  }
 
   // NOTE: path is actually is not required param for body
   // just to reuse object and thus improve perf, i think it
   // is better to type body as create schema and later set path
   const body = await readBody<FolderCreateFields>(event) || {};
 
-  if (typeof body.name === 'string')
+  if (typeof body.name === 'string') {
     body.name = body.name.trim();
+  }
 
   body.path = generateFolderPath(user.username, path);
 
@@ -65,8 +67,9 @@ export default defineEventHandler(async (event) => {
 
   timer.appendHeader(event);
 
-  if (!folder)
+  if (!folder) {
     throw createError({ status: 500 });
+  }
 
   setResponseStatus(event, 201);
 

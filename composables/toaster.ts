@@ -15,10 +15,12 @@ function addToQueue(message: ToastInstance['message'], options?: ToastUserOption
     toasts.value = toasts.value.concat(toast);
   };
 
-  if (options?.delay)
+  if (options?.delay) {
     timeout.value = setTimeout(addToastToQueue, options.delay);
-  else
+  }
+  else {
     addToastToQueue();
+  }
 
   return toast;
 };
@@ -28,8 +30,9 @@ export function useToaster() {
 }
 
 function createToast(options: ToastUserOptions & { message: ToastInstance['message'], timeout: { value: NodeJS.Timeout | null } }): ToastInstance {
-  if (unref(options.message).trim() === '')
+  if (unref(options.message).trim() === '') {
     throw new Error('no message was provided');
+  }
 
   const toastId = Math.floor(Math.random() * 9999999);
 
@@ -37,10 +40,12 @@ function createToast(options: ToastUserOptions & { message: ToastInstance['messa
     id: toastId,
     message: options.message,
     remove: () => {
-      if (options.timeout.value)
+      if (options.timeout.value) {
         clearTimeout(options.timeout.value);
-      else
+      }
+      else {
         toasts.value = toasts.value.filter((toast) => toast.id !== toastId);
+      }
     },
 
     priority: options.priority || 0,

@@ -9,15 +9,17 @@ export default defineNuxtModule({
     name: 'purge-comments',
   },
   setup(_options, nuxt) {
-    if (isDevelopment || nuxt.options._prepare)
+    if (isDevelopment || nuxt.options._prepare) {
       return;
+    }
 
     addVitePlugin({
       name: 'purge-comments',
       enforce: 'pre',
       transform: (code, id) => {
-        if (!id.endsWith('.vue') || !code.includes('<!--'))
+        if (!id.endsWith('.vue') || !code.includes('<!--')) {
           return;
+        }
 
         const decommented = decomment(code);
 

@@ -13,17 +13,20 @@ export default defineEventHandler(async (event) => {
 
   const path = getRouterParam(event, 'path');
 
-  if (!path)
+  if (!path) {
     throw createError({ status: 400 });
+  }
 
   const notePath = generateNotePath(user.username, path);
 
   const data = await readBody<NoteUpdateFields>(event) || {};
 
-  if (typeof data.name === 'string')
+  if (typeof data.name === 'string') {
     data.name = data.name.trim();
-  if (typeof data.content === 'string')
+  }
+  if (typeof data.content === 'string') {
     data.content = data.content.trim();
+  }
 
   const error = noteUpdateValidator.Errors(data).First();
 
@@ -37,8 +40,9 @@ export default defineEventHandler(async (event) => {
   data.updatedAt = new Date();
 
   // if user updates note name we also need to update its path
-  if (data.name)
+  if (data.name) {
     data.path = makeNewItemPath(notePath, data.name);
+  }
 
   const kysely = getKysely();
 

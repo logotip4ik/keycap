@@ -19,14 +19,16 @@ const stateSerializeOptions = {
 export function sendOAuthRedirectIfNeeded(event: H3Event, _query?: QueryObject): boolean {
   const query = _query || getQuery(event)!;
 
-  if (query.error || (query.state && query.code))
+  if (query.error || (query.state && query.code)) {
     return false;
+  }
 
   const pathWithoutQuery = event.path.split('?')[0] as keyof typeof providerPathToConfigMap;
   const providerConfig = providerPathToConfigMap[pathWithoutQuery];
 
-  if (!providerConfig)
+  if (!providerConfig) {
     throw createError({ status: 418, message: 'i a coffeepot' });
+  }
 
   const { site } = useRuntimeConfig().public;
 
@@ -44,8 +46,9 @@ export function sendOAuthRedirectIfNeeded(event: H3Event, _query?: QueryObject):
   redirectUrl.searchParams.set('redirect_uri', `${protocol}${site}/api/oauth/${providerConfig.name}`);
 
   if (providerConfig.options) {
-    for (const key in providerConfig.options)
+    for (const key in providerConfig.options) {
       redirectUrl.searchParams.set(key, providerConfig.options[key]);
+    }
   }
 
   sendRedirect(event, redirectUrl.toString());
@@ -105,8 +108,9 @@ export function updateUserWithSocialAuth(userId: string, socialAuth: NormalizedS
       .select('id')
       .executeTakeFirst();
 
-    if (oauth)
+    if (oauth) {
       return;
+    }
 
     await tx
       .insertInto('OAuth')

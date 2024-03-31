@@ -10,16 +10,18 @@ export function registerSWToasts() {
   const createToast = useToaster();
 
   const stopOfflineReady = watch(() => pwa?.offlineReady, (ready) => {
-    if (!ready)
+    if (!ready) {
       return;
+    }
 
     stopOfflineReady();
     createToast('Phewww, now you can work offline', { delay: 550 });
   }, { immediate: true });
 
   const stopNeedRefresh = watch(() => pwa?.needRefresh, (needRefresh) => {
-    if (!needRefresh)
+    if (!needRefresh) {
       return;
+    }
 
     stopNeedRefresh();
     createToast('Psss... We have some updates', {

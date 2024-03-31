@@ -43,8 +43,9 @@ function handleSearchInput(value: string) {
 async function openItem() {
   const result = selectedResult.value;
 
-  if (!result)
+  if (!result) {
     return;
+  }
 
   // is command
   if ('key' in result) {

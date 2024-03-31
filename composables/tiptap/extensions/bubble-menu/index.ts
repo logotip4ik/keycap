@@ -20,8 +20,9 @@ export const BubbleMenu = Extension.create<BubbleMenuOptions>({
   },
 
   addProseMirrorPlugins() {
-    if (!this.options.element)
+    if (!this.options.element) {
       return [];
+    }
 
     return [
       BubbleMenuPlugin({

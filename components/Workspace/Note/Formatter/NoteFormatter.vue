@@ -33,8 +33,9 @@ function animateContainerWidth(el: Element) {
     );
   }
 
-  if (!isEditingLink.value)
+  if (!isEditingLink.value) {
     return;
+  }
 
   const activeUrl = props.editor.isActive('link')
     ? props.editor.getAttributes('link').href
@@ -88,8 +89,9 @@ function toggleHeading() {
 
   for (let i = 0; i < 3; i++) {
     if (props.editor.isActive('heading', { level: i + 1 })) {
-      if (prevHeadingLevel === undefined)
+      if (prevHeadingLevel === undefined) {
         prevHeadingLevel = i + 1;
+      }
 
       actionIdx = i + 1;
 
@@ -129,17 +131,21 @@ function toggleListItem() {
     const list = lists[i];
 
     if (props.editor.isActive((list))) {
-      if (prevListItem === undefined)
+      if (prevListItem === undefined) {
         prevListItem = list;
+      }
 
       actionIdx = i + 1;
     }
   }
 
   if (prevListItem && prevListItem !== 'auto') {
-    if (prevListItem === 'taskList')
+    if (prevListItem === 'taskList') {
       commands.toggleTaskList().run();
-    else commands.liftListItem('listItem').run();
+    }
+    else {
+      commands.liftListItem('listItem').run();
+    }
 
     prevListItem = 'auto'; // enable cycling on next toggle
 
@@ -165,15 +171,17 @@ useTinykeys({
   '$mod+l': (event) => {
     const { from, to } = props.editor.state.selection;
 
-    if (props.editor.isFocused && to - from <= 0)
+    if (props.editor.isFocused && to - from <= 0) {
       return;
+    }
 
     event.preventDefault();
 
     isEditingLink.value = !isEditingLink.value;
 
-    if (!isEditingLink.value)
+    if (!isEditingLink.value) {
       resetSelection();
+    }
   },
 });
 

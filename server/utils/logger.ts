@@ -25,8 +25,9 @@ export interface Logger {
 
 let client: typeof $fetch | undefined;
 function getAxiomClient(axiom: ReturnType<typeof useRuntimeConfig>['axiom']) {
-  if (client)
+  if (client) {
     return client;
+  }
 
   client = $fetch.create({
     headers: {

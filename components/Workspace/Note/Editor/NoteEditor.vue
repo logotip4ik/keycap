@@ -29,21 +29,25 @@ function updateContent(force?: boolean) {
 }
 
 watch(() => props.content, (content) => {
-  if (isTyping.value || !editor.value)
+  if (isTyping.value || !editor.value) {
     return;
+  }
 
   const editorContent = editor.value.getHTML();
 
-  if (editorContent !== content)
+  if (editorContent !== content) {
     editor.value.commands.setContent(content || '');
+  }
 }, { immediate: import.meta.client });
 
 watch(() => props.editable, (editable) => {
-  if (!editor.value)
+  if (!editor.value) {
     return;
+  }
 
-  if (editor.value.options.editable !== editable)
+  if (editor.value.options.editable !== editable) {
     editor.value?.setOptions({ editable });
+  }
 }, { immediate: import.meta.client });
 
 mitt.on('save:note', () => updateContent());
@@ -52,8 +56,9 @@ onContentUpdate(() => updateContent());
 
 useTinykeys({
   '$mod+s': (event) => {
-    if (!editor.value?.isFocused)
+    if (!editor.value?.isFocused) {
       return;
+    }
 
     event.preventDefault();
 

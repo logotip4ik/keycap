@@ -29,8 +29,9 @@ export function normalizeGoogleUser(googleUser: GoogleUserRes, params: Normaliza
 export async function getGoogleUserWithEvent(event: H3Event) {
   const code = getQuery(event).code;
 
-  if (!code)
+  if (!code) {
     throw new Error('no code was found');
+  }
 
   const protocol = import.meta.prod ? 'https://' : 'http://';
 

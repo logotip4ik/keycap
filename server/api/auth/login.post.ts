@@ -7,10 +7,12 @@ type LoginFields = Static<typeof loginSchema>;
 export default defineEventHandler(async (event) => {
   const body = await readBody<LoginFields>(event) || {};
 
-  if (typeof body.email === 'string')
+  if (typeof body.email === 'string') {
     body.email = body.email.trim();
-  if (typeof body.password === 'string')
+  }
+  if (typeof body.password === 'string') {
     body.password = body.password.trim();
+  }
 
   const error = loginValidator.Errors(body).First();
 
@@ -32,11 +34,13 @@ export default defineEventHandler(async (event) => {
       await logger.error(event, { err, msg: 'auth.login failed (can\'t fetch user)' });
     });
 
-  if (!user)
+  if (!user) {
     throw createError({ status: 400, message: 'email or password is incorrect' });
+  }
 
-  if (!user.password)
+  if (!user.password) {
     throw createError({ status: 400, message: 'this account uses social auth' });
+  }
 
   const isPasswordValid = await verifyPassword(user.password, body.password)
     .catch(async (err) => {
@@ -45,8 +49,9 @@ export default defineEventHandler(async (event) => {
       throw createError({ status: 500 });
     });
 
-  if (isPasswordValid === false)
+  if (isPasswordValid === false) {
     throw createError({ status: 400, message: 'email or password is incorrect' });
+  }
 
   // $2 - bcrypt
   if (user.password.startsWith('$2')) {
@@ -66,8 +71,9 @@ export default defineEventHandler(async (event) => {
 
   await setAuthCookies(event, safeUser);
 
-  if (body.browserAction !== undefined)
+  if (body.browserAction !== undefined) {
     return sendRedirect(event, `/@${safeUser.username}`);
+  }
 
   return { data: safeUser };
 });

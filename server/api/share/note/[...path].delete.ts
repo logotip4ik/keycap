@@ -4,8 +4,9 @@ export default defineEventHandler(async (event) => {
 
   const path = getRouterParam(event, 'path');
 
-  if (!path)
+  if (!path) {
     throw createError({ status: 400 });
+  }
 
   const notePath = generateNotePath(user.username, path);
 
@@ -22,8 +23,9 @@ export default defineEventHandler(async (event) => {
       .where('Share.ownerId', '=', user.id)
       .executeTakeFirst();
 
-    if (!shareToDelete)
+    if (!shareToDelete) {
       throw createError({ status: 404 });
+    }
 
     await tx
       .deleteFrom('Share')

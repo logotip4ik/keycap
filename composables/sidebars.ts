@@ -8,14 +8,16 @@ export function shouldUnpinSidebar<T extends MaybeRef<SidebarState>>(first: T, s
     window.innerWidth < sidebarsBreakpoints.two
     && unref(first) === 'pinned'
     && unref(second) === 'pinned'
-  )
+  ) {
     return second;
+  }
 
   if (
     window.innerWidth < sidebarsBreakpoints.one
     && unref(second) === 'pinned'
-  )
+  ) {
     return second;
+  }
 }
 
 /**
@@ -60,8 +62,9 @@ export function makeSidebarVisibility(key: string): Ref<SidebarState> {
         ?.split('=')[1] as SidebarState | undefined;
     }
 
-    if (stateCookieValue && stateWhitelist.includes(stateCookieValue))
+    if (stateCookieValue && stateWhitelist.includes(stateCookieValue)) {
       return stateCookieValue as SidebarState || 'hidden';
+    }
 
     return 'hidden';
   });

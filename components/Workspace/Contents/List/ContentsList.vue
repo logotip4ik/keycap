@@ -37,8 +37,9 @@ const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefi
 
   $fetch(`/api/folder${folderApiPath.value}`, { signal: abortControllerGet.signal })
     .then(async (res) => {
-      if (!res)
+      if (!res) {
         return;
+      }
 
       const { data: fetchedFolder } = res as { data: FolderWithContents };
       const wasCreatingItem = folder.value?.notes.some((item) => item.creating);
@@ -53,8 +54,9 @@ const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefi
 
       folder.value = fetchedFolder;
 
-      if (wasCreatingItem)
+      if (wasCreatingItem) {
         preCreateItem(folder.value);
+      }
     })
     .catch((e) => {
       handleError(e);
@@ -78,8 +80,9 @@ const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefi
 });
 
 const folderContents = computed(() => {
-  if (!folder.value)
+  if (!folder.value) {
     return [];
+  }
 
   const notes = folder.value.notes || [];
   const subfolders = folder.value.subfolders || [];
@@ -88,16 +91,18 @@ const folderContents = computed(() => {
 });
 
 function showMenu(target: HTMLElement, item: FolderOrNote) {
-  if (isFallbackMode.value)
+  if (isFallbackMode.value) {
     return;
+  }
 
   menuOptions.item = item;
   menuOptions.target = target;
 }
 
 async function handleError(error: Error) {
-  if (await baseHandleError(error) || folder.value)
+  if (await baseHandleError(error) || folder.value) {
     return;
+  }
 
   // last chance to show user folder, if iterator in @[user].vue page hasn't yet set the foldersCache
   const offlineFolder = await offlineStorage.getItem?.(folderPath.value);
@@ -122,8 +127,9 @@ function handleArrowsPress(event: KeyboardEvent) {
 
   const listElement = (event.target as HTMLElement).offsetParent;
 
-  if (!diff || !listElement)
+  if (!diff || !listElement) {
     return;
+  }
 
   const currentIdx = Array.from(listElement.children)
     .findIndex((node) =>
@@ -143,8 +149,9 @@ watch(() => props.state, (state, oldState) => {
     state !== 'hidden'
     && (!oldState || oldState === 'hidden')
     && !folder.value
-  )
+  ) {
     return refresh();
+  }
 }, { immediate: import.meta.client });
 
 // TODO: rework details trigger ?
@@ -159,13 +166,15 @@ useTinykeys({
   [shortcuts.new]: async (event) => {
     event.preventDefault();
 
-    if (props.state === 'hidden')
+    if (props.state === 'hidden') {
       props.onUpdateState('visible');
+    }
 
     const alreadyCreating = folder.value && folder.value.notes.some((note) => note.creating);
 
-    if (alreadyCreating)
+    if (alreadyCreating) {
       return;
+    }
 
     const stop = watchEffect(() => {
       if (folder.value) {
@@ -184,8 +193,9 @@ if (import.meta.client) {
       document.visibilityState === 'visible'
       && props.state !== 'hidden'
       && timeDiff > parseDuration('15 seconds')!
-    )
+    ) {
       refresh();
+    }
   });
 
   onBeforeUnmount(() => {

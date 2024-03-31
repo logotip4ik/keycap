@@ -27,8 +27,9 @@ const templates = {
 export async function getOgTemplate(name: keyof typeof templates) {
   const url = templates[name];
 
-  if (!url)
+  if (!url) {
     throw new Error(`template ${name} not found!`);
+  }
 
   const template = await readFile(url, { encoding: 'utf8' });
 
@@ -43,8 +44,9 @@ export function splitOgText(text: string, maxLines?: number) {
 
   text = text.trim();
 
-  if (text.length === 0)
+  if (text.length === 0) {
     return lines;
+  }
 
   let match = splitByLineLengthRE.exec(text);
   while (match !== null && match[0].length !== 0) {

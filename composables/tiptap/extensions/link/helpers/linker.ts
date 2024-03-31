@@ -39,8 +39,9 @@ export function isWorkspaceHref(href: string) {
 export function getItemNameFromHref(href: string) {
   const parts = href.split('/');
 
-  if (parts.at(-1) === BLANK_NOTE_NAME)
+  if (parts.at(-1) === BLANK_NOTE_NAME) {
     parts.pop();
+  }
 
   return decodeURIComponent(parts.at(-1) || '');
 }

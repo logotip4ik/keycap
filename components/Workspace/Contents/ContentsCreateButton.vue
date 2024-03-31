@@ -2,13 +2,15 @@
 function handleClick() {
   const folder = useNuxtApp()._asyncData.folder;
 
-  if (!folder)
+  if (!folder) {
     return;
+  }
 
   const folderData = folder.data as Ref<FolderWithContents>;
 
-  if (!folderData.value || folderData.value.notes.some((note) => note.creating))
+  if (!folderData.value || folderData.value.notes.some((note) => note.creating)) {
     return;
+  }
 
   preCreateItem(folderData.value);
 }

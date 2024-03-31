@@ -24,8 +24,9 @@ function generateAccessToken(object: Record<string, unknown>): Promise<string> {
 
   const { id, ...rest } = object;
 
-  if (!id)
+  if (!id) {
     throw new Error('id should be defined');
+  }
 
   return new SignJWT(rest)
     .setProtectedHeader({ alg: 'HS256' })
@@ -50,8 +51,9 @@ export async function removeAuthCookies(event: H3Event) {
 export async function getUserFromEvent(event: H3Event): Promise<SafeUser | null> {
   const accessToken = getCookie(event, accessTokenName);
 
-  if (!accessToken)
+  if (!accessToken) {
     return null;
+  }
 
   const jwt = await jwtVerify(accessToken, jwtSecret, { issuer: jwtIssuer });
 

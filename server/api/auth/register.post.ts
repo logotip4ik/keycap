@@ -6,17 +6,21 @@ import type { SafeUser } from '~/types/server';
 type RegisterFields = Static<typeof registerSchema>;
 
 export default defineEventHandler(async (event) => {
-  if (event.context.user)
+  if (event.context.user) {
     return null;
+  }
 
   const body = await readBody<RegisterFields>(event) || {};
 
-  if (typeof body.email === 'string')
+  if (typeof body.email === 'string') {
     body.email = body.email.trim();
-  if (typeof body.username === 'string')
+  }
+  if (typeof body.username === 'string') {
     body.username = body.username.trim().replace(/\s/g, '_');
-  if (typeof body.password === 'string')
+  }
+  if (typeof body.password === 'string') {
     body.password = body.password.trim();
+  }
 
   const error = registerValidator.Errors(body).First();
 
@@ -80,8 +84,9 @@ export default defineEventHandler(async (event) => {
         }
       });
 
-    if (!user)
+    if (!user) {
       throw createError({ status: 500 });
+    }
 
     await tx
       .insertInto('Folder')
@@ -112,8 +117,9 @@ export default defineEventHandler(async (event) => {
     ),
   ]);
 
-  if (body.browserAction !== undefined)
+  if (body.browserAction !== undefined) {
     return sendRedirect(event, `/@${user.username}`);
+  }
 
   setResponseStatus(event, 201);
 

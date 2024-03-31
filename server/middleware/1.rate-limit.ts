@@ -27,8 +27,9 @@ export default defineEventHandler(async (event) => {
 // NOTE: https://lihbr.com/posts/rate-limiting-without-overhead-netlify-or-vercel-functions
 // cool article that describes problem about rate limiting in serverless functions
 function getRateLimiter() {
-  if (!globalThis.rateLimiter)
+  if (!globalThis.rateLimiter) {
     globalThis.rateLimiter = new RateLimitManager(INTERVAL, LIMIT);
+  }
 
   return globalThis.rateLimiter;
 }

@@ -11,8 +11,9 @@ export function clickHandler(_options: ClickHandlerOptions): Plugin {
     key: new PluginKey('handleClickLink'),
     props: {
       handleClick: (_view, _pos, event) => {
-        if (event.button !== 0)
+        if (event.button !== 0) {
           return false;
+        }
 
         let a = event.target as HTMLElement;
         const els = [];
@@ -22,14 +23,16 @@ export function clickHandler(_options: ClickHandlerOptions): Plugin {
           a = a.parentNode as HTMLElement;
         }
 
-        if (!els.some((value) => value.nodeName === 'A'))
+        if (!els.some((value) => value.nodeName === 'A')) {
           return false;
+        }
 
         const link = event.target as HTMLLinkElement;
 
         // TODO: add auto complete for inner links
-        if (!link)
+        if (!link) {
           return false;
+        }
 
         const href = link.getAttribute('href');
         const target = link.getAttribute('target');
@@ -37,10 +40,12 @@ export function clickHandler(_options: ClickHandlerOptions): Plugin {
         if (href) {
           const innerUrl = getInnerUrl(href);
 
-          if (innerUrl)
+          if (innerUrl) {
             navigateTo(innerUrl.pathname);
-          else
+          }
+          else {
             window.open(href, target || undefined);
+          }
 
           return true;
         }
@@ -54,13 +59,15 @@ export function clickHandler(_options: ClickHandlerOptions): Plugin {
 function getInnerUrl(link: string) {
   const url = new URL(link);
 
-  if (window.location.origin !== url.origin)
+  if (window.location.origin !== url.origin) {
     return;
+  }
 
   const user = useUser();
 
-  if (!user.value || !url.pathname.startsWith(`/@${user.value.username}`))
+  if (!user.value || !url.pathname.startsWith(`/@${user.value.username}`)) {
     return;
+  }
 
   return url;
 }

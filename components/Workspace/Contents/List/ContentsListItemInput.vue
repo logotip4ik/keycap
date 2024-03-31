@@ -51,8 +51,9 @@ function handleSubmit() {
 }
 
 function handleReset() {
-  if (props.item.creating)
+  if (props.item.creating) {
     return remove(props.parent.notes, props.item);
+  }
 
   extend(props.item, { editing: false, creating: false });
 }

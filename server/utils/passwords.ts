@@ -14,8 +14,9 @@ export function hashPassword(pass: string): Promise<string> {
 }
 
 export function verifyPassword(hashedPass: string, pass: string): Promise<boolean> {
-  if (hashedPass.startsWith('$argon2'))
+  if (hashedPass.startsWith('$argon2')) {
     return argon2.verify(hashedPass, pass, getArgon2Options());
+  }
 
   return bcrypt.compare(pass, hashedPass);
 }

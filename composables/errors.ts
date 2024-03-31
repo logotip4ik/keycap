@@ -2,8 +2,9 @@ import type { H3Error } from 'h3';
 
 export function setupErrorLogging() {
   // TODO: use server logger ?
-  if (import.meta.server)
+  if (import.meta.server) {
     return;
+  }
 
   onErrorCaptured((e) => sendError(e));
 }
@@ -25,21 +26,25 @@ export function sendError(error: Error, properties?: Record<string, string>) {
     event: '$event',
   };
 
-  if (properties)
+  if (properties) {
     extend(payload.properties, properties);
+  }
 
-  if (import.meta.prod)
+  if (import.meta.prod) {
     navigator.sendBeacon(errors.url, JSON.stringify(payload));
-  else
+  }
+  else {
     console.log(payload); // eslint-disable-line no-console
+  }
 }
 
 export async function baseHandleError(error: Error | H3Error): Promise<boolean> {
   const user = useUser();
   const isFallbackMode = useFallbackMode();
 
-  if (error.message.includes('aborted'))
+  if (error.message.includes('aborted')) {
     return true;
+  }
 
   // @ts-expect-error there actually is statusCode
   if (error.statusCode === 401 || !user.value) {
@@ -70,8 +75,9 @@ function getSessionId() {
     .find((cookie) => cookie.startsWith(key))
     ?.split('=')[1] as string | undefined;
 
-  if (id)
+  if (id) {
     return id;
+  }
 
   id = crypto.randomUUID();
 

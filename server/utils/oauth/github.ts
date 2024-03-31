@@ -29,8 +29,9 @@ export function normalizeGitHubUser(githubUser: GitHubUserRes, params: Normaliza
 export async function getGitHubUserWithEvent(event: H3Event) {
   const code = getQuery(event).code;
 
-  if (!code)
+  if (!code) {
     throw new Error('no code was found');
+  }
 
   const auth = await $fetch<GitHubAuthRes>(config.tokenEndpoint, {
     method: 'POST',
@@ -64,8 +65,9 @@ export async function getGitHubUserWithEvent(event: H3Event) {
 
     const primaryEmail = emails.find((email) => email.primary) || emails[0];
 
-    if (!primaryEmail)
+    if (!primaryEmail) {
       throw new Error('unable to gather user email');
+    }
 
     user.email = primaryEmail.email;
   }

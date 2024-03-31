@@ -20,8 +20,9 @@ export const ParseDurationTransformPlugin = createUnplugin(() => ({
   enforce: 'post',
 
   transform(code, id) {
-    if (!parseDurationFunctionCall.test(code))
+    if (!parseDurationFunctionCall.test(code)) {
       return;
+    }
 
     const context = createContext({
       parseDuration,
@@ -31,13 +32,15 @@ export const ParseDurationTransformPlugin = createUnplugin(() => ({
 
     walk(this.parse(code) as any, {
       enter(_node) {
-        if (_node.type !== 'CallExpression')
+        if (_node.type !== 'CallExpression') {
           return;
+        }
 
         const node = _node as SimpleCallExpression;
 
-        if ((node.callee as any).name !== parseDurationFunctionName)
+        if ((node.callee as any).name !== parseDurationFunctionName) {
           return;
+        }
 
         const { start, end } = node as any as { start: number, end: number };
 
@@ -69,8 +72,9 @@ function isVueOrJs(id: string) {
   const { type } = parseQuery(search);
 
   // vue files
-  if (pathname.endsWith('.vue') && (type === 'script' || !search))
+  if (pathname.endsWith('.vue') && (type === 'script' || !search)) {
     return true;
+  }
 
   // js files
   return jsExtRE.test(pathname);

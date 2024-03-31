@@ -41,11 +41,13 @@ async function main() {
     users.push(user);
   }
 
-  if (numberOfUsers > 500)
+  if (numberOfUsers > 500) {
     console.log(`hashing ${numberOfUsers} passwords may take a while...`);
+  }
 
-  if (existsSync(resultsPath))
+  if (existsSync(resultsPath)) {
     await fsp.writeFile(resultsPath, '');
+  }
 
   const hashedPasswords = await Promise.all(users.map((user) => hashPassword(user.password!)));
 
@@ -68,8 +70,9 @@ async function main() {
     const ownerIdx = faker.number.int({ min: 0, max: dbUsers.length - 1 });
     const owner = dbUsers.at(ownerIdx);
 
-    if (!owner)
+    if (!owner) {
       continue;
+    }
 
     // creating folder
     if (Math.random() > 0.88) {

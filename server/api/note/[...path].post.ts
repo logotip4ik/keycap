@@ -10,8 +10,9 @@ export default defineEventHandler(async (event) => {
 
   const path = getRouterParam(event, 'path');
 
-  if (!path)
+  if (!path) {
     throw createError({ status: 400 });
+  }
 
   const body = await readBody<NoteCreateFields>(event) || {};
 

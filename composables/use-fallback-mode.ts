@@ -5,8 +5,9 @@ export function useFallbackMode() {
 }
 
 if (import.meta.client) {
-  if (navigator)
+  if (navigator) {
     isFallbackMode.value = !navigator.onLine;
+  }
 
   if (import.meta.dev) {
     if (typeof window !== 'undefined') {

@@ -23,23 +23,27 @@ const rules: Array<Rule> = [
 ];
 
 export default defineEventHandler(async (event) => {
-  if (isPreflightRequest(event))
+  if (isPreflightRequest(event)) {
     return null;
+  }
 
   if (
     !import.meta.config.benchmarking
     && event.method !== 'GET'
     && isOriginMismatched(event)
-  )
+  ) {
     throw createError({ status: 403 });
+  }
 
   const rule = rules.find((rule) => event.path.startsWith(rule.path));
 
-  if (!rule)
+  if (!rule) {
     return;
+  }
 
   const shouldPass = rule.handler(event);
 
-  if (shouldPass === false)
+  if (shouldPass === false) {
     throw createError({ status: 401 });
+  }
 });

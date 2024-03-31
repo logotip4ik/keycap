@@ -10,8 +10,9 @@ export default defineNuxtModule({
     name: 'build-env',
   },
   async setup(_options, nuxt) {
-    if (nuxt.options._prepare)
+    if (nuxt.options._prepare) {
       return;
+    }
 
     const logger = useLogger('build-env');
 

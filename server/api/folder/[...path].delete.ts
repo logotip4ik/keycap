@@ -4,13 +4,15 @@ export default defineEventHandler(async (event) => {
 
   const path = getRouterParam(event, 'path');
 
-  if (!path)
+  if (!path) {
     throw createError({ status: 400 });
+  }
 
   const folderPath = generateFolderPath(user.username, path);
 
-  if (generateRootFolderPath(user.username) === folderPath)
+  if (generateRootFolderPath(user.username) === folderPath) {
     return sendNoContent(event);
+  }
 
   const kysely = getKysely();
 

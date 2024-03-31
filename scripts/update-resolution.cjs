@@ -15,18 +15,21 @@ async function updatePatches() {
   for (const [resolutionName, patch] of Object.entries(pkg.resolutions)) {
     const dep = deps.find(([name]) => resolutionName.includes(name));
 
-    if (!dep)
+    if (!dep) {
       continue;
+    }
 
     const [resolutionVersion] = patch.match(patchVersion_RE) || [];
 
-    if (!resolutionName)
+    if (!resolutionName) {
       continue;
+    }
 
     const normalizedDepVersion = dep[1].startsWith('^') ? dep[1].slice(1) : dep[1];
 
-    if (resolutionVersion === normalizedDepVersion)
+    if (resolutionVersion === normalizedDepVersion) {
       continue;
+    }
 
     const newPatch = patch.replace(patchVersion_RE, normalizedDepVersion);
 

@@ -11,8 +11,9 @@ type ItemWithPath = Record<string, unknown> & { root?: boolean, path: string };
 export function generateItemPath(item: ItemWithPath): RouteLocationRaw {
   let path = item.path.replace('/', '/@');
 
-  if (checkIsFolder(item))
+  if (checkIsFolder(item)) {
     path += `/${BLANK_NOTE_NAME}`;
+  }
 
   return path;
 }
@@ -33,8 +34,9 @@ export function preCreateItem(folderToAppend: FolderWithContents, initialValues?
     creating: true,
   };
 
-  if (initialValues)
+  if (initialValues) {
     extend(noteValues, initialValues);
+  }
 
   folderToAppend.notes.unshift(noteValues);
 }
@@ -57,8 +59,9 @@ export async function createFolder(folderName: string, self: FolderOrNote, paren
     body: { name: folderName, parentId: parent.id },
   });
 
-  if (!res)
+  if (!res) {
     return;
+  }
 
   const { data: newlyCreatedFolder } = res;
   const foldersCache = useFoldersCache();
@@ -88,8 +91,9 @@ export async function createNote(noteName: string, self: FolderOrNote, parent: F
     body: { name: noteName, parentId: parent.id },
   });
 
-  if (!res)
+  if (!res) {
     return;
+  }
 
   const { data: newlyCreatedNote } = res;
   const notesCache = useNotesCache();
@@ -192,8 +196,9 @@ export async function deleteNote(self: FolderOrNote, parent: FolderWithContents)
 
   const res = await $fetch.raw(`/api/note${notePath}`, { method: 'DELETE' });
 
-  if (!res)
+  if (!res) {
     return;
+  }
 
   const notesCache = useNotesCache();
   const offlineStorage = useOfflineStorage();
@@ -214,8 +219,9 @@ export async function deleteFolder(self: FolderOrNote, parent: FolderWithContent
 
   const res = await $fetch.raw<null>(`/api/folder${folderPath}`, { method: 'DELETE' });
 
-  if (!res)
+  if (!res) {
     return;
+  }
 
   const foldersCache = useFoldersCache();
   const offlineStorage = useOfflineStorage();
@@ -231,8 +237,9 @@ export async function deleteFolder(self: FolderOrNote, parent: FolderWithContent
         if (!item
           || typeof item !== 'object'
           || !('path' in item)
-          || !(item as FolderOrNote).path.startsWith(itemPathToCheck))
+          || !(item as FolderOrNote).path.startsWith(itemPathToCheck)) {
           continue;
+        }
 
         offlineStorage.removeItem?.((item as FolderOrNote).path);
       }
@@ -253,8 +260,9 @@ export async function preloadItem(self: FolderOrNote) {
 
   const res = await $fetch<{ data: FolderWithContents | NoteMinimal }>(`/api/${path}`);
 
-  if (!res)
+  if (!res) {
     return;
+  }
 
   const offlineStorage = useOfflineStorage();
   const notesCache = useNotesCache();

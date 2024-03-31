@@ -101,8 +101,9 @@ export class BubbleMenuView {
       return;
     }
 
-    if (event?.relatedTarget && this.element.parentNode?.contains(event.relatedTarget as Node))
+    if (event?.relatedTarget && this.element.parentNode?.contains(event.relatedTarget as Node)) {
       return;
+    }
 
     this.hide();
   };
@@ -126,11 +127,13 @@ export class BubbleMenuView {
     const selectionChanged = !oldState?.selection.eq(view.state.selection);
     const docChanged = !oldState?.doc.eq(view.state.doc);
 
-    if (!selectionChanged && !docChanged)
+    if (!selectionChanged && !docChanged) {
       return;
+    }
 
-    if (this.updateDebounceTimer)
+    if (this.updateDebounceTimer) {
       clearTimeout(this.updateDebounceTimer);
+    }
 
     this.updateDebounceTimer = window.setTimeout(() => {
       this.updateHandler(view, selectionChanged, docChanged, oldState);
@@ -143,8 +146,9 @@ export class BubbleMenuView {
 
     const isSame = !selectionChanged && !docChanged;
 
-    if (composing || isSame)
+    if (composing || isSame) {
       return;
+    }
 
     // support for CellSelections
     const { ranges } = selection;
@@ -205,11 +209,13 @@ export class BubbleMenuView {
 
       const nodeViewWrapper = node.dataset.nodeViewWrapper ? node : node.querySelector('[data-node-view-wrapper]');
 
-      if (nodeViewWrapper)
+      if (nodeViewWrapper) {
         node = nodeViewWrapper.firstChild as HTMLElement;
+      }
 
-      if (node)
+      if (node) {
         return node.getBoundingClientRect();
+      }
     }
 
     return posToDOMRect(this.editor.view, from, to);
@@ -236,8 +242,9 @@ export class BubbleMenuView {
 
     const hasEditorFocus = view.hasFocus() || isChildOfMenu;
 
-    if (!hasEditorFocus || empty || isEmptyTextBlock || !this.editor.isEditable)
+    if (!hasEditorFocus || empty || isEmptyTextBlock || !this.editor.isEditable) {
       return false;
+    }
 
     return true;
   }

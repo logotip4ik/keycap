@@ -20,8 +20,9 @@ const itemPath = isCommand
   );
 
 async function handleActionClick() {
-  if (!isCommand)
+  if (!isCommand) {
     return;
+  }
 
   const action = commandActions[props.item.key];
 

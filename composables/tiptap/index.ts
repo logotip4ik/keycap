@@ -31,8 +31,9 @@ const isTyping = ref(false);
 const debouncedClearTyping = debounce(() => isTyping.value = false, 500);
 
 function initTiptap() {
-  if (import.meta.server || editor.value)
+  if (import.meta.server || editor.value) {
     return;
+  }
 
   const isSmallScreen = getIsSmallScreen();
 
@@ -94,15 +95,17 @@ function initTiptap() {
 }
 
 export function useTiptap() {
-  if (!editor.value)
+  if (!editor.value) {
     initTiptap();
+  }
 
   return { editor, isTyping, onUpdate, withEditor };
 }
 
 function withEditor(cb: (editor: Editor) => void) {
-  if (editor.value)
+  if (editor.value) {
     return cb(editor.value);
+  }
 
   const stop = watch(editor, (editor) => {
     if (editor) {

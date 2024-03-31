@@ -7,16 +7,19 @@ const props = defineProps<{
 let prevHeight: number;
 let prevAnimation: Animation | null;
 function rememberHeight() {
-  if (props.animateEl)
+  if (props.animateEl) {
     prevHeight = props.animateEl.clientHeight;
+  }
 }
 
 function animateHeight() {
-  if (!props.animateEl)
+  if (!props.animateEl) {
     return;
+  }
 
-  if (prevAnimation)
+  if (prevAnimation) {
     prevAnimation.cancel();
+  }
 
   const currentHeight = props.animateEl.clientHeight;
 

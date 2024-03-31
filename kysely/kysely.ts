@@ -6,8 +6,9 @@ import type { DB } from './db/types';
 
 export function getKysely() {
   if (!globalThis.__kysely) {
-    if (!process.env.DATABASE_URL)
+    if (!process.env.DATABASE_URL) {
       throw new Error('DATABASE_URL must be defined');
+    }
 
     globalThis.__kysely = new Kysely<DB>({
       log: ['error'],

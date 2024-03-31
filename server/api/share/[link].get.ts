@@ -1,8 +1,9 @@
 export default defineEventHandler(async (event) => {
   const link = getRouterParam(event, 'link');
 
-  if (!link || !isShareLinkValid(link))
+  if (!link || !isShareLinkValid(link)) {
     throw createError({ status: 400 });
+  }
 
   const kysely = getKysely();
 
@@ -18,8 +19,9 @@ export default defineEventHandler(async (event) => {
       throw createError({ status: 400 });
     });
 
-  if (!note)
+  if (!note) {
     throw createError({ status: 404 });
+  }
 
   return { data: note };
 });

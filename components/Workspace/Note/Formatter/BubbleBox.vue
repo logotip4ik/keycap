@@ -11,8 +11,9 @@ const BubblePluginKey = 'bubbleMenu';
 const bubble = ref<HTMLElement | null>(null);
 
 onMounted(() => {
-  if (!bubble.value)
+  if (!bubble.value) {
     return;
+  }
 
   props.editor.registerPlugin(
     BubbleMenuPlugin({

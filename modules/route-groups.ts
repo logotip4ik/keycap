@@ -10,13 +10,15 @@ export default defineNuxtModule({
 
     nuxt.hook('pages:extend', (pages) => {
       for (const page of pages) {
-        if (!page.name || !page.path)
+        if (!page.name || !page.path) {
           continue;
+        }
 
         const groupName = getGroupName(page.name);
 
-        if (!groupName)
+        if (!groupName) {
           continue;
+        }
 
         const prevPath = page.path;
         const groupPath = `/(${groupName})`;
