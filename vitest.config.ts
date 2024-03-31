@@ -3,6 +3,8 @@ import { defineVitestConfig } from '@nuxt/test-utils/config';
 
 export default defineVitestConfig({
   test: {
+    isolate: false,
+
     setupFiles: ['./server/test/stub-nitro.ts'],
 
     includeSource: [

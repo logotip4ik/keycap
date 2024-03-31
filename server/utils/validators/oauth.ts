@@ -1,9 +1,6 @@
 import { FormatRegistry, Type } from '@sinclair/typebox';
 import { TypeCompiler } from '@sinclair/typebox/compiler';
 
-// import is needed for vitest ?
-import { emailRE } from '~/server/utils/index';
-
 FormatRegistry.Set('email', (value) => emailRE.test(value));
 
 export const socialUserSchema = Type.Object({

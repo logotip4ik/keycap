@@ -1,8 +1,6 @@
 import { Type } from '@sinclair/typebox';
 import { TypeCompiler } from '@sinclair/typebox/compiler';
 
-import { usernameRE } from '~/server/utils';
-
 export const usernameSchema = Type.String({
   minLength: 3,
   maxLength: 16,
