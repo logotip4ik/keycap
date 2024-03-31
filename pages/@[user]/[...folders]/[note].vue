@@ -68,10 +68,12 @@ const { data: note, refresh } = await useAsyncData<NoteWithContent | undefined>(
       loadingToast?.remove();
     });
 
+  const cachedNote = notesCache.get(notePath.value) || await offlineStorage.getItem?.(notePath.value);
+
   hydrationPromise && await hydrationPromise;
   hydrationPromise = undefined;
 
-  return notesCache.get(notePath.value) || await offlineStorage.getItem?.(notePath.value);
+  return cachedNote;
 }, {
   server: false,
   lazy: true,

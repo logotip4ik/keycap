@@ -67,10 +67,12 @@ const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefi
       pollingTimer = setTimeout(refresh, POLLING_TIME * multiplier);
     });
 
+  const cachedFolder = foldersCache.get(folderPath.value) || await offlineStorage.getItem?.(folderPath.value);
+
   hydrationPromise && await hydrationPromise;
   hydrationPromise = undefined;
 
-  return foldersCache.get(folderPath.value) || await offlineStorage.getItem?.(folderPath.value);
+  return cachedFolder;
 }, {
   server: false,
   immediate: false,
