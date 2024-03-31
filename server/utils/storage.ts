@@ -1,4 +1,5 @@
 import { defu } from 'defu';
+
 import type { CacheEntry } from 'nitropack';
 
 /**
