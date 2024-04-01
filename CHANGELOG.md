@@ -1,6 +1,43 @@
 # Changelog
 
 
+## v3.11.5
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.11.4...v3.11.5)
+
+### 🩹 Fixes
+
+- Order notes and folders by names ([2f60c484](https://github.com/logotip4ik/keycap/commit/2f60c484))
+- Import sidebar type from #components ([fa5fae5b](https://github.com/logotip4ik/keycap/commit/fa5fae5b))
+- Update size limit enties ([2143b2f4](https://github.com/logotip4ik/keycap/commit/2143b2f4))
+- Stub auto imported variables for vitest ([e4dd2f39](https://github.com/logotip4ik/keycap/commit/e4dd2f39))
+
+### 💅 Refactors
+
+- Use sapphire/ratelimits for rate limiting ([55febeca](https://github.com/logotip4ik/keycap/commit/55febeca))
+- Migrate to typebox for validation ([7ee35c4f](https://github.com/logotip4ik/keycap/commit/7ee35c4f))
+
+### 🏡 Chore
+
+- **release:** V3.11.4 ([5e3a156e](https://github.com/logotip4ik/keycap/commit/5e3a156e))
+- Update deps ([843979af](https://github.com/logotip4ik/keycap/commit/843979af))
+- Return promise from sync function where possible ([eda530dc](https://github.com/logotip4ik/keycap/commit/eda530dc))
+- Make link more self contained ([473f8e5c](https://github.com/logotip4ik/keycap/commit/473f8e5c))
+- Remove not needed vite plugin ([8b68f4bb](https://github.com/logotip4ik/keycap/commit/8b68f4bb))
+- Add scule to root deps ([40182453](https://github.com/logotip4ik/keycap/commit/40182453))
+- Get cached note and folder before waiting for hydration promise ([d425a78f](https://github.com/logotip4ik/keycap/commit/d425a78f))
+- Use relative font size for code tag ([b618d890](https://github.com/logotip4ik/keycap/commit/b618d890))
+
+### 🎨 Styles
+
+- Minor changes ([248e47ac](https://github.com/logotip4ik/keycap/commit/248e47ac))
+- Minor changes ([f37818c3](https://github.com/logotip4ik/keycap/commit/f37818c3))
+- Always use curly braces ([53fc08f6](https://github.com/logotip4ik/keycap/commit/53fc08f6))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.11.4
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.11.3...v3.11.4)
