@@ -1,4 +1,4 @@
-import { jsonArrayFrom } from 'kysely/helpers/postgres';
+import { jsonObjectFrom } from 'kysely/helpers/postgres';
 
 export default defineEventHandler(async (event) => {
   const user = event.context.user!;
@@ -55,13 +55,13 @@ function selectNoteDetails(path: string, ownerId: string) {
     .select((eb) => [
       'updatedAt',
       'createdAt',
-      jsonArrayFrom(
+      jsonObjectFrom(
         eb.selectFrom('Share')
           .where('ownerId', '=', ownerId)
           .whereRef('noteId', '=', 'Note.id')
           .select('Share.link')
           .limit(1),
-      ).as('shares'),
+      ).as('share'),
     ])
     .executeTakeFirst();
 }

@@ -12,7 +12,9 @@ const path = props.item.path.split('/').slice(2).join('/');
 
 const isFolder = checkIsFolder(props.item);
 
-type ItemDetails = Prettify<ItemMetadata & Partial<NoteShare>>;
+type ItemDetails = Prettify<ItemMetadata & {
+  share?: { link: string }
+}>;
 
 // NOTE(perf improvement): client bundle size reduced by using only useAsyncData or useFetch
 const { data: details, refresh } = useAsyncData(async () => {
@@ -26,11 +28,6 @@ const { data: details, refresh } = useAsyncData(async () => {
   lazy: true,
   server: false,
   immediate: false,
-  transform: (details) => ({
-    ...details,
-    name: props.item.name,
-    shares: details.shares?.[0],
-  }),
 });
 
 const rowsData = [
@@ -88,12 +85,12 @@ function formatDate(dateString?: Date | string) {
 }
 
 async function copyShareLink() {
-  if (!details.value?.shares) {
+  if (!details.value?.share?.link) {
     return;
   }
 
   const { protocol, host } = window.location;
-  const link = details.value?.shares.link;
+  const { link } = details.value?.share;
 
   await navigator.clipboard.writeText(`${protocol}//${host}/view/${link}`);
 
@@ -142,9 +139,9 @@ onBeforeMount(() => refresh());
           <p
             id="item-details-dialog-title"
             class="item-details__data__title"
-            :aria-label="`Details: ${details.name}`"
+            :aria-label="`Details: ${item.name}`"
           >
-            {{ details.name }}
+            {{ item.name }}
           </p>
 
           <div v-if="!isFolder" class="item-details__data__row item-details__data__row--share">
@@ -156,23 +153,23 @@ onBeforeMount(() => refresh());
 
             <button
               class="item-details__data__row__share-link"
-              :disabled="!details.shares || isLoadingItemDetails"
+              :disabled="!details.share || isLoadingItemDetails"
               @click="copyShareLink"
             >
               <!-- NOTE: skeleton class adds appear delay -->
               <WithFadeTransition>
                 <span v-if="isLoadingItemDetails" class="skeleton">Loading...</span>
-                <span v-else-if="details.shares">{{ details.shares.link }}</span>
+                <span v-else-if="details.share">{{ details.share.link }}</span>
                 <span v-else>Disabled</span>
               </WithFadeTransition>
             </button>
 
             <input
-              :checked="!!details.shares"
+              :checked="!!details.share"
               :readonly="isLoadingItemDetails"
               type="checkbox"
               class="item-details__data__row__checkbox"
-              @input="debouncedToggleShareLink(!details?.shares)"
+              @input="debouncedToggleShareLink(!details?.share)"
             >
           </div>
 
