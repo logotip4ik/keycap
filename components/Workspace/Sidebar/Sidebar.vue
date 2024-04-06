@@ -33,7 +33,9 @@ function updateTabindexForFocusableElements(currentState: SidebarState) {
     if (currentState === 'hidden') {
       el.setAttribute('tabindex', '-1');
     }
-    else { el.removeAttribute('tabindex'); }
+    else {
+      el.removeAttribute('tabindex');
+    }
   }
 }
 
