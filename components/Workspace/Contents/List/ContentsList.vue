@@ -252,7 +252,6 @@ if (import.meta.client) {
               :parent="folder"
               :menu-target="menuOptions.target"
               @show-menu="showMenu($event, item)"
-              @should-hide-sidebar="onUpdateState('hidden')"
             />
           </li>
         </WithFadeTransition>
