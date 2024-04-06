@@ -16,8 +16,8 @@ const folderApiPath = computed(() => getCurrentFolderPath(route).slice(0, -1));
 const folderPath = computed(() => `/${route.params.user}${folderApiPath.value}`);
 
 const menuOptions = shallowReactive({
-  item: null as FolderOrNote | null,
-  target: null as HTMLElement | null,
+  item: undefined as FolderOrNote | undefined,
+  target: undefined as HTMLElement | undefined,
 });
 
 const POLLING_TIME = parseDuration('2.5 minutes')!;
@@ -226,7 +226,7 @@ if (import.meta.client) {
       class="contents__list"
       tabindex="-1"
       @contextmenu.self.prevent
-      @click.self="menuOptions.target = null"
+      @click.self="menuOptions.target = undefined"
       @keydown.capture.passive="handleArrowsPress"
     >
       <template v-for="item in folderContents" :key="item.id">
@@ -265,7 +265,7 @@ if (import.meta.client) {
     :item="menuOptions.item"
     :target="menuOptions.target!"
     :parent="folder!"
-    @close="menuOptions.item = null"
+    @close="menuOptions.item = undefined"
   />
 </template>
 

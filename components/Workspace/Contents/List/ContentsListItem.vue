@@ -2,7 +2,7 @@
 const props = defineProps<{
   item: FolderOrNote
   parent: FolderWithContents
-  menuTarget: HTMLElement | null
+  menuTarget: HTMLElement | undefined
   onShowMenu: (target: HTMLElement) => void
   onShouldHideSidebar: () => void
 }>();
