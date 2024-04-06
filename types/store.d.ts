@@ -1,7 +1,12 @@
 import type { Serialize } from 'nitropack';
-import type { Folder, Note, Prisma } from '@prisma/client';
+import type { Selectable } from 'kysely';
+import type { Folder as _Folder, Note as _Note, Share as _Share } from '~/kysely/db/types';
 
 import type { SearchActionValues } from '~/types/common';
+
+type Note = Selectable<_Note>;
+type Folder = Selectable<_Folder>;
+type Share = Selectable<_Share>;
 
 declare global {
   type Prettify<T> = {
@@ -17,7 +22,6 @@ declare global {
     Pick<Note, 'updatedAt' | 'createdAt'> // | Pick<Folder, 'updatedAt' | 'createdAt'> - folder metadata should be the same as notes
   >;
 
-  export type NoteShare = Prisma.NoteGetPayload<{ select: { shares: { select: { link: true, updatedAt: true, createdAt: true } } } }>;
   export type NoteMinimal = Prettify<Serialize<Pick<Note, 'id' | 'name' | 'path'> & ItemMetatags>>;
   export type NoteWithContent = Prettify<NoteMinimal & Pick<Note, 'content'>>;
 

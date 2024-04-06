@@ -1,9 +1,10 @@
-import type { User } from '@prisma/client';
-import type { Serialize } from 'nitropack';
+import type { Selectable } from 'kysely';
+
+import type { User } from '~/kysely/db/types';
 import type { createTimer } from '~/server/utils/timers';
 import type { OAuthProvider } from '~/server/utils/oauth';
 
-export type SafeUser = Prettify<Serialize<Pick<User, 'id' | 'email' | 'username'>>>;
+export type SafeUser = Pick<Selectable<User>, 'id' | 'email' | 'username'>;
 
 export declare module 'h3' {
   interface H3EventContext {
