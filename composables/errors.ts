@@ -48,7 +48,7 @@ export async function baseHandleError(error: Error | H3Error): Promise<boolean> 
 
   // @ts-expect-error there actually is statusCode
   if (error.statusCode === 401 || !user.value) {
-    user.value = null;
+    user.value = undefined;
     await navigateTo('/login');
     return true;
   }
