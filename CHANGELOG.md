@@ -1,6 +1,41 @@
 # Changelog
 
 
+## v3.11.6
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.11.5...v3.11.6)
+
+### 🩹 Fixes
+
+- Type error ([406a5a2d](https://github.com/logotip4ik/keycap/commit/406a5a2d))
+- Do not hide sidebar on enter ([b473509e](https://github.com/logotip4ik/keycap/commit/b473509e))
+
+### 💅 Refactors
+
+- Return single share from note details endpoint ([ad248eee](https://github.com/logotip4ik/keycap/commit/ad248eee))
+
+### 🏡 Chore
+
+- **release:** V3.11.5 ([557e6ab6](https://github.com/logotip4ik/keycap/commit/557e6ab6))
+- Update deps ([77376102](https://github.com/logotip4ik/keycap/commit/77376102))
+- Remove obsolete version field ([14e9fda8](https://github.com/logotip4ik/keycap/commit/14e9fda8))
+- Remove use of prisma types ([443a7f60](https://github.com/logotip4ik/keycap/commit/443a7f60))
+- Less use of null ([6fe1b3ed](https://github.com/logotip4ik/keycap/commit/6fe1b3ed))
+- Disable early hints ([57d85d15](https://github.com/logotip4ik/keycap/commit/57d85d15))
+- Update tiptap ([be68acfd](https://github.com/logotip4ik/keycap/commit/be68acfd))
+
+### 🎨 Styles
+
+- Put statment on a new line ([fcf0da8a](https://github.com/logotip4ik/keycap/commit/fcf0da8a))
+
+### 🤖 CI
+
+- Bump the actions group with 1 update ([#21](https://github.com/logotip4ik/keycap/pull/21))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.11.5
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.11.4...v3.11.5)
