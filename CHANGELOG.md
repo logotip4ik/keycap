@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v3.11.7
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.11.6...v3.11.7)
+
+### 🩹 Fixes
+
+- Allow signing new users ([9b1f059c](https://github.com/logotip4ik/keycap/commit/9b1f059c))
+
+### 🏡 Chore
+
+- **release:** V3.11.6 ([eaa340db](https://github.com/logotip4ik/keycap/commit/eaa340db))
+- Update deps ([5a29b528](https://github.com/logotip4ik/keycap/commit/5a29b528))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk <bogdankostyuk@MacBook-Pro-Bogdan.local>
+
 ## v3.11.6
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.11.5...v3.11.6)
