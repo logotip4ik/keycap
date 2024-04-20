@@ -14,8 +14,8 @@ export function registerSWToasts() {
       return;
     }
 
-    stopOfflineReady();
     createToast('Phewww, now you can work offline', { delay: 550 });
+    stopOfflineReady();
   }, { immediate: true });
 
   const stopNeedRefresh = watch(() => pwa?.needRefresh, (needRefresh) => {
@@ -23,7 +23,6 @@ export function registerSWToasts() {
       return;
     }
 
-    stopNeedRefresh();
     createToast('Psss... We have some updates', {
       priority: 10,
       duration: parseDuration('25 seconds')!,
@@ -33,5 +32,6 @@ export function registerSWToasts() {
         { text: 'nahh, not now', onClick: (t) => t.remove() },
       ],
     });
+    stopNeedRefresh();
   }, { immediate: true });
 }
