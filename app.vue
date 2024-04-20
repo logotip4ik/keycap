@@ -61,8 +61,8 @@ if (import.meta.dev) {
       { rel: 'apple-touch-icon', sizes: '180x180', href: '/favicon-dev.ico' },
       { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-dev.ico' },
       { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-dev.ico' },
-    ]
-  })
+    ],
+  });
 }
 </script>
 
