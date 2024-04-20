@@ -1,8 +1,6 @@
 <script setup lang="ts">
 const { shortcuts } = useAppConfig();
 
-const { isMac } = useDevice();
-
 const shortcutsDescription = {
   edit: 'Focus Editor',
   new: 'Create new note or folder',
@@ -11,10 +9,8 @@ const shortcutsDescription = {
   toolbox: 'Open toolbox sidebar',
 } satisfies Record<keyof typeof shortcuts, string>;
 
-const ModKey = isMac.value ? 'Cmd' : 'Ctrl';
-
 function humanizeShortcut(shortcut: string) {
-  return shortcut.replace(/\$mod/g, ModKey).replace(/Key/g, '');
+  return shortcut.replace(/\$mod/g, getModKey()).replace(/Key/g, '');
 }
 </script>
 

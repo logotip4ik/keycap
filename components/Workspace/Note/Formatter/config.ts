@@ -16,11 +16,13 @@ export interface MarkButton {
   onClick?: (e: Editor) => any
 }
 
+const modKey = getModKey();
+
 export const marks: Array<MarkButton> = [
   {
     icon: LazyIconBaselineFormatBold,
     ariaLabel: 'toggle bold',
-    shortcut: 'Ctrl+b',
+    shortcut: `${modKey}+b`,
     isActive: (editor) => editor.isActive('bold'),
     onClick: (editor) => editor!.chain().focus().toggleBold().run(),
   },
@@ -28,14 +30,14 @@ export const marks: Array<MarkButton> = [
   {
     icon: LazyIconBaselineFormatItalic,
     ariaLabel: 'toggle italic',
-    shortcut: 'Ctrl+i',
+    shortcut: `${modKey}+i`,
     isActive: (editor) => editor.isActive('italic'),
     onClick: (editor) => editor!.chain().focus().toggleItalic().run(),
   },
 
   {
     icon: LazyIconBaselineCode,
-    shortcut: 'Ctrl+e',
+    shortcut: `${modKey}+e`,
     ariaLabel: 'toggle code',
     isActive: (editor) => editor.isActive('code'),
     onClick: (editor) => editor!.chain().focus().toggleCode().run(),
@@ -43,7 +45,7 @@ export const marks: Array<MarkButton> = [
 
   {
     icon: LazyIconStrikeThrough,
-    shortcut: 'Ctrl+Shift+S',
+    shortcut: `${modKey}+Shift+S`,
     ariaLabel: 'strike through',
     isActive: (editor) => editor.isActive('strike'),
     onClick: (editor) => editor!.chain().focus().toggleStrike().run(),
@@ -51,7 +53,7 @@ export const marks: Array<MarkButton> = [
 
   {
     icon: LazyIconBaselineLink,
-    shortcut: 'Ctrl+l',
+    shortcut: `${modKey}+l`,
     ariaLabel: 'toggle link',
     isActive: (editor) => editor.isActive('link'),
   },

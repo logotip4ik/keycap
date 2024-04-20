@@ -13,6 +13,7 @@ const linkInputPlaceholder = ref(LinkInputPlaceholder.INITIALLY_EMPTY);
 const isEditingLink = ref(false);
 const editingLink = ref('');
 
+const modKey = getModKey();
 let prevListItem: string | undefined;
 let prevHeadingLevel: number | undefined;
 const prevSelection = { start: -1, end: -1 };
@@ -229,7 +230,7 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
 
         <template #tooltip>
           <!-- TODO: show different number depending on current heading level -->
-          <kbd>Ctrl+Alt+1</kbd>
+          <kbd>{{ modKey }}+Alt+1</kbd>
         </template>
       </WithTooltip>
 
@@ -251,7 +252,7 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
         </template>
 
         <template #tooltip>
-          <kbd>Ctrl+Shift+8</kbd>
+          <kbd>{{ modKey }}+Shift+8</kbd>
         </template>
       </WithTooltip>
 
@@ -272,7 +273,7 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
         </template>
 
         <template #tooltip>
-          <kbd>Ctrl+Shift+B</kbd>
+          <kbd>{{ modKey }}+Shift+B</kbd>
         </template>
       </WithTooltip>
 
