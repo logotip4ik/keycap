@@ -5,7 +5,7 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>) {
     return;
   }
 
-  const isSmallScreen = getIsSmallScreen();
+  const { isSmallScreen } = useDevice();
 
   let lastFocusedEl: HTMLElement | undefined;
   let off: (() => void) | undefined;
@@ -24,7 +24,7 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>) {
   }
 
   function tryFocusLastElement() {
-    if (!isSmallScreen && lastFocusedEl) {
+    if (!isSmallScreen.value && lastFocusedEl) {
       lastFocusedEl.focus();
     }
 

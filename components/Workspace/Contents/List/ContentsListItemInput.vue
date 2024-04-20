@@ -6,7 +6,7 @@ const props = defineProps<{
 
 const { visibility } = useContentsSidebar();
 const createToast = useToaster();
-const isSmallScreen = getIsSmallScreen();
+const { isSmallScreen } = useDevice();
 
 const inputEl = shallowRef<HTMLInputElement | null>(null);
 const name = ref(props.item.name || '');
@@ -40,7 +40,7 @@ function handleSubmit() {
 
   promise
     .then(() => {
-      visibility.value = isSmallScreen
+      visibility.value = isSmallScreen.value
         ? 'hidden'
         : (visibility.value === 'visible' ? 'hidden' : visibility.value);
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const isSmallScreen = getIsSmallScreen();
+const { isSmallScreen } = useDevice();
 </script>
 
 <template>

@@ -10,7 +10,7 @@ const isFolder = checkIsFolder(props.item);
 
 const route = useRoute();
 const { visibility: contentsVisibility } = useContentsSidebar();
-const isSmallScreen = getIsSmallScreen();
+const { isSmallScreen } = useDevice();
 
 const link = shallowRef<ComponentPublicInstance | null>(null);
 
@@ -18,7 +18,7 @@ const itemHref = computed(() => generateItemPath(props.item));
 const isActive = computed(() => itemHref.value === route.path);
 
 function unpinIfNeeded() {
-  if (isSmallScreen && !isFolder) {
+  if (isSmallScreen.value && !isFolder) {
     contentsVisibility.value = 'hidden';
   }
 }

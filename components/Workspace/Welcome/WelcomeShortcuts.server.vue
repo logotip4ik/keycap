@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const { shortcuts } = useAppConfig();
 
-const userAgent = useRequestHeader('user-agent');
+const { isMac } = useDevice();
 
 const shortcutsDescription = {
   edit: 'Focus Editor',
@@ -11,7 +11,7 @@ const shortcutsDescription = {
   toolbox: 'Open toolbox sidebar',
 } satisfies Record<keyof typeof shortcuts, string>;
 
-const ModKey = userAgent && isSafari(userAgent) ? 'Cmd' : 'Ctrl';
+const ModKey = isMac.value ? 'Cmd' : 'Ctrl';
 
 function humanizeShortcut(shortcut: string) {
   return shortcut.replace(/\$mod/g, ModKey).replace(/Key/g, '');

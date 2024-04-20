@@ -1,7 +1,7 @@
 <script setup lang="ts">
 defineProps<{ tooltip?: string }>();
 
-const isSmallScreen = getIsSmallScreen();
+const { isSmallScreen } = useDevice();
 
 const shouldShow = ref(false);
 const target = shallowRef<HTMLElement | null>(null);
@@ -26,7 +26,7 @@ watch(target, (target) => {
 
   );
 
-  if (!isSmallScreen) {
+  if (!isSmallScreen.value) {
     cleanups.push(
       on(target, 'focus', showWithTimeout, handlerOptions),
       on(target, 'blur', hideAndClearTimeout, handlerOptions),

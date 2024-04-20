@@ -6,13 +6,7 @@ import MonaSansURL from '~/assets/fonts/Mona-Sans/Mona-Sans.woff2?url';
 setupErrorLogging();
 
 const { site } = useRuntimeConfig().public;
-const userAgent = useRequestHeader('user-agent');
-
-const isSmallScreen = import.meta.server
-  ? isMobileOrTablet(userAgent!)
-  : window.innerWidth < breakpoints.tablet;
-
-provide(IsSmallScreenKey, isSmallScreen);
+const { isSmallScreen, isFirefox } = useDevice();
 
 useHead({
   htmlAttrs: {
@@ -25,7 +19,7 @@ useHead({
 useServerHead({
   htmlAttrs: {
     class: {
-      firefox: isFirefox(userAgent!),
+      firefox: isFirefox,
     },
   },
 

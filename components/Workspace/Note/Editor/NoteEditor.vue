@@ -15,7 +15,7 @@ const props = defineProps<{
 }>();
 
 const mitt = useMitt();
-const isSmallScreen = getIsSmallScreen();
+const { isSmallScreen } = useDevice();
 const {
   editor,
   isTyping,

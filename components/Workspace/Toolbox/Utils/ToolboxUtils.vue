@@ -10,7 +10,7 @@ const props = defineProps<{
 }>();
 
 const route = useRoute();
-const isSmallScreen = getIsSmallScreen();
+const { isSmallScreen } = useDevice();
 const utilsEl = shallowRef<ComponentPublicInstance<HTMLUListElement> | null>(null);
 
 interface Util {
@@ -47,7 +47,7 @@ function transitionHeight() {
 }
 
 function hideIfNeeded() {
-  if (isSmallScreen && props.state === 'pinned') {
+  if (isSmallScreen.value && props.state === 'pinned') {
     props.onUpdateState('hidden');
   }
 }
