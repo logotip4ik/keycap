@@ -1,6 +1,27 @@
 # Changelog
 
 
+## v3.11.8
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.11.7...v3.11.8)
+
+### 💅 Refactors
+
+- Move device detection utils to composable ([f6d86086](https://github.com/logotip4ik/keycap/commit/f6d86086))
+- Show different meta key for mac and windows ([3f671520](https://github.com/logotip4ik/keycap/commit/3f671520))
+
+### 🏡 Chore
+
+- **release:** V3.11.7 ([bf201c74](https://github.com/logotip4ik/keycap/commit/bf201c74))
+- Update deps ([99876d47](https://github.com/logotip4ik/keycap/commit/99876d47))
+- Remove not used patch ([6bec6bc8](https://github.com/logotip4ik/keycap/commit/6bec6bc8))
+- Move wather stop handle below action ([9dea6cff](https://github.com/logotip4ik/keycap/commit/9dea6cff))
+- Use different favicon for dev env ([83cb8385](https://github.com/logotip4ik/keycap/commit/83cb8385))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.11.7
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.11.6...v3.11.7)
