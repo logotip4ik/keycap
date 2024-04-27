@@ -28,14 +28,14 @@ export const marks: Array<MarkButton> = [
   {
     icon: LazyIconBaselineFormatItalic,
     ariaLabel: 'toggle italic',
-    shortcut: computed(() => `${getModKey()}+i`,),
+    shortcut: computed(() => `${getModKey()}+i`),
     isActive: (editor) => editor.isActive('italic'),
     onClick: (editor) => editor!.chain().focus().toggleItalic().run(),
   },
 
   {
     icon: LazyIconBaselineCode,
-    shortcut: computed(() => `${getModKey()}+e`,),
+    shortcut: computed(() => `${getModKey()}+e`),
     ariaLabel: 'toggle code',
     isActive: (editor) => editor.isActive('code'),
     onClick: (editor) => editor!.chain().focus().toggleCode().run(),
