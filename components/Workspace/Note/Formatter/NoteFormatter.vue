@@ -206,6 +206,7 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
 
   prevAnchor = anchor;
 });
+console.log(marks)
 </script>
 
 <template>
@@ -294,7 +295,7 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
         </template>
 
         <template #tooltip>
-          <kbd>{{ mark.shortcut }}</kbd>
+          <kbd>{{ mark.shortcut.value }}</kbd>
         </template>
       </WithTooltip>
     </div>
