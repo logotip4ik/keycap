@@ -206,7 +206,6 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
 
   prevAnchor = anchor;
 });
-console.log(marks)
 </script>
 
 <template>
