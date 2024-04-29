@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v3.11.9
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.11.8...v3.11.9)
+
+### 🩹 Fixes
+
+- Nuxt instance is not unavailable ([a4414c5d](https://github.com/logotip4ik/keycap/commit/a4414c5d))
+
+### 🏡 Chore
+
+- **release:** V3.11.8 ([824aa220](https://github.com/logotip4ik/keycap/commit/824aa220))
+- Update deps ([d5cbdd4e](https://github.com/logotip4ik/keycap/commit/d5cbdd4e))
+- Remove console log ([f1a8382c](https://github.com/logotip4ik/keycap/commit/f1a8382c))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.11.8
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.11.7...v3.11.8)
