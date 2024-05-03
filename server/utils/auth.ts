@@ -48,11 +48,11 @@ export async function removeAuthCookies(event: H3Event) {
   deleteCookie(event, accessTokenName, authSerializeOptions);
 }
 
-export async function getUserFromEvent(event: H3Event): Promise<SafeUser | null> {
+export async function getUserFromEvent(event: H3Event): Promise<SafeUser | undefined> {
   const accessToken = getCookie(event, accessTokenName);
 
   if (!accessToken) {
-    return null;
+    return;
   }
 
   const jwt = await jwtVerify(accessToken, jwtSecret, { issuer: jwtIssuer });
@@ -63,9 +63,6 @@ export async function getUserFromEvent(event: H3Event): Promise<SafeUser | null>
       email: jwt.payload.email,
       username: jwt.payload.username,
     };
-  }
-  else {
-    return null;
   }
 }
 

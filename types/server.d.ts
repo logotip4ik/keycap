@@ -8,7 +8,7 @@ export type SafeUser = Pick<Selectable<User>, 'id' | 'email' | 'username'>;
 
 export declare module 'h3' {
   interface H3EventContext {
-    user?: SafeUser | null
+    user?: SafeUser
     timer?: ReturnType<typeof createTimer>
   }
 }

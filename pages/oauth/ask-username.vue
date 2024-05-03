@@ -13,11 +13,13 @@ if (import.meta.client) {
   });
 }
 
-const event = useRequestEvent()!;
 const { query } = useRoute();
 
 if (!query.code || !query.provider) {
-  await logger.error(event, { query, msg: 'not enough data for proceeding with username' });
+  await logger.error(
+    useRequestEvent()!,
+    { query, msg: 'not enough data for proceeding with username' }
+  );
 
   throw createError({
     status: 400,
@@ -26,13 +28,16 @@ if (!query.code || !query.provider) {
 }
 
 const provider = isArray(query.provider)
-  ? (query.provider[0] || '')
+  ? query.provider[0]
   : query.provider;
 
 const normalizedProvider = OAuthProvider[provider as keyof typeof OAuthProvider || ''];
 
 if (!normalizedProvider) {
-  await logger.warn(event, 'someone is messing with oauth');
+  await logger.warn(
+    useRequestEvent()!,
+    'someone is messing with oauth'
+  );
 
   throw createError({
     status: 400,

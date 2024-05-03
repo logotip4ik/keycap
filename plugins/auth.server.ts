@@ -6,7 +6,6 @@ export default defineNuxtPlugin({
     const user = useUser();
 
     // We can reuse already checked user from nitro's middleware.
-    // @ts-expect-error devalue will still stringify this
-    user.value = event.context.user;
+    user.value = event!.context.user;
   },
 });

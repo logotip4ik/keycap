@@ -16,8 +16,10 @@ const stateSerializeOptions = {
   sameSite: 'lax',
 } satisfies CookieSerializeOptions;
 
-export function sendOAuthRedirectIfNeeded(event: H3Event, _query?: QueryObject): boolean {
-  const query = _query || getQuery(event)!;
+export function sendOAuthRedirectIfNeeded(event: H3Event, query?: QueryObject): boolean {
+  if (!query) {
+    query = getQuery(event)!;
+  }
 
   if (query.error || (query.state && query.code)) {
     return false;
