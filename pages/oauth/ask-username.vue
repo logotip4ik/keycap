@@ -18,7 +18,7 @@ const { query } = useRoute();
 if (!query.code || !query.provider) {
   await logger.error(
     useRequestEvent()!,
-    { query, msg: 'not enough data for proceeding with username' }
+    { query, msg: 'not enough data for proceeding with username' },
   );
 
   throw createError({
@@ -36,7 +36,7 @@ const normalizedProvider = OAuthProvider[provider as keyof typeof OAuthProvider 
 if (!normalizedProvider) {
   await logger.warn(
     useRequestEvent()!,
-    'someone is messing with oauth'
+    'someone is messing with oauth',
   );
 
   throw createError({
