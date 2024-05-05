@@ -12,40 +12,32 @@ const { setting } = useSetting(settings.formatterPosition);
 const BubblePluginKey = 'bubbleMenu';
 const bubble = ref<HTMLElement | null>(null);
 
+function unregister() {
+  props.editor.unregisterPlugin(BubblePluginKey);
+}
+
+function register() {
+  if (!bubble.value) {
+    return;
+  }
+
+  props.editor.registerPlugin(
+    BubbleMenuPlugin({
+      pluginKey: BubblePluginKey,
+      editor: props.editor,
+      element: bubble.value,
+      placement: setting.value,
+    }),
+  );
+}
+
 watch(setting, () => {
-  if (!bubble.value) {
-    return;
-  }
-
-  props.editor.unregisterPlugin(BubblePluginKey);
-  props.editor.registerPlugin(
-    BubbleMenuPlugin({
-      pluginKey: BubblePluginKey,
-      editor: props.editor,
-      element: bubble.value,
-      placement: setting.value,
-    }),
-  );
+  unregister();
+  register();
 });
 
-onMounted(() => {
-  if (!bubble.value) {
-    return;
-  }
-
-  props.editor.registerPlugin(
-    BubbleMenuPlugin({
-      pluginKey: BubblePluginKey,
-      editor: props.editor,
-      element: bubble.value,
-      placement: setting.value,
-    }),
-  );
-});
-
-onBeforeUnmount(() => {
-  props.editor.unregisterPlugin(BubblePluginKey);
-});
+onMounted(() => register());
+onBeforeUnmount(() => unregister());
 </script>
 
 <template>
