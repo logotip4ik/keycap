@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import type { WorkspaceSidebar } from '#components';
-
-const sidebar = shallowRef<InstanceType<typeof WorkspaceSidebar>>();
-
 const { shortcuts } = useAppConfig();
 const { visibility: toolboxVisibility } = useToolboxSidebar();
 const { visibility: contentsVisibility } = useContentsSidebar();
@@ -54,7 +50,6 @@ if (import.meta.client) {
 
 <template>
   <WorkspaceSidebar
-    ref="sidebar"
     name="toolbox"
     :state="toolboxVisibility"
     @update-state="updateState"
@@ -77,6 +72,52 @@ if (import.meta.client) {
       @update-state="smartUpdateState"
     />
 
+    <WorkspaceToolboxSettings />
+
+    <hr>
+
     <WorkspaceToolboxFooter />
   </WorkspaceSidebar>
 </template>
+
+<style lang="scss">
+.toolbox__section {
+  &__title {
+    font-size: 1.15rem;
+    font-stretch: 105%;
+    color: hsla(var(--text-color-hsl), 0.875);
+
+    margin: calc(var(--pd-y) * 0.75) 0 var(--pd-y);
+  }
+
+  &__list {
+    --spacing: calc(var(--pd-y) * 0.66);
+
+    margin: var(--spacing) 0 0;
+    padding: 0 0 0 calc(var(--pd-x) * 1.66);
+
+    list-style-type: disc;
+
+    &__item {
+      color: hsla(var(--text-color-hsl), 0.75);
+
+      transition: color .3s, filter .3s;
+
+      &::marker {
+        color: currentColor;
+      }
+
+      &:hover {
+        color: var(--text-color);
+        filter: drop-shadow(0 0 0.5rem hsla(var(--text-color-hsl), 0.35));
+
+        transition-duration: .1s;
+      }
+
+      &:not(:first-child) {
+        margin-top: var(--spacing);
+      }
+    }
+  }
+}
+</style>

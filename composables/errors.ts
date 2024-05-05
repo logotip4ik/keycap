@@ -70,10 +70,7 @@ export async function baseHandleError(error: Error | H3Error): Promise<boolean> 
 
 function getSessionId() {
   const key = 'device-identifier';
-  let id = document.cookie
-    .split('; ')
-    .find((cookie) => cookie.startsWith(key))
-    ?.split('=')[1] as string | undefined;
+  let id = getUCookie(key);
 
   if (id) {
     return id;
@@ -81,7 +78,7 @@ function getSessionId() {
 
   id = crypto.randomUUID();
 
-  document.cookie = `${key}=${id}; Max-Age=${parseDuration('0.5year', 's')}; Path=/; Secure; SameSite=Lax`;
+  setUCookie(key, id, { maxAge: parseDuration('0.5year', 's'), secure: true, sameSite: 'lax' });
 
   return id;
 }

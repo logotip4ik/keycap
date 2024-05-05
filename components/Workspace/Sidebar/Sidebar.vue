@@ -52,7 +52,7 @@ watch(state, debounce((state: SidebarState) => {
   updateTabindexForFocusableElements(state);
 
   const cookieValue: SidebarState = state === 'visible' ? 'hidden' : state;
-  document.cookie = `${props.name}=${cookieValue}; Max-Age=${parseDuration('0.5year', 's')}; Path=/; Secure; SameSite=Lax`;
+  setUCookie(props.name, cookieValue, { secure: true, sameSite: 'lax', maxAge: parseDuration('0.5year', 's') });
 }, 375), { flush: 'post' });
 
 watch(focusableElements, debounce(() => {

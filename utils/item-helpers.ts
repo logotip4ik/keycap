@@ -232,10 +232,10 @@ export async function deleteFolder(self: FolderOrNote, parent: FolderWithContent
 
   const itemPathToCheck = `${self.path}/`;
   const itemsToDelete = await offlineStorage.getAllKeys()
-    .then((keys) => keys.filter(key => key.startsWith(itemPathToCheck)));
+    .then((keys) => keys.filter((key) => key.startsWith(itemPathToCheck)));
   await Promise.all(
     itemsToDelete.map((key) => offlineStorage.removeItem(key)),
-  )
+  );
 
   remove(parent.subfolders, self);
   fuzzyWorker.value?.refreshItemsCache();

@@ -1,4 +1,3 @@
-import { getCookie } from 'h3';
 import type { MaybeRef } from 'vue';
 
 export type SidebarState = 'hidden' | 'visible' | 'pinned';
@@ -48,22 +47,10 @@ export function useContentsSidebar() {
 const stateWhitelist = ['hidden', 'visible', 'pinned'] satisfies Array<SidebarState>;
 export function makeSidebarVisibility(key: string): Ref<SidebarState> {
   return useState<SidebarState>(key, () => {
-    let stateCookieValue: SidebarState | undefined;
+    const value = getUCookie<SidebarState>(key);
 
-    if (import.meta.server) {
-      const event = useRequestEvent()!;
-
-      stateCookieValue = getCookie(event, key) as SidebarState;
-    }
-    else {
-      stateCookieValue = document.cookie
-        .split('; ')
-        .find((cookie) => cookie.startsWith(key))
-        ?.split('=')[1] as SidebarState | undefined;
-    }
-
-    if (stateCookieValue && stateWhitelist.includes(stateCookieValue)) {
-      return stateCookieValue as SidebarState || 'hidden';
+    if (value && stateWhitelist.includes(value)) {
+      return value || 'hidden';
     }
 
     return 'hidden';

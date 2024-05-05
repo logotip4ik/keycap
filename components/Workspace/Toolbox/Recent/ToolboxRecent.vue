@@ -31,8 +31,8 @@ const stop = watch(() => props.state, (state) => {
 </script>
 
 <template>
-  <div class="toolbox__recent">
-    <p class="toolbox__recent__title">
+  <section class="toolbox__recent">
+    <p class="toolbox__section__title">
       Recent:
     </p>
 
@@ -43,11 +43,11 @@ const stop = watch(() => props.state, (state) => {
         Seems to be empty ⚆_⚆
       </div>
 
-      <ul v-else class="toolbox__recent__list">
+      <ul v-else class="toolbox__section__list">
         <li
           v-for="item in recent"
           :key="item.id"
-          class="toolbox__recent__list__item"
+          class="toolbox__section__list__item"
         >
           <WorkspaceToolboxRecentItem
             :item="item"
@@ -58,54 +58,16 @@ const stop = watch(() => props.state, (state) => {
         </li>
       </ul>
     </WithFadeTransition>
-  </div>
+  </section>
 </template>
 
 <style lang="scss">
 .toolbox__recent {
-  &__title {
-    font-size: 1.15rem;
-    font-stretch: 105%;
-    color: hsla(var(--text-color-hsl), 0.875);
-
-    margin: calc(var(--pd-y) * 0.75) 0 var(--pd-y);
-  }
-
   &__empty {
     font-size: 1.05rem;
     font-weight: 300;
     text-align: center;
     color: hsla(var(--text-color-hsl), 0.75);
-  }
-
-  &__list {
-    --spacing: calc(var(--pd-y) * 0.66);
-
-    margin: var(--spacing) 0 0;
-    padding: 0 0 0 calc(var(--pd-x) * 1.66);
-
-    list-style-type: disc;
-
-    &__item {
-      color: hsla(var(--text-color-hsl), 0.75);
-
-      transition: color .3s, filter .3s;
-
-      &::marker {
-        color: currentColor;
-      }
-
-      &:hover {
-        color: var(--text-color);
-        filter: drop-shadow(0 0 0.5rem hsla(var(--text-color-hsl), 0.35));
-
-        transition-duration: .1s;
-      }
-
-      &:not(:first-child) {
-        margin-top: var(--spacing);
-      }
-    }
   }
 }
 </style>

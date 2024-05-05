@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import type { WorkspaceSidebar } from '#components';
-
-const sidebar = shallowRef<InstanceType<typeof WorkspaceSidebar>>();
-
 const { shortcuts } = useAppConfig();
 const { visibility: contentsVisibility } = useContentsSidebar();
 const { visibility: toolboxVisibility } = useToolboxSidebar();
@@ -54,7 +50,6 @@ if (import.meta.client) {
 
 <template>
   <WorkspaceSidebar
-    ref="sidebar"
     dir="right"
     name="contents"
     :state="contentsVisibility"
