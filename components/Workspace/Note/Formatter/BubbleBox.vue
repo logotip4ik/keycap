@@ -7,8 +7,26 @@ const props = defineProps<{
   editor: Editor
 }>();
 
+const { setting } = useSetting(settings.formatterPosition);
+
 const BubblePluginKey = 'bubbleMenu';
 const bubble = ref<HTMLElement | null>(null);
+
+watch(setting, () => {
+  if (!bubble.value) {
+    return;
+  }
+
+  props.editor.unregisterPlugin(BubblePluginKey);
+  props.editor.registerPlugin(
+    BubbleMenuPlugin({
+      pluginKey: BubblePluginKey,
+      editor: props.editor,
+      element: bubble.value,
+      placement: setting.value,
+    }),
+  );
+});
 
 onMounted(() => {
   if (!bubble.value) {
@@ -20,6 +38,7 @@ onMounted(() => {
       pluginKey: BubblePluginKey,
       editor: props.editor,
       element: bubble.value,
+      placement: setting.value,
     }),
   );
 });

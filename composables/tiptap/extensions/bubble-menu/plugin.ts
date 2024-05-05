@@ -19,6 +19,7 @@ export interface BubbleMenuPluginProps {
   editor: Editor
   element: HTMLElement
   updateDelay?: number
+  placement?: 'top' | 'bottom'
 }
 
 export type BubbleMenuViewProps = BubbleMenuPluginProps & {
@@ -54,6 +55,7 @@ export class BubbleMenuView {
     editor,
     element,
     view,
+    placement = 'top',
     updateDelay = 75,
   }: BubbleMenuViewProps) {
     this.editor = editor;
@@ -72,7 +74,7 @@ export class BubbleMenuView {
       getBoundingClientRect: this.getSelectionDOMRect.bind(this),
     };
     this.floatingOptions = {
-      placement: 'top',
+      placement,
       middleware: [
         offset(8),
         shift({ padding: 8 }),

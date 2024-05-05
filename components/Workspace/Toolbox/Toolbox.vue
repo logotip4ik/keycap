@@ -101,7 +101,7 @@ if (import.meta.client) {
     &__item {
       color: hsla(var(--text-color-hsl), 0.75);
 
-      transition: color .3s, filter .3s;
+      transition: color .3s;
 
       &::marker {
         color: currentColor;
@@ -109,7 +109,6 @@ if (import.meta.client) {
 
       &:hover {
         color: var(--text-color);
-        filter: drop-shadow(0 0 0.5rem hsla(var(--text-color-hsl), 0.35));
 
         transition-duration: .1s;
       }

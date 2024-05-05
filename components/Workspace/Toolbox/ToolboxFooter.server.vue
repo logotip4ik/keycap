@@ -57,7 +57,7 @@ function isRelative(url: string) {
   align-items: stretch;
   flex-direction: column;
 
-  margin-top: auto;
+  margin-top: calc(var(--pd-y) * 0.75);
 
   &__title {
     display: flex;
