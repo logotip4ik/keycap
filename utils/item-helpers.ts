@@ -74,7 +74,7 @@ export async function createFolder(folderName: string, self: FolderOrNote, paren
   remove(parent.notes, self);
 
   foldersCache.set(newlyCreatedFolder.path, newlyCreatedFolder);
-  offlineStorage.setItem?.(newlyCreatedFolder.path, newlyCreatedFolder);
+  offlineStorage.setItem(newlyCreatedFolder.path, newlyCreatedFolder);
   fuzzyWorker.value?.addItemToCache(newlyCreatedFolder);
   extend(self, newlyCreatedFolder);
 
@@ -104,7 +104,7 @@ export async function createNote(noteName: string, self: FolderOrNote, parent: F
   newlyCreatedNote.creating = false;
 
   notesCache.set(newlyCreatedNote.path, newlyCreatedNote);
-  offlineStorage.setItem?.(newlyCreatedNote.path, newlyCreatedNote);
+  offlineStorage.setItem(newlyCreatedNote.path, newlyCreatedNote);
   fuzzyWorker.value?.addItemToCache(newlyCreatedNote);
   extend(self, newlyCreatedNote);
 
@@ -132,14 +132,14 @@ export async function renameFolder(newName: string, self: FolderOrNote) {
   const folder = foldersCache.get(self.path);
 
   foldersCache.remove(self.path);
-  offlineStorage.removeItem?.(self.path);
+  offlineStorage.removeItem(self.path);
 
   extend(self, newFolder);
   fuzzyWorker.value?.refreshItemsCache();
 
   const folderToCache = { ...toRaw(self), notes: [], subfolders: [] };
   foldersCache.set(self.path, folderToCache);
-  offlineStorage.setItem?.(self.path, folderToCache);
+  offlineStorage.setItem(self.path, folderToCache);
 
   if (folder) {
     const itemsToRename = folder.notes.concat(folder.subfolders);
@@ -148,7 +148,7 @@ export async function renameFolder(newName: string, self: FolderOrNote) {
       const cache = checkIsFolder(item) ? foldersCache : notesCache;
 
       cache.remove(item.path);
-      offlineStorage.removeItem?.(item.path);
+      offlineStorage.removeItem(item.path);
     }
   }
 }
@@ -173,7 +173,7 @@ export async function renameNote(newName: string, self: FolderOrNote) {
   const note = notesCache.get(self.path);
 
   notesCache.remove(self.path);
-  offlineStorage.removeItem?.(self.path);
+  offlineStorage.removeItem(self.path);
 
   extend(self, newNote);
   fuzzyWorker.value?.refreshItemsCache();
@@ -182,7 +182,7 @@ export async function renameNote(newName: string, self: FolderOrNote) {
     extend(note, newNote);
 
     notesCache.set(note.path, note);
-    offlineStorage.setItem?.(note.path, note);
+    offlineStorage.setItem(note.path, note);
   }
 
   // @ts-expect-error setting path two lines before
@@ -207,7 +207,7 @@ export async function deleteNote(self: FolderOrNote, parent: FolderWithContents)
   showItem(parent);
 
   notesCache.remove(self.path);
-  offlineStorage.removeItem?.(self.path);
+  offlineStorage.removeItem(self.path);
   fuzzyWorker.value?.refreshItemsCache();
   remove(parent.notes, self);
 }
@@ -228,22 +228,14 @@ export async function deleteFolder(self: FolderOrNote, parent: FolderWithContent
   const fuzzyWorker = useFuzzyWorker();
 
   foldersCache.remove(self.path);
-  offlineStorage.removeItem?.(self.path);
+  offlineStorage.removeItem(self.path);
 
   const itemPathToCheck = `${self.path}/`;
-  offlineStorage.getAllItems?.()
-    .then((items) => {
-      for (const item of items) {
-        if (!item
-          || typeof item !== 'object'
-          || !('path' in item)
-          || !(item as FolderOrNote).path.startsWith(itemPathToCheck)) {
-          continue;
-        }
-
-        offlineStorage.removeItem?.((item as FolderOrNote).path);
-      }
-    });
+  const itemsToDelete = await offlineStorage.getAllKeys()
+    .then((keys) => keys.filter(key => key.startsWith(itemPathToCheck)));
+  await Promise.all(
+    itemsToDelete.map((key) => offlineStorage.removeItem(key)),
+  )
 
   remove(parent.subfolders, self);
   fuzzyWorker.value?.refreshItemsCache();
@@ -272,5 +264,5 @@ export async function preloadItem(self: FolderOrNote) {
   const cache = isFolder ? foldersCache : notesCache;
 
   cache.set(item.path, item);
-  offlineStorage.setItem?.(item.path, item);
+  offlineStorage.setItem(item.path, item);
 }

@@ -16,6 +16,15 @@ export function getHydrationPromise(app?: NuxtApp): false | undefined | null | P
     && new Promise((r) => nuxtApp.hooks.hookOnce('app:suspense:resolve', r));
 }
 
+/* #__NO_SIDE_EFFECTS__ */
+export function devError<T>(msg: string): T {
+  if (import.meta.dev) {
+    throw new Error(msg);
+  }
+
+  return Promise.resolve() as T;
+}
+
 if (import.meta.vitest) {
   const { it, expect } = import.meta.vitest;
 

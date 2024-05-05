@@ -50,7 +50,7 @@ const { data: note, refresh } = await useAsyncData<NoteWithContent | undefined>(
       isFallbackMode.value = false;
 
       notesCache.set(fetchedNote.path, fetchedNote);
-      offlineStorage.setItem?.(fetchedNote.path, fetchedNote);
+      offlineStorage.setItem(fetchedNote.path, fetchedNote);
 
       hydrationPromise && await hydrationPromise;
       hydrationPromise = undefined;
@@ -68,7 +68,7 @@ const { data: note, refresh } = await useAsyncData<NoteWithContent | undefined>(
       loadingToast?.remove();
     });
 
-  const cachedNote = notesCache.get(notePath.value) || await offlineStorage.getItem?.(notePath.value);
+  const cachedNote = notesCache.get(notePath.value) || await offlineStorage.getItem(notePath.value);
 
   hydrationPromise && await hydrationPromise;
   hydrationPromise = undefined;
@@ -102,7 +102,7 @@ function forceUpdateNote(content: string) {
     retry: 2,
     signal: abortControllerUpdate.signal,
   })
-    .then(() => offlineStorage.setItem?.(newNote.path, newNote))
+    .then(() => offlineStorage.setItem(newNote.path, newNote))
     .catch(sendError);
 }
 
@@ -118,7 +118,7 @@ async function handleError(error: Error) {
   }
 
   // last chance to show user folder, if iterator in @[user].vue page hasn't yet set the foldersCache
-  const offlineNote = await offlineStorage.getItem?.(notePath.value);
+  const offlineNote = await offlineStorage.getItem(notePath.value);
 
   if (!offlineNote || typeof offlineNote !== 'object') {
     createToast(`Sorry ⊙︿⊙ We couldn't find offline note copy: "${route.params.note}"`);

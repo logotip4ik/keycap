@@ -12,7 +12,6 @@ import { breakpoints, sidebarsBreakpoints } from './constants/breakpoints';
 import { inlinableStylesRE, nodeModulesRE } from './constants/build';
 import { ParseDurationTransformPlugin, parseDurationFunctionName } from './unplugin/parse-duration';
 
-// https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
   devtools: { enabled: true },
 
@@ -42,6 +41,10 @@ export default defineNuxtConfig({
   experimental: {
     watcher: 'parcel',
     headNext: true,
+  },
+
+  future: {
+    typescriptBundlerResolution: true,
   },
 
   features: {

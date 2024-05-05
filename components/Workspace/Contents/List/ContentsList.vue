@@ -47,7 +47,7 @@ const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefi
       isFallbackMode.value = false;
 
       foldersCache.set(fetchedFolder.path, fetchedFolder);
-      offlineStorage.setItem?.(fetchedFolder.path, fetchedFolder);
+      offlineStorage.setItem(fetchedFolder.path, fetchedFolder);
 
       hydrationPromise && await hydrationPromise;
       hydrationPromise = undefined;
@@ -67,7 +67,7 @@ const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefi
       pollingTimer = setTimeout(refresh, POLLING_TIME * multiplier);
     });
 
-  const cachedFolder = foldersCache.get(folderPath.value) || await offlineStorage.getItem?.(folderPath.value);
+  const cachedFolder = foldersCache.get(folderPath.value) || await offlineStorage.getItem(folderPath.value);
 
   hydrationPromise && await hydrationPromise;
   hydrationPromise = undefined;
@@ -107,7 +107,7 @@ async function handleError(error: Error) {
   }
 
   // last chance to show user folder, if iterator in @[user].vue page hasn't yet set the foldersCache
-  const offlineFolder = await offlineStorage.getItem?.(folderPath.value);
+  const offlineFolder = await offlineStorage.getItem(folderPath.value);
 
   if (!offlineFolder || typeof offlineFolder !== 'object') {
     createToast(`Sorry ⊙︿⊙ We couldn't find offline copy for folder: "${route.params.folders.at(-1)}"`);

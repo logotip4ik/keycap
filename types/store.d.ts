@@ -53,7 +53,7 @@ declare global {
     setItem: <T = unknown>(key: string, value: T) => Promise<void>
     getItem: <T = unknown>(key: string) => Promise<T | undefined>
     removeItem: (key: string) => Promise<void>
-    getAllItems: <T = unknown>() => Promise<Array<T>>
+    getAllKeys: () => Promise<Array<string>>
   }
 }
 

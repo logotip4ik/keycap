@@ -1,4 +1,3 @@
-import { del, get, set, values } from 'idb-keyval';
 import { wrap as comlink } from 'comlink';
 
 import type { Remote } from 'comlink';
@@ -60,13 +59,4 @@ export async function defineFuzzyWorker() {
   else {
     fuzzyWorker.value = comlink(worker);
   }
-}
-
-export function getOfflineStorage(): OfflineStorage {
-  return {
-    setItem: set,
-    getItem: get,
-    removeItem: del,
-    getAllItems: values,
-  };
 }
