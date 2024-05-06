@@ -1,6 +1,36 @@
 # Changelog
 
 
+## v3.11.10
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.11.9...v3.11.10)
+
+### 🩹 Fixes
+
+- Minor code updates ([6411985a](https://github.com/logotip4ik/keycap/commit/6411985a))
+- Opt in nuxt nightly edition ([aeda5f8a](https://github.com/logotip4ik/keycap/commit/aeda5f8a))
+
+### 💅 Refactors
+
+- Make offlineStorage always available (types only) ([236b93af](https://github.com/logotip4ik/keycap/commit/236b93af))
+- Get and set universal cookie ([79eda289](https://github.com/logotip4ik/keycap/commit/79eda289))
+- Allow customizing floating formatter position ([0be144df](https://github.com/logotip4ik/keycap/commit/0be144df))
+
+### 🏡 Chore
+
+- **release:** V3.11.9 ([b56a9966](https://github.com/logotip4ik/keycap/commit/b56a9966))
+- Update deps ([587691e9](https://github.com/logotip4ik/keycap/commit/587691e9))
+- Update package manager ([9047500f](https://github.com/logotip4ik/keycap/commit/9047500f))
+- Put register and unregister in their own functions ([41a15b61](https://github.com/logotip4ik/keycap/commit/41a15b61))
+
+### 🤖 CI
+
+- Bump actions/checkout from 4.1.2 to 4.1.4 in the actions group ([#23](https://github.com/logotip4ik/keycap/pull/23))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.11.9
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.11.8...v3.11.9)
