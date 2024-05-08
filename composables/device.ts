@@ -12,7 +12,7 @@ const isFirefox = (a: string) => IS_FIREFOX_RE.test(a);
 const isMac = (a: string) => IS_MAC_RE.test(a);
 
 export function useDevice() {
-  const state = useState(import.meta.dev ? 'device-info' : 'dvi', () => {
+  const state = useState(() => {
     const userAgent = import.meta.server
       ? useRequestHeader('user-agent')!
       : navigator.userAgent;
