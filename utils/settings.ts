@@ -35,6 +35,7 @@ export function getSetting<T extends ValueOf<Settings>>(setting: T): SettingsDef
 
 export function setSetting<T extends ValueOf<Settings>>(setting: T, value: SettingsDefinitions[T]['posibleValues'][number]): void {
   setUCookie(SETTINGS_PREFIX + setting, value, {
+    path: '/',
     secure: true,
     sameSite: 'lax',
     maxAge: parseDuration('6 months', 's'),

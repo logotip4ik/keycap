@@ -78,7 +78,12 @@ function getSessionId() {
 
   id = crypto.randomUUID();
 
-  setUCookie(key, id, { maxAge: parseDuration('0.5year', 's'), secure: true, sameSite: 'lax' });
+  setUCookie(key, id, {
+    path: '/',
+    secure: true,
+    sameSite: 'lax',
+    maxAge: parseDuration('0.5year', 's'),
+  });
 
   return id;
 }
