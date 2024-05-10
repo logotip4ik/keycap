@@ -263,10 +263,6 @@ export default defineNuxtConfig({
       ...prefixedConfig,
     },
 
-    resolve: {
-      extensions: ['.mjs', '.js', '.ts', '.json'],
-    },
-
     build: {
       cssMinify: 'lightningcss',
       cssTarget: browserslistToEsbuild(),
