@@ -55,7 +55,7 @@ export async function getUserFromEvent(event: H3Event): Promise<SafeUser | undef
     return;
   }
 
-  const jwt = await jwtVerify(accessToken, jwtSecret, { issuer: jwtIssuer });
+  const jwt = await jwtVerify(accessToken, jwtSecret, { issuer: jwtIssuer }).catch(() => undefined);
 
   if (jwt && jwtPayloadValidator.Check(jwt.payload)) {
     return {
