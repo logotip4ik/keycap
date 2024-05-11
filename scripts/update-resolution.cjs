@@ -1,8 +1,9 @@
 'use strict';
 
 const fsp = require('node:fs/promises');
+const path = require('node:path');
 
-const pkgPath = '../package.json';
+const pkgPath = path.join(process.cwd(), 'package.json');
 const pkg = require(pkgPath);
 
 const deps = Object.entries(pkg.dependencies).concat(Object.entries(pkg.devDependencies));
