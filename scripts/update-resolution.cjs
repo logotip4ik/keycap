@@ -1,11 +1,9 @@
 'use strict';
 
 const fsp = require('node:fs/promises');
-const path = require('node:path');
 
-const pkgDir = path.join(process.cwd(), 'package.json');
-
-const pkg = require(pkgDir);
+const pkgPath = '../package.json';
+const pkg = require(pkgPath);
 
 const deps = Object.entries(pkg.dependencies).concat(Object.entries(pkg.devDependencies));
 
@@ -19,7 +17,8 @@ async function updatePatches() {
       continue;
     }
 
-    const [resolutionVersion] = patch.match(patchVersion_RE) || [];
+    const patchVersionChunk = decodeURIComponent(patch).split('#')[0];
+    const [resolutionVersion] = patchVersionChunk.match(patchVersion_RE) || [];
 
     if (!resolutionName) {
       continue;
@@ -38,7 +37,7 @@ async function updatePatches() {
 
   const newPkg = JSON.stringify(pkg, null, 2);
 
-  await fsp.writeFile(pkgDir, newPkg);
+  await fsp.writeFile(pkgPath, newPkg);
 }
 
 updatePatches();
