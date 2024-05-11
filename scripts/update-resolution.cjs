@@ -21,7 +21,7 @@ async function updatePatches() {
     const patchVersionChunk = decodeURIComponent(patch).split('#')[0];
     const [resolutionVersion] = patchVersionChunk.match(patchVersion_RE) || [];
 
-    if (!resolutionName) {
+    if (!resolutionVersion) {
       continue;
     }
 
@@ -36,7 +36,7 @@ async function updatePatches() {
     pkg.resolutions[resolutionName] = newPatch;
   }
 
-  const newPkg = JSON.stringify(pkg, null, 2);
+  const newPkg = `${JSON.stringify(pkg, null, 2)}\n`;
 
   await fsp.writeFile(pkgPath, newPkg);
 }
