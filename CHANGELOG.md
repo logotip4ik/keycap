@@ -1,6 +1,31 @@
 # Changelog
 
 
+## v3.11.11
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.11.10...v3.11.11)
+
+### 🩹 Fixes
+
+- Set path for cookies ([56bd386a](https://github.com/logotip4ik/keycap/commit/56bd386a))
+- Don't crash the server on failed jwt validation ([2dad2180](https://github.com/logotip4ik/keycap/commit/2dad2180))
+
+### 🏡 Chore
+
+- **release:** V3.11.10 ([00fd2aa2](https://github.com/logotip4ik/keycap/commit/00fd2aa2))
+- Disable prerending of index page ([6d753186](https://github.com/logotip4ik/keycap/commit/6d753186))
+- Don't fetch types for postgres ([a17a3438](https://github.com/logotip4ik/keycap/commit/a17a3438))
+- Remove custom resolve extensions ([b1c5ae39](https://github.com/logotip4ik/keycap/commit/b1c5ae39))
+- Update yarn ([5f3953ff](https://github.com/logotip4ik/keycap/commit/5f3953ff))
+- Check resolution version only in relevant chunk ([268dee5c](https://github.com/logotip4ik/keycap/commit/268dee5c))
+- Correctly resolve package json path ([741d760d](https://github.com/logotip4ik/keycap/commit/741d760d))
+- Ohmygod ([7001bf91](https://github.com/logotip4ik/keycap/commit/7001bf91))
+- Update deps ([93e11eea](https://github.com/logotip4ik/keycap/commit/93e11eea))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.11.10
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.11.9...v3.11.10)
