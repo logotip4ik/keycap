@@ -14,7 +14,9 @@ export function getKysely() {
       log: ['error'],
       dialect: new PostgresJSDialect({
         postgres: postgres(process.env.DATABASE_URL, {
-          fetch_types: false,
+          // This causing some issues with _kysely_ only, yet postgresjs seems to be working fine
+          // with cockroach ?
+          // fetch_types: false,
         }),
       }),
     });
