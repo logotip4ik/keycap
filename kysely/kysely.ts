@@ -14,7 +14,7 @@ export function getKysely() {
       log: ['error'],
       dialect: new PostgresJSDialect({
         postgres: postgres(process.env.DATABASE_URL, {
-          fetch_types: false,
+          fetch_types: true,
         }),
       }),
     });
