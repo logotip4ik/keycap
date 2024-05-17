@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
     && event.method !== 'GET'
     && isOriginMismatched(event)
   ) {
-    throw createError({ status: 403 });
+    throw createError({ status: 403, message: 'origin mismatched' });
   }
 
   const rule = rules.find((rule) => event.path.startsWith(rule.path));
