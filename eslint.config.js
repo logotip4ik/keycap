@@ -19,10 +19,7 @@ export default antfu({
     'yaml/no-empty-mapping-value': 'off',
     'node/prefer-global/process': ['error', 'always'],
   },
-}, {
-  ...regexp.configs.recommended,
-  plugins: { regexp },
-}, {
+}, regexp.configs['flat/recommended'], {
   rules: {
     'no-restricted-syntax': [
       'error',
