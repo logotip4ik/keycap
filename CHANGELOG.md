@@ -1,6 +1,10 @@
 # Changelog
 
 
+## v3.11.12
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.11.12...v3.11.12)
+
 ## v3.11.11
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.11.10...v3.11.11)
