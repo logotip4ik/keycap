@@ -1,6 +1,21 @@
 # Changelog
 
 
+## v3.11.13
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.11.12...v3.11.13)
+
+### 🏡 Chore
+
+- **release:** V3.11.12 ([c90c3e7e](https://github.com/logotip4ik/keycap/commit/c90c3e7e))
+- Remove patch from fontaine module ([0a07ed0c](https://github.com/logotip4ik/keycap/commit/0a07ed0c))
+- Update lock file ([661dae0b](https://github.com/logotip4ik/keycap/commit/661dae0b))
+- Update deps ([6b38b831](https://github.com/logotip4ik/keycap/commit/6b38b831))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.11.12
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.11.12...v3.11.12)
