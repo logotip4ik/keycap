@@ -24,6 +24,7 @@ import type { Transaction } from '@tiptap/pm/state';
 
 import { Link } from './extensions/link';
 import { BubbleMenu } from './extensions/bubble-menu';
+import { EmojiPicker } from './extensions/emoji-picker';
 
 const editor = shallowRef<Editor | undefined>();
 const isTyping = ref(false);
@@ -66,6 +67,7 @@ function initTiptap() {
       TaskList,
       TaskItem,
       BubbleMenu,
+      EmojiPicker,
       Code.configure({
         HTMLAttributes: {
           autocomplete: 'off',

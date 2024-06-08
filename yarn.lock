@@ -1665,6 +1665,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@emoji-mart/data@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "@emoji-mart/data@npm:1.2.1"
+  checksum: 10/a9f50edaf354aadfede604fb26d80055a085e9160db2c924fd5e6afc27033cd5beb0006a9ee48240ce9c543e58e1bf1cf9ed83baba5db83a395154984b30bd91
+  languageName: node
+  linkType: hard
+
 "@es-joy/jsdoccomment@npm:^0.43.0, @es-joy/jsdoccomment@npm:~0.43.1":
   version: 0.43.1
   resolution: "@es-joy/jsdoccomment@npm:0.43.1"
@@ -4528,6 +4535,16 @@ __metadata:
     prosemirror-transform: "npm:^1.8.0"
     prosemirror-view: "npm:^1.32.7"
   checksum: 10/b9af29ceb075b4ba7c758d2c1e934bbfc43b77e21a1b9cc1359708cffd3d7e8b210a2b16af0e468b286680aef73ceeeeb5162a706790179b6c69b07c1f8ea8b2
+  languageName: node
+  linkType: hard
+
+"@tiptap/suggestion@npm:^2.4.0":
+  version: 2.4.0
+  resolution: "@tiptap/suggestion@npm:2.4.0"
+  peerDependencies:
+    "@tiptap/core": ^2.0.0
+    "@tiptap/pm": ^2.0.0
+  checksum: 10/c95dbda60e3e2973897ac3c6da1adf8169ba27a5ef8c1ef9b25f36e3eee8c07756e8b76996a15e92bf94d3cce2088ee584d30cc760c92a2c2c900a93e2f63e46
   languageName: node
   linkType: hard
 
@@ -9701,6 +9718,7 @@ __metadata:
   dependencies:
     "@antfu/eslint-config": "npm:^2.20.0"
     "@drdgvhbh/postgres-error-codes": "npm:^0.0.6"
+    "@emoji-mart/data": "npm:^1.2.1"
     "@faker-js/faker": "npm:^8.4.1"
     "@floating-ui/dom": "npm:^1.6.5"
     "@node-rs/argon2": "npm:^1.8.3"
@@ -9740,6 +9758,7 @@ __metadata:
     "@tiptap/extension-text": "npm:^2.4.0"
     "@tiptap/extension-text-align": "npm:^2.4.0"
     "@tiptap/pm": "npm:^2.4.0"
+    "@tiptap/suggestion": "npm:^2.4.0"
     "@tiptap/vue-3": "npm:^2.4.0"
     "@total-typescript/ts-reset": "npm:^0.5.1"
     "@types/decomment": "npm:^0.9.5"
