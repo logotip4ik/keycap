@@ -26,18 +26,18 @@ export type BubbleMenuViewProps = BubbleMenuPluginProps & {
 };
 
 export class BubbleMenuView {
-  public editor: Editor;
+  private editor: Editor;
 
-  public element: HTMLElement;
+  private element: HTMLElement;
 
-  public view: EditorView;
+  private view: EditorView;
 
-  public preventHide = false;
+  private preventHide = false;
 
   public floatingReferenceEl: { getBoundingClientRect: () => DOMRect };
   public floatingOptions?: Partial<ComputePositionConfig>;
 
-  public updateDelay: number;
+  private updateDelay: number;
 
   private updateDebounceTimer: number | undefined;
 
