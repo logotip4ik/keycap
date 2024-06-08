@@ -43,9 +43,7 @@ export async function defineFuzzyWorker() {
   };
 
   // https://vitejs.dev/guide/features.html#web-workers
-  const worker = import.meta.prod
-    ? new Worker(new URL('../workers/fuzzy.ts', import.meta.url))
-    : new Worker(new URL('../workers/fuzzy.ts', import.meta.url), { type: 'module' });
+  const worker = new Worker(new URL('../workers/fuzzy.ts', import.meta.url), { type: 'module' });
 
   // Worker is broken in dev because it relies on SharedArrayBuffer, which is only available for
   // cross origin isolated sites, which localhost is not. But even if i set appropriate headers

@@ -283,6 +283,16 @@ export default defineNuxtConfig({
       },
     },
 
+    worker: {
+      format: 'es',
+      rollupOptions: {
+        treeshake: 'recommended',
+        output: {
+          generatedCode: 'es2015',
+        },
+      },
+    },
+
     css: {
       preprocessorMaxWorkers: true,
       preprocessorOptions: {
