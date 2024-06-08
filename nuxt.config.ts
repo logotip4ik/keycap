@@ -283,11 +283,6 @@ export default defineNuxtConfig({
       },
     },
 
-    optimizeDeps: {
-      holdUntilCrawlEnd: false,
-      include: ['@superhuman/command-score'],
-    },
-
     css: {
       preprocessorMaxWorkers: true,
       preprocessorOptions: {
@@ -306,9 +301,55 @@ export default defineNuxtConfig({
           external: ['.prisma/client/index-browser'],
         },
       },
+
+      optimizeDeps: {
+        include: [
+          '@superhuman/command-score',
+          'parse-duration',
+          'hashlru',
+          'idb-keyval',
+          'rad-event-listener',
+          'cookie-es',
+        ],
+
+        // https://github.com/antfu/nuxt-better-optimize-deps
+        exclude: [
+          // Vue
+          'vue',
+          '@vue/runtime-core',
+          '@vue/runtime-dom',
+          '@vue/reactivity',
+          '@vue/shared',
+          '@vue/devtools-api',
+          'vue-router',
+          'vue-demi',
+
+          // Nuxt Deps
+          'pathe',
+          'unenv',
+          'klona',
+          'devalue',
+          'hookable',
+          'unctx',
+          'h3',
+          'defu',
+          'ofetch',
+          'ufo',
+          '@unhead/vue',
+
+          // Ecosystem - later they should be providede by the ecosystem module
+          '@vueuse/core',
+          '@vueuse/shared',
+        ],
+      },
     },
 
     $server: {
+      // https://github.com/antfu/nuxt-better-optimize-deps
+      optimizeDeps: {
+        noDiscovery: true,
+      },
+
       plugins: [
         // Taken from elk
         // https://github.com/elk-zone/elk/blob/ed5592260fc83f0207a12a7184973749e87bc85e/nuxt.config.ts#L186

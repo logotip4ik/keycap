@@ -21,7 +21,7 @@ export default defineNuxtModule({
           return;
         }
 
-        const decommented = decomment(code);
+        const decommented = decomment.html(code);
 
         if (decommented !== code) {
           const s = new MagicString(decommented);

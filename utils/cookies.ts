@@ -22,12 +22,12 @@ export function getUCookie<T extends string>(name: string): T | undefined {
  * sets a cookie universally (nuxt side) on server and client
  */
 export function setUCookie(name: string, value: unknown, options?: CookieSerializeOptions) {
-  const _value = `${value}`;
+  value = `${value}`;
 
   if (import.meta.server) {
-    setCookie(useRequestEvent()!, name, _value, options);
+    setCookie(useRequestEvent()!, name, value as string, options);
   }
   else {
-    document.cookie = serialize(name, _value, options);
+    document.cookie = serialize(name, value as string, options);
   }
 }
