@@ -102,6 +102,7 @@ useFocusTrap(emojiPicker, { handleInitialFocusing: false });
                 :aria-describedby="tooltipId"
                 :aria-selected="selectedEmoji === i"
                 @focus="selectedEmoji = i"
+                @click="onSelect?.(emoji)"
               >
                 {{ getNativeSkin(emoji) }}
               </button>
@@ -126,7 +127,7 @@ useFocusTrap(emojiPicker, { handleInitialFocusing: false });
 
   width: max-content;
 
-  padding: 0.325rem 0.65rem;
+  padding: 0.35rem 0.65rem;
   margin: 0;
 
   background-color: hsla(var(--surface-color-hsl), 0.25);
@@ -151,6 +152,8 @@ useFocusTrap(emojiPicker, { handleInitialFocusing: false });
     }
 
     &__button {
+      font-size: 1.25rem;
+
       margin: 0;
       padding: 0;
 
@@ -161,7 +164,11 @@ useFocusTrap(emojiPicker, { handleInitialFocusing: false });
 
       &:is([aria-selected=true], :focus) {
         outline: 2px solid hsla(var(--selection-bg-color-hsl), 0.5);
-        outline-offset: 0.125rem;
+        outline-offset: 0.1rem;
+      }
+
+      @media (max-width: $breakpoint-tablet) {
+        font-size: 2rem;
       }
     }
   }
