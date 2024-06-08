@@ -33,8 +33,8 @@ const { data: note, refresh } = await useAsyncData<NoteWithContent | undefined>(
 
   lastRefetch = Date.now();
 
-  loadingToast = createToast('Fetching note takes longer then expected...', {
-    delay: parseDuration('1 minute'),
+  loadingToast = createToast('This is cached note, wait for new one to arrive...', {
+    delay: parseDuration('3 seconds'),
     type: 'loading',
   });
 
