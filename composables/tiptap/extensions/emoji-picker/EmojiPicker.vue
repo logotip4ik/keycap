@@ -62,20 +62,14 @@ function handleKeypress(event: KeyboardEvent) {
     editor.value?.commands.focus();
   }
   else if (
-    event.key === 'ArrowLeft'
+    (event.key === 'ArrowLeft' || event.key === 'ArrowRight')
     && emojiPicker.value?.contains(target)
   ) {
     const parent = target.parentElement as HTMLLIElement;
-    const next = parent.previousElementSibling || parent.parentElement?.lastElementChild;
 
-    next && (next.firstElementChild as HTMLElement).focus();
-  }
-  else if (
-    event.key === 'ArrowRight'
-    && emojiPicker.value?.contains(target)
-  ) {
-    const parent = target.parentElement as HTMLLIElement;
-    const next = parent.nextElementSibling || parent.parentElement?.firstElementChild;
+    const next = event.key === 'ArrowLeft'
+      ? (parent.previousElementSibling || parent.parentElement?.lastElementChild)
+      : (parent.nextElementSibling || parent.parentElement?.firstElementChild);
 
     next && (next.firstElementChild as HTMLElement).focus();
   }
