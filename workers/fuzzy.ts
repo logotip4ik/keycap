@@ -3,6 +3,7 @@ import { expose } from 'comlink';
 import { commandScore as getScore } from '@superhuman/command-score';
 
 import type { Emoji, EmojiMartData } from '@emoji-mart/data';
+
 import { commandActionsMin as commandsCache } from '~/utils/menu';
 import { transliterateFromEnglish, transliterateToEnglish } from '~/utils/transliterate';
 

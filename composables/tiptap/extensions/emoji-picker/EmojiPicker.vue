@@ -1,9 +1,5 @@
 <script setup lang="ts">
-import { computePosition } from '@floating-ui/dom';
-import { flip, offset, shift } from '@floating-ui/core';
-
 import type { Emoji } from '@emoji-mart/data';
-import type { ComputePositionConfig } from '@floating-ui/dom';
 
 const props = defineProps<{
   shouldBeVisible: boolean
@@ -14,40 +10,42 @@ const props = defineProps<{
 
 const { editor } = useTiptap();
 
-const emojiPicker = ref<HTMLDivElement | null>(null);
+const emojiPicker = shallowRef<HTMLDivElement | null>(null);
+const selectedEmoji = ref(0);
 
 const isVisible = computed(() => props.shouldBeVisible && props.items.length > 0);
-
-const floatingOptions: Partial<ComputePositionConfig> = {
-  placement: 'bottom-start',
-  middleware: [
-    offset(8),
-    shift({ padding: 8 }),
-    flip(),
-  ],
-};
 
 watch([
   () => emojiPicker.value,
   () => isVisible.value,
-], ([floating, isVisible], _, onCleanup) => {
+], async ([emojiPicker, isVisible], _, onCleanup) => {
   const { getBoundingClientRect } = props;
+  const { computePosition, flip, shift, offset } = await loadFloatingUi();
 
-  if (floating && isVisible && getBoundingClientRect) {
+  if (emojiPicker && isVisible && getBoundingClientRect) {
     computePosition(
       { getBoundingClientRect },
-      floating,
-      floatingOptions,
+      emojiPicker,
+      {
+        placement: 'bottom-start',
+        middleware: [
+          offset(8),
+          shift({ padding: 8 }),
+          flip(),
+        ],
+      },
     ).then(({ x, y }) => {
-      floating.style.setProperty('top', `${y}px`);
-      floating.style.setProperty('left', `${x}px`);
+      emojiPicker.style.setProperty('top', `${y}px`);
+      emojiPicker.style.setProperty('left', `${x}px`);
     });
 
     onCleanup(
-      on(window, 'keydown', handleKeypress),
+      on(window, 'keydown', handleKeypress, { capture: true }),
     );
   }
 });
+
+watch(() => props.items, () => selectedEmoji.value = 0);
 
 function handleKeypress(event: KeyboardEvent) {
   const target = event.target as HTMLButtonElement;
@@ -74,6 +72,11 @@ function handleKeypress(event: KeyboardEvent) {
 
     next && (next.firstElementChild as HTMLElement).focus();
   }
+  else if (event.key === 'Enter') {
+    props.onSelect?.(props.items[selectedEmoji.value]);
+
+    event.preventDefault();
+  }
 }
 
 function getNativeSkin(emoji: Emoji) {
@@ -88,7 +91,7 @@ useFocusTrap(emojiPicker, { handleInitialFocusing: false });
     <Teleport to="#teleports">
       <WithFadeTransition>
         <ul v-if="isVisible" ref="emojiPicker" class="emoji-picker">
-          <li v-for="emoji in items" :key="emoji.id" class="emoji-picker__item">
+          <li v-for="(emoji, i) in items" :key="emoji.id" class="emoji-picker__item">
             <WithTooltip
               v-slot="{ tooltipId }"
               :tooltip="emoji.name"
@@ -97,7 +100,8 @@ useFocusTrap(emojiPicker, { handleInitialFocusing: false });
               <button
                 class="emoji-picker__item__button"
                 :aria-describedby="tooltipId"
-                @click="onSelect?.(emoji)"
+                :aria-selected="selectedEmoji === i"
+                @focus="selectedEmoji = i"
               >
                 {{ getNativeSkin(emoji) }}
               </button>
@@ -155,7 +159,7 @@ useFocusTrap(emojiPicker, { handleInitialFocusing: false });
       background: none;
       appearance: none;
 
-      &:focus {
+      &:is([aria-selected=true], :focus) {
         outline: 2px solid hsla(var(--selection-bg-color-hsl), 0.5);
         outline-offset: 0.125rem;
       }

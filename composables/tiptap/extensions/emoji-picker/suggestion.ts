@@ -9,6 +9,8 @@ import type { Emoji } from '@emoji-mart/data';
 import EmojiPicker from './EmojiPicker.vue';
 
 export function createEmojiPickerSuggestionPlugin({ editor }: { editor: Editor }) {
+  const fuzzyWorker = useFuzzyWorker();
+
   return Suggestion({
     editor,
     pluginKey: new PluginKey('emoji-picker-suggestion'),
@@ -18,10 +20,7 @@ export function createEmojiPickerSuggestionPlugin({ editor }: { editor: Editor }
         return [];
       };
 
-      const fuzzyWorker = useFuzzyWorker();
-      const results = await fuzzyWorker.value?.searchForEmoji(query) || [];
-
-      return results;
+      return await fuzzyWorker.value?.searchForEmoji(query) || [];
     },
     command: ({ editor, range, props: emoji }) => {
       const skin = (emoji as Emoji).skins.find((skin) => skin.native !== undefined);
@@ -69,9 +68,8 @@ function createSuggestionRenderer(component: Component): SuggestionOptions['rend
       onKeyDown(props) {
         if (props.event.key === 'Escape') {
           renderer.updateProps({
-            shouldBeVisible: false,
             items: [],
-            onSelect: () => {},
+            shouldBeVisible: false,
           });
           return true;
         }

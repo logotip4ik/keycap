@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { flip, offset } from '@floating-ui/core';
-import { computePosition } from '@floating-ui/dom';
-
 interface MenuAction {
   name: string
   needConfirmation?: boolean
@@ -139,6 +136,7 @@ onMounted(async () => {
     return;
   }
 
+  const { computePosition, flip, offset } = await loadFloatingUi();
   const { x, y } = await computePosition(props.target, menu.value, {
     placement: 'bottom-start',
     middleware: [
