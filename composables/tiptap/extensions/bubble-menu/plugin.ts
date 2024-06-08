@@ -12,10 +12,9 @@ import type { EditorView } from '@tiptap/pm/view';
 import type { ComputePositionConfig } from '@floating-ui/dom';
 
 export interface BubbleMenuPluginProps {
-  pluginKey: PluginKey | string
+  pluginKey: string
   editor: Editor
   element: HTMLElement
-  updateDelay?: number
   placement?: 'top' | 'bottom'
 }
 
@@ -23,29 +22,20 @@ export type BubbleMenuViewProps = BubbleMenuPluginProps & {
   view: EditorView
 };
 
-interface ShouldShowProps {
-  editor: Editor
-  view: EditorView
-  state: EditorState
-  oldState?: EditorState
-  from: number
-  to: number
-}
-
 export class BubbleMenuView {
-  public editor: Editor;
+  private editor: Editor;
 
-  public element: HTMLElement;
+  private element: HTMLElement;
 
-  public view: EditorView;
+  private view: EditorView;
 
-  public preventHide = false;
+  private preventHide = false;
 
   private computeFloatingPosition: typeof import('@floating-ui/dom').computePosition | undefined;
   private floatingReferenceEl: { getBoundingClientRect: () => DOMRect };
   private floatingOptions?: Partial<ComputePositionConfig>;
 
-  public updateDelay: number;
+  private updateDelay: number;
 
   private updateDebounceTimer: number | undefined;
 
@@ -54,12 +44,11 @@ export class BubbleMenuView {
     element,
     view,
     placement = 'top',
-    updateDelay = 75,
   }: BubbleMenuViewProps) {
     this.editor = editor;
     this.element = element;
     this.view = view;
-    this.updateDelay = updateDelay;
+    this.updateDelay = 75;
 
     this.element.addEventListener('mousedown', this.mousedownHandler.bind(this), { capture: true });
     this.view.dom.addEventListener('dragstart', this.dragstartHandler.bind(this));
@@ -231,7 +220,14 @@ export class BubbleMenuView {
     state,
     from,
     to,
-  }: ShouldShowProps) {
+  }: {
+    editor: Editor
+    view: EditorView
+    state: EditorState
+    oldState?: EditorState
+    from: number
+    to: number
+  }) {
     const { doc, selection } = state;
     const { empty } = selection;
 
@@ -264,8 +260,7 @@ export class BubbleMenuView {
 
 export function BubbleMenuPlugin(options: BubbleMenuPluginProps) {
   return new Plugin({
-    key:
-      typeof options.pluginKey === 'string' ? new PluginKey(options.pluginKey) : options.pluginKey,
+    key: new PluginKey(options.pluginKey),
     view: (view) => new BubbleMenuView({ view, ...options }),
   });
 }
