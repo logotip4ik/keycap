@@ -1,6 +1,9 @@
 const TABBABLE_ELs = 'input:not([disabled]),select:not([disabled]),textarea:not([disabled]),a[href],button:not([disabled]),[tabindex="0"],audio[controls],video[controls],[contenteditable]:not([contenteditable="false"])';
 
-export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>) {
+export function useFocusTrap(
+  el: MaybeRef<HTMLElement | null | undefined>,
+  { handleInitialFocusing = true } = {},
+) {
   if (import.meta.server) {
     return;
   }
@@ -53,7 +56,9 @@ export function useFocusTrap(el: MaybeRef<HTMLElement | null | undefined>) {
       lastFocusedEl = document.activeElement as HTMLElement;
     }
 
-    getFocusableEls(el)[0].focus();
+    if (handleInitialFocusing) {
+      getFocusableEls(el)[0].focus();
+    }
 
     observer = new MutationObserver(
       debounce(() => {

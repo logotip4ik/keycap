@@ -9,9 +9,6 @@ import type { Editor } from '@tiptap/core';
 import type { EditorState } from '@tiptap/pm/state';
 import type { EditorView } from '@tiptap/pm/view';
 
-import { flip, offset, shift } from '@floating-ui/core';
-import { computePosition } from '@floating-ui/dom';
-
 import type { ComputePositionConfig } from '@floating-ui/dom';
 
 export interface BubbleMenuPluginProps {
@@ -34,8 +31,9 @@ export class BubbleMenuView {
 
   private preventHide = false;
 
-  public floatingReferenceEl: { getBoundingClientRect: () => DOMRect };
-  public floatingOptions?: Partial<ComputePositionConfig>;
+  private computeFloatingPosition: typeof import('@floating-ui/dom').computePosition | undefined;
+  private floatingReferenceEl: { getBoundingClientRect: () => DOMRect };
+  private floatingOptions?: Partial<ComputePositionConfig>;
 
   private updateDelay: number;
 
@@ -62,14 +60,19 @@ export class BubbleMenuView {
     this.floatingReferenceEl = {
       getBoundingClientRect: this.getSelectionDOMRect.bind(this),
     };
-    this.floatingOptions = {
-      placement,
-      middleware: [
-        offset(8),
-        shift({ padding: 8 }),
-        flip(),
-      ],
-    };
+
+    loadFloatingUi().then(({ computePosition, offset, shift, flip }) => {
+      this.computeFloatingPosition = computePosition;
+
+      this.floatingOptions = {
+        placement,
+        middleware: [
+          offset(8),
+          shift({ padding: 8 }),
+          flip(),
+        ],
+      };
+    });
   }
 
   mousedownHandler() {
@@ -164,7 +167,7 @@ export class BubbleMenuView {
     const shouldAnimate = this.element.style.visibility === 'visible';
     this.element.style.transitionDuration = shouldAnimate ? '.3s' : '0s';
 
-    computePosition(
+    this.computeFloatingPosition?.(
       this.floatingReferenceEl,
       this.element,
       this.floatingOptions,
