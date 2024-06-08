@@ -1,5 +1,9 @@
 <script setup lang="ts">
-defineProps<{ tooltip?: string }>();
+const props = defineProps<{
+  tooltip?: string
+  xOffset?: number
+  yOffset?: number
+}>();
 
 const { isSmallScreen } = useDevice();
 
@@ -55,7 +59,10 @@ watch(shouldShow, async (shouldShow) => {
   const { x, y } = await floating.computePosition(target.value, tooltipEl.value, {
     placement: 'bottom',
     middleware: [
-      floating.offset(4),
+      floating.offset({
+        mainAxis: 4 + (props.yOffset || 0),
+        crossAxis: 4 + (props.xOffset || 0),
+      }),
       floating.shift({ padding: 8 }),
     ],
   });

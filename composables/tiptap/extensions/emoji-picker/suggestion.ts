@@ -1,15 +1,10 @@
 import { VueRenderer } from '@tiptap/vue-3';
 import { PluginKey } from '@tiptap/pm/state';
-import { flip, offset, shift } from '@floating-ui/core';
-import { computePosition } from '@floating-ui/dom';
 
 import type { SuggestionOptions } from '@tiptap/suggestion';
-import type { Emoji, EmojiMartData } from '@emoji-mart/data';
-import type { ComputePositionConfig } from '@floating-ui/dom';
+import type { Emoji } from '@emoji-mart/data';
 
 import EmojiPicker from './EmojiPicker.vue';
-
-let emojis: Array<Emoji>;
 
 export const EmojiPickerSuggestionPlugin: Partial<SuggestionOptions> = {
   pluginKey: new PluginKey('emoji-picker-suggestion'),
@@ -19,19 +14,12 @@ export const EmojiPickerSuggestionPlugin: Partial<SuggestionOptions> = {
       return [];
     };
 
-    const lowerCaseQuery = query.toLowerCase();
+    console.time('search');
+    const fuzzyWorker = useFuzzyWorker();
+    const results = await fuzzyWorker.value?.searchForEmoji(query) || [];
+    console.timeEnd('search');
 
-    if (!emojis) {
-      emojis = Object.values(
-        (await import('@emoji-mart/data').then((m) => m.default as EmojiMartData)).emojis,
-      );
-    }
-
-    const suggestedEmojis: Array<Emoji> = emojis
-      // TODO: use keywords and fuzzy worker to find correct emoji
-      .filter(({ id }) => id.toLowerCase().startsWith(lowerCaseQuery));
-
-    return [...suggestedEmojis];
+    return results;
   },
   command: ({ editor, range, props: emoji }) => {
     const skin = (emoji as Emoji).skins.find((skin) => skin.native !== undefined);

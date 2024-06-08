@@ -15,8 +15,7 @@ const { editor } = useTiptap();
 
 const emojiPicker = ref<HTMLDivElement | null>(null);
 
-const emojis = computed(() => props.items.length > 5 ? props.items.slice(0, 5) : props.items);
-const isVisible = computed(() => props.shouldBeVisible && emojis.value.length > 0);
+const isVisible = computed(() => props.shouldBeVisible && props.items.length > 0);
 
 const floatingOptions: Partial<ComputePositionConfig> = {
   placement: 'bottom-start',
@@ -94,10 +93,20 @@ useFocusTrap(emojiPicker, { moveInitialFocus: false });
     <Teleport to="#teleports">
       <WithFadeTransition>
         <ul v-if="isVisible" ref="emojiPicker" class="emoji-picker">
-          <li v-for="emoji in emojis" :key="emoji.id" class="emoji-picker__item">
-            <button class="emoji-picker__item__button" @click="onSelect?.(emoji)">
-              {{ getNativeSkin(emoji) }}
-            </button>
+          <li v-for="emoji in items" :key="emoji.id" class="emoji-picker__item">
+            <WithTooltip
+              v-slot="{ tooltipId }"
+              :tooltip="emoji.name"
+              :y-offset="3"
+            >
+              <button
+                class="emoji-picker__item__button"
+                :aria-describedby="tooltipId"
+                @click="onSelect?.(emoji)"
+              >
+                {{ getNativeSkin(emoji) }}
+              </button>
+            </WithTooltip>
           </li>
         </ul>
       </WithFadeTransition>
