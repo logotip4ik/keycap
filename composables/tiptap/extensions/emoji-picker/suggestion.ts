@@ -14,10 +14,8 @@ export const EmojiPickerSuggestionPlugin: Partial<SuggestionOptions> = {
       return [];
     };
 
-    console.time('search');
     const fuzzyWorker = useFuzzyWorker();
     const results = await fuzzyWorker.value?.searchForEmoji(query) || [];
-    console.timeEnd('search');
 
     return results;
   },

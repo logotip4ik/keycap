@@ -5,10 +5,6 @@ import { EmojiPickerSuggestionPlugin } from './suggestion';
 
 export const EmojiPickerKey = new PluginKey('emoji-picker');
 
-/**
- * This extension allows you to insert mentions into the editor.
- * @see https://www.tiptap.dev/api/extensions/mention
- */
 export const EmojiPicker = Mark.create({
   name: 'emoji-picker',
 
