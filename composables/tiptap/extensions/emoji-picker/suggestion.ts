@@ -1,39 +1,44 @@
 import { VueRenderer } from '@tiptap/vue-3';
 import { PluginKey } from '@tiptap/pm/state';
+import { Suggestion } from '@tiptap/suggestion';
 
+import type { Editor } from '@tiptap/core';
 import type { SuggestionOptions } from '@tiptap/suggestion';
 import type { Emoji } from '@emoji-mart/data';
 
 import EmojiPicker from './EmojiPicker.vue';
 
-export const EmojiPickerSuggestionPlugin: Partial<SuggestionOptions> = {
-  pluginKey: new PluginKey('emoji-picker-suggestion'),
-  char: ':',
-  async items({ query }): Promise<Array<Emoji>> {
-    if (import.meta.server || query.length === 0) {
-      return [];
-    };
+export function createEmojiPickerSuggestionPlugin({ editor }: { editor: Editor }) {
+  return Suggestion({
+    editor,
+    pluginKey: new PluginKey('emoji-picker-suggestion'),
+    char: ':',
+    async items({ query }): Promise<Array<Emoji>> {
+      if (import.meta.server || query.length === 0) {
+        return [];
+      };
 
-    const fuzzyWorker = useFuzzyWorker();
-    const results = await fuzzyWorker.value?.searchForEmoji(query) || [];
+      const fuzzyWorker = useFuzzyWorker();
+      const results = await fuzzyWorker.value?.searchForEmoji(query) || [];
 
-    return results;
-  },
-  command: ({ editor, range, props: emoji }) => {
-    const skin = (emoji as Emoji).skins.find((skin) => skin.native !== undefined);
+      return results;
+    },
+    command: ({ editor, range, props: emoji }) => {
+      const skin = (emoji as Emoji).skins.find((skin) => skin.native !== undefined);
 
-    if (skin) {
-      editor.view.dispatch(
-        editor.state.tr.replaceRangeWith(
-          range.from,
-          range.to,
-          editor.state.schema.text(`${skin.native} `),
-        ),
-      );
-    };
-  },
-  render: createSuggestionRenderer(EmojiPicker),
-};
+      if (skin) {
+        editor.view.dispatch(
+          editor.state.tr.replaceRangeWith(
+            range.from,
+            range.to,
+            editor.state.schema.text(`${skin.native} `),
+          ),
+        );
+      };
+    },
+    render: createSuggestionRenderer(EmojiPicker),
+  });
+}
 
 function createSuggestionRenderer(component: Component): SuggestionOptions['render'] {
   return () => {

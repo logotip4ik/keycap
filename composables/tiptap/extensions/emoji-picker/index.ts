@@ -1,7 +1,6 @@
 import { Mark } from '@tiptap/core';
 import { PluginKey } from '@tiptap/pm/state';
-import Suggestion from '@tiptap/suggestion';
-import { EmojiPickerSuggestionPlugin } from './suggestion';
+import { createEmojiPickerSuggestionPlugin } from './suggestion';
 
 export const EmojiPickerKey = new PluginKey('emoji-picker');
 
@@ -19,9 +18,8 @@ export const EmojiPicker = Mark.create({
 
   addProseMirrorPlugins() {
     return [
-      Suggestion({
+      createEmojiPickerSuggestionPlugin({
         editor: this.editor,
-        ...EmojiPickerSuggestionPlugin,
       }),
     ];
   },
