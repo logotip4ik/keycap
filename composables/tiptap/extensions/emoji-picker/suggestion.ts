@@ -74,7 +74,7 @@ function createSuggestionRenderer(component: Component): SuggestionOptions['rend
           return true;
         }
 
-        return renderer?.ref?.onKeyDown?.(props.event);
+        return false;
       },
 
       onExit() {
