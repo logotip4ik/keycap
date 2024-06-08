@@ -53,7 +53,7 @@ function handleKeypress(event: KeyboardEvent) {
   if (event.key === 'ArrowDown') {
     const button = emojiPicker.value?.querySelector('button');
 
-    button && button.focus();
+    button?.focus();
 
     event.preventDefault();
   }
@@ -70,7 +70,7 @@ function handleKeypress(event: KeyboardEvent) {
       ? (parent.previousElementSibling || parent.parentElement?.lastElementChild)
       : (parent.nextElementSibling || parent.parentElement?.firstElementChild);
 
-    next && (next.firstElementChild as HTMLElement).focus();
+    (next?.firstElementChild as HTMLElement)?.focus();
   }
   else if (event.key === 'Enter') {
     props.onSelect?.(props.items[selectedEmoji.value]);
