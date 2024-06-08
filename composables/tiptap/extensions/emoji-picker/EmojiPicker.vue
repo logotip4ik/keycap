@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { type ComputePositionConfig, computePosition } from '@floating-ui/dom';
+import { computePosition } from '@floating-ui/dom';
 import { flip, offset, shift } from '@floating-ui/core';
 
 import type { Emoji } from '@emoji-mart/data';
+import type { ComputePositionConfig } from '@floating-ui/dom';
 
 const props = defineProps<{
   shouldBeVisible: boolean
