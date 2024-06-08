@@ -2,7 +2,7 @@ const TABBABLE_ELs = 'input:not([disabled]),select:not([disabled]),textarea:not(
 
 export function useFocusTrap(
   el: MaybeRef<HTMLElement | null | undefined>,
-  { moveInitialFocus = true } = {},
+  { handleInitialFocusing = true } = {},
 ) {
   if (import.meta.server) {
     return;
@@ -56,7 +56,7 @@ export function useFocusTrap(
       lastFocusedEl = document.activeElement as HTMLElement;
     }
 
-    if (moveInitialFocus) {
+    if (handleInitialFocusing) {
       getFocusableEls(el)[0].focus();
     }
 
