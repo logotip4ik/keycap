@@ -9,8 +9,6 @@ const props = defineProps<{
   editor: Editor
 }>();
 
-const { editor } = useTiptap();
-
 const formatter = shallowRef<HTMLElement | null>(null);
 
 const linkInputPlaceholder = ref(LinkInputPlaceholder.INITIALLY_EMPTY);
@@ -18,6 +16,8 @@ const isEditingLink = ref(false);
 const editingLink = ref('');
 
 const modKey = getModKey();
+const { setting: formatterPosition } = useSetting(settings.formatterPosition);
+
 let prevListItem: string | undefined;
 let prevHeadingLevel: number | undefined;
 const prevSelection = { start: -1, end: -1 };
@@ -171,23 +171,39 @@ function toggleListItem() {
   prevListItem = 'auto';
 }
 
+function focusFormatter(event: KeyboardEvent) {
+  const { from, to } = props.editor.state.selection;
+
+  if (!formatter.value || (props.editor.isFocused && to - from <= 0)) {
+    return;
+  }
+
+  event.preventDefault();
+  (formatter.value.firstElementChild as HTMLElement).focus();
+}
+
+function focusEditor(event: KeyboardEvent) {
+  if (formatter.value && formatter.value.contains(event.target as HTMLElement)) {
+    event.preventDefault();
+    props.editor.commands.focus();
+  }
+}
+
 useTinykeys({
   'ArrowDown': (event) => {
-    const { from, to } = props.editor.state.selection;
+    const focusAction = formatterPosition.value === 'bottom'
+      ? focusFormatter
+      : focusEditor;
 
-    if (!formatter.value || (props.editor.isFocused && to - from <= 0)) {
-      return;
-    }
-
-    event.preventDefault();
-    (formatter.value.firstElementChild as HTMLElement).focus();
+    focusAction(event);
   },
 
   'ArrowUp': (event) => {
-    if (formatter.value && formatter.value.contains(event.target as HTMLElement)) {
-      event.preventDefault();
-      editor.value?.commands.focus();
-    }
+    const focusAction = formatterPosition.value === 'top'
+      ? focusFormatter
+      : focusEditor;
+
+    focusAction(event);
   },
 
   // NOTE: change this to $mod+Shift+l if main ctrl+l keeps getting in place
