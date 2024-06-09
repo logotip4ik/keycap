@@ -49,7 +49,7 @@ watch(shouldShow, async (shouldShow) => {
     middleware: [
       offset({
         mainAxis: 4 + (props.yOffset || 0),
-        crossAxis: 0 + (props.xOffset || 0),
+        crossAxis: props.xOffset || 0,
       }),
       shift({ padding: 8 }),
     ],
