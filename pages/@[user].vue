@@ -19,17 +19,17 @@ mitt.on('search:show', () => isShowingSearch.value = true);
 
 const isNoteEmpty = computed(() => !route.params.note || route.params.note === BLANK_NOTE_NAME);
 
-let popstateOff: (() => void) | undefined;
-watch(isShowingSearch, async (search) => {
-  popstateOff && popstateOff();
-
+watch(isShowingSearch, async (search, _, onCleanup) => {
   const query = { ...route.query };
 
   // `undefined` and empty array removes param from query
   // `null` means that query param should be there but value should be empty
   // @ts-expect-error idk why it is not happy, but it works
   query.search = search ? null : undefined;
-  popstateOff = on(window, 'popstate', () => isShowingSearch.value = false);
+
+  onCleanup(
+    on(window, 'popstate', () => isShowingSearch.value = false),
+  );
 
   await navigateTo({ ...route, query });
 });
@@ -76,8 +76,6 @@ onMounted(() => {
     window.$createToast = useToaster();
   }
 });
-
-onBeforeUnmount(() => popstateOff?.());
 </script>
 
 <template>

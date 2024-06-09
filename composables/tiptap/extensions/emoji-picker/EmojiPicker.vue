@@ -15,37 +15,39 @@ const selectedEmoji = ref(0);
 
 const isVisible = computed(() => props.shouldBeVisible && props.items.length > 0);
 
-watch([
-  () => emojiPicker.value,
-  () => isVisible.value,
-], async ([emojiPicker, isVisible], _, onCleanup) => {
-  const { getBoundingClientRect } = props;
-  const { computePosition, flip, shift, offset } = await loadFloatingUi();
-
-  if (emojiPicker && isVisible && getBoundingClientRect) {
-    computePosition(
-      { getBoundingClientRect },
-      emojiPicker,
-      {
-        placement: 'bottom-start',
-        middleware: [
-          offset(8),
-          shift({ padding: 8 }),
-          flip(),
-        ],
-      },
-    ).then(({ x, y }) => {
-      emojiPicker.style.setProperty('top', `${y}px`);
-      emojiPicker.style.setProperty('left', `${x}px`);
-    });
-
-    onCleanup(
-      on(window, 'keydown', handleKeypress, { capture: true }),
-    );
-  }
+watch(() => props.items, () => {
+  selectedEmoji.value = 0;
 });
 
-watch(() => props.items, () => selectedEmoji.value = 0);
+watch(
+  [emojiPicker, isVisible],
+  async ([emojiPicker, isVisible], _, onCleanup) => {
+    const { getBoundingClientRect } = props;
+    const { computePosition, flip, shift, offset } = await loadFloatingUi();
+
+    if (emojiPicker && isVisible && getBoundingClientRect) {
+      computePosition(
+        { getBoundingClientRect },
+        emojiPicker,
+        {
+          placement: 'bottom-start',
+          middleware: [
+            offset(8),
+            shift({ padding: 8 }),
+            flip(),
+          ],
+        },
+      ).then(({ x, y }) => {
+        emojiPicker.style.setProperty('top', `${y}px`);
+        emojiPicker.style.setProperty('left', `${x}px`);
+      });
+
+      onCleanup(
+        on(window, 'keydown', handleKeypress, { capture: true }),
+      );
+    }
+  },
+);
 
 function handleKeypress(event: KeyboardEvent) {
   const target = event.target as HTMLButtonElement;

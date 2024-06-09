@@ -14,8 +14,10 @@ export function registerSWToasts() {
       return;
     }
 
-    createToast('Phewww, now you can work offline', { delay: 550 });
-    stopOfflineReady();
+    setTimeout(() => {
+      createToast('Phewww, now you can work offline', { delay: 550 });
+      stopOfflineReady();
+    });
   }, { immediate: true });
 
   const stopNeedRefresh = watch(() => pwa?.needRefresh, (needRefresh) => {
@@ -23,15 +25,17 @@ export function registerSWToasts() {
       return;
     }
 
-    createToast('Psss... We have some updates', {
-      priority: 10,
-      duration: parseDuration('25 seconds')!,
-      delay: 550,
-      buttons: [
-        { text: 'refresh now', onClick: () => pwa?.updateServiceWorker() },
-        { text: 'nahh, not now', onClick: (t) => t.remove() },
-      ],
+    setTimeout(() => {
+      createToast('Psss... We have some updates', {
+        priority: 10,
+        duration: parseDuration('25 seconds')!,
+        delay: 550,
+        buttons: [
+          { text: 'refresh now', onClick: () => pwa?.updateServiceWorker() },
+          { text: 'nahh, not now', onClick: (t) => t.remove() },
+        ],
+      });
+      stopNeedRefresh();
     });
-    stopNeedRefresh();
   }, { immediate: true });
 }

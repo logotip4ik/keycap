@@ -27,7 +27,6 @@ watch(target, (target) => {
   cleanups.push(
     on(target, 'mouseenter', showWithTimeout, handlerOptions),
     on(target, 'mouseleave', hideAndClearTimeout, handlerOptions),
-
   );
 
   if (!isSmallScreen.value) {
@@ -50,7 +49,7 @@ watch(shouldShow, async (shouldShow) => {
     middleware: [
       offset({
         mainAxis: 4 + (props.yOffset || 0),
-        crossAxis: 4 + (props.xOffset || 0),
+        crossAxis: 0 + (props.xOffset || 0),
       }),
       shift({ padding: 8 }),
     ],

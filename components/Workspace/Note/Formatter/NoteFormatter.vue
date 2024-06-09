@@ -9,6 +9,10 @@ const props = defineProps<{
   editor: Editor
 }>();
 
+const { editor } = useTiptap();
+
+const formatter = shallowRef<HTMLElement | null>(null);
+
 const linkInputPlaceholder = ref(LinkInputPlaceholder.INITIALLY_EMPTY);
 const isEditingLink = ref(false);
 const editingLink = ref('');
@@ -168,6 +172,24 @@ function toggleListItem() {
 }
 
 useTinykeys({
+  'ArrowDown': (event) => {
+    const { from, to } = props.editor.state.selection;
+
+    if (!formatter.value || (props.editor.isFocused && to - from <= 0)) {
+      return;
+    }
+
+    event.preventDefault();
+    (formatter.value.firstElementChild as HTMLElement).focus();
+  },
+
+  'ArrowUp': (event) => {
+    if (formatter.value && formatter.value.contains(event.target as HTMLElement)) {
+      event.preventDefault();
+      editor.value?.commands.focus();
+    }
+  },
+
   // NOTE: change this to $mod+Shift+l if main ctrl+l keeps getting in place
   '$mod+l': (event) => {
     const { from, to } = props.editor.state.selection;
@@ -206,11 +228,13 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
 
   prevAnchor = anchor;
 });
+
+useFocusTrap(formatter, { handleInitialFocusing: false });
 </script>
 
 <template>
   <WithFadeTransition @before-leave="rememberContainerWidth" @enter="animateContainerWidth">
-    <div v-if="!isEditingLink" class="formatter__contents-wrapper">
+    <div v-if="!isEditingLink" ref="formatter" class="formatter__contents-wrapper">
       <WithTooltip>
         <template #default="{ tooltipId }">
           <button

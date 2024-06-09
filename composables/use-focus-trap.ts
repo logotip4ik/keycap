@@ -17,8 +17,8 @@ export function useFocusTrap(
   let scheduled: boolean = true;
 
   function stop() {
-    off && off();
-    observer && observer.disconnect();
+    off?.();
+    observer?.disconnect();
 
     off = undefined;
     observer = undefined;

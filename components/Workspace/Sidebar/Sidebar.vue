@@ -45,10 +45,7 @@ function hideIf(trigger: SidebarState) {
   }
 }
 
-let off: (() => void) | undefined;
 watch(state, debounce((state: SidebarState) => {
-  off && off();
-
   updateTabindexForFocusableElements(state);
 
   const cookieValue: SidebarState = state === 'visible' ? 'hidden' : state;
@@ -81,7 +78,6 @@ onMounted(() => {
 
   onBeforeUnmount(() => {
     observer.disconnect();
-    off && off();
   });
 });
 </script>
