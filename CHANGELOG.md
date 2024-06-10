@@ -1,6 +1,40 @@
 # Changelog
 
 
+## v3.12.0
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.11.14...v3.12.0)
+
+### 🚀 Enhancements
+
+- Emoji picker ([#25](https://github.com/logotip4ik/keycap/pull/25))
+
+### 🩹 Fixes
+
+- Allow focusing formatter with relative arrow keys ([a14f337e](https://github.com/logotip4ik/keycap/commit/a14f337e))
+
+### 🏡 Chore
+
+- **release:** V3.11.14 ([79141a15](https://github.com/logotip4ik/keycap/commit/79141a15))
+- Update deps ([07bc86a7](https://github.com/logotip4ik/keycap/commit/07bc86a7))
+- Some minor changes in build and modules ([cfbf442d](https://github.com/logotip4ik/keycap/commit/cfbf442d))
+- Simplify a bit bubble box implementation and change note loading message ([5a7c8585](https://github.com/logotip4ik/keycap/commit/5a7c8585))
+- Mark all fields as private ([86178af6](https://github.com/logotip4ik/keycap/commit/86178af6))
+- Disable origin check for dev env ([7ffa6246](https://github.com/logotip4ik/keycap/commit/7ffa6246))
+- Add ability to focus formatter with arrow keys ([9630f10a](https://github.com/logotip4ik/keycap/commit/9630f10a))
+
+### 🎨 Styles
+
+- Remove not needed zero value ([c539ed55](https://github.com/logotip4ik/keycap/commit/c539ed55))
+
+### 🤖 CI
+
+- Bump actions/checkout from 4.1.4 to 4.1.6 in the actions group ([#24](https://github.com/logotip4ik/keycap/pull/24))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.11.14
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.11.13...v3.11.14)
