@@ -1,10 +1,8 @@
 <script setup lang="ts">
-defineProps<{
-  state: SidebarState
-  onUpdateState: (newState: SidebarState) => void
-}>();
+import { useContentsState } from './config';
 
 const route = useRoute();
+const { state } = useContentsState();
 
 interface Crumb { name: string, href: string }
 const crumbs = computed(() => {
@@ -60,8 +58,8 @@ const crumbs = computed(() => {
       class="contents__header__open-btn"
       :class="{ 'contents__header__open-btn--exposed': state === 'hidden' }"
       :aria-pressed="state === 'pinned'"
-      @click="onUpdateState(unpinSidebar(state))"
-      @mouseenter="state === 'hidden' && onUpdateState('visible')"
+      @click="state = unpinSidebar(state)"
+      @mouseenter="state === 'hidden' && (state = 'visible')"
     >
       <LazyIconOutlineFolder class="contents__header__open-btn__icon" />
     </button>

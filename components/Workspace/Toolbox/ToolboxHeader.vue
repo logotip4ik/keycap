@@ -1,10 +1,8 @@
 <script setup lang="ts">
-defineProps<{
-  state: SidebarState
-  onUpdateState: (newState: SidebarState) => void
-}>();
+import { useToolboxState } from './config';
 
 const user = useUser();
+const { state } = useToolboxState();
 </script>
 
 <template>
@@ -14,8 +12,8 @@ const user = useUser();
       class="toolbox__header__open-btn"
       :class="{ 'toolbox__header__open-btn--exposed': state === 'hidden' }"
       :aria-pressed="state === 'pinned'"
-      @click="onUpdateState(unpinSidebar(state))"
-      @mouseenter="state === 'hidden' && onUpdateState('visible')"
+      @click="state = unpinSidebar(state)"
+      @mouseenter="state === 'hidden' && (state = 'visible')"
     >
       <LazyIconMenuRounded class="toolbox__header__open-btn__icon" />
     </button>

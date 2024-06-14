@@ -32,20 +32,22 @@ export function unpinSidebar(state: MaybeRef<SidebarState>): SidebarState {
     : 'pinned';
 }
 
+// These are for general purpose and will just do what ever you tell them. Also, you should only use
+// these outside of sidebar itself
 export function useToolboxSidebar() {
   return {
-    visibility: makeSidebarVisibility('toolbox'),
+    state: makeSidebarState('toolbox'),
   };
 }
 
 export function useContentsSidebar() {
   return {
-    visibility: makeSidebarVisibility('contents'),
+    state: makeSidebarState('contents'),
   };
 }
 
 const stateWhitelist = ['hidden', 'visible', 'pinned'] satisfies Array<SidebarState>;
-export function makeSidebarVisibility(key: string): Ref<SidebarState> {
+export function makeSidebarState(key: string): Ref<SidebarState> {
   return useState<SidebarState>(key, () => {
     const value = getUCookie<SidebarState>(key);
 

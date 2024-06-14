@@ -1,8 +1,5 @@
 <script setup lang="ts">
-const props = defineProps<{
-  state: SidebarState
-  onUpdateState: (newState: SidebarState) => void
-}>();
+import { useContentsState } from '../config';
 
 const route = useRoute();
 const isFallbackMode = useFallbackMode();
@@ -11,6 +8,7 @@ const offlineStorage = useOfflineStorage();
 const createToast = useToaster();
 const user = useUser();
 const { shortcuts } = useAppConfig();
+const { state: contentsState } = useContentsState();
 
 const folderApiPath = computed(() => getCurrentFolderPath(route).slice(0, -1));
 const folderPath = computed(() => `/${route.params.user}${folderApiPath.value}`);
@@ -146,7 +144,7 @@ function handleArrowsPress(event: KeyboardEvent) {
   elementToFocus && elementToFocus.focus();
 }
 
-watch(() => props.state, (state, oldState) => {
+watch(() => contentsState.value, (state, oldState) => {
   if (
     state !== 'hidden'
     && (!oldState || oldState === 'hidden')
@@ -168,8 +166,8 @@ useTinykeys({
   [shortcuts.new]: async (event) => {
     event.preventDefault();
 
-    if (props.state === 'hidden') {
-      props.onUpdateState('visible');
+    if (contentsState.value === 'hidden') {
+      contentsState.value = 'visible';
     }
 
     const alreadyCreating = folder.value && folder.value.notes.some((note) => note.creating);
@@ -193,7 +191,7 @@ if (import.meta.client) {
 
     if (
       document.visibilityState === 'visible'
-      && props.state !== 'hidden'
+      && contentsState.value !== 'hidden'
       && timeDiff > parseDuration('15 seconds')!
     ) {
       refresh();

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useContentsState } from '../config';
+
 const props = defineProps<{
   item: FolderOrNote
   parent: FolderWithContents
@@ -9,7 +11,7 @@ const props = defineProps<{
 const isFolder = checkIsFolder(props.item);
 
 const route = useRoute();
-const { visibility: contentsVisibility } = useContentsSidebar();
+const { state: contentsState } = useContentsState();
 const { isSmallScreen } = useDevice();
 
 const link = shallowRef<ComponentPublicInstance | null>(null);
@@ -19,7 +21,7 @@ const isActive = computed(() => itemHref.value === route.path);
 
 function unpinIfNeeded() {
   if (isSmallScreen.value && !isFolder) {
-    contentsVisibility.value = 'hidden';
+    contentsState.value = 'hidden';
   }
 }
 

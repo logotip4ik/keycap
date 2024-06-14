@@ -1,8 +1,7 @@
 <script setup lang="ts">
-const props = defineProps<{
-  state: SidebarState
-  onUpdateState: (newState: SidebarState) => void
-}>();
+import { useToolboxState } from '../config';
+
+const { state } = useToolboxState();
 
 const POLLING_TIME = parseDuration('5 minutes');
 let pollingTimer: NodeJS.Timeout | undefined;
@@ -20,8 +19,8 @@ const { data: recent, refresh } = await useAsyncData('recent', async () => {
   immediate: false,
 });
 
-const stop = watch(() => props.state, (state) => {
-  if (state !== 'hidden') {
+const stop = watch(() => state.value, (visibility) => {
+  if (visibility !== 'hidden') {
     setTimeout(() => {
       refresh();
       stop();
@@ -51,7 +50,7 @@ const stop = watch(() => props.state, (state) => {
         >
           <WorkspaceToolboxRecentItem
             :item="item"
-            @keydown.enter="onUpdateState('hidden')"
+            @keydown.enter="state = 'hidden'"
           >
             {{ item.name }}
           </WorkspaceToolboxRecentItem>

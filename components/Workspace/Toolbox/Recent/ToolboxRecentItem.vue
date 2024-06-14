@@ -1,16 +1,18 @@
 <script setup lang="ts">
+import { useToolboxState } from '../config';
+
 const props = defineProps<{
   item: NoteMinimal
 }>();
 
 const { isSmallScreen } = useDevice();
-const { visibility: toolbox } = useToolboxSidebar();
+const { state } = useToolboxState();
 
 const itemHref = computed(() => generateItemPath(props.item));
 
 function unpinIfNeeded() {
   if (isSmallScreen.value) {
-    toolbox.value = 'hidden';
+    state.value = 'hidden';
   }
 }
 </script>

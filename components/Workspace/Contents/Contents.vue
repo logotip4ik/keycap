@@ -1,35 +1,36 @@
 <script setup lang="ts">
-const { shortcuts } = useAppConfig();
-const { visibility: contentsVisibility } = useContentsSidebar();
-const { visibility: toolboxVisibility } = useToolboxSidebar();
+import { ContentsState } from './config';
 
-function updateState(newState: SidebarState) {
-  contentsVisibility.value = newState;
-}
+const { shortcuts } = useAppConfig();
+const { state } = useContentsSidebar();
+const { state: toolboxState } = useToolboxSidebar();
+
+const contentsState = computed<SidebarState>({
+  get: () => state.value,
+  set: (value) => {
+    state.value = value;
+
+    hideSidebarsIfNeeded();
+  },
+});
+
+provide(ContentsState, { state: contentsState });
 
 function hideSidebarsIfNeeded() {
-  const sidebar = shouldUnpinSidebar(contentsVisibility, toolboxVisibility);
+  const sidebar = shouldUnpinSidebar(contentsState, toolboxState);
 
   if (sidebar) {
     sidebar.value = 'hidden';
   }
 }
 
-function smartUpdateState(newState: SidebarState) {
-  contentsVisibility.value = newState;
-
-  hideSidebarsIfNeeded();
-}
-
 useTinykeys({
   [shortcuts.contents]: (e) => {
     e.preventDefault();
 
-    smartUpdateState(
-      contentsVisibility.value === 'hidden'
-        ? 'visible'
-        : 'hidden',
-    );
+    contentsState.value = contentsState.value === 'hidden'
+      ? 'visible'
+      : 'hidden';
   },
 });
 
@@ -52,21 +53,14 @@ if (import.meta.client) {
   <WorkspaceSidebar
     dir="right"
     name="contents"
-    :state="contentsVisibility"
-    @update-state="updateState"
+    :injection-key="ContentsState"
   >
-    <WorkspaceContentsHeader
-      :state="contentsVisibility"
-      @update-state="smartUpdateState"
-    />
+    <WorkspaceContentsHeader />
 
     <WorkspaceContentsCreateButton />
 
     <hr>
 
-    <WorkspaceContentsList
-      :state="contentsVisibility"
-      @update-state="smartUpdateState"
-    />
+    <WorkspaceContentsList />
   </WorkspaceSidebar>
 </template>

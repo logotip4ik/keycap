@@ -1,35 +1,36 @@
 <script setup lang="ts">
-const { shortcuts } = useAppConfig();
-const { visibility: toolboxVisibility } = useToolboxSidebar();
-const { visibility: contentsVisibility } = useContentsSidebar();
+import { ToolboxState } from './config';
 
-function updateState(newState: SidebarState) {
-  toolboxVisibility.value = newState;
-}
+const { shortcuts } = useAppConfig();
+const { state } = useToolboxSidebar();
+const { state: contentsState } = useContentsSidebar();
+
+const toolboxState = computed<SidebarState>({
+  get: () => state.value,
+  set: (value) => {
+    state.value = value;
+
+    hideSidebarsIfNeeded();
+  },
+});
+
+provide(ToolboxState, { state: toolboxState });
 
 function hideSidebarsIfNeeded() {
-  const sidebar = shouldUnpinSidebar(toolboxVisibility, contentsVisibility);
+  const sidebar = shouldUnpinSidebar(toolboxState, contentsState);
 
   if (sidebar) {
     sidebar.value = 'hidden';
   }
 }
 
-function smartUpdateState(newState: SidebarState) {
-  toolboxVisibility.value = newState;
-
-  hideSidebarsIfNeeded();
-}
-
 useTinykeys({
   [shortcuts.toolbox]: (e) => {
     e.preventDefault();
 
-    smartUpdateState(
-      toolboxVisibility.value === 'hidden'
-        ? 'visible'
-        : 'hidden',
-    );
+    toolboxState.value = toolboxState.value === 'hidden'
+      ? 'visible'
+      : 'hidden';
   },
 });
 
@@ -51,26 +52,16 @@ if (import.meta.client) {
 <template>
   <WorkspaceSidebar
     name="toolbox"
-    :state="toolboxVisibility"
-    @update-state="updateState"
+    :injection-key="ToolboxState"
   >
     <!-- TODO: add fade ? animation when entering. Something like iphone quick settings menu -->
-    <WorkspaceToolboxHeader
-      :state="toolboxVisibility"
-      @update-state="smartUpdateState"
-    />
+    <WorkspaceToolboxHeader />
 
-    <WorkspaceToolboxUtils
-      :state="toolboxVisibility"
-      @update-state="smartUpdateState"
-    />
+    <WorkspaceToolboxUtils />
 
     <hr>
 
-    <WorkspaceToolboxRecent
-      :state="toolboxVisibility"
-      @update-state="smartUpdateState"
-    />
+    <WorkspaceToolboxRecent />
 
     <WorkspaceToolboxSettings />
 

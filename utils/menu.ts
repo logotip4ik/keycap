@@ -10,7 +10,7 @@ interface Command {
 
 export const commandActions: Record<Command['key'], Command['handler']> = {
   [SearchAction.New]: (args) => {
-    const { visibility: contentsVisibility } = useContentsSidebar();
+    const { state } = useContentsSidebar();
     const folder = useNuxtApp()._asyncData.folder;
 
     if (!folder) {
@@ -25,8 +25,8 @@ export const commandActions: Record<Command['key'], Command['handler']> = {
 
     preCreateItem(folderData.value, args ? { name: args.join(' ') } : undefined);
 
-    if (contentsVisibility.value === 'hidden') {
-      contentsVisibility.value = 'visible';
+    if (state.value === 'hidden') {
+      state.value = 'visible';
     }
   },
   [SearchAction.Refresh]: () => {

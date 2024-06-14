@@ -4,13 +4,12 @@ type FocusableElement = HTMLAnchorElement | HTMLButtonElement;
 const props = withDefaults(defineProps<{
   dir?: 'left' | 'right'
   name: string
-  state: SidebarState
-  onUpdateState: (newState: SidebarState) => void
+  injectionKey: InjectionKey<{ state: Ref<SidebarState> }>
 }>(), { dir: 'left' });
 
 const sidebar = shallowRef<HTMLDivElement | null>(null);
 const focusableElements = shallowRef<Array<FocusableElement>>([]);
-const state = toRef(props, 'state');
+const { state } = inject(props.injectionKey)!;
 
 defineExpose({ el: sidebar });
 
@@ -41,14 +40,14 @@ function updateTabindexForFocusableElements(currentState: SidebarState) {
 
 function hideIf(trigger: SidebarState) {
   if (state.value === trigger) {
-    props.onUpdateState('hidden');
+    state.value = 'hidden';
   }
 }
 
 watch(state, debounce((state: SidebarState) => {
   updateTabindexForFocusableElements(state);
 
-  const cookieValue: SidebarState = state === 'visible' ? 'hidden' : state;
+  const cookieValue = state === 'visible' ? 'hidden' : state;
   setUCookie(props.name, cookieValue, {
     path: '/',
     secure: true,
@@ -94,7 +93,7 @@ onMounted(() => {
     class="sidebar"
     :class="{ 'sidebar--hidden': state === 'hidden', 'sidebar--right': dir === 'right' }"
     :tabindex="state === 'hidden' ? undefined : 0"
-    @mouseleave="state === 'visible' && onUpdateState('hidden')"
+    @mouseleave="state === 'visible' && (state = 'hidden')"
   >
     <slot />
   </aside>

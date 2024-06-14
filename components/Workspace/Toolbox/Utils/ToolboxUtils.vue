@@ -1,16 +1,15 @@
 <script setup lang="ts">
+import { useToolboxState } from '../config';
+
 import {
   LazyWorkspaceToolboxUtilsButtonItemDetails,
   LazyWorkspaceToolboxUtilsButtonSearch,
 } from '#components';
 
-const props = defineProps<{
-  state: SidebarState
-  onUpdateState: (newState: SidebarState) => void
-}>();
-
 const route = useRoute();
 const { isSmallScreen } = useDevice();
+const { state } = useToolboxState();
+
 const utilsEl = shallowRef<ComponentPublicInstance<HTMLUListElement> | null>(null);
 
 interface Util {
@@ -47,8 +46,8 @@ function transitionHeight() {
 }
 
 function hideIfNeeded() {
-  if (isSmallScreen.value && props.state === 'pinned') {
-    props.onUpdateState('hidden');
+  if (isSmallScreen.value && state.value === 'pinned') {
+    state.value = 'hidden';
   }
 }
 </script>

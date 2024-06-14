@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import { useContentsState } from '../config';
+
 const props = defineProps<{
   item: FolderOrNote
   parent: FolderWithContents
 }>();
 
-const { visibility } = useContentsSidebar();
+const { state: contentsState } = useContentsState();
 const createToast = useToaster();
 const { isSmallScreen } = useDevice();
 
@@ -40,9 +42,9 @@ function handleSubmit() {
 
   promise
     .then(() => {
-      visibility.value = isSmallScreen.value
+      contentsState.value = isSmallScreen.value
         ? 'hidden'
-        : (visibility.value === 'visible' ? 'hidden' : visibility.value);
+        : (contentsState.value === 'visible' ? 'hidden' : contentsState.value);
 
       useTiptap().withEditor((editor) => editor.commands.focus());
     })
