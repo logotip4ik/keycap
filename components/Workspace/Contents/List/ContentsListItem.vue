@@ -14,7 +14,7 @@ const route = useRoute();
 const { state: contentsState } = useContentsState();
 const { isSmallScreen } = useDevice();
 
-const link = shallowRef<ComponentPublicInstance | null>(null);
+const linkComp = shallowRef<ComponentPublicInstance | null>(null);
 
 const itemHref = computed(() => generateItemPath(props.item));
 const isActive = computed(() => itemHref.value === route.path);
@@ -26,11 +26,11 @@ function unpinIfNeeded() {
 }
 
 function showMenu(event: Event) {
-  if (!link.value || props.menuTarget === link.value.$el) {
+  if (!linkComp.value || props.menuTarget === linkComp.value.$el) {
     return;
   }
 
-  props.onShowMenu(link.value.$el);
+  props.onShowMenu(linkComp.value.$el);
 
   event.preventDefault();
 }
@@ -38,7 +38,7 @@ function showMenu(event: Event) {
 
 <template>
   <NuxtLink
-    ref="link"
+    ref="linkComp"
     :href="itemHref"
     class="list__item"
     :class="{ 'list__item--active': isActive }"
@@ -59,7 +59,7 @@ function showMenu(event: Event) {
       v-if="isSmallScreen"
       class="list__item__edit"
       :aria-label="`show ${isFolder ? 'folder' : 'note'} actions`"
-      @click.prevent.stop="link && onShowMenu(link.$el)"
+      @click.prevent.stop="linkComp && onShowMenu(linkComp.$el)"
     >
       <LazyIconBaselineMoreVert v-once class="list__item__icon list__item__icon--edit" />
     </button>

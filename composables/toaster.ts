@@ -6,12 +6,12 @@ const toasts = shallowRef<Array<ToastInstance>>([]);
 export const useToasts = () => toasts;
 
 function addToQueue(message: ToastInstance['message'], options?: ToastUserOptions & { delay?: number }): ToastInstance {
-  const timeout: { value: NodeJS.Timeout | null } = { value: null };
+  const timeout: { value: NodeJS.Timeout | undefined } = { value: undefined };
 
   const toast = createToast({ ...options, message, timeout });
 
   const addToastToQueue = () => {
-    timeout.value = null;
+    timeout.value = undefined;
     toasts.value = toasts.value.concat(toast);
   };
 
@@ -29,7 +29,7 @@ export function useToaster() {
   return addToQueue;
 }
 
-function createToast(options: ToastUserOptions & { message: ToastInstance['message'], timeout: { value: NodeJS.Timeout | null } }): ToastInstance {
+function createToast(options: ToastUserOptions & { message: ToastInstance['message'], timeout: { value: NodeJS.Timeout | undefined } }): ToastInstance {
   if (unref(options.message).trim() === '') {
     throw new Error('no message was provided');
   }

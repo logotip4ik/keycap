@@ -80,7 +80,7 @@ const { data: note, refresh } = await useAsyncData<NoteWithContent | undefined>(
   deep: false,
 });
 
-let abortControllerUpdate: AbortController | null;
+let abortControllerUpdate: AbortController | undefined;
 const throttledNoteUpdate = useThrottleFn(forceUpdateNote, 1500, true, false); // enable trailing call and disable leading
 function forceUpdateNote(content: string) {
   // if no note was found in cache that means that it was deleted

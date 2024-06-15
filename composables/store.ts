@@ -5,7 +5,7 @@ import type { Remote } from 'comlink';
 import { del, get, keys, set } from 'idb-keyval';
 import type { SafeUser } from '~/types/server';
 
-export const useCurrentItemForDetails = () => useState<FolderOrNote | null>(() => null);
+export const useCurrentItemForDetails = () => useState<FolderOrNote | undefined>(() => undefined);
 export const useUser = () => useState<SafeUser | undefined>('user', () => undefined);
 
 const notesCache = LRUCache(20);

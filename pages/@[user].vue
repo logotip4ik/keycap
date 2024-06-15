@@ -59,7 +59,7 @@ useTinykeys({
     event.preventDefault();
 
     if (currentItemForDetails.value) {
-      currentItemForDetails.value = null;
+      currentItemForDetails.value = undefined;
     }
 
     isShowingSearch.value = !isShowingSearch.value;

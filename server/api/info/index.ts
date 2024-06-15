@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
       ])).catch(async (err) => {
         await logger.error(event, { err, msg: 'info failed' });
 
-        return [null, null];
+        return [undefined, undefined];
       });
 
     if (users) {

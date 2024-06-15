@@ -36,11 +36,11 @@ const rowsData = [
 ];
 
 function unsetCurrentDetailsItem() {
-  details.value = null; // clearing details from prev request
-  currentItemForDetails.value = null;
+  details.value = undefined; // clearing details from prev request
+  currentItemForDetails.value = undefined;
 }
 
-let prevPopupHeight: number | null;
+let prevPopupHeight: number | undefined;
 function rememberHeight() {
   prevPopupHeight = itemDetailsEl.value!.clientHeight;
 }

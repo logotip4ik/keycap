@@ -8,7 +8,7 @@ const props = defineProps<{
 const { isSmallScreen } = useDevice();
 
 const shouldShow = ref(false);
-const target = shallowRef<HTMLElement | null>(null);
+const targetEl = shallowRef<HTMLElement | null>(null);
 const tooltipEl = shallowRef<HTMLElement | null>(null);
 const tooltipId = (Math.random() * 1_000_000_000).toFixed(0);
 
@@ -17,7 +17,7 @@ const cleanups: Array<() => any> = [];
 const handlerOptions = { passive: true };
 
 let timeout: NodeJS.Timeout | undefined;
-watch(target, (target) => {
+watch(targetEl, (target) => {
   cleanup();
 
   if (!target) {
@@ -38,13 +38,13 @@ watch(target, (target) => {
 });
 
 watch(shouldShow, async (shouldShow) => {
-  if (!shouldShow || !target.value || !tooltipEl.value) {
+  if (!shouldShow || !targetEl.value || !tooltipEl.value) {
     return;
   }
 
   const { computePosition, offset, shift } = await loadFloatingUi();
 
-  const { x, y } = await computePosition(target.value, tooltipEl.value, {
+  const { x, y } = await computePosition(targetEl.value, tooltipEl.value, {
     placement: 'bottom',
     middleware: [
       offset({
@@ -80,7 +80,7 @@ onMounted(() => {
     return;
   }
 
-  target.value = (instance.vnode.el as HTMLElement).nextElementSibling as HTMLElement | null;
+  targetEl.value = (instance.vnode.el as HTMLElement).nextElementSibling as HTMLElement;
 });
 
 onBeforeUnmount(cleanup);

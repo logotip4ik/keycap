@@ -17,7 +17,7 @@ const detailsItem = useCurrentItemForDetails();
 
 const isFolder = checkIsFolder(props.item);
 
-const menu = shallowRef<null | HTMLElement>(null);
+const menuEl = shallowRef<HTMLElement | null>(null);
 const currentlyConfirming = ref(-1); // You can confirm one at a time
 
 const actions = [
@@ -28,7 +28,7 @@ const actions = [
   { name: 'delete', needConfirmation: true, handler: deleteItem },
 ];
 
-let cleanup: null | (() => void);
+let cleanup: (() => void) | undefined;
 const confirmDuration = parseDuration('5 seconds')!;
 
 function withEffects(event: Event, action: MenuAction) {
@@ -60,7 +60,7 @@ function withEffects(event: Event, action: MenuAction) {
       action.handler();
 
       cleanup!();
-      cleanup = null;
+      cleanup = undefined;
     });
 
     for (const eventType of targetCancelEvents) {
@@ -123,7 +123,7 @@ function openNewTab() {
   props.onClose();
 }
 
-useClickOutside(menu, () => props.onClose());
+useClickOutside(menuEl, () => props.onClose());
 
 useTinykeys({
   Escape: () => props.onClose(),
@@ -132,12 +132,12 @@ useTinykeys({
 onMounted(async () => {
   props.target.classList.add('selected');
 
-  if (!menu.value) {
+  if (!menuEl.value) {
     return;
   }
 
   const { computePosition, flip, offset } = await loadFloatingUi();
-  const { x, y } = await computePosition(props.target, menu.value, {
+  const { x, y } = await computePosition(props.target, menuEl.value, {
     placement: 'bottom-start',
     middleware: [
       offset(4),
@@ -145,13 +145,13 @@ onMounted(async () => {
     ],
   });
 
-  menu.value.style.top = `${y}px`;
-  menu.value.style.left = `${x}px`;
+  menuEl.value.style.top = `${y}px`;
+  menuEl.value.style.left = `${x}px`;
 });
 
 onBeforeUnmount(() => {
   cleanup?.();
-  cleanup = null;
+  cleanup = undefined;
 
   props.target.classList.remove('selected');
 });
@@ -161,7 +161,7 @@ onBeforeUnmount(() => {
   <Teleport :to="props.target.parentElement">
     <WithFadeTransition appear>
       <ul
-        ref="menu"
+        ref="menuEl"
         role="menu"
         class="item-context-menu fast-fade"
         aria-orientation="vertical"

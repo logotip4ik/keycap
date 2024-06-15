@@ -65,7 +65,7 @@ useTinykeys({
   Escape: () => hideIf('visible'),
 });
 useFocusTrap(
-  computed(() => state.value === 'visible' ? sidebar.value : null),
+  computed(() => state.value === 'visible' ? sidebar.value : undefined),
   { handleInitialFocusing: false },
 );
 

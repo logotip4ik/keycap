@@ -10,7 +10,7 @@ const props = defineProps<{
 
 const { editor } = useTiptap();
 
-const emojiPicker = shallowRef<HTMLDivElement | null>(null);
+const emojiPickerEl = shallowRef<HTMLDivElement | null>(null);
 const selectedEmoji = ref(0);
 
 const isVisible = computed(() => props.shouldBeVisible && props.items.length > 0);
@@ -20,7 +20,7 @@ watch(() => props.items, () => {
 });
 
 watch(
-  [emojiPicker, isVisible],
+  [emojiPickerEl, isVisible],
   async ([emojiPicker, isVisible], _, onCleanup) => {
     const { getBoundingClientRect } = props;
     const { computePosition, flip, shift, offset } = await loadFloatingUi();
@@ -53,7 +53,7 @@ function handleKeypress(event: KeyboardEvent) {
   const target = event.target as HTMLButtonElement;
 
   if (event.key === 'ArrowDown') {
-    const button = emojiPicker.value?.querySelector('button');
+    const button = emojiPickerEl.value?.querySelector('button');
 
     button?.focus();
 
@@ -64,7 +64,7 @@ function handleKeypress(event: KeyboardEvent) {
   }
   else if (
     (event.key === 'ArrowLeft' || event.key === 'ArrowRight')
-    && emojiPicker.value?.contains(target)
+    && emojiPickerEl.value?.contains(target)
   ) {
     const parent = target.parentElement as HTMLLIElement;
 
@@ -85,14 +85,14 @@ function getNativeSkin(emoji: Emoji) {
   return emoji.skins[0].native;
 }
 
-useFocusTrap(emojiPicker, { handleInitialFocusing: false });
+useFocusTrap(emojiPickerEl, { handleInitialFocusing: false });
 </script>
 
 <template>
   <div>
     <Teleport to="#teleports">
       <WithFadeTransition>
-        <ul v-if="isVisible" ref="emojiPicker" class="emoji-picker">
+        <ul v-if="isVisible" ref="emojiPickerEl" class="emoji-picker">
           <li v-for="(emoji, i) in items" :key="emoji.id" class="emoji-picker__item">
             <WithTooltip
               v-slot="{ tooltipId }"

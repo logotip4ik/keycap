@@ -10,8 +10,8 @@ const oauthEnabled = import.meta.config.oauthEnabled;
 const user = useUser();
 const createToast = useToaster();
 
-const emailComponent = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);
-const passwordComponent = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);
+const emailComp = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);
+const passwordComp = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);
 
 const isLoading = ref(false);
 
@@ -25,8 +25,8 @@ watch(
 
 async function login() {
   const data = {
-    email: emailComponent.value?.$el.value,
-    password: passwordComponent.value?.$el.value,
+    email: emailComp.value?.$el.value,
+    password: passwordComp.value?.$el.value,
   };
 
   if (!data.email || !data.password) {
@@ -71,7 +71,7 @@ async function login() {
 
         <FormInput
           id="email"
-          ref="emailComponent"
+          ref="emailComp"
           type="email"
           name="email"
           placeholder="email"
@@ -88,7 +88,7 @@ async function login() {
 
         <FormInput
           id="password"
-          ref="passwordComponent"
+          ref="passwordComp"
           type="password"
           name="password"
           placeholder="password"

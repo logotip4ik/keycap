@@ -9,7 +9,7 @@ const props = defineProps<{
   editor: Editor
 }>();
 
-const formatter = shallowRef<HTMLElement | null>(null);
+const formatterEl = shallowRef<HTMLElement | null>(null);
 
 const linkInputPlaceholder = ref(LinkInputPlaceholder.INITIALLY_EMPTY);
 const isEditingLink = ref(false);
@@ -174,16 +174,16 @@ function toggleListItem() {
 function focusFormatter(event: KeyboardEvent) {
   const { from, to } = props.editor.state.selection;
 
-  if (!formatter.value || (props.editor.isFocused && to - from <= 0)) {
+  if (!formatterEl.value || (props.editor.isFocused && to - from <= 0)) {
     return;
   }
 
   event.preventDefault();
-  (formatter.value.firstElementChild as HTMLElement).focus();
+  (formatterEl.value.firstElementChild as HTMLElement).focus();
 }
 
 function focusEditor(event: KeyboardEvent) {
-  if (formatter.value && formatter.value.contains(event.target as HTMLElement)) {
+  if (formatterEl.value && formatterEl.value.contains(event.target as HTMLElement)) {
     event.preventDefault();
     props.editor.commands.focus();
   }
@@ -245,12 +245,12 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
   prevAnchor = anchor;
 });
 
-useFocusTrap(formatter, { handleInitialFocusing: false });
+useFocusTrap(formatterEl, { handleInitialFocusing: false });
 </script>
 
 <template>
   <WithFadeTransition @before-leave="rememberContainerWidth" @enter="animateContainerWidth">
-    <div v-if="!isEditingLink" ref="formatter" class="formatter__contents-wrapper">
+    <div v-if="!isEditingLink" ref="formatterEl" class="formatter__contents-wrapper">
       <WithTooltip>
         <template #default="{ tooltipId }">
           <button

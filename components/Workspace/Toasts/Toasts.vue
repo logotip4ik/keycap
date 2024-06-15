@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const toasts = useToasts();
 
-const toasterEl = shallowRef<null | ComponentPublicInstance<HTMLElement>>(null);
+const toasterComp = shallowRef<ComponentPublicInstance<HTMLElement> | null>(null);
 
 const sortedToasts = computed(() =>
   toasts.value.slice().sort((a, b) => a.priority - b.priority),
@@ -13,7 +13,7 @@ function preservePositionAndSize(el: Element) {
   const elClientRect = el.getBoundingClientRect();
 
   if (!toasterElClientRect) {
-    toasterElClientRect = toasterEl.value!.$el.getBoundingClientRect();
+    toasterElClientRect = toasterComp.value!.$el.getBoundingClientRect();
   }
 
   const relativeBottomPos = (toasterElClientRect!.bottom - elClientRect.bottom);
@@ -36,7 +36,7 @@ if (import.meta.client) {
 <template>
   <Teleport to="#teleports">
     <TransitionGroup
-      ref="toasterEl"
+      ref="toasterComp"
       class="toasts"
       tag="section"
       name="toast"

@@ -9,7 +9,7 @@ export function toBigInt(string: string): bigint {
   return stringifiedBigIntRE.test(string) ? BigInt(string) : falsyBigInt;
 }
 
-export function getHydrationPromise(app?: NuxtApp): false | undefined | null | Promise<unknown> {
+export function getHydrationPromise(app?: NuxtApp): false | undefined | Promise<unknown> {
   const nuxtApp = app || useNuxtApp();
 
   return nuxtApp.isHydrating === true
@@ -22,7 +22,7 @@ export function devError<T>(msg: string): T {
     throw new Error(msg);
   }
 
-  return Promise.resolve() as T;
+  return new Promise((r) => r(undefined)) as T;
 }
 
 if (import.meta.vitest) {

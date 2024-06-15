@@ -10,7 +10,7 @@ const route = useRoute();
 const { isSmallScreen } = useDevice();
 const { state } = useToolboxState();
 
-const utilsEl = shallowRef<ComponentPublicInstance<HTMLUListElement> | null>(null);
+const utilsComp = shallowRef<ComponentPublicInstance<HTMLUListElement> | null>(null);
 
 interface Util {
   shouldShow?: ComputedRef<boolean>
@@ -29,17 +29,17 @@ const utils: Array<Util> = [
 
 let prevHeight: number;
 function rememberHeight() {
-  if (!utilsEl.value) {
+  if (!utilsComp.value) {
     return;
   }
 
-  prevHeight = utilsEl.value.$el.clientHeight;
+  prevHeight = utilsComp.value.$el.clientHeight;
 }
 
 function transitionHeight() {
-  const currentHeight = utilsEl.value?.$el.clientHeight;
+  const currentHeight = utilsComp.value?.$el.clientHeight;
 
-  utilsEl.value?.$el.animate([
+  utilsComp.value?.$el.animate([
     { height: `${prevHeight}px` },
     { height: `${currentHeight}px` },
   ], { duration: 375, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' });
@@ -54,7 +54,7 @@ function hideIfNeeded() {
 
 <template>
   <TransitionGroup
-    ref="utilsEl"
+    ref="utilsComp"
     tag="ul"
     name="fade"
     class="toolbox__utils"

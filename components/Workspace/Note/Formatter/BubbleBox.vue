@@ -10,14 +10,14 @@ const props = defineProps<{
 const { setting } = useSetting(settings.formatterPosition);
 
 const BubblePluginKey = 'bubbleMenu';
-const bubble = ref<HTMLElement | null>(null);
+const bubbleEl = ref<HTMLElement | null>(null);
 
 function unregister() {
   props.editor.unregisterPlugin(BubblePluginKey);
 }
 
 function register() {
-  if (!bubble.value) {
+  if (!bubbleEl.value) {
     return;
   }
 
@@ -25,7 +25,7 @@ function register() {
     BubbleMenuPlugin({
       pluginKey: BubblePluginKey,
       editor: props.editor,
-      element: bubble.value,
+      element: bubbleEl.value,
       placement: setting.value,
     }),
   );
@@ -41,7 +41,7 @@ onBeforeUnmount(() => unregister());
 </script>
 
 <template>
-  <div ref="bubble" class="formatter floating">
+  <div ref="bubbleEl" class="formatter floating">
     <slot />
   </div>
 </template>

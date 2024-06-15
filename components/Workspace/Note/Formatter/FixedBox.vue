@@ -6,16 +6,16 @@ defineProps<{
 }>();
 
 const isFallbackMode = useFallbackMode();
-const fixedBox = shallowRef<HTMLElement | null>(null);
+const fixedBoxEl = shallowRef<HTMLElement | null>(null);
 
 const hiddenClass = 'inline-menu__hidden';
 
 let prevFormatterPosition: number = 0;
-let prevAnimation: Animation | null;
+let prevAnimation: Animation | undefined;
 function handleKeyboardAppear() {
   const viewport = window.visualViewport;
 
-  if (!fixedBox.value || !viewport || prevAnimation) {
+  if (!fixedBoxEl.value || !viewport || prevAnimation) {
     return;
   }
 
@@ -23,14 +23,14 @@ function handleKeyboardAppear() {
     - viewport.offsetTop
     - viewport.height;
 
-  prevAnimation = fixedBox.value.animate([
+  prevAnimation = fixedBoxEl.value.animate([
     { transform: `translate3d(0,${-1 * prevFormatterPosition}px,0)` },
     { transform: `translate3d(0,${-1 * formatterPosition}px,0)` },
   ], { fill: 'forwards', duration: 100, easing: 'cubic-bezier(0.33, 1, 0.68, 1)' });
 
   prevAnimation.addEventListener('finish', () => {
-    fixedBox.value?.classList.remove(hiddenClass);
-    prevAnimation = null;
+    fixedBoxEl.value?.classList.remove(hiddenClass);
+    prevAnimation = undefined;
     prevFormatterPosition = formatterPosition;
   });
 }
@@ -38,7 +38,7 @@ function handleKeyboardAppear() {
 const debouncedKeyboardAppear = debounce(handleKeyboardAppear, 75);
 
 function handleMobileScroll() {
-  fixedBox.value?.classList.add(hiddenClass);
+  fixedBoxEl.value?.classList.add(hiddenClass);
 
   debouncedKeyboardAppear();
 }
@@ -58,7 +58,7 @@ if (import.meta.client) {
 
 <template>
   <WithFadeTransition appear>
-    <div v-show="!isFallbackMode" ref="fixedBox" class="inline-menu formatter">
+    <div v-show="!isFallbackMode" ref="fixedBoxEl" class="inline-menu formatter">
       <slot />
     </div>
   </WithFadeTransition>

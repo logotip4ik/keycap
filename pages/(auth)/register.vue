@@ -14,9 +14,9 @@ const user = useUser();
 const createToast = useToaster();
 const { turnstile } = useRuntimeConfig().public;
 
-const usernameComponent = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);
-const emailComponent = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);
-const passwordComponent = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);
+const usernameComp = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);
+const emailComp = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);
+const passwordComp = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);
 
 const isLoading = ref(false);
 
@@ -30,9 +30,9 @@ watch(
 
 async function register() {
   const data: Record<string, string> = {
-    username: usernameComponent.value?.$el.value,
-    email: emailComponent.value?.$el.value,
-    password: passwordComponent.value?.$el.value,
+    username: usernameComp.value?.$el.value,
+    email: emailComp.value?.$el.value,
+    password: passwordComp.value?.$el.value,
   };
 
   if (!data.username || !data.email || !data.password) {
@@ -120,7 +120,7 @@ declare global {
 
         <FormInput
           id="username"
-          ref="usernameComponent"
+          ref="usernameComp"
           type="text"
           name="username"
           placeholder="username (no spaces allowed)"
@@ -142,7 +142,7 @@ declare global {
 
         <FormInput
           id="email"
-          ref="emailComponent"
+          ref="emailComp"
           type="email"
           name="email"
           placeholder="email"
@@ -158,7 +158,7 @@ declare global {
 
         <FormInput
           id="password"
-          ref="passwordComponent"
+          ref="passwordComp"
           type="password"
           name="password"
           placeholder="password"

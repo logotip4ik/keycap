@@ -20,7 +20,7 @@ const menuOptions = shallowReactive({
 
 const POLLING_TIME = parseDuration('2.5 minutes')!;
 let pollingTimer: NodeJS.Timeout;
-let abortControllerGet: AbortController | null;
+let abortControllerGet: AbortController | undefined;
 let lastRefetch: number | undefined;
 
 const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefined>('folder', async () => {
