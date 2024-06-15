@@ -66,6 +66,7 @@ useTinykeys({
 });
 useFocusTrap(
   computed(() => state.value === 'visible' ? sidebar.value : null),
+  { handleInitialFocusing: false },
 );
 
 onMounted(() => {
