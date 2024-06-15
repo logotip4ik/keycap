@@ -8,7 +8,7 @@ export const socialUserSchema = Type.Object({
     Type.String({ minLength: 21, maxLength: 21, pattern: '^[\\d]{21}$' }),
     Type.Number({ minimum: 0 }),
   ]),
-  email: Type.String({ format: 'email' }),
+  email: Type.String({ format: 'email', maxLength: 100 }),
 }, { additionalProperties: true });
 
 export const socialUserValidator = TypeCompiler.Compile(socialUserSchema);

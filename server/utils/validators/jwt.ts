@@ -5,7 +5,7 @@ FormatRegistry.Set('email', (value) => emailRE.test(value));
 
 export const jwtPayloadSchema = Type.Object({
   sub: Type.String({ minLength: 18, maxLength: 18, pattern: stringifiedBigIntRE.source }),
-  email: Type.String({ format: 'email' }),
+  email: Type.String({ format: 'email', maxLength: 100 }),
   username: usernameSchema,
 }, { additionalProperties: true });
 
