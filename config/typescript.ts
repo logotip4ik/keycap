@@ -5,6 +5,7 @@ export const tsConfig: TSConfig = {
     types: ['vitest/importMeta'],
     moduleDetection: 'force',
     isolatedModules: true, // disabled in nitro ?
+    noUncheckedIndexedAccess: false,
   },
 
   exclude: [
