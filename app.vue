@@ -69,6 +69,10 @@ if (import.meta.dev) {
 <template>
   <NuxtPage />
 
+  <Teleport to="#teleports">
+    <NuxtRouteAnnouncer />
+  </Teleport>
+
   <ClientOnly>
     <LazyWorkspaceToasts />
   </ClientOnly>
