@@ -1,6 +1,37 @@
 # Changelog
 
 
+## v3.12.1
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.12.0...v3.12.1)
+
+### 🩹 Fixes
+
+- **build:** Use relative-like path to font ([5a27a388](https://github.com/logotip4ik/keycap/commit/5a27a388))
+- Do not handle initial focusing on sidebar ([f0fc2724](https://github.com/logotip4ik/keycap/commit/f0fc2724))
+
+### 💅 Refactors
+
+- Use provide and inject to pass down relative sidebar state ([45d42d77](https://github.com/logotip4ik/keycap/commit/45d42d77))
+
+### 🏡 Chore
+
+- **release:** V3.12.0 ([c3a308cf](https://github.com/logotip4ik/keycap/commit/c3a308cf))
+- Update deps and package manager ([9572841c](https://github.com/logotip4ik/keycap/commit/9572841c))
+- Enable compatibility version 4 ([83c7a299](https://github.com/logotip4ik/keycap/commit/83c7a299))
+- Add max string length ([76254cdf](https://github.com/logotip4ik/keycap/commit/76254cdf))
+- **typescript:** Enable unchecked index access ([f4513992](https://github.com/logotip4ik/keycap/commit/f4513992))
+- Add route announcer ([34ad4066](https://github.com/logotip4ik/keycap/commit/34ad4066))
+- Change nuxt version back to stable ([74f6be53](https://github.com/logotip4ik/keycap/commit/74f6be53))
+
+### 🎨 Styles
+
+- Less null use and more consistent namings ([b660889d](https://github.com/logotip4ik/keycap/commit/b660889d))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.12.0
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.11.14...v3.12.0)
