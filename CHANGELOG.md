@@ -1,6 +1,21 @@
 # Changelog
 
 
+## v3.12.2
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.12.1...v3.12.2)
+
+### 🏡 Chore
+
+- **release:** V3.12.1 ([f6cef657](https://github.com/logotip4ik/keycap/commit/f6cef657))
+- Update deps ([b7e2e8d6](https://github.com/logotip4ik/keycap/commit/b7e2e8d6))
+- Update package manager ([a04db2c1](https://github.com/logotip4ik/keycap/commit/a04db2c1))
+- Add user input reducer before nuxt version update ([e4237bdd](https://github.com/logotip4ik/keycap/commit/e4237bdd))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.12.1
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.12.0...v3.12.1)
