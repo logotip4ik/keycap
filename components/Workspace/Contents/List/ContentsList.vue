@@ -144,7 +144,7 @@ function handleArrowsPress(event: KeyboardEvent) {
   elementToFocus && elementToFocus.focus();
 }
 
-watch(() => contentsState.value, (state, oldState) => {
+watch(contentsState, (state, oldState) => {
   if (
     state !== 'hidden'
     && (!oldState || oldState === 'hidden')

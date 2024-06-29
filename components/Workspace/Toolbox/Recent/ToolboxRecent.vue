@@ -19,7 +19,7 @@ const { data: recent, refresh } = await useAsyncData('recent', async () => {
   immediate: false,
 });
 
-const stop = watch(() => state.value, (visibility) => {
+const stop = watch(state, (visibility) => {
   if (visibility !== 'hidden') {
     setTimeout(() => {
       refresh();
