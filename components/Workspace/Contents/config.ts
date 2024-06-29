@@ -3,6 +3,7 @@ export const ContentsState = Symbol(
   import.meta.prod ? '' : 'toolbox sidebar state and helper functions',
 ) as InjectionKey<{
   state: Ref<SidebarState>
+  isFixed: Ref<boolean>
 }>;
 
 // This is better version of general purpose useContentsSidebar, you should use this everywhere you

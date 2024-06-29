@@ -6,7 +6,7 @@ const props = defineProps<{
   parent: FolderWithContents
 }>();
 
-const { state: contentsState } = useContentsState();
+const { state: contentsState, isFixed: isContentsFixed } = useContentsState();
 const createToast = useToaster();
 const { isSmallScreen } = useDevice();
 
@@ -53,6 +53,8 @@ function handleSubmit() {
 }
 
 function handleReset() {
+  isContentsFixed.value = false;
+
   if (props.item.creating) {
     return remove(props.parent.notes, props.item);
   }
@@ -63,6 +65,8 @@ function handleReset() {
 onMounted(() => {
   inputEl.value?.focus();
   inputEl.value?.scrollIntoView();
+
+  isContentsFixed.value = true;
 });
 </script>
 

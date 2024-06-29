@@ -5,16 +5,31 @@ const { shortcuts } = useAppConfig();
 const { state } = useContentsSidebar();
 const { state: toolboxState } = useToolboxSidebar();
 
+const isFixed = ref(false);
+let lastNonFixedState: SidebarState | undefined;
+
 const contentsState = computed<SidebarState>({
   get: () => state.value,
   set: (value) => {
+    if (isFixed.value) {
+      lastNonFixedState = value;
+      return;
+    }
+
     state.value = value;
 
     hideSidebarsIfNeeded();
   },
 });
 
-provide(ContentsState, { state: contentsState });
+watch(isFixed, (isFixed) => {
+  if (!isFixed && lastNonFixedState) {
+    contentsState.value = lastNonFixedState;
+    lastNonFixedState = undefined;
+  }
+});
+
+provide(ContentsState, { state: contentsState, isFixed });
 
 function hideSidebarsIfNeeded() {
   const sidebar = shouldUnpinSidebar(contentsState, toolboxState);
