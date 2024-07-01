@@ -1,6 +1,28 @@
 # Changelog
 
 
+## v3.12.3
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.12.2...v3.12.3)
+
+### 🩹 Fixes
+
+- Remove broken patched vue/shared package ([0a1045a4](https://github.com/logotip4ik/keycap/commit/0a1045a4))
+- Do not allow hiding contents sidebar while user inputs item name ([6bfdd0b3](https://github.com/logotip4ik/keycap/commit/6bfdd0b3))
+
+### 💅 Refactors
+
+- Watch directly the ref ([a0336bfb](https://github.com/logotip4ik/keycap/commit/a0336bfb))
+
+### 🏡 Chore
+
+- **release:** V3.12.2 ([ce6c0e78](https://github.com/logotip4ik/keycap/commit/ce6c0e78))
+- Update deps ([9ef8ba88](https://github.com/logotip4ik/keycap/commit/9ef8ba88))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.12.2
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.12.1...v3.12.2)
