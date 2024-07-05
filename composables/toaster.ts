@@ -1,9 +1,17 @@
+import proxy from 'unenv/runtime/mock/proxy';
+
 import type { ToastInstance } from '~/types/toasts';
 
 export type ToastUserOptions = Partial<Omit<ToastInstance, 'id' | 'message' | 'remove' | 'el' | 'delete'>>;
 
 const toasts = shallowRef<Array<ToastInstance>>([]);
-export const useToasts = () => toasts;
+export function useToasts(): typeof toasts {
+  if (import.meta.server) {
+    return proxy;
+  }
+
+  return toasts;
+}
 
 function addToQueue(message: ToastInstance['message'], options?: ToastUserOptions & { delay?: number }): ToastInstance {
   const timeout: { value: NodeJS.Timeout | undefined } = { value: undefined };

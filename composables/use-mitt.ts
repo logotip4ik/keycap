@@ -1,4 +1,7 @@
-import mitt, { type Emitter } from 'mitt';
+import mitt from 'mitt';
+import type { Emitter } from 'mitt';
+
+import proxy from 'unenv/runtime/mock/proxy';
 
 // eslint-disable-next-line ts/consistent-type-definitions
 type Events = {
@@ -17,5 +20,9 @@ emitter.on = (type, handler) => {
 };
 
 export function useMitt(): Emitter<Events> {
+  if (import.meta.server) {
+    return proxy;
+  }
+
   return emitter;
 };

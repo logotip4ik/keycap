@@ -1,34 +1,55 @@
 import LRUCache from 'hashlru';
+import { del, get, keys, set } from 'idb-keyval';
+import proxy from 'unenv/runtime/mock/proxy';
 
 import type { Remote } from 'comlink';
 
-import { del, get, keys, set } from 'idb-keyval';
 import type { SafeUser } from '~/types/server';
 
-export const useCurrentItemForDetails = () => useState<FolderOrNote | undefined>(() => undefined);
-export const useUser = () => useState<SafeUser | undefined>('user', () => undefined);
+export function useCurrentItemForDetails() {
+  return useState<FolderOrNote | undefined>(() => undefined);
+}
+
+export function useUser() {
+  return useState<SafeUser | undefined>('user', () => undefined);
+}
 
 const notesCache = LRUCache(20);
-export const useNotesCache = () => notesCache;
+export function useNotesCache(): typeof notesCache {
+  if (import.meta.server) {
+    return proxy;
+  }
+
+  return notesCache;
+}
 
 const foldersCache = LRUCache(5);
-export const useFoldersCache = () => foldersCache;
+export function useFoldersCache(): typeof foldersCache {
+  if (import.meta.server) {
+    return proxy;
+  }
+
+  return foldersCache;
+}
 
 const fuzzyWorker = shallowRef<Prettify<Remote<FuzzyWorker>> | undefined>();
-export const useFuzzyWorker = () => fuzzyWorker;
+export function useFuzzyWorker(): typeof fuzzyWorker {
+  if (import.meta.server) {
+    return proxy;
+  }
 
-const offlineStorage = shallowReactive<OfflineStorage>(import.meta.client
-  ? {
-      setItem: set,
-      getItem: get,
-      removeItem: del,
-      getAllKeys: keys,
-    }
-  : {
-      setItem: () => devError('setItem should not be used on the server'),
-      getItem: () => devError('getItem should not be used on the server'),
-      removeItem: () => devError('removeItem should not be used on the server'),
-      getAllKeys: () => devError('getAllKeys should not be used on the server'),
-    } as OfflineStorage,
-);
-export const useOfflineStorage = () => offlineStorage;
+  return fuzzyWorker;
+}
+
+export function useOfflineStorage(): OfflineStorage {
+  if (import.meta.server) {
+    return proxy;
+  }
+
+  return {
+    setItem: set,
+    getItem: get,
+    removeItem: del,
+    getAllKeys: keys,
+  };
+}

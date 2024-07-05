@@ -9,20 +9,12 @@ export function toBigInt(string: string): bigint {
   return stringifiedBigIntRE.test(string) ? BigInt(string) : falsyBigInt;
 }
 
-export function getHydrationPromise(app?: NuxtApp): false | undefined | Promise<unknown> {
-  const nuxtApp = app || useNuxtApp();
-
-  return nuxtApp.isHydrating === true
-    && new Promise((r) => nuxtApp.hooks.hookOnce('app:suspense:resolve', r));
-}
-
-/* #__NO_SIDE_EFFECTS__ */
-export function devError<T>(msg: string): T {
-  if (import.meta.dev) {
-    throw new Error(msg);
+export function getHydrationPromise(nuxtApp: NuxtApp = useNuxtApp()): undefined | Promise<unknown> {
+  if (!nuxtApp.isHydrating) {
+    return;
   }
 
-  return new Promise((r) => r(undefined)) as T;
+  return new Promise((r) => nuxtApp.hooks.hookOnce('app:suspense:resolve', r));
 }
 
 if (import.meta.vitest) {
