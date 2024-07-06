@@ -13,6 +13,8 @@ import { inlinableStylesRE, nodeModulesRE } from './constants/build';
 import { ParseDurationTransformPlugin, parseDurationFunctionName } from './unplugin/parse-duration';
 
 export default defineNuxtConfig({
+  compatibilityDate: '2024-07-06',
+
   devtools: { enabled: true },
 
   app: {
