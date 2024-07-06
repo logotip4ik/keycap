@@ -164,7 +164,7 @@ useFocusTrap(emojiPickerEl, { handleInitialFocusing: false });
       background: none;
       appearance: none;
 
-      &:is([aria-selected=true], :focus) {
+      &:focus {
         outline: 2px solid hsla(var(--selection-bg-color-hsl), 0.5);
         outline-offset: 0.1rem;
       }
