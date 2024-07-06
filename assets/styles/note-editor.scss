@@ -112,7 +112,7 @@
       }
     }
 
-    code {
+    pre, code {
       font-size: 0.825em;
       color: var(--text-color);
 
@@ -122,6 +122,21 @@
       background-color: hsla(var(--text-color-hsl), 0.1);
       box-shadow: 0 0 0.25rem 0 hsla(var(--text-color-hsl), 0.05);
       box-decoration-break: clone;
+    }
+
+    pre {
+      & > code {
+        box-shadow: none;
+        background-color: transparent;
+      }
+
+      & + pre {
+        margin-top: 0.75rem;
+      }
+
+      &.is-empty::before {
+        padding-left: 0.25rem;
+      }
     }
 
     li {
@@ -138,7 +153,7 @@
     a {
       color: currentColor;
       cursor: pointer;
-      
+
       &[data-inner=true] {
         --op: 0.5;
 
