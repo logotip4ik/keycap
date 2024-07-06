@@ -37,11 +37,14 @@ export function isWorkspaceHref(href: string) {
 }
 
 export function getItemNameFromHref(href: string) {
-  const parts = href.split('/');
+  const user = useUser();
+
+  const [,innerPart] = href.split(`${user.value!.username}/`);
+  const parts = innerPart.split('/');
 
   if (parts.at(-1) === BLANK_NOTE_NAME) {
     parts.pop();
   }
 
-  return decodeURIComponent(parts.at(-1) || '');
+  return parts.map(decodeURIComponent).join('/');
 }
