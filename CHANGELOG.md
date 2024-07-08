@@ -1,6 +1,34 @@
 # Changelog
 
 
+## v3.12.4
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.12.3...v3.12.4)
+
+### 🩹 Fixes
+
+- Correctly highlight code in pre blocks and add spacing for between pre blocks ([84b3d0d6](https://github.com/logotip4ik/keycap/commit/84b3d0d6))
+- Show parent path if available when pasting inner link ([1a8621fa](https://github.com/logotip4ik/keycap/commit/1a8621fa))
+
+### 💅 Refactors
+
+- Do not allow use of global caches and variables on server ([89a13394](https://github.com/logotip4ik/keycap/commit/89a13394))
+- Add little backlight for emojis ([43eb0a96](https://github.com/logotip4ik/keycap/commit/43eb0a96))
+
+### 🏡 Chore
+
+- **release:** V3.12.3 ([1731d302](https://github.com/logotip4ik/keycap/commit/1731d302))
+- Add vue to root deps ([f46a2abe](https://github.com/logotip4ik/keycap/commit/f46a2abe))
+- Update deps ([4908a9e8](https://github.com/logotip4ik/keycap/commit/4908a9e8))
+- Remove builtin plugin ([6a6f4835](https://github.com/logotip4ik/keycap/commit/6a6f4835))
+- Set compatibilityDate for nuxt ([d810f1da](https://github.com/logotip4ik/keycap/commit/d810f1da))
+- Convert function comment to jsdoc ([73cb2439](https://github.com/logotip4ik/keycap/commit/73cb2439))
+- Highlight emoji only in focus state ([e29233c1](https://github.com/logotip4ik/keycap/commit/e29233c1))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.12.3
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.12.2...v3.12.3)
