@@ -47,8 +47,10 @@ const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefi
       foldersCache.set(fetchedFolder.path, fetchedFolder);
       offlineStorage.setItem(fetchedFolder.path, fetchedFolder);
 
-      hydrationPromise && await hydrationPromise;
-      hydrationPromise = undefined;
+      if (hydrationPromise) {
+        await hydrationPromise;
+        hydrationPromise = undefined;
+      }
 
       folder.value = fetchedFolder;
 
@@ -67,8 +69,10 @@ const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefi
 
   const cachedFolder = foldersCache.get(folderPath.value) || await offlineStorage.getItem(folderPath.value);
 
-  hydrationPromise && await hydrationPromise;
-  hydrationPromise = undefined;
+  if (hydrationPromise) {
+    await hydrationPromise;
+    hydrationPromise = undefined;
+  }
 
   return cachedFolder;
 }, {
@@ -141,7 +145,7 @@ function handleArrowsPress(event: KeyboardEvent) {
   const loopedNewSelectedResult = newSelectedResult < 0 ? listElement.childElementCount - 1 : newSelectedResult;
   const elementToFocus = listElement.children[loopedNewSelectedResult].firstElementChild as HTMLElement | undefined;
 
-  elementToFocus && elementToFocus.focus();
+  elementToFocus?.focus();
 }
 
 watch(contentsState, (state, oldState) => {

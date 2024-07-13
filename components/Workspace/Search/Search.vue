@@ -51,7 +51,7 @@ async function openItem() {
   if ('key' in result) {
     const action = commandActions[result.key];
 
-    action && action();
+    action?.();
   }
   else {
     await navigateTo(

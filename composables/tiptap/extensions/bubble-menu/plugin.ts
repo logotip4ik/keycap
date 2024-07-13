@@ -183,10 +183,12 @@ export class BubbleMenuView {
     const shouldAnimate = this.element.style.visibility === 'hidden';
     this.element.style.visibility = 'visible';
 
-    shouldAnimate && this.element.animate([
-      { opacity: 0 },
-      { opacity: 1 },
-    ], { duration: 100 });
+    if (shouldAnimate) {
+      this.element.animate([
+        { opacity: 0 },
+        { opacity: 1 },
+      ], { duration: 100 });
+    }
   }
 
   hide() {
