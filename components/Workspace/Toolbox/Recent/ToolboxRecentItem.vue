@@ -41,6 +41,8 @@ function unpinIfNeeded() {
   text-decoration: underline dashed 1px hsla(var(--selection-bg-color-hsl), 1);
   text-underline-offset: 3px;
 
+  transition: border-bottom-width .1s;
+
   &::after {
     content: '';
 
@@ -58,8 +60,6 @@ function unpinIfNeeded() {
     pointer-events: none;
     transition: opacity .1s;
   }
-
-  transition: border-bottom-width .1s;
 
   &:focus-visible {
     color: var(--text-color);

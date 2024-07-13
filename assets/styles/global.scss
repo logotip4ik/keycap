@@ -19,6 +19,9 @@
   --selection-bg-color: hsl(var(--selection-bg-color-hsl));
   --error-color: hsl(var(--error-color-hsl));
 
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/color-scheme#declaring_color_scheme_preferences
+  color-scheme: light dark;
+
   @media (prefers-color-scheme: dark) {
     --task-list-indicator-color: hsl(var(--hsl-primary-color), 40%, 40%);
 
@@ -27,9 +30,6 @@
     --selection-bg-color-hsl: var(--hsl-primary-color), 35%, 35%;
     --error-color-hsl: 0, 75%, 55%;
   }
-
-  // https://developer.mozilla.org/en-US/docs/Web/CSS/color-scheme#declaring_color_scheme_preferences
-  color-scheme: light dark;
 }
 
 ::selection {

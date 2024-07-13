@@ -94,13 +94,13 @@ defineProps<{
   }
 
   &--loading {
+    outline-offset: -1px !important;
+    pointer-events: none;
+
     &::after,
     &::before {
       opacity: 1;
     }
-
-    outline-offset: -1px !important;
-    pointer-events: none;
   }
 
   & + & {

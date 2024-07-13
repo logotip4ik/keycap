@@ -122,6 +122,9 @@ const crumbs = computed(() => {
 
         transition: color .3s;
 
+        text-decoration: underline dashed 1px hsla(var(--selection-bg-color-hsl), 1);
+        text-underline-offset: 3px;
+
         @media (hover: hover) {
           color: hsla(var(--text-color-hsl), 0.75);
         }
@@ -129,16 +132,13 @@ const crumbs = computed(() => {
         &:is(:hover, :focus-visible) {
           color: var(--text-color);
 
+          transition-duration: 0.1s;
+
           &:focus-visible {
             border-radius: 0.125rem;
             outline: 2px solid hsla(var(--selection-bg-color-hsl), 0.75);
           }
-
-          transition-duration: 0.1s;
         }
-
-        text-decoration: underline dashed 1px hsla(var(--selection-bg-color-hsl), 1);
-        text-underline-offset: 3px;
       }
 
       &__icon {
