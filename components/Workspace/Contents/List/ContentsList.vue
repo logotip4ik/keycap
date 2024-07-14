@@ -11,7 +11,7 @@ const { shortcuts } = useAppConfig();
 const { state: contentsState } = useContentsState();
 
 const folderApiPath = computed(() => getCurrentFolderPath(route).slice(0, -1));
-const folderPath = computed(() => `/${route.params.user}${folderApiPath.value}`);
+const folderPath = computed(() => `/${user.value!.username}${folderApiPath.value}`);
 
 const menuOptions = shallowReactive({
   item: undefined as FolderOrNote | undefined,

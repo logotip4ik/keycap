@@ -25,7 +25,8 @@ export function sendOAuthRedirectIfNeeded(event: H3Event, query?: QueryObject): 
     return false;
   }
 
-  const pathWithoutQuery = event.path.split('?')[0] as keyof typeof providerPathToConfigMap;
+  const queryStart = event.path.indexOf('?');
+  const pathWithoutQuery = event.path.substring(0, queryStart) as keyof typeof providerPathToConfigMap;
   const providerConfig = providerPathToConfigMap[pathWithoutQuery];
 
   if (!providerConfig) {

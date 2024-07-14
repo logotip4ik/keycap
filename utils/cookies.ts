@@ -11,10 +11,22 @@ export function getUCookie<T extends string>(name: string): T | undefined {
     return getCookie(useRequestEvent()!, name) as T;
   }
   else {
-    return document.cookie
-      .split('; ')
-      .find((cookie) => cookie.startsWith(name))
-      ?.split('=')[1] as T;
+    const cookies = document.cookie;
+
+    const cookieNamePrefix = `${name}=`;
+    const cookieValueStart = cookies.indexOf(cookieNamePrefix) + cookieNamePrefix.length;
+
+    if (cookieValueStart < cookieNamePrefix.length) {
+      return undefined;
+    }
+
+    const cookieValueEnd = cookies.indexOf('; ', cookieValueStart);
+    const cookieValue = cookies.substring(
+      cookieValueStart,
+      cookieValueEnd === -1 ? cookies.length : cookieValueEnd,
+    );
+
+    return cookieValue as T;
   }
 }
 

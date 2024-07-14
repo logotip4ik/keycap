@@ -12,8 +12,8 @@ const currentItemForDetails = useCurrentItemForDetails();
 const user = useUser();
 const mitt = useMitt();
 
-const notePath = computed(() => route.path.replace('/@', '/'));
-const noteApiPath = computed(() => route.path.replace(`/@${route.params.user}`, ''));
+const noteApiPath = computed(() => route.path.substring(2 + user.value!.username.length));
+const notePath = computed(() => `/${user.value!.username}${noteApiPath.value}`);
 
 const POLLING_TIME = parseDuration('2 minutes')!;
 let pollingTimer: NodeJS.Timeout;

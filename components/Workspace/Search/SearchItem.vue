@@ -6,18 +6,17 @@ const props = defineProps<{
 
 const isCommand = 'key' in props.item;
 
-const itemHref = isCommand ? '' : generateItemPath(props.item);
-const itemPath = isCommand
-  ? ''
-  : decodeURIComponent(
-    props.item.path
-      // TODO: rewrite item path resolution ?
-      // This is faster then array manipulation
-      // removing account name
-      .replace(/\/\w+\//, '')
-      // the last one string from path
-      .replace(/\/?[\w%.]+$/, ''),
-  );
+let itemHref: string, itemPath: string;
+
+if (!isCommand) {
+  itemHref = generateItemPath(props.item);
+
+  const user = useUser();
+  const pathWithoutWorkspacePrefix = props.item.path.substring(1 + user.value!.username.length + 1);
+
+  const lastSlashIdx = pathWithoutWorkspacePrefix.lastIndexOf('/');
+  itemPath = pathWithoutWorkspacePrefix.substring(0, lastSlashIdx);
+}
 
 async function handleActionClick() {
   if (!isCommand) {
