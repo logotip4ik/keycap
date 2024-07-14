@@ -101,10 +101,10 @@ export function useTiptap() {
     initTiptap();
   }
 
-  return { editor, isTyping, onUpdate, withEditor };
+  return { editor, isTyping, onUpdate };
 }
 
-function withEditor(cb: (editor: Editor) => void) {
+export function withTiptapEditor(cb: (editor: Editor) => void) {
   if (editor.value) {
     return cb(editor.value);
   }
@@ -118,7 +118,7 @@ function withEditor(cb: (editor: Editor) => void) {
 }
 
 function onUpdate(cb: (e: { editor: CoreEditor, transaction: Transaction }) => void) {
-  withEditor((editor) => editor.on('update', cb));
+  withTiptapEditor((editor) => editor.on('update', cb));
 
   onScopeDispose(() => editor.value?.off('update', cb));
 }

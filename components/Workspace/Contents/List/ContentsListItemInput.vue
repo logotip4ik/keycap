@@ -46,7 +46,7 @@ function handleSubmit() {
         ? 'hidden'
         : (contentsState.value === 'visible' ? 'hidden' : contentsState.value);
 
-      useTiptap().withEditor((editor) => editor.commands.focus());
+      withTiptapEditor((editor) => editor.commands.focus());
     })
     .catch((error) => createToast(error.data.message || ERROR_MESSAGES.DEFAULT))
     .finally(() => isLoading.value = false);

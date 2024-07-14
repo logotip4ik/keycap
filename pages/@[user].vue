@@ -52,7 +52,7 @@ useTinykeys({
     }
 
     event.preventDefault();
-    useTiptap().editor.value?.commands.focus();
+    withTiptapEditor((editor) => editor.commands.focus());
   },
 
   [shortcuts.search]: (event) => {
