@@ -44,6 +44,15 @@ function hideIf(trigger: SidebarState) {
   }
 }
 
+function maybeFocusEditor(element: HTMLElement) {
+  if (!element.classList.contains('tiptap')) {
+    return;
+  }
+
+  withTiptapEditor((editor) => editor.commands.focus('start'));
+  return true;
+}
+
 watch(state, debounce((state: SidebarState) => {
   updateTabindexForFocusableElements(state);
 
@@ -66,7 +75,7 @@ useTinykeys({
 });
 useFocusTrap(
   computed(() => state.value === 'visible' ? sidebar.value : undefined),
-  { handleInitialFocusing: false },
+  { handleInitialFocusing: false, handleLastElementFocus: maybeFocusEditor },
 );
 
 onMounted(() => {

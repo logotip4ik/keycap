@@ -2,7 +2,7 @@ const TABBABLE_ELs = 'input:not([disabled]),select:not([disabled]),textarea:not(
 
 export function useFocusTrap(
   el: MaybeRef<HTMLElement | null | undefined>,
-  { handleInitialFocusing = true } = {},
+  opts?: { handleInitialFocusing?: boolean, handleLastElementFocus?: (lastElement: HTMLElement) => boolean | void },
 ) {
   if (import.meta.server) {
     return;
@@ -28,7 +28,11 @@ export function useFocusTrap(
 
   function tryFocusLastElement() {
     if (!isSmallScreen.value && lastFocusedEl) {
-      lastFocusedEl.focus();
+      const handledLastElementFocus = opts?.handleLastElementFocus?.(lastFocusedEl) === true;
+
+      if (!handledLastElementFocus) {
+        lastFocusedEl.focus();
+      }
     }
 
     lastFocusedEl = undefined;
@@ -56,7 +60,7 @@ export function useFocusTrap(
       lastFocusedEl = document.activeElement as HTMLElement;
     }
 
-    if (handleInitialFocusing) {
+    if (opts?.handleInitialFocusing) {
       getFocusableEls(el)[0].focus();
     }
 
@@ -76,15 +80,15 @@ export function useFocusTrap(
       }
 
       const focusableEls = getFocusableEls(el);
-      const firstFocusableEl = focusableEls.at(0);
+      const firstFocusedEl = focusableEls.at(0);
       const lastFocusedEl = focusableEls.at(-1);
 
-      if (e.shiftKey && e.target === firstFocusableEl) {
+      if (e.shiftKey && e.target === firstFocusedEl) {
         lastFocusedEl?.focus();
         e.preventDefault();
       }
       else if (!e.shiftKey && e.target === lastFocusedEl) {
-        firstFocusableEl?.focus();
+        firstFocusedEl?.focus();
         e.preventDefault();
       }
     });
