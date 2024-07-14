@@ -95,11 +95,11 @@ onUnmounted(() => {
     <Component
       :is="isSmallScreen ? LazyFixedBox : LazyBubbleBox"
       v-if="editor"
-      :editor="editor"
+      :editor
     >
-      <WorkspaceNoteFormatter :editor="editor" />
+      <WorkspaceNoteFormatter :editor />
     </Component>
 
-    <EditorContent class="note-editor" :editor="editor" />
+    <EditorContent class="note-editor" :editor />
   </div>
 </template>
