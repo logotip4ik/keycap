@@ -75,7 +75,7 @@ useTinykeys({
 });
 useFocusTrap(
   computed(() => state.value === 'visible' ? sidebar.value : undefined),
-  { handleInitialFocusing: false, handleLastElementFocus: maybeFocusEditor },
+  { handleLastElementFocus: maybeFocusEditor },
 );
 
 onMounted(() => {

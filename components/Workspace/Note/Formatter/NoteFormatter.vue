@@ -245,7 +245,7 @@ watch(() => props.editor.state.selection.$anchor, (anchor) => {
   prevAnchor = anchor;
 });
 
-useFocusTrap(formatterEl, { handleInitialFocusing: false });
+useFocusTrap(formatterEl);
 </script>
 
 <template>

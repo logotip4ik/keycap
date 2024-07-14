@@ -85,7 +85,7 @@ function getNativeSkin(emoji: Emoji) {
   return emoji.skins[0].native;
 }
 
-useFocusTrap(emojiPickerEl, { handleInitialFocusing: false });
+useFocusTrap(emojiPickerEl);
 </script>
 
 <template>
