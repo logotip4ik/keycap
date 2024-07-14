@@ -43,6 +43,7 @@ export default defineNuxtConfig({
   experimental: {
     watcher: 'parcel',
     headNext: true,
+    componentIslands: 'local',
   },
 
   future: {
