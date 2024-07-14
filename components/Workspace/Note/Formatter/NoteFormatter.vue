@@ -305,7 +305,7 @@ useFocusTrap(formatterEl, { handleInitialFocusing: false });
             }"
             aria-label="toggle blockquote"
             :aria-pressed="editor.isActive('blockquote')"
-            :aria-describe="tooltipId"
+            :aria-describedby="tooltipId"
             @click="editor.chain().focus().toggleBlockquote().run()"
           >
             <LazyIconDoubleQuotesR />
