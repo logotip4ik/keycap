@@ -8,8 +8,7 @@ const isLoadingItemDetails = ref(false);
 const itemDetailsComp = shallowRef<ComponentPublicInstance | null>(null);
 const itemDetailsEl = computed(() => itemDetailsComp.value?.$el as HTMLElement | undefined);
 
-const path = props.item.path.split('/').slice(2).join('/');
-
+const path = getItemPathFromHref(props.item.path);
 const isFolder = checkIsFolder(props.item);
 
 type ItemDetails = Prettify<ItemMetadata & {

@@ -35,16 +35,3 @@ export function isWorkspaceHref(href: string) {
 
   return user.value && href.includes(`/@${user.value.username}`);
 }
-
-export function getItemNameFromHref(href: string) {
-  const user = useUser();
-
-  const [,innerPart] = href.split(`${user.value!.username}/`);
-  const parts = innerPart.split('/');
-
-  if (parts.at(-1) === BLANK_NOTE_NAME) {
-    parts.pop();
-  }
-
-  return parts.map(decodeURIComponent).join('/');
-}

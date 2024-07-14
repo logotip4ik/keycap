@@ -1,6 +1,5 @@
 import escapeRE from 'escape-string-regexp';
 
-import type { RouteLocationRaw } from 'vue-router';
 import type { NavigateToOptions } from '#app/composables/router';
 
 export function checkIsFolder(item: Record<string, unknown>): item is FolderWithContents {
@@ -8,7 +7,7 @@ export function checkIsFolder(item: Record<string, unknown>): item is FolderWith
 }
 
 type ItemWithPath = Record<string, unknown> & { root?: boolean, path: string };
-export function generateItemPath(item: ItemWithPath): RouteLocationRaw {
+export function generateItemPath(item: ItemWithPath): string {
   let path = item.path.replace('/', '/@');
 
   if (checkIsFolder(item)) {
@@ -47,6 +46,22 @@ export function getCurrentFolderPath(_route?: ReturnType<typeof useRoute>) {
   return isArray(route.params.folders) && route.params.folders.length > 0
     ? `/${route.params.folders.map(encodeURIComponent).join('/')}/`
     : '/';
+}
+
+export function getItemPathFromHref(href: string) {
+  const user = useUser();
+
+  const workspacePrefix = `/@${user.value!.username}/`;
+  const innerPartStart = href.indexOf(workspacePrefix) + workspacePrefix.length;
+
+  const innerPart = href.substring(innerPartStart);
+  const parts = innerPart.split('/');
+
+  if (parts.at(-1) === BLANK_NOTE_NAME) {
+    parts.pop();
+  }
+
+  return parts.map(decodeURIComponent).join('/');
 }
 
 export async function createFolder(folderName: string, self: FolderOrNote, parent: FolderWithContents) {

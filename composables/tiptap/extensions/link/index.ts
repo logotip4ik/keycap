@@ -5,7 +5,7 @@ import type { MarkType } from '@tiptap/pm/model';
 
 import { autolink } from './helpers/autolink';
 import { clickHandler } from './helpers/clickHandler';
-import { find, getItemNameFromHref, isWorkspaceHref } from './helpers/linker';
+import { find, isWorkspaceHref } from './helpers/linker';
 
 export interface LinkOptions {
   HTMLAttributes: Record<string, unknown>
@@ -146,7 +146,7 @@ function makePasteRules(config: { type: MarkType }) {
             markStart,
             markEnd,
             state.schema.text(
-              getItemNameFromHref(attrs.href),
+              getItemPathFromHref(attrs.href),
               [config.type.create(attrs)],
             ),
           );
