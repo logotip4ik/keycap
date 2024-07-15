@@ -1,6 +1,39 @@
 # Changelog
 
 
+## v3.12.5
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.12.4...v3.12.5)
+
+### 🩹 Fixes
+
+- Move css rules before nested selectors ([8caba89a](https://github.com/logotip4ik/keycap/commit/8caba89a))
+- Prevent page jumping when focusing editor back from sidebar ([53584add](https://github.com/logotip4ik/keycap/commit/53584add))
+- Valid id's for tooltips ([c72be530](https://github.com/logotip4ik/keycap/commit/c72be530))
+- Invert focus trap options ([c636357f](https://github.com/logotip4ik/keycap/commit/c636357f))
+
+### 💅 Refactors
+
+- Export withTiptapEditor function ([36e7dc2d](https://github.com/logotip4ik/keycap/commit/36e7dc2d))
+- Export utility for getting item path from href ([d069075c](https://github.com/logotip4ik/keycap/commit/d069075c))
+- Little perf optimizations ([0cc11cf7](https://github.com/logotip4ik/keycap/commit/0cc11cf7))
+
+### 🏡 Chore
+
+- **release:** V3.12.4 ([440f1041](https://github.com/logotip4ik/keycap/commit/440f1041))
+- Update deps ([37a05cae](https://github.com/logotip4ik/keycap/commit/37a05cae))
+- Fix eslint rules ([467db924](https://github.com/logotip4ik/keycap/commit/467db924))
+- Use short syntax binding ([d143122a](https://github.com/logotip4ik/keycap/commit/d143122a))
+- Remove vitest warning ([273a5729](https://github.com/logotip4ik/keycap/commit/273a5729))
+
+### 🤖 CI
+
+- Bump the actions group with 2 updates ([#27](https://github.com/logotip4ik/keycap/pull/27))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.12.4
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.12.3...v3.12.4)
