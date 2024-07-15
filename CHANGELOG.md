@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v3.12.6
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.12.5...v3.12.6)
+
+### 🩹 Fixes
+
+- Do not take a substring if there is no query ([b176d3a9](https://github.com/logotip4ik/keycap/commit/b176d3a9))
+
+### 🏡 Chore
+
+- **release:** V3.12.5 ([723e5710](https://github.com/logotip4ik/keycap/commit/723e5710))
+- Remove not needed axiom org id header ([9c681579](https://github.com/logotip4ik/keycap/commit/9c681579))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.12.5
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.12.4...v3.12.5)
