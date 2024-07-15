@@ -35,7 +35,6 @@ function getAxiomClient(axiom: ReturnType<typeof useRuntimeConfig>['axiom']) {
       'Content-Type': 'application/x-ndjson',
       'Authorization': `Bearer ${axiom.token}`,
       'User-Agent': serverUserAgent,
-      'X-Axiom-Org-Id': axiom.orgId,
     },
     method: 'POST',
     baseURL: axiom.baseUrl,
