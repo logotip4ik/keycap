@@ -34,6 +34,12 @@ export default defineNuxtModule({
 });
 
 async function getCommitSha(): Promise<string> {
+  const SOURCE_COMMIT = process.env.SOURCE_COMMIT;
+
+  if (typeof SOURCE_COMMIT === 'string' && SOURCE_COMMIT.length > 8) {
+    return SOURCE_COMMIT.substring(0, 8);
+  }
+
   const { stdout } = await execa('git', ['rev-parse', '--short', 'HEAD']);
 
   return stdout;
