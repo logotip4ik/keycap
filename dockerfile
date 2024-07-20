@@ -20,8 +20,6 @@ WORKDIR /app
 
 COPY --from=builder /source/.output ./
 
-# dont forget to set env's
+RUN cd ./server
 
-ENV NODE_ENV=production
-
-CMD ["node", "./server/index.mjs"]
+CMD ["node", "./index.mjs"]
