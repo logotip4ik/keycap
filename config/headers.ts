@@ -61,7 +61,7 @@ export type HeadersOptions = NoteViewHeaderOptions | unknown;
 export function getHeaders(
   headersOptions?: HeadersType | { type: HeadersType, opts: HeadersOptions },
 ): Record<string, string | undefined> {
-  const type: HeadersType = typeof headersOptions === 'object'
+  const type = typeof headersOptions === 'object'
     ? headersOptions.type
     : (headersOptions ?? 'default');
 

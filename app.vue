@@ -44,6 +44,7 @@ useServerSeoMeta({
   ogImageWidth: 1200,
   ogImageHeight: 630,
   ogUrl: `${protocol}://${site}`,
+  ogSiteName: 'Keycap',
 
   robots: { none: true },
   applicationName: 'Keycap',
