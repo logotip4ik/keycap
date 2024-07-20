@@ -409,8 +409,6 @@ export default defineNuxtConfig({
             '**/*.ttf',
             '**/*.svg',
           ],
-          fileName: isProduction ? '[name][extname]' : '[dirname][name][extname]',
-          sourceDir: isDevelopment ? process.cwd() : undefined,
         }),
       ],
     },
