@@ -20,6 +20,4 @@ WORKDIR /app
 
 COPY --from=builder /source/.output ./
 
-RUN cd ./server
-
-CMD ["node", "./index.mjs"]
+CMD ["node", "./server/index.mjs"]

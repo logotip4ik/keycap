@@ -409,6 +409,7 @@ export default defineNuxtConfig({
             '**/*.ttf',
             '**/*.svg',
           ],
+          destDir: `${process.cwd()}/.output`,
         }),
       ],
     },
