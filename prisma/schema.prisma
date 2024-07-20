@@ -19,8 +19,8 @@ datasource db {
 model User {
   id BigInt @id @default(autoincrement())
 
-  username String  @unique @db.String(50)
-  email    String  @unique @db.String(75)
+  username String  @unique
+  email    String  @unique
   password String?
 
   notes   Note[]
@@ -47,7 +47,7 @@ model OAuth {
 model Note {
   id BigInt @id @default(autoincrement())
 
-  name    String  @db.String(150)
+  name    String
   content String?
   path    String  @unique
 
@@ -75,8 +75,8 @@ model Note {
 model Folder {
   id BigInt @id @default(autoincrement())
 
-  name String  @db.String(50)
-  path String  @unique @db.String(100)
+  name String
+  path String  @unique
   root Boolean @default(false)
 
   notes      Note[]
@@ -99,7 +99,7 @@ model Folder {
 model Share {
   id BigInt @id @default(autoincrement())
 
-  link String @unique @db.String(21)
+  link String @unique
 
   // NOTE: later can share folder ? but share entity still should own only note or folder 
   note   Note   @relation(references: [id], fields: [noteId], onDelete: Cascade, onUpdate: Cascade)
