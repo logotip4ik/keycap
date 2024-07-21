@@ -1,6 +1,6 @@
 import type { NuxtApp } from '#app';
 
-export const stringifiedBigIntRE = /^(\d{18})$/;
+export const stringifiedBigIntRE = /^(\d{1,19})$/;
 export const allowedClientItemNameRE = /^[\w .&#!\|\-\u0404-\u0457]{2,50}\/?$/; // eslint-disable-line regexp/no-useless-escape
 // NOTE: do not forget to change same RE in nitro side
 
