@@ -26,7 +26,7 @@ function handleSubmit() {
   isLoading.value = true;
 
   if (props.item.creating) {
-    const creationName = name.value.replace(/\//g, '');
+    const creationName = name.value.at(-1) === '/' ? name.value.slice(0, -1) : name.value;
     const createAction = creationName.length === name.value.length ? createNote : createFolder;
 
     promise = createAction(creationName, props.item, props.parent);
@@ -54,6 +54,10 @@ function handleSubmit() {
 
 function handleReset() {
   isContentsFixed.value = false;
+
+  if (isLoading.value) {
+    return;
+  }
 
   if (props.item.creating) {
     return remove(props.parent.notes, props.item);
