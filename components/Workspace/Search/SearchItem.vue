@@ -15,7 +15,7 @@ if (!isCommand) {
   const pathWithoutWorkspacePrefix = props.item.path.substring(1 + user.value!.username.length + 1);
 
   const lastSlashIdx = pathWithoutWorkspacePrefix.lastIndexOf('/');
-  itemPath = pathWithoutWorkspacePrefix.substring(0, lastSlashIdx);
+  itemPath = decodeURIComponent(pathWithoutWorkspacePrefix.substring(0, lastSlashIdx));
 }
 
 async function handleActionClick() {
