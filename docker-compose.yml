@@ -1,15 +1,9 @@
 services:
-  cockroach:
-    image: cockroachdb/cockroach:latest
-    command: start-single-node --insecure
-    volumes:
-      - ./data/node_1:/cockroach/cockroach-data
+  postgres:
+    image: 'postgres:latest'
     ports:
-      - "26257:26257"
-      - "8080:8080"
-    networks:
-      - cockroachnet
-
-networks:
-  cockroachnet:
-    driver: bridge
+      - 5432:5432
+    environment:
+      POSTGRES_USER: username # The PostgreSQL user (useful to connect to the database)
+      POSTGRES_PASSWORD: password # The PostgreSQL password (useful to connect to the database)
+      POSTGRES_DB: keycap # The PostgreSQL default database (automatically created at first launch)
