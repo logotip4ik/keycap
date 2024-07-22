@@ -21,7 +21,7 @@ if (import.meta.vitest) {
   const { it, expect } = import.meta.vitest;
 
   it('toBigInt', () => {
-    expect(toBigInt('77777777777777777')).toEqual(BigInt(-1));
-    expect(toBigInt('777777777777777777')).not.toEqual(BigInt(-1));
+    expect(toBigInt('77777777777777777')).toEqual(BigInt('77777777777777777'));
+    expect(toBigInt('77777777777777777asd')).toEqual(BigInt(-1));
   });
 }
