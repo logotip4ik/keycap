@@ -1,6 +1,36 @@
 # Changelog
 
 
+## v3.12.7
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.12.6...v3.12.7)
+
+### 🩹 Fixes
+
+- Use env variable to get source commit if available ([d4452468](https://github.com/logotip4ik/keycap/commit/d4452468))
+- **build:** Run server from correct dir ([c0996770](https://github.com/logotip4ik/keycap/commit/c0996770))
+- **build:** Run server from output folder and put assets in the root of output folder ([bd9a6fc8](https://github.com/logotip4ik/keycap/commit/bd9a6fc8))
+- Note disappearing after creation ([4c6d5c82](https://github.com/logotip4ik/keycap/commit/4c6d5c82))
+- Decode path for search item path ([8113f6d9](https://github.com/logotip4ik/keycap/commit/8113f6d9))
+- Update bigint tests ([745e5076](https://github.com/logotip4ik/keycap/commit/745e5076))
+
+### 💅 Refactors
+
+- Migrate to postgres ([003aac93](https://github.com/logotip4ik/keycap/commit/003aac93))
+
+### 🏡 Chore
+
+- **release:** V3.12.6 ([8b748aa5](https://github.com/logotip4ik/keycap/commit/8b748aa5))
+- Update deps ([0c389457](https://github.com/logotip4ik/keycap/commit/0c389457))
+- Add og:site_name ([e01d3141](https://github.com/logotip4ik/keycap/commit/e01d3141))
+- Remove not needed url plugin options ([de2c7ae9](https://github.com/logotip4ik/keycap/commit/de2c7ae9))
+- More generic schema to allow mixing other databases ([7ad32641](https://github.com/logotip4ik/keycap/commit/7ad32641))
+- Allow less strict bigint id validation ([7591bc2c](https://github.com/logotip4ik/keycap/commit/7591bc2c))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.12.6
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.12.5...v3.12.6)
