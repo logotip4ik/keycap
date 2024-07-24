@@ -2,9 +2,6 @@ FROM node:20-slim AS builder
 
 WORKDIR /source
 
-RUN apt update -y
-RUN apt install git -y
-
 COPY . .
 
 RUN yarn
