@@ -1,4 +1,4 @@
-FROM oven/bun:latest-alpine AS builder
+FROM oven/bun:alpine AS builder
 
 WORKDIR /source
 
@@ -12,7 +12,7 @@ ENV NODE_ENV=production
 RUN bun build
 
 # release includes bare minimum required to run the app, copied from builder
-FROM oven/bun:latest-alpine
+FROM oven/bun:alpine
 
 WORKDIR /app
 
