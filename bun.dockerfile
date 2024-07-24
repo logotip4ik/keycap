@@ -1,23 +1,18 @@
-FROM oven/bun:latest AS builder
+FROM oven/bun:latest-alpine AS builder
 
-WORKDIR /source
-
-RUN apt update -y
-RUN apt install git -y
+WORKDIR /source
 
 COPY . .
 
-RUN yarn
+RUN bun install
 
 ENV NITRO_PRESET=bun
 ENV NODE_ENV=production
 
-RUN yarn build
+RUN bun build
 
 # release includes bare minimum required to run the app, copied from builder
-FROM oven/bun:latest
-
-RUN apt update -y
+FROM oven/bun:latest-alpine
 
 WORKDIR /app
 
