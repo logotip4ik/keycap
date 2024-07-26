@@ -39,7 +39,7 @@ useServerSeoMeta({
   title: 'Keycap - Better Notes',
   ogTitle: 'Keycap - Better Notes',
 
-  ogDescription: 'Better then just notes ❤. Synced between your devices, simple, fast and purple.',
+  ogDescription: 'Beautiful notes 💜. Fast, simple, shareable, synced between devices and purple.',
   ogImage: `${protocol}://${site}/og-image.min.jpg`,
   ogImageWidth: 1200,
   ogImageHeight: 630,
