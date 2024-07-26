@@ -46,6 +46,8 @@ html {
   text-rendering: optimizeLegibility;
 
   tab-size: 4;
+  scroll-behavior: smooth;
+  overscroll-behavior: none;
 }
 
 body {
@@ -55,8 +57,6 @@ body {
   color: var(--text-color);
 
   background-color: var(--surface-color);
-
-  overscroll-behavior: none;
 }
 
 #__nuxt {
