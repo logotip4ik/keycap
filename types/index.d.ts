@@ -14,6 +14,7 @@ export declare global {
   interface ImportMeta {
     dev: boolean
     prod: boolean
+    ci: boolean
 
     config: Config
   }

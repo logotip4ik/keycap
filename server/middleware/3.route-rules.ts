@@ -29,7 +29,7 @@ export default defineEventHandler(async (event) => {
 
   if (
     !import.meta.config.benchmarking
-    && !import.meta.dev
+    && import.meta.ci
     && event.method !== 'GET'
     && isOriginMismatched(event)
   ) {

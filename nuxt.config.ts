@@ -259,6 +259,7 @@ export default defineNuxtConfig({
     define: {
       'import.meta.dev': isDevelopment,
       'import.meta.prod': isProduction,
+      'import.meta.ci': isCI,
 
       '__VUE_OPTIONS_API__': false,
 
@@ -385,11 +386,9 @@ export default defineNuxtConfig({
 
   nitro: {
     replace: {
-      // https://github.com/danielroe/roe.dev/blob/main/nuxt.config.ts#L115
-      'process.browser': false,
-
       'import.meta.dev': isDevelopment,
       'import.meta.prod': isProduction,
+      'import.meta.ci': isCI,
 
       'process.env.NODE_ENV': JSON.stringify(nodeENV),
 
