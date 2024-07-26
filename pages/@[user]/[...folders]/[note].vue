@@ -1,8 +1,4 @@
 <script setup lang="ts">
-definePageMeta({
-  scrollToTop: true,
-});
-
 const route = useRoute();
 const isFallbackMode = useFallbackMode();
 const notesCache = useNotesCache();
