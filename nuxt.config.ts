@@ -497,6 +497,10 @@ export default defineNuxtConfig({
     includeManifestIcons: false,
     minify: true, // TODO: why this is not working ? https://github.com/vite-pwa/nuxt/issues/62
 
+    pwaAssets: {
+      disabled: true,
+    },
+
     client: {
       installPrompt: false,
       registerPlugin: true,
@@ -504,8 +508,12 @@ export default defineNuxtConfig({
     },
 
     injectManifest: {
-      globPatterns: ['**/*.{js,json,css,html,txt,svg,png,ico,webp,woff,woff2,ttf,eot,otf,wasm}'],
-      globIgnores: ['**.webmanifest', 'register', 'login', 'sw.js', 'index.html'],
+      globPatterns: ['**/*.{js,json,css,html,svg,ico,woff2,ttf}', 'logo.webp'],
+      globIgnores: [
+        '**.webmanifest',
+        '*-dev*',
+        'index.html',
+      ],
     },
   },
 
