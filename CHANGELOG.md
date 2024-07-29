@@ -1,6 +1,30 @@
 # Changelog
 
 
+## v3.12.8
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.12.7...v3.12.8)
+
+### 🩹 Fixes
+
+- Do not install origin mismatch check for non ci envs ([8cac71a2](https://github.com/logotip4ik/keycap/commit/8cac71a2))
+
+### 🏡 Chore
+
+- **release:** V3.12.7 ([01411a40](https://github.com/logotip4ik/keycap/commit/01411a40))
+- Experiment with bun dockerfile ([eb125db0](https://github.com/logotip4ik/keycap/commit/eb125db0))
+- Fix bun docker image ([282ec27d](https://github.com/logotip4ik/keycap/commit/282ec27d))
+- More experimentation with dockerfiles ([bc152f7c](https://github.com/logotip4ik/keycap/commit/bc152f7c))
+- Update keycap description ([8acf26bf](https://github.com/logotip4ik/keycap/commit/8acf26bf))
+- Remove not needed scrollToTop ([bada72b1](https://github.com/logotip4ik/keycap/commit/bada72b1))
+- Better scroll behaivor ([8c5d75ec](https://github.com/logotip4ik/keycap/commit/8c5d75ec))
+- Update deps ([41ab80f2](https://github.com/logotip4ik/keycap/commit/41ab80f2))
+- Reduce memory usage by lowering number of cached items ([805a9c42](https://github.com/logotip4ik/keycap/commit/805a9c42))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.12.7
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.12.6...v3.12.7)
