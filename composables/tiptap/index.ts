@@ -26,8 +26,8 @@ import { Link } from './extensions/link';
 import { BubbleMenu } from './extensions/bubble-menu';
 import { EmojiPicker } from './extensions/emoji-picker';
 
-const editor = shallowRef<Editor | undefined>();
-const isTyping = ref(false);
+const editor = /* #__PURE__ */ shallowRef<Editor | undefined>();
+const isTyping = /* #__PURE__ */ ref(false);
 
 const debouncedClearTyping = debounce(() => isTyping.value = false, 500);
 

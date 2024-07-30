@@ -372,7 +372,7 @@ export default defineNuxtConfig({
           name: 'mock',
           enforce: 'pre',
           resolveId(id) {
-            if (/(?:^|\/)@tiptap\//.test(id)) {
+            if (/(?:^|\/)@?tiptap\//.test(id)) {
               return resolve('./mocks/tiptap.ts');
             }
             if (/(?:^|\/)prosemirror/.test(id)) {

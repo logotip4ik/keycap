@@ -1,4 +1,6 @@
-const isFallbackMode = ref(false);
+import proxy from 'unenv/runtime/mock/proxy';
+
+const isFallbackMode: Ref<boolean> = import.meta.server ? proxy : ref(false);
 
 export function useFallbackMode() {
   return isFallbackMode;

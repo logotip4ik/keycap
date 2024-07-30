@@ -10,19 +10,18 @@ type Events = {
   'search:show'?: Partial<object>
 };
 
-const emitter = mitt<Events>();
-const beseOn = emitter.on;
-// @ts-expect-error end user will still get type support because of useMitt function
-emitter.on = (type, handler) => {
-  beseOn(type, handler);
+const emitter = import.meta.server ? proxy : /* #__PURE__ */ mitt<Events>();
 
-  onScopeDispose(() => emitter.off(type, handler));
-};
+if (import.meta.client) {
+  const beseOn = emitter.on;
+  // @ts-expect-error end user will still get type support because of useMitt function
+  emitter.on = (type, handler) => {
+    beseOn(type, handler);
+
+    onScopeDispose(() => emitter.off(type, handler));
+  };
+}
 
 export function useMitt(): Emitter<Events> {
-  if (import.meta.server) {
-    return proxy;
-  }
-
   return emitter;
 };

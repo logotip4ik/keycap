@@ -10,7 +10,7 @@ const shortcutsDescription = {
 } satisfies Record<keyof typeof shortcuts, string>;
 
 function humanizeShortcut(shortcut: string) {
-  return shortcut.replace(/\$mod/g, getModKey()).replace(/Key/g, '');
+  return shortcut.replace(/\$mod/g, useModKey()).replace(/Key/g, '');
 }
 </script>
 

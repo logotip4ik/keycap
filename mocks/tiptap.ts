@@ -31,4 +31,8 @@ export const isTextSelection = proxy;
 export const isNodeSelection = proxy;
 export const posToDOMRect = proxy;
 
+export const useTiptap = proxy;
+export const withTiptapEditor = proxy;
+export const BubbleMenuPlugin = proxy;
+
 export default proxy;

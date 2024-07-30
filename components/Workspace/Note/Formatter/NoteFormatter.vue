@@ -15,7 +15,7 @@ const linkInputPlaceholder = ref(LinkInputPlaceholder.INITIALLY_EMPTY);
 const isEditingLink = ref(false);
 const editingLink = ref('');
 
-const modKey = getModKey();
+const modKey = useModKey();
 const { setting: formatterPosition } = useSetting(settings.formatterPosition);
 
 let prevListItem: string | undefined;
@@ -334,7 +334,7 @@ useFocusTrap(formatterEl);
         </template>
 
         <template #tooltip>
-          <kbd>{{ mark.shortcut.value }}</kbd>
+          <kbd>{{ mark.shortcut() }}</kbd>
         </template>
       </WithTooltip>
     </div>
