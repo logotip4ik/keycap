@@ -114,6 +114,7 @@ function updateNote(content: string, force?: boolean) {
 
 async function handleError(error: Error) {
   if (await baseHandleError(error) || note.value) {
+    createToast('Failed to fetch current note, showing cached one.');
     return;
   }
 

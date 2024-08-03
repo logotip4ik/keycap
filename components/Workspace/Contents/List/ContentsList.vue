@@ -105,6 +105,7 @@ function showMenu(target: HTMLElement, item: FolderOrNote) {
 
 async function handleError(error: Error) {
   if (await baseHandleError(error) || folder.value) {
+    createToast('Failed to fetch current folder, showing cached one.');
     return;
   }
 
