@@ -10,6 +10,7 @@ definePageMeta({
 const route = useRoute();
 const user = useUser();
 const mitt = useMitt();
+const isFallback = useFallbackMode();
 const { shortcuts } = useAppConfig();
 
 const currentItemForDetails = useCurrentItemForDetails();
@@ -80,6 +81,8 @@ onMounted(() => {
 
 <template>
   <div id="workspace" class="workspace">
+    <LazyWorkspaceBannerNoConnection v-if="isFallback" />
+
     <LazyWorkspaceToolbox />
 
     <WithFadeTransition>
