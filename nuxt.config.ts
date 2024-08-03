@@ -272,13 +272,22 @@ export default defineNuxtConfig({
       ...prefixedConfig,
     },
 
+    json: {
+      stringify: true,
+    },
+
     build: {
+      target: 'esnext',
+
       cssMinify: 'lightningcss',
       cssTarget: browserslistToEsbuild(),
-      target: 'esnext',
+
       minify: isCI ? 'terser' : 'esbuild',
       terserOptions: isCI ? { // eslint-disable-line style/multiline-ternary
-        compress: true,
+        compress: {
+          defaults: true,
+          pure_getters: true,
+        },
         mangle: true,
         safari10: false,
         ecma: 2020,
@@ -537,6 +546,10 @@ export default defineNuxtConfig({
 
       replace: {
         'import.meta.vitest': false,
+      },
+
+      externals: {
+        external: ['crossws', 'croner', 'iron-webcrypto'],
       },
 
       rollupConfig: {
