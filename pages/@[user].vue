@@ -75,25 +75,27 @@ onMounted(() => {
   if (import.meta.dev) {
     // @ts-expect-error this should not be defined
     window.$createToast = useToaster();
+    // @ts-expect-error this should not be defined
+    window.$isFallback = useFallbackMode();
   }
 });
 </script>
 
 <template>
   <div id="workspace" class="workspace">
-    <LazyWorkspaceBannerNoConnection v-if="isFallback" />
-
     <LazyWorkspaceToolbox />
 
-    <WithFadeTransition>
-      <LazyWorkspaceWelcome v-if="isNoteEmpty" />
+    <main class="workspace__note">
+      <LazyWorkspaceBannerNoConnection v-if="isFallback" />
 
-      <main v-else class="workspace__note">
-        <NuxtPage
-          :transition="{ name: 'fade' }"
-        />
-      </main>
-    </WithFadeTransition>
+      <WithFadeTransition>
+        <LazyWorkspaceWelcome v-if="isNoteEmpty" />
+
+        <div v-else>
+          <NuxtPage :transition="{ name: 'fade' }" />
+        </div>
+      </WithFadeTransition>
+    </main>
 
     <LazyWorkspaceContents />
 
@@ -130,6 +132,8 @@ onMounted(() => {
     --scrollbar-thumb-color: hsla(var(--text-color-hsl), 0.175);
     --scrollbar-background: hsla(var(--text-color-hsl), 0.025);
 
+    position: relative;
+
     flex: 1;
 
     width: 100%;
@@ -137,6 +141,7 @@ onMounted(() => {
 
     overflow-y: auto;
 
+    scrollbar-gutter: stable;
     scrollbar-width: thin;
     scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-background);
     &::-webkit-scrollbar {

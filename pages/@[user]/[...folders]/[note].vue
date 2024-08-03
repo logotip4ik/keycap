@@ -186,18 +186,16 @@ if (import.meta.client) {
 </template>
 
 <style lang="scss">
-.workspace {
-  &__note-editor {
-    width: 97.5%;
-    height: 100%;
+.workspace__note-editor {
+  width: 97.5%;
+  height: 100%;
 
-    max-width: 1300px;
+  max-width: 1300px;
 
-    margin: 0 auto;
+  margin: 0 auto;
 
-    @media (max-width: $breakpoint-tablet) {
-      width: 100%;
-    }
+  @media (max-width: $breakpoint-tablet) {
+    width: 100%;
   }
 }
 </style>

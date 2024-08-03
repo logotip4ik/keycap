@@ -1,24 +1,20 @@
-import proxy from 'unenv/runtime/mock/proxy';
-
-const isFallbackMode: Ref<boolean> = import.meta.server ? proxy : ref(false);
+let fallbackMode: Ref<boolean> | undefined;
 
 export function useFallbackMode() {
-  return isFallbackMode;
+  if (import.meta.server) {
+    return ref(false);
+  }
+
+  if (!fallbackMode) {
+    fallbackMode = ref(false);
+
+    mountListeners(fallbackMode);
+  }
+
+  return fallbackMode;
 }
 
-if (import.meta.client) {
-  if (navigator) {
-    isFallbackMode.value = !navigator.onLine;
-  }
-
-  if (import.meta.dev) {
-    if (typeof window !== 'undefined') {
-      window.addEventListener('online', () => isFallbackMode.value = false);
-      window.addEventListener('offline', () => isFallbackMode.value = true);
-    }
-  }
-  else {
-    window.addEventListener('online', () => isFallbackMode.value = false);
-    window.addEventListener('offline', () => isFallbackMode.value = true);
-  }
+function mountListeners(fallback: Ref<boolean>) {
+  on(window, 'online', () => fallback.value = true);
+  on(window, 'offline', () => fallback.value = true);
 }

@@ -233,7 +233,7 @@ if (import.meta.client) {
       @click.self="menuOptions.target = undefined"
       @keydown.capture.passive="handleArrowsPress"
     >
-      <template v-for="item in folderContents" :key="item.id">
+      <template v-for="item in folderContents" :key="item.path">
         <WithFadeTransition>
           <li
             v-if="item.state"

@@ -14,8 +14,8 @@
   gap: 0.25rem;
 
   position: absolute;
-  top: 1.25rem;
-  right: 50%;
+  top: 1.5rem;
+  left: 50%;
 
   font-size: 0.975rem;
   color: var(--error-color);
