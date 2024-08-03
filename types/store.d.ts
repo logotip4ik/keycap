@@ -3,7 +3,7 @@ import type { Selectable } from 'kysely';
 import type { Emoji } from '@emoji-mart/data';
 import type { Folder as _Folder, Note as _Note, Share as _Share } from '~/kysely/db/types';
 
-import type { SearchActionValues } from '~/types/common';
+import type { ItemStateValues, SearchActionValues } from '~/types/common';
 
 type Note = Selectable<_Note>;
 type Folder = Selectable<_Folder>;
@@ -15,8 +15,7 @@ declare global {
   } & unknown;
 
   export interface ItemMetatags {
-    editing?: boolean
-    creating?: boolean
+    state?: ItemStateValues
   };
 
   export type ItemMetadata = Prettify<

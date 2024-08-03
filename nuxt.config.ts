@@ -85,6 +85,10 @@ export default defineNuxtConfig({
         ],
       },
       {
+        from: resolve('./types/common'),
+        imports: ['ItemState'],
+      },
+      {
         from: 'rad-event-listener',
         imports: ['on'],
       },

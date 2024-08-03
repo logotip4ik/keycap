@@ -15,7 +15,7 @@ const name = ref(props.item.name || '');
 const isLoading = ref(false);
 
 const isFolder = checkIsFolder(props.item);
-const placeholder = props.item.creating
+const placeholder = props.item.state === ItemState.Creating
   ? 'note or folder/'
   : isFolder
     ? 'new folder name'
@@ -25,13 +25,15 @@ function handleSubmit() {
   let promise: Promise<unknown>;
   isLoading.value = true;
 
-  if (props.item.creating) {
+  const state = props.item.state;
+
+  if (state === ItemState.Creating) {
     const creationName = name.value.at(-1) === '/' ? name.value.slice(0, -1) : name.value;
     const createAction = creationName.length === name.value.length ? createNote : createFolder;
 
     promise = createAction(creationName, props.item, props.parent);
   }
-  else if (props.item.editing) {
+  else if (state === ItemState.Editing) {
     const renameAction = isFolder ? renameFolder : renameNote;
 
     promise = renameAction(name.value, props.item);
@@ -48,7 +50,10 @@ function handleSubmit() {
 
       withTiptapEditor((editor) => editor.commands.focus());
     })
-    .catch((error) => createToast(error.data.message || ERROR_MESSAGES.DEFAULT))
+    .catch((error) => {
+      createToast(error.data.message || ERROR_MESSAGES.DEFAULT);
+      setTimeout(() => inputEl.value?.focus(), 50);
+    })
     .finally(() => isLoading.value = false);
 }
 
@@ -59,11 +64,11 @@ function handleReset() {
     return;
   }
 
-  if (props.item.creating) {
+  if (props.item.state === ItemState.Creating) {
     return remove(props.parent.notes, props.item);
   }
 
-  extend(props.item, { editing: false, creating: false });
+  extend(props.item, { state: undefined });
 }
 
 onMounted(() => {

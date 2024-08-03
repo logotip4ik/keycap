@@ -84,8 +84,7 @@ function preloadItemWithIndication() {
 }
 
 function renameItem() {
-  extend(props.item, { editing: true });
-
+  extend(props.item, { state: ItemState.Editing });
   props.onClose();
 }
 

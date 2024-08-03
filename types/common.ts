@@ -9,3 +9,11 @@ export const SearchAction = {
 
 export type SearchActionKeys = keyof typeof SearchAction;
 export type SearchActionValues = typeof SearchAction[SearchActionKeys];
+
+export const ItemState = {
+  Creating: 1,
+  Editing: 2,
+} as const;
+
+export type ItemStateKeys = keyof typeof ItemState;
+export type ItemStateValues = typeof ItemState[ItemStateKeys];

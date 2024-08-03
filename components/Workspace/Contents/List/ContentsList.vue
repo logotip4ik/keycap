@@ -40,7 +40,7 @@ const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefi
       }
 
       const { data: fetchedFolder } = res as { data: FolderWithContents };
-      const wasCreatingItem = folder.value?.notes.some((item) => item.creating);
+      const wasCreatingItem = folder.value?.notes.some((item) => item.state === ItemState.Creating);
 
       isFallbackMode.value = false;
 
@@ -174,7 +174,8 @@ useTinykeys({
       contentsState.value = 'visible';
     }
 
-    const alreadyCreating = folder.value && folder.value.notes.some((note) => note.creating);
+    const alreadyCreating = folder.value
+      && folder.value.notes.some((note) => note.state === ItemState.Creating);
 
     if (alreadyCreating) {
       return;
@@ -234,7 +235,7 @@ if (import.meta.client) {
       <template v-for="item in folderContents" :key="item.id">
         <WithFadeTransition>
           <li
-            v-if="item.creating || item.editing"
+            v-if="item.state"
             key="1"
             class="contents__list__item"
           >

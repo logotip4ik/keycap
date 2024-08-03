@@ -8,7 +8,10 @@ function handleClick() {
 
   const folderData = folder.data as Ref<FolderWithContents>;
 
-  if (!folderData.value || folderData.value.notes.some((note) => note.creating)) {
+  if (
+    !folderData.value
+    || folderData.value.notes.some((note) => note.state === ItemState.Creating)
+  ) {
     return;
   }
 

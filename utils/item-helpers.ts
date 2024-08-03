@@ -30,7 +30,7 @@ export function preCreateItem(folderToAppend: FolderWithContents, initialValues?
     id,
     name: '',
     path: '',
-    creating: true,
+    state: ItemState.Creating,
   };
 
   if (initialValues) {
@@ -83,7 +83,7 @@ export async function createFolder(folderName: string, self: FolderOrNote, paren
   const offlineStorage = useOfflineStorage();
   const fuzzyWorker = useFuzzyWorker();
 
-  newlyCreatedFolder.creating = false;
+  newlyCreatedFolder.state = undefined;
   parent.subfolders.push(newlyCreatedFolder);
 
   remove(parent.notes, self);
@@ -116,7 +116,7 @@ export async function createNote(noteName: string, self: FolderOrNote, parent: F
   const fuzzyWorker = useFuzzyWorker();
 
   newlyCreatedNote.content ||= '';
-  newlyCreatedNote.creating = false;
+  newlyCreatedNote.state = undefined;
 
   notesCache.set(newlyCreatedNote.path, newlyCreatedNote);
   offlineStorage.setItem(newlyCreatedNote.path, newlyCreatedNote);
@@ -127,7 +127,7 @@ export async function createNote(noteName: string, self: FolderOrNote, parent: F
 }
 
 export async function renameFolder(newName: string, self: FolderOrNote) {
-  const newFolder: Record<string, string | boolean> = { name: newName.trim() };
+  const newFolder: Record<string, string | undefined> = { name: newName.trim() };
 
   const currentFolderPath = getCurrentFolderPath();
   const folderPathName = encodeURIComponent(self.name);
@@ -141,8 +141,8 @@ export async function renameFolder(newName: string, self: FolderOrNote) {
   const fuzzyWorker = useFuzzyWorker();
 
   const folderNameRegex = new RegExp(`${escapeRE(encodeURIComponent(self.name))}$`);
-  newFolder.path = self.path.replace(folderNameRegex, encodeURIComponent(newFolder.name));
-  newFolder.editing = false;
+  newFolder.path = self.path.replace(folderNameRegex, encodeURIComponent(newFolder.name!));
+  newFolder.state = undefined;
 
   const folder = foldersCache.get(self.path);
 
@@ -169,7 +169,7 @@ export async function renameFolder(newName: string, self: FolderOrNote) {
 }
 
 export async function renameNote(newName: string, self: FolderOrNote) {
-  const newNote: Record<string, string | boolean> = { name: newName.trim() };
+  const newNote: Record<string, string | undefined> = { name: newName.trim() };
 
   const currentFolderPath = getCurrentFolderPath();
   const notePathName = encodeURIComponent(self.name);
@@ -182,8 +182,8 @@ export async function renameNote(newName: string, self: FolderOrNote) {
   const fuzzyWorker = useFuzzyWorker();
 
   const noteNameRegex = new RegExp(`${escapeRE(encodeURIComponent(self.name))}$`);
-  newNote.path = self.path.replace(noteNameRegex, encodeURIComponent(newNote.name));
-  newNote.editing = false;
+  newNote.path = self.path.replace(noteNameRegex, encodeURIComponent(newNote.name!));
+  newNote.state = undefined;
 
   const note = notesCache.get(self.path);
 
