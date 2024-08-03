@@ -3,7 +3,7 @@ import type { ChainedCommands, Editor } from '@tiptap/core';
 import type { Level } from '@tiptap/extension-heading';
 import type { ResolvedPos } from '@tiptap/pm/model';
 
-import { LinkInputPlaceholder, marks } from './config';
+import { LinkInputPlaceholder, makeMarks } from './config';
 
 const props = defineProps<{
   editor: Editor
@@ -16,6 +16,7 @@ const isEditingLink = ref(false);
 const editingLink = ref('');
 
 const modKey = useModKey();
+const marks = makeMarks();
 const { setting: formatterPosition } = useSetting(settings.formatterPosition);
 
 let prevListItem: string | undefined;
@@ -334,7 +335,7 @@ useFocusTrap(formatterEl);
         </template>
 
         <template #tooltip>
-          <kbd>{{ mark.shortcut() }}</kbd>
+          <kbd>{{ mark.shortcut }}</kbd>
         </template>
       </WithTooltip>
     </div>

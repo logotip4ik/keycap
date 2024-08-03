@@ -10,49 +10,53 @@ export const LinkInputPlaceholder = {
 export interface MarkButton {
   icon: Component
   ariaLabel: string
-  shortcut: () => string
+  shortcut: string
   isActive: (e: Editor) => boolean
   /** @description empty click handler acts as __toggling link form__ */
   onClick?: (e: Editor) => any
 }
 
-export const marks: Array<MarkButton> = [
-  {
-    icon: LazyIconBaselineFormatBold,
-    ariaLabel: 'toggle bold',
-    shortcut: () => `${useModKey()}+b`,
-    isActive: (editor) => editor.isActive('bold'),
-    onClick: (editor) => editor!.chain().focus().toggleBold().run(),
-  },
+export function makeMarks(): Array<MarkButton> {
+  const modKey = useModKey();
 
-  {
-    icon: LazyIconBaselineFormatItalic,
-    ariaLabel: 'toggle italic',
-    shortcut: () => `${useModKey()}+i`,
-    isActive: (editor) => editor.isActive('italic'),
-    onClick: (editor) => editor!.chain().focus().toggleItalic().run(),
-  },
+  return [
+    {
+      icon: LazyIconBaselineFormatBold,
+      ariaLabel: 'toggle bold',
+      shortcut: `${modKey}+b`,
+      isActive: (editor) => editor.isActive('bold'),
+      onClick: (editor) => editor!.chain().focus().toggleBold().run(),
+    },
 
-  {
-    icon: LazyIconBaselineCode,
-    shortcut: () => `${useModKey()}+e`,
-    ariaLabel: 'toggle code',
-    isActive: (editor) => editor.isActive('code'),
-    onClick: (editor) => editor!.chain().focus().toggleCode().run(),
-  },
+    {
+      icon: LazyIconBaselineFormatItalic,
+      ariaLabel: 'toggle italic',
+      shortcut: `${modKey}+i`,
+      isActive: (editor) => editor.isActive('italic'),
+      onClick: (editor) => editor!.chain().focus().toggleItalic().run(),
+    },
 
-  {
-    icon: LazyIconStrikeThrough,
-    shortcut: () => `${useModKey()}+Shift+S`,
-    ariaLabel: 'strike through',
-    isActive: (editor) => editor.isActive('strike'),
-    onClick: (editor) => editor!.chain().focus().toggleStrike().run(),
-  },
+    {
+      icon: LazyIconBaselineCode,
+      shortcut: `${modKey}+e`,
+      ariaLabel: 'toggle code',
+      isActive: (editor) => editor.isActive('code'),
+      onClick: (editor) => editor!.chain().focus().toggleCode().run(),
+    },
 
-  {
-    icon: LazyIconBaselineLink,
-    shortcut: () => `${useModKey()}+l`,
-    ariaLabel: 'toggle link',
-    isActive: (editor) => editor.isActive('link'),
-  },
-];
+    {
+      icon: LazyIconStrikeThrough,
+      shortcut: `${modKey}+Shift+S`,
+      ariaLabel: 'strike through',
+      isActive: (editor) => editor.isActive('strike'),
+      onClick: (editor) => editor!.chain().focus().toggleStrike().run(),
+    },
+
+    {
+      icon: LazyIconBaselineLink,
+      shortcut: `${modKey}+l`,
+      ariaLabel: 'toggle link',
+      isActive: (editor) => editor.isActive('link'),
+    },
+  ];
+}
