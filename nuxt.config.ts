@@ -284,10 +284,7 @@ export default defineNuxtConfig({
 
       minify: isCI ? 'terser' : 'esbuild',
       terserOptions: isCI ? { // eslint-disable-line style/multiline-ternary
-        compress: {
-          defaults: true,
-          pure_getters: true,
-        },
+        compress: true,
         mangle: true,
         safari10: false,
         ecma: 2020,
@@ -546,10 +543,6 @@ export default defineNuxtConfig({
 
       replace: {
         'import.meta.vitest': false,
-      },
-
-      externals: {
-        external: ['crossws', 'croner', 'iron-webcrypto'],
       },
 
       rollupConfig: {
