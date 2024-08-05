@@ -548,6 +548,10 @@ export default defineNuxtConfig({
         'import.meta.vitest': false,
       },
 
+      externals: {
+        external: ['crossws', 'croner', 'iron-webcrypto'],
+      },
+
       rollupConfig: {
         plugins: [
           // NOTE: it results in smaller server size and faster builds. Neat ¯\_(ツ)_/¯
