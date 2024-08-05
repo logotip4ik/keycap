@@ -1,6 +1,30 @@
 # Changelog
 
 
+## v3.12.9
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.12.8...v3.12.9)
+
+### 💅 Refactors
+
+- Avoid calling ref in global server scope ([ec51208e](https://github.com/logotip4ik/keycap/commit/ec51208e))
+- Use state field instead of two flags ([bae4d044](https://github.com/logotip4ik/keycap/commit/bae4d044))
+- Improve banner position ([4c47a540](https://github.com/logotip4ik/keycap/commit/4c47a540))
+- Wrap marks into function ([b8809077](https://github.com/logotip4ik/keycap/commit/b8809077))
+
+### 🏡 Chore
+
+- **release:** V3.12.8 ([7aee3801](https://github.com/logotip4ik/keycap/commit/7aee3801))
+- Update deps ([4f94a398](https://github.com/logotip4ik/keycap/commit/4f94a398))
+- Stringify json in client builds and make server smaller ([3739bfd6](https://github.com/logotip4ik/keycap/commit/3739bfd6))
+- Show message when failed to fetch folder or note ([1b4e2970](https://github.com/logotip4ik/keycap/commit/1b4e2970))
+- Show `no connection` message when in fallback mode ([21574232](https://github.com/logotip4ik/keycap/commit/21574232))
+- Remove not needed glob ([4bc6d940](https://github.com/logotip4ik/keycap/commit/4bc6d940))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.12.8
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.12.7...v3.12.8)
