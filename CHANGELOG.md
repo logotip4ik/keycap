@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v3.12.10
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.12.9...v3.12.10)
+
+### 🏡 Chore
+
+- **release:** V3.12.9 ([651f320c](https://github.com/logotip4ik/keycap/commit/651f320c))
+- Maybe fix build ([0976b7a6](https://github.com/logotip4ik/keycap/commit/0976b7a6))
+- Maybe fix prod ([c332fb3e](https://github.com/logotip4ik/keycap/commit/c332fb3e))
+- Maybe fix prod ([28452fd2](https://github.com/logotip4ik/keycap/commit/28452fd2))
+- Add back not used packages as externals ([47c78af0](https://github.com/logotip4ik/keycap/commit/47c78af0))
+- Update deps ([0f60fbb5](https://github.com/logotip4ik/keycap/commit/0f60fbb5))
+- Update package manager ([e285b551](https://github.com/logotip4ik/keycap/commit/e285b551))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.12.9
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.12.8...v3.12.9)
