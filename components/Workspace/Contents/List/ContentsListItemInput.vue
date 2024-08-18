@@ -88,7 +88,10 @@ onMounted(() => {
     @reset.prevent="handleReset"
   >
     <label v-once class="sr-only" for="contentsListItemInput">
-      Item name (enter "/" at the end to create folder)
+      Item name
+      <template v-if="item.state === ItemState.Creating">
+        &nbsp;(enter "/" at the end to create folder)
+      </template>
     </label>
     <input
       id="contentsListItemInput"
