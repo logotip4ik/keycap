@@ -1,6 +1,6 @@
 import parseDuration from 'parse-duration';
 import browserslistToEsbuild from 'browserslist-to-esbuild';
-import { join, resolve } from 'pathe';
+import { resolve } from 'pathe';
 import { isCI, isDevelopment, isProduction, nodeENV } from 'std-env';
 import RollupSucrase from '@rollup/plugin-sucrase';
 import RollupUrl from '@rollup/plugin-url';

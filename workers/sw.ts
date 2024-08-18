@@ -1,6 +1,6 @@
 import { NetworkFirst, Strategy } from 'workbox-strategies';
 import { cacheNames, clientsClaim } from 'workbox-core';
-import { Route, registerRoute } from 'workbox-routing';
+import { registerRoute } from 'workbox-routing';
 import { cleanupOutdatedCaches } from 'workbox-precaching';
 import { get, set } from 'idb-keyval';
 import type { StrategyHandler } from 'workbox-strategies';
