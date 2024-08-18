@@ -25,7 +25,7 @@ After months of using Windows and Android, I found out that notes aren't syncing
 - [x] OAuth with Google and GitHub?
 - [x] show notes via sharable links
 - [ ] code highlighting
-- [ ] work without internet (kinda working, if the page is still cached, notes and folders will be loaded from local copies)
+- [x] work without internet (user still needs to navigate to workspace manually, for now...)
 - [ ] create landing page
 - [x] create project logo
 
