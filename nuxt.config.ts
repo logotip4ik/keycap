@@ -4,6 +4,7 @@ import { resolve } from 'pathe';
 import { isCI, isDevelopment, isProduction, nodeENV } from 'std-env';
 import RollupSucrase from '@rollup/plugin-sucrase';
 import RollupUrl from '@rollup/plugin-url';
+import UnheadVite from '@unhead/addons/vite';
 
 import { prefixedConfig } from './config/build';
 import { getHeaders } from './config/headers';
@@ -19,10 +20,11 @@ export default defineNuxtConfig({
 
   app: {
     head: {
+      title: 'Keycap',
       viewport: 'width=device-width, initial-scale=1, interactive-widget=resizes-visual',
       htmlAttrs: { translate: 'no', lang: 'en' },
       meta: [
-        { name: 'description', content: 'Beautiful notes 💜. Fast, simple, shareable, synced between devices and purple.' },
+        { name: 'description', content: 'Beautiful Notes 💜. Fast, simple, shareable, synced between devices and purple.' },
         { name: 'mobile-web-app-capable', content: 'yes' },
         { name: 'theme-color', content: '#FCFCFD', media: '(prefers-color-scheme: light)', key: 'theme-color-light' },
         { name: 'theme-color', content: '#111113', media: '(prefers-color-scheme: dark)', key: 'theme-color-dark' },
@@ -30,6 +32,7 @@ export default defineNuxtConfig({
         { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent', media: '(prefers-color-scheme: dark)', key: 'status-bar-dark' },
         { name: 'apple-mobile-web-app-capable', content: 'yes' },
         { name: 'robots', content: 'none' },
+        { property: 'og:site_name', content: 'Keycap' },
       ],
       link: [
         { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
@@ -511,6 +514,7 @@ export default defineNuxtConfig({
 
       plugins: [
         ParseDurationTransformPlugin.vite(),
+        UnheadVite(),
       ],
     },
 

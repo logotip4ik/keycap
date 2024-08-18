@@ -5,6 +5,7 @@ import MonaSansURL from '~/assets/fonts/Mona-Sans/Mona-Sans.woff2?url';
 
 setupErrorLogging();
 
+const route = useRoute();
 const { site } = useRuntimeConfig().public;
 const { isSmallScreen, isFirefox } = useDevice();
 
@@ -12,17 +13,9 @@ useHead({
   htmlAttrs: {
     class: {
       'phone-or-tablet': isSmallScreen,
+      'firefox': isFirefox,
     },
   },
-});
-
-useServerHead({
-  htmlAttrs: {
-    class: {
-      firefox: isFirefox,
-    },
-  },
-
   link: [
     {
       rel: 'preload',
@@ -35,18 +28,18 @@ useServerHead({
 });
 
 const protocol = import.meta.prod ? 'https' : 'http';
-useServerSeoMeta({
-  title: 'Keycap - Better Notes',
-  ogTitle: 'Keycap - Better Notes',
 
-  ogDescription: 'Beautiful notes 💜. Fast, simple, shareable, synced between devices and purple.',
+useSeoMeta({
+  title: 'Keycap - Beautiful Notes',
+  ogTitle: 'Keycap - Beautiful Notes',
+
+  ogDescription: 'Beautiful Notes 💜. Fast, simple, shareable, synced between devices and purple.',
   ogImage: `${protocol}://${site}/og-image.min.jpg`,
   ogImageWidth: 1200,
   ogImageHeight: 630,
-  ogUrl: `${protocol}://${site}`,
-  ogSiteName: 'Keycap',
+  ogType: 'website',
+  ogUrl: () => `${protocol}://${site}${route.path}`,
 
-  robots: { none: true },
   applicationName: 'Keycap',
   author: 'Bogdan Kostyuk',
 

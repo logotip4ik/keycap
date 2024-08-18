@@ -23,6 +23,14 @@ const errorMessages: Record<number, string> = {
 
 const message = errorMessages[props.error.statusCode] || 'That was unexpected (⊙_⊙;)';
 
+useSeoMeta({
+  title: () => `Keycap - ${props.error.statusCode}`,
+  ogTitle: () => `Keycap - ${props.error.statusCode}`,
+
+  description: () => `${randomNote} ${message}`,
+  ogDescription: () => `${randomNote} ${message}`,
+});
+
 function handleError() {
   clearError({
     redirect: user.value ? `/@${user.value.username}` : '/',
