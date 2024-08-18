@@ -6,8 +6,6 @@ const UPDATE_WORKER_DELAY = parseDuration('1.5s')!;
 const initCallbacks = [
   defineFuzzyWorker,
   preloadDashboardComponents,
-  () => import('~/utils/sw-controller')
-    .then(({ registerSW }) => registerSW()),
 ];
 export function prepareWorkspace() {
   requestIdleCallback(() => {

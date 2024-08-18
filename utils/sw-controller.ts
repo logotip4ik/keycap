@@ -1,10 +1,3 @@
-export async function registerSW() {
-  // @ts-expect-error no types
-  const { registerSW } = await import('virtual:pwa-register') as { registerSW: () => unknown };
-
-  registerSW();
-}
-
 export function registerSWToasts() {
   const { $pwa: pwa } = useNuxtApp();
   const createToast = useToaster();
