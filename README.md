@@ -37,9 +37,6 @@ After months of using Windows and Android, I found out that notes aren't syncing
 - [Prisma vs Kysely (my benchmark)](./benchmarks/prisma-vs-kysely/README.md)
   tldr: in queries without joins prisma is not that far, but in larger queries, Kysely has usually more than 100 ops/s difference
 
-<!-- [Rewrite with kysely](https://github.com/logotip4ik/keycap/tree/feat/kysely). Kysely is slightly faster in a development environment, -->
-<!-- though `node-postgres` isn't well suited for serverless. So to see Kysely outperforms Prisma you will need much more traffic than a few visitors in a week. -->
-
 - With migrating to kysely, the overall memory usage dropped significantly (something like -100mb)
 
 - Tested node vs bun vs deno perf, and results are quite interesting (testing command `bombardier -c 200 -d 60s -la`, Fedora):
