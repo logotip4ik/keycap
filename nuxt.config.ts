@@ -232,30 +232,6 @@ export default defineNuxtConfig({
       }
 
       delete nitro.options.storage.data;
-
-      // minifies service worker
-      const terserPromise = import('terser');
-      const fspPromise = import('node:fs/promises');
-
-      nitro.hooks.hookOnce('compiled', async (nitro) => {
-        const terser = await terserPromise;
-        const fsp = await fspPromise;
-
-        const { publicDir } = nitro.options.output;
-
-        const swPath = join(publicDir, 'sw.js');
-        const swSource = await fsp.readFile(swPath, 'utf8');
-        const swMinified = await terser.minify(swSource, {
-          compress: true,
-          mangle: true,
-          ecma: 2020,
-          sourceMap: false,
-          ie8: false,
-          safari10: false,
-        });
-
-        await fsp.writeFile(swPath, swMinified.code!);
-      });
     },
   },
 
@@ -505,7 +481,7 @@ export default defineNuxtConfig({
     strategies: 'injectManifest',
     manifest: false,
     includeManifestIcons: false,
-    minify: true, // TODO: why this is not working ? https://github.com/vite-pwa/nuxt/issues/62
+    minify: true,
 
     pwaAssets: {
       disabled: true,
