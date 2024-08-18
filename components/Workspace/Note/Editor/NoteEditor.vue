@@ -55,6 +55,10 @@ mitt.on('save:note', () => updateContent());
 onContentUpdate(() => updateContent());
 
 useTinykeys({
+  'Escape': () => {
+    editor.value?.commands.blur();
+  },
+
   '$mod+s': (event) => {
     if (!editor.value?.isFocused) {
       return;
