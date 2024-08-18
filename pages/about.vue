@@ -1,3 +1,9 @@
+<script setup lang="ts">
+definePageMeta({
+  middleware: ['redirect-dashboard'],
+});
+</script>
+
 <template>
   <main v-once>
     <h1>About page</h1>
