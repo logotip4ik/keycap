@@ -46,17 +46,17 @@ export async function baseHandleError(error: Error | H3Error): Promise<boolean> 
     return true;
   }
 
-  // @ts-expect-error there actually is statusCode
-  if (error.statusCode === 401 || !user.value) {
-    user.value = undefined;
-    await navigateTo('/login');
-    return true;
-  }
+  if ('statusCode' in error) {
+    if (error.statusCode === 401 || !user.value) {
+      user.value = undefined;
+      await navigateTo('/login');
+      return true;
+    }
 
-  // @ts-expect-error there actually is statusCode
-  if (error.statusCode === 404) {
-    await navigateTo(`/@${user.value.username}`);
-    return true;
+    if (error.statusCode === 404) {
+      await navigateTo(`/@${user.value.username}`);
+      return true;
+    }
   }
 
   // Other network error ?
