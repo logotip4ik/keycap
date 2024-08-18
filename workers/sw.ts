@@ -1,7 +1,8 @@
-import { Strategy } from 'workbox-strategies';
+import { NetworkFirst, Strategy } from 'workbox-strategies';
 import { cacheNames, clientsClaim } from 'workbox-core';
-import { registerRoute } from 'workbox-routing';
+import { Route, registerRoute } from 'workbox-routing';
 import { cleanupOutdatedCaches } from 'workbox-precaching';
+import { get, set } from 'idb-keyval';
 import type { StrategyHandler } from 'workbox-strategies';
 import type { ManifestEntry } from 'workbox-build';
 
@@ -32,8 +33,6 @@ class CacheNetworkRace extends Strategy {
   }
 }
 
-// TODO: somehow add current user page to cache. Like
-// /@test, so it could actually work without internet
 const manifest = self.__WB_MANIFEST as Array<ManifestEntry>;
 
 const cacheEntries: Array<RequestInfo> = [];
@@ -70,29 +69,60 @@ self.addEventListener('activate', (event: ExtendableEvent) => {
   );
 });
 
-self.addEventListener('message', (event) => {
-  if (event.data && event.data.type === 'SKIP_WAITING') {
-    self.skipWaiting();
-  }
-});
-
 registerRoute(
   ({ url }) => manifestURLs.includes(url.href),
   new CacheNetworkRace(),
 );
 
-// TODO: add app-shell for network errors ?
-// // fallback to app-shell for document request
-// setCatchHandler(({ event }): Promise<Response> => {
-//   switch (event.request.destination) {
-//     case 'document':
-//       return caches.match(fallback).then((r) => {
-//         return r ? Promise.resolve(r) : Promise.resolve(Response.error())
-//       })
-//     default:
-//       return Promise.resolve(Response.error())
-//   }
-// })
+let workspacePath: string | undefined;
+self.addEventListener('message', (event) => {
+  if (!event.data) {
+    return;
+  }
+
+  if (event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+  else if (event.data.type === 'WORKSPACE_PATH') {
+    const payload = event.data.payload as { workspacePath: string };
+
+    workspacePath = payload.workspacePath;
+    set('WORKSPACE_PATH', payload.workspacePath);
+    caches.open(cacheName).then((cache) => {
+      cache.add(payload.workspacePath);
+    });
+  }
+});
+
+const networkFirstHandler = new NetworkFirst();
+function workspaceHandlerWithFallback(event: FetchEvent) {
+  return networkFirstHandler
+    .handle(event)
+    .catch(
+      async () => await caches.match(workspacePath!) || Response.error(),
+    );
+};
+
+self.addEventListener('fetch', async (event) => {
+  const { request } = event;
+
+  if (request.destination !== 'document') {
+    return;
+  }
+
+  if (!workspacePath) {
+    workspacePath = await get('WORKSPACE_PATH');
+  }
+
+  if (!workspacePath) {
+    return;
+  }
+
+  const url = new URL(request.url);
+  if (url.origin === location.origin && url.pathname.startsWith(workspacePath)) {
+    event.respondWith(workspaceHandlerWithFallback(event));
+  }
+});
 
 clientsClaim();
 cleanupOutdatedCaches();
