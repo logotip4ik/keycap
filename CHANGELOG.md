@@ -1,6 +1,43 @@
 # Changelog
 
 
+## v3.13.0
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.12.10...v3.13.0)
+
+### 🚀 Enhancements
+
+- Offline workspace loading ([0352db59](https://github.com/logotip4ik/keycap/commit/0352db59))
+
+### 🩹 Fixes
+
+- Prevent double service worker registration ([9ec2d721](https://github.com/logotip4ik/keycap/commit/9ec2d721))
+
+### 📖 Documentation
+
+- Mark todo ([a0dc88f7](https://github.com/logotip4ik/keycap/commit/a0dc88f7))
+- Remove comments ([5be73539](https://github.com/logotip4ik/keycap/commit/5be73539))
+
+### 🏡 Chore
+
+- **release:** V3.12.10 ([73e13e4b](https://github.com/logotip4ik/keycap/commit/73e13e4b))
+- Update deps and repatch @tiptap/core ([e42d4505](https://github.com/logotip4ik/keycap/commit/e42d4505))
+- Auto redirect logged in user from index page to workspace ([2c2bf47b](https://github.com/logotip4ik/keycap/commit/2c2bf47b))
+- Blur editor on escape ([c9e8f708](https://github.com/logotip4ik/keycap/commit/c9e8f708))
+- Show different aria messages for different item states ([0fc417bd](https://github.com/logotip4ik/keycap/commit/0fc417bd))
+- Redirect only in prod ([208f763d](https://github.com/logotip4ik/keycap/commit/208f763d))
+- More safe error handling ([c4fdaff1](https://github.com/logotip4ik/keycap/commit/c4fdaff1))
+- Remove custom service worker minification ([842b0cf6](https://github.com/logotip4ik/keycap/commit/842b0cf6))
+- Better og seo ([168ca255](https://github.com/logotip4ik/keycap/commit/168ca255))
+
+### 🤖 CI
+
+- Bump actions/setup-node from 4.0.2 to 4.0.3 in the actions group ([#28](https://github.com/logotip4ik/keycap/pull/28))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.12.10
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.12.9...v3.12.10)
