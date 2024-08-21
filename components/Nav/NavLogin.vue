@@ -42,7 +42,7 @@
 
   &__link {
     &--title {
-      font-size: calc(1rem + 1vw);
+      font-size: min(calc(1rem + 1vw), 1.75rem);
     }
 
     &--login {

@@ -2,8 +2,6 @@
 definePageMeta({
   middleware: ['redirect-dashboard'],
 });
-
-const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 </script>
 
 <!--
@@ -41,15 +39,16 @@ const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
       </div>
 
       <div class="index__header__editor__wrapper">
-        <img
-          :src=" `/editor-wide${prefersDarkMode ? '-dark' : ''}.png`"
+        <LightDarkImg
+          light-src="/editor-wide.png"
+          dark-src="/editor-wide-dark.png"
           alt="editor preview"
           decoding="async"
           width="1980"
           height="780"
           fetchpriority="high"
           class="index__header__editor"
-        >
+        />
       </div>
     </header>
     <main class="index__main" />
@@ -148,7 +147,7 @@ const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
       contain: strict;
       mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0) 90%);
 
-      transform: translate(-4%, 3%) scale(1.2) rotateX(47deg) rotateY(31deg) rotate(324deg);
+      transform: translate(-5%, 3%) scale(1.2) rotateX(47deg) rotateY(31deg) rotate(324deg);
       transform-origin: top left;
       backface-visibility: hidden;
 
@@ -156,7 +155,7 @@ const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
         position: relative;
         z-index: -2;
 
-        width: min(1400px, 95vw);
+        width: min(1500px, 95vw);
         height: 40rem;
 
         contain: strict;
