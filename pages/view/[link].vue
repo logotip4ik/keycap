@@ -96,7 +96,7 @@ useSeoMeta({
       &__icon {
         margin-right: 0.25rem;
 
-        vertical-align: baseline  !important;
+        vertical-align: baseline !important;
 
         transform: translateY(1.5px);
       }
