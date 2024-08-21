@@ -2,6 +2,13 @@
 definePageMeta({
   middleware: ['redirect-dashboard'],
 });
+
+useHead({
+  link: [
+    { rel: 'preload', as: 'image', href: '/editor-wide.webp', media: '(prefers-color-scheme: light)' },
+    { rel: 'preload', as: 'image', href: '/editor-wide-dark.webp', media: '(prefers-color-scheme: dark)' },
+  ],
+});
 </script>
 
 <template>
@@ -28,8 +35,8 @@ definePageMeta({
 
       <div class="index__header__editor__wrapper">
         <LightDarkImg
-          light-src="/editor-wide.png"
-          dark-src="/editor-wide-dark.png"
+          light-src="/editor-wide.webp"
+          dark-src="/editor-wide-dark.webp"
           alt="editor preview"
           decoding="async"
           width="1980"
@@ -85,12 +92,12 @@ definePageMeta({
           left: 50%;
           z-index: -1;
 
-          width: 120%;
-          height: 100%;
+          width: 130%;
+          height: 110%;
 
           background-color: var(--selection-bg-color);
           opacity: 0.5;
-          border-radius: 25%;
+          border-radius: 35%;
 
           filter: blur(16px);
           transform: translate(-50%, -50%);
@@ -105,12 +112,13 @@ definePageMeta({
       gap: 1.25rem;
 
       &__button {
-        font-size: 1.25rem;
+        font-size: min(calc(1rem + 0.25vw), 1.25rem);
         font-weight: 500;
         color: var(--text-color);
         text-decoration: none;
 
         padding: 0.66rem 1.5rem;
+        padding: min(calc(0.3rem + 0.5vw), 0.66rem) min(calc(0.75rem + 0.5vw), 1.5rem);
 
         border-radius: 0.175rem;
       }
@@ -128,34 +136,39 @@ definePageMeta({
       width: 100%;
       height: auto;
 
-      padding-top: 10rem;
+      padding-top: 5rem;
 
       pointer-events: none;
       user-select: none;
       contain: strict;
-      mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0) 90%);
+      mask-image: linear-gradient(to bottom, black, rgba(0,0,0,0) 90%);
 
-      transform: translate(-5%, 3%) scale(1.2) rotateX(47deg) rotateY(31deg) rotate(324deg);
+      transform: translate(-5%, 3%) scale(1.2) rotateX(50deg) rotateY(30deg) rotate(325deg);
       transform-origin: top left;
       backface-visibility: hidden;
+      animation: appear 0.5s 0.5s forwards !important;
 
       &__wrapper {
         position: relative;
         z-index: -2;
 
         width: min(1500px, 95vw);
-        height: 40rem;
+        height: 33rem;
 
         contain: strict;
         perspective: 4000px;
         perspective-origin: 100% 0;
-        transform-style: preserve-3d;
       }
     }
   }
 
   &__main {
-    height:  500vh;
+    height: 500vh;
   }
+}
+
+@keyframes appear {
+  from { opacity: 0 }
+  to { opacity: 1 }
 }
 </style>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ImgHTMLAttributes } from 'vue';
 
-interface Props extends /* @vue-ignore */ ImgHTMLAttributes {
+interface Props extends /* @vue-ignore */ Omit<ImgHTMLAttributes, 'src'> {
   lightSrc: string
   darkSrc: string
 }
