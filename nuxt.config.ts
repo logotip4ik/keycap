@@ -478,6 +478,7 @@ export default defineNuxtConfig({
   },
 
   pwa: {
+    disable: !isCI,
     srcDir: 'workers',
     filename: 'sw.ts',
     registerType: 'prompt',
