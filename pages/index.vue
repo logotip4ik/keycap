@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { IconBeautifulShape, IconFastShape, IconStarShape } from '#components';
+
 definePageMeta({
   middleware: ['redirect-dashboard'],
 });
@@ -9,6 +11,68 @@ useHead({
     { rel: 'preload', as: 'image', href: '/editor-wide-dark.webp', media: '(prefers-color-scheme: dark)' },
   ],
 });
+
+const more = [
+  {
+    icon: IconStarShape,
+    title: 'Crafted to be simple',
+    content: 'Available on every device the moment you type. Create note or folder in 1 click. Public link to note with 2 clicks.',
+    gradient: ['#DF99F7', '#FFDBB0'],
+  },
+  {
+    icon: IconFastShape,
+    title: 'Tuned to be fast',
+    content: 'Avarage response time for api\'s are under 100ms. Built with Nitro and Nuxt.',
+    gradient: ['#FFD9A0', '#FFF5F1'],
+  },
+  {
+    icon: IconBeautifulShape,
+    title: 'Designed to be beautiful',
+    content: 'Every component is designed and crafted by hand with perfection in mind.',
+    gradient: ['#A7B5FF', '#F3ACFF'],
+  },
+];
+
+const editorImgWrapperEl = shallowRef<HTMLDivElement | null>(null);
+
+function animateImgPos(
+  end: number,
+  movement: number,
+) {
+  const wrapper = editorImgWrapperEl.value;
+
+  if (!wrapper) {
+    return;
+  }
+
+  const current = Math.min(1, window.scrollY / end);
+  const px = current * movement;
+
+  wrapper.animate([
+    { transform: `translateY(${px.toFixed(2)}px)` },
+  ], {
+    duration: 200,
+    easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+    fill: 'forwards',
+  });
+}
+
+onMounted(() => {
+  const end = window.innerHeight / 1.5;
+  const movement = -50;
+
+  animateImgPos(end, movement);
+
+  if (import.meta.dev) {
+    onBeforeUpdate(
+      on(window, 'scroll', () => animateImgPos(end, movement)),
+    );
+  }
+
+  onBeforeUnmount(
+    on(window, 'scroll', () => animateImgPos(end, movement)),
+  );
+});
 </script>
 
 <template>
@@ -18,7 +82,7 @@ useHead({
     <header class="index__header">
       <p class="index__header__text">
         Beautiful <span class="index__header__text__notes">Notes</span>. <i
-          class="index__header__text__fast font-wide"
+          class="font-wide"
         >Fast</i>, simple, shareable, synced between devices and
         <span class="index__header__text__purple">purple.</span>
       </p>
@@ -33,7 +97,7 @@ useHead({
         </NuxtLink>
       </div>
 
-      <div class="index__header__editor__wrapper">
+      <div ref="editorImgWrapperEl" class="index__header__editor__wrapper">
         <LightDarkImg
           light-src="/editor-wide.webp"
           dark-src="/editor-wide-dark.webp"
@@ -43,10 +107,33 @@ useHead({
           height="780"
           fetchpriority="high"
           class="index__header__editor"
+          style="opacity: 0;"
         />
       </div>
     </header>
-    <main class="index__main" />
+
+    <main class="index__main">
+      <section id="more" class="index__main__more">
+        <ol class="index__main__more__list">
+          <li
+            v-for="(item, i) in more"
+            :key="i"
+            class="index__main__more__list__item"
+            :style="{ '--grad-start': item.gradient[0], '--grad-stop': item.gradient[1] }"
+          >
+            <Component :is="item.icon" class="index__main__more__list__item__icon" />
+
+            <p class="index__main__more__list__item__title">
+              {{ item.title }}
+            </p>
+
+            <p class="index__main__more__list__item__content">
+              {{ item.content }}
+            </p>
+          </li>
+        </ol>
+      </section>
+    </main>
   </div>
 </template>
 
@@ -69,10 +156,6 @@ useHead({
       letter-spacing: -1px;
 
       max-width: 1200px;
-
-      &__fast {
-        font-feature-settings: "ss02" on;
-      }
 
       &__purple {
         font-weight: 600;
@@ -112,13 +195,13 @@ useHead({
       gap: 1.25rem;
 
       &__button {
-        font-size: min(calc(1rem + 0.25vw), 1.25rem);
+        font-size: min(1rem + 0.25vw, 1.25rem);
         font-weight: 500;
         color: var(--text-color);
         text-decoration: none;
 
         padding: 0.66rem 1.5rem;
-        padding: min(calc(0.3rem + 0.5vw), 0.66rem) min(calc(0.75rem + 0.5vw), 1.5rem);
+        padding: min(0.3rem + 0.5vw, 0.66rem) min(0.75rem + 0.5vw, 1.5rem);
 
         border-radius: 0.175rem;
       }
@@ -153,7 +236,7 @@ useHead({
         z-index: -2;
 
         width: min(1500px, 95vw);
-        height: 33rem;
+        height: 35rem;
 
         contain: strict;
         perspective: 4000px;
@@ -163,7 +246,78 @@ useHead({
   }
 
   &__main {
-    height: 500vh;
+    &__more {
+      display: flex;
+      justify-content: center;
+
+      padding: 4rem 2rem;
+
+      &__list {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: stretch;
+        flex-wrap: wrap;
+        gap: 3rem 2rem;
+
+        margin: 0;
+        padding: 0;
+
+        list-style-type: none;
+
+        &__item {
+          --br: 0.5rem;
+
+          position: relative;
+
+          width: 95vw;
+          max-width: 325px;
+
+          padding: 4ch 2ch;
+
+          border-radius: var(--br);
+          background-color: var(--surface-color);
+
+          &__icon {
+            display: block;
+
+            width: 33%;
+            height: auto;
+          }
+
+          &__title {
+            font-size: min(1rem + 1vw, 1.75rem);
+            line-height: 1.1;
+
+            margin: 1.5rem 0;
+          }
+
+          &__content {
+            opacity: 0.85;
+
+            margin: 0;
+          }
+
+          &::after,
+          &::before {
+            --spacing: 0.125rem;
+
+            content: '';
+
+            position: absolute;
+            inset: calc(-1 * var(--spacing));
+            z-index: -1;
+
+            border-radius: calc(var(--br) + var(--spacing));
+            background-image: linear-gradient(to bottom, var(--grad-start), var(--grad-stop));
+          }
+
+          &::after {
+            filter: blur(16px);
+            opacity: 0.175;
+          }
+        }
+      }
+    }
   }
 }
 

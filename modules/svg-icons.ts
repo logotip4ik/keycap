@@ -67,7 +67,15 @@ export async function generateIconFileDefinition({ name, path }: { name: string,
     path,
     multipass: true,
     floatPrecision: 2,
-
+    plugins: [
+      { name: 'preset-default' },
+      {
+        name: 'prefixIds',
+        params: {
+          prefixIds: true,
+        },
+      },
+    ],
   }).data.replace('<svg', '<svg v-once');
 
   const compiledCode = compileTemplate({
