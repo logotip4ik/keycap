@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v3.13.1
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.13.0...v3.13.1)
+
+### 🏡 Chore
+
+- **release:** V3.13.0 ([b2eb916b](https://github.com/logotip4ik/keycap/commit/b2eb916b))
+- Minor changes in styles and code ([2f16e83b](https://github.com/logotip4ik/keycap/commit/2f16e83b))
+- Disable service worker in non ci envs ([24b57eed](https://github.com/logotip4ik/keycap/commit/24b57eed))
+- Better types for fade transition wrapper ([f79b7e59](https://github.com/logotip4ik/keycap/commit/f79b7e59))
+- Update deps and repatch nuxt ([ee21ecc8](https://github.com/logotip4ik/keycap/commit/ee21ecc8))
+- Use before unmount hook ([b355edee](https://github.com/logotip4ik/keycap/commit/b355edee))
+- Remove not needed route groups module ([1956a884](https://github.com/logotip4ik/keycap/commit/1956a884))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.13.0
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.12.10...v3.13.0)
