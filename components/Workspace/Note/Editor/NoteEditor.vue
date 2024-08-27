@@ -14,6 +14,7 @@ const props = defineProps<{
   onUpdate: (content: string, force?: boolean) => void
 }>();
 
+const { shortcuts } = useAppConfig();
 const mitt = useMitt();
 const { isSmallScreen } = useDevice();
 const {
@@ -55,6 +56,15 @@ mitt.on('save:note', () => updateContent());
 onContentUpdate(() => updateContent());
 
 useTinykeys({
+  [shortcuts.edit]: (event) => {
+    const target = event.target as HTMLElement;
+
+    if (target.tagName !== 'INPUT' && target !== editor.value?.view.dom) {
+      event.preventDefault();
+      editor.value?.commands.focus();
+    }
+  },
+
   'Escape': () => {
     editor.value?.commands.blur();
   },

@@ -36,10 +36,8 @@ function initTiptap() {
     return;
   }
 
-  const { isSmallScreen } = useDevice();
-
   editor.value = new Editor({
-    autofocus: !isSmallScreen.value && 'start', // disable auto focus on small screens
+    autofocus: false,
     editable: true,
     editorProps: {
       attributes: { spellcheck: 'false' },
