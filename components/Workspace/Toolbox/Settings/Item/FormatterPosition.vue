@@ -40,6 +40,7 @@ function pinToolbox() {
     font-size: 0.9rem;
     line-height: inherit;
     text-align: center;
+    text-align-last: center; // for some reason `text-align` in safari is not working
 
     min-width: 10ch;
 
