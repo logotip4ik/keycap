@@ -301,13 +301,7 @@ onBeforeMount(() => refresh());
       }
 
       &__checkbox {
-        transform: scale(1.75);
-
-        margin-left: 0.2rem;
-        margin-right: 0.35rem;
-
-        cursor: pointer;
-        accent-color: var(--task-list-indicator-color);
+        --size: 1.65rem !important;
       }
 
       &__share-link {

@@ -96,12 +96,7 @@
             }
 
             input {
-              cursor: pointer;
-
-              accent-color: var(--task-list-indicator-color);
-
-              transform: scale(1.125);
-              transform-origin: center center;
+              transform: translateY(0.175rem);
             }
           }
 
@@ -205,10 +200,6 @@
       padding-top: 0.5rem;
     }
   }
-}
-
-.firefox.phone-or-tablet .ProseMirror label input[type="checkbox"] {
-  transform: scale(1.5);
 }
 
 .safari .ProseMirror :is(ol, ul) li {

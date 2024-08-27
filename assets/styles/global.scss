@@ -86,6 +86,41 @@ a {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
+input[type=checkbox] {
+  --size: 1.2rem;
+
+  position: relative;
+
+  font-size: calc(var(--size) - 0.3rem);
+  font-weight: 700;
+
+  width: var(--size);
+  height: var(--size);
+
+  border-radius: 0.25rem;
+  background-color: hsla(var(--text-color-hsl), 0.175);
+  appearance: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:checked {
+    background-color: var(--task-list-indicator-color);
+    transition: background-color 0.1s;
+
+    &::after {
+      content: "\2713";
+
+      position: absolute;
+      top: 50%;
+      left: 50%;
+
+      color: white;
+
+      transform: translate(-50%, -50%);
+    }
+  }
+}
+
 kbd {
   display: inline-block;
 
