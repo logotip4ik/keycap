@@ -20,8 +20,7 @@ export function prepareWorkspace() {
 }
 
 export function preloadDashboardComponents() {
-  const blankNotePath = `/@a/${BLANK_NOTE_NAME}`;
-  preloadRouteComponents(blankNotePath);
+  preloadRouteComponents(`/@a/${BLANK_NOTE_NAME}`);
 }
 
 export async function defineFuzzyWorker() {

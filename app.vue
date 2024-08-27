@@ -17,6 +17,9 @@ useHead({
       'safari': isSafari,
     },
   },
+});
+
+useServerHead({
   link: [
     {
       rel: 'preload',
