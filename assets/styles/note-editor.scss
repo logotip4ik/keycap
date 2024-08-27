@@ -210,3 +210,7 @@
 .firefox.phone-or-tablet .ProseMirror label input[type="checkbox"] {
   transform: scale(1.5);
 }
+
+.safari .ProseMirror :is(ol, ul) li {
+  filter: none !important;
+}

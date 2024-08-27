@@ -21,7 +21,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       title: 'Keycap',
-      viewport: 'width=device-width, initial-scale=1, interactive-widget=resizes-visual',
+      viewport: 'width=device-width, initial-scale=1',
       htmlAttrs: { translate: 'no', lang: 'en' },
       meta: [
         { name: 'description', content: 'Beautiful Notes 💜. Fast, simple, shareable, synced between devices and purple.' },

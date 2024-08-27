@@ -7,13 +7,14 @@ setupErrorLogging();
 
 const route = useRoute();
 const { site } = useRuntimeConfig().public;
-const { isSmallScreen, isFirefox } = useDevice();
+const { isSmallScreen, isFirefox, isSafari } = useDevice();
 
 useHead({
   htmlAttrs: {
     class: {
       'phone-or-tablet': isSmallScreen,
       'firefox': isFirefox,
+      'safari': isSafari,
     },
   },
   link: [
