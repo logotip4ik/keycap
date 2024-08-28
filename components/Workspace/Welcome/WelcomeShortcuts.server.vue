@@ -15,7 +15,7 @@ function humanizeShortcut(shortcut: string) {
 </script>
 
 <template>
-  <div v-once class="welcome__shortcuts">
+  <div class="welcome__shortcuts">
     <p
       v-for="(shortcut, name) in shortcuts"
       :key="name"
