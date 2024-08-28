@@ -60,6 +60,7 @@ watch(shouldShow, async (shouldShow) => {
 });
 
 function showWithTimeout() {
+  clearTimeout(timeout);
   timeout = setTimeout(() => shouldShow.value = true, timeoutToShowTooltip);
 }
 
