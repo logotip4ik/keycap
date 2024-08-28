@@ -22,6 +22,8 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
+
+    font-size: min(1rem + 1vw, 1.75rem);
   }
 }
 </style>

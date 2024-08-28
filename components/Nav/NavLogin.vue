@@ -5,17 +5,6 @@
         <img
           src="/logo.webp"
           alt="purple keycap"
-          class="nav__link__img nav__link__img--title nav__link__img--blur"
-          decoding="async"
-          width="48"
-          height="48"
-          fetchpriority="low"
-          loading="lazy"
-        >
-
-        <img
-          src="/logo.webp"
-          alt="purple keycap"
           class="nav__link__img nav__link__img--title"
           decoding="async"
           width="48"
@@ -59,20 +48,28 @@
         z-index: 1;
       }
 
-      &--blur {
-        position: absolute;
-        z-index: -1;
-        opacity: 0.25;
-        filter: blur(16px);
-      }
-
       &--title {
         width: var(--img-width);
 
         margin-bottom: 0;
 
+        @media (prefers-reduced-motion: no-preference) {
+          animation: press 10s 5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+        }
       }
     }
+  }
+}
+
+@keyframes press {
+  0% { transform: rotate(0) }
+
+  1% {
+    transform: translateY(0.5rem) scale(0.9);
+  }
+
+  2.5% {
+    transform: rotate(0)
   }
 }
 </style>
