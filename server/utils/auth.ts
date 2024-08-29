@@ -44,7 +44,7 @@ export async function setAuthCookies(event: H3Event, user: SafeUser) {
   setCookie(event, accessTokenName, accessToken, authSerializeOptions);
 }
 
-export async function removeAuthCookies(event: H3Event) {
+export async function deleteAuthCookies(event: H3Event) {
   deleteCookie(event, accessTokenName, authSerializeOptions);
 }
 

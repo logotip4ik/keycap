@@ -1,5 +1,5 @@
 export default defineEventHandler((event) => {
-  removeAuthCookies(event);
+  deleteAuthCookies(event);
 
   return sendRedirect(event, '/');
 });

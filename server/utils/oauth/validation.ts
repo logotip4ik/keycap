@@ -9,7 +9,7 @@ export async function assertNoOAuthErrors(event: H3Event, _query?: QueryObject) 
   const query = _query || getQuery(event)!;
 
   if (query.error) {
-    deleteCookie(event, 'state');
+    deleteOAuthStateCookie(event);
 
     await logger.error(event, { err: new Error(query.error.toString()), msg: 'oauth failed' });
 
@@ -17,7 +17,7 @@ export async function assertNoOAuthErrors(event: H3Event, _query?: QueryObject) 
   }
 
   if (typeof query.state !== 'string' || query.state !== getCookie(event, 'state')) {
-    deleteCookie(event, 'state');
+    deleteOAuthStateCookie(event);
 
     const identifier = getRequestIP(event, { xForwardedFor: true });
 

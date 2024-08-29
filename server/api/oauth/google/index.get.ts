@@ -98,7 +98,7 @@ export default defineEventHandler(async (event) => {
       });
   }
 
-  deleteCookie(event, 'state');
+  deleteOAuthStateCookie(event);
 
   if (!user) {
     return sendRedirect(event, '/');

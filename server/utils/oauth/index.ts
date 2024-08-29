@@ -59,6 +59,10 @@ export function sendOAuthRedirectIfNeeded(event: H3Event, query?: QueryObject): 
   return true;
 }
 
+export function deleteOAuthStateCookie(event: H3Event) {
+  deleteCookie(event, 'state', stateSerializeOptions);
+}
+
 export function createUserWithSocialAuth(socialAuth: NormalizedSocialUser) {
   const kysely = getKysely();
   const now = new Date();
