@@ -1,6 +1,22 @@
 <script setup lang="ts">
 const editorImgWrapperEl = shallowRef<HTMLDivElement | null>(null);
 
+const wordsSettings: Record<string, { tag?: string, class: string }> = {
+  'Notes.': { class: 'header__text__notes' },
+  'Fast,': { tag: 'i', class: 'font-wide' },
+  'purple.': { class: 'header__text__purple' },
+};
+const text = 'Beautiful Notes. Fast, simple, shareable, synced between devices and purple.'
+  .split(' ')
+  .map((word) => {
+    const setting = wordsSettings[word];
+    return {
+      word,
+      tag: setting?.tag || 'span',
+      class: setting?.class,
+    };
+  });
+
 function animateImgPos(end: number, movement: number) {
   const wrapper = editorImgWrapperEl.value;
 
@@ -41,18 +57,30 @@ onMounted(() => {
 <template>
   <header class="header">
     <p class="header__text">
-      Beautiful <span class="header__text__notes">Notes</span>. <i
-        class="font-wide"
-      >Fast</i>, simple, shareable, synced between devices and
-      <span class="header__text__purple">purple.</span>
+      <template v-for="(item, i) in text" :key="i">
+        <Component :is="item.tag" :class="item.class" class="header__text__word" :style="{ '--i': i, 'opacity': 0 }">
+          {{ item.word }}
+        </Component>
+        <template v-if="i !== text.length - 1">
+          {{ ' ' }}
+        </template>
+      </template>
     </p>
 
     <div class="header__buttons">
-      <NuxtLink href="/register" class="header__buttons__button header__buttons__start">
+      <NuxtLink
+        href="/register"
+        class="header__buttons__button header__buttons__start"
+        style="opacity: 0;"
+      >
         Start Keycaping
       </NuxtLink>
 
-      <NuxtLink href="#more" class="header__buttons__button header__buttons__more">
+      <NuxtLink
+        href="#more"
+        class="header__buttons__button header__buttons__more"
+        style="opacity: 0;"
+      >
         More
       </NuxtLink>
     </div>
@@ -84,7 +112,7 @@ onMounted(() => {
 
   &__text {
     color: hsla(var(--text-color-hsl), 0.9);
-    font-size: min(calc(1.5rem + 1.75vw), 3.5rem);
+    font-size: min(calc(1.5rem + 2.75vw), 3.5rem);
     text-wrap: balance;
     text-align: center;
     line-height: 1.2;
@@ -121,6 +149,10 @@ onMounted(() => {
         transform: translate(-50%, -50%);
       }
     }
+
+    &__word {
+      animation: appear 0.825s calc(var(--i) * 0.0825s) forwards !important;
+    }
   }
 
   &__buttons {
@@ -139,6 +171,12 @@ onMounted(() => {
       padding: min(0.3rem + 0.5vw, 0.66rem) min(0.75rem + 0.5vw, 1.5rem);
 
       border-radius: 0.175rem;
+
+      animation: appear 0.75s 0.75s forwards !important;
+
+      & + & {
+        animation-delay: 0.9s !important;
+      }
     }
 
     &__start {
@@ -166,8 +204,9 @@ onMounted(() => {
 
     transform: translate(var(--translate)) scale(var(--scale)) rotateX(50deg) rotateY(30deg) rotate(325deg);
     transform-origin: top left;
-    backface-visibility: hidden;
-    animation: appear 0.5s 0.5s forwards !important;
+    animation:
+      land   1s 1.25s forwards cubic-bezier(0.16, 1, 0.3, 1),
+      appear 1s 1.25s forwards !important;
 
     &__wrapper {
       position: relative;
@@ -192,8 +231,25 @@ onMounted(() => {
   }
 }
 
+@keyframes land {
+  from {
+    scale: 1.1;
+    translate: 5vw -5vh;
+  }
+  to {
+    scale: 1;
+    translate: 0;
+  }
+}
+
 @keyframes appear {
-  from { opacity: 0 }
-  to { opacity: 1 }
+  from {
+    opacity: 0;
+    filter: blur(12px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0px);
+  }
 }
 </style>
