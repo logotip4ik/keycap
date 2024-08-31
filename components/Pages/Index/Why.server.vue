@@ -30,11 +30,13 @@
   padding: 1rem 1rem 4rem;
 
   &__title {
-    font-size: min(1rem + 1vw, 1.75rem);
+    font-size: calc(min(calc(1.5rem + 2.75vw), 3.5rem) / 1.33);
   }
 
   &__text {
-    font-size: min(0.85rem + 1vw, 1.25rem);
+    font-size: calc(min(calc(1.5rem + 2.75vw), 3.5rem) / 1.75);
+    text-wrap: balance;
+
     opacity: 0.9;
   }
 }

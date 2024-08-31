@@ -105,6 +105,10 @@ const { build } = useRuntimeConfig().public;
 
       transform: translateY(1.5%);
     }
+
+    @media screen and (max-width: $breakpoint-tablet) {
+      font-size: calc(min(1rem + 1vw, 1.75rem) * 1.25);
+    }
   }
 }
 </style>

@@ -59,9 +59,12 @@ const more = [
     align-items: stretch;
     flex-wrap: wrap;
     gap: 3rem 2rem;
+    flex: 1;
 
     margin: 0;
     padding: 0;
+
+    max-width: 1200px;
 
     list-style-type: none;
 

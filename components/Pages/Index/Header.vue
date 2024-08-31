@@ -30,7 +30,7 @@ function animateImgPos(end: number, movement: number) {
   wrapper.animate([
     { transform: `translateY(${px.toFixed(2)}px)` },
   ], {
-    duration: 200,
+    duration: 1000,
     easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
     fill: 'forwards',
   });
@@ -167,7 +167,6 @@ onMounted(() => {
       color: var(--text-color);
       text-decoration: none;
 
-      padding: 0.66rem 1.5rem;
       padding: min(0.3rem + 0.5vw, 0.66rem) min(0.75rem + 0.5vw, 1.5rem);
 
       border-radius: 0.175rem;
@@ -176,6 +175,10 @@ onMounted(() => {
 
       & + & {
         animation-delay: 0.9s !important;
+      }
+
+      @media screen and (max-width: $breakpoint-tablet) {
+        padding: 0.75rem 1.75rem;
       }
     }
 
@@ -227,14 +230,29 @@ onMounted(() => {
     @media screen and (max-width: $breakpoint-tablet) {
       --scale: 1.6;
       --translate: -25%, 2%;
+
+      animation:
+        mobileLand 1s 1.25s forwards cubic-bezier(0.16, 1, 0.3, 1),
+        appear     1s 1.25s forwards !important;
     }
   }
 }
 
 @keyframes land {
   from {
-    scale: 1.1;
+    scale: 1.2;
     translate: 5vw -5vh;
+  }
+  to {
+    scale: 1;
+    translate: 0;
+  }
+}
+
+@keyframes mobileLand {
+  from {
+    scale: 2;
+    translate: 20vw -30vh;
   }
   to {
     scale: 1;
