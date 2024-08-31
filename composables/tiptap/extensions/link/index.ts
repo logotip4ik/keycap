@@ -102,6 +102,7 @@ export const Link = Mark.create<LinkOptions>({
         },
 
       unsetLink:
+        // eslint-disable-next-line unicorn/consistent-function-scoping
         () => ({ chain }) => {
           return chain()
             .unsetMark(this.name, { extendEmptyMarkRange: true })
