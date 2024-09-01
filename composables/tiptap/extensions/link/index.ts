@@ -138,12 +138,18 @@ export const Link = Mark.create<LinkOptions>({
 function makePasteRules(config: { type: MarkType, username: string | undefined }) {
   return [
     new PasteRule({
-      find: (text) => find(text)
-        .map((link): PasteRuleMatch => ({
-          index: link.start,
-          text: link.href,
-          data: link,
-        })),
+      find: (_, event) => {
+        // sometimes text was missing last char if that char is same as in pasted link...
+        // @ts-expect-error taken from mdn... https://developer.mozilla.org/en-US/docs/Web/API/Element/paste_event#live_example
+        const data = (event?.clipboardData || window.clipboardData as DataTransfer | null | undefined)?.getData('text') || '';
+
+        return find(data)
+          .map((link): PasteRuleMatch => ({
+            index: link.start,
+            text: link.href,
+            data: link,
+          }));
+      },
       handler: ({ match, state, range }) => {
         const attrs = { href: match[0] };
 
