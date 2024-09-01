@@ -32,6 +32,7 @@ declare module '@tiptap/core' {
 }
 
 export const validLinkStartRE = /^https?:\/\//;
+let prevSelectedText: string | undefined;
 
 /**
  * All credits to original Link extension
@@ -111,8 +112,19 @@ export const Link = Mark.create<LinkOptions>({
     };
   },
 
+  onSelectionUpdate() {
+    const { state } = this.editor;
+
+    const selection = state.selection;
+
+    prevSelectedText = selection.empty ? undefined : state.doc.textBetween(selection.from, selection.to);
+  },
+
   addPasteRules() {
-    return makePasteRules({ type: this.type, username: this.options.username });
+    return makePasteRules({
+      type: this.type,
+      username: this.options.username,
+    });
   },
 
   addProseMirrorPlugins() {
@@ -140,19 +152,27 @@ function makePasteRules(config: { type: MarkType, username: string | undefined }
         const markStart = range.from;
         const markEnd = markStart + attrs.href.length;
 
-        if (isWorkspaceUrl(new URL(attrs.href), config.username)) {
+        const link = config.type.create(attrs);
+
+        if (prevSelectedText || isWorkspaceUrl(new URL(attrs.href), config.username)) {
           tr.replaceRangeWith(
             markStart,
             markEnd,
             state.schema.text(
-              getItemPathFromHref(attrs.href),
-              [config.type.create(attrs)],
+              prevSelectedText || getItemPathFromHref(attrs.href),
+              [link],
             ),
           );
         }
         else {
-          tr.addMark(markStart, markEnd, config.type.create(attrs));
+          tr.addMark(
+            markStart,
+            markEnd,
+            link,
+          );
         }
+
+        prevSelectedText = undefined;
 
         tr.removeStoredMark(config.type);
       },
