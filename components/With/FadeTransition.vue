@@ -1,11 +1,3 @@
-<script setup lang="ts">
-import type { TransitionProps } from 'vue';
-
-interface Props extends TransitionProps {}
-
-defineProps<Props>();
-</script>
-
 <template>
   <Transition name="fade">
     <slot />
