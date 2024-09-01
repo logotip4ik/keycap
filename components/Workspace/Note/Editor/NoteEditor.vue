@@ -24,7 +24,7 @@ const {
 } = useTiptap();
 
 function updateContent(force?: boolean) {
-  const content = editor.value?.isEmpty ? '' : editor.value?.getHTML();
+  const content = editor.value?.getHTML();
 
   props.onUpdate(content || '', force);
 }
