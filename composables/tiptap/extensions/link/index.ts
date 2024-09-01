@@ -5,9 +5,10 @@ import type { MarkType } from '@tiptap/pm/model';
 
 import { autolink } from './helpers/autolink';
 import { clickHandler } from './helpers/clickHandler';
-import { find, isWorkspaceHref } from './helpers/linker';
+import { find, isWorkspaceUrl } from './helpers/linker';
 
 export interface LinkOptions {
+  username: string | undefined
   HTMLAttributes: Record<string, unknown>
 }
 
@@ -17,11 +18,11 @@ declare module '@tiptap/core' {
       /**
        * Set a link mark
        */
-      setLink: (attributes: { href: string, target?: string | null, rel?: string | null }) => ReturnType
+      setLink: (attributes: { href: string }) => ReturnType
       /**
        * Toggle a link mark
        */
-      toggleLink: (attributes: { href: string, target?: string | null, rel?: string | null }) => ReturnType
+      toggleLink: (attributes: { href: string }) => ReturnType
       /**
        * Unset a link mark
        */
@@ -46,7 +47,10 @@ export const Link = Mark.create<LinkOptions>({
   exitable: true,
 
   addOptions() {
+    const username = useUser().value?.username;
+
     return {
+      username,
       HTMLAttributes: {
         target: '_blank',
         rel: 'noopener noreferrer nofollow',
@@ -57,8 +61,6 @@ export const Link = Mark.create<LinkOptions>({
   addAttributes() {
     return {
       href: { default: null },
-      target: { default: this.options.HTMLAttributes.target },
-      rel: { default: this.options.HTMLAttributes.rel },
     };
   },
 
@@ -67,14 +69,13 @@ export const Link = Mark.create<LinkOptions>({
   },
 
   renderHTML({ HTMLAttributes }) {
-    if (!HTMLAttributes.href || !validLinkStartRE.test(HTMLAttributes.href)) {
+    const href = HTMLAttributes.href;
+
+    if (!href || !validLinkStartRE.test(href)) {
       return ['a', mergeAttributes(this.options.HTMLAttributes, { ...HTMLAttributes, href: '' }), 0];
     }
 
-    if (
-      HTMLAttributes.href?.startsWith(window.location.origin)
-      && isWorkspaceHref(HTMLAttributes.href)
-    ) {
+    if (isWorkspaceUrl(new URL(href), this.options.username)) {
       HTMLAttributes['data-inner'] = true;
     }
 
@@ -111,7 +112,7 @@ export const Link = Mark.create<LinkOptions>({
   },
 
   addPasteRules() {
-    return makePasteRules({ type: this.type });
+    return makePasteRules({ type: this.type, username: this.options.username });
   },
 
   addProseMirrorPlugins() {
@@ -122,7 +123,7 @@ export const Link = Mark.create<LinkOptions>({
   },
 });
 
-function makePasteRules(config: { type: MarkType }) {
+function makePasteRules(config: { type: MarkType, username: string | undefined }) {
   return [
     new PasteRule({
       find: (text) => find(text)
@@ -133,14 +134,13 @@ function makePasteRules(config: { type: MarkType }) {
         })),
       handler: ({ match, state, range }) => {
         const attrs = { href: match[0] };
-        const isInnerLink = attrs.href.startsWith(window.location.origin) && isWorkspaceHref(attrs.href);
 
         const { tr } = state;
 
         const markStart = range.from;
         const markEnd = markStart + attrs.href.length;
 
-        if (isInnerLink) {
+        if (isWorkspaceUrl(new URL(attrs.href), config.username)) {
           tr.replaceRangeWith(
             markStart,
             markEnd,

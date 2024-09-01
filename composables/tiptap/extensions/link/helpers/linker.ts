@@ -26,12 +26,8 @@ export function find(text: string) {
   return links;
 }
 
-/**
- * **Always** combine with check for correct origin!
- * @param {string} href full href or pathname
- */
-export function isWorkspaceHref(href: string) {
-  const user = useUser();
-
-  return user.value && href.includes(`/@${user.value.username}`);
+export function isWorkspaceUrl(url: URL, username: string | undefined) {
+  return username
+    && url.origin === window.location.origin
+    && url.pathname.startsWith(`/@${username}`);
 }
