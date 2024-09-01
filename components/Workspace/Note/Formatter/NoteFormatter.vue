@@ -207,8 +207,7 @@ useTinykeys({
     focusAction(event);
   },
 
-  // NOTE: change this to $mod+Shift+l if main ctrl+l keeps getting in place
-  '$mod+l': (event) => {
+  '$mod+Shift+l': (event) => {
     const { from, to } = props.editor.state.selection;
 
     if (props.editor.isFocused && to - from <= 0) {

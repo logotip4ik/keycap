@@ -54,7 +54,7 @@ export function makeMarks(): Array<MarkButton> {
 
     {
       icon: LazyIconBaselineLink,
-      shortcut: `${modKey}+l`,
+      shortcut: `${modKey}+Shift+l`,
       ariaLabel: 'toggle link',
       isActive: (editor) => editor.isActive('link'),
     },
