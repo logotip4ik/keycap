@@ -10,6 +10,10 @@ export default defineEventHandler(async (event) => {
 
     const rateLimit = limiter.acquire(identifier!);
 
+    setHeader(event, 'X-RateLimit-Limit', LIMIT);
+    setHeader(event, 'X-RateLimit-Remaining', rateLimit.remaining);
+    setHeader(event, 'X-RateLimit-Reset', rateLimit.remainingTime);
+
     if (rateLimit.limited) {
       throw createError({
         status: 429,
@@ -17,10 +21,18 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    rateLimit.consume();
+    const pathWithQuery = event.path;
+    const queryIdx = pathWithQuery.indexOf('?');
+    const path = queryIdx !== -1 ? pathWithQuery.substring(0, queryIdx) : pathWithQuery;
 
-    setHeader(event, 'X-RateLimit-Limit', LIMIT);
-    setHeader(event, 'X-RateLimit-Remaining', rateLimit.remaining);
+    if (path === '/api/auth/register' || path === '/api/auth/login') {
+      for (let i = 0; i < 20; i++) {
+        rateLimit.consume();
+      }
+    }
+    else {
+      rateLimit.consume();
+    }
   }
 });
 
