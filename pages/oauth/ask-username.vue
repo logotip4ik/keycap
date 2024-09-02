@@ -6,20 +6,16 @@ definePageMeta({
   middleware: ['redirect-dashboard'],
 });
 
-if (import.meta.client) {
-  throw createError({
-    status: 418,
-    message: 'this page should not run on client',
-  });
-}
-
 const { query } = useRoute();
+const event = useRequestEvent()!;
+const identifier = getRequestIP(event, { xForwardedFor: true });
 
 if (!query.code || !query.provider) {
-  await logger.error(
-    useRequestEvent()!,
-    { query, msg: 'not enough data for proceeding with username' },
-  );
+  await logger.error(event, {
+    msg: 'not enough data for proceeding with username',
+    nuxt: true,
+    identifier,
+  });
 
   throw createError({
     status: 400,
@@ -34,10 +30,11 @@ const provider = isArray(query.provider)
 const normalizedProvider = OAuthProvider[provider as keyof typeof OAuthProvider || ''];
 
 if (!normalizedProvider) {
-  await logger.warn(
-    useRequestEvent()!,
-    'someone is messing with oauth',
-  );
+  await logger.warn(event, {
+    msg: 'someone is messing with oauth',
+    nuxt: true,
+    identifier,
+  });
 
   throw createError({
     status: 400,
@@ -70,10 +67,10 @@ const notEmptyQuery = Object.fromEntries(
         <!-- Preserves original oauth query -->
         <FormHiddenValue
           v-for="(value, key) in notEmptyQuery"
-          :id="key.toString()"
-          :key="key.toString()"
-          :name="key.toString()"
-          :value="value!.toString()"
+          :id="`${key}`"
+          :key="`${key}`"
+          :name="`${key}`"
+          :value="`${value}`"
         />
 
         <FormTitle>
