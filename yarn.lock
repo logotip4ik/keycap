@@ -8201,13 +8201,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"function-bind@npm:@nolyfill/function-bind@latest":
-  version: 1.0.21
-  resolution: "@nolyfill/function-bind@npm:1.0.21"
-  checksum: 10/b132954ab8b0f17360fc85aff853d7fda8ef2d72124a31dc7f8793e2aeb7da2175d4c1491149f818f8126e93ba8cbfed70b77f160991696caa15e8476223da43
-  languageName: node
-  linkType: hard
-
 "gauge@npm:^3.0.0":
   version: 3.0.2
   resolution: "gauge@npm:3.0.2"
@@ -8585,15 +8578,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hasown@npm:^2.0.2":
-  version: 2.0.2
-  resolution: "hasown@npm:2.0.2"
-  dependencies:
-    function-bind: "npm:^1.1.2"
-  checksum: 10/7898a9c1788b2862cf0f9c345a6bec77ba4a0c0983c7f19d610c382343d4f98fa260686b225dfb1f88393a66679d2ec58ee310c1d6868c081eda7918f32cc70a
-  languageName: node
-  linkType: hard
-
 "hookable@npm:^5.5.3":
   version: 5.5.3
   resolution: "hookable@npm:5.5.3"
@@ -8937,12 +8921,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-core-module@npm:^2.13.0":
-  version: 2.15.1
-  resolution: "is-core-module@npm:2.15.1"
-  dependencies:
-    hasown: "npm:^2.0.2"
-  checksum: 10/77316d5891d5743854bcef2cd2f24c5458fb69fbc9705c12ca17d54a2017a67d0693bbf1ba8c77af376c0eef6bf6d1b27a4ab08e4db4e69914c3789bdf2ceec5
+"is-core-module@npm:@nolyfill/is-core-module@^1":
+  version: 1.0.39
+  resolution: "@nolyfill/is-core-module@npm:1.0.39"
+  checksum: 10/0d6e098b871eca71d875651288e1f0fa770a63478b0b50479c99dc760c64175a56b5b04f58d5581bbcc6b552b8191ab415eada093d8df9597ab3423c8cac1815
   languageName: node
   linkType: hard
 
@@ -9179,10 +9161,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"isarray@npm:~1.0.0":
-  version: 1.0.0
-  resolution: "isarray@npm:1.0.0"
-  checksum: 10/f032df8e02dce8ec565cf2eb605ea939bdccea528dbcf565cdf92bfa2da9110461159d86a537388ef1acef8815a330642d7885b29010e8f7eac967c9993b65ab
+"isarray@npm:@nolyfill/isarray@^1":
+  version: 1.0.29
+  resolution: "@nolyfill/isarray@npm:1.0.29"
+  checksum: 10/4a86695cdf75eef283ac40fb8beca8c23631dea4227c078b8ac60a4d2ad136e92f7b0693746eea3f10af1e6d1183efe2359525bfa4c785bb24a628ddf74fb63c
   languageName: node
   linkType: hard
 
@@ -13158,7 +13140,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"string.prototype.matchall@npm:@nolyfill/string.prototype.matchall@latest":
+"string.prototype.matchall@npm:@nolyfill/string.prototype.matchall@^1":
   version: 1.0.28
   resolution: "@nolyfill/string.prototype.matchall@npm:1.0.28"
   dependencies:
