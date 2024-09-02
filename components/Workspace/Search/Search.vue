@@ -71,7 +71,11 @@ function changeSelectedResult(difference: number) {
 watch(searchInput, debounce(handleSearchInput, 100));
 
 useFocusTrap(searchEl, { handleInitialFocusing: true });
-useTinykeys({ Escape: props.onClose });
+useTinykeys({
+  'Escape': props.onClose,
+  'Control+n': () => changeSelectedResult(1),
+  'Control+p': () => changeSelectedResult(-1),
+});
 </script>
 
 <template>
