@@ -413,6 +413,9 @@ useFocusTrap(formatterEl);
   &__button {
     --size-basis: 2rem;
 
+    display: flex;
+    justify-content: center;
+    align-items: center;
     flex-shrink: 0;
 
     font-size: 1rem;
