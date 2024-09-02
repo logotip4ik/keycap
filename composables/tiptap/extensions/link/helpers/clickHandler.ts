@@ -11,26 +11,10 @@ export function clickHandler(_options: ClickHandlerOptions): Plugin {
     key: new PluginKey('handleClickLink'),
     props: {
       handleClick: (_view, _pos, event) => {
-        if (event.button !== 0) {
-          return false;
-        }
-
-        let a = event.target as HTMLElement;
-        const els = [];
-
-        while (a.nodeName !== 'DIV') {
-          els.push(a);
-          a = a.parentNode as HTMLElement;
-        }
-
-        if (!els.some((value) => value.nodeName === 'A')) {
-          return false;
-        }
-
         const link = event.target as HTMLLinkElement;
 
         // TODO: add auto complete for inner links
-        if (!link) {
+        if (!link || link.nodeName !== 'A') {
           return false;
         }
 
