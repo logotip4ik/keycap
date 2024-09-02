@@ -1,6 +1,42 @@
 # Changelog
 
 
+## v3.13.2
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.13.1...v3.13.2)
+
+### 🩹 Fixes
+
+- Disable blur filter in note-editor for safari ([86ba13a2](https://github.com/logotip4ik/keycap/commit/86ba13a2))
+- Safari aligment issue ([4acbb7eb](https://github.com/logotip4ik/keycap/commit/4acbb7eb))
+- Prevent random tooltip appearance ([a8510d78](https://github.com/logotip4ik/keycap/commit/a8510d78))
+- Correctly remove oauth state cookie ([c8d763cb](https://github.com/logotip4ik/keycap/commit/c8d763cb))
+- Broken link input ([01945783](https://github.com/logotip4ik/keycap/commit/01945783))
+- Change link shortcut ([3691a59f](https://github.com/logotip4ik/keycap/commit/3691a59f))
+- Maintan selected text after pasting link ([7d4ee4af](https://github.com/logotip4ik/keycap/commit/7d4ee4af))
+- Pasting links ([296f0b01](https://github.com/logotip4ik/keycap/commit/296f0b01))
+
+### 💅 Refactors
+
+- Use `i` as shortcut for focusing editor ([140b54b4](https://github.com/logotip4ik/keycap/commit/140b54b4))
+- Custom checkbox ([3b05e94d](https://github.com/logotip4ik/keycap/commit/3b05e94d))
+
+### 🏡 Chore
+
+- **release:** V3.13.1 ([d3019946](https://github.com/logotip4ik/keycap/commit/d3019946))
+- Move font preloading to server only head ([2480fecf](https://github.com/logotip4ik/keycap/commit/2480fecf))
+- Remove v-once from server component ([cd474945](https://github.com/logotip4ik/keycap/commit/cd474945))
+- Update deps ([ed7d35f3](https://github.com/logotip4ik/keycap/commit/ed7d35f3))
+- Fix eslint ([2300d5e5](https://github.com/logotip4ik/keycap/commit/2300d5e5))
+- Use node22 for builder and runner ([72a7be6b](https://github.com/logotip4ik/keycap/commit/72a7be6b))
+- Remove not used class prop ([0138fcde](https://github.com/logotip4ik/keycap/commit/0138fcde))
+- Improve link pasting ([07b1c13f](https://github.com/logotip4ik/keycap/commit/07b1c13f))
+- Remove check for empty editor ([237cf8a4](https://github.com/logotip4ik/keycap/commit/237cf8a4))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.13.1
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.13.0...v3.13.1)
