@@ -3,6 +3,13 @@ import { TypeCompiler } from '@sinclair/typebox/compiler';
 
 FormatRegistry.Set('email', (value) => emailRE.test(value));
 
+export const emailRegisterSchema = Type.Object({
+  email: Type.String({ format: 'email', maxLength: 100 }),
+  browserAction: Type.Optional(
+    Type.Boolean(),
+  ),
+});
+
 export const registerSchema = Type.Object({
   'username': usernameSchema,
   'email': Type.String({ format: 'email', maxLength: 100 }),
@@ -15,4 +22,5 @@ export const registerSchema = Type.Object({
   ),
 });
 
+export const emailRegisterValidator = TypeCompiler.Compile(emailRegisterSchema);
 export const registerValidator = TypeCompiler.Compile(registerSchema);

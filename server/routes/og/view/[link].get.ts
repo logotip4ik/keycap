@@ -1,7 +1,5 @@
 import { escapeHtml } from '@vue/shared';
 
-const textLineRE = /\{\{line(\d)\}\}/g;
-
 export default defineEventHandler(async (event) => {
   const link = getRouterParam(event, 'link');
 
@@ -32,14 +30,10 @@ export default defineEventHandler(async (event) => {
 
   setResponseHeader(event, 'Content-Type', 'image/png');
 
-  const svg = svgTemplate.replace(
-    textLineRE,
-    (_, i) => {
-      const text = textLines[Number.parseInt(i) - 1];
-
-      return text ? escapeHtml(text) : '';
-    },
-  );
+  const svg = processTemplate(svgTemplate, {
+    line1: textLines[0] ? escapeHtml(textLines[0]) : '',
+    line2: textLines[1] ? escapeHtml(textLines[1]) : '',
+  });
 
   return generatePngFromSvg(svg);
 });

@@ -1,6 +1,9 @@
 import { defu } from 'defu';
+import { prefixStorage } from 'unstorage';
 
 import type { CacheEntry } from 'nitropack';
+
+export const kvStorage = prefixStorage(useStorage(), 'keycap:kv');
 
 /**
  * @param {string} key - should be full key, including base, group, name, entry + .json
