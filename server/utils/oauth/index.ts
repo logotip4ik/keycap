@@ -112,10 +112,10 @@ export function updateUserWithSocialAuth(userId: string, socialAuth: NormalizedS
       .where('id', '=', socialAuth.id)
       .where('type', '=', socialAuth.type)
       .where('userId', '=', userId)
-      .select('id')
+      .select((eb) => eb.lit(true).as('exists'))
       .executeTakeFirst();
 
-    if (oauth) {
+    if (oauth?.exists) {
       return;
     }
 

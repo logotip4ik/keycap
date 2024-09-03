@@ -55,10 +55,10 @@ async function checkIfUsernameTaken_(_event: H3Event, username: string) {
   const user = await kysely
     .selectFrom('User')
     .where('username', '=', username)
-    .select('username')
+    .select((eb) => eb.lit(true).as('exists'))
     .executeTakeFirst();
 
-  return user !== undefined;
+  return user?.exists === true;
 }
 
 function getRecentForUser_(_event: H3Event, user: { id: string, username: string }) {
