@@ -128,4 +128,4 @@ async function login() {
   </main>
 </template>
 
-<style src="~/assets/styles/auth-pages.scss"></style>
+<style src="~/assets/styles/auth-pages.scss" />
