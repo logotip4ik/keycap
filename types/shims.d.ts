@@ -7,3 +7,8 @@ declare module '*.ttf' {
   const url: string;
   export default url;
 }
+
+declare module '*.html' {
+  const url: string;
+  export default url;
+}

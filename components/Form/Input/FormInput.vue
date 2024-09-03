@@ -51,7 +51,7 @@ withDefaults(defineProps<{
 
   transition: border-color 0.3s, box-shadow 0.3s;
 
-  &:is(:focus-visible, :hover) {
+  &:not(:disabled):is(:focus-visible, :hover) {
     outline: none;
 
     border-color: hsla(var(--text-color-hsl), 0.25);
@@ -67,6 +67,10 @@ withDefaults(defineProps<{
   &:user-invalid {
     border-color: var(--error-color);
     box-shadow: 0 0 1rem hsla(var(--error-color-hsl), 0.175);
+  }
+
+  &:disabled {
+    color: hsla(var(--text-color-hsl), 0.5);
   }
 }
 </style>

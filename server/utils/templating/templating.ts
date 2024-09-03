@@ -1,3 +1,9 @@
+import { readFile } from 'node:fs/promises';
+
+import ViewSvgUrl from './assets/view.svg';
+import FirstNoteUrl from './assets/first-note.html';
+import ContinueOnboardingUrl from './assets/continue-onboarding.html';
+
 const varsRE = /\{\{\s?(\w+)\s?\}\}/;
 export function processTemplate(template: string, vars: Record<string, string | number>) {
   let match: RegExpExecArray | undefined | null;
@@ -15,6 +21,31 @@ export function processTemplate(template: string, vars: Record<string, string | 
   }
 
   return template;
+}
+
+function readTemplate(template: string, templates: Record<string, string>) {
+  const path = templates[template];
+
+  if (import.meta.dev && !path) {
+    throw new Error(`template "${template}" not found`);
+  }
+
+  return readFile(path, { encoding: 'utf8' });
+}
+
+const htmlTemplates = {
+  FirstNote: FirstNoteUrl,
+  ContinueOnboarding: ContinueOnboardingUrl,
+} as const;
+export function getHtmlTemplate(template: keyof typeof htmlTemplates) {
+  return readTemplate(template, htmlTemplates);
+}
+
+const svgTemplates = {
+  view: ViewSvgUrl,
+} as const;
+export function getOgTemplate(template: keyof typeof svgTemplates) {
+  return readTemplate(template, svgTemplates);
 }
 
 if (import.meta.vitest) {

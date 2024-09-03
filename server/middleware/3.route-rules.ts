@@ -1,8 +1,9 @@
 import type { InternalApi } from 'nitropack';
+import type { Promisable } from 'type-fest';
 import type { H3Event } from 'h3';
 
 // true | undefined | void - should pass, else - should disallow
-type RuleFunction = (event: H3Event) => boolean | undefined | void;
+type RuleFunction = (event: H3Event) => Promisable<boolean | undefined | void>;
 
 interface Rule {
   path: keyof InternalApi | (string & NonNullable<unknown>)
@@ -13,7 +14,17 @@ function withUserOnly(event: H3Event) {
   return !!event.context.user;
 }
 
+async function getEmailFromCode(event: H3Event) {
+  const query = getQuery(event);
+
+  if (query.code) {
+    const metadata = await registerStorage.getItem(`continue:${query.code}`) as { email?: string };
+    event.context.registerEmail = metadata?.email;
+  }
+}
+
 const rules: Array<Rule> = [
+  { path: '/register', handler: getEmailFromCode },
   { path: '/api/note', handler: withUserOnly },
   { path: '/api/folder', handler: withUserOnly },
   { path: '/api/search', handler: withUserOnly },
@@ -42,7 +53,10 @@ export default defineEventHandler(async (event) => {
     return;
   }
 
-  const shouldPass = rule.handler(event);
+  let shouldPass = rule.handler(event);
+  if (shouldPass instanceof Promise) {
+    shouldPass = await shouldPass;
+  }
 
   if (shouldPass === false) {
     throw createError({ status: 401 });

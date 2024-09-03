@@ -1,8 +1,6 @@
-import { readFile } from 'node:fs/promises';
 import type { ResvgRenderOptions } from '@resvg/resvg-js';
 
 import MonaSansUrl from './assets/fonts/MonaSans-Regular.ttf';
-import ViewTemplateUrl from './assets/templates/view.svg';
 
 const resvgOptions = {
   logLevel: import.meta.dev ? 'info' : 'error',
@@ -19,21 +17,6 @@ export async function generatePngFromSvg(svg: string) {
   const image = await renderAsync(svg, resvgOptions);
 
   return image.asPng();
-}
-
-const templates = {
-  view: ViewTemplateUrl,
-} as const;
-export async function getOgTemplate(name: keyof typeof templates) {
-  const url = templates[name];
-
-  if (!url) {
-    throw new Error(`template ${name} not found!`);
-  }
-
-  const template = await readFile(url, { encoding: 'utf8' });
-
-  return template;
 }
 
 // https://antfu.me/posts/break-lines-in-js

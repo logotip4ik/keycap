@@ -3,7 +3,10 @@ import { prefixStorage } from 'unstorage';
 
 import type { CacheEntry } from 'nitropack';
 
-export const kvStorage = prefixStorage(useStorage(), 'keycap:kv');
+export const registerStorage = prefixStorage<{ email: string }>(
+  useStorage(),
+  `keycap:${KeyPrefix.Register}`,
+);
 
 /**
  * @param {string} key - should be full key, including base, group, name, entry + .json

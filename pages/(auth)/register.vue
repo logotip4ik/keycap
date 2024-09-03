@@ -1,21 +1,37 @@
 <script setup lang="ts">
 import type { OAuthProvider } from '~/types/server';
 
+import { usernameRE } from '~/server/utils';
+
 definePageMeta({
   middleware: ['redirect-dashboard'],
 });
 
 const oauthEnabled = import.meta.config.oauthEnabled;
 
+const router = useRouter();
 const createToast = useToaster();
+const user = useUser();
 
 const emailComp = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);
+const usernameComp = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);
+const passwordComp = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);
+
+const email = useState(() => {
+  if (import.meta.server) {
+    const event = useRequestEvent()!;
+
+    return event.context.registerEmail as string;
+  }
+});
+const emailVerified = email.value != null;
 
 const state = ref<'idle' | 'loading' | 'success' | 'error'>('idle');
+let verificationCode: string | undefined;
 
 const providers: Array<OAuthProvider> = ['GitHub', 'Google'];
 
-async function register() {
+async function verifyEmail() {
   const data: Record<string, string> = {
     email: emailComp.value?.$el.value,
   };
@@ -27,7 +43,7 @@ async function register() {
 
   state.value = 'loading';
 
-  $fetch('/api/auth/register', { method: 'POST', body: data })
+  $fetch('/api/auth/verify-email', { method: 'POST', body: data })
     .then(() => {
       state.value = 'success';
     })
@@ -37,6 +53,47 @@ async function register() {
       createToast(error.data.message || ERROR_MESSAGES.DEFAULT);
     });
 }
+
+function register() {
+  const data: Record<string, string | undefined> = {
+    code: verificationCode,
+    email: emailComp.value?.$el.value,
+    username: usernameComp.value?.$el.value,
+    password: passwordComp.value?.$el.value,
+  };
+
+  if (!data.email || !data.username || !data.password) {
+    createToast('Fill all required fields');
+    return;
+  }
+
+  state.value = 'loading';
+
+  // generic workspace path
+  preloadRouteComponents('/@a');
+
+  $fetch('/api/auth/register', { method: 'POST', body: data })
+    .then(async (res) => {
+      if (res) {
+        user.value = res.data;
+        await navigateTo(`/@${user.value.username}`);
+      }
+    })
+    .catch((error) => {
+      state.value = 'error';
+
+      createToast(error.data.message || ERROR_MESSAGES.DEFAULT);
+    });
+}
+
+onMounted(async () => {
+  const query = new URLSearchParams(window.location.search);
+  verificationCode = query.get('code') || '';
+
+  if (verificationCode) {
+    await router.replace(window.location.pathname);
+  }
+});
 </script>
 
 <template>
@@ -48,7 +105,7 @@ async function register() {
         v-if="state !== 'success'"
         action="/api/auth/register"
         method="POST"
-        @submit.prevent="register"
+        @submit.prevent="emailVerified ? register() : verifyEmail()"
       >
         <FormHiddenValue
           id="browserAction"
@@ -73,10 +130,48 @@ async function register() {
             placeholder="email"
             autocomplete="email"
             minlength="5"
+            :disabled="emailVerified"
+            :value="email"
           />
         </FormItem>
 
-        <FormItem actions>
+        <template v-if="emailVerified">
+          <FormItem>
+            <FormLabel target="username">
+              Username
+            </FormLabel>
+
+            <FormInput
+              id="username"
+              ref="usernameComp"
+              type="text"
+              name="username"
+              placeholder="username (no spaces allowed)"
+              autocomplete="username"
+              minlength="3"
+              :pattern="usernameRE.source"
+              autofocus="true"
+            />
+          </FormItem>
+
+          <FormItem>
+            <FormLabel target="password">
+              Password
+            </FormLabel>
+
+            <FormInput
+              id="password"
+              ref="passwordComp"
+              type="password"
+              name="password"
+              placeholder="password"
+              autocomplete="new-password"
+              minlength="8"
+            />
+          </FormItem>
+        </template>
+
+        <FormItem v-if="!emailVerified" actions>
           <FormInputNote>
             Have an account?
             <NuxtLink to="/login">
@@ -102,6 +197,15 @@ async function register() {
               Continue with {{ provider }}
             </FormButtonSocial>
           </template>
+        </FormItem>
+
+        <FormItem v-else actions>
+          <FormButton
+            type="submit"
+            :loading="state === 'loading'"
+          >
+            Start Keycaping
+          </FormButton>
         </FormItem>
       </Form>
 

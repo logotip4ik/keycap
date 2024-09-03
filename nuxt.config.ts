@@ -402,6 +402,7 @@ export default defineNuxtConfig({
           include: [
             '**/*.ttf',
             '**/*.svg',
+            '**/*.html',
           ],
           destDir: `${process.cwd()}/.output`,
           sourceDir: isDevelopment ? process.cwd() : undefined,
@@ -449,13 +450,13 @@ export default defineNuxtConfig({
     },
 
     storage: {
-      'cache': isCI ? { // eslint-disable-line style/multiline-ternary
+      cache: isCI ? { // eslint-disable-line style/multiline-ternary
         driver: 'redis',
         url: process.env.REDIS_URL,
         tls: true,
       } : undefined,
 
-      'keycap:kv': {
+      keycap: {
         driver: 'redis',
         url: process.env.REDIS_URL,
         tls: true,
@@ -463,9 +464,8 @@ export default defineNuxtConfig({
     },
 
     devStorage: {
-      'keycap:kv': {
-        driver: 'fsLite',
-        base: './.nuxt/server/tmp',
+      keycap: {
+        driver: 'memory',
       },
     },
   },
