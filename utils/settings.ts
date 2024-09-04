@@ -13,12 +13,17 @@ export const SETTINGS_PREFIX = 's:';
 
 export const settings = {
   formatterPosition: 'fmt-pos',
+  spellcheck: 'splchk',
 } as const;
 
 const settingsDefinitions = {
   [settings.formatterPosition]: defineSetting({
     defaultValue: 'top',
     posibleValues: ['top', 'bottom'] as const,
+  }),
+  [settings.spellcheck]: defineSetting({
+    defaultValue: 'no',
+    posibleValues: ['yes', 'no'] as const,
   }),
 } satisfies Record<ValueOf<Settings>, SettingDefinition<unknown>>;
 

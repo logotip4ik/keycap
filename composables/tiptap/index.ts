@@ -40,7 +40,9 @@ function initTiptap() {
     autofocus: false,
     editable: true,
     editorProps: {
-      attributes: { spellcheck: 'false' },
+      attributes: {
+        spellcheck: getSetting(settings.spellcheck).value === 'yes' ? 'true' : 'false',
+      },
       handleKeyDown() {
         isTyping.value = !!debouncedClearTyping();
       },

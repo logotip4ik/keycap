@@ -2,7 +2,7 @@
 import { useToolboxState } from '../../config';
 
 const { state } = useToolboxState();
-const { setting, posibleValues } = useSetting(settings.formatterPosition);
+const { setting, posibleValues } = useSetting(settings.spellcheck);
 
 function pinToolbox() {
   if (state.value === 'pinned') {
@@ -15,7 +15,7 @@ function pinToolbox() {
 
 <template>
   <div class="toolbox__settings__setting" @mousedown.capture="pinToolbox">
-    Formatter position
+    Spellcheck enabled
 
     <select
       v-model="setting"

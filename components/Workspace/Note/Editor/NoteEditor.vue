@@ -17,6 +17,7 @@ const props = defineProps<{
 const { shortcuts } = useAppConfig();
 const mitt = useMitt();
 const { isSmallScreen } = useDevice();
+const { setting: spellcheck } = useSetting(settings.spellcheck);
 const {
   editor,
   isTyping,
@@ -42,14 +43,19 @@ watch(() => props.content, (content) => {
 }, { immediate: import.meta.client });
 
 watch(() => props.editable, (editable) => {
-  if (!editor.value) {
-    return;
-  }
-
-  if (editor.value.options.editable !== editable) {
-    editor.value?.setOptions({ editable });
-  }
+  editor.value?.setOptions({ editable });
 }, { immediate: import.meta.client });
+
+watch(() => spellcheck.value, (spellcheck) => {
+  editor.value?.setOptions({
+    editorProps: {
+      attributes: {
+        ...editor.value.options.editorProps.attributes,
+        spellcheck: spellcheck === 'yes' ? 'true' : 'false',
+      },
+    },
+  });
+});
 
 mitt.on('save:note', () => updateContent());
 

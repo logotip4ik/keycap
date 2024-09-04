@@ -1,6 +1,9 @@
 import type { ValueOf } from 'type-fest';
+import type { ShallowRef } from 'vue';
 
-export function useSetting<T extends ValueOf<Settings>>(key: T) {
+export function useSetting<T extends ValueOf<Settings>>(
+  key: T,
+): Omit<SettingsDefinitions[T], 'value'> & { setting: ShallowRef<SettingsDefinitions[T]['value']> } {
   const mitt = useMitt();
 
   const definition = getSetting(key);
@@ -30,5 +33,5 @@ export function useSetting<T extends ValueOf<Settings>>(key: T) {
     setting,
     defaultValue: definition.defaultValue,
     posibleValues: definition.posibleValues,
-  };
+  } as any; // TODO: fix types ?
 }
