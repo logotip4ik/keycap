@@ -10,7 +10,8 @@ export const emailRegisterSchema = Type.Object({
   ),
 });
 
-const codeLength = KeyPrefix.Register.length + 32; // 32 default registration code length
+// 32 default registration code length + one underscore
+const codeLength = KeyPrefix.Register.length + 32 + 1;
 export const registerSchema = Type.Object({
   'username': usernameSchema,
   'email': Type.String({ format: 'email', maxLength: 100 }),

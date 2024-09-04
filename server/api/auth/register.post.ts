@@ -93,7 +93,6 @@ export default defineEventHandler(async (event) => {
         updatedAt: new Date(),
         content: firstNote,
       })
-      .returning('id')
       .executeTakeFirstOrThrow();
 
     (user as SafeUser).email = body.email;
