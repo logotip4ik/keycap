@@ -111,7 +111,7 @@ function toggleShareLink(isCreateRequest: boolean) {
     .finally(() => isLoadingItemDetails.value = false);
 }
 
-useFocusTrap(itemDetailsEl);
+useFocusTrap(itemDetailsEl, { handleInitialFocusing: true });
 useTinykeys({ Escape: unsetCurrentDetailsItem });
 useClickOutside(itemDetailsEl, unsetCurrentDetailsItem);
 
