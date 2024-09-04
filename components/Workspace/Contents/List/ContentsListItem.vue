@@ -25,10 +25,28 @@ function unpinIfNeeded() {
   }
 }
 
+let showedCustomContextmenu = false;
 function showMenu(event: Event) {
-  if (!linkComp.value || props.menuTarget === linkComp.value.$el) {
+  if (!linkComp.value || showedCustomContextmenu) {
     return;
   }
+
+  showedCustomContextmenu = true;
+
+  const cleanups = [
+    on(window, 'click', () => {
+      invokeArrayFns(cleanups);
+      showedCustomContextmenu = false;
+    }, { once: true }),
+    on(window, 'contextmenu', (event) => {
+      if (linkComp.value?.$el.contains(event.target as HTMLElement)) {
+        return;
+      }
+
+      invokeArrayFns(cleanups);
+      showedCustomContextmenu = false;
+    }),
+  ];
 
   props.onShowMenu(linkComp.value.$el);
 
