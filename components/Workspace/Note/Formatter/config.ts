@@ -1,6 +1,12 @@
 import type { Editor } from '@tiptap/core';
 
-import { LazyIconBaselineCode, LazyIconBaselineFormatBold, LazyIconBaselineFormatItalic, LazyIconBaselineLink, LazyIconStrikeThrough } from '#components';
+import {
+  LazyIconBaselineCode,
+  LazyIconBaselineFormatBold,
+  LazyIconBaselineFormatItalic,
+  LazyIconHighlighter,
+  LazyIconStrikeThrough,
+} from '#components';
 
 export const LinkInputPlaceholder = {
   INITIALLY_EMPTY: 'hit enter to show menu',
@@ -12,8 +18,7 @@ export interface MarkButton {
   ariaLabel: string
   shortcut: string
   isActive: (e: Editor) => boolean
-  /** @description empty click handler acts as __toggling link form__ */
-  onClick?: (e: Editor) => any
+  onClick: (e: Editor) => any
 }
 
 export function makeMarks(): Array<MarkButton> {
@@ -53,10 +58,11 @@ export function makeMarks(): Array<MarkButton> {
     },
 
     {
-      icon: LazyIconBaselineLink,
-      shortcut: `${modKey}+Shift+l`,
-      ariaLabel: 'toggle link',
-      isActive: (editor) => editor.isActive('link'),
+      icon: LazyIconHighlighter,
+      shortcut: `${modKey}+Shift+H`,
+      ariaLabel: 'highlight',
+      isActive: (editor) => editor.isActive('highlight'),
+      onClick: (editor) => editor!.chain().focus().toggleHighlight().run(),
     },
   ];
 }

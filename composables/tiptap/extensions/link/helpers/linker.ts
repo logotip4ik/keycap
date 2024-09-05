@@ -12,7 +12,6 @@ export function find(text: string) {
   const links: Array<Link> = [];
   let res;
 
-  // eslint-disable-next-line no-cond-assign
   while ((res = urlRE.exec(text)) !== null) {
     links.push({
       type: 'url',

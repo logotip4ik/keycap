@@ -111,17 +111,32 @@
       }
     }
 
-    pre, code {
+    pre, code, mark {
       font-size: 0.825em;
       color: var(--text-color);
 
       padding: 0.1rem 0.25rem;
 
-      border-radius: 0.25rem;
+      border-radius: 0.175rem;
       background-color: hsla(var(--text-color-hsl), 0.1);
       box-shadow: 0 0 0.25rem 0 hsla(var(--text-color-hsl), 0.05);
       box-decoration-break: clone;
     }
+
+    mark {
+      font-size: 1rem;
+
+      color: currentColor;
+
+      padding: 0.05rem 0.175rem;
+
+      background-color: var(--selection-bg-color);
+
+      &::selection {
+        background-color: var(--surface-color);
+      }
+    }
+
 
     pre {
       & > code {

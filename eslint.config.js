@@ -14,6 +14,7 @@ export default antfu({
     'style/arrow-parens': ['error', 'always'],
     'ts/array-type': ['error', { default: 'generic' }],
     'ts/no-shadow': 'off',
+    'no-cond-assign': 'off',
 
     'import/no-nodejs-modules': 'off',
     'yaml/no-empty-mapping-value': 'off',

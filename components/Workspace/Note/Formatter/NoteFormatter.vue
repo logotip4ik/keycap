@@ -300,9 +300,7 @@ useFocusTrap(formatterEl);
         <template #default="{ tooltipId }">
           <button
             class="formatter__button"
-            :class="{
-              'formatter__button--active': editor.isActive('blockquote'),
-            }"
+            :class="{ 'formatter__button--active': editor.isActive('blockquote') }"
             aria-label="toggle blockquote"
             :aria-pressed="editor.isActive('blockquote')"
             :aria-describedby="tooltipId"
@@ -317,6 +315,25 @@ useFocusTrap(formatterEl);
         </template>
       </WithTooltip>
 
+      <WithTooltip>
+        <template #default="{ tooltipId }">
+          <button
+            class="formatter__button"
+            :class="{ 'formatter__button--active': editor.isActive('link') }"
+            aria-label="toggle link"
+            :aria-pressed="editor.isActive('link')"
+            :aria-describedby="tooltipId"
+            @click="isEditingLink = !isEditingLink"
+          >
+            <LazyIconBaselineLink />
+          </button>
+        </template>
+
+        <template #tooltip>
+          <kbd>{{ modKey }}+Shift+L</kbd>
+        </template>
+      </WithTooltip>
+
       <div class="formatter__vr" aria-hidden="true" />
 
       <WithTooltip v-for="(mark, i) in marks" :key="i">
@@ -327,7 +344,7 @@ useFocusTrap(formatterEl);
             :aria-label="mark.ariaLabel"
             :aria-pressed="mark.isActive(editor)"
             :aria-describedby="tooltipId"
-            @click="mark.onClick ? mark.onClick(editor) : (isEditingLink = !isEditingLink)"
+            @click="mark.onClick(editor)"
           >
             <Component :is="mark.icon" />
           </button>
@@ -361,17 +378,21 @@ useFocusTrap(formatterEl);
   --items-spacing: 0.5rem;
 
   &__vr {
-    flex: 0 0 1px;
     align-self: stretch;
 
     background-color: hsla(var(--text-color-hsl), 0.1);
   }
 
   &__contents-wrapper {
-    display: flex;
+    --button-size: minmax(1.5rem, 1fr);
+
+    display: grid;
     align-items: center;
-    justify-content: flex-start;
     gap: var(--items-spacing);
+    grid-template-columns: repeat(4, var(--button-size)) 1px repeat(auto-fit, var(--button-size));
+
+    width: 100%;
+    max-width: 355px;
   }
 
   &__input {
@@ -411,8 +432,6 @@ useFocusTrap(formatterEl);
   }
 
   &__button {
-    --size-basis: 2rem;
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -421,8 +440,9 @@ useFocusTrap(formatterEl);
     font-size: 1rem;
     color: hsla(var(--text-color-hsl), 0.5);
 
-    width: var(--size-basis);
-    height: var(--size-basis);
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1/1;
 
     appearance: none;
     background-color: transparent;
@@ -457,16 +477,8 @@ useFocusTrap(formatterEl);
     svg {
       display: inline-block;
 
-      width: calc(var(--size-basis) * 0.425);
+      width: 60%;
       height: auto;
-    }
-
-    @media (max-width: $breakpoint-tablet) {
-      --size-basis: calc(2.25rem + 1.5vw);
-
-      @media (max-width: 400px) {
-        --size-basis: 2.25rem;
-      }
     }
   }
 

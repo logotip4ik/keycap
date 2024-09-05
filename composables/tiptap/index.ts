@@ -6,6 +6,7 @@ import Text from '@tiptap/extension-text';
 import Bold from '@tiptap/extension-bold';
 import Italic from '@tiptap/extension-italic';
 import Strike from '@tiptap/extension-strike';
+import Highlight from '@tiptap/extension-highlight';
 import Blockquote from '@tiptap/extension-blockquote';
 import BulletList from '@tiptap/extension-bullet-list';
 import HardBreak from '@tiptap/extension-hard-break';
@@ -58,6 +59,7 @@ function initTiptap() {
       ListItem,
       OrderedList,
       Bold,
+      Highlight,
       Italic,
       Strike,
       History.configure({
