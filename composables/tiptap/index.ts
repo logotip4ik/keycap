@@ -27,17 +27,17 @@ import { Link } from './extensions/link';
 import { BubbleMenu } from './extensions/bubble-menu';
 import { EmojiPicker } from './extensions/emoji-picker';
 
-const editor = /* #__PURE__ */ shallowRef<Editor | undefined>();
+const editor = /* #__PURE__ */ shallowRef<Editor>();
 const isTyping = /* #__PURE__ */ ref(false);
 
 const debouncedClearTyping = debounce(() => isTyping.value = false, 500);
 
 function initTiptap() {
-  if (import.meta.server || editor.value) {
+  if (import.meta.server) {
     return;
   }
 
-  editor.value = new Editor({
+  return new Editor({
     autofocus: false,
     editable: true,
     editorProps: {
@@ -62,9 +62,6 @@ function initTiptap() {
       Highlight,
       Italic,
       Strike,
-      History.configure({
-        depth: 100,
-      }),
       Link,
       TaskList,
       TaskItem,
@@ -90,6 +87,9 @@ function initTiptap() {
           };
         },
       }),
+      History.configure({
+        depth: 100,
+      }),
       Placeholder.configure({
         placeholder: ({ editor }) =>
           editor.isEmpty ? '# Start with heading...' : 'Write something...',
@@ -100,7 +100,7 @@ function initTiptap() {
 
 export function useTiptap() {
   if (!editor.value) {
-    initTiptap();
+    editor.value = initTiptap();
   }
 
   return { editor, isTyping, onUpdate };
