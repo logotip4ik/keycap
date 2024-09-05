@@ -11,10 +11,16 @@ export function clickHandler(_options: ClickHandlerOptions): Plugin {
     key: new PluginKey('handleClickLink'),
     props: {
       handleClick: (_view, _pos, event) => {
-        const link = event.target as HTMLLinkElement;
+        let link = event.target as HTMLElement;
 
         // TODO: add auto complete for inner links
-        if (!link || link.nodeName !== 'A') {
+        if (
+          !link
+          || (
+            link.nodeName !== 'A'
+            && (link = link.parentElement as HTMLElement)?.nodeName !== 'A'
+          )
+        ) {
           return false;
         }
 
