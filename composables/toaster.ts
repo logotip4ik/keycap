@@ -12,7 +12,7 @@ export function useToasts() {
 }
 
 function addToQueue(message: ToastInstance['message'], options?: ToastUserOptions & { delay?: number }): ToastInstance {
-  const timeout: { value: NodeJS.Timeout | undefined } = { value: undefined };
+  const timeout: { value: ReturnType<typeof setTimeout> | undefined } = { value: undefined };
 
   const toast = createToast({ ...options, message, timeout });
 
@@ -35,7 +35,10 @@ export function useToaster() {
   return addToQueue;
 }
 
-function createToast(options: ToastUserOptions & { message: ToastInstance['message'], timeout: { value: NodeJS.Timeout | undefined } }): ToastInstance {
+function createToast(options: ToastUserOptions & {
+  message: ToastInstance['message']
+  timeout: { value: ReturnType<typeof setTimeout> | undefined }
+}): ToastInstance {
   if (unref(options.message).trim() === '') {
     throw new Error('no message was provided');
   }

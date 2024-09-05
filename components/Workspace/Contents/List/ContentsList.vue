@@ -19,7 +19,7 @@ const menuOptions = shallowReactive({
 });
 
 const POLLING_TIME = parseDuration('2.5 minutes')!;
-let pollingTimer: NodeJS.Timeout;
+let pollingTimer: ReturnType<typeof setTimeout>;
 let abortControllerGet: AbortController | undefined;
 let lastRefetch: number | undefined;
 

@@ -12,7 +12,7 @@ const noteApiPath = computed(() => route.path.substring(2 + user.value!.username
 const notePath = computed(() => `/${user.value!.username}${noteApiPath.value}`);
 
 const POLLING_TIME = parseDuration('2 minutes')!;
-let pollingTimer: NodeJS.Timeout;
+let pollingTimer: ReturnType<typeof setTimeout>;
 let loadingToast: ToastInstance | undefined;
 let abortControllerGet: AbortController | undefined;
 let lastRefetch: number | undefined;

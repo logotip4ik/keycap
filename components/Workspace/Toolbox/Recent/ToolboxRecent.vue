@@ -4,7 +4,7 @@ import { useToolboxState } from '../config';
 const { state } = useToolboxState();
 
 const POLLING_TIME = parseDuration('5 minutes');
-let pollingTimer: NodeJS.Timeout | undefined;
+let pollingTimer: ReturnType<typeof setTimeout> | undefined;
 
 const { data: recent, refresh } = await useAsyncData('recent', async () => {
   clearTimeout(pollingTimer);

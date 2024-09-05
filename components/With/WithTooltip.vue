@@ -16,7 +16,7 @@ const timeoutToShowTooltip = parseDuration('0.75s')!;
 const cleanups: Array<() => any> = [];
 const handlerOptions = { passive: true };
 
-let timeout: NodeJS.Timeout | undefined;
+let timeout: ReturnType<typeof setTimeout> | undefined;
 watch(targetEl, (target) => {
   cleanup();
 

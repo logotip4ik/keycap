@@ -4,7 +4,7 @@ const props = defineProps<{
   animationDuration: number
 }>();
 
-let timeout: NodeJS.Timeout;
+let timeout: ReturnType<typeof setTimeout>;
 
 onMounted(() => {
   const totalTime = props.animationDuration + props.toast.duration;
