@@ -1,32 +1,15 @@
-import type { Static } from '@sinclair/typebox';
-
-type EmailRegisterFields = Static<typeof emailRegisterSchema>;
-
 export default defineEventHandler(async (event) => {
   if (event.context.user) {
     return null;
   }
 
-  const body = await readBody<EmailRegisterFields>(event) || {};
-
-  if (typeof body?.email === 'string') {
-    body.email = body.email.trim();
-  }
-
-  const error = emailRegisterValidator.Errors(body).First();
-
-  if (error) {
-    throw createError({
-      status: 400,
-      message: formatTypboxError(error),
-    });
-  }
+  const data = await readSecureBody(event, emailRegisterValidator);
 
   const kysely = getKysely();
 
   const user = await kysely
     .selectFrom('User')
-    .where('email', '=', body.email)
+    .where('email', '=', data.email)
     .select((eb) => eb.lit(true).as('exists'))
     .executeTakeFirst();
 
@@ -58,7 +41,7 @@ export default defineEventHandler(async (event) => {
       },
       body: {
         from: `Keycap <onboarding@${resend.site}>`,
-        to: body.email,
+        to: data.email,
         subject: 'Continue Onboarding - Keycap',
         html,
         text: `Continue Onboarding - ${templateVariables.verifyLink}\nKeycap © ${templateVariables.year}`,
@@ -79,11 +62,11 @@ export default defineEventHandler(async (event) => {
 
   await registerStorage.setItem(
     `continue:${code}`,
-    { email: body.email },
+    { email: data.email },
     { ttl: parseDuration('5 minutes', 's') },
   );
 
-  if (body.browserAction !== undefined) {
+  if (data.browserAction !== undefined) {
     return sendRedirect(event, '/');
   }
 
