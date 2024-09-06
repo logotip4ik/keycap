@@ -391,8 +391,8 @@ useFocusTrap(formatterEl);
     gap: var(--items-spacing);
     grid-template-columns: repeat(4, var(--button-size)) 1px repeat(auto-fit, var(--button-size));
 
-    width: 100%;
-    max-width: 355px;
+    width: 99vw;
+    max-width: 22rem;
   }
 
   &__input {
@@ -493,5 +493,9 @@ useFocusTrap(formatterEl);
       }
     }
   }
+}
+
+.safari .formatter svg {
+  width: 70%;
 }
 </style>
