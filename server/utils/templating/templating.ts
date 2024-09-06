@@ -8,7 +8,6 @@ const varsRE = /\{\{\s?(\w+)\s?\}\}/;
 export function processTemplate(template: string, vars: Record<string, string | number>) {
   let match: RegExpExecArray | undefined | null;
 
-  // eslint-disable-next-line no-cond-assign
   while ((match = varsRE.exec(template))) {
     const varName = match[1];
     const value = vars[varName];
