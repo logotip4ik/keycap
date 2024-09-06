@@ -25,9 +25,9 @@ const email = useState(() => {
   }
 });
 const emailVerified = email.value != null;
+const verificationCode = useRequestURL().searchParams.get('code') || undefined;
 
 const state = ref<'idle' | 'loading' | 'success' | 'error'>('idle');
-let verificationCode: string | undefined;
 
 const providers: Array<OAuthProvider> = ['GitHub', 'Google'];
 
@@ -87,9 +87,6 @@ function register() {
 }
 
 onMounted(async () => {
-  const query = new URLSearchParams(window.location.search);
-  verificationCode = query.get('code') || '';
-
   if (verificationCode) {
     await router.replace(window.location.pathname);
   }
@@ -110,6 +107,12 @@ onMounted(async () => {
         <FormHiddenValue
           name="browserAction"
           value="true"
+        />
+
+        <FormHiddenValue
+          v-if="verificationCode"
+          name="code"
+          :value="verificationCode"
         />
 
         <FormTitle>
