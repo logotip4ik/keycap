@@ -55,7 +55,6 @@ async function login() {
       @submit.prevent="login"
     >
       <FormHiddenValue
-        id="browserAction"
         name="browserAction"
         :value="true"
       />

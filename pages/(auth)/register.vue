@@ -108,7 +108,6 @@ onMounted(async () => {
         @submit.prevent="emailVerified ? register() : verifyEmail()"
       >
         <FormHiddenValue
-          id="browserAction"
           name="browserAction"
           value="true"
         />
