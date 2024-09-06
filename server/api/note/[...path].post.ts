@@ -1,9 +1,5 @@
 import postgres from 'postgres';
 
-import type { Static } from '@sinclair/typebox';
-
-type NoteCreateFields = Static<typeof noteCreateSchema>;
-
 export default defineEventHandler(async (event) => {
   const user = event.context.user!;
   const timer = event.context.timer!;
@@ -14,19 +10,9 @@ export default defineEventHandler(async (event) => {
     throw createError({ status: 400 });
   }
 
-  const body = await readBody<NoteCreateFields>(event) || {};
-
-  body.name = body.name?.trim();
-  body.path = generateNotePath(user.username, path);
-
-  const error = noteCreateValidator.Errors(body).First();
-
-  if (error) {
-    throw createError({
-      status: 400,
-      message: formatTypboxError(error),
-    });
-  }
+  const data = await readSecureBody(event, noteCreateValidator, {
+    path: generateNotePath(user.username, path),
+  });
 
   const kysely = getKysely();
 
@@ -34,11 +20,11 @@ export default defineEventHandler(async (event) => {
   const note = await kysely
     .insertInto('Note')
     .values({
-      name: body.name,
+      name: data.name,
       content: '',
-      path: body.path,
+      path: data.path,
       ownerId: user.id,
-      parentId: body.parentId,
+      parentId: data.parentId,
       updatedAt: new Date(),
     })
     .returning(['id', 'name', 'content', 'path'])

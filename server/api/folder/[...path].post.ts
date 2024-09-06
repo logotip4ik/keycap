@@ -1,9 +1,5 @@
 import postgres from 'postgres';
 
-import type { Static } from '@sinclair/typebox';
-
-type FolderCreateFields = Static<typeof folderCreateSchema>;
-
 export default defineEventHandler(async (event) => {
   const user = event.context.user!;
   const timer = event.context.timer!;
@@ -14,25 +10,9 @@ export default defineEventHandler(async (event) => {
     throw createError({ status: 400 });
   }
 
-  // NOTE: path is actually is not required param for body
-  // just to reuse object and thus improve perf, i think it
-  // is better to type body as create schema and later set path
-  const body = await readBody<FolderCreateFields>(event) || {};
-
-  if (typeof body.name === 'string') {
-    body.name = body.name.trim();
-  }
-
-  body.path = generateFolderPath(user.username, path);
-
-  const error = folderCreateValidator.Errors(body).First();
-
-  if (error) {
-    throw createError({
-      status: 400,
-      message: formatTypboxError(error),
-    });
-  }
+  const data = await readSecureBody(event, folderCreateValidator, {
+    path: generateFolderPath(user.username, path),
+  });
 
   const kysely = getKysely();
 
@@ -40,10 +20,10 @@ export default defineEventHandler(async (event) => {
   const folder = await kysely
     .insertInto('Folder')
     .values({
-      name: body.name,
-      path: body.path,
+      name: data.name,
+      path: data.path,
       ownerId: user.id,
-      parentId: body.parentId,
+      parentId: data.parentId,
       updatedAt: new Date(),
     })
     .returning(['id', 'name', 'path', 'root'])

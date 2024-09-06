@@ -1,40 +1,17 @@
 import postgres from 'postgres';
 
-import type { Static } from '@sinclair/typebox';
 import type { SafeUser } from '~/types/server';
-
-type RegisterFields = Static<typeof registerSchema>;
 
 export default defineEventHandler(async (event) => {
   if (event.context.user) {
     return null;
   }
 
-  const body = await readBody<RegisterFields>(event) || {};
-
-  if (typeof body.email === 'string') {
-    body.email = body.email.trim();
-  }
-  if (typeof body.username === 'string') {
-    body.username = body.username.trim().replace(/\s/g, '_');
-  }
-  if (typeof body.password === 'string') {
-    body.password = body.password.trim();
-  }
-
-  const error = registerValidator.Errors(body).First();
-
-  // TODO: add data to error and match schemaPath with client inputs to highlight wrong inputs
-  if (error) {
-    throw createError({
-      status: 400,
-      message: formatTypboxError(error),
-    });
-  }
+  const data = await readSecureBody(event, registerValidator);
 
   const [usernameTaken, captchaValid] = await Promise.all([
-    checkIfUsernameTaken(event, body.username),
-    import.meta.config.turnstileEnabled ? validateTurnstileReponse(body['cf-turnstile-response']) : true,
+    checkIfUsernameTaken(event, data.username),
+    import.meta.config.turnstileEnabled ? validateTurnstileReponse(data['cf-turnstile-response']) : true,
   ]);
 
   if (usernameTaken) {
@@ -51,7 +28,7 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const hashedPassword = await hashPassword(body.password)
+  const hashedPassword = await hashPassword(data.password)
     .catch(async (err) => {
       await logger.error(event, { err, msg: 'password hashing failed' });
 
@@ -65,8 +42,8 @@ export default defineEventHandler(async (event) => {
     const user = await tx
       .insertInto('User')
       .values({
-        email: body.email,
-        username: body.username,
+        email: data.email,
+        username: data.username,
         password: hashedPassword,
         updatedAt: now,
       })
@@ -91,16 +68,16 @@ export default defineEventHandler(async (event) => {
     await tx
       .insertInto('Folder')
       .values({
-        name: `${body.username}'s workspace'`,
+        name: `${data.username}'s workspace'`,
         root: true,
-        path: generateRootFolderPath(body.username),
+        path: generateRootFolderPath(data.username),
         ownerId: user.id,
         updatedAt: now,
       })
       .executeTakeFirst();
 
-    (user as SafeUser).email = body.email;
-    (user as SafeUser).username = body.username;
+    (user as SafeUser).email = data.email;
+    (user as SafeUser).username = data.username;
 
     return user as SafeUser;
   }).catch(async (err) => {
@@ -117,7 +94,7 @@ export default defineEventHandler(async (event) => {
     ),
   ]);
 
-  if (body.browserAction !== undefined) {
+  if (data.browserAction !== undefined) {
     return sendRedirect(event, `/@${user.username}`);
   }
 

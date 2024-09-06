@@ -2,10 +2,6 @@ import { sql } from 'kysely';
 import postgres from 'postgres';
 import escapeRE from 'escape-string-regexp';
 
-import type { Static } from '@sinclair/typebox';
-
-type FolderUpdateFields = Static<typeof folderUpdateSchema>;
-
 export default defineEventHandler(async (event) => {
   const user = event.context.user!;
   const timer = event.context.timer!;
@@ -18,20 +14,7 @@ export default defineEventHandler(async (event) => {
 
   const folderPath = generateFolderPath(user.username, path);
 
-  const data = await readBody<FolderUpdateFields>(event) || {};
-
-  if (typeof data.name === 'string') {
-    data.name = data.name.trim();
-  }
-
-  const error = folderUpdateValidator.Errors(data).First();
-
-  if (error) {
-    throw createError({
-      status: 400,
-      message: formatTypboxError(error),
-    });
-  }
+  const data = await readSecureBody(event, folderUpdateValidator);
 
   // Short-circuiting as currently only folder name could be updated
   // But we don't require `name` prop in request body

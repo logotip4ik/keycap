@@ -19,23 +19,7 @@ export default defineEventHandler(async (event) => {
 
   const notePath = generateNotePath(user.username, path);
 
-  const data = await readBody<NoteUpdateFields>(event) || {};
-
-  if (typeof data.name === 'string') {
-    data.name = data.name.trim();
-  }
-  if (typeof data.content === 'string') {
-    data.content = data.content.trim();
-  }
-
-  const error = noteUpdateValidator.Errors(data).First();
-
-  if (error) {
-    throw createError({
-      status: 400,
-      message: formatTypboxError(error),
-    });
-  }
+  const data = await readSecureBody(event, noteUpdateValidator) as NoteUpdateFields;
 
   data.updatedAt = new Date();
 

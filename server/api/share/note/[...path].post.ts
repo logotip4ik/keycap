@@ -10,6 +10,15 @@ export default defineEventHandler(async (event) => {
 
   const notePath = generateNotePath(user.username, path);
 
+  const error = shareNoteValidator.Errors({ path: notePath }).First();
+
+  if (error) {
+    throw createError({
+      status: 400,
+      message: formatTypboxError(error),
+    });
+  }
+
   const kysely = getKysely();
 
   timer.start('db');

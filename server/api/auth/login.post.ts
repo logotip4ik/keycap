@@ -1,33 +1,13 @@
-import type { Static } from '@sinclair/typebox';
-
 import type { SafeUser } from '~/types/server';
 
-type LoginFields = Static<typeof loginSchema>;
-
 export default defineEventHandler(async (event) => {
-  const body = await readBody<LoginFields>(event) || {};
-
-  if (typeof body.email === 'string') {
-    body.email = body.email.trim();
-  }
-  if (typeof body.password === 'string') {
-    body.password = body.password.trim();
-  }
-
-  const error = loginValidator.Errors(body).First();
-
-  if (error) {
-    throw createError({
-      status: 400,
-      message: formatTypboxError(error),
-    });
-  }
+  const data = await readSecureBody(event, loginValidator);
 
   const kysely = getKysely();
 
   const user = await kysely
     .selectFrom('User')
-    .where('email', '=', body.email)
+    .where('email', '=', data.email)
     .select(['id', 'email', 'username', 'password'])
     .executeTakeFirst()
     .catch(async (err) => {
@@ -42,7 +22,7 @@ export default defineEventHandler(async (event) => {
     throw createError({ status: 400, message: 'this account uses social auth' });
   }
 
-  const isPasswordValid = await verifyPassword(user.password, body.password)
+  const isPasswordValid = await verifyPassword(user.password, data.password)
     .catch(async (err) => {
       await logger.error(event, { err, msg: 'password verification failed' });
 
@@ -55,7 +35,7 @@ export default defineEventHandler(async (event) => {
 
   // $2 - bcrypt
   if (user.password.startsWith('$2')) {
-    const rehashedPassword = await hashPassword(body.password);
+    const rehashedPassword = await hashPassword(data.password);
 
     await kysely
       .updateTable('User')
@@ -71,7 +51,7 @@ export default defineEventHandler(async (event) => {
 
   await setAuthCookies(event, safeUser);
 
-  if (body.browserAction !== undefined) {
+  if (data.browserAction !== undefined) {
     return sendRedirect(event, `/@${safeUser.username}`);
   }
 
