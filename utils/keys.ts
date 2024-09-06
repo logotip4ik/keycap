@@ -7,6 +7,7 @@ export const KeyPrefix = {
   Jwt: 'jwt',
   OAuthState: 'oauth_state',
   Link: 'link',
+  Register: 'rgstr',
 } as const;
 
 export function createKey(prefix: ValueOf<typeof KeyPrefix>, size?: number) {

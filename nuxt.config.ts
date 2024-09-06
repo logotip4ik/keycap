@@ -165,6 +165,12 @@ export default defineNuxtConfig({
       dataset: '',
       baseUrl: 'https://api.axiom.co',
     },
+
+    resend: {
+      apiKey: '',
+      site: '',
+      endpoint: 'https://api.resend.com/emails',
+    },
   },
 
   routeRules: {
@@ -396,8 +402,11 @@ export default defineNuxtConfig({
           include: [
             '**/*.ttf',
             '**/*.svg',
+            '**/*.html',
           ],
           destDir: `${process.cwd()}/.output`,
+          sourceDir: isDevelopment ? process.cwd() : undefined,
+          fileName: isDevelopment ? '[dirname][name][extname]' : '[hash][extname]',
         }),
       ],
     },
@@ -440,13 +449,25 @@ export default defineNuxtConfig({
       },
     },
 
-    storage: isCI ? { // eslint-disable-line style/multiline-ternary
-      cache: {
+    storage: {
+      cache: isCI ? { // eslint-disable-line style/multiline-ternary
+        driver: 'redis',
+        url: process.env.REDIS_URL,
+        tls: true,
+      } : undefined,
+
+      keycap: {
         driver: 'redis',
         url: process.env.REDIS_URL,
         tls: true,
       },
-    } : undefined,
+    },
+
+    devStorage: {
+      keycap: {
+        driver: 'memory',
+      },
+    },
   },
 
   serverHandlers: [

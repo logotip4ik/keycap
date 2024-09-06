@@ -67,7 +67,6 @@ const notEmptyQuery = Object.fromEntries(
         <!-- Preserves original oauth query -->
         <FormHiddenValue
           v-for="(value, key) in notEmptyQuery"
-          :id="`${key}`"
           :key="`${key}`"
           :name="`${key}`"
           :value="`${value}`"

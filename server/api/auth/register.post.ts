@@ -9,22 +9,22 @@ export default defineEventHandler(async (event) => {
 
   const data = await readSecureBody(event, registerValidator);
 
-  const [usernameTaken, captchaValid] = await Promise.all([
+  const [usernameTaken, metadata] = await Promise.all([
     checkIfUsernameTaken(event, data.username),
-    import.meta.config.turnstileEnabled ? validateTurnstileReponse(data['cf-turnstile-response']) : true,
+    registerStorage.getItem(`continue:${data.code}`),
   ]);
+
+  if (!metadata || metadata.email !== data.email) {
+    throw createError({
+      status: 422,
+      message: 'Verification failed. Try sending verification email again.',
+    });
+  }
 
   if (usernameTaken) {
     throw createError({
       status: 400,
-      message: 'Sorry... But this username is already taken',
-    });
-  }
-
-  if (!captchaValid) {
-    throw createError({
-      status: 422,
-      message: 'Verification failed. Maybe try reloading the page ?',
+      message: 'Sorry... But this username is already taken.',
     });
   }
 
@@ -35,8 +35,14 @@ export default defineEventHandler(async (event) => {
       throw createError({ status: 500 });
     });
 
+  const { public: { site } } = useRuntimeConfig();
   const kysely = getKysely();
   const now = new Date();
+
+  const firstNoteTemplate = await getHtmlTemplate('FirstNote');
+  const firstNote = processTemplate(firstNoteTemplate, {
+    siteUrl: `https://${site}`,
+  });
 
   const user = await kysely.transaction().execute(async (tx) => {
     const user = await tx
@@ -47,7 +53,7 @@ export default defineEventHandler(async (event) => {
         password: hashedPassword,
         updatedAt: now,
       })
-      .returning(['id'])
+      .returning('id')
       .executeTakeFirst()
       .catch((error) => {
         if (
@@ -65,7 +71,7 @@ export default defineEventHandler(async (event) => {
       throw createError({ status: 500 });
     }
 
-    await tx
+    const rootFolder = await tx
       .insertInto('Folder')
       .values({
         name: `${data.username}'s workspace'`,
@@ -74,7 +80,20 @@ export default defineEventHandler(async (event) => {
         ownerId: user.id,
         updatedAt: now,
       })
-      .executeTakeFirst();
+      .returning('id')
+      .executeTakeFirstOrThrow();
+
+    await tx
+      .insertInto('Note')
+      .values({
+        name: 'My first note',
+        ownerId: user.id,
+        parentId: rootFolder.id,
+        path: generateFolderPath(data.username, encodeURI('My first note')),
+        updatedAt: new Date(),
+        content: firstNote,
+      })
+      .executeTakeFirstOrThrow();
 
     (user as SafeUser).email = data.email;
     (user as SafeUser).username = data.username;
@@ -88,6 +107,7 @@ export default defineEventHandler(async (event) => {
 
   await Promise.all([
     setAuthCookies(event, user),
+    registerStorage.removeItem(`continue:${data.code}`),
     updateCacheEntry(
       getUserCacheKey(user.username, UserCacheName.Taken),
       true,

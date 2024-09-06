@@ -63,11 +63,17 @@ export function deleteOAuthStateCookie(event: H3Event) {
   deleteCookie(event, 'state', stateSerializeOptions);
 }
 
-export function createUserWithSocialAuth(socialAuth: NormalizedSocialUser) {
+export async function createUserWithSocialAuth(socialAuth: NormalizedSocialUser) {
   const kysely = getKysely();
   const now = new Date();
 
-  return kysely.transaction().execute(async (tx) => {
+  const { public: { site } } = useRuntimeConfig();
+  const firstNoteTemplate = await getHtmlTemplate('FirstNote');
+  const firstNote = processTemplate(firstNoteTemplate, {
+    siteUrl: `https://${site}`,
+  });
+
+  return await kysely.transaction().execute(async (tx) => {
     const dbUser = await tx
       .insertInto('User')
       .values({
@@ -75,10 +81,10 @@ export function createUserWithSocialAuth(socialAuth: NormalizedSocialUser) {
         email: socialAuth.email,
         updatedAt: now,
       })
-      .returning(['User.id', 'User.email', 'User.username'])
+      .returning(['id', 'email', 'username'])
       .executeTakeFirstOrThrow();
 
-    await Promise.all([
+    const [rootFolder] = await Promise.all([
       tx.insertInto('Folder')
         .values({
           name: `${socialAuth.username}'s workspace`,
@@ -87,6 +93,7 @@ export function createUserWithSocialAuth(socialAuth: NormalizedSocialUser) {
           ownerId: dbUser.id,
           updatedAt: now,
         })
+        .returning('id')
         .executeTakeFirstOrThrow(),
 
       tx.insertInto('OAuth')
@@ -98,6 +105,18 @@ export function createUserWithSocialAuth(socialAuth: NormalizedSocialUser) {
         })
         .executeTakeFirstOrThrow(),
     ]);
+
+    await tx
+      .insertInto('Note')
+      .values({
+        name: 'My first note',
+        ownerId: dbUser.id,
+        parentId: rootFolder.id,
+        path: generateFolderPath(dbUser.username, encodeURI('My first note')),
+        updatedAt: new Date(),
+        content: firstNote,
+      })
+      .executeTakeFirstOrThrow();
 
     return dbUser;
   });
