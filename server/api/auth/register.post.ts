@@ -7,14 +7,14 @@ export default defineEventHandler(async (event) => {
     return null;
   }
 
-  const body = await readSecureBody(event, registerValidator);
+  const data = await readSecureBody(event, registerValidator);
 
   const [usernameTaken, metadata] = await Promise.all([
-    checkIfUsernameTaken(event, body.username),
-    registerStorage.getItem(`continue:${body.code}`),
+    checkIfUsernameTaken(event, data.username),
+    registerStorage.getItem(`continue:${data.code}`),
   ]);
 
-  if (!metadata || metadata.email !== body.email) {
+  if (!metadata || metadata.email !== data.email) {
     throw createError({
       status: 422,
       message: 'Verification failed. Try sending verification email again.',
@@ -28,7 +28,7 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const hashedPassword = await hashPassword(body.password)
+  const hashedPassword = await hashPassword(data.password)
     .catch(async (err) => {
       await logger.error(event, { err, msg: 'password hashing failed' });
 
@@ -48,8 +48,8 @@ export default defineEventHandler(async (event) => {
     const user = await tx
       .insertInto('User')
       .values({
-        email: body.email,
-        username: body.username,
+        email: data.email,
+        username: data.username,
         password: hashedPassword,
         updatedAt: now,
       })
@@ -74,9 +74,9 @@ export default defineEventHandler(async (event) => {
     const rootFolder = await tx
       .insertInto('Folder')
       .values({
-        name: `${body.username}'s workspace'`,
+        name: `${data.username}'s workspace'`,
         root: true,
-        path: generateRootFolderPath(body.username),
+        path: generateRootFolderPath(data.username),
         ownerId: user.id,
         updatedAt: now,
       })
@@ -89,14 +89,14 @@ export default defineEventHandler(async (event) => {
         name: 'My first note',
         ownerId: user.id,
         parentId: rootFolder.id,
-        path: generateFolderPath(body.username, encodeURI('My first note')),
+        path: generateFolderPath(data.username, encodeURI('My first note')),
         updatedAt: new Date(),
         content: firstNote,
       })
       .executeTakeFirstOrThrow();
 
-    (user as SafeUser).email = body.email;
-    (user as SafeUser).username = body.username;
+    (user as SafeUser).email = data.email;
+    (user as SafeUser).username = data.username;
 
     return user as SafeUser;
   }).catch(async (err) => {
@@ -107,13 +107,14 @@ export default defineEventHandler(async (event) => {
 
   await Promise.all([
     setAuthCookies(event, user),
+    registerStorage.removeItem(`continue:${data.code}`),
     updateCacheEntry(
       getUserCacheKey(user.username, UserCacheName.Taken),
       true,
     ),
   ]);
 
-  if (body.browserAction !== undefined) {
+  if (data.browserAction !== undefined) {
     return sendRedirect(event, `/@${user.username}`);
   }
 
