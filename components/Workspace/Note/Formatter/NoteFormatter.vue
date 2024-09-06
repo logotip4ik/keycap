@@ -24,11 +24,11 @@ let prevHeadingLevel: number | undefined;
 const prevSelection = { start: -1, end: -1 };
 
 let prevContainerWidth: number;
-function rememberContainerWidth(el: Element) {
+function rememberContainer(el: Element) {
   prevContainerWidth = getElementWidth(el.parentElement);
 }
 
-function animateContainerWidth(el: Element) {
+function animateContainer(el: Element) {
   const currentContainerWidth = getElementWidth(el.parentElement);
   const containerWidthDiff = Math.abs(prevContainerWidth - currentContainerWidth);
 
@@ -249,7 +249,7 @@ useFocusTrap(formatterEl);
 </script>
 
 <template>
-  <WithFadeTransition @before-leave="rememberContainerWidth" @enter="animateContainerWidth">
+  <WithFadeTransition @before-leave="rememberContainer" @enter="animateContainer">
     <div v-if="!isEditingLink" ref="formatterEl" class="formatter__contents-wrapper">
       <WithTooltip>
         <template #default="{ tooltipId }">
@@ -356,7 +356,7 @@ useFocusTrap(formatterEl);
       </WithTooltip>
     </div>
 
-    <form v-else class="formatter__contents-wrapper" @submit.prevent="trySaveEditingLink">
+    <form v-else class="formatter__contents-wrapper formatter__contents-wrapper__form" @submit.prevent="trySaveEditingLink">
       <input
         v-model="editingLink"
         type="url"
@@ -393,18 +393,25 @@ useFocusTrap(formatterEl);
 
     width: 99vw;
     max-width: 22rem;
+
+    &__form {
+      grid-template-columns: repeat(10, var(--button-size));
+      max-width: calc(24rem - 2px);
+    }
+
+    @media screen and (max-width: $breakpoint-tablet) {
+      max-width: 25rem;
+    }
   }
 
   &__input {
+    grid-column: 1 / 10;
     align-self: stretch;
 
     font: inherit;
     font-size: 0.9rem;
     line-height: 0.5;
     color: var(--text-color);
-
-    width: 95vw;
-    max-width: 35ch;
 
     padding: 0 0.5rem;
 
@@ -496,6 +503,6 @@ useFocusTrap(formatterEl);
 }
 
 .safari .formatter svg {
-  width: 70%;
+  width: 75%;
 }
 </style>
