@@ -4,7 +4,7 @@ import type { SafeUser } from '~/types/server';
 
 export default defineEventHandler(async (event) => {
   if (event.context.user) {
-    return null;
+    return sendRedirect(event, `/@${event.context.user.username}`);
   }
 
   const data = await readSecureBody(event, registerValidator);

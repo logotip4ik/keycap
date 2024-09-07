@@ -1,6 +1,6 @@
 export default defineEventHandler(async (event) => {
   if (event.context.user) {
-    return null;
+    return sendRedirect(event, `/@${event.context.user.username}`);
   }
 
   const data = await readSecureBody(event, emailRegisterValidator);
