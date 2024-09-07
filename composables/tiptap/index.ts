@@ -1,31 +1,31 @@
-import { Editor } from '@tiptap/vue-3';
-
-import Document from '@tiptap/extension-document';
-import Paragraph from '@tiptap/extension-paragraph';
-import Text from '@tiptap/extension-text';
-import Bold from '@tiptap/extension-bold';
-import Italic from '@tiptap/extension-italic';
-import Strike from '@tiptap/extension-strike';
-import Highlight from '@tiptap/extension-highlight';
 import Blockquote from '@tiptap/extension-blockquote';
+
+import Bold from '@tiptap/extension-bold';
 import BulletList from '@tiptap/extension-bullet-list';
+import Code from '@tiptap/extension-code';
+import CodeBlock from '@tiptap/extension-code-block';
+import Document from '@tiptap/extension-document';
 import HardBreak from '@tiptap/extension-hard-break';
 import Heading from '@tiptap/extension-heading';
+import Highlight from '@tiptap/extension-highlight';
+import History from '@tiptap/extension-history';
+import Italic from '@tiptap/extension-italic';
 import ListItem from '@tiptap/extension-list-item';
 import OrderedList from '@tiptap/extension-ordered-list';
-import Code from '@tiptap/extension-code';
+import Paragraph from '@tiptap/extension-paragraph';
 import Placeholder from '@tiptap/extension-placeholder';
-import TaskList from '@tiptap/extension-task-list';
+import Strike from '@tiptap/extension-strike';
 import TaskItem from '@tiptap/extension-task-item';
-import CodeBlock from '@tiptap/extension-code-block';
-import History from '@tiptap/extension-history';
+import TaskList from '@tiptap/extension-task-list';
+import Text from '@tiptap/extension-text';
+import { Editor } from '@tiptap/vue-3';
 
 import type { Editor as CoreEditor } from '@tiptap/core';
 import type { Transaction } from '@tiptap/pm/state';
 
-import { Link } from './extensions/link';
 import { BubbleMenu } from './extensions/bubble-menu';
 import { EmojiPicker } from './extensions/emoji-picker';
+import { Link } from './extensions/link';
 
 const editor = /* #__PURE__ */ shallowRef<Editor>();
 const isTyping = /* #__PURE__ */ ref(false);

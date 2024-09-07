@@ -1,5 +1,5 @@
-import path from 'node:path';
 import { writeFile } from 'node:fs/promises';
+import path from 'node:path';
 
 const icons = [
   'lucide:heading-1',

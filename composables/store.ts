@@ -2,8 +2,8 @@ import LRUCache from 'hashlru';
 import { del, get, keys, set } from 'idb-keyval';
 import proxy from 'unenv/runtime/mock/proxy';
 
-import type { ShallowRef } from 'vue';
 import type { Remote } from 'comlink';
+import type { ShallowRef } from 'vue';
 
 import type { SafeUser } from '~/types/server';
 

@@ -1,6 +1,6 @@
+import type { H3Event } from 'h3';
 import type { InternalApi } from 'nitropack';
 import type { Promisable } from 'type-fest';
-import type { H3Event } from 'h3';
 
 // true | undefined | void - should pass, else - should disallow
 type RuleFunction = (event: H3Event) => Promisable<boolean | undefined | void>;

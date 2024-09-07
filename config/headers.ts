@@ -1,6 +1,6 @@
-import { isCI } from 'std-env';
 import { destr } from 'destr';
 import parseDuration from 'parse-duration';
+import { isCI } from 'std-env';
 
 import type { HTTPHeaderName, HTTPMethod } from 'h3';
 

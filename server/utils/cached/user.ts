@@ -1,5 +1,5 @@
-import type { H3Event } from 'h3';
 import { sha256base64 } from 'ohash';
+import type { H3Event } from 'h3';
 
 import type { ValueOf } from 'type-fest';
 

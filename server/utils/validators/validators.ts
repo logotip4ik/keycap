@@ -1,9 +1,9 @@
 import { withoutLeadingSlash } from 'ufo';
 
-import type { H3Event } from 'h3';
-import type { ValueError } from '@sinclair/typebox/value';
-import type { TypeCheck } from '@sinclair/typebox/compiler';
 import type { Static, TSchema } from '@sinclair/typebox';
+import type { TypeCheck } from '@sinclair/typebox/compiler';
+import type { ValueError } from '@sinclair/typebox/value';
+import type { H3Event } from 'h3';
 
 export function formatTypboxError(error: ValueError) {
   return `${error.message}: ${withoutLeadingSlash(error.path)}`;

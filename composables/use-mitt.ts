@@ -1,7 +1,7 @@
 import mitt from 'mitt';
-import type { Emitter } from 'mitt';
-
 import proxy from 'unenv/runtime/mock/proxy';
+
+import type { Emitter } from 'mitt';
 
 // eslint-disable-next-line ts/consistent-type-definitions
 type Events = {

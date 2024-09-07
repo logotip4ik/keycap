@@ -20,7 +20,8 @@ export default defineEventHandler(async (event) => {
         tx.selectFrom('Note')
           .select((eb) => eb.fn.countAll<string>().as('count'))
           .executeTakeFirstOrThrow(),
-      ])).catch(async (err) => {
+      ]))
+      .catch(async (err) => {
         await logger.error(event, { err, msg: 'info failed' });
 
         return [undefined, undefined];

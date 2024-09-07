@@ -1,4 +1,4 @@
-import { Mark, PasteRule, mergeAttributes } from '@tiptap/core';
+import { Mark, mergeAttributes, PasteRule } from '@tiptap/core';
 
 import type { PasteRuleMatch } from '@tiptap/core';
 import type { MarkType } from '@tiptap/pm/model';
@@ -102,7 +102,7 @@ export const Link = Mark.create<LinkOptions>({
         },
 
       unsetLink:
-        // eslint-disable-next-line unicorn/consistent-function-scoping
+
         () => ({ chain }) => {
           return chain()
             .unsetMark(this.name, { extendEmptyMarkRange: true })

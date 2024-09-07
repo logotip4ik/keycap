@@ -1,8 +1,8 @@
 import type { Selectable } from 'kysely';
 
 import type { User } from '~/kysely/db/types';
-import type { createTimer } from '~/server/utils/timers';
 import type { OAuthProvider } from '~/server/utils/oauth';
+import type { createTimer } from '~/server/utils/timers';
 
 export type SafeUser = Pick<Selectable<User>, 'id' | 'email' | 'username'>;
 

@@ -1,5 +1,5 @@
-import bcrypt from '@node-rs/bcrypt';
 import argon2 from '@node-rs/argon2';
+import bcrypt from '@node-rs/bcrypt';
 
 function getArgon2Options(): argon2.Options {
   // https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html#introduction

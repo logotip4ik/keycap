@@ -1,7 +1,7 @@
 import { addVitePlugin, defineNuxtModule } from '@nuxt/kit';
-import { isDevelopment } from 'std-env';
-import MagicString from 'magic-string';
 import decomment from 'decomment';
+import MagicString from 'magic-string';
+import { isDevelopment } from 'std-env';
 
 // NOTE: taken from - https://github.com/elk-zone/elk/blob/main/modules/purge-comments.ts
 export default defineNuxtModule({

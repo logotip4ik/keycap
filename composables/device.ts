@@ -1,5 +1,5 @@
-import type { ToRefs } from 'vue';
 import type { ReadonlyDeep } from 'type-fest';
+import type { ToRefs } from 'vue';
 
 // most of this is taken from: https://github.com/nuxt-community/device-module/blob/master/src/runtime/generateFlags.ts
 const MOBILE_OR_TABLET1_RE = /(?:android|bb\d|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|FBAN|FBAV|fennec|hiptop|iemobile|ip(?:hone|od)|Instagram|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(?:ob|in)i|palm(?: os)?|phone|p(?:ixi|re)\/|plucker|pocket|psp|series(?:4|6)0|symbian|treo|up\.(?:browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i;

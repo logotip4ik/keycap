@@ -1,6 +1,6 @@
+import type { CookieSerializeOptions } from 'cookie-es';
 import type { H3Event } from 'h3';
 import type { QueryObject } from 'ufo';
-import type { CookieSerializeOptions } from 'cookie-es';
 
 import type { NormalizedSocialUser } from '~/types/server';
 

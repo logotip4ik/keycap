@@ -3,7 +3,7 @@ import { execa } from 'execa';
 import colors from 'picocolors';
 
 import { version } from '../package.json';
-import { KeyPrefix, createKey } from '../utils/keys';
+import { createKey, KeyPrefix } from '../utils/keys';
 
 export default defineNuxtModule({
   meta: {

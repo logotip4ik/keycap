@@ -11,7 +11,7 @@ export const emailRE = /^[\w!#$%&'*+/=?^`{|}~-]+(?:\.[\w!#$%&'*+/=?^`{|}~-]+)*@(
 export const OAuthProvider = SocialAuth;
 export const serverUserAgent = import.meta.prod ? process.env.SERVER_NAME || 'Keycap' : `${process.env.SERVER_NAME || 'Keycap'} Dev`;
 
-export { toBigInt, stringifiedBigIntRE } from '~/utils';
+export { stringifiedBigIntRE, toBigInt } from '~/utils';
 
 export function generateFolderPath(username: string, path: string): string {
   // prepending leading slash to username + leading slash path + remove trailing slash

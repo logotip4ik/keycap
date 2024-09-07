@@ -1,10 +1,10 @@
-import { readFile, readdir } from 'node:fs/promises';
+import { readdir, readFile } from 'node:fs/promises';
 import { addComponent, addTemplate, addTypeTemplate, defineNuxtModule, useLogger } from '@nuxt/kit';
 import { resolve } from 'pathe';
+import colors from 'picocolors';
 import { camelCase, pascalCase } from 'scule';
 import { optimize as optimizeSvg } from 'svgo';
 import { compileTemplate } from 'vue/compiler-sfc';
-import colors from 'picocolors';
 
 export default defineNuxtModule({
   meta: {
@@ -68,9 +68,7 @@ export async function generateIconFileDefinition({ name, path }: { name: string,
     multipass: true,
     floatPrecision: 2,
 
-  }).data
-    // NOTE: will this cause issues ?
-    .replace('<svg', '<svg v-once');
+  }).data.replace('<svg', '<svg v-once');
 
   const compiledCode = compileTemplate({
     id: name,

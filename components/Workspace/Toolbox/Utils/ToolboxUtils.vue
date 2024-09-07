@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { useToolboxState } from '../config';
-
 import {
   LazyWorkspaceToolboxUtilsButtonItemDetails,
   LazyWorkspaceToolboxUtilsButtonSearch,
 } from '#components';
+
+import { useToolboxState } from '../config';
 
 const route = useRoute();
 const { isSmallScreen } = useDevice();

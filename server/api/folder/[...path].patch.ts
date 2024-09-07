@@ -1,6 +1,6 @@
+import escapeRE from 'escape-string-regexp';
 import { sql } from 'kysely';
 import postgres from 'postgres';
-import escapeRE from 'escape-string-regexp';
 
 export default defineEventHandler(async (event) => {
   const user = event.context.user!;

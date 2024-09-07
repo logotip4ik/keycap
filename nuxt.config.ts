@@ -1,17 +1,17 @@
-import parseDuration from 'parse-duration';
-import browserslistToEsbuild from 'browserslist-to-esbuild';
-import { resolve } from 'pathe';
-import { isCI, isDevelopment, isProduction, nodeENV } from 'std-env';
 import RollupSucrase from '@rollup/plugin-sucrase';
 import RollupUrl from '@rollup/plugin-url';
 import UnheadVite from '@unhead/addons/vite';
+import browserslistToEsbuild from 'browserslist-to-esbuild';
+import parseDuration from 'parse-duration';
+import { resolve } from 'pathe';
+import { isCI, isDevelopment, isProduction, nodeENV } from 'std-env';
 
 import { prefixedConfig } from './config/build';
 import { getHeaders } from './config/headers';
 import { tsConfig } from './config/typescript';
 import { breakpoints, sidebarsBreakpoints } from './constants/breakpoints';
 import { inlinableStylesRE, nodeModulesRE } from './constants/build';
-import { ParseDurationTransformPlugin, parseDurationFunctionName } from './unplugin/parse-duration';
+import { parseDurationFunctionName, ParseDurationTransformPlugin } from './unplugin/parse-duration';
 
 export default defineNuxtConfig({
   compatibilityDate: '2024-07-06',

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import '~/polyfills/array-at';
-
 import MonaSansURL from '~/assets/fonts/Mona-Sans/Mona-Sans.woff2?url';
+
+import '~/polyfills/array-at';
 
 setupErrorLogging();
 

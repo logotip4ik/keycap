@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import '~/assets/styles/note-editor.scss';
-
-import { EditorContent } from '@tiptap/vue-3';
-
 import {
   LazyWorkspaceNoteFormatterBubbleBox as LazyBubbleBox,
   LazyWorkspaceNoteFormatterFixedBox as LazyFixedBox,
 } from '#components';
+
+import { EditorContent } from '@tiptap/vue-3';
+
+import '~/assets/styles/note-editor.scss';
 
 const props = defineProps<{
   content: string

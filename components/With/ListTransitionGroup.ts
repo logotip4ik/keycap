@@ -1,6 +1,6 @@
-import '~/assets/styles/list-transition.scss';
+import { defineComponent, h, TransitionGroup } from 'vue';
 
-import { TransitionGroup, defineComponent, h } from 'vue';
+import '~/assets/styles/list-transition.scss';
 
 const defaultTransitionProps = { name: 'list', tag: 'div' };
 

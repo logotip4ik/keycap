@@ -1,6 +1,6 @@
+import { fakerEN as faker } from '@faker-js/faker';
 import postgres from 'postgres';
 import { read } from 'rc9';
-import { fakerEN as faker } from '@faker-js/faker';
 
 import { hashPassword } from '../server/utils/passwords';
 

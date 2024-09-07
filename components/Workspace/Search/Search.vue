@@ -29,15 +29,14 @@ function handleSearchInput(value: string) {
     return;
   }
 
-  fuzzyWorker.value.searchWithQuery(value)
-    .then((entries) => {
-      results.value = entries;
-      // if results are empty and user has cleared input, then display as idle
-      // else, show results
-      resultsState.value = entries.length === 0
-        ? (value.length === 0 ? 'idle' : 'empty')
-        : 'idle';
-    });
+  fuzzyWorker.value.searchWithQuery(value).then((entries) => {
+    results.value = entries;
+    // if results are empty and user has cleared input, then display as idle
+    // else, show results
+    resultsState.value = entries.length === 0
+      ? (value.length === 0 ? 'idle' : 'empty')
+      : 'idle';
+  });
 }
 
 async function openItem() {

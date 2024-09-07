@@ -1,8 +1,8 @@
 import { readFile } from 'node:fs/promises';
 
-import ViewSvgUrl from './assets/view.svg';
-import FirstNoteUrl from './assets/first-note.html';
 import ContinueOnboardingUrl from './assets/continue-onboarding.html';
+import FirstNoteUrl from './assets/first-note.html';
+import ViewSvgUrl from './assets/view.svg';
 
 const varsRE = /\{\{\s?(\w+)\s?\}\}/;
 export function processTemplate(template: string, vars: Record<string, string | number>) {
