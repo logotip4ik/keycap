@@ -47,8 +47,9 @@ useSeoMeta({
   applicationName: 'Keycap',
   author: 'Bogdan Kostyuk',
 
+  twitterSite: 'KeycapTheNotes',
   twitterCard: 'summary',
-  twitterCreator: '@bogdankostyuk_',
+  twitterCreator: 'BogdanKostyuk_',
   twitterImage: `${protocol}://${site}/og-image.min.jpg`,
   twitterImageAlt: 'Keycap',
 });
