@@ -225,7 +225,7 @@ useTinykeys({
 
 let prevTextSelection: string | undefined;
 watch(() => props.editor.state.selection, (selection) => {
-  const textSelection = props.editor.state.doc.textBetween(selection.from, selection.to);
+  const textSelection = props.editor.state.doc.textBetween(selection.from, selection.to, '');
 
   if (prevTextSelection && prevTextSelection !== textSelection) {
     isEditingLink.value = false;

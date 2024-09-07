@@ -10,7 +10,7 @@ const { isSmallScreen } = useDevice();
 const shouldShow = ref(false);
 const targetEl = shallowRef<HTMLElement | null>(null);
 const tooltipEl = shallowRef<HTMLElement | null>(null);
-const tooltipId = `tp${(Math.random() * 1_000_000_000).toFixed(0)}`;
+const tooltipId = useId();
 
 const timeoutToShowTooltip = parseDuration('0.75s')!;
 const cleanups: Array<() => any> = [];
