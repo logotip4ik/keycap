@@ -111,13 +111,26 @@ const more = [
         inset: calc(-1 * var(--spacing));
         z-index: -1;
 
+        opacity: 0.75;
         border-radius: calc(var(--br) + var(--spacing));
         background-image: linear-gradient(to bottom, var(--grad-start), var(--grad-stop));
+
+        transition: opacity 0.25s ease-out;
       }
 
       &::after {
         filter: blur(16px);
         opacity: 0.175;
+      }
+
+      &:hover {
+        &::before {
+          opacity: 1;
+        }
+
+        &::after {
+          opacity: 0.25;
+        }
       }
     }
   }

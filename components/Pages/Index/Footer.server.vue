@@ -1,5 +1,9 @@
 <script setup lang="ts">
 const { build } = useRuntimeConfig().public;
+
+const links = [
+  { name: '@KeycapTheNotes', href: 'https://x.com/KeycapTheNotes' },
+];
 </script>
 
 <template>
@@ -26,7 +30,14 @@ const { build } = useRuntimeConfig().public;
       </div>
 
       <div class="footer__row">
-        <p />
+        <ul class="footer__links">
+          <li v-for="item in links" :key="item.href" class="footer__links__item">
+            <a class="footer__links__item__link" :href="item.href" target="_blank">
+              {{ item.name }}
+            </a>
+          </li>
+        </ul>
+
         <p class="footer__headline">
           Built to be used 💜
         </p>
@@ -57,6 +68,7 @@ const { build } = useRuntimeConfig().public;
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
     background-color: hsla(var(--text-color-hsl), 0.025);
+    box-shadow: 0 0 1rem hsla(var(--task-list-indicator-color-hsl), 0.175);
   }
 
   &__row {
@@ -66,7 +78,7 @@ const { build } = useRuntimeConfig().public;
     gap: 0.5rem;
 
     & + & {
-      margin-top: 0.5rem;
+      margin-top: 0.75rem;
     }
 
     @media screen and (max-width: $breakpoint-tablet) {
@@ -83,6 +95,10 @@ const { build } = useRuntimeConfig().public;
     margin: 0;
 
     opacity: 0.7;
+  }
+
+  &__version {
+    font-size: calc(min(1rem + 1vw, 1.75rem) / 1.33);
   }
 
   &__title {
@@ -108,6 +124,20 @@ const { build } = useRuntimeConfig().public;
 
     @media screen and (max-width: $breakpoint-tablet) {
       font-size: calc(min(1rem + 1vw, 1.75rem) * 1.25);
+    }
+  }
+
+  &__links {
+    margin: 0;
+    padding: 0;
+
+    list-style-type: none;
+
+    &__item {
+      &__link {
+        color: hsla(var(--text-color-hsl), 0.75);
+        text-decoration: none;
+      }
     }
   }
 }
