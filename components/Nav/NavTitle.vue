@@ -1,6 +1,3 @@
-<script setup lang="ts">
-</script>
-
 <template>
   <NavLink class="nav__link--title font-wide" to="/">
     <img
