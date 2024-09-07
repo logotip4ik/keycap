@@ -100,7 +100,7 @@ onMounted(async () => {
     <WithFadeTransition>
       <Form
         v-if="state !== 'success'"
-        action="/api/auth/register"
+        :action="emailVerified ? '/api/auth/register' : '/api/auth/verify-email'"
         method="POST"
         @submit.prevent="emailVerified ? register() : verifyEmail()"
       >
