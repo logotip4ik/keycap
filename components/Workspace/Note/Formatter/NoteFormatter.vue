@@ -172,9 +172,9 @@ function toggleListItem() {
 }
 
 function focusFormatter(event: KeyboardEvent) {
-  const { from, to } = props.editor.state.selection;
+  const { empty } = props.editor.state.selection;
 
-  if (!formatterEl.value || (props.editor.isFocused && to - from <= 0)) {
+  if (!formatterEl.value || (props.editor.isFocused && !empty)) {
     return;
   }
 
@@ -207,9 +207,9 @@ useTinykeys({
   },
 
   '$mod+Shift+l': (event) => {
-    const { from, to } = props.editor.state.selection;
+    const { empty } = props.editor.state.selection;
 
-    if (props.editor.isFocused && to - from <= 0) {
+    if (props.editor.isFocused && !empty) {
       return;
     }
 
