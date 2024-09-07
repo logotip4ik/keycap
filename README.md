@@ -26,7 +26,7 @@ After months of using Windows and Android, I found out that notes aren't syncing
 - [x] show notes via sharable links
 - [ ] code highlighting
 - [x] work without internet (user still needs to navigate to workspace manually, for now...)
-- [ ] create landing page
+- [x] create landing page
 - [x] create project logo
 
 ## Notes
