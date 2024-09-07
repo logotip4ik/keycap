@@ -210,7 +210,6 @@ export default defineNuxtConfig({
     'normalize.css/normalize.css',
     '~/assets/styles/global.scss',
     '~/assets/fonts/Mona-Sans/style.css',
-    '~/assets/styles/with-blob.scss',
   ],
 
   sourcemap: isDevelopment,

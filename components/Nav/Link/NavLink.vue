@@ -20,16 +20,6 @@
 
   transition: color .3s, filter .3s;
 
-  &__img {
-    display: block;
-
-    width: 2rem;
-    height: auto;
-
-    margin-right: 0.5rem;
-    margin-bottom: 0.125rem;
-  }
-
   @media (hover: hover) {
     color: hsla(var(--text-color-hsl), 0.8);
 
