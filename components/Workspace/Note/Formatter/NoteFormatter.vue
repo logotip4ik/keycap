@@ -385,6 +385,7 @@ useFocusTrap(formatterEl);
 
   &__contents-wrapper {
     --button-size: minmax(1.5rem, 1fr);
+    --form-columns: 10;
 
     display: grid;
     align-items: center;
@@ -395,17 +396,21 @@ useFocusTrap(formatterEl);
     max-width: 22rem;
 
     &__form {
-      grid-template-columns: repeat(10, var(--button-size));
+      grid-template-columns: repeat(var(--form-columns), var(--button-size));
       max-width: calc(24rem - 2px);
     }
 
     @media screen and (max-width: $breakpoint-tablet) {
-      max-width: 25rem;
+      max-width: 26rem;
+
+      &__form {
+        --form-columns: 9;
+      }
     }
   }
 
   &__input {
-    grid-column: 1 / 10;
+    grid-column: 1 / var(--form-columns);
     align-self: stretch;
 
     font: inherit;
@@ -431,10 +436,6 @@ useFocusTrap(formatterEl);
 
     &:user-invalid {
       border-color: var(--error-color);
-    }
-
-    @media (max-width: $breakpoint-tablet) {
-      max-width: 32ch;
     }
   }
 
@@ -491,10 +492,6 @@ useFocusTrap(formatterEl);
 
   &.inline-menu {
     .formatter {
-      &__input {
-        max-width: min(75vw, $breakpoint-tablet - 75px);
-      }
-
       &__wrapper {
         justify-content: center;
       }
