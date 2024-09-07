@@ -4,7 +4,7 @@ import { SocialAuth } from '~/kysely/db/types';
 
 // escaping `-` and `|` because it is used on client side and browsers don't like it unescaped
 // NOTE: do not forget to change same RE in client side
-export const allowedItemNameRE = /^[\w .&#!|\-\u0404-\u0457]{2,50}$/;
+export const allowedItemNameRE = /^[\w .&#!\|\-\u0404-\u0457]{2,50}$/; // eslint-disable-line regexp/no-useless-escape
 export const currentItemNameRE = /[\w%.!]+$/;
 export const usernameRE = /^[\w.\-]{3,16}$/;
 export const emailRE = /^[\w!#$%&'*+/=?^`{|}~-]+(?:\.[\w!#$%&'*+/=?^`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i;

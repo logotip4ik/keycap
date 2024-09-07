@@ -20,6 +20,7 @@ const placeholder = props.item.state === ItemState.Creating
   : isFolder
     ? 'new folder name'
     : 'new note name';
+const allowedItemName = `${allowedItemNameRE.source.slice(0, -1)}\\/?$`;
 
 function handleSubmit() {
   let promise: Promise<unknown>;
@@ -101,7 +102,7 @@ onMounted(() => {
       enterkeyhint="done"
       type="text"
       minlength="2"
-      :pattern="allowedClientItemNameRE.source"
+      :pattern="allowedItemName"
       :placeholder="placeholder"
       :disabled="isLoading"
       @blur="handleReset"
