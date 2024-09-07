@@ -172,14 +172,12 @@ function toggleListItem() {
 }
 
 function focusFormatter(event: KeyboardEvent) {
-  const { empty } = props.editor.state.selection;
+  const { selection } = props.editor.state;
 
-  if (!formatterEl.value || (props.editor.isFocused && !empty)) {
-    return;
+  if (formatterEl.value && props.editor.isFocused && !selection.empty) {
+    event.preventDefault();
+    (formatterEl.value.firstElementChild as HTMLElement).focus();
   }
-
-  event.preventDefault();
-  (formatterEl.value.firstElementChild as HTMLElement).focus();
 }
 
 function focusEditor(event: KeyboardEvent) {
@@ -207,25 +205,23 @@ useTinykeys({
   },
 
   '$mod+Shift+l': (event) => {
-    const { empty } = props.editor.state.selection;
+    const { selection } = props.editor.state;
 
-    if (props.editor.isFocused && !empty) {
-      return;
-    }
+    if ((props.editor.isFocused && !selection.empty) || isEditingLink.value) {
+      event.preventDefault();
 
-    event.preventDefault();
+      isEditingLink.value = !isEditingLink.value;
 
-    isEditingLink.value = !isEditingLink.value;
-
-    if (!isEditingLink.value) {
-      resetSelection();
+      if (!isEditingLink.value) {
+        resetSelection();
+      }
     }
   },
 });
 
 let prevTextSelection: string | undefined;
 watch(() => props.editor.state.selection, (selection) => {
-  const textSelection = props.editor.state.doc.textBetween(selection.from, selection.to, '');
+  const textSelection = selection.empty ? '' : props.editor.state.doc.textBetween(selection.from, selection.to, '');
 
   if (prevTextSelection && prevTextSelection !== textSelection) {
     isEditingLink.value = false;
