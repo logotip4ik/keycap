@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { allowedItemNameRE } from '~/server/utils';
 import { useContentsState } from '../config';
 
 const props = defineProps<{

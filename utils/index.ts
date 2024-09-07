@@ -1,8 +1,6 @@
 import type { NuxtApp } from '#app';
 
 export const stringifiedBigIntRE = /^(\d{1,19})$/;
-export { allowedItemNameRE } from '~/server/utils/index';
-// NOTE: do not forget to change same RE in nitro side
 
 const falsyBigInt = BigInt(-1);
 export function toBigInt(string: string): bigint {
