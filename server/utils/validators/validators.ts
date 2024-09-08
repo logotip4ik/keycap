@@ -16,12 +16,7 @@ export async function readSecureBody<Schema extends TSchema>(
 ): Promise<Static<Schema>> {
   const contentType = getHeader(event, 'content-type');
 
-  if (
-    !contentType || (
-      contentType !== 'application/json'
-      && contentType !== 'application/x-www-form-urlencoded'
-    )
-  ) {
+  if (!contentType || contentType !== 'application/json') {
     throw createError({ status: 415 });
   }
 
