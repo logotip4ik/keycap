@@ -44,9 +44,19 @@ export default defineNuxtConfig({
   },
 
   experimental: {
+    buildCache: true,
     watcher: 'parcel',
     headNext: true,
     componentIslands: 'local',
+    defaults: {
+      nuxtLink: {
+        prefetch: true,
+        prefetchOn: {
+          interaction: true,
+          visibility: false,
+        },
+      },
+    },
   },
 
   future: {
