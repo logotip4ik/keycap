@@ -249,11 +249,16 @@ export default defineNuxtConfig({
       'import.meta.prod': isProduction,
       'import.meta.ci': isCI,
 
-      '__VUE_OPTIONS_API__': false,
-
       'process.env.NODE_ENV': JSON.stringify(nodeENV),
 
       ...prefixedConfig,
+    },
+
+    vue: {
+      features: {
+        optionsAPI: false,
+        propsDestructure: false,
+      },
     },
 
     json: {
