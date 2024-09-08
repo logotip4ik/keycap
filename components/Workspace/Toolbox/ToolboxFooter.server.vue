@@ -36,13 +36,13 @@ function isRelative(url: string) {
         :key="idx"
         class="toolbox__footer__links__item"
       >
-        <a
+        <NuxtLink
           :href="link.href"
           :target="isRelative(link.href) ? '_self' : '_blank'"
           class="toolbox__footer__links__item__link"
         >
           {{ link.name }}
-        </a>
+        </NuxtLink>
       </li>
     </ul>
   </footer>

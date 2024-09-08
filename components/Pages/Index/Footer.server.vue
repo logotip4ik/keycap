@@ -32,9 +32,9 @@ const links = [
       <div class="footer__row">
         <ul class="footer__links">
           <li v-for="item in links" :key="item.href" class="footer__links__item">
-            <a class="footer__links__item__link" :href="item.href" target="_blank">
+            <NuxtLink class="footer__links__item__link" :href="item.href" target="_blank">
               {{ item.name }}
-            </a>
+            </NuxtLink>
           </li>
         </ul>
 
