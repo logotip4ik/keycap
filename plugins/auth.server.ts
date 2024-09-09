@@ -1,7 +1,7 @@
 export default defineNuxtPlugin({
   parallel: true,
   env: { islands: false },
-  async setup() {
+  setup() {
     const event = useRequestEvent();
     const user = useUser();
 
