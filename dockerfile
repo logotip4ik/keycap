@@ -13,6 +13,8 @@ RUN yarn build
 # release includes bare minimum required to run the app, copied from builder
 FROM node:22 AS release
 
+USER node
+
 WORKDIR /app
 
 COPY --from=builder /source/.output ./
