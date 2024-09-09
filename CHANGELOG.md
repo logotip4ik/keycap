@@ -1,6 +1,80 @@
 # Changelog
 
 
+## v3.14.0
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.13.2...v3.14.0)
+
+### 🚀 Enhancements
+
+- Email validation ([#30](https://github.com/logotip4ik/keycap/pull/30))
+- Better index page ([#29](https://github.com/logotip4ik/keycap/pull/29))
+
+### 🩹 Fixes
+
+- Center note formatter button icons ([a8e4e50d](https://github.com/logotip4ik/keycap/commit/a8e4e50d))
+- Better custom contextmenu handling ([d6dcb21d](https://github.com/logotip4ik/keycap/commit/d6dcb21d))
+- Handle initial focusing for item details modal ([dc9c80eb](https://github.com/logotip4ik/keycap/commit/dc9c80eb))
+- Don't overwrite global setTimeout ([57332b4b](https://github.com/logotip4ik/keycap/commit/57332b4b))
+- Also check parent node for anchor tag ([8e9123de](https://github.com/logotip4ik/keycap/commit/8e9123de))
+- Correct mark sizing ([9f4c9557](https://github.com/logotip4ik/keycap/commit/9f4c9557))
+- Update formatter link input layout ([0cd8aa9d](https://github.com/logotip4ik/keycap/commit/0cd8aa9d))
+- Reduce difference in size between link input and buttons for small screens ([1f92696c](https://github.com/logotip4ik/keycap/commit/1f92696c))
+- Better selection change detection ([609decb4](https://github.com/logotip4ik/keycap/commit/609decb4))
+- Directly import allowedItemNamaRE ([65a6a325](https://github.com/logotip4ik/keycap/commit/65a6a325))
+- Support reading form data ([583cac68](https://github.com/logotip4ik/keycap/commit/583cac68))
+- Different actions for email verifcation and registration ([224c9577](https://github.com/logotip4ik/keycap/commit/224c9577))
+- Redirect to workspace if user is present in request ([84e38d56](https://github.com/logotip4ik/keycap/commit/84e38d56))
+- Remove urlencoded values as accepted content until csrf protection ([b71a43e3](https://github.com/logotip4ik/keycap/commit/b71a43e3))
+- Treat html as assets in tests ([69f7947c](https://github.com/logotip4ik/keycap/commit/69f7947c))
+
+### 💅 Refactors
+
+- Always set rate limit headers and consume more tokes for auth routes ([fa50e935](https://github.com/logotip4ik/keycap/commit/fa50e935))
+- Harden api validaton ([aff456eb](https://github.com/logotip4ik/keycap/commit/aff456eb))
+
+### 📖 Documentation
+
+- Mark todo ([cd89c0f3](https://github.com/logotip4ik/keycap/commit/cd89c0f3))
+
+### 🏡 Chore
+
+- **release:** V3.13.2 ([60eb3528](https://github.com/logotip4ik/keycap/commit/60eb3528))
+- Execute nolyfill ([e4b6e618](https://github.com/logotip4ik/keycap/commit/e4b6e618))
+- Use vim ctrl n or p for selecting next or previous search result ([2907fd81](https://github.com/logotip4ik/keycap/commit/2907fd81))
+- Improve error logging for ask-username page ([7232fecd](https://github.com/logotip4ik/keycap/commit/7232fecd))
+- Simplify click handler ([73a59809](https://github.com/logotip4ik/keycap/commit/73a59809))
+- Use self closing tag ([2ac66c90](https://github.com/logotip4ik/keycap/commit/2ac66c90))
+- Pin tinykeys to 2.1.0 ([a9b3f1e9](https://github.com/logotip4ik/keycap/commit/a9b3f1e9))
+- Use literal to check if row is in db ([3dc029a1](https://github.com/logotip4ik/keycap/commit/3dc029a1))
+- Add spellcheck setting ([43740dd3](https://github.com/logotip4ik/keycap/commit/43740dd3))
+- Update linkify url re ([5e2192f2](https://github.com/logotip4ik/keycap/commit/5e2192f2))
+- Add highlight mark ([07d2e9f9](https://github.com/logotip4ik/keycap/commit/07d2e9f9))
+- Bump safari version ([404ae871](https://github.com/logotip4ik/keycap/commit/404ae871))
+- Return tiptap editor rather then directly assigning ([f0fe40fc](https://github.com/logotip4ik/keycap/commit/f0fe40fc))
+- Correctly sized formatter ([aa09a490](https://github.com/logotip4ik/keycap/commit/aa09a490))
+- Update deps ([28d034ec](https://github.com/logotip4ik/keycap/commit/28d034ec))
+- Update pm ([93bed835](https://github.com/logotip4ik/keycap/commit/93bed835))
+- Use useId composable to generate id ([aa86da01](https://github.com/logotip4ik/keycap/commit/aa86da01))
+- Use empty selection property ([53c5db7c](https://github.com/logotip4ik/keycap/commit/53c5db7c))
+- Improve selection check ([2e0e6744](https://github.com/logotip4ik/keycap/commit/2e0e6744))
+- Reuse allowedItemName from server utils on frontend ([dd569fab](https://github.com/logotip4ik/keycap/commit/dd569fab))
+- Use fullscreen mode for pwa ([957d05a2](https://github.com/logotip4ik/keycap/commit/957d05a2))
+- Better twitter links ([e8b26b92](https://github.com/logotip4ik/keycap/commit/e8b26b92))
+- Refresh lockfile to include latest unhead ([0f0c4589](https://github.com/logotip4ik/keycap/commit/0f0c4589))
+- Omit using .catch ts reset ([396e67d0](https://github.com/logotip4ik/keycap/commit/396e67d0))
+- Use NuxtLink where needed ([56d727cc](https://github.com/logotip4ik/keycap/commit/56d727cc))
+- Use vite's optiosn to configure vue ([c54d38ec](https://github.com/logotip4ik/keycap/commit/c54d38ec))
+- Customize nuxtlink prefetches ([ff61ec91](https://github.com/logotip4ik/keycap/commit/ff61ec91))
+
+### ✅ Tests
+
+- Add note-formatter link behaivor check ([2ca18a78](https://github.com/logotip4ik/keycap/commit/2ca18a78))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.13.2
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.13.1...v3.13.2)
