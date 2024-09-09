@@ -34,23 +34,21 @@ if (import.meta.client) {
 </script>
 
 <template>
-  <Teleport to="#teleports">
-    <TransitionGroup
-      ref="toasterComp"
-      class="toasts"
-      tag="section"
-      name="toast"
-      aria-label="Notifications"
-      @before-leave="preservePositionAndSize"
-    >
-      <WorkspaceToastsItem
-        v-for="toast in sortedToasts"
-        :key="toast.id"
-        :toast="toast"
-        :animation-duration="ANIMATION_DURATION"
-      />
-    </TransitionGroup>
-  </Teleport>
+  <TransitionGroup
+    ref="toasterComp"
+    class="toasts"
+    tag="section"
+    name="toast"
+    aria-label="Notifications"
+    @before-leave="preservePositionAndSize"
+  >
+    <WorkspaceToastsItem
+      v-for="toast in sortedToasts"
+      :key="toast.id"
+      :toast="toast"
+      :animation-duration="ANIMATION_DURATION"
+    />
+  </TransitionGroup>
 </template>
 
 <style lang="scss">
