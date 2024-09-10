@@ -31,7 +31,6 @@ export default defineNuxtConfig({
         { name: 'apple-mobile-web-app-status-bar-style', content: 'default', media: '(prefers-color-scheme: light)', key: 'status-bar-light' },
         { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent', media: '(prefers-color-scheme: dark)', key: 'status-bar-dark' },
         { name: 'apple-mobile-web-app-capable', content: 'yes' },
-        { name: 'robots', content: 'none' },
         { property: 'og:site_name', content: 'Keycap' },
       ],
       link: [
