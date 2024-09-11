@@ -1,7 +1,8 @@
 <script setup lang="ts">
-const { build } = useRuntimeConfig().public;
+const { build, site } = useRuntimeConfig().public;
 
 const links = [
+  { name: 'Email', href: `mailto:contact@${site}` },
   { name: '@KeycapTheNotes', href: 'https://x.com/KeycapTheNotes' },
 ];
 </script>
@@ -137,6 +138,17 @@ const links = [
       &__link {
         color: hsla(var(--text-color-hsl), 0.75);
         text-decoration: none;
+        filter: none;
+
+        transition: filter .3s, color .3s;
+
+        &:is(:hover, :focus) {
+          color: var(--text-color);
+          filter: drop-shadow(0 0 1rem hsla(var(--text-color-hsl), 0.5));
+          text-decoration: underline;
+
+          transition-duration: .1s;
+        }
       }
     }
   }

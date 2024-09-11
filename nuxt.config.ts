@@ -266,7 +266,6 @@ export default defineNuxtConfig({
     vue: {
       features: {
         optionsAPI: false,
-        propsDestructure: false,
       },
     },
 

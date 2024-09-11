@@ -27,7 +27,7 @@
       transition-duration: .1s;
 
       color: hsla(var(--text-color-hsl), 1);
-      filter: drop-shadow(0px 0px 0.5rem hsla(var(--text-color-hsl), 0.15));
+      filter: drop-shadow(0px 0px 0.5rem hsla(var(--text-color-hsl), 0.3));
     }
   }
 }

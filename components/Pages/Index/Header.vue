@@ -70,7 +70,7 @@ onMounted(() => {
     <div class="header__buttons">
       <NuxtLink
         href="/register"
-        class="header__buttons__button header__buttons__start"
+        class="header__buttons__button header__buttons__button--start"
         style="opacity: 0;"
       >
         Start Keycaping
@@ -78,7 +78,7 @@ onMounted(() => {
 
       <NuxtLink
         href="#more"
-        class="header__buttons__button header__buttons__more"
+        class="header__buttons__button header__buttons__button--more"
         style="opacity: 0;"
       >
         More
@@ -159,7 +159,9 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1.25rem;
+    gap: 0.75rem;
+
+    transform: translateX(-0.5rem);
 
     &__button {
       font-size: min(1rem + 0.25vw, 1.25rem);
@@ -167,7 +169,7 @@ onMounted(() => {
       color: var(--text-color);
       text-decoration: none;
 
-      padding: min(0.3rem + 0.5vw, 0.66rem) min(0.75rem + 0.5vw, 1.5rem);
+      padding: min(0.3rem + 0.5vw, 0.66rem) min(1rem + 0.5vw, 1.5rem);
 
       border-radius: 0.175rem;
 
@@ -177,15 +179,34 @@ onMounted(() => {
         animation-delay: 0.9s !important;
       }
 
+      &--start {
+        color: white;
+        background-color: hsla(var(--task-list-indicator-color-hsl), 0.9);
+
+        transition: background-color .3s, box-shadow .3s;
+
+        &:is(:hover, :focus) {
+          background-color: var(--task-list-indicator-color);
+          box-shadow: 0 0 1rem hsla(var(--selection-bg-color-hsl), 0.50);
+
+          transition-duration: .1s;
+        }
+      }
+
+      &--more {
+        transition: background-color .3s, filter .3s;
+
+        &:is(:hover, :focus) {
+          background-color: hsla(var(--text-color-hsl), 0.1);
+          box-shadow: 0 0 1rem hsla(var(--text-color-hsl), 0.05);
+
+          transition-duration: .1s;
+        }
+      }
+
       @media screen and (max-width: $breakpoint-tablet) {
         padding: 0.75rem 1.75rem;
       }
-    }
-
-    &__start {
-      color: white;
-      background-color: var(--task-list-indicator-color);
-      filter: drop-shadow(0 0 1rem hsla(var(--selection-bg-color-hsl), 0.25));
     }
   }
 
