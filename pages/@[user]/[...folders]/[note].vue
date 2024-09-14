@@ -8,6 +8,8 @@ const currentItemForDetails = useCurrentItemForDetails();
 const user = useUser();
 const mitt = useMitt();
 
+const note = shallowRef<NoteWithContent>();
+
 const noteApiPath = computed(() => route.path.substring(2 + user.value!.username.length));
 const notePath = computed(() => `/${user.value!.username}${noteApiPath.value}`);
 
@@ -17,7 +19,7 @@ let loadingToast: ToastInstance | undefined;
 let abortControllerGet: AbortController | undefined;
 let lastRefetch: number | undefined;
 
-const { data: note, refresh } = await useAsyncData<NoteWithContent | undefined>('note', async () => {
+async function fetchNote() {
   if (import.meta.server || !route.params.note || route.params.note === BLANK_NOTE_NAME) {
     return;
   }
@@ -48,20 +50,14 @@ const { data: note, refresh } = await useAsyncData<NoteWithContent | undefined>(
       notesCache.set(fetchedNote.path, fetchedNote);
       offlineStorage.setItem(fetchedNote.path, fetchedNote);
 
-      if (hydrationPromise) {
-        await hydrationPromise;
-        hydrationPromise = undefined;
-      }
-
       note.value = fetchedNote;
     })
     .catch((e) => {
       handleError(e);
-      throw e;
     })
     .finally(() => {
       const multiplier = document.visibilityState === 'visible' ? 1 : 2;
-      pollingTimer = setTimeout(refresh, POLLING_TIME * multiplier);
+      pollingTimer = setTimeout(fetchNote, POLLING_TIME * multiplier);
 
       loadingToast?.remove();
     });
@@ -74,11 +70,7 @@ const { data: note, refresh } = await useAsyncData<NoteWithContent | undefined>(
   }
 
   return cachedNote;
-}, {
-  server: false,
-  lazy: true,
-  deep: false,
-});
+}
 
 let retryInterval: ReturnType<typeof setInterval> | undefined;
 let failedSaveToast: ToastInstance | undefined;
@@ -164,17 +156,19 @@ mitt.on('details:show', () => {
   }
 });
 
-if (import.meta.client) {
+onBeforeMount(() => {
+  fetchNote();
+
   const offVisibility = on(document, 'visibilitychange', () => {
     const timeDiff = Date.now() - (lastRefetch || 0);
 
     if (document.visibilityState === 'visible' && timeDiff > parseDuration('10 seconds')!) {
-      refresh();
+      fetchNote();
     }
   });
 
   // MDN: `event.persisted` indicates if the document is loading from a cache
-  const offPageShow = on(window, 'pageshow', (event) => event.persisted && refresh());
+  const offPageShow = on(window, 'pageshow', (event) => event.persisted && fetchNote());
 
   onBeforeUnmount(() => {
     offPageShow();
@@ -189,7 +183,7 @@ if (import.meta.client) {
     loadingToast = undefined;
     failedSaveToast = undefined;
   });
-}
+});
 </script>
 
 <!-- NOTE: NoteEditor component should be wrapped inside client only, if note is rendered on server -->
