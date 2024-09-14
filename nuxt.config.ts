@@ -10,7 +10,7 @@ import { prefixedConfig } from './config/build';
 import { getHeaders } from './config/headers';
 import { tsConfig } from './config/typescript';
 import { breakpoints, sidebarsBreakpoints } from './constants/breakpoints';
-import { inlinableStylesRE, nodeModulesRE } from './constants/build';
+import { inlinableStylesRE } from './constants/build';
 import { parseDurationFunctionName, ParseDurationTransformPlugin } from './unplugin/parse-duration';
 
 export default defineNuxtConfig({
