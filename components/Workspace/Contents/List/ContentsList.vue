@@ -247,33 +247,31 @@ if (import.meta.client) {
       @click.self="menuOptions.target = undefined"
       @keydown.capture="handleArrowsPress"
     >
-      <template v-for="item in folderContents" :key="item.path">
-        <WithFadeTransition>
-          <li
-            v-if="item.state"
-            key="1"
-            class="contents__list__item"
-          >
-            <LazyWorkspaceContentsListItemInput
-              :item="item"
-              :parent="folder"
-            />
-          </li>
+      <WithFadeTransition v-for="item in folderContents" :key="item.path">
+        <li
+          v-if="item.state"
+          key="1"
+          class="contents__list__item"
+        >
+          <LazyWorkspaceContentsListItemInput
+            :item="item"
+            :parent="folder"
+          />
+        </li>
 
-          <li
-            v-else
-            key="2"
-            class="contents__list__item"
-          >
-            <LazyWorkspaceContentsListItem
-              :item="item"
-              :parent="folder"
-              :menu-target="menuOptions.target"
-              @show-menu="showMenu($event, item)"
-            />
-          </li>
-        </WithFadeTransition>
-      </template>
+        <li
+          v-else
+          key="2"
+          class="contents__list__item"
+        >
+          <LazyWorkspaceContentsListItem
+            :item="item"
+            :parent="folder"
+            :menu-target="menuOptions.target"
+            @show-menu="showMenu($event, item)"
+          />
+        </li>
+      </WithFadeTransition>
     </WithListTransitionGroup>
   </WithFadeTransition>
 

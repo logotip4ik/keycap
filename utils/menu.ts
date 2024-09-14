@@ -57,6 +57,9 @@ export const commandActions: Record<Command['key'], Command['handler']> = {
       mitt.emit(`details:show:${noNote ? 'folder' : 'note'}`);
     }
   },
+  [SearchAction.Shortcuts]: () => {
+    useMitt().emit('shortcuts:show');
+  },
 };
 
 export const commandActionsMin: Map<Command['key'], Pick<Command, 'key' | 'name'>> = new Map([
@@ -66,6 +69,7 @@ export const commandActionsMin: Map<Command['key'], Pick<Command, 'key' | 'name'
   [SearchAction.RefreshFolder, { name: 'refresh-folder', key: SearchAction.RefreshFolder }],
   [SearchAction.SaveNote, { name: 'save-note', key: SearchAction.SaveNote }],
   [SearchAction.Details, { name: 'details', key: SearchAction.Details }],
+  [SearchAction.Shortcuts, { name: 'shortcuts', key: SearchAction.Shortcuts }],
 ]);
 
 export function generateSearchRelativeItemPath(path: string, username: string) {

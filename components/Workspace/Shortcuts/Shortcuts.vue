@@ -1,0 +1,114 @@
+<script setup lang="ts">
+import type { ComponentPublicInstance } from 'vue';
+
+const props = defineProps<{
+  onClose: () => void
+}>();
+
+const { shortcuts } = useAppConfig();
+
+const shortcutsComp = shallowRef<ComponentPublicInstance>();
+const shortcutsEl = computed(() => shortcutsComp.value?.$el);
+
+const shortcutsDescription = {
+  edit: 'Focus Editor',
+  new: 'Create new note or folder',
+  search: 'Show search',
+  contents: 'Open contents sidebar',
+  toolbox: 'Open toolbox sidebar',
+} satisfies Record<keyof typeof shortcuts, string>;
+
+const modRE = /\$mod/g;
+const keyRE = /Key/g;
+function humanizeShortcut(shortcut: string) {
+  return shortcut.replace(modRE, useModKey()).replace(keyRE, '');
+}
+
+useTinykeys({ Escape: props.onClose });
+useFocusTrap(shortcutsEl, { handleInitialFocusing: true });
+useClickOutside(shortcutsEl, props.onClose);
+</script>
+
+<template>
+  <WithBackdrop class="shortcuts__wrapper">
+    <WorkspaceModal ref="shortcutsComp" class="shortcuts">
+      <WorkspaceModalCloseButton @click="onClose" />
+
+      <p class="shortcuts__title font-wide">
+        Keyboard Shortcuts
+      </p>
+
+      <ul class="shortcuts__list">
+        <li v-for="(shortcut, key) in shortcuts" :key="key" class="shortcuts__list__item">
+          <kbd>{{ humanizeShortcut(shortcut) }}</kbd>
+
+          <hr class="shortcuts__list__item__hr">
+
+          <p class="shortcuts__list__item__desc">
+            {{ shortcutsDescription[key] }}
+          </p>
+        </li>
+      </ul>
+    </WorkspaceModal>
+  </WithBackdrop>
+</template>
+
+<style lang="scss">
+.shortcuts {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  padding: 2rem 1.25rem 1.5rem;
+
+  max-width: #{$breakpoint-tablet - 200};
+
+  &__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @media screen and (max-width: $breakpoint-tablet) {
+      align-items: stretch;
+    }
+  }
+
+  &__title {
+    font-size: clamp(1.25rem, 2vw + 0.75rem, 2rem);
+
+    margin: 0 0 2.25rem;
+  }
+
+  &__list {
+    width: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    list-style-type: none;
+
+    &__item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      &__hr {
+        flex: 1;
+
+        width: 100%;
+        height: 0.1rem;
+
+        margin: 0 1rem;
+
+        border: none;
+        background-color: hsla(var(--text-color-hsl), 0.1);
+      }
+
+      &__desc {
+        font-size: 1.1rem;
+      }
+    }
+  }
+}
+</style>

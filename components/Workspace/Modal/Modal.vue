@@ -10,6 +10,8 @@
 
 <style lang="scss">
 .modal {
+  position: relative;
+
   width: 90%;
 
   border-radius: 0.5rem;

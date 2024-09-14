@@ -15,8 +15,10 @@ const { shortcuts } = useAppConfig();
 
 const currentItemForDetails = useCurrentItemForDetails();
 
+const isShowingShortcuts = ref(false);
 const isShowingSearch = ref(false);
 mitt.on('search:show', () => isShowingSearch.value = true);
+mitt.on('shortcuts:show', () => isShowingShortcuts.value = true);
 
 const isNoteEmpty = computed(() => !route.params.note || route.params.note === BLANK_NOTE_NAME);
 
@@ -50,11 +52,10 @@ useTinykeys({
   [shortcuts.search]: (event) => {
     event.preventDefault();
 
-    if (currentItemForDetails.value) {
-      currentItemForDetails.value = undefined;
-    }
-
     isShowingSearch.value = !isShowingSearch.value;
+
+    currentItemForDetails.value = undefined;
+    isShowingShortcuts.value = false;
   },
 });
 
@@ -97,6 +98,15 @@ onMounted(() => {
           @close="isShowingSearch = false"
         />
       </Transition>
+    </Teleport>
+
+    <Teleport to="#teleports">
+      <WithFadeTransition>
+        <LazyWorkspaceShortcuts
+          v-if="isShowingShortcuts"
+          @close="isShowingShortcuts = false"
+        />
+      </WithFadeTransition>
     </Teleport>
 
     <Teleport to="#teleports">

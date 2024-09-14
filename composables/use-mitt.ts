@@ -9,6 +9,7 @@ type Events = {
   'details:show:folder'?: Partial<object>
   'details:show:note'?: Partial<object>
   'search:show'?: Partial<object>
+  'shortcuts:show'?: Partial<object>
 };
 
 const emitter = import.meta.server ? proxy : /* #__PURE__ */ mitt<Events>();

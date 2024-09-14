@@ -2,7 +2,9 @@
 import {
   LazyWorkspaceToolboxUtilsButtonItemDetails,
   LazyWorkspaceToolboxUtilsButtonSearch,
+  LazyWorkspaceToolboxUtilsButtonShortcuts,
 } from '#components';
+import ListTransitionGroup from '~/components/With/ListTransitionGroup';
 
 import { useToolboxState } from '../config';
 
@@ -18,13 +20,12 @@ interface Util {
 };
 
 const utils: Array<Util> = [
-  {
-    component: LazyWorkspaceToolboxUtilsButtonSearch,
-  },
+  { component: LazyWorkspaceToolboxUtilsButtonSearch },
   {
     shouldShow: computed(() => !!route.params.note && route.params.note !== BLANK_NOTE_NAME),
     component: LazyWorkspaceToolboxUtilsButtonItemDetails,
   },
+  { component: LazyWorkspaceToolboxUtilsButtonShortcuts },
 ];
 
 let prevHeight: number;
@@ -42,7 +43,7 @@ function transitionHeight() {
   utilsComp.value?.$el.animate([
     { height: `${prevHeight}px` },
     { height: `${currentHeight}px` },
-  ], { duration: 375, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' });
+  ], { duration: 400, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' });
 }
 
 function hideIfNeeded() {
@@ -53,34 +54,34 @@ function hideIfNeeded() {
 </script>
 
 <template>
-  <TransitionGroup
+  <ListTransitionGroup
     ref="utilsComp"
     tag="ul"
-    name="fade"
     class="toolbox__utils"
     @enter="transitionHeight"
     @leave="transitionHeight"
     @before-enter="rememberHeight"
     @before-leave="rememberHeight"
   >
-    <li
-      v-for="(util, idx) in utils"
-      v-show="unref(util.shouldShow) ?? true"
-      :key="idx"
-      class="toolbox__utils__item"
-      @click="hideIfNeeded"
-    >
-      <Component :is="util.component" />
-    </li>
-  </TransitionGroup>
+    <template v-for="(util, idx) in utils" :key="idx">
+      <li
+        v-if="unref(util.shouldShow) ?? true"
+        class="toolbox__utils__item"
+        @click="hideIfNeeded"
+      >
+        <Component :is="util.component" />
+      </li>
+    </template>
+  </ListTransitionGroup>
 </template>
 
 <style lang="scss">
 .toolbox__utils {
+  position: relative;
+
   margin: var(--pd-y) 0 calc(var(--pd-y) / 2);
   padding: 0;
 
-  will-change: height, contents;
   list-style-type: none;
 
   &__item {
