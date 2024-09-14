@@ -1,11 +1,20 @@
 import type { Remote } from 'comlink';
 import type { ShallowRef } from 'vue';
+
 import LRUCache from 'hashlru';
 
 import { del, get, keys, set } from 'idb-keyval';
 import proxy from 'unenv/runtime/mock/proxy';
 
 import type { SafeUser } from '~/types/server';
+
+interface LRU<T> {
+  has: (key: string | number) => boolean
+  remove: (key: string | number) => void
+  get: (key: string | number) => T
+  set: (key: string | number, value: T) => void
+  clear: () => void
+}
 
 export function useCurrentItemForDetails() {
   return useState<FolderOrNote | undefined>(() => undefined);
@@ -16,12 +25,12 @@ export function useUser() {
 }
 
 const notesCache = import.meta.server ? proxy : /* #__PURE__ */ LRUCache(20);
-export function useNotesCache(): ReturnType<typeof LRUCache> {
+export function useNotesCache(): LRU<NoteWithContent> {
   return notesCache;
 }
 
 const foldersCache = import.meta.server ? proxy : /* #__PURE__ */ LRUCache(10);
-export function useFoldersCache(): ReturnType<typeof LRUCache> {
+export function useFoldersCache(): LRU<FolderWithContents> {
   return foldersCache;
 }
 
