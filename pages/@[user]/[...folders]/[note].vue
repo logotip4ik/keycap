@@ -80,9 +80,11 @@ const { data: note, refresh } = await useAsyncData<NoteWithContent | undefined>(
   deep: false,
 });
 
+let retryInterval: ReturnType<typeof setInterval> | undefined;
+let failedSaveToast: ToastInstance | undefined;
 let abortControllerUpdate: AbortController | undefined;
-const throttledNoteUpdate = useThrottleFn(forceUpdateNote, 1500, true, false); // enable trailing call and disable leading
-function forceUpdateNote(content: string) {
+const throttledNoteUpdate = useThrottleFn(updateNote, 1500, true, false); // enable trailing call and disable leading
+function updateNote(content: string) {
   // if no note was found in cache that means that it was deleted
   if (!notesCache.has(notePath.value)) {
     return;
@@ -90,26 +92,50 @@ function forceUpdateNote(content: string) {
 
   const newNote = { ...notesCache.get(notePath.value), content };
 
-  // enables optimistic ui
   notesCache.set(newNote.path, newNote);
 
-  abortControllerUpdate?.abort();
-  abortControllerUpdate = new AbortController();
+  const innerUpdate = (note: NoteWithContent) => {
+    abortControllerUpdate?.abort();
+    abortControllerUpdate = new AbortController();
 
-  $fetch(`/api/note${noteApiPath.value}`, {
-    method: 'PATCH',
-    body: { content },
-    retry: 2,
-    signal: abortControllerUpdate.signal,
-  })
-    .then(() => offlineStorage.setItem(newNote.path, newNote))
-    .catch(sendError);
-}
+    $fetch(`/api/note${noteApiPath.value}`, {
+      method: 'PATCH',
+      body: { content },
+      retry: 2,
+      signal: abortControllerUpdate.signal,
+    })
+      .then(() => {
+        offlineStorage.setItem(note.path, note);
 
-function updateNote(content: string, force?: boolean) {
-  const update = force ? forceUpdateNote : throttledNoteUpdate;
+        if (failedSaveToast) {
+          isFallbackMode.value = false;
 
-  update(content);
+          failedSaveToast.remove();
+          failedSaveToast = undefined;
+
+          clearInterval(retryInterval);
+          retryInterval = undefined;
+        }
+      })
+      .catch((e) => {
+        sendError(e);
+
+        if (!failedSaveToast) {
+          isFallbackMode.value = true;
+
+          failedSaveToast = createToast(`Fallback mode enabled. Failed to save "${note.name}" note, retrying...`, {
+            type: 'loading',
+            duration: Infinity,
+            priority: 100,
+          });
+
+          retryInterval = setInterval(innerUpdate, parseDuration('2s'), newNote);
+        }
+      });
+  };
+
+  clearInterval(retryInterval);
+  innerUpdate(newNote);
 }
 
 async function handleError(error: Error) {
@@ -118,7 +144,6 @@ async function handleError(error: Error) {
     return;
   }
 
-  // last chance to show user folder, if iterator in @[user].vue page hasn't yet set the foldersCache
   const offlineNote = await offlineStorage.getItem(notePath.value);
 
   if (!offlineNote || typeof offlineNote !== 'object') {
@@ -155,11 +180,14 @@ if (import.meta.client) {
     offPageShow();
     offVisibility();
     clearTimeout(pollingTimer);
+    clearInterval(retryInterval);
     abortControllerGet?.abort();
     loadingToast?.remove();
+    failedSaveToast?.remove();
 
     abortControllerGet = undefined;
     loadingToast = undefined;
+    failedSaveToast = undefined;
   });
 }
 </script>
@@ -174,7 +202,7 @@ if (import.meta.client) {
       class="workspace__note-editor"
       :content="note.content || ''"
       :editable="!isFallbackMode && !!note"
-      @update="updateNote"
+      @update="throttledNoteUpdate"
     />
 
     <WorkspaceNoteEditorSkeleton

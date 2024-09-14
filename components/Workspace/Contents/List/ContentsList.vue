@@ -109,7 +109,6 @@ async function handleError(error: Error) {
     return;
   }
 
-  // last chance to show user folder, if iterator in @[user].vue page hasn't yet set the foldersCache
   const offlineFolder = await offlineStorage.getItem(folderPath.value);
 
   if (!offlineFolder || typeof offlineFolder !== 'object') {

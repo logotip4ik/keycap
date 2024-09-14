@@ -11,7 +11,7 @@ import '~/assets/styles/note-editor.scss';
 const props = defineProps<{
   content: string
   editable: boolean
-  onUpdate: (content: string, force?: boolean) => void
+  onUpdate: (content: string) => void
 }>();
 
 const { shortcuts } = useAppConfig();
@@ -24,10 +24,10 @@ const {
   onUpdate: onContentUpdate,
 } = useTiptap();
 
-function updateContent(force?: boolean) {
+function updateContent() {
   const content = editor.value?.getHTML();
 
-  props.onUpdate(content || '', force);
+  props.onUpdate(content || '');
 }
 
 watch(() => props.content, (content) => {

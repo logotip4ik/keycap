@@ -265,7 +265,7 @@ export async function preloadItem(self: FolderOrNote) {
   const pathName = encodeURIComponent(self.name);
   const path = pathPrefix + currentFolderPath + pathName;
 
-  const res = await $fetch<{ data: FolderWithContents | NoteMinimal }>(`/api/${path}`);
+  const res = await $fetch<{ data: FolderWithContents | NoteWithContent }>(`/api/${path}`);
 
   if (!res) {
     return;
@@ -276,8 +276,13 @@ export async function preloadItem(self: FolderOrNote) {
   const foldersCache = useFoldersCache();
 
   const item = res.data;
-  const cache = isFolder ? foldersCache : notesCache;
 
-  cache.set(item.path, item);
+  if (checkIsFolder(item)) {
+    foldersCache.set(item.path, item);
+  }
+  else {
+    notesCache.set(item.path, item);
+  }
+
   offlineStorage.setItem(item.path, item);
 }
