@@ -1,9 +1,12 @@
 <script setup lang="ts">
-const props = defineProps<{ item: NoteMinimal | FolderMinimal }>();
+const props = defineProps<{
+  item: NoteMinimal | FolderMinimal
+}>();
 
 const currentItemForDetails = useCurrentItemForDetails();
 const createToast = useToaster();
 
+const details = shallowRef<ItemDetails>();
 const isLoadingItemDetails = ref(false);
 const itemDetailsComp = shallowRef<ComponentPublicInstance | null>(null);
 const itemDetailsEl = computed(() => itemDetailsComp.value?.$el as HTMLElement | undefined);
@@ -15,41 +18,46 @@ type ItemDetails = Prettify<ItemMetadata & {
   share?: { link: string }
 }>;
 
-// NOTE(perf improvement): client bundle size reduced by using only useAsyncData or useFetch
-const { data: details, refresh } = useAsyncData(async () => {
-  const res = await $fetch<{ data: ItemDetails }>(
-    isFolder ? `/api/folder/${path}` : `/api/note/${path}`,
-    { query: { details: true } },
-  );
-
-  return res.data;
-}, {
-  lazy: true,
-  server: false,
-  immediate: false,
-});
-
 const rowsData = [
   { title: 'Last update', value: computed(() => formatDate(details.value?.updatedAt)) },
   { title: 'Created at', value: computed(() => formatDate(details.value?.createdAt)) },
 ];
 
+async function fetchDetails() {
+  const res = await $fetch<{ data: ItemDetails }>(
+    isFolder ? `/api/folder/${path}` : `/api/note/${path}`,
+    { query: { details: true } },
+  ).catch((error) => {
+    sendError(error);
+  });
+
+  if (res) {
+    details.value = res.data;
+  }
+  else {
+    unsetCurrentDetailsItem();
+    createToast(`Failed to fetch details for "${props.item.name}". Please try again later...`);
+  }
+}
+
 function unsetCurrentDetailsItem() {
-  details.value = undefined; // clearing details from prev request
+  // immediate unset of details will cause issues with transition
+  // details.value = undefined;
+
   currentItemForDetails.value = undefined;
 }
 
 let prevPopupHeight: number | undefined;
 function rememberHeight() {
-  prevPopupHeight = itemDetailsEl.value!.clientHeight;
+  prevPopupHeight = itemDetailsEl.value?.clientHeight;
 }
 
 function transitionHeight(_el: Element, done: () => void) {
-  const newHeight = itemDetailsEl.value!.clientHeight;
-
   if (!prevPopupHeight) {
     return;
   }
+
+  const newHeight = itemDetailsEl.value!.clientHeight;
 
   const heightDifference = Math.abs(prevPopupHeight - newHeight);
 
@@ -107,7 +115,7 @@ function toggleShareLink(isCreateRequest: boolean) {
   $fetch(`/api/share/note/${path}`, {
     method: isCreateRequest ? 'POST' : 'DELETE',
   })
-    .then(() => refresh())
+    .then(() => fetchDetails())
     .finally(() => isLoadingItemDetails.value = false);
 }
 
@@ -115,7 +123,7 @@ useFocusTrap(itemDetailsEl, { handleInitialFocusing: true });
 useTinykeys({ Escape: unsetCurrentDetailsItem });
 useClickOutside(itemDetailsEl, unsetCurrentDetailsItem);
 
-onBeforeMount(() => refresh());
+onBeforeMount(() => fetchDetails());
 </script>
 
 <template>
