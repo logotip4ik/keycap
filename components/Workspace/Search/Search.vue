@@ -4,6 +4,7 @@ const props = defineProps<{
 }>();
 
 const fuzzyWorker = useFuzzyWorker();
+const user = useUser();
 
 const results = shallowRef<Array<FuzzyItem | CommandItem>>([]);
 const resultsState = ref<'idle' | 'empty'>('idle');
@@ -50,7 +51,11 @@ async function openItem() {
   if ('key' in result) {
     const action = commandActions[result.key];
 
-    action?.();
+    const search = searchInput.value;
+    const whitespaceIdx = search.indexOf(' ');
+    const arg = whitespaceIdx === -1 ? undefined : search.substring(whitespaceIdx + 1);
+
+    action?.(arg);
   }
   else {
     await navigateTo(
@@ -65,6 +70,27 @@ function changeSelectedResult(difference: number) {
   const newSelectedResult = (selected.value + difference) % results.value.length;
 
   selected.value = newSelectedResult < 0 ? results.value.length - 1 : newSelectedResult;
+}
+
+function fillResult() {
+  const result = selectedResult.value;
+
+  if (!result) {
+    return;
+  }
+
+  if ('key' in result) {
+    searchInput.value = `/${result.name} `;
+  }
+  else {
+    const itemPath = generateSearchRelativeItemPath(result.path, user.value!.username);
+    if (itemPath) {
+      searchInput.value = `${itemPath}/${result.name}`;
+    }
+    else {
+      searchInput.value = result.name;
+    }
+  }
 }
 
 watch(searchInput, debounce(handleSearchInput, 100));
@@ -90,6 +116,7 @@ useTinykeys({
           @keydown.enter.prevent="openItem"
           @keydown.up.prevent="changeSelectedResult(-1)"
           @keydown.down.prevent="changeSelectedResult(+1)"
+          @keydown.tab.prevent="fillResult"
         />
 
         <p v-show="selectedResult" class="search__form__typeahead">

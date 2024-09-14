@@ -9,13 +9,10 @@ const isCommand = 'key' in props.item;
 let itemHref: string, itemPath: string;
 
 if (!isCommand) {
-  itemHref = generateItemPath(props.item);
-
   const user = useUser();
-  const pathWithoutWorkspacePrefix = props.item.path.substring(1 + user.value!.username.length + 1);
 
-  const lastSlashIdx = pathWithoutWorkspacePrefix.lastIndexOf('/');
-  itemPath = decodeURIComponent(pathWithoutWorkspacePrefix.substring(0, lastSlashIdx));
+  itemHref = generateItemPath(props.item);
+  itemPath = generateSearchRelativeItemPath(props.item.path, user.value!.username);
 }
 
 async function handleActionClick() {
@@ -35,7 +32,7 @@ async function handleActionClick() {
     <LazyIconRoundKeyboardReturn v-once class="search-item__enter-icon" />
   </button>
 
-  <NuxtLink v-else :href="itemHref" class="search-item" :data-selected="selected" :data-name="item.name">
+  <NuxtLink v-else :href="itemHref" class="search-item" :data-selected="selected">
     <span v-if="itemPath !== ''" class="search-item__path">{{ itemPath }}/</span>
     <span class="search-item__name">{{ item.name }}</span>
     <LazyIconRoundKeyboardReturn v-once class="search-item__enter-icon" />
