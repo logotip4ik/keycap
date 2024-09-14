@@ -1,6 +1,6 @@
 import { defineNuxtModule, useLogger } from '@nuxt/kit';
-import { execa } from 'execa';
 import colors from 'picocolors';
+import { exec } from 'tinyexec';
 
 import { version } from '../package.json';
 import { createKey, KeyPrefix } from '../utils/keys';
@@ -40,7 +40,7 @@ async function getCommitSha(): Promise<string> {
     return SOURCE_COMMIT.substring(0, 8);
   }
 
-  const { stdout } = await execa('git', ['rev-parse', '--short', 'HEAD']);
+  const { stdout } = await exec('git', ['rev-parse', '--short', 'HEAD']);
 
   return stdout;
 }
