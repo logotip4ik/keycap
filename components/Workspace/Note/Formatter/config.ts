@@ -1,3 +1,5 @@
+import type { Editor } from '@tiptap/core';
+
 import {
   LazyIconBaselineCode,
   LazyIconBaselineFormatBold,
@@ -5,8 +7,6 @@ import {
   LazyIconHighlighter,
   LazyIconStrikeThrough,
 } from '#components';
-
-import type { Editor } from '@tiptap/core';
 
 export const LinkInputPlaceholder = {
   INITIALLY_EMPTY: 'hit enter to show menu',

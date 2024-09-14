@@ -1,13 +1,13 @@
+import type { SimpleCallExpression } from 'estree';
 import { pathToFileURL } from 'node:url';
+
 import { createContext, runInContext } from 'node:vm';
 
 import { walk } from 'estree-walker';
-
 import MagicString from 'magic-string';
 import parseDuration from 'parse-duration';
 import { parseQuery, parseURL } from 'ufo';
 import { createUnplugin } from 'unplugin';
-import type { SimpleCallExpression } from 'estree';
 
 export const parseDurationFunctionName = 'parseDuration';
 const parseDurationFunctionCall = /parseDuration\(/;

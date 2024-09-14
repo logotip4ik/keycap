@@ -1,5 +1,5 @@
-import { customAlphabet } from 'nanoid';
 import type { ValueOf } from 'type-fest';
+import { customAlphabet } from 'nanoid';
 
 export const nanoid = customAlphabet('123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz', 24);
 export const KeyPrefix = {

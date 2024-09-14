@@ -1,10 +1,10 @@
+import type { ManifestEntry } from 'workbox-build';
+import type { StrategyHandler } from 'workbox-strategies';
 import { get, set } from 'idb-keyval';
 import { cacheNames, clientsClaim } from 'workbox-core';
 import { cleanupOutdatedCaches } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { NetworkFirst, Strategy } from 'workbox-strategies';
-import type { ManifestEntry } from 'workbox-build';
-import type { StrategyHandler } from 'workbox-strategies';
 
 // Give TypeScript the correct global.
 declare let self: ServiceWorkerGlobalScope;

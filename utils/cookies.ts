@@ -1,7 +1,7 @@
-import { serialize } from 'cookie-es';
-import { getCookie, setCookie } from 'h3';
-
 import type { CookieSerializeOptions } from 'cookie-es';
+import { serialize } from 'cookie-es';
+
+import { getCookie, setCookie } from 'h3';
 
 /**
  * gets a cookie universally (nuxt side) on server and client

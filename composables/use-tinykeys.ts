@@ -1,6 +1,6 @@
-import { tinykeys } from 'tinykeys';
-
 import type { KeyBindingMap, KeyBindingOptions } from 'tinykeys';
+
+import { tinykeys } from 'tinykeys';
 
 export function useTinykeys(shortcuts: KeyBindingMap, options?: KeyBindingOptions) {
   if (import.meta.server) {

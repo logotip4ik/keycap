@@ -1,6 +1,6 @@
-import postgres from 'postgres';
-
 import type { Static } from '@sinclair/typebox';
+
+import postgres from 'postgres';
 
 interface NoteUpdateFields extends Static<typeof noteUpdateSchema> {
   path?: string

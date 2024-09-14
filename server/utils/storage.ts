@@ -1,7 +1,7 @@
-import { defu } from 'defu';
-import { prefixStorage } from 'unstorage';
-
 import type { CacheEntry } from 'nitropack';
+import { defu } from 'defu';
+
+import { prefixStorage } from 'unstorage';
 
 export const registerStorage = prefixStorage<{ email: string }>(
   useStorage(),

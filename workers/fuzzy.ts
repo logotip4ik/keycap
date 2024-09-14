@@ -1,8 +1,8 @@
+import type { Emoji, EmojiMartData } from '@emoji-mart/data';
 import { commandScore as getScore } from '@superhuman/command-score';
 import coincident from 'coincident';
-import { expose } from 'comlink';
 
-import type { Emoji, EmojiMartData } from '@emoji-mart/data';
+import { expose } from 'comlink';
 
 import { commandActionsMin as commandsCache } from '~/utils/menu';
 import { transliterateFromEnglish, transliterateToEnglish } from '~/utils/transliterate';

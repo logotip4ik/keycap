@@ -1,7 +1,7 @@
-import { jwtVerify, SignJWT } from 'jose';
-
 import type { CookieSerializeOptions } from 'cookie-es';
+
 import type { H3Event } from 'h3';
+import { jwtVerify, SignJWT } from 'jose';
 
 import type { SafeUser } from '~/types/server';
 

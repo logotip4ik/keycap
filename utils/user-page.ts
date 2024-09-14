@@ -1,6 +1,6 @@
-import { wrap as comlink } from 'comlink';
-
 import type { Remote } from 'comlink';
+
+import { wrap as comlink } from 'comlink';
 
 const UPDATE_WORKER_DELAY = parseDuration('1.5s')!;
 const initCallbacks = [

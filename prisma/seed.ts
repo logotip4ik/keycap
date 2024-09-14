@@ -1,9 +1,9 @@
+import type { Prisma } from '@prisma/client';
 /* eslint-disable no-console */
 import { existsSync } from 'node:fs';
 import fsp from 'node:fs/promises';
-import { faker } from '@faker-js/faker';
 
-import type { Prisma } from '@prisma/client';
+import { faker } from '@faker-js/faker';
 
 import { generateFolderPath, generateNotePath, generateRootFolderPath } from '~/server/utils';
 import { hashPassword } from '~/server/utils/passwords';

@@ -1,6 +1,6 @@
-import escapeRE from 'escape-string-regexp';
-
 import type { NavigateToOptions } from '#app/composables/router';
+
+import escapeRE from 'escape-string-regexp';
 
 export function checkIsFolder(item: Record<string, unknown>): item is FolderWithContents {
   return 'root' in item;

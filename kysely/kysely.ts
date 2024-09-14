@@ -1,8 +1,8 @@
+import type { DB } from './db/types';
 import { Kysely } from 'kysely';
 import { PostgresJSDialect } from 'kysely-postgres-js';
-import postgres from 'postgres';
 
-import type { DB } from './db/types';
+import postgres from 'postgres';
 
 export function getKysely() {
   if (!globalThis.__kysely) {

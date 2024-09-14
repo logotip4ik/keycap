@@ -1,6 +1,6 @@
-import proxy from 'unenv/runtime/mock/proxy';
-
 import type { ShallowRef } from 'vue';
+
+import proxy from 'unenv/runtime/mock/proxy';
 
 import type { ToastInstance } from '~/types/toasts';
 

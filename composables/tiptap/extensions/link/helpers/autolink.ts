@@ -1,3 +1,6 @@
+import type { NodeWithPos } from '@tiptap/core';
+import type { MarkType } from '@tiptap/pm/model';
+
 import {
   combineTransactionSteps,
   findChildrenInRange,
@@ -5,9 +8,6 @@ import {
   getMarksBetween,
 } from '@tiptap/core';
 import { Plugin, PluginKey } from '@tiptap/pm/state';
-
-import type { NodeWithPos } from '@tiptap/core';
-import type { MarkType } from '@tiptap/pm/model';
 
 import { find } from './linker';
 

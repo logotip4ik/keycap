@@ -1,10 +1,10 @@
-import { PluginKey } from '@tiptap/pm/state';
-import { Suggestion } from '@tiptap/suggestion';
-import { VueRenderer } from '@tiptap/vue-3';
-
 import type { Emoji } from '@emoji-mart/data';
 import type { Editor } from '@tiptap/core';
 import type { SuggestionOptions } from '@tiptap/suggestion';
+
+import { PluginKey } from '@tiptap/pm/state';
+import { Suggestion } from '@tiptap/suggestion';
+import { VueRenderer } from '@tiptap/vue-3';
 
 import EmojiPicker from './EmojiPicker.vue';
 

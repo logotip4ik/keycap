@@ -1,8 +1,8 @@
+import type { HTTPHeaderName, HTTPMethod } from 'h3';
 import { destr } from 'destr';
 import parseDuration from 'parse-duration';
-import { isCI } from 'std-env';
 
-import type { HTTPHeaderName, HTTPMethod } from 'h3';
+import { isCI } from 'std-env';
 
 const turnstileEnabled = destr(process.env.FEATURE_TURNSTILE) === true;
 

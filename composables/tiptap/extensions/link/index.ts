@@ -1,7 +1,7 @@
-import { Mark, mergeAttributes, PasteRule } from '@tiptap/core';
-
 import type { PasteRuleMatch } from '@tiptap/core';
+
 import type { MarkType } from '@tiptap/pm/model';
+import { Mark, mergeAttributes, PasteRule } from '@tiptap/core';
 
 import { autolink } from './helpers/autolink';
 import { clickHandler } from './helpers/clickHandler';

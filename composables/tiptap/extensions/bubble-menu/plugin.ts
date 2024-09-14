@@ -1,15 +1,15 @@
+import type { ComputePositionConfig } from '@floating-ui/dom';
+import type { Editor } from '@tiptap/core';
+
+import type { EditorState } from '@tiptap/pm/state';
+import type { EditorView } from '@tiptap/pm/view';
 import {
   isNodeSelection,
   isTextSelection,
   posToDOMRect,
 } from '@tiptap/core';
+
 import { Plugin, PluginKey } from '@tiptap/pm/state';
-
-import type { ComputePositionConfig } from '@floating-ui/dom';
-import type { Editor } from '@tiptap/core';
-import type { EditorState } from '@tiptap/pm/state';
-
-import type { EditorView } from '@tiptap/pm/view';
 
 export interface BubbleMenuPluginProps {
   pluginKey: string
