@@ -16,8 +16,13 @@ interface LRU<T> {
   clear: () => void
 }
 
-export function useCurrentItemForDetails() {
-  return useState<FolderWithContents | NoteWithContent | undefined>(() => undefined);
+const detailsItem = import.meta.server ? proxy : /* #__PURE__ */ shallowRef();
+export function useCurrentItemForDetails(): ShallowRef<FolderMinimal | NoteMinimal | undefined> {
+  if (import.meta.server) {
+    return shallowRef();
+  }
+
+  return detailsItem;
 }
 
 export function useUser() {
@@ -34,7 +39,7 @@ export function useFoldersCache(): LRU<FolderWithContents> {
   return foldersCache;
 }
 
-const fuzzyWorker = import.meta.server ? proxy : /* #__PURE__ */ shallowRef<Prettify<Remote<FuzzyWorker>> | undefined>();
+const fuzzyWorker = import.meta.server ? proxy : /* #__PURE__ */ shallowRef();
 export function useFuzzyWorker(): ShallowRef<Prettify<Remote<FuzzyWorker>> | undefined> {
   return fuzzyWorker;
 }
