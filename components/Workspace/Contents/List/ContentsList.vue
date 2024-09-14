@@ -26,6 +26,10 @@ let abortControllerGet: AbortController | undefined;
 let lastRefetch: number | undefined;
 
 const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefined>('folder', async () => {
+  if (import.meta.server) {
+    return;
+  }
+
   clearTimeout(pollingTimer);
 
   abortControllerGet?.abort();
@@ -148,6 +152,7 @@ function handleArrowsPress(event: KeyboardEvent) {
   const elementToFocus = listElement.children[loopedNewSelectedResult].firstElementChild as HTMLElement | undefined;
 
   elementToFocus?.focus();
+  event.preventDefault();
 }
 
 watch(contentsState, (state, oldState) => {
@@ -233,7 +238,7 @@ if (import.meta.client) {
       tabindex="-1"
       @contextmenu.self.prevent
       @click.self="menuOptions.target = undefined"
-      @keydown.capture.passive="handleArrowsPress"
+      @keydown.capture="handleArrowsPress"
     >
       <template v-for="item in folderContents" :key="item.path">
         <WithFadeTransition>
