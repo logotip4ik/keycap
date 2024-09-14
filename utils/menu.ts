@@ -1,3 +1,5 @@
+import type { Promisable } from 'type-fest';
+
 import { SearchAction } from '~/types/common';
 
 import type { SearchActionValues } from '~/types/common';
@@ -5,29 +7,24 @@ import type { SearchActionValues } from '~/types/common';
 interface Command {
   key: SearchActionValues
   name: string
-  handler: (arg?: string) => void
+  handler: (arg?: string) => Promisable<void>
 }
 
 export const commandActions: Record<Command['key'], Command['handler']> = {
   [SearchAction.New]: (arg) => {
     const { state } = useContentsSidebar();
-    const folder = useNuxtApp()._asyncData.folder;
-
-    if (!folder) {
-      return;
-    }
-
-    const folderData = folder.data as Ref<FolderWithContents>;
-
-    if (!folderData.value) {
-      return;
-    }
-
-    preCreateItem(folderData.value, arg ? { name: arg } : undefined);
+    const { data: folder } = useNuxtData('folder');
 
     if (state.value === 'hidden') {
       state.value = 'visible';
     }
+
+    const stop = watch(() => folder.value, (folder) => {
+      if (folder) {
+        preCreateItem(folder, arg ? { name: arg } : undefined);
+        stop();
+      }
+    });
   },
   [SearchAction.Refresh]: () => {
     refreshNuxtData(['note', 'folder']);
@@ -60,6 +57,11 @@ export const commandActions: Record<Command['key'], Command['handler']> = {
   [SearchAction.Shortcuts]: () => {
     useMitt().emit('shortcuts:show');
   },
+  [SearchAction.Workspace]: async () => {
+    const user = useUser();
+
+    await navigateTo(`/@${user.value?.username}`);
+  },
 };
 
 export const commandActionsMin: Map<Command['key'], Pick<Command, 'key' | 'name'>> = new Map([
@@ -70,6 +72,7 @@ export const commandActionsMin: Map<Command['key'], Pick<Command, 'key' | 'name'
   [SearchAction.SaveNote, { name: 'save-note', key: SearchAction.SaveNote }],
   [SearchAction.Details, { name: 'details', key: SearchAction.Details }],
   [SearchAction.Shortcuts, { name: 'shortcuts', key: SearchAction.Shortcuts }],
+  [SearchAction.Workspace, { name: 'workspace', key: SearchAction.Workspace }],
 ]);
 
 export function generateSearchRelativeItemPath(path: string, username: string) {

@@ -55,7 +55,7 @@ async function openItem() {
     const whitespaceIdx = search.indexOf(' ');
     const arg = whitespaceIdx === -1 ? undefined : search.substring(whitespaceIdx + 1);
 
-    action?.(arg);
+    await action?.(arg);
   }
   else {
     await navigateTo(

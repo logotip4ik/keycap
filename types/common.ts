@@ -6,6 +6,7 @@ export const SearchAction = {
   SaveNote: 5,
   Details: 6,
   Shortcuts: 7,
+  Workspace: 8,
 } as const;
 
 export type SearchActionKeys = keyof typeof SearchAction;
