@@ -9,8 +9,10 @@ const shortcutsDescription = {
   toolbox: 'Open toolbox sidebar',
 } satisfies Record<keyof typeof shortcuts, string>;
 
+const modRE = /\$mod/g;
+const keyRE = /Key/g;
 function humanizeShortcut(shortcut: string) {
-  return shortcut.replace(/\$mod/g, useModKey()).replace(/Key/g, '');
+  return shortcut.replace(modRE, useModKey()).replace(keyRE, '');
 }
 </script>
 
