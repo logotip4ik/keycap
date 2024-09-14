@@ -151,7 +151,6 @@ async function handleError(error: Error) {
 
 mitt.on('details:show', () => {
   if (note.value) {
-    // @ts-expect-error it will be okeeeeeey
     currentItemForDetails.value = note.value;
   }
 });

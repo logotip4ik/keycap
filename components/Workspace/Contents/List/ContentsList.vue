@@ -3,6 +3,8 @@ import { useContentsState } from '../config';
 
 const route = useRoute();
 const isFallbackMode = useFallbackMode();
+const mitt = useMitt();
+const detailsItem = useCurrentItemForDetails();
 const foldersCache = useFoldersCache();
 const offlineStorage = useOfflineStorage();
 const createToast = useToaster();
@@ -159,12 +161,13 @@ watch(contentsState, (state, oldState) => {
 }, { immediate: import.meta.client });
 
 // TODO: rework details trigger ?
-// mitt.on('details:show', () => {
-//   // const noNote = !route.params.note || route.params.note === BLANK_NOTE_NAME;
+mitt.on('details:show', () => {
+  const noNote = !route.params.note || route.params.note === BLANK_NOTE_NAME;
 
-//   // if (folder.value && noNote)
-//   // detailsItem.value = { };
-// });
+  if (folder.value && noNote) {
+    detailsItem.value = folder.value;
+  }
+});
 
 useTinykeys({
   [shortcuts.new]: async (event) => {

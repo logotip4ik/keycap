@@ -17,7 +17,7 @@ interface LRU<T> {
 }
 
 export function useCurrentItemForDetails() {
-  return useState<FolderOrNote | undefined>(() => undefined);
+  return useState<FolderWithContents | NoteWithContent | undefined>(() => undefined);
 }
 
 export function useUser() {
