@@ -63,7 +63,7 @@ onMounted(() => {
         <span v-html="message" />
       </FormTitle>
 
-      <FormItem class="error-page__form__actions" actions>
+      <FormItem actions>
         <FormButton>
           Try to fix everything
         </FormButton>

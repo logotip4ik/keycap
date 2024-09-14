@@ -43,7 +43,6 @@ export default defineNuxtConfig({
   },
 
   experimental: {
-    buildCache: true,
     watcher: 'parcel',
     headNext: true,
     componentIslands: 'local',
@@ -65,7 +64,7 @@ export default defineNuxtConfig({
 
   features: {
     inlineStyles: (id) => {
-      if (!id || nodeModulesRE.test(id)) {
+      if (!id) {
         return false;
       }
 
@@ -228,7 +227,7 @@ export default defineNuxtConfig({
   },
 
   hooks: {
-    'nitro:init': function (nitro) {
+    'nitro:init': (nitro) => {
       nitro.options.devStorage.root.ignore.push(
         '**/data/**',
         '**/.nuxt/**',
@@ -577,4 +576,5 @@ export default defineNuxtConfig({
       },
     },
   },
+
 });
