@@ -42,7 +42,10 @@ export const commandActions: Record<Command['key'], Command['handler']> = {
     useMitt().emit('save:note');
   },
   [SearchAction.Details]: () => {
-    useMitt().emit('details:show');
+    const route = useRoute();
+    const noNote = !route.params.note || route.params.note === BLANK_NOTE_NAME;
+
+    useMitt().emit(`details:show:${noNote ? 'folder' : 'note'}`);
   },
 };
 

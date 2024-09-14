@@ -165,11 +165,18 @@ watch(contentsState, (state, oldState) => {
   }
 }, { immediate: import.meta.client });
 
-// TODO: rework details trigger ?
-mitt.on('details:show', () => {
-  const noNote = !route.params.note || route.params.note === BLANK_NOTE_NAME;
+mitt.on('details:show:folder', () => {
+  if (!folder.value) {
+    const stop = watch(() => folder.value, (folder) => {
+      if (folder) {
+        detailsItem.value = folder;
+        stop();
+      }
+    });
 
-  if (folder.value && noNote) {
+    refresh();
+  }
+  else {
     detailsItem.value = folder.value;
   }
 });

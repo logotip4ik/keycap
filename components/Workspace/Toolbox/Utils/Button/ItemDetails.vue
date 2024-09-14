@@ -1,9 +1,10 @@
 <script setup lang="ts">
-const mitt = useMitt();
-const detailsItem = useCurrentItemForDetails()!;
+import { SearchAction } from '~/types/common';
+
+const detailsItem = useCurrentItemForDetails();
 
 function openDetails() {
-  mitt.emit('details:show');
+  commandActions[SearchAction.Details]();
 }
 </script>
 
