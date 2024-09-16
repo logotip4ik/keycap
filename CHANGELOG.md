@@ -1,6 +1,48 @@
 # Changelog
 
 
+## v3.14.1
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.14.0...v3.14.1)
+
+### 🩹 Fixes
+
+- Kinda broken transition and remove asyncData call ([ea43b146](https://github.com/logotip4ik/keycap/commit/ea43b146))
+
+### 💅 Refactors
+
+- Imporve error handling while saving note ([101d9173](https://github.com/logotip4ik/keycap/commit/101d9173))
+- Don't use asyncData for note route ([b2a4d9ba](https://github.com/logotip4ik/keycap/commit/b2a4d9ba))
+- Improve current details item type ([077c5075](https://github.com/logotip4ik/keycap/commit/077c5075))
+- Emit different events for showing note or folder ([bb89e68c](https://github.com/logotip4ik/keycap/commit/bb89e68c))
+- Allow "tabing" selected result and pass missing args to command actions ([827a5bed](https://github.com/logotip4ik/keycap/commit/827a5bed))
+- Move shortcuts into separate modal ([eb5d55ea](https://github.com/logotip4ik/keycap/commit/eb5d55ea))
+- Add workspace command and await actions ([1a7693c2](https://github.com/logotip4ik/keycap/commit/1a7693c2))
+
+### 🏡 Chore
+
+- **release:** V3.14.0 ([61870e80](https://github.com/logotip4ik/keycap/commit/61870e80))
+- Run app as node user ([bd6d20f2](https://github.com/logotip4ik/keycap/commit/bd6d20f2))
+- Move teleport out of toasts wrapper ([9e719205](https://github.com/logotip4ik/keycap/commit/9e719205))
+- Make server auth plugin sync ([e0fe3768](https://github.com/logotip4ik/keycap/commit/e0fe3768))
+- Update lock file to fix styles remount ([9dd7adcb](https://github.com/logotip4ik/keycap/commit/9dd7adcb))
+- Update deps ([d92720a2](https://github.com/logotip4ik/keycap/commit/d92720a2))
+- Allow robots ([535cbb5f](https://github.com/logotip4ik/keycap/commit/535cbb5f))
+- Improve hover and focus styles for buttons ([b89de455](https://github.com/logotip4ik/keycap/commit/b89de455))
+- Add gitattributes file ([d0ccee09](https://github.com/logotip4ik/keycap/commit/d0ccee09))
+- Move deps and dev deps ([4b69a11f](https://github.com/logotip4ik/keycap/commit/4b69a11f))
+- Use tinyexec instead of execa ([4334ecba](https://github.com/logotip4ik/keycap/commit/4334ecba))
+- Install only one version of type-fest ([f87c64de](https://github.com/logotip4ik/keycap/commit/f87c64de))
+- Make lru cache typed ([2caa5ca5](https://github.com/logotip4ik/keycap/commit/2caa5ca5))
+- Use server boudary to remove code ([ce0ef551](https://github.com/logotip4ik/keycap/commit/ce0ef551))
+- Don't use useState where it's not needed ([52901701](https://github.com/logotip4ik/keycap/commit/52901701))
+- Export regular expressions ([bbf07c06](https://github.com/logotip4ik/keycap/commit/bbf07c06))
+- Inline entry styles ([7e1e9cb6](https://github.com/logotip4ik/keycap/commit/7e1e9cb6))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.14.0
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.13.2...v3.14.0)
