@@ -27,7 +27,7 @@ func (h *Hub) Run() {
   for {
     select {
     case client := <- h.register:
-      h.rooms[client.user.id] = append(h.GetUserRooms(client.user), client)
+      h.rooms[client.user.id] = append(h.rooms[client.user.id], client)
 
     case client := <- h.unregister:
       if clients, ok := h.rooms[client.user.id]; ok {
@@ -43,8 +43,4 @@ func (h *Hub) Run() {
       }
     }
   }
-}
-
-func (h *Hub) GetUserRooms(user *User) []*Client {
-  return h.rooms[user.id]
 }

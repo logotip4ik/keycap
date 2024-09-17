@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/gorilla/websocket"
+	"keycapthenotes.com/zeenk/utils"
 )
 
 const (
@@ -31,6 +32,8 @@ var (
     WriteBufferSize: 5120,
     CheckOrigin: checkOrigin,
   }
+
+  prodHost = "https://" + utils.GetEnv("SITE", "")
 )
 
 type User struct {
@@ -86,7 +89,7 @@ func (c *Client) readPump() {
         break
       }
 
-      clients := c.hub.GetUserRooms(c.user)
+      clients := c.getRoom()
 
       for _, client := range clients {
         if client != c {
@@ -95,6 +98,10 @@ func (c *Client) readPump() {
       }
     }
   }
+}
+
+func (c *Client) getRoom() []*Client {
+  return c.hub.rooms[c.user.id]
 }
 
 func (c *Client) writePump() {
@@ -192,6 +199,8 @@ func checkOrigin(r *http.Request) bool {
   origin := r.Header.Get("Origin")
 
   switch origin {
+  case prodHost:
+          return true
   case "http://localhost:3000":
           return true
   default:
