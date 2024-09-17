@@ -10,9 +10,7 @@ type Folder = Selectable<_Folder>;
 type Share = Selectable<_Share>;
 
 declare global {
-  type Prettify<T> = {
-    [K in keyof T]: T[K];
-  } & unknown;
+  type Prettify<T> = Omit<T, never>;
 
   export interface ItemMetatags {
     state?: ItemStateValues
@@ -32,7 +30,7 @@ declare global {
   };
   export type FolderWithContents = Prettify<FolderMinimal & FolderContents>;
 
-  export type FolderOrNote = Prettify<FolderMinimal & NoteMinimal>;
+  export type FolderOrNote = FolderMinimal & NoteMinimal;
 
   export type SharedNote = Pick<Note, 'name' | 'content' | 'updatedAt' | 'createdAt'>;
 
