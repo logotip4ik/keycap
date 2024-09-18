@@ -3,12 +3,14 @@ import {
   LazyWorkspaceNoteFormatterBubbleBox as LazyBubbleBox,
   LazyWorkspaceNoteFormatterFixedBox as LazyFixedBox,
 } from '#components';
+import { Step } from '@tiptap/pm/transform';
 
 import { EditorContent } from '@tiptap/vue-3';
 
 import '~/assets/styles/note-editor.scss';
 
 const props = defineProps<{
+  notePath: string
   content: string
   editable: boolean
   onUpdate: (content: string) => void
@@ -16,6 +18,7 @@ const props = defineProps<{
 
 const { shortcuts } = useAppConfig();
 const mitt = useMitt();
+const zeenk = useZeenk();
 const { isSmallScreen } = useDevice();
 const { setting: spellcheck } = useSetting(settings.spellcheck);
 const {
@@ -58,8 +61,36 @@ watch(() => spellcheck.value, (spellcheck) => {
 });
 
 mitt.on('save:note', () => updateContent());
+zeenk.on('update-note', ({ path, steps }) => {
+  if (props.notePath === path) {
+    if (!editor.value) {
+      return;
+    }
 
-onContentUpdate(() => updateContent());
+    const tr = editor.value.state.tr;
+    tr.setMeta('websocket', true);
+
+    for (const step of steps) {
+      tr.step(
+        Step.fromJSON(editor.value.state.schema, step),
+      );
+    }
+
+    editor.value.view.dispatch(tr);
+  }
+});
+
+onContentUpdate(({ transaction }) => {
+  if (transaction.getMeta('websocket') === true) {
+    return;
+  }
+
+  updateContent();
+  zeenk.send('update-note', {
+    path: props.notePath,
+    steps: transaction.steps.map((s) => s.toJSON()),
+  });
+});
 
 useTinykeys({
   [shortcuts.edit]: (event) => {
