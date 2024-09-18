@@ -27,7 +27,7 @@ func (h *Hub) Run() {
   for {
     select {
     case client := <- h.register:
-      h.rooms[client.user.id] = append(h.rooms[client.user.id], client)
+      h.rooms[client.user.id] = append(client.getRoom(), client)
 
     case client := <- h.unregister:
       if clients, ok := h.rooms[client.user.id]; ok {

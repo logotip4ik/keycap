@@ -19,7 +19,7 @@ const (
 
   pingPeriod = (pongWait * 9) / 10
 
-  maxMessageSize = 5120
+  maxMessageSize = 2048
 )
 
 var (
@@ -28,9 +28,10 @@ var (
   space = []byte{' '}
 
   upgrader = websocket.Upgrader{
-    ReadBufferSize:  5120,
-    WriteBufferSize: 5120,
+    ReadBufferSize: maxMessageSize,
+    WriteBufferSize: maxMessageSize,
     CheckOrigin: checkOrigin,
+    EnableCompression: true,
   }
 
   prodHost = "https://" + utils.GetEnv("SITE", "")
