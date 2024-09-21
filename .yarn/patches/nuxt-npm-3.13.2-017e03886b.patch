@@ -1,5 +1,5 @@
 diff --git a/dist/app/components/nuxt-island.js b/dist/app/components/nuxt-island.js
-index 5449cc44dca6006bef7805cac2600e295fec0731..c1095489368d7f06f3e12dacd2e590108d42351f 100644
+index aecb2c72b46aefc81920f1b0ea0871937d8cc3a8..75516f063956dec66e7d43115945f6faa73227bb 100644
 --- a/dist/app/components/nuxt-island.js
 +++ b/dist/app/components/nuxt-island.js
 @@ -1,6 +1,5 @@
@@ -9,7 +9,7 @@ index 5449cc44dca6006bef7805cac2600e295fec0731..c1095489368d7f06f3e12dacd2e59010
  import { appendResponseHeader } from "h3";
  import { injectHead } from "@unhead/vue";
  import { randomUUID } from "uncrypto";
-@@ -34,6 +33,67 @@ async function loadComponents(source = appBaseURL, paths) {
+@@ -34,6 +33,68 @@ async function loadComponents(source = appBaseURL, paths) {
    }
    await Promise.all(promises);
  }
@@ -74,14 +74,15 @@ index 5449cc44dca6006bef7805cac2600e295fec0731..c1095489368d7f06f3e12dacd2e59010
 +  return hashString(stableHash(arg));
 +}
 +
++
  export default defineComponent({
    name: "NuxtIsland",
-   props: {
+   inheritAttrs: false,
 diff --git a/dist/index.mjs b/dist/index.mjs
-index 1275a0e7e6ae17c3f88cf6a20003ba3c19e58ef0..81e68f62b4ea7a21f1e402e7add945393d473dcd 100644
+index 9fe137cf72916a0ceb3edbae12c9deacd960faed..fc0051a16fdda03d417d9fa6032842b6df886a30 100644
 --- a/dist/index.mjs
 +++ b/dist/index.mjs
-@@ -2919,19 +2919,6 @@ function addDeclarationTemplates(ctx, options) {
+@@ -2932,19 +2932,6 @@ function addDeclarationTemplates(ctx, options) {
          return;
        }
        let path = resolveAlias(from);

@@ -1,10 +1,10 @@
 diff --git a/dist/index.cjs b/dist/index.cjs
-index 957f51d1a3a1398f4770bb157b34b08ddfe9fc25..acf75deb10127dd2878609bed651f036ae1790f3 100644
+index b121b4476da0a15111d5df9eb33eb5dd17e47787..fc5ebb80b6efd099602d956a1d2f6cfee1ffc14c 100644
 --- a/dist/index.cjs
 +++ b/dist/index.cjs
-@@ -3885,81 +3885,8 @@ class NodePos {
-     }
- }
+@@ -3934,81 +3934,7 @@ const PastePlugin = (onPaste) => {
+     });
+ };
  
 -const style = `.ProseMirror {
 -  position: relative;
@@ -77,21 +77,21 @@ index 957f51d1a3a1398f4770bb157b34b08ddfe9fc25..acf75deb10127dd2878609bed651f036
 -.ProseMirror-focused .ProseMirror-gapcursor {
 -  display: block;
 -}
- 
+-
 -.tippy-box[data-animation=fade][data-state=hidden] {
 -  opacity: 0
 -}`;
-+const style = '.ProseMirror{word-wrap:break-word;white-space:pre-wrap;white-space:break-spaces;-webkit-font-variant-ligatures:none;font-variant-ligatures:none;font-feature-settings:"liga" 0;position:relative}.ProseMirror [contenteditable=false]{white-space:normal}.ProseMirror [contenteditable=false] [contenteditable=true],.ProseMirror pre{white-space:pre-wrap}.ProseMirror-hideselection ::selection{background:0 0}.ProseMirror-hideselection ::selection{background:0 0}.ProseMirror-hideselection *{caret-color:#0000}.ProseMirror-focused .ProseMirror-gapcursor{display:block}';
++const style = '.ProseMirror{word-wrap:break-word;white-space:pre-wrap;white-space:break-spaces;-webkit-font-variant-ligatures:none;font-variant-ligatures:none;font-feature-settings:"liga" 0;position:relative}.ProseMirror [contenteditable=false]{white-space:normal}.ProseMirror [contenteditable=false] [contenteditable=true],.ProseMirror pre{white-space:pre-wrap}img.ProseMirror-separator{border:none!important;width:0!important;height:0!important;margin:0!important;display:inline!important}.ProseMirror-gapcursor{pointer-events:none;margin:0;display:none;position:absolute}.ProseMirror-gapcursor:after{content:"";border-top:1px solid #000;width:20px;animation:1.1s steps(2,start) infinite ProseMirror-cursor-blink;display:block;position:absolute;top:-2px}@keyframes ProseMirror-cursor-blink{to{visibility:hidden}}.ProseMirror-hideselection ::selection{background:0 0}.ProseMirror-hideselection ::selection{background:0 0}.ProseMirror-hideselection *{caret-color:#0000}.ProseMirror-focused .ProseMirror-gapcursor{display:block}.tippy-box[data-animation=fade][data-state=hidden]{opacity:0}';
  
  function createStyleTag(style, nonce, suffix) {
      const tiptapStyleTag = document.querySelector(`style[data-tiptap-style${suffix ? `-${suffix}` : ''}]`);
 diff --git a/dist/index.js b/dist/index.js
-index d4d32d1bd5ee349b0b50a4132480a11646b7edbe..b4e7c02d135ed592d95fa1b8766fd70cb6135470 100644
+index 74a644f4e75a684a06d517a263edbd41261f360c..24394b523227aadd9f0574ff9cf2876ea9d900e2 100644
 --- a/dist/index.js
 +++ b/dist/index.js
-@@ -3883,81 +3883,7 @@ class NodePos {
-     }
- }
+@@ -3932,81 +3932,7 @@ const PastePlugin = (onPaste) => {
+     });
+ };
  
 -const style = `.ProseMirror {
 -  position: relative;
@@ -168,17 +168,17 @@ index d4d32d1bd5ee349b0b50a4132480a11646b7edbe..b4e7c02d135ed592d95fa1b8766fd70c
 -.tippy-box[data-animation=fade][data-state=hidden] {
 -  opacity: 0
 -}`;
-+const style = '.ProseMirror{word-wrap:break-word;white-space:pre-wrap;white-space:break-spaces;-webkit-font-variant-ligatures:none;font-variant-ligatures:none;font-feature-settings:"liga" 0;position:relative}.ProseMirror [contenteditable=false]{white-space:normal}.ProseMirror [contenteditable=false] [contenteditable=true],.ProseMirror pre{white-space:pre-wrap}.ProseMirror-hideselection ::selection{background:0 0}.ProseMirror-hideselection ::selection{background:0 0}.ProseMirror-hideselection *{caret-color:#0000}.ProseMirror-focused .ProseMirror-gapcursor{display:block}';
++const style = '.ProseMirror{word-wrap:break-word;white-space:pre-wrap;white-space:break-spaces;-webkit-font-variant-ligatures:none;font-variant-ligatures:none;font-feature-settings:"liga" 0;position:relative}.ProseMirror [contenteditable=false]{white-space:normal}.ProseMirror [contenteditable=false] [contenteditable=true],.ProseMirror pre{white-space:pre-wrap}img.ProseMirror-separator{border:none!important;width:0!important;height:0!important;margin:0!important;display:inline!important}.ProseMirror-gapcursor{pointer-events:none;margin:0;display:none;position:absolute}.ProseMirror-gapcursor:after{content:"";border-top:1px solid #000;width:20px;animation:1.1s steps(2,start) infinite ProseMirror-cursor-blink;display:block;position:absolute;top:-2px}@keyframes ProseMirror-cursor-blink{to{visibility:hidden}}.ProseMirror-hideselection ::selection{background:0 0}.ProseMirror-hideselection ::selection{background:0 0}.ProseMirror-hideselection *{caret-color:#0000}.ProseMirror-focused .ProseMirror-gapcursor{display:block}.tippy-box[data-animation=fade][data-state=hidden]{opacity:0}';
  
  function createStyleTag(style, nonce, suffix) {
      const tiptapStyleTag = document.querySelector(`style[data-tiptap-style${suffix ? `-${suffix}` : ''}]`);
 diff --git a/dist/index.umd.js b/dist/index.umd.js
-index 43c4ad02cc8e484955064a36d6db618c9309fb79..24bc578dd63a181aca86685ee2006354324d0605 100644
+index 4ad4dec6e52bb08e3febd28794ec10c32357740d..d14c42dd8fba90382215ee41fe09eb48dff2a1be 100644
 --- a/dist/index.umd.js
 +++ b/dist/index.umd.js
-@@ -3881,81 +3881,7 @@
-       }
-   }
+@@ -3930,81 +3930,7 @@
+       });
+   };
  
 -  const style = `.ProseMirror {
 -  position: relative;
@@ -255,7 +255,7 @@ index 43c4ad02cc8e484955064a36d6db618c9309fb79..24bc578dd63a181aca86685ee2006354
 -.tippy-box[data-animation=fade][data-state=hidden] {
 -  opacity: 0
 -}`;
-+const style = '.ProseMirror{word-wrap:break-word;white-space:pre-wrap;white-space:break-spaces;-webkit-font-variant-ligatures:none;font-variant-ligatures:none;font-feature-settings:"liga" 0;position:relative}.ProseMirror [contenteditable=false]{white-space:normal}.ProseMirror [contenteditable=false] [contenteditable=true],.ProseMirror pre{white-space:pre-wrap}.ProseMirror-hideselection ::selection{background:0 0}.ProseMirror-hideselection ::selection{background:0 0}.ProseMirror-hideselection *{caret-color:#0000}.ProseMirror-focused .ProseMirror-gapcursor{display:block}';
++  const style = '.ProseMirror{word-wrap:break-word;white-space:pre-wrap;white-space:break-spaces;-webkit-font-variant-ligatures:none;font-variant-ligatures:none;font-feature-settings:"liga" 0;position:relative}.ProseMirror [contenteditable=false]{white-space:normal}.ProseMirror [contenteditable=false] [contenteditable=true],.ProseMirror pre{white-space:pre-wrap}img.ProseMirror-separator{border:none!important;width:0!important;height:0!important;margin:0!important;display:inline!important}.ProseMirror-gapcursor{pointer-events:none;margin:0;display:none;position:absolute}.ProseMirror-gapcursor:after{content:"";border-top:1px solid #000;width:20px;animation:1.1s steps(2,start) infinite ProseMirror-cursor-blink;display:block;position:absolute;top:-2px}@keyframes ProseMirror-cursor-blink{to{visibility:hidden}}.ProseMirror-hideselection ::selection{background:0 0}.ProseMirror-hideselection ::selection{background:0 0}.ProseMirror-hideselection *{caret-color:#0000}.ProseMirror-focused .ProseMirror-gapcursor{display:block}.tippy-box[data-animation=fade][data-state=hidden]{opacity:0}';
  
    function createStyleTag(style, nonce, suffix) {
        const tiptapStyleTag = document.querySelector(`style[data-tiptap-style${suffix ? `-${suffix}` : ''}]`);
