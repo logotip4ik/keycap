@@ -308,6 +308,7 @@ export default defineNuxtConfig({
       preprocessorMaxWorkers: true,
       preprocessorOptions: {
         scss: {
+          api: 'modern',
           additionalData: [
             Object.entries(breakpoints).map(([key, value]) => `$breakpoint-${key}: ${value}px;`).join('\n'),
             Object.entries(sidebarsBreakpoints).map(([key, value]) => `$sidebar-breakpoint-${key}: ${value}px;`).join('\n'),
