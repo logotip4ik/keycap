@@ -1,4 +1,7 @@
+import type { ShallowReactive } from 'vue';
 import proxy from 'unenv/runtime/mock/proxy';
+
+type WebSocketState = 'connecting' | 'open' | 'closed';
 
 interface Event {
   type: keyof ZeenkEvents
@@ -10,71 +13,115 @@ interface ZeenkEvents {
 };
 
 interface Zeenk {
-  /**
-   * @description compare with WebSocket.OPEN or WebSocket.CLOSED etc.
-   */
-  state: Ref<number>
+  state: ComputedRef<WebSocketState>
 
   send: <T extends keyof ZeenkEvents>(type: T, payload: ZeenkEvents[T]) => void
   on: <T extends keyof ZeenkEvents>(type: T, cb: (payload: ZeenkEvents[T]) => void) => void
 }
+
+let offs: Array<() => void> = [];
+const _buffer: Array<Event> = [];
+let context: ShallowReactive<{
+  ws: WebSocket | undefined
+  state: WebSocketState
+}>;
 
 export function useZeenk(): Zeenk {
   if (import.meta.server) {
     return proxy as Zeenk;
   }
 
-  const { state, ws } = getZeenkWs();
+  const scope = getCurrentScope()!;
 
-  const listeners: Partial<Record<keyof ZeenkEvents, Array<(payload: ZeenkEvents[keyof ZeenkEvents]) => void>>> = {};
-  const _buffer: Array<Event> = [];
+  let listeners: Partial<Record<keyof ZeenkEvents, (payload: ZeenkEvents[keyof ZeenkEvents]) => void>> = {};
 
-  const off = on(ws, 'open', () => {
-    if (_buffer.length > 0) {
-      for (const e of _buffer) {
-        ws.send(JSON.stringify(e));
-      }
+  const init = () => {
+    invokeArrayFns(offs);
 
-      _buffer.length = 0;
-    }
-  }, { once: true });
+    const { zeenkUrl } = useRuntimeConfig().public;
+    const proto = import.meta.prod ? 'wss://' : 'ws://';
 
-  onScopeDispose(() => {
-    off();
+    context = shallowReactive({
+      ws: new WebSocket(proto + zeenkUrl),
+      state: 'connecting',
+    });
 
-    for (const cbs of Object.values(listeners)) {
-      cbs.length = 0;
-    }
-  });
+    offs = [
+      on(context.ws!, 'open', () => {
+        const ws = context.ws!;
+
+        context.state = 'open';
+
+        for (const event of _buffer) {
+          send(ws, event);
+        }
+
+        _buffer.length = 0;
+
+        // this wont work with two components
+        // maybe move this offs to watcher ?
+        scope.run(() => {
+          for (const [type, cb] of Object.entries(listeners)) {
+            onScopeDispose(
+              listen(ws, type as keyof ZeenkEvents, cb),
+            );
+          }
+
+          listeners = {};
+        });
+      }, { once: true }),
+
+      on(context.ws!, 'close', () => {
+        // TODO: reconnect
+      }, { once: true }),
+    ];
+  };
+
+  if (!context) {
+    init();
+  }
 
   return {
-    state,
+    state: computed(() => context.state),
 
     send: (type, payload) => {
-      const event = { type, payload } satisfies Event;
-
-      if (ws.readyState === WebSocket.OPEN) {
-        ws.send(JSON.stringify(event));
+      if (context.state === 'open' && context.ws) {
+        send(context.ws, { type, payload });
       }
       else {
-        _buffer.push(event);
+        _buffer.push({ type, payload });
       }
     },
 
     on: (type, cb) => {
-      const off = on(ws, 'message', (ev) => {
-        const event = parseMessage(ev.data);
-
-        if (event && event.type === type) {
-          cb(event.payload as ZeenkEvents[keyof ZeenkEvents]);
-        }
-      });
-
-      onScopeDispose(off);
-
-      return off;
+      if (context.state === 'open' && context.ws) {
+        onScopeDispose(
+          listen(context.ws, type, cb),
+        );
+      }
+      else {
+        listeners[type] = cb;
+      }
     },
   };
+}
+
+function send(ws: WebSocket, event: Event) {
+  ws.send(JSON.stringify(event));
+}
+
+function listen<T extends keyof ZeenkEvents>(
+  ws: WebSocket,
+  type: T,
+  cb: (payload: ZeenkEvents[T]) => void,
+) {
+  return on(ws, 'message', (e) => {
+    const event = parseMessage(e.data);
+
+    if (event && event.type === type) {
+      cb(event.payload as ZeenkEvents[T]);
+    }
+  });
 }
 
 function parseMessage(message: string) {
