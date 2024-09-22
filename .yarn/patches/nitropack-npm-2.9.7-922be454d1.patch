@@ -12,24 +12,16 @@ index d54f501a2e63b68520868b8a40ec923cb73122ac..928b22c7744ab1c4fe82fac7a1561581
    ]);
    return {
 diff --git a/dist/runtime/cache.mjs b/dist/runtime/cache.mjs
-index fdf72bf59978c52aee250e9e92475985ecfbded3..68e85427207abdb2f623ee464ee4594b6654017e 100644
+index fdf72bf59978c52aee250e9e92475985ecfbded3..7ecec2b57f5d3b8600fb6e6493c07e005dfae70e 100644
 --- a/dist/runtime/cache.mjs
 +++ b/dist/runtime/cache.mjs
-@@ -32,7 +32,7 @@ export function defineCachedFunction(fn, opts = {}) {
-       console.error("[nitro] [cache]", error);
-       useNitroApp().captureError(error, { event, tags: ["cache"] });
-     }
--    const ttl = (opts.maxAge ?? opts.maxAge ?? 0) * 1e3;
-+    const ttl = (opts.maxAge ?? 0) * 1e3;
-     if (ttl) {
-       entry.expires = Date.now() + ttl;
-     }
-@@ -61,7 +61,7 @@ export function defineCachedFunction(fn, opts = {}) {
+@@ -61,7 +61,8 @@ export function defineCachedFunction(fn, opts = {}) {
          entry.integrity = integrity;
          delete pending[key];
          if (validate(entry) !== false) {
 -          const promise = useStorage().setItem(cacheKey, entry).catch((error) => {
-+          const promise = useStorage().setItem(cacheKey, entry, ttl ? { ttl } : undefined).catch((error) => {
++          const ttlInSeconds = ttl / 1e3;
++          const promise = useStorage().setItem(cacheKey, entry, ttlInSeconds > 0.1 ? { ttl: ttlInSeconds } : undefined).catch((error) => {
              console.error(`[nitro] [cache] Cache write error.`, error);
              useNitroApp().captureError(error, { event, tags: ["cache"] });
            });
