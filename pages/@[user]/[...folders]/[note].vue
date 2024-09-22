@@ -19,7 +19,7 @@ let loadingToast: ToastInstance | undefined;
 let abortControllerGet: AbortController | undefined;
 let lastRefetch: number | undefined;
 
-async function fetchNote() {
+async function fetchNote(): Promise<void> {
   if (import.meta.server || !route.params.note || route.params.note === BLANK_NOTE_NAME) {
     return;
   }
@@ -69,7 +69,7 @@ async function fetchNote() {
     hydrationPromise = undefined;
   }
 
-  return cachedNote;
+  note.value = cachedNote;
 }
 
 let retryInterval: ReturnType<typeof setInterval> | undefined;
