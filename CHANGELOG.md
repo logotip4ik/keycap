@@ -1,6 +1,32 @@
 # Changelog
 
 
+## v3.14.2
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.14.1...v3.14.2)
+
+### 🩹 Fixes
+
+- Update nitro patch to set ttl in seconds ([a3d653d5](https://github.com/logotip4ik/keycap/commit/a3d653d5))
+- Actually use cached note ([8be48b92](https://github.com/logotip4ik/keycap/commit/8be48b92))
+
+### 💅 Refactors
+
+- Update type definitions ([d0d5487c](https://github.com/logotip4ik/keycap/commit/d0d5487c))
+
+### 🏡 Chore
+
+- **release:** V3.14.1 ([05ad370d](https://github.com/logotip4ik/keycap/commit/05ad370d))
+- Update pm ([80c29bf8](https://github.com/logotip4ik/keycap/commit/80c29bf8))
+- Update deps ([9e8d71f3](https://github.com/logotip4ik/keycap/commit/9e8d71f3))
+- Repatch nuxt and tiptap ([e59b2457](https://github.com/logotip4ik/keycap/commit/e59b2457))
+- Use modern api for scss ([ca3268e8](https://github.com/logotip4ik/keycap/commit/ca3268e8))
+- Bump vue ([0e64a080](https://github.com/logotip4ik/keycap/commit/0e64a080))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.14.1
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.14.0...v3.14.1)
