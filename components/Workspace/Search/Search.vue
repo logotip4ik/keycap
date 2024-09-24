@@ -95,7 +95,6 @@ function fillResult() {
 
 watch(searchInput, debounce(handleSearchInput, 100));
 
-useFocusTrap(searchEl, { handleInitialFocusing: true });
 useTinykeys({
   'Escape': props.onClose,
   'Control+n': () => changeSelectedResult(1),
@@ -104,7 +103,7 @@ useTinykeys({
 </script>
 
 <template>
-  <WithBackdrop class="search__wrapper" @click.self="props.onClose">
+  <WithBackdrop class="search__wrapper" @click.self="onClose">
     <WorkspaceModal ref="searchComp" class="search">
       <form class="search__form" @submit.prevent="openItem">
         <WorkspaceSearchInput
@@ -164,6 +163,7 @@ useTinykeys({
 <style lang="scss">
 .search {
   max-width: 575px;
+  overflow: hidden;
 
   margin: 0 auto;
   padding: 0.5rem;

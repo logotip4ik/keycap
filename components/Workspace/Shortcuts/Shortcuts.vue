@@ -8,7 +8,6 @@ const props = defineProps<{
 const { shortcuts } = useAppConfig();
 
 const shortcutsComp = shallowRef<ComponentPublicInstance>();
-const shortcutsEl = computed(() => shortcutsComp.value?.$el);
 
 const shortcutsDescription = {
   edit: 'Focus Editor',
@@ -32,12 +31,10 @@ function humanizeShortcut(shortcut: string) {
 }
 
 useTinykeys({ Escape: props.onClose });
-useFocusTrap(shortcutsEl, { handleInitialFocusing: true });
-useClickOutside(shortcutsEl, props.onClose);
 </script>
 
 <template>
-  <WithBackdrop class="shortcuts__wrapper">
+  <WithBackdrop class="shortcuts__wrapper" @click.self="onClose">
     <WorkspaceModal ref="shortcutsComp" class="shortcuts">
       <WorkspaceModalCloseButton @click="onClose" />
 

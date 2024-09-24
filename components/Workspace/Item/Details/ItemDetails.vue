@@ -119,15 +119,13 @@ function toggleShareLink(isCreateRequest: boolean) {
     .finally(() => isLoadingItemDetails.value = false);
 }
 
-useFocusTrap(itemDetailsEl, { handleInitialFocusing: true });
 useTinykeys({ Escape: unsetCurrentDetailsItem });
-useClickOutside(itemDetailsEl, unsetCurrentDetailsItem);
 
 onBeforeMount(() => fetchDetails());
 </script>
 
 <template>
-  <WithBackdrop class="item-details__wrapper fast-fade">
+  <WithBackdrop class="item-details__wrapper fast-fade" @click.self="unsetCurrentDetailsItem">
     <WorkspaceModal
       id="item-details"
       ref="itemDetailsComp"
