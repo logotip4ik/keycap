@@ -76,15 +76,12 @@ function initTiptap() {
         },
       }),
       // TODO: https://tiptap.dev/api/nodes/code-block-lowlight
-      CodeBlock.extend({
-        addAttributes() {
-          return {
-            ...this.parent?.(),
-            autocomplete: { default: 'off' },
-            autocorrect: { default: 'off' },
-            autocapitalize: { default: 'none' },
-            spellcheck: { default: 'false' },
-          };
+      CodeBlock.configure({
+        HTMLAttributes: {
+          autocomplete: { default: 'off' },
+          autocorrect: { default: 'off' },
+          autocapitalize: { default: 'none' },
+          spellcheck: { default: 'false' },
         },
       }),
       History.configure({
