@@ -18,6 +18,13 @@ const shortcutsDescription = {
   toolbox: 'Open toolbox sidebar',
 } satisfies Record<keyof typeof shortcuts, string>;
 
+const editorShortcuts = {
+  '$mod+Alt+0': 'Set paragraph',
+  '$mod+Alt+1': 'Set heading level to 1',
+  '$mod+Alt+2': 'Set heading level to 2',
+  '$mod+Alt+3': 'Set heading level to 3',
+};
+
 const modRE = /\$mod/g;
 const keyRE = /Key/g;
 function humanizeShortcut(shortcut: string) {
@@ -34,32 +41,47 @@ useClickOutside(shortcutsEl, props.onClose);
     <WorkspaceModal ref="shortcutsComp" class="shortcuts">
       <WorkspaceModalCloseButton @click="onClose" />
 
-      <p class="shortcuts__title font-wide">
-        Keyboard Shortcuts
-      </p>
+      <div class="shortcuts__item">
+        <p class="shortcuts__title font-wide">
+          Global Shortcuts
+        </p>
 
-      <ul class="shortcuts__list">
-        <li v-for="(shortcut, key) in shortcuts" :key="key" class="shortcuts__list__item">
-          <kbd>{{ humanizeShortcut(shortcut) }}</kbd>
+        <ul class="shortcuts__list">
+          <li v-for="(shortcut, key) in shortcuts" :key="key" class="shortcuts__list__item">
+            <kbd>{{ humanizeShortcut(shortcut) }}</kbd>
 
-          <hr class="shortcuts__list__item__hr">
+            <hr class="shortcuts__list__item__hr">
 
-          <p class="shortcuts__list__item__desc">
-            {{ shortcutsDescription[key] }}
-          </p>
-        </li>
-      </ul>
+            <p class="shortcuts__list__item__desc">
+              {{ shortcutsDescription[key] }}
+            </p>
+          </li>
+        </ul>
+      </div>
+
+      <div class="shortcuts__item">
+        <p class="shortcuts__title font-wide">
+          Editor Shortcuts
+        </p>
+
+        <ul class="shortcuts__list">
+          <li v-for="(description, shortcut) in editorShortcuts" :key="shortcut" class="shortcuts__list__item">
+            <kbd>{{ humanizeShortcut(shortcut) }}</kbd>
+
+            <hr class="shortcuts__list__item__hr">
+
+            <p class="shortcuts__list__item__desc">
+              {{ description }}
+            </p>
+          </li>
+        </ul>
+      </div>
     </WorkspaceModal>
   </WithBackdrop>
 </template>
 
 <style lang="scss">
 .shortcuts {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-
   padding: 2rem 1.25rem 1.5rem;
 
   max-width: #{$breakpoint-tablet - 200};
@@ -71,6 +93,19 @@ useClickOutside(shortcutsEl, props.onClose);
 
     @media screen and (max-width: $breakpoint-tablet) {
       align-items: stretch;
+    }
+  }
+
+  &__item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    width: 100%;
+
+    & + & {
+      margin-top: 1.5rem;
     }
   }
 
@@ -107,6 +142,11 @@ useClickOutside(shortcutsEl, props.onClose);
 
       &__desc {
         font-size: 1.1rem;
+        margin: 0;
+      }
+
+      & + & {
+        margin-top: 1rem;
       }
     }
   }
