@@ -388,7 +388,7 @@ useFocusTrap(formatterEl);
     }
 
     @media screen and (max-width: $breakpoint-tablet) {
-      max-width: 26rem;
+      max-width: 28rem;
 
       &__form {
         --form-columns: 9;
