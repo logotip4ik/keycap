@@ -50,6 +50,11 @@ async function fetchNote(): Promise<void> {
       notesCache.set(fetchedNote.path, fetchedNote);
       offlineStorage.setItem(fetchedNote.path, fetchedNote);
 
+      if (hydrationPromise) {
+        await hydrationPromise;
+        hydrationPromise = undefined;
+      }
+
       note.value = fetchedNote;
     })
     .catch((e) => {
