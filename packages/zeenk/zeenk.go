@@ -10,7 +10,11 @@ import (
 )
 
 var (
-  keycapUrl = utils.GetEnv("KEYCAP_URL", "http://localhost:3000")
+  GOENV = utils.GetEnv("GOENV", "PROD")
+
+  keycapUrl = utils.GetEnv("KEYCAP_URL", "localhost:3000")
+
+  port = utils.GetEnv("PORT", "8123")
 )
 
 func main() {
@@ -18,15 +22,22 @@ func main() {
 
   go hub.Run()
 
+  var keycapLink string;
+  if GOENV == "PROD" {
+    keycapLink = "https://" + keycapUrl
+  } else {
+    keycapLink = "http://" + keycapUrl
+  }
+
   http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
     if _, ok := r.Header["Sec-Websocket-Version"]; ok {
       zeenk.ServeWs(hub, w, r)
     } else {
-      http.Redirect(w, r, keycapUrl, http.StatusPermanentRedirect);
+      http.Redirect(w, r, keycapLink, http.StatusPermanentRedirect);
     }
   })
 
-  addr := "127.0.0.1:" + utils.GetEnv("PORT", "8123")
+  addr := "127.0.0.1:" + port
 
   fmt.Println("Listing on", addr)
 

@@ -9,7 +9,6 @@ type Context = ShallowReactive<{
 
 let context: Context;
 
-// TODO: add reconnect functionality ?
 export function getZeenkWs() {
   if (import.meta.server) {
     return proxy as {

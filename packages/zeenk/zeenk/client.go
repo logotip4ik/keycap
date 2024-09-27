@@ -34,7 +34,7 @@ var (
     EnableCompression: true,
   }
 
-  prodHost = "https://" + utils.GetEnv("SITE", "")
+  prodHost = "https://" + utils.GetEnv("KEYCAP_URL", "")
 )
 
 type User struct {
@@ -85,7 +85,7 @@ func (c *Client) readPump() {
       data, err := json.Marshal(event)
 
       if err != nil {
-        fmt.Println("error while stringing json", event)
+        fmt.Println("error while stringifing json", event)
 
         break
       }

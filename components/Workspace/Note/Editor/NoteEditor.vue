@@ -62,22 +62,20 @@ watch(() => spellcheck.value, (spellcheck) => {
 
 mitt.on('save:note', () => updateContent());
 zeenk.on('update-note', ({ path, steps }) => {
-  if (props.notePath === path) {
-    if (!editor.value) {
-      return;
-    }
-
-    const tr = editor.value.state.tr;
-    tr.setMeta('websocket', true);
-
-    for (const step of steps) {
-      tr.step(
-        Step.fromJSON(editor.value.state.schema, step),
-      );
-    }
-
-    editor.value.view.dispatch(tr);
+  if (props.notePath !== path || !editor.value) {
+    return;
   }
+
+  const tr = editor.value.state.tr;
+  tr.setMeta('websocket', true);
+
+  for (const step of steps) {
+    tr.step(
+      Step.fromJSON(editor.value.state.schema, step),
+    );
+  }
+
+  editor.value.view.dispatch(tr);
 });
 
 onContentUpdate(({ transaction }) => {
