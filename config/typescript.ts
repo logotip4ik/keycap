@@ -6,6 +6,7 @@ export const tsConfig: TSConfig = {
     moduleDetection: 'force',
     isolatedModules: true, // disabled in nitro ?
     noUncheckedIndexedAccess: false,
+    useDefineForClassFields: true,
   },
 
   exclude: [
