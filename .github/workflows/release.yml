@@ -83,6 +83,7 @@ jobs:
     steps:
       - name: Trigger deployment
         env:
+          AUTH: ${{ secrets.DEPLOYMENT_AUTH }}
           TRIGGER_DEPLOYMENT: ${{ secrets.TRIGGER_DEPLOYMENT }}
         shell: bash
-        run: curl -X POST $TRIGGER_DEPLOYMENT
+        run: curl -s -H $AUTH -X POST $TRIGGER_DEPLOYMENT > /dev/null
