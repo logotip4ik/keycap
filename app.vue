@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import MonaSansURL from '~/assets/fonts/Mona-Sans/Mona-Sans.woff2?url';
-
 import '~/polyfills/array-at';
 
 setupErrorLogging();
@@ -23,10 +21,10 @@ useServerHead({
   link: [
     {
       rel: 'preload',
+      href: '/fonts/Mona-Sans.woff2',
       as: 'font',
       type: 'font/woff2',
-      crossorigin: 'anonymous',
-      href: MonaSansURL,
+      crossorigin: '',
     },
   ],
 });

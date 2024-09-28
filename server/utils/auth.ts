@@ -9,7 +9,7 @@ const authExpiration = parseDuration('3 days', 'second')!;
 const jwtSecret = new TextEncoder().encode(process.env.JWT_SECRET || '');
 const jwtIssuer = process.env.JWT_ISSUER || 'test:keycap';
 const accessTokenName = import.meta.prod ? '__Secure-keycap-user' : 'keycap-user';
-const site = process.env.NUXT_PUBLIC_SITE || 'localhost';
+const site = process.env.NUXT_PUBLIC_SITE?.split(':')[0] || 'localhost';
 
 // https://web.dev/first-party-cookie-recipes/#the-good-first-party-cookie-recipe
 const authSerializeOptions: CookieSerializeOptions = {
