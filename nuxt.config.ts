@@ -139,7 +139,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       site: '',
-      zeenkUrl: '',
+      zeenkSite: '',
 
       turnstile: {
         siteKey: '',

@@ -43,11 +43,11 @@ function init(context: Context, retry: number = 0) {
     return;
   }
 
-  const { zeenkUrl } = useRuntimeConfig().public;
+  const { zeenkSite } = useRuntimeConfig().public;
   const proto = import.meta.prod ? 'wss://' : 'ws://';
 
   try {
-    const ws = new WebSocket(proto + zeenkUrl);
+    const ws = new WebSocket(proto + zeenkSite);
 
     context.ws = ws;
     context.state = 'CONNECTING';
