@@ -31,7 +31,8 @@ export function sendError(error: Error, properties?: Record<string, string>) {
   }
 
   if (import.meta.prod) {
-    navigator.sendBeacon(errors.url, JSON.stringify(payload));
+    // TODO: self host or proxy from our domain because of CORP headers
+    // navigator.sendBeacon(errors.url, JSON.stringify(payload));
   }
   else {
     console.log(payload); // eslint-disable-line no-console
