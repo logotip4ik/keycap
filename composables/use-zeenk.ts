@@ -37,6 +37,7 @@ export function useZeenk(): Zeenk {
 
       _buffer.length = 0;
 
+      const offs: Array<() => void> = [];
       for (const _type in _listeners) {
         const type = _type as keyof ZeenkEvents;
 
@@ -45,12 +46,16 @@ export function useZeenk(): Zeenk {
         delete _listeners[type];
 
         if (cb) {
-          scope.run(() => {
-            onScopeDispose(
-              listen(websocket, type, cb),
-            );
-          });
+          offs.push(
+            listen(websocket, type, cb),
+          );
         }
+      }
+
+      if (offs.length > 0) {
+        scope.run(() => {
+          onScopeDispose(() => invokeArrayFns(offs));
+        });
       }
     }
   });

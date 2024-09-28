@@ -55,6 +55,7 @@ function init(context: Context, retry: number = 0) {
     on(ws, 'open', () => {
       context.state = 'OPEN';
     }, { once: true, passive: true }),
+
     on(ws, 'close', () => {
       context.state = 'CLOSED';
 
