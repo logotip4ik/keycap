@@ -8,6 +8,6 @@ RUN go mod download
 
 COPY . .
 
-RUN go build -o zeenk
+RUN go build -o zeenk-server
 
-CMD ["/build/zeenk"]
+CMD ["/build/zeenk-server"]
