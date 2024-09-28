@@ -18,10 +18,16 @@ var (
 func getAuthCookie(r *http.Request) (*http.Cookie, error) {
   cookieName := "keycap-user"
   if strings.ToUpper(GOENV) == "PROD" {
-    cookieName = "__Host-" + cookieName
+    cookieName = "__Secure-" + cookieName
   }
 
-  return r.Cookie(cookieName)
+  // TODO: remove in next release
+  cookie, err := r.Cookie(cookieName)
+  if err != nil {
+    return r.Cookie("__Host-keycap-user");
+  }
+
+  return cookie, nil
 }
 
 func verifyJwt(cookie string) (*jwt.Token, error) {

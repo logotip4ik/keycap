@@ -8,7 +8,7 @@ import type { SafeUser } from '~/types/server';
 const authExpiration = parseDuration('3 days', 'second')!;
 const jwtSecret = new TextEncoder().encode(process.env.JWT_SECRET || '');
 const jwtIssuer = process.env.JWT_ISSUER || 'test:keycap';
-const accessTokenName = import.meta.prod ? '__Host-keycap-user' : 'keycap-user';
+const accessTokenName = import.meta.prod ? '__Secure-keycap-user' : 'keycap-user';
 const site = process.env.NUXT_PUBLIC_SITE || 'localhost';
 
 // https://web.dev/first-party-cookie-recipes/#the-good-first-party-cookie-recipe
@@ -51,7 +51,8 @@ export async function deleteAuthCookies(event: H3Event) {
 }
 
 export async function getUserFromEvent(event: H3Event): Promise<SafeUser | undefined> {
-  const accessToken = getCookie(event, accessTokenName);
+  // TODO: remove in next release
+  const accessToken = getCookie(event, accessTokenName) || getCookie(event, '__Host-keycap-user');
 
   if (!accessToken) {
     return;
