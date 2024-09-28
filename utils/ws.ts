@@ -46,20 +46,26 @@ function init(context: Context, retry: number = 0) {
   const { zeenkUrl } = useRuntimeConfig().public;
   const proto = import.meta.prod ? 'wss://' : 'ws://';
 
-  const ws = new WebSocket(proto + zeenkUrl);
+  try {
+    const ws = new WebSocket(proto + zeenkUrl);
 
-  context.ws = ws;
-  context.state = 'CONNECTING';
+    context.ws = ws;
+    context.state = 'CONNECTING';
 
-  offs = [
-    on(ws, 'open', () => {
-      context.state = 'OPEN';
-    }, { once: true, passive: true }),
+    offs = [
+      on(ws, 'open', () => {
+        context.state = 'OPEN';
+      }, { once: true, passive: true }),
 
-    on(ws, 'close', () => {
-      context.state = 'CLOSED';
+      on(ws, 'close', () => {
+        context.state = 'CLOSED';
 
-      setTimeout(init, RETRY_DELAY, context, retry + 1);
-    }, { once: true, passive: true }),
-  ];
+        setTimeout(init, RETRY_DELAY, context, retry + 1);
+      }, { once: true, passive: true }),
+    ];
+  }
+  catch (e) {
+    sendError(e as Error, { msg: 'couldn\'t connect to zeenk' });
+    setTimeout(init, RETRY_DELAY, context, retry + 1);
+  }
 }
