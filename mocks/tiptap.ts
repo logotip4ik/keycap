@@ -16,6 +16,7 @@ export const findChildren = proxy;
 export const VueRenderer = proxy;
 export const BubbleMenu = proxy;
 export const Suggestion = proxy;
+export const Step = proxy;
 
 export const Mark = proxy;
 export const Plugin = proxy;

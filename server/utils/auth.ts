@@ -9,6 +9,7 @@ const authExpiration = parseDuration('3 days', 'second')!;
 const jwtSecret = new TextEncoder().encode(process.env.JWT_SECRET || '');
 const jwtIssuer = process.env.JWT_ISSUER || 'test:keycap';
 const accessTokenName = import.meta.prod ? '__Host-keycap-user' : 'keycap-user';
+const site = process.env.SITE || 'localhost';
 
 // https://web.dev/first-party-cookie-recipes/#the-good-first-party-cookie-recipe
 const authSerializeOptions: CookieSerializeOptions = {
@@ -17,6 +18,7 @@ const authSerializeOptions: CookieSerializeOptions = {
   httpOnly: true,
   secure: import.meta.prod,
   maxAge: authExpiration,
+  domain: site, // Need this to share auth cookie with sync server
 };
 
 function generateAccessToken(object: Record<string, unknown>): Promise<string> {

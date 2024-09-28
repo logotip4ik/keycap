@@ -198,6 +198,7 @@ onBeforeMount(() => {
       v-if="note"
       key="content"
       class="workspace__note-editor"
+      :note-path
       :content="note.content || ''"
       :editable="!isFallbackMode && !!note"
       @update="throttledNoteUpdate"
