@@ -6,6 +6,7 @@
   "scripts": {
     "build": "NODE_ENV=production nuxt build",
     "build:bench": "NODE_ENV=production BENCHMARKING=true nuxt build",
+    "build:ci": "NODE_ENV=production CI=1 nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
