@@ -64,11 +64,13 @@ export function useZeenk(): Zeenk {
     state,
 
     send: (type, payload) => {
+      const event = { type, payload };
+
       if (state.value === 'OPEN' && ws.value) {
-        send(ws.value, { type, payload });
+        send(ws.value, event);
       }
       else {
-        _buffer.push({ type, payload });
+        _buffer.push(event);
       }
     },
 
@@ -119,10 +121,16 @@ function parseMessage(message: string) {
     else if (import.meta.dev) {
       console.error('Invalid message format:', parsed);
     }
+    else {
+      sendError(new Error(`Invalid message format: ${parsed}`));
+    }
   }
   catch {
     if (import.meta.dev) {
       console.error('Couldn\'t parse message:', message);
+    }
+    else {
+      sendError(new Error(`Couldn't parse message: ${message}`));
     }
   }
 
