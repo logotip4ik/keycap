@@ -37,7 +37,13 @@ func main() {
     }
   })
 
-  addr := "127.0.0.1:" + port
+  var addr string;
+
+  if GOENV == "PROD" {
+     addr = "0.0.0.0:" + port
+  } else {
+     addr = "127.0.0.1:" + port
+  }
 
   fmt.Println("Listing on", addr)
 
