@@ -27,7 +27,7 @@ export function useZeenk(): Zeenk {
   const _listeners: Partial<Record<keyof ZeenkEvents, (p: ZeenkEvents[keyof ZeenkEvents]) => void>> = {};
 
   const scope = getCurrentScope()!;
-  watch(() => state.value, (state) => {
+  watch(state, (state) => {
     const websocket = ws.value;
 
     if (state === 'OPEN' && websocket) {

@@ -193,7 +193,7 @@ watch(contentsState, (state, oldState) => {
 
 mitt.on('details:show:folder', () => {
   if (!folder.value) {
-    const stop = watch(() => folder.value, (folder) => {
+    const stop = watch(folder, (folder) => {
       if (folder) {
         detailsItem.value = folder;
         stop();

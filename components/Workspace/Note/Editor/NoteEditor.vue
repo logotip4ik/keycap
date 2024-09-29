@@ -49,7 +49,7 @@ watch(() => props.editable, (editable) => {
   editor.value?.setOptions({ editable });
 }, { immediate: import.meta.client });
 
-watch(() => spellcheck.value, (spellcheck) => {
+watch(spellcheck, (spellcheck) => {
   editor.value?.setOptions({
     editorProps: {
       attributes: {
