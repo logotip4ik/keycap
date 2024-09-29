@@ -1,5 +1,5 @@
 <template>
-  <div v-once class="recent-skeleton">
+  <div class="recent-skeleton">
     <div v-for="i in 4" :key="i" class="recent-skeleton__item skeleton-bg" />
   </div>
 </template>

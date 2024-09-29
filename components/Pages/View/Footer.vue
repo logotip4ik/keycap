@@ -1,5 +1,5 @@
 <template>
-  <footer v-once class="note-view__footer">
+  <footer class="note-view__footer">
     <NuxtLink href="/register" class="note-view__footer__link">
       Want an account ?
     </NuxtLink>
