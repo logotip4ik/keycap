@@ -503,8 +503,8 @@ export default defineNuxtConfig({
     fonts: [
       {
         family: 'Mona Sans',
-        src: 'fonts/Mona-Sans/Mona-Sans.woff2',
-        root: 'assets',
+        src: 'fonts/Mona-Sans.woff2',
+        root: 'public',
         fallbacks: ['Arial'],
       },
     ],
