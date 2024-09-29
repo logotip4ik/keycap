@@ -1,32 +1,61 @@
 <script setup lang="ts">
 import { useToolboxState } from '../config';
 
+const createToast = useToaster();
 const { state } = useToolboxState();
 
-const POLLING_TIME = parseDuration('5 minutes');
-let pollingTimer: ReturnType<typeof setTimeout> | undefined;
+const recent = shallowRef<Array<NoteMinimal>>();
 
-const { data: recent, refresh } = await useAsyncData('recent', async () => {
+const POLLING_TIME = parseDuration('5 minutes');
+const RETRY_TIME = parseDuration('5s');
+const MAX_RETRY = 10;
+
+let pollingTimer: ReturnType<typeof setTimeout> | undefined;
+let retryingToast: ToastInstance | undefined;
+
+async function fetchRecent(retry: number = 0): Promise<void> {
   clearTimeout(pollingTimer);
 
-  const recent = await $fetch('/api/recent');
-  pollingTimer = setTimeout(refresh, POLLING_TIME);
+  $fetch('/api/recent')
+    .then(async (response) => {
+      const hydrationPromise = getHydrationPromise();
 
-  return recent.data;
-}, {
-  server: false,
-  lazy: true,
-  immediate: false,
-});
+      if (hydrationPromise) {
+        await hydrationPromise;
+      }
 
-const stop = watch(state, (visibility) => {
-  if (visibility !== 'hidden') {
-    setTimeout(() => {
-      refresh();
-      stop();
-    }, 0);
+      if (retryingToast) {
+        retryingToast?.remove();
+        retryingToast = undefined;
+      }
+
+      recent.value = response.data;
+      pollingTimer = setTimeout(fetchRecent, POLLING_TIME);
+    })
+    .catch(() => {
+      if (!retryingToast) {
+        retryingToast = createToast('Failed fetching recent notes. Retrying...', {
+          type: 'loading',
+          duration: Infinity,
+        });
+      }
+
+      const nextRetry = retry + 1;
+      if (nextRetry <= MAX_RETRY) {
+        setTimeout(fetchRecent, RETRY_TIME, retry + 1);
+      }
+      else {
+        retryingToast.remove();
+        createToast('Can\'t fetch recents, please try reloading the website if needed.');
+      }
+    });
+};
+
+onBeforeMount(() => {
+  if (state.value !== 'hidden') {
+    fetchRecent();
   }
-}, { immediate: import.meta.client });
+});
 </script>
 
 <template>

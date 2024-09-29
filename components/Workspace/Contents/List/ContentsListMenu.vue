@@ -70,7 +70,7 @@ function withEffects(event: Event, action: MenuAction) {
 }
 
 function preloadItemWithIndication() {
-  const loadingToast = createToast(`Preloading into cache: "${props.item.name}"`, {
+  const loadingToast = createToast(`Preloading into cache: "${props.item.name}".`, {
     delay: 250,
     duration: parseDuration('0.5 minute'),
     type: 'loading',
@@ -95,7 +95,7 @@ function showDetails() {
 }
 
 function deleteItem() {
-  const loadingToast = createToast(`Deleting "${props.item.name}"`, {
+  const loadingToast = createToast(`Deleting "${props.item.name}".`, {
     delay: 250,
     duration: parseDuration('0.5 minute'),
     type: 'loading',

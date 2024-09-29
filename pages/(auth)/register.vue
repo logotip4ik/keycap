@@ -37,7 +37,7 @@ async function verifyEmail() {
   };
 
   if (!data.email) {
-    createToast('Fill all required fields');
+    createToast('Fill all required fields.');
     return;
   }
 
@@ -63,7 +63,7 @@ function register() {
   };
 
   if (!data.email || !data.username || !data.password) {
-    createToast('Fill all required fields');
+    createToast('Fill all required fields.');
     return;
   }
 

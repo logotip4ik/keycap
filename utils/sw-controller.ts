@@ -18,7 +18,7 @@ export function registerSWToasts() {
     }
 
     setTimeout(() => {
-      createToast('Phewww, now you can work offline', { delay: 550 });
+      createToast('Phewww, now you can work offline.', { delay: 550 });
       stopOfflineReady();
     });
   }, { immediate: true });
@@ -29,7 +29,7 @@ export function registerSWToasts() {
     }
 
     setTimeout(() => {
-      createToast('Psss... We have some updates', {
+      createToast('Psss... We have some updates.', {
         priority: 10,
         duration: parseDuration('25 seconds')!,
         delay: 550,

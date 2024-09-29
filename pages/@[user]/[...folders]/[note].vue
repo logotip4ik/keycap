@@ -152,7 +152,7 @@ async function handleError(error: Error) {
   const offlineNote = await offlineStorage.getItem(notePath.value);
 
   if (!offlineNote || typeof offlineNote !== 'object') {
-    createToast(`Sorry ⊙︿⊙ We couldn't find offline note copy: "${route.params.note}"`);
+    createToast(`Sorry ⊙︿⊙ We couldn't find offline note copy: "${route.params.note}".`);
 
     await navigateTo(`/@${user.value!.username}`);
 
@@ -168,7 +168,7 @@ mitt.on('details:show:note', () => {
   }
 });
 
-onBeforeMount(() => {
+if (import.meta.client) {
   fetchNote();
 
   const offVisibility = on(document, 'visibilitychange', () => {
@@ -195,7 +195,7 @@ onBeforeMount(() => {
     loadingToast = undefined;
     failedSaveToast = undefined;
   });
-});
+};
 </script>
 
 <!-- NOTE: NoteEditor component should be wrapped inside client only, if note is rendered on server -->

@@ -101,7 +101,7 @@ async function copyShareLink() {
 
   await navigator.clipboard.writeText(`${protocol}//${host}/view/${link}`);
 
-  createToast('Copied share link');
+  createToast('Copied share link.');
 }
 
 const debouncedToggleShareLink = debounce(toggleShareLink, 250);

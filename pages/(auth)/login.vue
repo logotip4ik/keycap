@@ -26,7 +26,7 @@ async function login() {
   };
 
   if (!data.email || !data.password) {
-    createToast('Fill all required fields');
+    createToast('Fill all required fields.');
     return;
   }
 

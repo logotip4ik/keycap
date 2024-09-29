@@ -121,7 +121,9 @@ async function handleError(error: Error) {
   const offlineFolder = await offlineStorage.getItem(folderPath.value);
 
   if (!offlineFolder || typeof offlineFolder !== 'object') {
-    createToast(`Sorry ⊙︿⊙ We couldn't find offline copy for folder: "${route.params.folders.at(-1)}"`);
+    createToast(
+      `Sorry ⊙︿⊙ We couldn't find offline copy for folder: "${route.params.folders.at(-1)}".`,
+    );
 
     await navigateTo(`/@${user.value!.username}`);
 
