@@ -67,6 +67,10 @@ async function fetchNote(): Promise<void> {
       loadingToast?.remove();
     });
 
+  if (note.value) {
+    return;
+  }
+
   const cachedNote = notesCache.get(notePath.value) || await offlineStorage.getItem(notePath.value);
 
   if (hydrationPromise) {

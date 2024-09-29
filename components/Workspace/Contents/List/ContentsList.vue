@@ -15,6 +15,7 @@ const { state: contentsState } = useContentsState();
 const folderApiPath = computed(() => getCurrentFolderPath(route).slice(0, -1));
 const folderPath = computed(() => `/${user.value!.username}${folderApiPath.value}`);
 
+const folder = ref<FolderWithContents>();
 const menuOptions = shallowReactive({
   item: undefined as FolderOrNote | undefined,
   target: undefined as HTMLElement | undefined,
@@ -25,7 +26,7 @@ let pollingTimer: ReturnType<typeof setTimeout>;
 let abortControllerGet: AbortController | undefined;
 let lastRefetch: number | undefined;
 
-const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefined>('folder', async () => {
+async function fetchFolder(): Promise<void> {
   if (import.meta.server) {
     return;
   }
@@ -46,7 +47,7 @@ const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefi
       }
 
       const { data: fetchedFolder } = res as { data: FolderWithContents };
-      const wasCreatingItem = folder.value?.notes.some((item) => item.state === ItemState.Creating);
+      const creatingItem = folder.value?.notes.find((item) => item.state === ItemState.Creating);
 
       isFallbackMode.value = false;
 
@@ -58,11 +59,11 @@ const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefi
         hydrationPromise = undefined;
       }
 
-      folder.value = fetchedFolder;
-
-      if (wasCreatingItem) {
-        preCreateItem(folder.value);
+      if (creatingItem) {
+        preCreateItem(fetchedFolder, creatingItem);
       }
+
+      folder.value = fetchedFolder;
     })
     .catch((e) => {
       handleError(e);
@@ -70,8 +71,12 @@ const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefi
     })
     .finally(() => {
       const multiplier = document.visibilityState === 'visible' ? 1 : 2;
-      pollingTimer = setTimeout(refresh, POLLING_TIME * multiplier);
+      pollingTimer = setTimeout(fetchFolder, POLLING_TIME * multiplier);
     });
+
+  if (folder.value) {
+    return;
+  }
 
   const cachedFolder = foldersCache.get(folderPath.value) || await offlineStorage.getItem(folderPath.value);
 
@@ -80,14 +85,8 @@ const { data: folder, refresh } = await useAsyncData<FolderWithContents | undefi
     hydrationPromise = undefined;
   }
 
-  return cachedFolder;
-}, {
-  server: false,
-  immediate: false,
-  lazy: true,
-  deep: true, // TODO: make it work with `deep: false`
-  watch: [folderApiPath],
-});
+  folder.value = cachedFolder;
+};
 
 const folderContents = computed(() => {
   if (!folder.value) {
@@ -159,13 +158,34 @@ function handleArrowsPress(event: KeyboardEvent) {
   event.preventDefault();
 }
 
+function handleCreateItem(initialValues?: Parameters<typeof preCreateItem>[1]) {
+  // this will also trigger folder fetching if needed
+  if (contentsState.value === 'hidden') {
+    contentsState.value = 'visible';
+  }
+
+  if (!folder.value) {
+    const stop = watchEffect(() => {
+      if (folder.value) {
+        preCreateItem(folder.value, initialValues);
+        stop();
+      }
+    });
+  }
+  else {
+    preCreateItem(folder.value, initialValues);
+  }
+}
+
+watch(folderApiPath, fetchFolder);
+
 watch(contentsState, (state, oldState) => {
   if (
     state !== 'hidden'
     && (!oldState || oldState === 'hidden')
     && !folder.value
   ) {
-    return refresh();
+    return fetchFolder();
   }
 }, { immediate: import.meta.client });
 
@@ -178,21 +198,19 @@ mitt.on('details:show:folder', () => {
       }
     });
 
-    refresh();
+    fetchFolder();
   }
   else {
     detailsItem.value = folder.value;
   }
 });
 
+mitt.on('precreate:item', (event) => {
+  handleCreateItem(event);
+});
+
 useTinykeys({
   [shortcuts.new]: async (event) => {
-    event.preventDefault();
-
-    if (contentsState.value === 'hidden') {
-      contentsState.value = 'visible';
-    }
-
     const alreadyCreating = folder.value
       && folder.value.notes.some((note) => note.state === ItemState.Creating);
 
@@ -200,12 +218,9 @@ useTinykeys({
       return;
     }
 
-    const stop = watchEffect(() => {
-      if (folder.value) {
-        preCreateItem(folder.value);
-        nextTick(() => stop());
-      }
-    }, { flush: 'sync' });
+    event.preventDefault();
+
+    handleCreateItem();
   },
 });
 
@@ -218,7 +233,7 @@ if (import.meta.client) {
       && contentsState.value !== 'hidden'
       && timeDiff > parseDuration('15 seconds')!
     ) {
-      refresh();
+      fetchFolder();
     }
   });
 

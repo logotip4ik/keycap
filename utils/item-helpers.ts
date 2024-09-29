@@ -23,21 +23,15 @@ export async function showItem(item: ItemWithPath, options?: NavigateToOptions) 
   await navigateTo(itemRouteParams, options);
 }
 
-export function preCreateItem(folderToAppend: FolderWithContents, initialValues?: Partial<NoteMinimal>) {
+export function preCreateItem(folderToAppend: FolderWithContents, initialValues?: Partial<Pick<NoteMinimal, 'name' | 'path'>>) {
   const id = Math.floor(Math.random() * 1000).toString();
 
-  const noteValues = {
+  folderToAppend.notes.unshift({
     id,
-    name: '',
-    path: '',
+    name: initialValues?.name ?? '',
+    path: initialValues?.path ?? '',
     state: ItemState.Creating,
-  };
-
-  if (initialValues) {
-    extend(noteValues, initialValues);
-  }
-
-  folderToAppend.notes.unshift(noteValues);
+  });
 }
 
 export function getCurrentFolderPath(_route?: ReturnType<typeof useRoute>) {

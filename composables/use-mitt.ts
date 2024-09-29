@@ -10,6 +10,7 @@ type Events = {
   'details:show:note'?: Partial<object>
   'search:show'?: Partial<object>
   'shortcuts:show'?: Partial<object>
+  'precreate:item'?: Partial<{ name: string }>
 };
 
 const emitter = import.meta.server ? proxy : /* #__PURE__ */ mitt<Events>();

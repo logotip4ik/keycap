@@ -1,21 +1,8 @@
 <script setup lang="ts">
+const mitt = useMitt();
+
 function handleClick() {
-  const folder = useNuxtApp()._asyncData.folder;
-
-  if (!folder) {
-    return;
-  }
-
-  const folderData = folder.data as Ref<FolderWithContents>;
-
-  if (
-    !folderData.value
-    || folderData.value.notes.some((note) => note.state === ItemState.Creating)
-  ) {
-    return;
-  }
-
-  preCreateItem(folderData.value);
+  mitt.emit('precreate:item');
 }
 </script>
 

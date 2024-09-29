@@ -12,19 +12,7 @@ interface Command {
 
 export const commandActions: Record<Command['key'], Command['handler']> = {
   [SearchAction.New]: (arg) => {
-    const { state } = useContentsSidebar();
-    const { data: folder } = useNuxtData('folder');
-
-    if (state.value === 'hidden') {
-      state.value = 'visible';
-    }
-
-    const stop = watch(() => folder.value, (folder) => {
-      if (folder) {
-        preCreateItem(folder, arg ? { name: arg } : undefined);
-        stop();
-      }
-    });
+    useMitt().emit('precreate:item', arg ? { name: arg } : undefined);
   },
   [SearchAction.Refresh]: () => {
     refreshNuxtData(['note', 'folder']);
