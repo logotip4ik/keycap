@@ -2,10 +2,10 @@ FROM node:22 AS builder
 
 WORKDIR /source
 
-COPY package.json .
-COPY yarn.lock .
-COPY .yarn .
-COPY .yarnrc.yml .
+COPY package.json package.json
+COPY yarn.lock yarn.lock
+COPY .yarn/ .yarn/
+COPY .yarnrc.yml .yarnrc.yml
 
 RUN yarn --immutable
 
