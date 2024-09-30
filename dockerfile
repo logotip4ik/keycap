@@ -4,8 +4,10 @@ WORKDIR /source
 
 COPY package.json .
 COPY yarn.lock .
+COPY .yarn .
+COPY .yarnrc.yml .
 
-RUN yarn
+RUN yarn --immutable
 
 ENV NODE_ENV=production
 
