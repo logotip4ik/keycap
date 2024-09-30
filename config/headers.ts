@@ -22,7 +22,7 @@ export const corsHeaders = {
 export const cspHeaders = {
   'Content-Security-Policy': [
     'default-src \'self\'',
-    `connect-src \'self\' https: wss://${ZEENK_SITE}`,
+    `connect-src \'self\' wss://${ZEENK_SITE}`,
     `script-src 'self' 'unsafe-inline' ${turnstileEnabled ? 'https://challenges.cloudflare.com' : ''}`.trim(),
     'style-src \'self\' \'unsafe-inline\'',
     'object-src \'none\'',
