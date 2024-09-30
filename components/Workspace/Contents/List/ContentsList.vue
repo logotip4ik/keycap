@@ -332,7 +332,7 @@ if (import.meta.client) {
   list-style-type: none;
 
   overflow-y: auto;
-  scroll-snap-type: y proximity;
+  scroll-snap-type: y mandatory; // proximity behaves really weirdly in chrome
 
   scrollbar-width: thin;
   scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-background);

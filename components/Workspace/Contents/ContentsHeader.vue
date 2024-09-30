@@ -93,7 +93,7 @@ const crumbs = computed(() => {
 
     // idk how, but chrome was adding y scroll at certain screen width
     overflow: auto;
-    scroll-snap-type: x proximity;
+    scroll-snap-type: x mandatory; // proximity behaves really weirdly in chrome
     scrollbar-width: thin;
     scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-background);
     &::-webkit-scrollbar {
