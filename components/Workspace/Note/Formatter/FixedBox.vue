@@ -77,7 +77,7 @@ if (import.meta.client) {
   left: 0;
   z-index: 10;
 
-  padding: 0.325rem;
+  padding: 0.325rem 0.75rem;
 
   width: 100%;
 

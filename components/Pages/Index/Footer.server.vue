@@ -86,6 +86,8 @@ const links = [
       flex-direction: column;
       justify-content: flex-start;
       align-items: center;
+
+      text-align: center;
     }
   }
 
