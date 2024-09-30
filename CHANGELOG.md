@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v3.15.1
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.0...v3.15.1)
+
+### 🩹 Fixes
+
+- Add zeenk to allowed csp connect resource ([fdde3aa5](https://github.com/logotip4ik/keycap/commit/fdde3aa5))
+
+### 🏡 Chore
+
+- **release:** V3.15.0 ([55ff2812](https://github.com/logotip4ik/keycap/commit/55ff2812))
+- Remove https: resource from connect-src ([819ad0a9](https://github.com/logotip4ik/keycap/commit/819ad0a9))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.15.0
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.14.2...v3.15.0)
