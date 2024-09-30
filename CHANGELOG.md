@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v3.15.3
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.2...v3.15.3)
+
+### 🩹 Fixes
+
+- **ci:** Correct release hook call ([c6a37414](https://github.com/logotip4ik/keycap/commit/c6a37414))
+
+### 🏡 Chore
+
+- **release:** V3.15.2 ([db754c8e](https://github.com/logotip4ik/keycap/commit/db754c8e))
+- Update dockerignore ([4dbb18dc](https://github.com/logotip4ik/keycap/commit/4dbb18dc))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.15.2
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.1...v3.15.2)
