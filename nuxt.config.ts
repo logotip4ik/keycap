@@ -26,8 +26,6 @@ export default defineNuxtConfig({
       meta: [
         { name: 'description', content: 'Beautiful Notes 💜. Fast, simple, shareable, synced between devices and purple.' },
         { name: 'mobile-web-app-capable', content: 'yes' },
-        { name: 'theme-color', content: '#FCFCFD', media: '(prefers-color-scheme: light)', key: 'theme-color-light' },
-        { name: 'theme-color', content: '#111113', media: '(prefers-color-scheme: dark)', key: 'theme-color-dark' },
         { name: 'apple-mobile-web-app-capable', content: 'yes' },
         { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
         { property: 'og:site_name', content: 'Keycap' },

@@ -6,6 +6,7 @@ setupErrorLogging();
 const route = useRoute();
 const { site } = useRuntimeConfig().public;
 const { isSmallScreen, isFirefox, isSafari } = useDevice();
+const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
 useHead({
   htmlAttrs: {
@@ -32,6 +33,8 @@ useServerHead({
 const protocol = import.meta.prod ? 'https' : 'http';
 
 useSeoMeta({
+  themeColor: () => prefersDarkMode.value ? '#111113' : '#FCFCFD',
+
   title: 'Keycap - Beautiful Notes',
   ogTitle: 'Keycap - Beautiful Notes',
 
