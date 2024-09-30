@@ -86,4 +86,4 @@ jobs:
           AUTH: ${{ secrets.DEPLOYMENT_AUTH }}
           TRIGGER_DEPLOYMENT: ${{ secrets.TRIGGER_DEPLOYMENT }}
         shell: bash
-        run: curl -s -H $AUTH -X POST $TRIGGER_DEPLOYMENT > /dev/null
+        run: curl -s -H "$AUTH" $TRIGGER_DEPLOYMENT > /dev/null
