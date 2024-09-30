@@ -2,11 +2,14 @@ FROM node:22 AS builder
 
 WORKDIR /source
 
-COPY . .
+COPY package.json .
+COPY yarn.lock .
 
 RUN yarn
 
 ENV NODE_ENV=production
+
+COPY . .
 
 RUN yarn build
 
