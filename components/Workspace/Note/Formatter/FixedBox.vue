@@ -10,12 +10,10 @@ const fixedBoxEl = shallowRef<HTMLElement | null>(null);
 
 const hiddenClass = 'inline-menu__hidden';
 
-let prevFormatterPosition: number = 0;
-let prevAnimation: Animation | undefined;
 function handleKeyboardAppear() {
   const viewport = window.visualViewport;
 
-  if (!fixedBoxEl.value || !viewport || prevAnimation) {
+  if (!fixedBoxEl.value || !viewport) {
     return;
   }
 
@@ -23,24 +21,21 @@ function handleKeyboardAppear() {
     - viewport.offsetTop
     - viewport.height;
 
-  prevAnimation = fixedBoxEl.value.animate([
-    { transform: `translate3d(0,${-1 * prevFormatterPosition}px,0)` },
-    { transform: `translate3d(0,${-1 * formatterPosition}px,0)` },
-  ], { fill: 'forwards', duration: 100, easing: 'cubic-bezier(0.33, 1, 0.68, 1)' });
+  fixedBoxEl.value.style.setProperty('bottom', `${formatterPosition}px`);
 
-  prevAnimation.addEventListener('finish', () => {
+  requestAnimationFrame(() => {
     fixedBoxEl.value?.classList.remove(hiddenClass);
-    prevAnimation = undefined;
-    prevFormatterPosition = formatterPosition;
   });
 }
 
-const debouncedKeyboardAppear = debounce(handleKeyboardAppear, 75);
+const debouncedKeyboardAppear = debounce(handleKeyboardAppear, 100, { trailing: true });
 
 function handleMobileScroll() {
   fixedBoxEl.value?.classList.add(hiddenClass);
 
-  debouncedKeyboardAppear();
+  requestAnimationFrame(() => {
+    debouncedKeyboardAppear();
+  });
 }
 
 if (import.meta.client) {
@@ -73,11 +68,16 @@ if (import.meta.client) {
   align-items: center;
 
   position: fixed;
-  bottom: 0px;
+  bottom: 0;
   left: 0;
   z-index: 10;
 
-  padding: 0.325rem 0.75rem;
+  padding:
+    0.325rem
+    calc(0.75rem + env(safe-area-inset-right))
+    max(0.375rem, env(safe-area-inset-bottom))
+    calc(0.75rem + env(safe-area-inset-left))
+  ;
 
   width: 100%;
 
