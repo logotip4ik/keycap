@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v3.15.4
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.3...v3.15.4)
+
+### 🏡 Chore
+
+- **release:** V3.15.3 ([30cb9124](https://github.com/logotip4ik/keycap/commit/30cb9124))
+- Remove broken theme_color tag from webmanifest ([d469c335](https://github.com/logotip4ik/keycap/commit/d469c335))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.15.3
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.2...v3.15.3)
