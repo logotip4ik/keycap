@@ -1,6 +1,61 @@
 # Changelog
 
 
+## v3.15.0
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.14.2...v3.15.0)
+
+### 🚀 Enhancements
+
+- Zeenk server ([#33](https://github.com/logotip4ik/keycap/pull/33))
+
+### 🩹 Fixes
+
+- Also wait for hydration when setting up to date note ([e94c5b9f](https://github.com/logotip4ik/keycap/commit/e94c5b9f))
+- **zeenk:** Listen on external host when prod ([1eaeca94](https://github.com/logotip4ik/keycap/commit/1eaeca94))
+- Use correct site url ([bc7ef35c](https://github.com/logotip4ik/keycap/commit/bc7ef35c))
+- Use different cookie prefix because we now specify domain ([3231421d](https://github.com/logotip4ik/keycap/commit/3231421d))
+- Use correct hint path for fontaine ([16838df4](https://github.com/logotip4ik/keycap/commit/16838df4))
+- Do not show error message if base error handling passed ([25b7181c](https://github.com/logotip4ik/keycap/commit/25b7181c))
+
+### 💅 Refactors
+
+- Move focus handling to modal component ([bff445a4](https://github.com/logotip4ik/keycap/commit/bff445a4))
+- Remove asyncData from folder contents list ([f3ae1d47](https://github.com/logotip4ik/keycap/commit/f3ae1d47))
+- Improve recents fetch ([eaf37d00](https://github.com/logotip4ik/keycap/commit/eaf37d00))
+- More consistent watcher call ([4e29e928](https://github.com/logotip4ik/keycap/commit/4e29e928))
+
+### 🏡 Chore
+
+- **release:** V3.14.2 ([39f9e37f](https://github.com/logotip4ik/keycap/commit/39f9e37f))
+- Add editor shortcuts list ([98dd0fa6](https://github.com/logotip4ik/keycap/commit/98dd0fa6))
+- Make note scrollbar a bit smaller ([253e7321](https://github.com/logotip4ik/keycap/commit/253e7321))
+- Allow formatter to span wider on phones ([5049c912](https://github.com/logotip4ik/keycap/commit/5049c912))
+- Use config instead of extend ([05155865](https://github.com/logotip4ik/keycap/commit/05155865))
+- Use define for class fields ([f5877c47](https://github.com/logotip4ik/keycap/commit/f5877c47))
+- Update deps ([3715f338](https://github.com/logotip4ik/keycap/commit/3715f338))
+- Add build:ci script ([def44644](https://github.com/logotip4ik/keycap/commit/def44644))
+- Do not break the app if failed connecting to zeenk ([8f0a8834](https://github.com/logotip4ik/keycap/commit/8f0a8834))
+- Disable error client error logging for now ([92da84f2](https://github.com/logotip4ik/keycap/commit/92da84f2))
+- Move font to public dir to benefit from caching ([69c7a337](https://github.com/logotip4ik/keycap/commit/69c7a337))
+- Rename zeenkurl to zeenksite ([d14e32d9](https://github.com/logotip4ik/keycap/commit/d14e32d9))
+- Improve status bar handling for ios devices ([af31e851](https://github.com/logotip4ik/keycap/commit/af31e851))
+- Drop second prisma install ([d1c70a55](https://github.com/logotip4ik/keycap/commit/d1c70a55))
+- Remove v-once directives ([fd1c3a01](https://github.com/logotip4ik/keycap/commit/fd1c3a01))
+- Hoist tests from unplugin dir ([b554498d](https://github.com/logotip4ik/keycap/commit/b554498d))
+
+### ✅ Tests
+
+- Add contents sidebar testing ([b5f440f4](https://github.com/logotip4ik/keycap/commit/b5f440f4))
+
+### 🤖 CI
+
+- Update deployment action ([531bf76f](https://github.com/logotip4ik/keycap/commit/531bf76f))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.14.2
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.14.1...v3.14.2)
