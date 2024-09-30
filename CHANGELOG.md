@@ -1,6 +1,28 @@
 # Changelog
 
 
+## v3.15.2
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.1...v3.15.2)
+
+### 🩹 Fixes
+
+- Use white background as main theme color and don't use media with theme-color ([392ed634](https://github.com/logotip4ik/keycap/commit/392ed634))
+- Simplify formatter position animation ([add6ea9d](https://github.com/logotip4ik/keycap/commit/add6ea9d))
+
+### 🏡 Chore
+
+- **release:** V3.15.1 ([34caf215](https://github.com/logotip4ik/keycap/commit/34caf215))
+- Try to cache node installs ([6d00b3b3](https://github.com/logotip4ik/keycap/commit/6d00b3b3))
+- Better yarn installs in docker ([6a7446cb](https://github.com/logotip4ik/keycap/commit/6a7446cb))
+- Maybe fix dockerfile ([3dc7c4fe](https://github.com/logotip4ik/keycap/commit/3dc7c4fe))
+- Minor css issues ([92eeba28](https://github.com/logotip4ik/keycap/commit/92eeba28))
+- Use mandatory snapping ([1bb379ee](https://github.com/logotip4ik/keycap/commit/1bb379ee))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.15.1
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.0...v3.15.1)
