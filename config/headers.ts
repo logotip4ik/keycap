@@ -6,6 +6,8 @@ import { isCI } from 'std-env';
 
 const turnstileEnabled = destr(process.env.FEATURE_TURNSTILE) === true;
 
+const ZEENK_SITE = process.env.NUXT_PUBLIC_ZEENK_SITE;
+
 export const CorsOrigin = process.env.NUXT_PUBLIC_SITE || '*';
 export const CorsMethods = ['GET', 'OPTIONS', 'PATCH', 'POST', 'DELETE'] satisfies Array<HTTPMethod>;
 export const CorsHeaders = ['Origin', 'Content-Type', 'Accept'];
@@ -20,7 +22,7 @@ export const corsHeaders = {
 export const cspHeaders = {
   'Content-Security-Policy': [
     'default-src \'self\'',
-    'connect-src \'self\' https:',
+    `connect-src \'self\' https: wss://${ZEENK_SITE}`,
     `script-src 'self' 'unsafe-inline' ${turnstileEnabled ? 'https://challenges.cloudflare.com' : ''}`.trim(),
     'style-src \'self\' \'unsafe-inline\'',
     'object-src \'none\'',
