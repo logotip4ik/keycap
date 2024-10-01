@@ -25,6 +25,7 @@ async function getEmailFromCode(event: H3Event) {
 
 const rules: Array<Rule> = [
   { path: '/register', handler: getEmailFromCode },
+  { path: '/_log', handler: withUserOnly },
   { path: '/api/note', handler: withUserOnly },
   { path: '/api/folder', handler: withUserOnly },
   { path: '/api/search', handler: withUserOnly },

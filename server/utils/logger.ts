@@ -7,11 +7,6 @@ export const LogLevel = {
   Error: 'error',
 } as const;
 
-const logDefaults = {
-  nitro: true,
-  env: process.env.VERCEL_ENV || 'development',
-};
-
 export interface LoggerData extends Record<string, unknown | undefined> {
   msg?: string | undefined
   err?: Error | undefined
@@ -46,14 +41,19 @@ function getAxiomClient(axiom: ReturnType<typeof useRuntimeConfig>['axiom']) {
 async function log(event: H3Event, level: ValueOf<typeof LogLevel>, data: LoggerData) {
   const [path, query] = event.path.split('?');
 
-  Object.assign(data, logDefaults, {
+  Object.assign(data, {
     path,
     query,
     user: event.context.user,
 
     level,
     _time: new Date().toISOString(),
+    env: process.env.VERCEL_ENV || 'development',
   });
+
+  if (data.nitro === undefined) {
+    data.nitro = true;
+  }
 
   if (data.err) {
     data.err = Object.assign(Object.create(null), data.err, {
@@ -70,7 +70,7 @@ async function log(event: H3Event, level: ValueOf<typeof LogLevel>, data: Logger
 
   if (import.meta.dev) {
     // eslint-disable-next-line no-console
-    return console.log(data);
+    return console.dir(data);
   }
 
   const { axiom } = useRuntimeConfig();
@@ -80,6 +80,8 @@ async function log(event: H3Event, level: ValueOf<typeof LogLevel>, data: Logger
     .catch((err) => {
       // eslint-disable-next-line no-console
       console.log('that was unexpected', err);
+      // eslint-disable-next-line no-console
+      console.dir({ data });
     });
 }
 

@@ -4,35 +4,58 @@ const INTERVAL = parseDuration('1 minute')!;
 const LIMIT = Math.floor((INTERVAL * 2) / 1000); // two per second
 
 export default defineEventHandler(async (event) => {
-  if (!import.meta.config.benchmarking && event.path?.startsWith('/api')) {
-    const limiter = getRateLimiter();
-    const identifier = getRequestIP(event, { xForwardedFor: true });
+  let path = event.path;
+  const queryIdx = path.indexOf('?');
 
-    const rateLimit = limiter.acquire(identifier!);
+  if (queryIdx !== -1) {
+    path = path.substring(0, queryIdx);
+  }
 
-    setHeader(event, 'X-RateLimit-Limit', LIMIT);
-    setHeader(event, 'X-RateLimit-Remaining', rateLimit.remaining);
-    setHeader(event, 'X-RateLimit-Reset', rateLimit.remainingTime);
+  let pathFirstPart = path;
+  const firstSlashIdx = pathFirstPart.indexOf('/', 1);
 
-    if (rateLimit.limited) {
-      throw createError({
-        status: 429,
-        message: 'Too many requests',
-      });
-    }
+  if (firstSlashIdx !== -1) {
+    pathFirstPart = pathFirstPart.substring(0, firstSlashIdx);
+  }
 
-    const pathWithQuery = event.path;
-    const queryIdx = pathWithQuery.indexOf('?');
-    const path = queryIdx !== -1 ? pathWithQuery.substring(0, queryIdx) : pathWithQuery;
+  const isApiRequest = pathFirstPart === '/api';
+  const isLogRequest = pathFirstPart === '/_log';
 
-    if (path === '/api/auth/register' || path === '/api/auth/login') {
-      for (let i = 0; i < 20; i++) {
-        rateLimit.consume();
-      }
-    }
-    else {
+  if (
+    import.meta.config.benchmarking
+      || (!isApiRequest && !isLogRequest)
+  ) {
+    return;
+  }
+
+  const limiter = getRateLimiter();
+  let identifier = getRequestIP(event, { xForwardedFor: true });
+
+  // use separate bucket for log requests
+  if (isLogRequest) {
+    identifier += '_log';
+  }
+
+  const rateLimit = limiter.acquire(identifier!);
+
+  setHeader(event, 'X-RateLimit-Limit', LIMIT);
+  setHeader(event, 'X-RateLimit-Remaining', rateLimit.remaining);
+  setHeader(event, 'X-RateLimit-Reset', rateLimit.remainingTime);
+
+  if (rateLimit.limited) {
+    throw createError({
+      status: 429,
+      message: 'Too many requests',
+    });
+  }
+
+  if (path === '/api/auth/register' || path === '/api/auth/login') {
+    for (let i = 0; i < 20; i++) {
       rateLimit.consume();
     }
+  }
+  else {
+    rateLimit.consume();
   }
 });
 

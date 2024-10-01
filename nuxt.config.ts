@@ -143,11 +143,6 @@ export default defineNuxtConfig({
       },
 
       features: {},
-
-      errors: {
-        url: '',
-        apiKey: '',
-      },
     },
 
     turnstile: {

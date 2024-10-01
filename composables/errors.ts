@@ -10,33 +10,30 @@ export function setupErrorLogging() {
 }
 
 export function sendError(error: Error, properties?: Record<string, string>) {
-  const { errors } = useRuntimeConfig().public;
-
   const payload = {
-    api_key: errors.apiKey,
-    distinct_id: import.meta.prod ? 'Keycap' : 'Keycap Dev',
-    properties: {
+    type: LogLevel.Info,
+    payload: {
+      ...error,
+
+      distinct_id: import.meta.prod ? 'Keycap' : 'Keycap Dev',
       name: error.name,
       msg: error.message,
+      stack: error.stack,
       // @ts-expect-error in case status code exists send it
       statusCode: error.statusCode,
-      // https://github.com/PostHog/posthog-js-lite/blob/master/posthog-core/src/index.ts#L680
-      $session_id: getSessionId(),
     },
-    event: '$event',
   };
 
   if (properties) {
-    extend(payload.properties, properties);
+    extend(payload.payload, properties);
   }
 
-  if (import.meta.prod) {
-    // TODO: self host or proxy from our domain because of CORP headers
-    // navigator.sendBeacon(errors.url, JSON.stringify(payload));
-  }
-  else {
-    console.log(payload); // eslint-disable-line no-console
-  }
+  $fetch('/_log', {
+    priority: 'low',
+    method: 'POST',
+    body: payload,
+    ignoreResponseError: true,
+  });
 }
 
 export async function baseHandleError(error: Error | H3Error): Promise<boolean> {
@@ -68,23 +65,3 @@ export async function baseHandleError(error: Error | H3Error): Promise<boolean> 
 
   return false;
 };
-
-function getSessionId() {
-  const key = 'device-identifier';
-  let id = getUCookie(key);
-
-  if (id) {
-    return id;
-  }
-
-  id = crypto.randomUUID();
-
-  setUCookie(key, id, {
-    path: '/',
-    secure: true,
-    sameSite: 'lax',
-    maxAge: parseDuration('0.5year', 's'),
-  });
-
-  return id;
-}

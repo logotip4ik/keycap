@@ -1,5 +1,7 @@
 import type { NuxtApp } from '#app';
 
+export { LogLevel } from '~/server/utils/logger';
+
 export const stringifiedBigIntRE = /^(\d{1,19})$/;
 
 const falsyBigInt = BigInt(-1);
