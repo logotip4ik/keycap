@@ -15,7 +15,7 @@ After months of using Windows and Android, I found out that notes aren't syncing
 
 - [Nuxt](https://nuxt.com/)
 - [Kysely](https://kysely.dev/)
-- [Cockroach DB](https://www.cockroachlabs.com/product/)
+- [PostgreSQL](https://www.postgresql.org/)
 
 ## Todo
 
