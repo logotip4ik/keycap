@@ -51,10 +51,15 @@ async function fetchRecent(retry: number = 0): Promise<void> {
     });
 };
 
-onBeforeMount(() => {
-  if (state.value !== 'hidden') {
-    fetchRecent();
+const stop = watchEffect(() => {
+  if (state.value === 'hidden') {
+    return;
   }
+
+  fetchRecent();
+  nextTick(() => {
+    stop();
+  });
 });
 </script>
 
