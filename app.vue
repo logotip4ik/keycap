@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import '~/polyfills/array-at';
 
-setupErrorLogging();
-
 const route = useRoute();
 const { site } = useRuntimeConfig().public;
 const { isSmallScreen, isFirefox, isSafari } = useDevice();
@@ -53,6 +51,10 @@ useSeoMeta({
   twitterCreator: 'BogdanKostyuk_',
   twitterImage: `${protocol}://${site}/og-image.min.jpg`,
   twitterImageAlt: 'Keycap',
+});
+
+onErrorCaptured((error) => {
+  sendError(error);
 });
 
 if (import.meta.dev) {
