@@ -57,6 +57,7 @@ function init(context: Context, retry: number = 0) {
         context.state = 'OPEN';
 
         if (import.meta.dev) {
+          // eslint-disable-next-line no-console
           console.info('zeenk connected.');
         }
       }, { once: true, passive: true }),

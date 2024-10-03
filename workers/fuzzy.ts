@@ -12,6 +12,8 @@ const arrayWithString = [''];
 const itemsCache = new Map<string, FuzzyItem>();
 const emojisCache = new Map<string, Emoji>();
 
+let populateItemsCachePromise: Promise<void> | undefined;
+
 function addItem(item: FuzzyItem) {
   // truncate before first slash part /test/abc -> abc
   const identifier = decodeURIComponent(item.path.replace(/\/\w+\//, ''));
@@ -50,7 +52,11 @@ function search(query: string): Array<FuzzyItem | CommandItem> {
     .map((suggestion) => suggestion.value);
 }
 
-function searchWithTransliteration(query: string): Array<FuzzyItem | CommandItem> {
+async function searchWithTransliteration(query: string): Promise<Array<FuzzyItem | CommandItem>> {
+  if (populateItemsCachePromise) {
+    await populateItemsCachePromise;
+  }
+
   let result = search(query);
 
   if (result.length === 0) {
@@ -71,6 +77,8 @@ async function populateItemsCache() {
   for (const item of items.data || []) {
     addItem(item);
   }
+
+  populateItemsCachePromise = undefined;
 }
 
 async function populateEmojisCache() {
@@ -111,7 +119,7 @@ async function searchForEmoji(query: string) {
     .map((suggestion) => suggestion.value);
 }
 
-populateItemsCache();
+populateItemsCachePromise = populateItemsCache();
 
 const fuzzyInterface: FuzzyWorker = {
   searchWithQuery: searchWithTransliteration,
