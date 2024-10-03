@@ -34,7 +34,7 @@ function handleSubmit() {
     const creationName = name.value.at(-1) === '/' ? name.value.slice(0, -1) : name.value;
     const createAction = creationName.length === name.value.length ? createNote : createFolder;
 
-    promise = createAction(creationName, props.item, props.parent) as Promise<FolderOrNote>;
+    promise = createAction(creationName, props.item, props.parent) as Promise<FolderOrNote | undefined>;
   }
   else if (state === ItemState.Editing) {
     const renameAction = isFolder ? renameFolder : renameNote;

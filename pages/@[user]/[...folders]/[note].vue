@@ -85,7 +85,7 @@ let retryInterval: ReturnType<typeof setInterval> | undefined;
 let failedSaveToast: ToastInstance | undefined;
 let abortControllerUpdate: AbortController | undefined;
 const throttledNoteUpdate = useThrottleFn(updateNote, 1500, true, false); // enable trailing call and disable leading
-function updateNote(content: string) {
+async function updateNote(content: string) {
   // if no note was found in cache that means that it was deleted
   if (!notesCache.has(notePath.value)) {
     return;
@@ -95,11 +95,11 @@ function updateNote(content: string) {
 
   notesCache.set(newNote.path, newNote);
 
-  const innerUpdate = (note: NoteWithContent) => {
+  const innerUpdate = async (note: NoteWithContent) => {
     abortControllerUpdate?.abort();
     abortControllerUpdate = new AbortController();
 
-    $fetch(`/api/note${noteApiPath.value}`, {
+    await $fetch(`/api/note${noteApiPath.value}`, {
       method: 'PATCH',
       body: { content },
       retry: 2,
@@ -136,7 +136,7 @@ function updateNote(content: string) {
   };
 
   clearInterval(retryInterval);
-  innerUpdate(newNote);
+  await innerUpdate(newNote);
 }
 
 async function handleError(error: Error) {
@@ -210,10 +210,10 @@ if (import.meta.client) {
       v-if="note"
       key="content"
       class="workspace__note-editor"
-      :note-path
-      :content="note.content || ''"
+      :note
       :editable="!isFallbackMode && !!note"
       @update="throttledNoteUpdate"
+      @refresh="fetchNote"
     />
 
     <WorkspaceNoteEditorSkeleton

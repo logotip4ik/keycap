@@ -10,10 +10,10 @@ import { EditorContent } from '@tiptap/vue-3';
 import '~/assets/styles/note-editor.scss';
 
 const props = defineProps<{
-  notePath: string
-  content: string
+  note: NoteWithContent
   editable: boolean
-  onUpdate: (content: string) => void
+  onUpdate: (content: string) => Promise<void>
+  onRefresh: () => Promise<void>
 }>();
 
 const { shortcuts } = useAppConfig();
@@ -30,10 +30,10 @@ const {
 function updateContent() {
   const content = editor.value?.getHTML();
 
-  props.onUpdate(content || '');
+  return props.onUpdate(content || '');
 }
 
-watch(() => props.content, (content) => {
+watch(() => props.note.content, (content) => {
   if (isTyping.value || !editor.value) {
     return;
   }
@@ -43,7 +43,10 @@ watch(() => props.content, (content) => {
   if (editorContent !== content) {
     editor.value.commands.setContent(content || '');
   }
-}, { immediate: import.meta.client });
+}, {
+  immediate: import.meta.client,
+  deep: true, // this is really weird, but it only triggers watcher with deep: true ?
+});
 
 watch(() => props.editable, (editable) => {
   editor.value?.setOptions({ editable });
@@ -61,8 +64,14 @@ watch(spellcheck, (spellcheck) => {
 });
 
 mitt.on('save:note', () => updateContent());
+
 zeenk.on('update-note', ({ path, steps }) => {
-  if (props.notePath !== path || !editor.value) {
+  if (props.note.path !== path || !editor.value) {
+    return;
+  }
+
+  if (!steps) {
+    props.onRefresh();
     return;
   }
 
@@ -83,9 +92,18 @@ onContentUpdate(({ transaction }) => {
     return;
   }
 
-  updateContent();
+  const updatePromise = updateContent();
+
+  if (transaction.getMeta('paste') === true) {
+    updatePromise.then(() => {
+      zeenk.send('update-note', { path: props.note.path });
+    });
+
+    return;
+  }
+
   zeenk.send('update-note', {
-    path: props.notePath,
+    path: props.note.path,
     steps: transaction.steps.map((s) => s.toJSON()),
   });
 });

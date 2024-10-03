@@ -220,16 +220,7 @@ mitt.on('precreate:item', (event) => {
 
 zeenk.on('item-created', ({ item }) => {
   if (folder.value && item.path.startsWith(folder.value.path)) {
-    if (checkIsFolder(item)) {
-      folder.value.subfolders = folder.value.subfolders
-        .concat(item)
-        .sort((a, b) => a.name > b.name ? 1 : -1);
-    }
-    else {
-      folder.value.notes = folder.value.notes
-        .concat(item)
-        .sort((a, b) => a.name > b.name ? 1 : -1);
-    }
+    fetchFolder();
   }
 });
 

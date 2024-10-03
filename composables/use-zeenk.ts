@@ -6,7 +6,9 @@ interface Event {
 }
 
 interface ZeenkEvents {
-  'update-note': { path: string, steps: Array<unknown> }
+  // if without steps, that means that there are too many tokens to send through zeenk
+  'update-note': { path: string, steps?: Array<unknown> }
+
   'item-created': { item: FolderOrNote }
 };
 
