@@ -10,6 +10,7 @@ const props = defineProps<{
 const { state: contentsState, isFixed: isContentsFixed } = useContentsState();
 const createToast = useToaster();
 const { isSmallScreen } = useDevice();
+const zeenk = useZeenk();
 
 const inputEl = shallowRef<HTMLInputElement | null>(null);
 const name = ref(props.item.name || '');
@@ -24,7 +25,7 @@ const placeholder = props.item.state === ItemState.Creating
 const allowedItemName = `${allowedItemNameRE.source.slice(0, -1)}\\/?$`;
 
 function handleSubmit() {
-  let promise: Promise<unknown>;
+  let promise: Promise<FolderOrNote | undefined>;
   isLoading.value = true;
 
   const state = props.item.state;
@@ -33,24 +34,28 @@ function handleSubmit() {
     const creationName = name.value.at(-1) === '/' ? name.value.slice(0, -1) : name.value;
     const createAction = creationName.length === name.value.length ? createNote : createFolder;
 
-    promise = createAction(creationName, props.item, props.parent);
+    promise = createAction(creationName, props.item, props.parent) as Promise<FolderOrNote>;
   }
   else if (state === ItemState.Editing) {
     const renameAction = isFolder ? renameFolder : renameNote;
 
-    promise = renameAction(name.value, props.item);
+    promise = renameAction(name.value, props.item) as Promise<undefined>;
   }
   else {
     return;
   }
 
   promise
-    .then(() => {
+    .then((item) => {
       contentsState.value = isSmallScreen.value
         ? 'hidden'
         : (contentsState.value === 'visible' ? 'hidden' : contentsState.value);
 
       withTiptapEditor((editor) => editor.commands.focus());
+
+      if (state === ItemState.Creating && item) {
+        zeenk.send('item-created', { item });
+      }
     })
     .catch((error) => {
       createToast(error.data.message || ERROR_MESSAGES.DEFAULT);

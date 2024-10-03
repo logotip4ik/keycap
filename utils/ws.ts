@@ -55,6 +55,10 @@ function init(context: Context, retry: number = 0) {
     offs = [
       on(ws, 'open', () => {
         context.state = 'OPEN';
+
+        if (import.meta.dev) {
+          console.info('zeenk connected.');
+        }
       }, { once: true, passive: true }),
 
       on(ws, 'close', () => {

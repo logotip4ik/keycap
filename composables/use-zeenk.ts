@@ -7,6 +7,7 @@ interface Event {
 
 interface ZeenkEvents {
   'update-note': { path: string, steps: Array<unknown> }
+  'item-created': { item: FolderOrNote }
 };
 
 interface Zeenk {

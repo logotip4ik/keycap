@@ -11,6 +11,7 @@ const createToast = useToaster();
 const user = useUser();
 const { shortcuts } = useAppConfig();
 const { state: contentsState } = useContentsState();
+const zeenk = useZeenk();
 
 const folderApiPath = computed(() => getCurrentFolderPath(route).slice(0, -1));
 const folderPath = computed(() => `/${user.value!.username}${folderApiPath.value}`);
@@ -182,10 +183,12 @@ function handleCreateItem(initialValues?: Parameters<typeof preCreateItem>[1]) {
 watch(folderApiPath, fetchFolder);
 
 watch(contentsState, (state, oldState) => {
+  const timeDiff = Date.now() - (lastRefetch || 0);
+
   if (
     state !== 'hidden'
-    && (!oldState || oldState === 'hidden')
-    && !folder.value
+    && (!oldState || oldState === 'hidden' || !folder.value)
+    && timeDiff > parseDuration('5 seconds')!
   ) {
     return fetchFolder();
   }
@@ -209,6 +212,21 @@ mitt.on('details:show:folder', () => {
 
 mitt.on('precreate:item', (event) => {
   handleCreateItem(event);
+});
+
+zeenk.on('item-created', ({ item }) => {
+  if (folder.value && item.path.startsWith(folder.value.path)) {
+    if (checkIsFolder(item)) {
+      folder.value.subfolders = folder.value.subfolders
+        .concat(item)
+        .sort((a, b) => a.name > b.name ? 1 : -1);
+    }
+    else {
+      folder.value.notes = folder.value.notes
+        .concat(item)
+        .sort((a, b) => a.name > b.name ? 1 : -1);
+    }
+  }
 });
 
 useTinykeys({

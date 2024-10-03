@@ -87,7 +87,9 @@ export async function createFolder(folderName: string, self: FolderOrNote, paren
   fuzzyWorker.value?.addItemToCache(newlyCreatedFolder);
   extend(self, newlyCreatedFolder);
 
-  showItem(newlyCreatedFolder);
+  await showItem(newlyCreatedFolder);
+
+  return newlyCreatedFolder;
 }
 
 export async function createNote(noteName: string, self: FolderOrNote, parent: FolderWithContents) {
@@ -117,7 +119,9 @@ export async function createNote(noteName: string, self: FolderOrNote, parent: F
   fuzzyWorker.value?.addItemToCache(newlyCreatedNote);
   extend(self, newlyCreatedNote);
 
-  showItem(newlyCreatedNote);
+  await showItem(newlyCreatedNote);
+
+  return newlyCreatedNote;
 }
 
 export async function renameFolder(newName: string, self: FolderOrNote) {
@@ -195,7 +199,7 @@ export async function renameNote(newName: string, self: FolderOrNote) {
   }
 
   // @ts-expect-error setting path two lines before
-  showItem(newNote);
+  await showItem(newNote);
 }
 
 export async function deleteNote(self: FolderOrNote, parent: FolderWithContents) {
@@ -213,7 +217,7 @@ export async function deleteNote(self: FolderOrNote, parent: FolderWithContents)
   const offlineStorage = useOfflineStorage();
   const fuzzyWorker = useFuzzyWorker();
 
-  showItem(parent);
+  await showItem(parent);
 
   notesCache.remove(self.path);
   offlineStorage.removeItem(self.path);
