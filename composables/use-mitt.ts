@@ -5,11 +5,20 @@ import proxy from 'unenv/runtime/mock/proxy';
 
 // eslint-disable-next-line ts/consistent-type-definitions
 type Events = {
+  'refresh:note'?: Partial<object>
+
   'save:note'?: Partial<{ force: boolean }>
+
+  'refresh:folder'?: Partial<object>
+
   'details:show:folder'?: Partial<object>
+
   'details:show:note'?: Partial<object>
+
   'search:show'?: Partial<object>
+
   'shortcuts:show'?: Partial<object>
+
   'precreate:item'?: Partial<{ name: string }>
 };
 

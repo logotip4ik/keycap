@@ -194,6 +194,10 @@ watch(contentsState, (state, oldState) => {
   }
 }, { immediate: import.meta.client });
 
+mitt.on('refresh:folder', () => {
+  fetchFolder();
+});
+
 mitt.on('details:show:folder', () => {
   if (!folder.value) {
     const stop = watch(folder, (folder) => {

@@ -162,6 +162,10 @@ async function handleError(error: Error) {
   note.value = offlineNote as NoteWithContent;
 }
 
+mitt.on('refresh:note', () => {
+  fetchNote();
+});
+
 mitt.on('details:show:note', () => {
   if (note.value) {
     currentItemForDetails.value = note.value;

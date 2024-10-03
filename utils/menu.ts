@@ -15,13 +15,16 @@ export const commandActions: Record<Command['key'], Command['handler']> = {
     useMitt().emit('precreate:item', arg ? { name: arg } : undefined);
   },
   [SearchAction.Refresh]: () => {
-    refreshNuxtData(['note', 'folder']);
+    const mitt = useMitt();
+
+    mitt.emit('refresh:note');
+    mitt.emit('refresh:folder');
   },
   [SearchAction.RefreshNote]: () => {
-    refreshNuxtData('note');
+    useMitt().emit('refresh:note');
   },
   [SearchAction.RefreshFolder]: () => {
-    refreshNuxtData('folder');
+    useMitt().emit('refresh:folder');
   },
   [SearchAction.SaveNote]: () => {
     useMitt().emit('save:note');
