@@ -85,7 +85,7 @@ onMounted(() => {
       <WithFadeTransition>
         <LazyWorkspaceWelcome v-if="isNoteEmpty" />
 
-        <div v-else>
+        <div v-else style="height: 100%;">
           <NuxtPage :transition="{ name: 'fade' }" />
         </div>
       </WithFadeTransition>
