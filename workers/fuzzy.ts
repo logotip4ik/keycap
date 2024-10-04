@@ -29,7 +29,13 @@ async function hasItemInCache(key: string) {
     await populateItemsCachePromise;
   }
 
-  return itemsCache.has(key);
+  for (const item of itemsCache.values()) {
+    if (item.path === key) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 function search(query: string): Array<FuzzyItem | CommandItem> {

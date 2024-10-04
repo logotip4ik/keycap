@@ -74,7 +74,7 @@ export async function createFolder(folderName: string, self: FolderOrNote, paren
 
   const { data: newlyCreatedFolder } = res;
   const foldersCache = useFoldersCache();
-  const offlineStorage = useOfflineStorage();
+  const offlineStorage = getOfflineStorage();
   const fuzzyWorker = getFuzzyWorker();
 
   newlyCreatedFolder.state = undefined;
@@ -108,7 +108,7 @@ export async function createNote(noteName: string, self: FolderOrNote, parent: F
 
   const { data: newlyCreatedNote } = res;
   const notesCache = useNotesCache();
-  const offlineStorage = useOfflineStorage();
+  const offlineStorage = getOfflineStorage();
   const fuzzyWorker = getFuzzyWorker();
 
   newlyCreatedNote.content ||= '';
@@ -135,7 +135,7 @@ export async function renameFolder(newName: string, self: FolderOrNote) {
 
   const notesCache = useNotesCache();
   const foldersCache = useFoldersCache();
-  const offlineStorage = useOfflineStorage();
+  const offlineStorage = getOfflineStorage();
   const fuzzyWorker = getFuzzyWorker();
 
   const folderNameRegex = new RegExp(`${escapeRE(encodeURIComponent(self.name))}$`);
@@ -176,7 +176,7 @@ export async function renameNote(newName: string, self: FolderOrNote) {
   await $fetch(`/api/note${notePath}`, { method: 'PATCH', body: newNote });
 
   const notesCache = useNotesCache();
-  const offlineStorage = useOfflineStorage();
+  const offlineStorage = getOfflineStorage();
   const fuzzyWorker = getFuzzyWorker();
 
   const noteNameRegex = new RegExp(`${escapeRE(encodeURIComponent(self.name))}$`);
@@ -214,7 +214,7 @@ export async function deleteNote(self: FolderOrNote, parent: FolderWithContents)
   }
 
   const notesCache = useNotesCache();
-  const offlineStorage = useOfflineStorage();
+  const offlineStorage = getOfflineStorage();
   const fuzzyWorker = getFuzzyWorker();
 
   await showItem(parent);
@@ -237,14 +237,14 @@ export async function deleteFolder(self: FolderOrNote, parent: FolderWithContent
   }
 
   const foldersCache = useFoldersCache();
-  const offlineStorage = useOfflineStorage();
+  const offlineStorage = getOfflineStorage();
   const fuzzyWorker = getFuzzyWorker();
 
   foldersCache.remove(self.path);
   offlineStorage.removeItem(self.path);
 
   const itemPathToCheck = `${self.path}/`;
-  const itemsToDelete = await offlineStorage.getAllKeys()
+  const itemsToDelete = await offlineStorage.getItemsKeys()
     .then((keys) => keys.filter((key) => key.startsWith(itemPathToCheck)));
   await Promise.all(
     itemsToDelete.map((key) => offlineStorage.removeItem(key)),
@@ -269,7 +269,7 @@ export async function preloadItem(self: FolderOrNote) {
     return;
   }
 
-  const offlineStorage = useOfflineStorage();
+  const offlineStorage = getOfflineStorage();
   const notesCache = useNotesCache();
   const foldersCache = useFoldersCache();
 

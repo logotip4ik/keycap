@@ -38,14 +38,10 @@ declare global {
     key: SearchActionValues
   }
 
-  export type FuzzyItem = Prettify<Pick<FolderOrNote, 'name' | 'path'> & { root?: boolean }>;
-
-
-  export interface OfflineStorage {
-    setItem: <T = unknown>(key: string, value: T) => Promise<void>
-    getItem: <T = unknown>(key: string) => Promise<T | undefined>
-    removeItem: (key: string) => Promise<void>
-    getAllKeys: () => Promise<Array<string>>
+  export interface FuzzyItem {
+    name: string
+    path: string
+    root?: boolean
   }
 }
 
