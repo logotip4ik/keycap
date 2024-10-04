@@ -7,7 +7,7 @@ interface MenuAction {
 
 const props = defineProps<{
   target: HTMLElement
-  item: FolderOrNote
+  item: FolderMinimal | NoteMinimal
   parent: FolderWithContents
   onClose: () => void
 }>();

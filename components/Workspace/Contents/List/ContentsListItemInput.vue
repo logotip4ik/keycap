@@ -3,7 +3,7 @@ import { allowedItemNameRE } from '~/server/utils';
 import { useContentsState } from '../config';
 
 const props = defineProps<{
-  item: FolderOrNote
+  item: FolderMinimal | NoteMinimal
   parent: FolderWithContents
 }>();
 
@@ -25,7 +25,7 @@ const placeholder = props.item.state === ItemState.Creating
 const allowedItemName = `${allowedItemNameRE.source.slice(0, -1)}\\/?$`;
 
 function handleSubmit() {
-  let promise: Promise<FolderOrNote | undefined>;
+  let promise: Promise<FolderMinimal | NoteMinimal | undefined>;
   isLoading.value = true;
 
   const state = props.item.state;
@@ -34,12 +34,17 @@ function handleSubmit() {
     const creationName = name.value.at(-1) === '/' ? name.value.slice(0, -1) : name.value;
     const createAction = creationName.length === name.value.length ? createNote : createFolder;
 
-    promise = createAction(creationName, props.item, props.parent) as Promise<FolderOrNote | undefined>;
+    // precreated item (which we use for showing input) is always note, so both `createNote` and
+    // `createFolder` require second param to be typeof NoteMinimal
+    promise = createAction(creationName, props.item, props.parent) as Promise<FolderMinimal | NoteMinimal | undefined>;
   }
   else if (state === ItemState.Editing) {
-    const renameAction = isFolder ? renameFolder : renameNote;
-
-    promise = renameAction(name.value, props.item) as Promise<undefined>;
+    if (checkIsFolder(props.item)) {
+      promise = renameFolder(name.value, props.item) as Promise<undefined>;
+    }
+    else {
+      promise = renameNote(name.value, props.item) as Promise<undefined>;
+    }
   }
   else {
     return;

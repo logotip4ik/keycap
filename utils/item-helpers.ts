@@ -58,7 +58,7 @@ export function getItemPathFromHref(href: string) {
   return parts.map(decodeURIComponent).join('/');
 }
 
-export async function createFolder(folderName: string, self: FolderOrNote, parent: FolderWithContents) {
+export async function createFolder(folderName: string, self: NoteMinimal, parent: FolderWithContents) {
   const currentFolderPath = getCurrentFolderPath();
   const newFolderPathName = encodeURIComponent(folderName.trim());
   const newFolderPath = currentFolderPath + newFolderPathName;
@@ -92,7 +92,7 @@ export async function createFolder(folderName: string, self: FolderOrNote, paren
   return newlyCreatedFolder;
 }
 
-export async function createNote(noteName: string, self: FolderOrNote, parent: FolderWithContents) {
+export async function createNote(noteName: string, self: NoteMinimal, parent: FolderWithContents) {
   const currentFolderPath = getCurrentFolderPath();
   const newNotePathName = encodeURIComponent(noteName.trim());
   const newNotePath = currentFolderPath + newNotePathName;
@@ -124,7 +124,7 @@ export async function createNote(noteName: string, self: FolderOrNote, parent: F
   return newlyCreatedNote;
 }
 
-export async function renameFolder(newName: string, self: FolderOrNote) {
+export async function renameFolder(newName: string, self: FolderMinimal) {
   const newFolder: Record<string, string | undefined> = { name: newName.trim() };
 
   const currentFolderPath = getCurrentFolderPath();
@@ -166,7 +166,7 @@ export async function renameFolder(newName: string, self: FolderOrNote) {
   }
 }
 
-export async function renameNote(newName: string, self: FolderOrNote) {
+export async function renameNote(newName: string, self: NoteMinimal) {
   const newNote: Record<string, string | undefined> = { name: newName.trim() };
 
   const currentFolderPath = getCurrentFolderPath();
@@ -202,7 +202,7 @@ export async function renameNote(newName: string, self: FolderOrNote) {
   await showItem(newNote);
 }
 
-export async function deleteNote(self: FolderOrNote, parent: FolderWithContents) {
+export async function deleteNote(self: NoteMinimal, parent: FolderWithContents) {
   const currentFolderPath = getCurrentFolderPath();
   const notePathName = encodeURIComponent(self.name);
   const notePath = currentFolderPath + notePathName;
@@ -225,7 +225,7 @@ export async function deleteNote(self: FolderOrNote, parent: FolderWithContents)
   remove(parent.notes, self);
 }
 
-export async function deleteFolder(self: FolderOrNote, parent: FolderWithContents) {
+export async function deleteFolder(self: FolderMinimal, parent: FolderWithContents) {
   const currentFolderPath = getCurrentFolderPath();
   const folderPathName = encodeURIComponent(self.name);
   const folderPath = currentFolderPath + folderPathName;
@@ -255,7 +255,7 @@ export async function deleteFolder(self: FolderOrNote, parent: FolderWithContent
 }
 
 // NOTE: Refactor all functions above to use this approach ?
-export async function preloadItem(self: FolderOrNote) {
+export async function preloadItem(self: FolderMinimal | NoteMinimal) {
   const isFolder = checkIsFolder(self);
 
   const currentFolderPath = getCurrentFolderPath();

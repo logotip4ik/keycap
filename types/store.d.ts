@@ -29,8 +29,6 @@ declare global {
   };
   export type FolderWithContents = Prettify<FolderMinimal & FolderContents>;
 
-  export type FolderOrNote = FolderMinimal & NoteMinimal;
-
   export type SharedNote = Pick<Note, 'name' | 'content' | 'updatedAt' | 'createdAt'>;
 
   export interface CommandItem {

@@ -18,7 +18,7 @@ const folderPath = computed(() => `/${user.value!.username}${folderApiPath.value
 
 const folder = ref<FolderWithContents>();
 const menuOptions = shallowReactive({
-  item: undefined as FolderOrNote | undefined,
+  item: undefined as FolderMinimal | NoteMinimal | undefined,
   target: undefined as HTMLElement | undefined,
 });
 
@@ -97,10 +97,10 @@ const folderContents = computed(() => {
   const notes = folder.value.notes || [];
   const subfolders = folder.value.subfolders || [];
 
-  return notes.concat(subfolders) as Array<FolderOrNote>;
+  return notes.concat(subfolders) as Array<FolderMinimal | NoteMinimal>;
 });
 
-function showMenu(target: HTMLElement, item: FolderOrNote) {
+function showMenu(target: HTMLElement, item: FolderMinimal | NoteMinimal) {
   if (isFallbackMode.value) {
     return;
   }

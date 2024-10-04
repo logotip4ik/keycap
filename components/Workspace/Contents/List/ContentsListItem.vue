@@ -2,7 +2,7 @@
 import { useContentsState } from '../config';
 
 const props = defineProps<{
-  item: FolderOrNote
+  item: FolderMinimal | NoteMinimal
   parent: FolderWithContents
   menuTarget: HTMLElement | undefined
   onShowMenu: (target: HTMLElement) => void
