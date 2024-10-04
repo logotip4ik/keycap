@@ -59,9 +59,7 @@ useTinykeys({
   },
 });
 
-onMounted(() => {
-  isShowingSearch.value = route.query.search !== undefined;
-
+if (import.meta.client) {
   prepareWorkspace();
 
   if (import.meta.dev) {
@@ -70,6 +68,10 @@ onMounted(() => {
     // @ts-expect-error this should not be defined
     window.$isFallback = useFallbackMode();
   }
+}
+
+onMounted(() => {
+  isShowingSearch.value = route.query.search !== undefined;
 });
 </script>
 

@@ -3,7 +3,7 @@ const props = defineProps<{
   onClose: () => void
 }>();
 
-const fuzzyWorker = useFuzzyWorker();
+const fuzzyWorker = getFuzzyWorker();
 const user = useUser();
 
 const results = shallowRef<Array<FuzzyItem | CommandItem>>([]);
@@ -24,13 +24,15 @@ function handleSearchInput(value: string) {
   value = value.trimStart();
   selected.value = 0;
 
-  if (value.length === 0 || !fuzzyWorker.value) {
+  const worker = fuzzyWorker.value;
+
+  if (value.length === 0 || !worker) {
     results.value = [];
     resultsState.value = 'idle';
     return;
   }
 
-  fuzzyWorker.value.searchWithQuery(value).then((entries) => {
+  worker.searchWithQuery(value).then((entries) => {
     results.value = entries;
     // if results are empty and user has cleared input, then display as idle
     // else, show results

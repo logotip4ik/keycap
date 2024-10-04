@@ -1,9 +1,7 @@
-import type { Remote } from 'comlink';
 import type { ShallowRef } from 'vue';
 
 import LRUCache from 'hashlru';
 
-import { del, get, keys, set } from 'idb-keyval';
 import proxy from 'unenv/runtime/mock/proxy';
 
 import type { SafeUser } from '~/types/server';
@@ -37,21 +35,4 @@ export function useNotesCache(): LRU<NoteWithContent> {
 const foldersCache = import.meta.server ? proxy : /* #__PURE__ */ LRUCache(10);
 export function useFoldersCache(): LRU<FolderWithContents> {
   return foldersCache;
-}
-
-const fuzzyWorker = import.meta.server ? proxy : /* #__PURE__ */ shallowRef();
-export function useFuzzyWorker(): ShallowRef<Prettify<Remote<FuzzyWorker>> | undefined> {
-  return fuzzyWorker;
-}
-
-const offlineStorage = import.meta.server
-  ? proxy
-  : /* #__PURE__ */ {
-      setItem: set,
-      getItem: get,
-      removeItem: del,
-      getAllKeys: keys,
-    };
-export function useOfflineStorage(): OfflineStorage {
-  return offlineStorage;
 }

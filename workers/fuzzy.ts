@@ -1,8 +1,11 @@
 import type { Emoji, EmojiMartData } from '@emoji-mart/data';
-import { commandScore as getScore } from '@superhuman/command-score';
-import coincident from 'coincident';
 
+import { commandScore as getScore } from '@superhuman/command-score';
+
+import coincident from 'coincident';
 import { expose } from 'comlink';
+
+import type { FuzzyWorker } from '~/utils/fuzzy';
 
 import { commandActionsMin as commandsCache } from '~/utils/menu';
 import { transliterateFromEnglish, transliterateToEnglish } from '~/utils/transliterate';
@@ -19,6 +22,14 @@ function addItem(item: FuzzyItem) {
   const identifier = decodeURIComponent(item.path.replace(/\/\w+\//, ''));
 
   itemsCache.set(identifier, item);
+}
+
+async function hasItemInCache(key: string) {
+  if (populateItemsCachePromise) {
+    await populateItemsCachePromise;
+  }
+
+  return itemsCache.has(key);
 }
 
 function search(query: string): Array<FuzzyItem | CommandItem> {
@@ -125,6 +136,7 @@ const fuzzyInterface: FuzzyWorker = {
   searchWithQuery: searchWithTransliteration,
   searchForEmoji,
   addItemToCache: addItem,
+  hasItemInCache,
   refreshItemsCache: populateItemsCache,
 };
 

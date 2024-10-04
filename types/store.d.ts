@@ -1,4 +1,3 @@
-import type { Emoji } from '@emoji-mart/data';
 import type { Selectable } from 'kysely';
 import type { Serialize } from 'nitropack';
 import type { Folder as _Folder, Note as _Note, Share as _Share } from '~/kysely/db/types';
@@ -41,12 +40,6 @@ declare global {
 
   export type FuzzyItem = Prettify<Pick<FolderOrNote, 'name' | 'path'> & { root?: boolean }>;
 
-  export interface FuzzyWorker {
-    searchWithQuery: (query: string) => Promise<Array<FuzzyItem | CommandItem>>
-    searchForEmoji: (query: string) => Promise<Array<Emoji>>
-    addItemToCache: (item: FuzzyItem) => void
-    refreshItemsCache: () => Promise<void>
-  }
 
   export interface OfflineStorage {
     setItem: <T = unknown>(key: string, value: T) => Promise<void>

@@ -9,7 +9,7 @@ import { VueRenderer } from '@tiptap/vue-3';
 import EmojiPicker from './EmojiPicker.vue';
 
 export function createEmojiPickerSuggestionPlugin({ editor }: { editor: Editor }) {
-  const fuzzyWorker = useFuzzyWorker();
+  const fuzzyWorker = getFuzzyWorker();
 
   return Suggestion({
     editor,

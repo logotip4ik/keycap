@@ -75,7 +75,7 @@ export async function createFolder(folderName: string, self: FolderOrNote, paren
   const { data: newlyCreatedFolder } = res;
   const foldersCache = useFoldersCache();
   const offlineStorage = useOfflineStorage();
-  const fuzzyWorker = useFuzzyWorker();
+  const fuzzyWorker = getFuzzyWorker();
 
   newlyCreatedFolder.state = undefined;
   parent.subfolders.push(newlyCreatedFolder);
@@ -109,7 +109,7 @@ export async function createNote(noteName: string, self: FolderOrNote, parent: F
   const { data: newlyCreatedNote } = res;
   const notesCache = useNotesCache();
   const offlineStorage = useOfflineStorage();
-  const fuzzyWorker = useFuzzyWorker();
+  const fuzzyWorker = getFuzzyWorker();
 
   newlyCreatedNote.content ||= '';
   newlyCreatedNote.state = undefined;
@@ -136,7 +136,7 @@ export async function renameFolder(newName: string, self: FolderOrNote) {
   const notesCache = useNotesCache();
   const foldersCache = useFoldersCache();
   const offlineStorage = useOfflineStorage();
-  const fuzzyWorker = useFuzzyWorker();
+  const fuzzyWorker = getFuzzyWorker();
 
   const folderNameRegex = new RegExp(`${escapeRE(encodeURIComponent(self.name))}$`);
   newFolder.path = self.path.replace(folderNameRegex, encodeURIComponent(newFolder.name!));
@@ -177,7 +177,7 @@ export async function renameNote(newName: string, self: FolderOrNote) {
 
   const notesCache = useNotesCache();
   const offlineStorage = useOfflineStorage();
-  const fuzzyWorker = useFuzzyWorker();
+  const fuzzyWorker = getFuzzyWorker();
 
   const noteNameRegex = new RegExp(`${escapeRE(encodeURIComponent(self.name))}$`);
   newNote.path = self.path.replace(noteNameRegex, encodeURIComponent(newNote.name!));
@@ -215,7 +215,7 @@ export async function deleteNote(self: FolderOrNote, parent: FolderWithContents)
 
   const notesCache = useNotesCache();
   const offlineStorage = useOfflineStorage();
-  const fuzzyWorker = useFuzzyWorker();
+  const fuzzyWorker = getFuzzyWorker();
 
   await showItem(parent);
 
@@ -238,7 +238,7 @@ export async function deleteFolder(self: FolderOrNote, parent: FolderWithContent
 
   const foldersCache = useFoldersCache();
   const offlineStorage = useOfflineStorage();
-  const fuzzyWorker = useFuzzyWorker();
+  const fuzzyWorker = getFuzzyWorker();
 
   foldersCache.remove(self.path);
   offlineStorage.removeItem(self.path);
