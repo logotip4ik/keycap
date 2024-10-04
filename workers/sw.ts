@@ -96,8 +96,10 @@ self.addEventListener('message', (event) => {
 
 const networkFirstHandler = new NetworkFirst();
 function workspaceHandlerWithFallback(event: FetchEvent) {
-  return networkFirstHandler
-    .handle(event)
+  return Promise.race<Response>([
+    networkFirstHandler.handle(event),
+    new Promise((_, reject) => setTimeout(reject, 5000)),
+  ])
     .catch(
       async () => await caches.match(workspacePath!) || Response.error(),
     );
