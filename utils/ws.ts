@@ -54,6 +54,7 @@ function init(context: Context, retry: number = 0) {
 
     offs = [
       on(ws, 'open', () => {
+        retry = 0;
         context.state = 'OPEN';
 
         if (import.meta.dev) {
