@@ -83,7 +83,7 @@ async function fetchNote(): Promise<void> {
 
 let retryInterval: ReturnType<typeof setInterval> | undefined;
 let failedSaveToast: ToastInstance | undefined;
-const throttledNoteUpdate = useThrottleFn(forcedNoteUpdate, 1500, true, false); // enable trailing call and disable leading
+const throttledNoteUpdate = useDebounceFn(forcedNoteUpdate, 1000, { maxWait: 1500 });
 async function forcedNoteUpdate(content: string, shouldStopSave?: AbortSignal) {
   // if no note was found in cache that means that it was deleted
   if (!notesCache.has(notePath.value)) {
