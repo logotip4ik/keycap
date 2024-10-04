@@ -12,6 +12,7 @@ const user = useUser();
 const { shortcuts } = useAppConfig();
 const { state: contentsState } = useContentsState();
 const zeenk = useZeenk();
+const fuzzyWorker = getFuzzyWorker();
 
 const folderApiPath = computed(() => getCurrentFolderPath(route).slice(0, -1));
 const folderPath = computed(() => `/${user.value!.username}${folderApiPath.value}`);
@@ -180,6 +181,12 @@ function handleCreateItem(initialValues?: Parameters<typeof preCreateItem>[1]) {
   }
 }
 
+function refetchFolderIfNeeded(path: string) {
+  if (folder.value && path.startsWith(folder.value.path)) {
+    fetchFolder();
+  }
+}
+
 watch(folderApiPath, fetchFolder);
 
 watch(contentsState, (state, oldState) => {
@@ -218,9 +225,56 @@ mitt.on('precreate:item', (event) => {
   handleCreateItem(event);
 });
 
-zeenk.on('item-created', ({ item }) => {
-  if (folder.value && item.path.startsWith(folder.value.path)) {
-    fetchFolder();
+zeenk.on('item-created', ({ path }) => {
+  fuzzyWorker.value
+    ?.refreshItemsCache()
+    .then(validateOfflineStorage);
+
+  refetchFolderIfNeeded(path);
+});
+
+zeenk.on('item-renamed', async ({ path, oldPath }) => {
+  fuzzyWorker.value
+    ?.refreshItemsCache()
+    .then(validateOfflineStorage);
+
+  const renamedFolder = foldersCache.has(oldPath);
+  const currentItemPath = route.path.replace('/@', '/');
+
+  if (currentItemPath === oldPath) {
+    await navigateTo(path.replace('/', '/@'));
+    refetchFolderIfNeeded(path);
+  }
+  else if (renamedFolder && folderPath.value.startsWith(oldPath)) {
+    await navigateTo(
+      currentItemPath
+        .replace(oldPath, path)
+        .replace('/', '/@'),
+    );
+  }
+  else {
+    refetchFolderIfNeeded(path);
+  }
+});
+
+zeenk.on('item-deleted', async ({ path }) => {
+  fuzzyWorker.value
+    ?.refreshItemsCache()
+    .then(validateOfflineStorage);
+
+  const deletedFolder = foldersCache.has(path);
+
+  const lastSlashIdx = path.lastIndexOf('/');
+  const newPath = `/@${path.substring(1, lastSlashIdx)}/${BLANK_NOTE_NAME}`;
+
+  if (
+    (deletedFolder && folderPath.value.startsWith(path))
+    || route.path.replace('/@', '/') === path
+  ) {
+    await navigateTo(newPath);
+  }
+  else {
+    refetchFolderIfNeeded(path);
   }
 });
 

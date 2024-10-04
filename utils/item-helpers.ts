@@ -2,11 +2,14 @@ import type { NavigateToOptions } from '#app/composables/router';
 
 import escapeRE from 'escape-string-regexp';
 
-export function checkIsFolder(item: Record<string, unknown>): item is FolderWithContents {
+export function checkIsFolder(item: object): item is FolderWithContents {
   return 'root' in item;
 }
 
-type ItemWithPath = Record<string, unknown> & { root?: boolean, path: string };
+interface ItemWithPath {
+  root?: boolean
+  path: string
+}
 export function generateItemPath(item: ItemWithPath): string {
   let path = item.path.replace('/', '/@');
 
@@ -133,7 +136,6 @@ export async function renameFolder(newName: string, self: FolderMinimal) {
 
   await $fetch<unknown>(`/api/folder${folderPath}`, { method: 'PATCH', body: newFolder });
 
-  const notesCache = useNotesCache();
   const foldersCache = useFoldersCache();
   const offlineStorage = getOfflineStorage();
   const fuzzyWorker = getFuzzyWorker();
@@ -142,28 +144,15 @@ export async function renameFolder(newName: string, self: FolderMinimal) {
   newFolder.path = self.path.replace(folderNameRegex, encodeURIComponent(newFolder.name!));
   newFolder.state = undefined;
 
-  const folder = foldersCache.get(self.path);
-
   foldersCache.remove(self.path);
   offlineStorage.removeItem(self.path);
 
   extend(self, newFolder);
-  fuzzyWorker.value?.refreshItemsCache();
 
   const folderToCache = { ...toRaw(self), notes: [], subfolders: [] };
   foldersCache.set(self.path, folderToCache);
   offlineStorage.setItem(self.path, folderToCache);
-
-  if (folder) {
-    const itemsToRename = folder.notes.concat(folder.subfolders);
-
-    for (const item of itemsToRename) {
-      const cache = checkIsFolder(item) ? foldersCache : notesCache;
-
-      cache.remove(item.path);
-      offlineStorage.removeItem(item.path);
-    }
-  }
+  fuzzyWorker.value?.refreshItemsCache().then(validateOfflineStorage);
 }
 
 export async function renameNote(newName: string, self: NoteMinimal) {

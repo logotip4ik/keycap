@@ -9,7 +9,11 @@ interface ZeenkEvents {
   // if without steps, that means that there are too many tokens to send through zeenk
   'update-note': { path: string, steps?: Array<unknown> }
 
-  'item-created': { item: FolderMinimal | NoteMinimal }
+  'item-created': { path: string }
+
+  'item-renamed': { path: string, oldPath: string }
+
+  'item-deleted': { path: string }
 };
 
 interface Zeenk {
@@ -27,7 +31,7 @@ export function useZeenk(): Zeenk {
   const { ws, state } = getZeenkWs();
 
   const _buffer: Array<Event> = [];
-  const _listeners: Partial<Record<keyof ZeenkEvents, (p: ZeenkEvents[keyof ZeenkEvents]) => void>> = {};
+  const _listeners: Partial<Record<keyof ZeenkEvents, (p: any) => void>> = {};
 
   const scope = getCurrentScope()!;
   watch(state, (state) => {

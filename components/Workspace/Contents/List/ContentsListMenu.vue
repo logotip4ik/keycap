@@ -14,6 +14,7 @@ const props = defineProps<{
 
 const createToast = useToaster();
 const detailsItem = useCurrentItemForDetails();
+const zeenk = useZeenk();
 
 const isFolder = checkIsFolder(props.item);
 
@@ -101,9 +102,17 @@ function deleteItem() {
     type: 'loading',
   });
 
-  const deleteItem = isFolder ? deleteFolder : deleteNote;
+  let promise: Promise<void>;
 
-  deleteItem(props.item, props.parent)
+  if (checkIsFolder(props.item)) {
+    promise = deleteFolder(props.item, props.parent);
+  }
+  else {
+    promise = deleteNote(props.item, props.parent);
+  }
+
+  promise
+    .then(() => zeenk.send('item-deleted', { path: props.item.path }))
     .catch(() => createToast(ERROR_MESSAGES.DEFAULT))
     .finally(() => loadingToast.remove());
 

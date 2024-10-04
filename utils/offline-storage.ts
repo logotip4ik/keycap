@@ -10,8 +10,8 @@ export const offlineStoragePrefixes = {
 export type OfflineStoragePrefixes = typeof offlineStoragePrefixes;
 
 export interface OfflineStorage {
-  getVersion: () => Promise<string | undefined>
-  setVersion: (v: string) => Promise<void>
+  getVersion: () => Promise<number | undefined>
+  setVersion: (v: number) => Promise<void>
 
   clear: () => Promise<void>
 

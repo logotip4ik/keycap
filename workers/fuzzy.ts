@@ -86,6 +86,12 @@ async function searchWithTransliteration(query: string): Promise<Array<FuzzyItem
 }
 
 async function populateItemsCache() {
+  let resolve: () => void;
+
+  populateItemsCachePromise = new Promise((r) => {
+    resolve = r;
+  });
+
   const res = await fetch('/api/search/client');
   const items = res.ok ? await res.json() as { data?: Array<FuzzyItem> } : {};
 
@@ -95,6 +101,8 @@ async function populateItemsCache() {
     addItem(item);
   }
 
+  // @ts-expect-error this should work, because promise callback is executed synchronously
+  resolve();
   populateItemsCachePromise = undefined;
 }
 
@@ -136,7 +144,7 @@ async function searchForEmoji(query: string) {
     .map((suggestion) => suggestion.value);
 }
 
-populateItemsCachePromise = populateItemsCache();
+populateItemsCache();
 
 const fuzzyInterface: FuzzyWorker = {
   searchWithQuery: searchWithTransliteration,

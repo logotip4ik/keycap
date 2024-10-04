@@ -28,7 +28,9 @@ function handleSubmit() {
   let promise: Promise<FolderMinimal | NoteMinimal | undefined>;
   isLoading.value = true;
 
+  // copying some of properties to later send with zeenk
   const state = props.item.state;
+  const path = props.item.path;
 
   if (state === ItemState.Creating) {
     const creationName = name.value.at(-1) === '/' ? name.value.slice(0, -1) : name.value;
@@ -58,8 +60,11 @@ function handleSubmit() {
 
       withTiptapEditor((editor) => editor.commands.focus());
 
-      if (state === ItemState.Creating && item) {
-        zeenk.send('item-created', { item });
+      if (item && state === ItemState.Creating) {
+        zeenk.send('item-created', { path: item.path });
+      }
+      else if (state === ItemState.Editing) {
+        zeenk.send('item-renamed', { oldPath: path, path: props.item.path });
       }
     })
     .catch((error) => {
@@ -160,8 +165,8 @@ onMounted(() => {
     --size: 1.5rem;
 
     position: absolute;
-    top: calc(var(--pd-y) / 2);
-    right: calc(var(--pd-x) / 2);
+    top: calc(var(--pd-y) * 0.75);
+    right: var(--pd-x);
 
     width: var(--size);
     height: var(--size);
@@ -188,10 +193,6 @@ onMounted(() => {
 }
 
 @keyframes spin {
-  from {
-    transform: rotate(0)
-  }
-
   to {
     transform: rotate(1turn)
   }

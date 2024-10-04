@@ -2,7 +2,7 @@ const UPDATE_WORKER_DELAY = parseDuration('1.5s')!;
 const initCallbacks = [
   defineFuzzyWorker,
   preloadDashboardComponents,
-  prepareOfflineStorage,
+  validateOfflineStorage,
   () => {
     setTimeout(async () => {
       const { registerSWToasts } = await import('~/utils/sw-controller');
@@ -22,8 +22,8 @@ export function preloadDashboardComponents() {
   });
 }
 
-const currentOfflineStorageVersion = '1';
-export function prepareOfflineStorage() {
+const currentOfflineStorageVersion = 1;
+export function validateOfflineStorage() {
   const fuzzyWorker = getFuzzyWorker();
   const offlineStorage = getOfflineStorage();
 
