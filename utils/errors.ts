@@ -40,7 +40,14 @@ export async function baseHandleError(error: Error | H3Error): Promise<boolean> 
   if ('statusCode' in error) {
     if (error.statusCode === 401 || !user.value) {
       user.value = undefined;
-      await navigateTo('/login');
+
+      if (import.meta.client) {
+        window.location.pathname = '/login';
+      }
+      else {
+        await navigateTo('/login');
+      }
+
       return true;
     }
 
