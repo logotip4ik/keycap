@@ -45,7 +45,17 @@ export async function baseHandleError(error: Error | H3Error): Promise<boolean> 
     }
 
     if (error.statusCode === 404) {
-      await navigateTo(`/@${user.value.username}`);
+      const hydrationPromise = getHydrationPromise();
+
+      if (hydrationPromise) {
+        hydrationPromise.then(async () => {
+          await navigateTo(`/@${user.value!.username}`);
+        });
+      }
+      else {
+        await navigateTo(`/@${user.value.username}`);
+      }
+
       return true;
     }
   }
