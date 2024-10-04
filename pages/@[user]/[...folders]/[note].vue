@@ -83,9 +83,8 @@ async function fetchNote(): Promise<void> {
 
 let retryInterval: ReturnType<typeof setInterval> | undefined;
 let failedSaveToast: ToastInstance | undefined;
-let abortControllerUpdate: AbortController | undefined;
-const throttledNoteUpdate = useThrottleFn(updateNote, 1500, true, false); // enable trailing call and disable leading
-async function updateNote(content: string) {
+const throttledNoteUpdate = useThrottleFn(forcedNoteUpdate, 1500, true, false); // enable trailing call and disable leading
+async function forcedNoteUpdate(content: string, shouldStopSave?: AbortSignal) {
   // if no note was found in cache that means that it was deleted
   if (!notesCache.has(notePath.value)) {
     return;
@@ -96,14 +95,15 @@ async function updateNote(content: string) {
   notesCache.set(newNote.path, newNote);
 
   const innerUpdate = async (note: NoteWithContent) => {
-    abortControllerUpdate?.abort();
-    abortControllerUpdate = new AbortController();
+    if (shouldStopSave?.aborted) {
+      return;
+    }
 
     await $fetch(`/api/note${noteApiPath.value}`, {
       method: 'PATCH',
       body: { content },
       retry: 2,
-      signal: abortControllerUpdate.signal,
+      signal: shouldStopSave,
     })
       .then(() => {
         offlineStorage.setItem(note.path, note);
@@ -119,6 +119,10 @@ async function updateNote(content: string) {
         }
       })
       .catch((e) => {
+        if (shouldStopSave?.aborted) {
+          return;
+        }
+
         sendError(e);
 
         if (!failedSaveToast) {
@@ -137,6 +141,18 @@ async function updateNote(content: string) {
 
   clearInterval(retryInterval);
   await innerUpdate(newNote);
+}
+
+let abortThrottledSave = new AbortController();
+function updateNote(content: string, force?: boolean) {
+  if (force) {
+    abortThrottledSave && abortThrottledSave.abort();
+    abortThrottledSave = new AbortController();
+
+    return forcedNoteUpdate(content);
+  }
+
+  return throttledNoteUpdate(content, abortThrottledSave.signal);
 }
 
 async function handleError(error: Error) {
@@ -212,7 +228,7 @@ if (import.meta.client) {
       class="workspace__note-editor"
       :note
       :editable="!isFallbackMode && !!note"
-      @update="throttledNoteUpdate"
+      @update="updateNote"
       @refresh="fetchNote"
     />
 

@@ -12,7 +12,7 @@ import '~/assets/styles/note-editor.scss';
 const props = defineProps<{
   note: NoteWithContent
   editable: boolean
-  onUpdate: (content: string) => Promise<void>
+  onUpdate: (content: string, force?: boolean) => Promise<void>
   onRefresh: () => Promise<void>
 }>();
 
@@ -27,10 +27,10 @@ const {
   onUpdate: onContentUpdate,
 } = useTiptap();
 
-function updateContent() {
+function updateContent(force?: boolean) {
   const content = editor.value?.getHTML();
 
-  return props.onUpdate(content || '');
+  return props.onUpdate(content || '', force);
 }
 
 watch(() => props.note.content, (content) => {
@@ -133,28 +133,36 @@ useTinykeys({
   },
 });
 
-onBeforeUnmount(() => {
-  // If user navigates right after keypress, `isTyping` could be true on next
-  // render of NoteEditor component, and so content watcher will not update
-  // editor's content. This prevents such case by explicitly setting `isTyping`
-  // to false after unmounting
-  isTyping.value = false;
+if (import.meta.client) {
+  const offUnload = on(window, 'beforeunload', () => {
+    updateContent(true);
+  }, { passive: true });
 
-  // prevent resuse of history between documents
-  // probably the worst implementation
-  // should have just created new instance of tiptap ?
-  if (editor.value && 'history$' in editor.value.state) {
-    const history = editor.value.state.history$ as any;
+  onBeforeUnmount(() => {
+    offUnload();
 
-    history.done.eventCount = 0;
-    history.done.items.values.length = 0;
+    // If user navigates right after keypress, `isTyping` could be true on next
+    // render of NoteEditor component, and so content watcher will not update
+    // editor's content. This prevents such case by explicitly setting `isTyping`
+    // to false after unmounting
+    isTyping.value = false;
 
-    history.undone.eventCount = 0;
-    history.undone.items.values.length = 0;
+    // prevent resuse of history between documents
+    // probably the worst implementation
+    // should have just created new instance of tiptap ?
+    if (editor.value && 'history$' in editor.value.state) {
+      const history = editor.value.state.history$ as any;
 
-    history.prevTime += 10000;
-  }
-});
+      history.done.eventCount = 0;
+      history.done.items.values.length = 0;
+
+      history.undone.eventCount = 0;
+      history.undone.items.values.length = 0;
+
+      history.prevTime += 10000;
+    }
+  });
+}
 </script>
 
 <template>
