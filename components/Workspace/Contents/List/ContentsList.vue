@@ -135,33 +135,6 @@ async function handleError(error: Error) {
   folder.value = offlineFolder as FolderWithContents;
 }
 
-function handleArrowsPress(event: KeyboardEvent) {
-  const diff = event.key === 'ArrowUp'
-    ? -1
-    : event.key === 'ArrowDown'
-      ? +1
-      : 0;
-
-  const listElement = (event.target as HTMLElement).offsetParent;
-
-  if (!diff || !listElement) {
-    return;
-  }
-
-  const currentIdx = Array.from(listElement.children)
-    .findIndex((node) =>
-      // event.target will be anchor tag, but it is wrapped in li, which is list element child
-      node === (event.target as HTMLElement).parentElement,
-    );
-
-  const newSelectedResult = (currentIdx + diff) % listElement.childElementCount;
-  const loopedNewSelectedResult = newSelectedResult < 0 ? listElement.childElementCount - 1 : newSelectedResult;
-  const elementToFocus = listElement.children[loopedNewSelectedResult].firstElementChild as HTMLElement | undefined;
-
-  elementToFocus?.focus();
-  event.preventDefault();
-}
-
 function handleCreateItem(initialValues?: Parameters<typeof preCreateItem>[1]) {
   // this will also trigger folder fetching if needed
   if (contentsState.value === 'hidden') {
@@ -334,9 +307,9 @@ if (import.meta.client) {
       tag="ul"
       class="contents__list"
       tabindex="-1"
+      handle-arrows-press="vertical"
       @contextmenu.self.prevent
       @click.self="menuOptions.target = undefined"
-      @keydown.capture="handleArrowsPress"
     >
       <WithFadeTransition v-for="item in folderContents" :key="item.path">
         <li
