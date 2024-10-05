@@ -187,7 +187,10 @@ function refetchFolderIfNeeded(path: string) {
   }
 }
 
-watch(folderApiPath, fetchFolder);
+watch(folderApiPath, () => {
+  folder.value = undefined;
+  fetchFolder();
+});
 
 watch(contentsState, (state, oldState) => {
   const timeDiff = Date.now() - (lastRefetch || 0);
