@@ -1,5 +1,7 @@
 FROM node:22 AS builder
 
+RUN corepack enable
+
 WORKDIR /source
 
 COPY package.json package.json
@@ -22,6 +24,6 @@ USER node
 
 WORKDIR /app
 
-COPY --from=builder /source/.output ./
+COPY --link --from=builder /source/.output ./
 
-CMD ["node", "./server/index.mjs"]
+ENTRYPOINT ["node", "./server/index.mjs"]
