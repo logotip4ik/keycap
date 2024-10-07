@@ -26,4 +26,4 @@ WORKDIR /app
 
 COPY --link --from=builder /source/.output ./
 
-CMD ["node", "./server/index.mjs"]
+ENTRYPOINT ["node", "./server/index.mjs"]
