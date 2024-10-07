@@ -1,6 +1,66 @@
 # Changelog
 
 
+## v3.15.5
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.4...v3.15.5)
+
+### 🩹 Fixes
+
+- Watch for sidebar state change when fetching for recents ([329e3021](https://github.com/logotip4ik/keycap/commit/329e3021))
+- Use request event fetch to send logs event from nuxt ssr ([2472fc7d](https://github.com/logotip4ik/keycap/commit/2472fc7d))
+- Await populate cache promise if not resolved yet ([524fdb8d](https://github.com/logotip4ik/keycap/commit/524fdb8d))
+- Refresh not working after removal of async data ([747cc509](https://github.com/logotip4ik/keycap/commit/747cc509))
+- Long content breaking websocket connection ([f16ed1ff](https://github.com/logotip4ik/keycap/commit/f16ed1ff))
+- Clear connect retries on success ([d130fe30](https://github.com/logotip4ik/keycap/commit/d130fe30))
+- Add time limit for workspace network handler ([f33744fe](https://github.com/logotip4ik/keycap/commit/f33744fe))
+- Hydration mismatch with when note was note found ([fcff2b18](https://github.com/logotip4ik/keycap/commit/fcff2b18))
+- Prevent hydration missmatch when user is not defined ([e38427b3](https://github.com/logotip4ik/keycap/commit/e38427b3))
+- Try one last note save before view unloading ([b014e924](https://github.com/logotip4ik/keycap/commit/b014e924))
+- Wrap teleport into client only to omit overflow on page load ([d81ff84f](https://github.com/logotip4ik/keycap/commit/d81ff84f))
+- Use debounce with max wait instead of throttle ([5e3d97da](https://github.com/logotip4ik/keycap/commit/5e3d97da))
+- Install missing dep ([6e7ffa27](https://github.com/logotip4ik/keycap/commit/6e7ffa27))
+
+### 💅 Refactors
+
+- Improve client side error logging ([93063f83](https://github.com/logotip4ik/keycap/commit/93063f83))
+- Use zeenk to notify about folder and note creation ([8808bc1b](https://github.com/logotip4ik/keycap/commit/8808bc1b))
+- Move fuzzy worker function into utils ([0ba2542d](https://github.com/logotip4ik/keycap/commit/0ba2542d))
+- Introduce offline storage versions ([d02ae06c](https://github.com/logotip4ik/keycap/commit/d02ae06c))
+- Use union types instead of intersection ([8c31f295](https://github.com/logotip4ik/keycap/commit/8c31f295))
+- Update view state based on item creation, rename or deletion ([dc069284](https://github.com/logotip4ik/keycap/commit/dc069284))
+- Move arrow keys inside list handling to with list transition component ([d376ae09](https://github.com/logotip4ik/keycap/commit/d376ae09))
+
+### 📖 Documentation
+
+- Update readme stack ([c3e8a267](https://github.com/logotip4ik/keycap/commit/c3e8a267))
+
+### 📦 Build
+
+- Better dockerfile ([7ca8bc8c](https://github.com/logotip4ik/keycap/commit/7ca8bc8c))
+
+### 🏡 Chore
+
+- **release:** V3.15.4 ([18a0d59e](https://github.com/logotip4ik/keycap/commit/18a0d59e))
+- Update deps and repatch tiptap ([997a3e01](https://github.com/logotip4ik/keycap/commit/997a3e01))
+- Lower debounce time ([daa2406e](https://github.com/logotip4ik/keycap/commit/daa2406e))
+- Unset previos folder when folder route changed ([b8d3326c](https://github.com/logotip4ik/keycap/commit/b8d3326c))
+- Imporve warmup performance ([dbb87daa](https://github.com/logotip4ik/keycap/commit/dbb87daa))
+- Use preview vue version ([12697f54](https://github.com/logotip4ik/keycap/commit/12697f54))
+- Don't generate ci only for ci production ([a041feff](https://github.com/logotip4ik/keycap/commit/a041feff))
+
+### ✅ Tests
+
+- Add toolbox recent fetch check ([70ee7528](https://github.com/logotip4ik/keycap/commit/70ee7528))
+
+### 🤖 CI
+
+- Bump the actions group with 2 updates ([#34](https://github.com/logotip4ik/keycap/pull/34))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.15.4
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.3...v3.15.4)
