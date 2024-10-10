@@ -83,8 +83,8 @@ async function fetchNote(): Promise<void> {
 
 let retryInterval: ReturnType<typeof setInterval> | undefined;
 let failedSaveToast: ToastInstance | undefined;
-const throttledNoteUpdate = useDebounceFn(forcedNoteUpdate, 750, { maxWait: 1500 });
-async function forcedNoteUpdate(content: string, shouldStopSave?: AbortSignal) {
+const throttledUpdateNote = useDebounceFn(forcedUpdateNote, 750, { maxWait: 1500 });
+async function forcedUpdateNote(content: string, shouldStopSave?: AbortSignal) {
   // if no note was found in cache that means that it was deleted
   if (!notesCache.has(notePath.value)) {
     return;
@@ -104,6 +104,7 @@ async function forcedNoteUpdate(content: string, shouldStopSave?: AbortSignal) {
       body: { content },
       retry: 2,
       signal: shouldStopSave,
+      priority: 'high',
     })
       .then(() => {
         offlineStorage.setItem(note.path, note);
@@ -149,10 +150,10 @@ function updateNote(content: string, force?: boolean) {
     abortThrottledSave && abortThrottledSave.abort();
     abortThrottledSave = new AbortController();
 
-    return forcedNoteUpdate(content);
+    return forcedUpdateNote(content);
   }
 
-  return throttledNoteUpdate(content, abortThrottledSave.signal);
+  return throttledUpdateNote(content, abortThrottledSave.signal);
 }
 
 async function handleError(error: Error) {
