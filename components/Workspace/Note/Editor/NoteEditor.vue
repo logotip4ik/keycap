@@ -63,7 +63,7 @@ watch(spellcheck, (spellcheck) => {
   });
 });
 
-mitt.on('save:note', () => updateContent());
+mitt.on('save:note', () => updateContent(true));
 
 zeenk.on('update-note', ({ path, steps }) => {
   if (props.note.path !== path || !editor.value) {
