@@ -16,16 +16,6 @@ export function useFocusTrap(
   let cachedEls: Array<HTMLElement> = [];
   let scheduled: boolean = true;
 
-  function stop() {
-    off?.();
-    observer?.disconnect();
-
-    off = undefined;
-    observer = undefined;
-    cachedEls.length = 0;
-    scheduled = true;
-  }
-
   function tryFocusLastElement() {
     if (!isSmallScreen.value && lastFocusedEl) {
       const handledLastElementFocus = opts?.handleLastElementFocus?.(lastFocusedEl) === true;
@@ -49,12 +39,15 @@ export function useFocusTrap(
     return cachedEls;
   }
 
-  watch(() => unref(el), (el) => {
+  const stopWatch = watch(() => unref(el), async (el) => {
     stop();
 
     if (!el) {
       return tryFocusLastElement();
     }
+
+    await nextTick();
+    await nextTick();
 
     if (document.activeElement) {
       lastFocusedEl = document.activeElement as HTMLElement;
@@ -94,9 +87,20 @@ export function useFocusTrap(
     });
   });
 
+  function stop() {
+    stopWatch();
+    off?.();
+    observer?.disconnect();
+
+    off = undefined;
+    observer = undefined;
+    cachedEls.length = 0;
+    scheduled = true;
+  }
+
   onScopeDispose(() => {
-    stop();
     tryFocusLastElement();
+    stop();
   });
 
   return stop;
