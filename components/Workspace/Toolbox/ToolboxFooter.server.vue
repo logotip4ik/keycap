@@ -39,6 +39,7 @@ function isRelative(url: string) {
         <NuxtLink
           :href="link.href"
           :target="isRelative(link.href) ? '_self' : '_blank'"
+          external
           class="toolbox__footer__links__item__link"
         >
           {{ link.name }}
