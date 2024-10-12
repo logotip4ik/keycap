@@ -214,7 +214,20 @@ $breakpoint-one: $sidebar-breakpoint-one;
   }
 
   &--hidden {
-    transform: scale3d(var(--sidebar-hidden-scale), var(--sidebar-hidden-scale), 1) translate3d(calc(-1 * var(--dir) * var(--sidebar-width)), 0, 0);
+    box-shadow: none;
+
+    transform:
+      scale3d(
+        var(--sidebar-hidden-scale),
+        var(--sidebar-hidden-scale),
+        1
+      )
+      translate3d(
+        calc(-1 * var(--dir) * var(--sidebar-width)),
+        0,
+        0
+      )
+    ;
   }
 
   hr {

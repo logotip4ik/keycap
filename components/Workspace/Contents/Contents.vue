@@ -55,7 +55,7 @@ if (import.meta.client) {
   onBeforeUnmount(
     on(window, 'resize', debounce(() => {
       if (prevWindowWidth !== window.innerWidth) {
-        return hideSidebarsIfNeeded();
+        hideSidebarsIfNeeded();
       }
 
       prevWindowWidth = window.innerWidth;
