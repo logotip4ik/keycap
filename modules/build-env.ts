@@ -42,5 +42,5 @@ async function getCommitSha(): Promise<string> {
 
   const { stdout } = await exec('git', ['rev-parse', '--short', 'HEAD']);
 
-  return stdout;
+  return stdout.trimEnd();
 }
