@@ -40,17 +40,6 @@ const { state } = inject(props.injectionKey)!;
   cursor: pointer;
   transition: transform var(--sidebar-tr-duration) var(--sidebar-tr-ease);
 
-  &[aria-pressed="true"] {
-    outline: 1px solid hsla(var(--selection-bg-color-hsl), 0.75);
-    box-shadow: 0 0 0.5rem 0 hsla(var(--selection-bg-color-hsl), 0.25);
-
-    svg {
-      color: hsla(var(--text-color-hsl), 0.8);
-
-      transition-duration: .1s;
-    }
-  }
-
   &--exposed {
     transform:
       translate3d(
@@ -84,6 +73,17 @@ const { state } = inject(props.injectionKey)!;
 
     svg {
       color: hsla(var(--text-color-hsl), 0.65);
+
+      transition-duration: .1s;
+    }
+  }
+
+  &[aria-pressed="true"] {
+    outline: 1px solid hsla(var(--selection-bg-color-hsl), 0.75);
+    box-shadow: 0 0 0.5rem 0 hsla(var(--selection-bg-color-hsl), 0.25);
+
+    svg {
+      color: hsla(var(--text-color-hsl), 0.8);
 
       transition-duration: .1s;
     }
