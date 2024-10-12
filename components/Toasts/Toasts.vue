@@ -42,7 +42,7 @@ if (import.meta.client) {
     aria-label="Notifications"
     @before-leave="preservePositionAndSize"
   >
-    <WorkspaceToastsItem
+    <ToastsItem
       v-for="toast in sortedToasts"
       :key="toast.id"
       :toast="toast"

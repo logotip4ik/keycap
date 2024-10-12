@@ -76,6 +76,6 @@ if (import.meta.dev) {
   </Teleport>
 
   <Teleport to="#teleports">
-    <LazyWorkspaceToasts />
+    <LazyToasts />
   </Teleport>
 </template>
