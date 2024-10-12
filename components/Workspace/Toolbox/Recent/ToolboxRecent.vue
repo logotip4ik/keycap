@@ -5,6 +5,7 @@ const createToast = useToaster();
 const { state } = useToolboxState();
 
 const recent = shallowRef<Array<NoteMinimal>>();
+const lastFetch = shallowRef<number>();
 
 const POLLING_TIME = parseDuration('5 minutes');
 const RETRY_TIME = parseDuration('5s');
@@ -30,6 +31,7 @@ async function fetchRecent(retry: number = 0): Promise<void> {
       }
 
       recent.value = response.data;
+      lastFetch.value = Date.now();
       pollingTimer = setTimeout(fetchRecent, POLLING_TIME);
     })
     .catch(() => {
@@ -76,7 +78,7 @@ const stop = watchEffect(() => {
         Seems to be empty ⚆_⚆
       </div>
 
-      <ul v-else class="toolbox__section__list">
+      <ul v-else :key="lastFetch" class="toolbox__section__list">
         <li
           v-for="item in recent"
           :key="item.id"
