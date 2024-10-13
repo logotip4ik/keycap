@@ -56,7 +56,7 @@ export interface NoteViewHeaderOptions {
   staleWhileRevalidate?: number
 }
 type HeaderObject = Partial<Record<HTTPHeaderName, string | undefined>>;
-export type HeadersType = 'default' | 'assets' | 'api' | 'api-info' | 'webmanifest' | 'og';
+export type HeadersType = 'default' | 'assets' | 'api' | 'api-info' | 'webmanifest' | 'og' | 'fonts' | 'editor-images';
 export type HeadersOptions = NoteViewHeaderOptions | unknown;
 
 export function getHeaders(
@@ -75,6 +75,7 @@ export function getHeaders(
   Object.assign(headers, defaultHeaders);
 
   switch (type) {
+    case 'fonts':
     case 'assets': {
       const halfAYear = parseDuration('0.5 year', 'second')!;
 
@@ -141,6 +142,17 @@ export function getHeaders(
       }));
 
       headers['Cross-Origin-Resource-Policy'] = 'cross-origin';
+
+      break;
+    }
+
+    case 'editor-images': {
+      Object.assign(headers, makeCacheControlHeader({
+        private: false,
+        immutable: true,
+        maxAge: parseDuration('1 week', 's')!,
+        CDN: true,
+      }));
 
       break;
     }

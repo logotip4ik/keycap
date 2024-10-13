@@ -191,12 +191,13 @@ export default defineNuxtConfig({
       headers: getHeaders('api-info'),
     },
 
-    '/og/**': { headers: getHeaders('og') },
-
-    '/site.webmanifest': { headers: getHeaders('webmanifest') },
-
     // this would be great https://github.com/unjs/nitro/issues/603#issuecomment-1415826732
     '/view/**': { isr: parseDuration('15 minutes', 'second') },
+    '/og/**': { headers: getHeaders('og') },
+    '/fonts/**': { headers: getHeaders('fonts') },
+    '/editor-wide.webp': { headers: getHeaders('editor-images') },
+    '/editor-wide-dark.webp': { headers: getHeaders('editor-images') },
+    '/site.webmanifest': { headers: getHeaders('webmanifest') },
 
     '/oauth/ask-username': { experimentalNoScripts: true },
   },
