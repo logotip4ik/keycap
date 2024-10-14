@@ -1,6 +1,50 @@
 # Changelog
 
 
+## v3.15.7
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.6...v3.15.7)
+
+### 🩹 Fixes
+
+- Revert back to use CMD instead of entrypoint ([9787b045](https://github.com/logotip4ik/keycap/commit/9787b045))
+- Revert back to use CMD instead of entrypoint" ([766ba67f](https://github.com/logotip4ik/keycap/commit/766ba67f))
+- Revert back to use CMD instead of entrypoint" ([358e9ea7](https://github.com/logotip4ik/keycap/commit/358e9ea7))
+- Consistently handle focusing ([0b955f1e](https://github.com/logotip4ik/keycap/commit/0b955f1e))
+- Remove warning about logout href not found in vue router ([2eac5607](https://github.com/logotip4ik/keycap/commit/2eac5607))
+- Move pressed styles lower then hover and focus ([ebe1f77c](https://github.com/logotip4ik/keycap/commit/ebe1f77c))
+- Trim commit ([11ec6c30](https://github.com/logotip4ik/keycap/commit/11ec6c30))
+
+### 💅 Refactors
+
+- Export sidebar open button to single component with inlinable styles ([e22054b1](https://github.com/logotip4ik/keycap/commit/e22054b1))
+- Export contents header crumbs to inline contents header styles to reduce content shift ([dd135747](https://github.com/logotip4ik/keycap/commit/dd135747))
+
+### 🏡 Chore
+
+- **release:** V3.15.6 ([d9e12887](https://github.com/logotip4ik/keycap/commit/d9e12887))
+- Add status endpoint ([359f3cb0](https://github.com/logotip4ik/keycap/commit/359f3cb0))
+- Revert dockerfile changes, maybe fix build ([be28ff6f](https://github.com/logotip4ik/keycap/commit/be28ff6f))
+- Maybe fix build ([03e7e718](https://github.com/logotip4ik/keycap/commit/03e7e718))
+- Remove expose and custom healthcheck ([bae7a439](https://github.com/logotip4ik/keycap/commit/bae7a439))
+- Use prefered filename for docker file ([53c64a65](https://github.com/logotip4ik/keycap/commit/53c64a65))
+- Remove vue version resolution ([ba3aba35](https://github.com/logotip4ik/keycap/commit/ba3aba35))
+- Update deps ([28b39243](https://github.com/logotip4ik/keycap/commit/28b39243))
+- Force save when user explicitely called save function ([1fed27fe](https://github.com/logotip4ik/keycap/commit/1fed27fe))
+- Better function naming scheme ([939b0e8b](https://github.com/logotip4ik/keycap/commit/939b0e8b))
+- Flash recent with refetch ([d712cf02](https://github.com/logotip4ik/keycap/commit/d712cf02))
+- Remove client only wrap from toasts ([78c7fc30](https://github.com/logotip4ik/keycap/commit/78c7fc30))
+- Move toasts out of workspace namespace ([b7697b3f](https://github.com/logotip4ik/keycap/commit/b7697b3f))
+- Improve caching for images and fonts ([e5300776](https://github.com/logotip4ik/keycap/commit/e5300776))
+
+### 🤖 CI
+
+- Update node types with other deps ([5a11702e](https://github.com/logotip4ik/keycap/commit/5a11702e))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.15.6
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.5...v3.15.6)
