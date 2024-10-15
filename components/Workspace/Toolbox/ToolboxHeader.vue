@@ -7,7 +7,7 @@ const user = useUser();
 <template>
   <header class="toolbox__header">
     <WorkspaceSidebarOpenButton :injection-key="ToolboxState">
-      <LazyIconMenuRounded />
+      <LazyIconMenuRounded class="toolbox__header__svg" />
     </WorkspaceSidebarOpenButton>
 
     <p class="toolbox__header__username font-wide">
@@ -32,6 +32,10 @@ const user = useUser();
     padding: 0;
 
     overflow: hidden;
+  }
+
+  &__svg {
+    width: 70% !important;
   }
 }
 </style>
