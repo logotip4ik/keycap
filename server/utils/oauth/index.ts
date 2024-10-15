@@ -29,7 +29,6 @@ export function sendOAuthRedirectIfNeeded({ event, query, config }: { event: H3E
   const { site } = useRuntimeConfig().public;
 
   const state = createKey(KeyPrefix.OAuthState);
-  const protocol = import.meta.prod ? 'https://' : 'http://';
   const redirectUrl = new URL(config.authorizeEndpoint);
 
   setCookie(event, 'state', state, stateSerializeOptions);
@@ -39,7 +38,7 @@ export function sendOAuthRedirectIfNeeded({ event, query, config }: { event: H3E
   redirectUrl.searchParams.set('response_type', 'code');
   redirectUrl.searchParams.set('response_mode', 'query');
   redirectUrl.searchParams.set('scope', config.scope);
-  redirectUrl.searchParams.set('redirect_uri', `${protocol}${site}/api/oauth/${config.name}`);
+  redirectUrl.searchParams.set('redirect_uri', `${defaultProtocol}${site}/api/oauth/${config.name}`);
 
   if (config.options) {
     for (const key in config.options) {

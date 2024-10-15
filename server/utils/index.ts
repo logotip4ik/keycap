@@ -10,6 +10,7 @@ export const usernameRE = /^[\w.\-]{3,16}$/;
 export const emailRE = /^[\w!#$%&'*+/=?^`{|}~-]+(?:\.[\w!#$%&'*+/=?^`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i;
 export const OAuthProvider = SocialAuth;
 export const serverUserAgent = import.meta.prod ? process.env.SERVER_NAME || 'Keycap' : `${process.env.SERVER_NAME || 'Keycap'} Dev`;
+export const defaultProtocol = import.meta.prod ? 'https://' : 'http://';
 
 export { stringifiedBigIntRE, toBigInt } from '~/utils';
 

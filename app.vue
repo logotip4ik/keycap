@@ -28,8 +28,6 @@ useServerHead({
   ],
 });
 
-const protocol = import.meta.prod ? 'https' : 'http';
-
 useSeoMeta({
   themeColor: () => prefersDarkMode.value ? '#111113' : '#FCFCFD',
 
@@ -37,11 +35,11 @@ useSeoMeta({
   ogTitle: 'Keycap - Beautiful Notes',
 
   ogDescription: 'Beautiful Notes 💜. Fast, simple, shareable, synced between devices and purple.',
-  ogImage: `${protocol}://${site}/og-image.min.jpg`,
+  ogImage: `${defaultProtocol}${site}/og-image.min.jpg`,
   ogImageWidth: 1200,
   ogImageHeight: 630,
   ogType: 'website',
-  ogUrl: () => `${protocol}://${site}${route.path}`,
+  ogUrl: () => `${defaultProtocol}${site}${route.path}`,
 
   applicationName: 'Keycap',
   author: 'Bogdan Kostyuk',
@@ -49,7 +47,7 @@ useSeoMeta({
   twitterSite: 'KeycapTheNotes',
   twitterCard: 'summary',
   twitterCreator: 'BogdanKostyuk_',
-  twitterImage: `${protocol}://${site}/og-image.min.jpg`,
+  twitterImage: `${defaultProtocol}${site}/og-image.min.jpg`,
   twitterImageAlt: 'Keycap',
 });
 

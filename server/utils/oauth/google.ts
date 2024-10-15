@@ -33,8 +33,6 @@ export async function getGoogleUserWithEvent(event: H3Event) {
     throw new Error('no code was found');
   }
 
-  const protocol = import.meta.prod ? 'https://' : 'http://';
-
   const auth = await $fetch<GoogleAuthRes>(config.tokenEndpoint, {
     method: 'POST',
     body: {
@@ -42,7 +40,7 @@ export async function getGoogleUserWithEvent(event: H3Event) {
       client_id: config.oauth.clientId,
       client_secret: config.oauth.clientSecret,
       grant_type: 'authorization_code',
-      redirect_uri: `${protocol}${useRuntimeConfig().public.site}/api/oauth/google`,
+      redirect_uri: `${defaultProtocol}${useRuntimeConfig().public.site}/api/oauth/google`,
     },
   });
 

@@ -73,10 +73,9 @@ export async function getUserFromEvent(event: H3Event): Promise<SafeUser | undef
   }
 }
 
-const protocol = import.meta.prod ? 'https://' : 'http://';
 const validOrigin = import.meta.config.vercelEnv === 'production'
-  ? protocol + process.env.NUXT_PUBLIC_SITE
-  : protocol + process.env.VERCEL_URL;
+  ? defaultProtocol + process.env.NUXT_PUBLIC_SITE
+  : defaultProtocol + process.env.VERCEL_URL;
 
 export function isOriginMismatched(event: H3Event) {
   const origin = getRequestHeader(event, 'Origin');

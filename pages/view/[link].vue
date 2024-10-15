@@ -16,16 +16,15 @@ if (error.value || !note.value) {
   });
 }
 
-const protocol = import.meta.prod ? 'https' : 'http';
 useSeoMeta({
   title: `View on Keycap - ${note.value.name}`,
 
   ogTitle: `View on Keycap - ${note.value.name}`,
-  ogImage: `${protocol}://${site}/og${route.path}`,
+  ogImage: `${defaultProtocol}${site}/og${route.path}`,
   ogType: 'article',
 
   twitterCard: 'summary_large_image',
-  twitterImage: `${protocol}://${site}/og${route.path}`,
+  twitterImage: `${defaultProtocol}${site}/og${route.path}`,
   twitterImageAlt: `${note.value.name} - Keycap`,
 });
 </script>

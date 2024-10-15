@@ -1,5 +1,6 @@
 import type { NuxtApp } from '#app';
 
+export { defaultProtocol } from '~/server/utils/index';
 export { LogLevel } from '~/server/utils/logger';
 
 export const stringifiedBigIntRE = /^(\d{1,19})$/;
