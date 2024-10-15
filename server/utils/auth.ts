@@ -5,7 +5,7 @@ import { jwtVerify, SignJWT } from 'jose';
 
 import type { SafeUser } from '~/types/server';
 
-const authExpiration = parseDuration('3 days', 'second')!;
+const authExpiration = parseDuration('2 days', 'second')!;
 const jwtSecret = new TextEncoder().encode(process.env.JWT_SECRET || '');
 const jwtIssuer = process.env.JWT_ISSUER || 'test:keycap';
 const accessTokenName = import.meta.prod ? '__Secure-keycap-user' : 'keycap-user';
@@ -58,7 +58,11 @@ export async function getUserFromEvent(event: H3Event): Promise<SafeUser | undef
     return;
   }
 
-  const jwt = await jwtVerify(accessToken, jwtSecret, { issuer: jwtIssuer }).catch(() => undefined);
+  const jwt = await jwtVerify(accessToken, jwtSecret, {
+    algorithms: ['HS256'],
+    issuer: jwtIssuer,
+    maxTokenAge: authExpiration,
+  }).catch(() => undefined);
 
   if (jwt && jwtPayloadValidator.Check(jwt.payload)) {
     return {
