@@ -33,6 +33,8 @@ export async function getGitHubUserWithEvent(event: H3Event) {
     throw new Error('no code was found');
   }
 
+  const protocol = import.meta.prod ? 'https://' : 'http://';
+
   const auth = await $fetch<GitHubAuthRes>(config.tokenEndpoint, {
     method: 'POST',
     headers: {
@@ -42,6 +44,7 @@ export async function getGitHubUserWithEvent(event: H3Event) {
       code,
       client_id: config.oauth.clientId,
       client_secret: config.oauth.clientSecret,
+      redirect_uri: `${protocol}${useRuntimeConfig().public.site}/api/oauth/github`,
     },
   });
 

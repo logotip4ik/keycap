@@ -14,7 +14,13 @@ export default defineEventHandler(async (event) => {
 
   // This means that user was redirected here to actually sign in
   // with social account, so this technically is not an error
-  if (sendOAuthRedirectIfNeeded(event, query)) {
+  if (
+    sendOAuthRedirectIfNeeded({
+      event,
+      query,
+      config: githubConfig,
+    })
+  ) {
     return;
   }
 

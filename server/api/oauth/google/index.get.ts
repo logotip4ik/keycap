@@ -12,7 +12,13 @@ export default defineEventHandler(async (event) => {
 
   const query = getQuery(event);
 
-  if (sendOAuthRedirectIfNeeded(event, query)) {
+  if (
+    sendOAuthRedirectIfNeeded({
+      event,
+      query,
+      config: googleConfig,
+    })
+  ) {
     return;
   }
 

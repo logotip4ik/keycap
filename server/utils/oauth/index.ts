@@ -1,6 +1,7 @@
 import type { CookieSerializeOptions } from 'cookie-es';
 import type { H3Event } from 'h3';
 import type { QueryObject } from 'ufo';
+import type { OAuthProviderConfig } from '~/types/oauth';
 
 import type { NormalizedSocialUser } from '~/types/server';
 
@@ -16,7 +17,7 @@ const stateSerializeOptions = {
   sameSite: 'lax',
 } satisfies CookieSerializeOptions;
 
-export function sendOAuthRedirectIfNeeded(event: H3Event, query?: QueryObject): boolean {
+export function sendOAuthRedirectIfNeeded({ event, query, config }: { event: H3Event, query?: QueryObject, config: OAuthProviderConfig }): boolean {
   if (!query) {
     query = getQuery(event)!;
   }
@@ -25,32 +26,24 @@ export function sendOAuthRedirectIfNeeded(event: H3Event, query?: QueryObject): 
     return false;
   }
 
-  const queryStart = event.path.indexOf('?');
-  const pathWithoutQuery = (queryStart === -1 ? event.path : event.path.substring(0, queryStart)) as keyof typeof providerPathToConfigMap;
-  const providerConfig = providerPathToConfigMap[pathWithoutQuery];
-
-  if (!providerConfig) {
-    throw createError({ status: 418, message: 'i a coffeepot' });
-  }
-
   const { site } = useRuntimeConfig().public;
 
   const state = createKey(KeyPrefix.OAuthState);
   const protocol = import.meta.prod ? 'https://' : 'http://';
-  const redirectUrl = new URL(providerConfig.authorizeEndpoint);
+  const redirectUrl = new URL(config.authorizeEndpoint);
 
   setCookie(event, 'state', state, stateSerializeOptions);
 
   redirectUrl.searchParams.set('state', state);
-  redirectUrl.searchParams.set('client_id', providerConfig.oauth.clientId);
+  redirectUrl.searchParams.set('client_id', config.oauth.clientId);
   redirectUrl.searchParams.set('response_type', 'code');
   redirectUrl.searchParams.set('response_mode', 'query');
-  redirectUrl.searchParams.set('scope', providerConfig.scope);
-  redirectUrl.searchParams.set('redirect_uri', `${protocol}${site}/api/oauth/${providerConfig.name}`);
+  redirectUrl.searchParams.set('scope', config.scope);
+  redirectUrl.searchParams.set('redirect_uri', `${protocol}${site}/api/oauth/${config.name}`);
 
-  if (providerConfig.options) {
-    for (const key in providerConfig.options) {
-      redirectUrl.searchParams.set(key, providerConfig.options[key]);
+  if (config.options) {
+    for (const key in config.options) {
+      redirectUrl.searchParams.set(key, config.options[key]);
     }
   }
 
