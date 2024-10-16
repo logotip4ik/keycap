@@ -203,7 +203,6 @@ export default defineNuxtConfig({
   },
 
   modules: [
-    '@vueuse/nuxt',
     '@vite-pwa/nuxt',
     '@nuxtjs/fontaine',
   ],
