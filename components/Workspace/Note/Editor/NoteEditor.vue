@@ -27,10 +27,15 @@ const {
   onUpdate: onContentUpdate,
 } = useTiptap();
 
+let hasUnsavedChanges = false;
 function updateContent(force?: boolean) {
   const content = editor.value?.getHTML();
 
-  return props.onUpdate(content || '', force);
+  return props
+    .onUpdate(content || '', force)
+    .then(() => {
+      hasUnsavedChanges = false;
+    });
 }
 
 watch(() => props.note.content, (content) => {
@@ -87,11 +92,18 @@ zeenk.on('update-note', ({ path, steps }) => {
   editor.value.view.dispatch(tr);
 });
 
+function saveUnsavedChanges() {
+  if (hasUnsavedChanges) {
+    updateContent(true);
+  }
+}
+
 onContentUpdate(({ transaction }) => {
   if (transaction.getMeta('websocket') === true) {
     return;
   }
 
+  hasUnsavedChanges = true;
   const updatePromise = updateContent();
 
   if (transaction.getMeta('paste') === true) {
@@ -139,11 +151,10 @@ if (import.meta.client) {
     editor.registerPlugin(history());
   });
 
-  const offUnload = on(window, 'beforeunload', () => {
-    updateContent(true);
-  }, { passive: true });
+  const offUnload = on(window, 'beforeunload', saveUnsavedChanges, { passive: true });
 
   onBeforeUnmount(() => {
+    saveUnsavedChanges();
     offUnload();
 
     // If user navigates right after keypress, `isTyping` could be true on next

@@ -83,13 +83,14 @@ async function fetchNote(): Promise<void> {
 
 let retryInterval: ReturnType<typeof setInterval> | undefined;
 let failedSaveToast: ToastInstance | undefined;
-const throttledUpdateNote = useDebounceFn(forcedUpdateNote, 750, { maxWait: 1500 });
+const throttledUpdateNote = debounce(forcedUpdateNote, 550);
 async function forcedUpdateNote(content: string, shouldStopSave?: AbortSignal) {
   // if no note was found in cache that means that it was deleted
   if (!notesCache.has(notePath.value)) {
     return;
   }
 
+  const savePath = noteApiPath.value;
   const newNote = { ...notesCache.get(notePath.value), content };
 
   notesCache.set(newNote.path, newNote);
@@ -99,7 +100,7 @@ async function forcedUpdateNote(content: string, shouldStopSave?: AbortSignal) {
       return;
     }
 
-    await $fetch(`/api/note${noteApiPath.value}`, {
+    await $fetch(`/api/note${savePath}`, {
       method: 'PATCH',
       body: { content },
       retry: 2,
