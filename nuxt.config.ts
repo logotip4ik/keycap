@@ -331,35 +331,7 @@ export default defineNuxtConfig({
           '@superhuman/command-score',
         ],
 
-        // https://github.com/antfu/nuxt-better-optimize-deps
         exclude: [
-          // Vue
-          'vue',
-          '@vue/runtime-core',
-          '@vue/runtime-dom',
-          '@vue/reactivity',
-          '@vue/shared',
-          '@vue/devtools-api',
-          'vue-router',
-          'vue-demi',
-
-          // Nuxt Deps
-          'pathe',
-          'unenv',
-          'klona',
-          'devalue',
-          'hookable',
-          'unctx',
-          'h3',
-          'defu',
-          'ofetch',
-          'ufo',
-          '@unhead/vue',
-
-          // Ecosystem - later they should be providede by the ecosystem module
-          '@vueuse/core',
-          '@vueuse/shared',
-
           '@tiptap/core',
           '@tiptap/extension-blockquote',
           '@tiptap/extension-bold',
