@@ -3,8 +3,8 @@ import {
   LazyWorkspaceNoteFormatterBubbleBox as LazyBubbleBox,
   LazyWorkspaceNoteFormatterFixedBox as LazyFixedBox,
 } from '#components';
+import { history } from '@tiptap/pm/history';
 import { Step } from '@tiptap/pm/transform';
-
 import { EditorContent } from '@tiptap/vue-3';
 
 import '~/assets/styles/note-editor.scss';
@@ -134,6 +134,11 @@ useTinykeys({
 });
 
 if (import.meta.client) {
+  withTiptapEditor((editor) => {
+    editor.unregisterPlugin('history');
+    editor.registerPlugin(history());
+  });
+
   const offUnload = on(window, 'beforeunload', () => {
     updateContent(true);
   }, { passive: true });
@@ -146,21 +151,6 @@ if (import.meta.client) {
     // editor's content. This prevents such case by explicitly setting `isTyping`
     // to false after unmounting
     isTyping.value = false;
-
-    // prevent resuse of history between documents
-    // probably the worst implementation
-    // should have just created new instance of tiptap ?
-    if (editor.value && 'history$' in editor.value.state) {
-      const history = editor.value.state.history$ as any;
-
-      history.done.eventCount = 0;
-      history.done.items.values.length = 0;
-
-      history.undone.eventCount = 0;
-      history.undone.items.values.length = 0;
-
-      history.prevTime += 10000;
-    }
   });
 }
 </script>

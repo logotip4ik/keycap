@@ -31,6 +31,7 @@ export const markPasteRule = proxy;
 export const isTextSelection = proxy;
 export const isNodeSelection = proxy;
 export const posToDOMRect = proxy;
+export const history = proxy;
 
 export const useTiptap = proxy;
 export const withTiptapEditor = proxy;
