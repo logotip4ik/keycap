@@ -51,8 +51,7 @@ export async function deleteAuthCookies(event: H3Event) {
 }
 
 export async function getUserFromEvent(event: H3Event): Promise<SafeUser | undefined> {
-  // TODO: remove in next release
-  const accessToken = getCookie(event, accessTokenName) || getCookie(event, '__Host-keycap-user');
+  const accessToken = getCookie(event, accessTokenName);
 
   if (!accessToken) {
     return;

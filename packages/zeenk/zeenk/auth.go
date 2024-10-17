@@ -21,13 +21,7 @@ func getAuthCookie(r *http.Request) (*http.Cookie, error) {
     cookieName = "__Secure-" + cookieName
   }
 
-  // TODO: remove in next release
-  cookie, err := r.Cookie(cookieName)
-  if err != nil {
-    return r.Cookie("__Host-keycap-user");
-  }
-
-  return cookie, nil
+  return r.Cookie(cookieName)
 }
 
 func verifyJwt(cookie string) (*jwt.Token, error) {
