@@ -271,14 +271,6 @@ export default defineNuxtConfig({
       cssMinify: 'lightningcss',
       cssTarget: browserslistToEsbuild(),
 
-      minify: isCI ? 'terser' : 'esbuild',
-      terserOptions: isCI ? { // eslint-disable-line style/multiline-ternary
-        compress: true,
-        mangle: true,
-        safari10: false,
-        ecma: 2020,
-      } : undefined,
-
       rollupOptions: {
         treeshake: 'recommended',
         output: {
