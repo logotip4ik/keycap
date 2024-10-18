@@ -58,16 +58,16 @@ function initTiptap() {
       Heading.configure({ levels: [1, 2, 3] }),
       ListItem,
       OrderedList,
-      Bold,
-      Highlight,
-      Italic,
-      Strike,
+      Bold.extend({ inclusive: false }),
+      Highlight.extend({ inclusive: false }),
+      Italic.extend({ inclusive: false }),
+      Strike.extend({ inclusive: false }),
       Link,
       TaskList,
       TaskItem,
       BubbleMenu,
       EmojiPicker,
-      Code.configure({
+      Code.extend({ inclusive: false }).configure({
         HTMLAttributes: {
           autocomplete: 'off',
           autocorrect: 'off',
