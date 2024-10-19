@@ -181,12 +181,12 @@ onMounted(() => {
 
       &--start {
         color: white;
-        background-color: hsla(var(--task-list-indicator-color-hsl), 0.9);
+        background-color: hsla(var(--selection-bg-color-hsl), 0.9);
 
         transition: background-color .3s, box-shadow .3s;
 
         &:is(:hover, :focus) {
-          background-color: var(--task-list-indicator-color);
+          background-color: var(--selection-bg-color);
           box-shadow: 0 0 1rem hsla(var(--selection-bg-color-hsl), 0.50);
 
           transition-duration: .1s;
