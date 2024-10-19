@@ -125,7 +125,11 @@ onMounted(() => {
     &__purple {
       font-weight: 600;
       font-feature-settings: "ccmp", "ss03";
-      color: var(--selection-bg-color);
+      color: var(--task-list-indicator-color);
+
+      @media (prefers-color-scheme: dark) {
+        color: var(--selection-bg-color);
+      }
     }
 
     &__notes {
@@ -183,15 +187,23 @@ onMounted(() => {
 
       &--start {
         color: white;
-        background-color: hsla(var(--selection-bg-color-hsl), 0.9);
+        background-color: hsla(var(--task-list-indicator-color-hsl), 0.9);
 
         transition: background-color .3s, box-shadow .3s;
 
         &:is(:hover, :focus) {
-          background-color: var(--selection-bg-color);
+          background-color: var(--task-list-indicator-color);
           box-shadow: 0 0 1rem hsla(var(--selection-bg-color-hsl), 0.50);
 
           transition-duration: .1s;
+
+          @media (prefers-color-scheme: dark) {
+            background-color: hsla(var(--selection-bg-color-hsl), 0.9);
+          }
+        }
+
+        @media (prefers-color-scheme: dark) {
+          background-color: hsla(var(--selection-bg-color-hsl), 0.9);
         }
       }
 
@@ -251,7 +263,7 @@ onMounted(() => {
         height: calc(15rem + 20vw);
       }
 
-      @media screen and (prefers-color-scheme: dark) {
+      @media (prefers-color-scheme: dark) {
         mix-blend-mode: lighten;
       }
     }
