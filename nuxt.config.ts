@@ -174,6 +174,7 @@ export default defineNuxtConfig({
     },
   },
 
+  // nitro doesn't apply route rules for dev server, so cmd+k search will be broken for firefox+dev
   routeRules: {
     '/**': { headers: getHeaders('default') },
 
@@ -303,63 +304,53 @@ export default defineNuxtConfig({
       },
     },
 
-    $client: {
-      build: {
-        rollupOptions: {
-          external: ['.prisma/client/index-browser'],
-        },
-      },
+    optimizeDeps: {
+      include: [
+        'mitt',
+        'idb-keyval',
+        'coincident',
+        'perfect-debounce',
+        'cookie-es',
+        'escape-string-regexp',
+        '@floating-ui/dom',
+        '@superhuman/command-score',
+      ],
 
-      optimizeDeps: {
-        include: [
-          'mitt',
-          'idb-keyval',
-          'coincident',
-          'comlink',
-          'perfect-debounce',
-          'cookie-es',
-          'escape-string-regexp',
-          '@floating-ui/dom',
-          '@superhuman/command-score',
-        ],
+      exclude: [
+        '@tiptap/core',
+        '@tiptap/extension-blockquote',
+        '@tiptap/extension-bold',
+        '@tiptap/extension-bullet-list',
+        '@tiptap/extension-code',
+        '@tiptap/extension-code-block',
+        '@tiptap/extension-document',
+        '@tiptap/extension-hard-break',
+        '@tiptap/extension-heading',
+        '@tiptap/extension-highlight',
+        '@tiptap/extension-history',
+        '@tiptap/extension-horizontal-rule',
+        '@tiptap/extension-italic',
+        '@tiptap/extension-list-item',
+        '@tiptap/extension-ordered-list',
+        '@tiptap/extension-paragraph',
+        '@tiptap/extension-placeholder',
+        '@tiptap/extension-strike',
+        '@tiptap/extension-task-item',
+        '@tiptap/extension-task-list',
+        '@tiptap/extension-text',
+        '@tiptap/extension-text-align',
+        '@tiptap/extension-text-style',
+        '@tiptap/pm',
+        '@tiptap/suggestion',
+        '@tiptap/vue-3',
+      ],
 
-        exclude: [
-          '@tiptap/core',
-          '@tiptap/extension-blockquote',
-          '@tiptap/extension-bold',
-          '@tiptap/extension-bullet-list',
-          '@tiptap/extension-code',
-          '@tiptap/extension-code-block',
-          '@tiptap/extension-document',
-          '@tiptap/extension-hard-break',
-          '@tiptap/extension-heading',
-          '@tiptap/extension-highlight',
-          '@tiptap/extension-history',
-          '@tiptap/extension-horizontal-rule',
-          '@tiptap/extension-italic',
-          '@tiptap/extension-list-item',
-          '@tiptap/extension-ordered-list',
-          '@tiptap/extension-paragraph',
-          '@tiptap/extension-placeholder',
-          '@tiptap/extension-strike',
-          '@tiptap/extension-task-item',
-          '@tiptap/extension-task-list',
-          '@tiptap/extension-text',
-          '@tiptap/extension-text-align',
-          '@tiptap/extension-text-style',
-          '@tiptap/pm',
-          '@tiptap/suggestion',
-          '@tiptap/vue-3',
-        ],
+      esbuildOptions: {
+        target: 'esnext',
       },
     },
 
     $server: {
-      // https://github.com/antfu/nuxt-better-optimize-deps
-      optimizeDeps: {
-        noDiscovery: true,
-      },
-
       plugins: [
         // Taken from elk
         // https://github.com/elk-zone/elk/blob/ed5592260fc83f0207a12a7184973749e87bc85e/nuxt.config.ts#L186
@@ -565,5 +556,4 @@ export default defineNuxtConfig({
       },
     },
   },
-
 });

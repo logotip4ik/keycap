@@ -4490,17 +4490,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ungap/structured-clone@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "@ungap/structured-clone@npm:1.2.0"
-  checksum: 10/c6fe89a505e513a7592e1438280db1c075764793a2397877ff1351721fe8792a966a5359769e30242b3cd023f2efb9e63ca2ca88019d73b564488cc20e3eab12
-  languageName: node
-  linkType: hard
-
-"@ungap/with-resolvers@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "@ungap/with-resolvers@npm:0.1.0"
-  checksum: 10/295fe3eb9f9139333773b7cdc7091f89380611586a0cc787b8fb021a6a06587fd53feb1273fd5cf87fb647d7af21710bea06ff70bc90f4cf93262b6e3a5d553e
+"@ungap/raw-json@npm:^0.3.7":
+  version: 0.3.7
+  resolution: "@ungap/raw-json@npm:0.3.7"
+  checksum: 10/4c3518bba87346a0e11c26e26ae7d34b749e56aa3460780e45d50d1c5cf73766434d15959dfadc66246cd4b9ae6b1a8a30ee9c3d7ba40578bf5cb1ea64cabded
   languageName: node
   linkType: hard
 
@@ -5963,35 +5956,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"coincident@npm:1.2.3":
-  version: 1.2.3
-  resolution: "coincident@npm:1.2.3"
+"coincident@npm:2.2.3":
+  version: 2.2.3
+  resolution: "coincident@npm:2.2.3"
   dependencies:
-    "@ungap/structured-clone": "npm:^1.2.0"
-    "@ungap/with-resolvers": "npm:^0.1.0"
-    gc-hook: "npm:^0.3.1"
-    proxy-target: "npm:^3.0.2"
-    ws: "npm:^8.16.0"
-  dependenciesMeta:
-    ws:
-      optional: true
-  checksum: 10/d9ea812bf09f570a16dfb4af2af61ec45cb7212723038bc89c4a4ed61af59efac4f97d33379a9221d8f363ee5e17bfb9c5dd44c8f6b75820970fc83f51e4f1a7
+    gc-hook: "npm:^0.4.1"
+    js-proxy: "npm:^0.5.1"
+    sabayon: "npm:^0.5.2"
+  checksum: 10/5a2e9e2e7819f0e84d6c16b4c38bc3ef39fdbc3f59e54fedb15fa9f429c4002effd142a771932473c795440a280cb4923f23d10ba71c09488de927be2c4d049d
   languageName: node
   linkType: hard
 
-"coincident@patch:coincident@npm%3A1.2.3#~/.yarn/patches/coincident-npm-1.2.2-c8ea01ebb8.patch":
-  version: 1.2.3
-  resolution: "coincident@patch:coincident@npm%3A1.2.3#~/.yarn/patches/coincident-npm-1.2.2-c8ea01ebb8.patch::version=1.2.3&hash=fc047d"
+"coincident@patch:coincident@npm%3A2.2.3#~/.yarn/patches/coincident-npm-2.2.3-ab8197d8c7.patch":
+  version: 2.2.3
+  resolution: "coincident@patch:coincident@npm%3A2.2.3#~/.yarn/patches/coincident-npm-2.2.3-ab8197d8c7.patch::version=2.2.3&hash=c7375d"
   dependencies:
-    "@ungap/structured-clone": "npm:^1.2.0"
-    "@ungap/with-resolvers": "npm:^0.1.0"
-    gc-hook: "npm:^0.3.1"
-    proxy-target: "npm:^3.0.2"
-    ws: "npm:^8.16.0"
-  dependenciesMeta:
-    ws:
-      optional: true
-  checksum: 10/7178b3a23d4979d5ed7deb78302d2856e01c3d1b990edda26b4ec414a5befa29b80fde3d2c4dff8b06c38ea4624c2b4a0245705f76d1f6a8d23c4ee37cc0ad7e
+    gc-hook: "npm:^0.4.1"
+    js-proxy: "npm:^0.5.1"
+    sabayon: "npm:^0.5.2"
+  checksum: 10/b9cfb6a52a315309aedce03e9b0d71cc72651f2fc2ac102e2a58d7f094b2696b3687b0acda286210a4e0e54d0c7de899a756867fbeb37d0e688090de8af81f4b
   languageName: node
   linkType: hard
 
@@ -6040,13 +6023,6 @@ __metadata:
   version: 2.9.3
   resolution: "colord@npm:2.9.3"
   checksum: 10/907a4506d7307e2f580b471b581e992181ed75ab0c6925ece9ca46d88161d2fc50ed15891cd0556d0d9321237ca75afc9d462e4c050b939ef88428517f047f30
-  languageName: node
-  linkType: hard
-
-"comlink@npm:^4.4.1":
-  version: 4.4.1
-  resolution: "comlink@npm:4.4.1"
-  checksum: 10/3d953e987874bf0d60c02a3dd96e9f661141e58709eaab82097369c585382935651ce61f004e7bb1a5eb868ca8d8734d1cec885965ae53c56567d91b9539f2d0
   languageName: node
   linkType: hard
 
@@ -8233,6 +8209,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"gc-hook@npm:^0.4.1":
+  version: 0.4.1
+  resolution: "gc-hook@npm:0.4.1"
+  checksum: 10/25769a16b4c690653c86678380abaeae62aacc118495f6c97f5fbb2a879075a1e863017efd1f45df5fe443468523f2251c10be1576fc465aaaf5ab66e98798c8
+  languageName: node
+  linkType: hard
+
 "gensync@npm:^1.0.0-beta.2":
   version: 1.0.0-beta.2
   resolution: "gensync@npm:1.0.0-beta.2"
@@ -9343,6 +9326,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"js-proxy@npm:^0.5.1":
+  version: 0.5.1
+  resolution: "js-proxy@npm:0.5.1"
+  dependencies:
+    gc-hook: "npm:^0.3.1"
+    proxy-target: "npm:^3.0.2"
+  checksum: 10/a541874aa88a67cab0259d061015dbe46edfad54e4e89f85d750464869c2ae1ad12920f74edede5df7d18d3c546c0bc3cb9452e84c3f27b6cdade9bc3c785e78
+  languageName: node
+  linkType: hard
+
 "js-tokens@npm:^4.0.0":
   version: 4.0.0
   resolution: "js-tokens@npm:4.0.0"
@@ -9542,8 +9535,7 @@ __metadata:
     "@vite-pwa/nuxt": "npm:^0.10.5"
     "@vue/test-utils": "npm:^2.4.6"
     browserslist-to-esbuild: "npm:^2.1.1"
-    coincident: "npm:1.2.3"
-    comlink: "npm:^4.4.1"
+    coincident: "npm:^2.2.3"
     decomment: "npm:^0.9.5"
     escape-string-regexp: "npm:^5.0.0"
     eslint: "npm:^9.13.0"
@@ -13220,6 +13212,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"sabayon@npm:latest":
+  version: 0.6.0
+  resolution: "sabayon@npm:0.6.0"
+  dependencies:
+    "@ungap/raw-json": "npm:^0.3.7"
+  bin:
+    sabayon: cli.cjs
+  checksum: 10/39b5de89b3638da8b49da27127401987f172f7405298eca81e6c9c24ec69ee1526c6952c686324272125ad6cf39920b9e87e25490aa89589fd4f232de6ec30f2
+  languageName: node
+  linkType: hard
+
+"sabayon@patch:sabayon@npm%3Alatest#~/.yarn/patches/sabayon-npm-0.5.2-f93f65a00f.patch":
+  version: 0.6.0
+  resolution: "sabayon@patch:sabayon@npm%3A0.6.0#~/.yarn/patches/sabayon-npm-0.5.2-f93f65a00f.patch::version=0.6.0&hash=5226b1"
+  dependencies:
+    "@ungap/raw-json": "npm:^0.3.7"
+  bin:
+    sabayon: cli.cjs
+  checksum: 10/a819a31933ccc2d5df05e5c90960262c722e4a5da85bf2ec48da1f7ece36ad4c625326589b9372ba3e434e1e9922526335618f808d20f435025a8cc7afd61320
+  languageName: node
+  linkType: hard
+
 "safe-buffer@npm:^5.1.0, safe-buffer@npm:~5.2.0":
   version: 5.2.1
   resolution: "safe-buffer@npm:5.2.1"
@@ -15538,7 +15552,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ws@npm:^8.16.0, ws@npm:^8.18.0":
+"ws@npm:^8.18.0":
   version: 8.18.0
   resolution: "ws@npm:8.18.0"
   peerDependencies:

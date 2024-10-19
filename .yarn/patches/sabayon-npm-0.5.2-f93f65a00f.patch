@@ -1,0 +1,13 @@
+diff --git a/src/shared.js b/src/shared.js
+index 4d61d24710db5de9be1c13e2d0c3bea588c35760..1e3080d304516e4e4e42ace98ce4daf739634e38 100644
+--- a/src/shared.js
++++ b/src/shared.js
+@@ -82,7 +82,7 @@ const transferViews = (data, transfer, visited) => {
+ const waitAsyncPatch = (...args) => ({
+   value: new Promise(resolve => {
+     // encodeURIComponent('onmessage=e=>postMessage(!Atomics.wait(...e.data))')
+-    let w = new Worker('data:application/javascript,onmessage%3De%3D%3EpostMessage(!Atomics.wait(...e.data))');
++    let w = new Worker('/__sabayon_async_wait_fallback.js');
+     w.onmessage = () => resolve('ok');
+     w.postMessage(args);
+   })

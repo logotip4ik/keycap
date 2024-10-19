@@ -1,0 +1,12 @@
+diff --git a/package.json b/package.json
+index 1f4def4f341684ddaed93ebd07f05c9d89ee01df..e408146350f6aa4811813e1a2e1c87c60e6c7c6a 100644
+--- a/package.json
++++ b/package.json
+@@ -27,6 +27,7 @@
+   },
+   "type": "module",
+   "exports": {
++    ".": "./src/main.js",
+     "./server/main": "./src/server/main.js",
+     "./server/worker": "./src/server/worker.js",
+     "./window/main": "./src/window/main.js",

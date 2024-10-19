@@ -2,8 +2,8 @@ import type { Emoji, EmojiMartData } from '@emoji-mart/data';
 
 import { commandScore as getScore } from '@superhuman/command-score';
 
-import coincident from 'coincident';
-import { expose } from 'comlink';
+// @ts-expect-error no types
+import coincident from 'coincident/worker';
 
 import type { FuzzyWorker } from '~/utils/fuzzy';
 
@@ -154,11 +154,7 @@ const fuzzyInterface: FuzzyWorker = {
   refreshItemsCache: populateItemsCache,
 };
 
-if (import.meta.prod) {
-  const worker = coincident(globalThis);
+// eslint-disable-next-line antfu/no-top-level-await
+const { proxy: worker } = await coincident();
 
-  Object.assign(worker, fuzzyInterface);
-}
-else {
-  expose(fuzzyInterface);
-}
+Object.assign(worker, fuzzyInterface);

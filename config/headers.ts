@@ -35,7 +35,7 @@ export const cspHeaders = {
 export const defaultHeaders = {
   'Cross-Origin-Embedder-Policy': 'require-corp',
   'Cross-Origin-Opener-Policy': 'same-origin',
-  'Cross-Origin-Resource-Policy': 'same-origin',
+  'Cross-Origin-Resource-Policy': isCI ? 'cross-origin' : 'same-origin',
   'Origin-Agent-Cluster': '?1',
   'X-DNS-Prefetch-Control': 'off',
   'X-Download-Options': 'noopen',
@@ -66,13 +66,11 @@ export function getHeaders(
     ? headersOptions.type
     : (headersOptions ?? 'default');
 
-  const headers: HeaderObject = { };
+  const headers: HeaderObject = { ...defaultHeaders };
 
   if (!isCI) {
     return headers;
   }
-
-  Object.assign(headers, defaultHeaders);
 
   switch (type) {
     case 'fonts':
