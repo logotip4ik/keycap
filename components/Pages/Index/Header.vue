@@ -56,6 +56,8 @@ onMounted(() => {
 
 <template>
   <header class="header">
+    <PagesIndexGodRay />
+
     <p class="header__text">
       <template v-for="(item, i) in text" :key="i">
         <Component :is="item.tag" :class="item.class" class="header__text__word" :style="{ '--i': i, 'opacity': 0 }">
@@ -243,8 +245,14 @@ onMounted(() => {
       perspective: 4000px;
       perspective-origin: 100% 0;
 
+      mix-blend-mode: darken;
+
       @media screen and (max-width: $breakpoint-tablet) {
         height: calc(15rem + 20vw);
+      }
+
+      @media screen and (prefers-color-scheme: dark) {
+        mix-blend-mode: lighten;
       }
     }
 
