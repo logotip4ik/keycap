@@ -10,8 +10,6 @@
 </template>
 
 <style lang="scss">
-@use "sass:math";
-
 .editor-skeleton {
   padding: 20vh 1.5rem 25vh;
 
@@ -23,7 +21,7 @@
   }
 
   &__heading {
-    width: (random(54) + 24)+#{'%'};
+    width: (math.random(54) + 24)+#{'%'};
     height: 2rem;
 
     margin-bottom: 2rem;
@@ -41,7 +39,7 @@
     // Skip first element
     @for $i from 2 to $numberOfItems + 2 {
       &:nth-of-type(#{$i}) {
-        width: (random(54) + 24)+#{'%'};
+        width: (math.random(54) + 24)+#{'%'};
 
         opacity: math.div(1, $i);
       }

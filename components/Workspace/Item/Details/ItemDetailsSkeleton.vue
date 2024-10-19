@@ -18,10 +18,8 @@
 </template>
 
 <style lang="scss">
-@use "sass:math";
-
 .skeleton__heading {
-  width: (random(54) + 24)+#{'%'};
+  width: (math.random(54) + 24)+#{'%'};
   height: 2rem;
 
   margin: 0;
@@ -54,13 +52,13 @@
     &:nth-of-type(#{$i}) {
       .skeleton__row__text,
       .skeleton__row__date {
-        width: (random(15) + 17)+#{'%'};
+        width: (math.random(15) + 17)+#{'%'};
 
         opacity: math.div(1, $i + 1);
       }
 
       .skeleton__row__text {
-        width: (random(15) + 17)+#{'%'};
+        width: (math.random(15) + 17)+#{'%'};
       }
     }
   }

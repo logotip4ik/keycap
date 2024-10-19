@@ -5,8 +5,6 @@
 </template>
 
 <style lang="scss">
-@use "sass:math";
-
 .recent-skeleton {
   &__item {
     width: 100%;
@@ -21,7 +19,7 @@
     @for $i from 1 to 5 {
       &:nth-child(#{$i}) {
         opacity: #{math.div(1, $i)};
-        width: #{25 + random($limit: 25) + "%"}
+        width: #{25 + math.random($limit: 25) + "%"}
       }
     }
   }

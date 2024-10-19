@@ -295,6 +295,7 @@ export default defineNuxtConfig({
         scss: {
           api: 'modern',
           additionalData: [
+            '@use "sass:math";',
             Object.entries(breakpoints).map(([key, value]) => `$breakpoint-${key}: ${value}px;`).join('\n'),
             Object.entries(sidebarsBreakpoints).map(([key, value]) => `$sidebar-breakpoint-${key}: ${value}px;`).join('\n'),
           ].join('\n'),
