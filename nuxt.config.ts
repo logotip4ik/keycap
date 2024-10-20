@@ -307,8 +307,9 @@ export default defineNuxtConfig({
     optimizeDeps: {
       include: [
         'mitt',
+        'coincident/main',
+        'coincident/worker',
         'idb-keyval',
-        'coincident',
         'perfect-debounce',
         'cookie-es',
         'escape-string-regexp',
