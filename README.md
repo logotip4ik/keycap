@@ -2,7 +2,7 @@
 
 # Keycap
 
-<img src="public\android-chrome-192x192.png" align="right"
+<img src="./public/android-chrome-512x512.png" align="right"
   alt="Purple keycap with capital letter K" width="150" height="150"/>
 
 Simple note-taking app with support for markdown. Share your thoughts with others and organize them into folders.
