@@ -270,7 +270,7 @@ export default defineNuxtConfig({
       target: 'esnext',
 
       cssMinify: 'lightningcss',
-      cssTarget: browserslistToEsbuild(),
+      cssTarget: browserslistToEsbuild('>0.3%, not dead, Safari > 15, iOS > 15'),
 
       rollupOptions: {
         treeshake: 'recommended',
