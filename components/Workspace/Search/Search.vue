@@ -172,6 +172,7 @@ useTinykeys({
 
   @media (max-width: $breakpoint-tablet) {
     padding: 1.5rem;
+    max-width: unset;
   }
 
   &__wrapper {
