@@ -175,15 +175,13 @@
   "size-limit": [
     {
       "name": "js",
-      "path": ".output/public/_nuxt/*.js"
+      "path": "./.output/public/_nuxt/*.js",
+      "limit": "265kb"
     },
     {
       "name": "css",
-      "path": ".output/public/_nuxt/*.css"
-    },
-    {
-      "name": "server",
-      "path": ".output/server/**/*"
+      "path": "./.output/public/_nuxt/*.css",
+      "limit": "16kb"
     }
   ]
 }
