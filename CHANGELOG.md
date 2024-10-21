@@ -1,6 +1,53 @@
 # Changelog
 
 
+## v3.15.8
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.7...v3.15.8)
+
+### 🩹 Fixes
+
+- Make look toolbox open icon visually the same as contents ([a513ca10](https://github.com/logotip4ik/keycap/commit/a513ca10))
+- Make sourcemap only for local env ([413d46b7](https://github.com/logotip4ik/keycap/commit/413d46b7))
+- Allow search to fill width in tablet mode ([1e41330f](https://github.com/logotip4ik/keycap/commit/1e41330f))
+
+### 💅 Refactors
+
+- Simplify oauth redirect function ([a3199ae9](https://github.com/logotip4ik/keycap/commit/a3199ae9))
+- Export http protocol to build time variable ([e11fc347](https://github.com/logotip4ik/keycap/commit/e11fc347))
+- Easier clearance of history ([84118779](https://github.com/logotip4ik/keycap/commit/84118779))
+- More stable save flow ([15561d0a](https://github.com/logotip4ik/keycap/commit/15561d0a))
+- Update to coincident v2 ([b17b9fb1](https://github.com/logotip4ik/keycap/commit/b17b9fb1))
+
+### 📖 Documentation
+
+- Fix path to image ([b84ebcae](https://github.com/logotip4ik/keycap/commit/b84ebcae))
+
+### 🏡 Chore
+
+- **release:** V3.15.7 ([2d974a28](https://github.com/logotip4ik/keycap/commit/2d974a28))
+- Improve jwt security parsing ([a9034a18](https://github.com/logotip4ik/keycap/commit/a9034a18))
+- Remove already excluded optimize options ([825ffab3](https://github.com/logotip4ik/keycap/commit/825ffab3))
+- Remove vueuse ([490f840f](https://github.com/logotip4ik/keycap/commit/490f840f))
+- Remove old cookie check ([b76074a8](https://github.com/logotip4ik/keycap/commit/b76074a8))
+- Remove not used page ([ec74f06e](https://github.com/logotip4ik/keycap/commit/ec74f06e))
+- Use esbuild for minification ([e163754c](https://github.com/logotip4ik/keycap/commit/e163754c))
+- Prevent marks from spreading after space or line break ([4827ad78](https://github.com/logotip4ik/keycap/commit/4827ad78))
+- Update deps ([7fa54f36](https://github.com/logotip4ik/keycap/commit/7fa54f36))
+- Update yarn ([112ffc66](https://github.com/logotip4ik/keycap/commit/112ffc66))
+- Migrate sass global function to namespaced ([2d48ffca](https://github.com/logotip4ik/keycap/commit/2d48ffca))
+- Bump a bit selection color lightness for dark mode ([816e5ff7](https://github.com/logotip4ik/keycap/commit/816e5ff7))
+- Add new ui effect to landing page ([f735b565](https://github.com/logotip4ik/keycap/commit/f735b565))
+- Update colors for key components in light and dark modes ([0b302eb4](https://github.com/logotip4ik/keycap/commit/0b302eb4))
+- Remove some of config files ([7b91e837](https://github.com/logotip4ik/keycap/commit/7b91e837))
+- Adjust yarn config ([ff11206d](https://github.com/logotip4ik/keycap/commit/ff11206d))
+- Remove server from size-limit and add limit for client size js and css ([172a9584](https://github.com/logotip4ik/keycap/commit/172a9584))
+- Remove benchmarks folder ([b2c4e96b](https://github.com/logotip4ik/keycap/commit/b2c4e96b))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.15.7
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.6...v3.15.7)
