@@ -145,10 +145,14 @@ export function getHeaders(
     }
 
     case 'editor-images': {
-      Object.assign(headers, makeCacheControlHeader({
+      const cacheOptions = {
         private: false,
         immutable: true,
         maxAge: parseDuration('1 week', 's')!,
+      };
+      Object.assign(headers, makeCacheControlHeader(cacheOptions));
+      Object.assign(headers, makeCacheControlHeader({
+        ...cacheOptions,
         CDN: true,
       }));
 
