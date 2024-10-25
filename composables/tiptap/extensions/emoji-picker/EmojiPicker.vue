@@ -8,8 +8,6 @@ const props = defineProps<{
   getBoundingClientRect?: () => DOMRect
 }>();
 
-const { editor } = useTiptap();
-
 const emojiPickerEl = shallowRef<HTMLDivElement | null>(null);
 const selectedEmoji = ref(0);
 
@@ -60,7 +58,9 @@ function handleKeypress(event: KeyboardEvent) {
     event.preventDefault();
   }
   else if (event.key === 'ArrowUp') {
-    editor.value?.commands.focus();
+    withTiptapEditor((editor) => {
+      editor.commands.focus();
+    });
   }
   else if (
     (event.key === 'ArrowLeft' || event.key === 'ArrowRight')

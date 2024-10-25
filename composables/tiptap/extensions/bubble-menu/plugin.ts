@@ -1,5 +1,5 @@
 import type { ComputePositionConfig } from '@floating-ui/dom';
-import type { Editor } from '@tiptap/core';
+import type { Editor, EditorEvents } from '@tiptap/core';
 
 import type { EditorState } from '@tiptap/pm/state';
 import type { EditorView } from '@tiptap/pm/view';
@@ -22,6 +22,15 @@ export type BubbleMenuViewProps = BubbleMenuPluginProps & {
   view: EditorView
 };
 
+function editorOn<T extends keyof EditorEvents>(
+  editor: Editor,
+  event: T,
+  cb: (...props: EditorEvents[T] extends Array<any> ? EditorEvents[T] : [EditorEvents[T]]) => void,
+): () => void {
+  editor.on(event, cb);
+  return () => editor.off(event, cb);
+}
+
 export class BubbleMenuView {
   private editor: Editor;
 
@@ -39,6 +48,8 @@ export class BubbleMenuView {
 
   private updateDebounceTimer: number | undefined;
 
+  private offs: Array<() => void>;
+
   constructor({
     editor,
     element,
@@ -50,10 +61,12 @@ export class BubbleMenuView {
     this.view = view;
     this.updateDelay = 75;
 
-    this.element.addEventListener('mousedown', this.mousedownHandler.bind(this), { capture: true });
-    this.view.dom.addEventListener('dragstart', this.dragstartHandler.bind(this));
-    this.editor.on('focus', this.focusHandler.bind(this));
-    this.editor.on('blur', this.blurHandler.bind(this));
+    this.offs = [
+      on(this.element, 'mousedown', () => this.mousedownHandler(), { capture: true }),
+      on(this.view.dom, 'dragstart', () => this.dragstartHandler()),
+      editorOn(this.editor, 'focus', () => this.focusHandler()),
+      editorOn(this.editor, 'blur', (payload) => this.blurHandler(payload)),
+    ];
 
     this.hide();
 
@@ -253,10 +266,15 @@ export class BubbleMenuView {
   }
 
   destroy() {
-    this.element.removeEventListener('mousedown', this.mousedownHandler, { capture: true });
-    this.view.dom.removeEventListener('dragstart', this.dragstartHandler);
-    this.editor.off('focus', this.focusHandler);
-    this.editor.off('blur', this.blurHandler);
+    invokeArrayFns(this.offs);
+    this.offs.length = 0;
+
+    // @ts-expect-error cleaning up memory
+    this.editor = undefined;
+    // @ts-expect-error cleaning up memory
+    this.element = undefined;
+    // @ts-expect-error cleaning up memory
+    this.view = undefined;
   }
 }
 

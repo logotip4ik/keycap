@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Editor } from '@tiptap/vue-3';
+
 import {
   LazyWorkspaceNoteFormatterBubbleBox as LazyBubbleBox,
   LazyWorkspaceNoteFormatterFixedBox as LazyFixedBox,
@@ -29,7 +31,7 @@ const {
 
 let hasUnsavedChanges = false;
 function updateContent(force?: boolean) {
-  const content = editor.value?.getHTML();
+  const content = editor.getHTML();
 
   return props
     .onUpdate(content || '', force)
@@ -39,14 +41,14 @@ function updateContent(force?: boolean) {
 }
 
 watch(() => props.note.content, (content) => {
-  if (isTyping.value || !editor.value) {
+  if (isTyping.value || !editor) {
     return;
   }
 
-  const editorContent = editor.value.getHTML();
+  const editorContent = editor.getHTML();
 
   if (editorContent !== content) {
-    editor.value.commands.setContent(content || '');
+    editor.commands.setContent(content || '');
   }
 }, {
   immediate: import.meta.client,
@@ -54,14 +56,14 @@ watch(() => props.note.content, (content) => {
 });
 
 watch(() => props.editable, (editable) => {
-  editor.value?.setOptions({ editable });
+  editor.setOptions({ editable });
 }, { immediate: import.meta.client });
 
 watch(spellcheck, (spellcheck) => {
-  editor.value?.setOptions({
+  editor.setOptions({
     editorProps: {
       attributes: {
-        ...editor.value.options.editorProps.attributes,
+        ...editor.options.editorProps.attributes,
         spellcheck: spellcheck === 'yes' ? 'true' : 'false',
       },
     },
@@ -71,7 +73,7 @@ watch(spellcheck, (spellcheck) => {
 mitt.on('save:note', () => updateContent(true));
 
 zeenk.on('update-note', ({ path, steps }) => {
-  if (props.note.path !== path || !editor.value) {
+  if (props.note.path !== path || !editor) {
     return;
   }
 
@@ -80,16 +82,16 @@ zeenk.on('update-note', ({ path, steps }) => {
     return;
   }
 
-  const tr = editor.value.state.tr;
+  const tr = editor.state.tr;
   tr.setMeta('websocket', true);
 
   for (const step of steps) {
     tr.step(
-      Step.fromJSON(editor.value.state.schema, step),
+      Step.fromJSON(editor.state.schema, step),
     );
   }
 
-  editor.value.view.dispatch(tr);
+  editor.view.dispatch(tr);
 });
 
 function saveUnsavedChanges() {
@@ -124,18 +126,18 @@ useTinykeys({
   [shortcuts.edit]: (event) => {
     const target = event.target as HTMLElement;
 
-    if (target.tagName !== 'INPUT' && target !== editor.value?.view.dom) {
+    if (target.tagName !== 'INPUT' && target !== editor.view.dom) {
       event.preventDefault();
-      editor.value?.commands.focus();
+      editor.commands.focus();
     }
   },
 
   'Escape': () => {
-    editor.value?.commands.blur();
+    editor.commands.blur();
   },
 
   '$mod+s': (event) => {
-    if (!editor.value?.isFocused) {
+    if (!editor.isFocused) {
       return;
     }
 
@@ -176,6 +178,6 @@ if (import.meta.client) {
       <WorkspaceNoteFormatter :editor />
     </Component>
 
-    <EditorContent class="note-editor" :editor />
+    <EditorContent class="note-editor" :editor="editor as Editor" />
   </div>
 </template>

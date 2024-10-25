@@ -1,6 +1,7 @@
-import type { Editor as CoreEditor } from '@tiptap/core';
-
 import type { Transaction } from '@tiptap/pm/state';
+
+import { Editor } from '@tiptap/core';
+
 import Blockquote from '@tiptap/extension-blockquote';
 import Bold from '@tiptap/extension-bold';
 import BulletList from '@tiptap/extension-bullet-list';
@@ -19,15 +20,12 @@ import Placeholder from '@tiptap/extension-placeholder';
 import Strike from '@tiptap/extension-strike';
 import TaskItem from '@tiptap/extension-task-item';
 import TaskList from '@tiptap/extension-task-list';
-
 import Text from '@tiptap/extension-text';
-import { Editor } from '@tiptap/vue-3';
 
 import { BubbleMenu } from './extensions/bubble-menu';
 import { EmojiPicker } from './extensions/emoji-picker';
 import { Link } from './extensions/link';
 
-const editor = /* #__PURE__ */ shallowRef<Editor>();
 const isTyping = /* #__PURE__ */ ref(false);
 
 const debouncedClearTyping = debounce(() => isTyping.value = false, 500);
@@ -95,29 +93,43 @@ function initTiptap() {
   });
 }
 
+const currentTiptap = shallowRef<Editor>();
 export function useTiptap() {
-  if (!editor.value) {
-    editor.value = initTiptap();
-  }
+  const editor = initTiptap()!;
 
-  return { editor, isTyping, onUpdate };
+  currentTiptap.value = editor;
+
+  const offs: Array<() => void> = [
+    () => currentTiptap.value = undefined,
+  ];
+
+  onScopeDispose(() => {
+    invokeArrayFns(offs);
+    offs.length = 0;
+    editor.destroy();
+  });
+
+  return {
+    editor,
+    isTyping,
+    onUpdate: (cb: (e: { editor: Editor, transaction: Transaction }) => void) => {
+      editor.on('update', cb);
+
+      offs.push(() => editor.off('update', cb));
+    },
+  };
 }
 
 export function withTiptapEditor(cb: (editor: Editor) => void) {
-  if (editor.value) {
-    return cb(editor.value);
+  const tiptap = currentTiptap.value;
+  if (tiptap) {
+    return cb(tiptap);
   }
 
-  const stop = watch(editor, (editor) => {
+  const stop = watch(currentTiptap, (editor) => {
     if (editor) {
       stop();
       cb(editor);
     }
   });
-}
-
-function onUpdate(cb: (e: { editor: CoreEditor, transaction: Transaction }) => void) {
-  withTiptapEditor((editor) => editor.on('update', cb));
-
-  onScopeDispose(() => editor.value?.off('update', cb));
 }
