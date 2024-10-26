@@ -1,7 +1,8 @@
 import type { Transaction } from '@tiptap/pm/state';
 
-import { Editor } from '@tiptap/core';
+import type { ShallowRef } from 'vue';
 
+import { Editor } from '@tiptap/core';
 import Blockquote from '@tiptap/extension-blockquote';
 import Bold from '@tiptap/extension-bold';
 import BulletList from '@tiptap/extension-bullet-list';
@@ -20,13 +21,16 @@ import Placeholder from '@tiptap/extension-placeholder';
 import Strike from '@tiptap/extension-strike';
 import TaskItem from '@tiptap/extension-task-item';
 import TaskList from '@tiptap/extension-task-list';
+
 import Text from '@tiptap/extension-text';
 
+import proxy from 'unenv/runtime/mock/proxy';
 import { BubbleMenu } from './extensions/bubble-menu';
 import { EmojiPicker } from './extensions/emoji-picker';
 import { Link } from './extensions/link';
 
-const isTyping = /* #__PURE__ */ ref(false);
+const currentTiptap: ShallowRef<Editor | undefined> = import.meta.server ? proxy : shallowRef<Editor>();
+const isTyping = /* #__PURE__ */ ref(false); // this will be removed in server bundle
 
 const debouncedClearTyping = debounce(() => isTyping.value = false, 500);
 
@@ -93,7 +97,6 @@ function initTiptap() {
   });
 }
 
-const currentTiptap = shallowRef<Editor>();
 export function useTiptap() {
   const editor = initTiptap()!;
 
