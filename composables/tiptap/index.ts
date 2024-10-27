@@ -109,7 +109,10 @@ export function useTiptap() {
   onScopeDispose(() => {
     invokeArrayFns(offs);
     offs.length = 0;
+
     editor.destroy();
+    // @ts-expect-error break circular reference
+    editor.view.dom.editor = undefined;
   });
 
   return {
