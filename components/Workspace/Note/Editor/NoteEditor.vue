@@ -5,7 +5,6 @@ import {
   LazyWorkspaceNoteFormatterBubbleBox as LazyBubbleBox,
   LazyWorkspaceNoteFormatterFixedBox as LazyFixedBox,
 } from '#components';
-import { history } from '@tiptap/pm/history';
 import { Step } from '@tiptap/pm/transform';
 import { EditorContent } from '@tiptap/vue-3';
 
@@ -148,16 +147,11 @@ useTinykeys({
 });
 
 if (import.meta.client) {
-  withTiptapEditor((editor) => {
-    editor.unregisterPlugin('history');
-    editor.registerPlugin(history());
-  });
-
   const offUnload = on(window, 'beforeunload', saveUnsavedChanges, { passive: true });
 
   onBeforeUnmount(() => {
-    saveUnsavedChanges();
     offUnload();
+    saveUnsavedChanges();
 
     // If user navigates right after keypress, `isTyping` could be true on next
     // render of NoteEditor component, and so content watcher will not update
