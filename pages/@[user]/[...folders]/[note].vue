@@ -31,11 +31,6 @@ async function fetchNote(): Promise<void> {
 
   lastRefetch = Date.now();
 
-  loadingToast = createToast('This is cached note, wait for new one to arrive...', {
-    delay: parseDuration('3 seconds'),
-    type: 'loading',
-  });
-
   let hydrationPromise = getHydrationPromise();
 
   $fetch(`/api/note${noteApiPath.value}`, { signal: abortControllerGet.signal })
@@ -77,6 +72,17 @@ async function fetchNote(): Promise<void> {
     await hydrationPromise;
     hydrationPromise = undefined;
   }
+
+  loadingToast = createToast(
+    cachedNote
+      ? 'This is cached note, wait for new one to arrive...'
+      : 'This shouldn\'t take a long time...',
+    {
+      delay: parseDuration('3 seconds'),
+      type: 'loading',
+      duration: Infinity,
+    },
+  );
 
   note.value = cachedNote;
 }
