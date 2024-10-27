@@ -17,6 +17,8 @@ const props = defineProps<{
   onRefresh: () => Promise<void>
 }>();
 
+const content = computed(() => props.note.content || '');
+
 const { shortcuts } = useAppConfig();
 const mitt = useMitt();
 const zeenk = useZeenk();
@@ -26,20 +28,9 @@ const {
   editor,
   isTyping,
   onUpdate: onContentUpdate,
-} = useTiptap();
+} = useTiptap({ content: content.value, editable: props.editable });
 
-let hasUnsavedChanges = false;
-function updateContent(force?: boolean) {
-  const content = editor.getHTML();
-
-  return props
-    .onUpdate(content || '', force)
-    .then(() => {
-      hasUnsavedChanges = false;
-    });
-}
-
-watch(() => props.note.content, (content) => {
+watch(content, (content) => {
   if (isTyping.value || !editor) {
     return;
   }
@@ -49,14 +40,11 @@ watch(() => props.note.content, (content) => {
   if (editorContent !== content) {
     editor.commands.setContent(content || '');
   }
-}, {
-  immediate: import.meta.client,
-  deep: true, // this is really weird, but it only triggers watcher with deep: true ?
 });
 
 watch(() => props.editable, (editable) => {
   editor.setOptions({ editable });
-}, { immediate: import.meta.client });
+});
 
 watch(spellcheck, (spellcheck) => {
   editor.setOptions({
@@ -92,6 +80,17 @@ zeenk.on('update-note', ({ path, steps }) => {
 
   editor.view.dispatch(tr);
 });
+
+let hasUnsavedChanges = false;
+function updateContent(force?: boolean) {
+  const content = editor.getHTML();
+
+  return props
+    .onUpdate(content || '', force)
+    .then(() => {
+      hasUnsavedChanges = false;
+    });
+}
 
 function saveUnsavedChanges() {
   if (hasUnsavedChanges) {

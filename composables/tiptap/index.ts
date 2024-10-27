@@ -34,14 +34,15 @@ const isTyping = /* #__PURE__ */ ref(false); // this will be removed in server b
 
 const debouncedClearTyping = debounce(() => isTyping.value = false, 500);
 
-function initTiptap() {
+function initTiptap(opts?: { content?: string, editable?: boolean }) {
   if (import.meta.server) {
     return;
   }
 
   return new Editor({
     autofocus: false,
-    editable: true,
+    editable: opts?.editable,
+    content: opts?.content,
     editorProps: {
       attributes: {
         spellcheck: getSetting(settings.spellcheck).value === 'yes' ? 'true' : 'false',
@@ -97,8 +98,8 @@ function initTiptap() {
   });
 }
 
-export function useTiptap() {
-  const editor = initTiptap()!;
+export function useTiptap(opts?: { content?: string, editable?: boolean }) {
+  const editor = initTiptap(opts)!;
 
   currentTiptap.value = editor;
 
