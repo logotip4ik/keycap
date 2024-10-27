@@ -85,9 +85,12 @@ onMounted(() => {
       <WithFadeTransition>
         <LazyWorkspaceWelcome v-if="isNoteEmpty" />
 
-        <div v-else style="height: 100%;">
-          <NuxtPage :transition="{ name: 'fade' }" />
-        </div>
+        <WithFadeTransition v-else>
+          <div :key="$route.path" style="height: 100%;">
+            <!-- nuxt page transition is causing severe memory leak... -->
+            <NuxtPage />
+          </div>
+        </WithFadeTransition>
       </WithFadeTransition>
     </main>
 
