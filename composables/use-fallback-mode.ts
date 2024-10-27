@@ -1,8 +1,6 @@
-import proxy from 'unenv/runtime/mock/proxy';
-
 export function useFallbackMode() {
   if (import.meta.server) {
-    return proxy;
+    return ref(false);
   }
 
   const fallback = ref(!window.navigator.onLine);
