@@ -472,7 +472,7 @@ useFocusTrap(formatterEl);
     svg {
       display: inline-block;
 
-      width: 60%;
+      width: 75%;
       height: auto;
     }
   }
@@ -486,7 +486,9 @@ useFocusTrap(formatterEl);
   }
 }
 
-.safari .formatter svg {
-  width: 75%;
+.firefox .formatter svg {
+  // idk why, but firefox is rendering bigger svgs then other, or chrome and safari rendering
+  // smaller then needed...
+  width: 60%;
 }
 </style>
