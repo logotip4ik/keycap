@@ -1,6 +1,35 @@
 # Changelog
 
 
+## v3.15.9
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.8...v3.15.9)
+
+### 🩹 Fixes
+
+- Set local cache headers as well as cdn for editor images ([3c600f77](https://github.com/logotip4ik/keycap/commit/3c600f77))
+- Avoid ssr memory leak with global shallow ref ([48d7f031](https://github.com/logotip4ik/keycap/commit/48d7f031))
+- Memory leak in fallback mode composable ([43f380a6](https://github.com/logotip4ik/keycap/commit/43f380a6))
+- Fallback mode should be false in server ([48a21b31](https://github.com/logotip4ik/keycap/commit/48a21b31))
+- Correctly sized icons in formatter buttons ([8ce68a80](https://github.com/logotip4ik/keycap/commit/8ce68a80))
+- Memory leak with nuxt page transition ([41fce7f9](https://github.com/logotip4ik/keycap/commit/41fce7f9))
+
+### 🏡 Chore
+
+- **release:** V3.15.8 ([0cbee86a](https://github.com/logotip4ik/keycap/commit/0cbee86a))
+- Maybe fix memory leak ([25981ab2](https://github.com/logotip4ik/keycap/commit/25981ab2))
+- Update deps ([e668cbb5](https://github.com/logotip4ik/keycap/commit/e668cbb5))
+- Bump node version ([e943e74e](https://github.com/logotip4ik/keycap/commit/e943e74e))
+- Remove not needed history reinitialization ([5c7565e2](https://github.com/logotip4ik/keycap/commit/5c7565e2))
+- Break circular reference ([d4bfadd8](https://github.com/logotip4ik/keycap/commit/d4bfadd8))
+- Show different loading message when there is no cached note yet ([323083a1](https://github.com/logotip4ik/keycap/commit/323083a1))
+- Allow directly setting tiptap options instead of immediate watcher ([829caee7](https://github.com/logotip4ik/keycap/commit/829caee7))
+- Use already define route for key resolution ([16ba29b1](https://github.com/logotip4ik/keycap/commit/16ba29b1))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.15.8
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.7...v3.15.8)
