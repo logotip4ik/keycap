@@ -12,8 +12,7 @@ RUN CGO_ENABLED=0 go build -o /go/bin/zeenk-server
 
 FROM debian:bookworm-slim
 
-# need wget for healthchecks
-RUN apt-get update; apt-get install -y --no-install-recommends wget; rm -rf /var/lib/apt/lists/*
+RUN apt-get update; apt-get install -y --no-install-recommends wget curl; rm -rf /var/lib/apt/lists/*
 
 RUN groupadd --gid 1000 nonroot \
   && useradd --uid 1000 --gid nonroot --shell /bin/bash --create-home nonroot
