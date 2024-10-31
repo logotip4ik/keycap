@@ -57,5 +57,6 @@ export default antfu({
     'vercel.json',
     'dist',
     'benchmarks',
+    'packages',
   ],
 });

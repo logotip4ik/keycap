@@ -22,6 +22,7 @@ export const tsConfig: TSConfig = {
     '../archive',
     '../prisma/migrations',
     '../public',
+    '../packages',
 
     // this folder has it's own tsconfig
     '../workers',
