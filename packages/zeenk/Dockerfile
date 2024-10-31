@@ -1,4 +1,4 @@
-FROM golang:latest AS base
+FROM golang:latest AS build
 
 WORKDIR /build
 
@@ -8,6 +8,12 @@ RUN go mod download
 
 COPY . .
 
-RUN go build -o zeenk-server
+RUN CGO_ENABLED=0 go build -o /go/bin/zeenk-server
 
-CMD ["/build/zeenk-server"]
+FROM gcr.io/distroless/static-debian12:latest
+
+USER nonroot
+
+COPY --from=build /go/bin/zeenk-server /
+
+CMD ["/zeenk-server"]
