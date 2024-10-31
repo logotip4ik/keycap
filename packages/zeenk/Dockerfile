@@ -10,7 +10,10 @@ COPY . .
 
 RUN CGO_ENABLED=0 go build -o /go/bin/zeenk-server
 
-FROM gcr.io/distroless/static-debian12:latest
+FROM debian:bookworm
+
+RUN groupadd --gid 1000 nonroot \
+  && useradd --uid 1000 --gid nonroot --shell /bin/bash --create-home nonroot
 
 USER nonroot
 
