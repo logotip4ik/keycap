@@ -95,11 +95,12 @@ useFocusTrap(emojiPickerEl);
         <ul v-if="isVisible" ref="emojiPickerEl" class="emoji-picker">
           <li v-for="(emoji, i) in items" :key="emoji.id" class="emoji-picker__item">
             <WithTooltip
-              v-slot="{ tooltipId }"
+              v-slot="{ ref, tooltipId }"
               :tooltip="emoji.name"
               :y-offset="3"
             >
               <button
+                :ref
                 class="emoji-picker__item__button"
                 :aria-describedby="tooltipId"
                 :aria-selected="selectedEmoji === i"

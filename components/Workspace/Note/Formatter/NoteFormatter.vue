@@ -239,8 +239,9 @@ useFocusTrap(formatterEl);
   <WithFadeTransition @before-leave="rememberContainer" @enter="animateContainer">
     <div v-if="!isEditingLink" ref="formatterEl" class="formatter__contents-wrapper">
       <WithTooltip>
-        <template #default="{ tooltipId }">
+        <template #default="{ ref, tooltipId }">
           <button
+            :ref
             class="formatter__button"
             :class="{ 'formatter__button--active': editor.isActive('heading') }"
             aria-label="cycle heading"
@@ -262,8 +263,9 @@ useFocusTrap(formatterEl);
       </WithTooltip>
 
       <WithTooltip>
-        <template #default="{ tooltipId }">
+        <template #default="{ ref, tooltipId }">
           <button
+            :ref
             class="formatter__button"
             :class="{
               'formatter__button--active':
@@ -284,8 +286,9 @@ useFocusTrap(formatterEl);
       </WithTooltip>
 
       <WithTooltip>
-        <template #default="{ tooltipId }">
+        <template #default="{ ref, tooltipId }">
           <button
+            :ref
             class="formatter__button"
             :class="{ 'formatter__button--active': editor.isActive('blockquote') }"
             aria-label="toggle blockquote"
@@ -303,8 +306,9 @@ useFocusTrap(formatterEl);
       </WithTooltip>
 
       <WithTooltip>
-        <template #default="{ tooltipId }">
+        <template #default="{ ref, tooltipId }">
           <button
+            :ref
             class="formatter__button"
             :class="{ 'formatter__button--active': editor.isActive('link') }"
             aria-label="toggle link"
@@ -324,8 +328,9 @@ useFocusTrap(formatterEl);
       <div class="formatter__vr" aria-hidden="true" />
 
       <WithTooltip v-for="(mark, i) in marks" :key="i">
-        <template #default="{ tooltipId }">
+        <template #default="{ ref, tooltipId }">
           <button
+            :ref
             class="formatter__button"
             :class="{ 'formatter__button--active': mark.isActive(editor) }"
             :aria-label="mark.ariaLabel"

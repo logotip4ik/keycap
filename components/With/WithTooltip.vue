@@ -5,10 +5,15 @@ const props = defineProps<{
   yOffset?: number
 }>();
 
+defineSlots<{
+  default: (props: { ref: (e: any) => void, tooltipId: string }) => any
+  tooltip: () => any
+}>();
+
 const { isSmallScreen } = useDevice();
 
 const shouldShow = ref(false);
-const targetEl = shallowRef<HTMLElement | null>(null);
+const targetEl = shallowRef<HTMLElement>();
 const tooltipEl = shallowRef<HTMLElement | null>(null);
 const tooltipId = useId();
 
@@ -59,6 +64,10 @@ watch(shouldShow, async (shouldShow) => {
   tooltipEl.value.style.top = `${y}px`;
 });
 
+function setRef(e: HTMLElement) {
+  targetEl.value = e;
+}
+
 function showWithTimeout() {
   clearTimeout(timeout);
   timeout = setTimeout(() => shouldShow.value = true, timeoutToShowTooltip);
@@ -74,21 +83,14 @@ function cleanup() {
   cleanups.length = 0;
 };
 
-onMounted(() => {
-  const instance = getCurrentInstance();
-
-  if (!instance) {
-    return;
-  }
-
-  targetEl.value = (instance.vnode.el as HTMLElement).nextElementSibling as HTMLElement;
+onBeforeUnmount(() => {
+  cleanup();
+  targetEl.value = undefined;
 });
-
-onBeforeUnmount(cleanup);
 </script>
 
 <template>
-  <slot :tooltip-id="tooltipId" />
+  <slot :ref="setRef" :tooltip-id="tooltipId" />
 
   <WithFadeTransition>
     <div
