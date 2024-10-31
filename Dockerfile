@@ -16,7 +16,9 @@ COPY . .
 RUN yarn build
 
 # release includes bare minimum required to run the app, copied from builder
-FROM node:22 AS release
+FROM node:22-bookworm-slim as release
+
+RUN apt-get update; apt-get install -y --no-install-recommends wget curl; rm -rf /var/lib/apt/lists/*
 
 USER node
 

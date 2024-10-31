@@ -10,7 +10,7 @@ COPY . .
 
 RUN CGO_ENABLED=0 go build -o /go/bin/zeenk-server
 
-FROM debian:bookworm-slim
+FROM debian:bookworm-slim as release
 
 RUN apt-get update; apt-get install -y --no-install-recommends wget curl; rm -rf /var/lib/apt/lists/*
 
