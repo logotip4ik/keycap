@@ -15,13 +15,13 @@ jobs:
 
     steps:
       - name: Checkouting repo
-        uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           persist-credentials: false
           fetch-depth: 0
 
       - name: Node setup
-        uses: actions/setup-node@0a44ba7841725637a19e28fa30b79a866c81b0a6
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af
         with:
           node-version: 20
           cache: yarn
@@ -45,13 +45,13 @@ jobs:
 
     steps:
       - name: Checkouting repo
-        uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           persist-credentials: false
           fetch-depth: 0
 
       - name: Node setup
-        uses: actions/setup-node@0a44ba7841725637a19e28fa30b79a866c81b0a6
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af
         with:
           node-version: 18
           cache: yarn
