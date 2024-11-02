@@ -1,0 +1,13 @@
+diff --git a/dist/rollup/index.mjs b/dist/rollup/index.mjs
+index b147ccca03dc6fee43454afa2615f1ed42167f73..1e78047ae50b25f7c1752bd70d33d0373a24a47d 100644
+--- a/dist/rollup/index.mjs
++++ b/dist/rollup/index.mjs
+@@ -1327,8 +1327,6 @@ function raw(opts = {}) {
+     ".mdx",
+     ".txt",
+     ".css",
+-    ".htm",
+-    ".html",
+     ".sql",
+     ...opts.extensions || []
+   ]);

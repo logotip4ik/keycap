@@ -11022,7 +11022,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nitropack@npm:^2.9.7":
+"nitropack@npm:latest":
   version: 2.10.0
   resolution: "nitropack@npm:2.10.0"
   dependencies:
@@ -11103,6 +11103,90 @@ __metadata:
     nitro: dist/cli/index.mjs
     nitropack: dist/cli/index.mjs
   checksum: 10/fa7fab0fe0aeb1ad08503352693db2d13277e55754e21dcbdf290ed16cffe5fb6c2d83e7aa3fe55f3c44cb707841f04cb5f1ed00c194d0c28655414fc4ca3241
+  languageName: node
+  linkType: hard
+
+"nitropack@patch:nitropack@npm%3Alatest#~/.yarn/patches/nitropack-npm-2.10.0-e06a5d842d.patch":
+  version: 2.10.0
+  resolution: "nitropack@patch:nitropack@npm%3A2.10.0#~/.yarn/patches/nitropack-npm-2.10.0-e06a5d842d.patch::version=2.10.0&hash=27f3b1"
+  dependencies:
+    "@cloudflare/kv-asset-handler": "npm:^0.3.4"
+    "@netlify/functions": "npm:^2.8.2"
+    "@rollup/plugin-alias": "npm:^5.1.1"
+    "@rollup/plugin-commonjs": "npm:^28.0.1"
+    "@rollup/plugin-inject": "npm:^5.0.5"
+    "@rollup/plugin-json": "npm:^6.1.0"
+    "@rollup/plugin-node-resolve": "npm:^15.3.0"
+    "@rollup/plugin-replace": "npm:^6.0.1"
+    "@rollup/plugin-terser": "npm:^0.4.4"
+    "@rollup/pluginutils": "npm:^5.1.3"
+    "@types/http-proxy": "npm:^1.17.15"
+    "@vercel/nft": "npm:^0.27.5"
+    archiver: "npm:^7.0.1"
+    c12: "npm:2.0.1"
+    chokidar: "npm:^3.6.0"
+    citty: "npm:^0.1.6"
+    compatx: "npm:^0.1.8"
+    confbox: "npm:^0.1.8"
+    consola: "npm:^3.2.3"
+    cookie-es: "npm:^1.2.2"
+    croner: "npm:^9.0.0"
+    crossws: "npm:^0.3.1"
+    db0: "npm:^0.2.1"
+    defu: "npm:^6.1.4"
+    destr: "npm:^2.0.3"
+    dot-prop: "npm:^9.0.0"
+    esbuild: "npm:^0.24.0"
+    escape-string-regexp: "npm:^5.0.0"
+    etag: "npm:^1.8.1"
+    fs-extra: "npm:^11.2.0"
+    globby: "npm:^14.0.2"
+    gzip-size: "npm:^7.0.0"
+    h3: "npm:^1.13.0"
+    hookable: "npm:^5.5.3"
+    httpxy: "npm:^0.1.5"
+    ioredis: "npm:^5.4.1"
+    jiti: "npm:^2.4.0"
+    klona: "npm:^2.0.6"
+    knitwork: "npm:^1.1.0"
+    listhen: "npm:^1.9.0"
+    magic-string: "npm:^0.30.12"
+    magicast: "npm:^0.3.5"
+    mime: "npm:^4.0.4"
+    mlly: "npm:^1.7.2"
+    node-fetch-native: "npm:^1.6.4"
+    ofetch: "npm:^1.4.1"
+    ohash: "npm:^1.1.4"
+    openapi-typescript: "npm:^7.4.2"
+    pathe: "npm:^1.1.2"
+    perfect-debounce: "npm:^1.0.0"
+    pkg-types: "npm:^1.2.1"
+    pretty-bytes: "npm:^6.1.1"
+    radix3: "npm:^1.1.2"
+    rollup: "npm:^4.24.3"
+    rollup-plugin-visualizer: "npm:^5.12.0"
+    scule: "npm:^1.3.0"
+    semver: "npm:^7.6.3"
+    serve-placeholder: "npm:^2.0.2"
+    serve-static: "npm:^1.16.2"
+    std-env: "npm:^3.7.0"
+    ufo: "npm:^1.5.4"
+    uncrypto: "npm:^0.1.3"
+    unctx: "npm:^2.3.1"
+    unenv: "npm:^1.10.0"
+    unimport: "npm:^3.13.1"
+    unstorage: "npm:^1.13.1"
+    untyped: "npm:^1.5.1"
+    unwasm: "npm:^0.3.9"
+  peerDependencies:
+    xml2js: ^0.6.2
+  peerDependenciesMeta:
+    xml2js:
+      optional: true
+  bin:
+    nitro: dist/cli/index.mjs
+    nitropack: dist/cli/index.mjs
+  checksum: 10/98c8ab41c7d0ac463b8bbaa459f17e3ded31a62c84c1d7ae12e0713f79232724fc5a90c3fae69c636f0084cd985836840907b63da4ded09a56d1fbc95d34d241
   languageName: node
   linkType: hard
 
