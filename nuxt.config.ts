@@ -220,31 +220,6 @@ export default defineNuxtConfig({
     transpile: ['tinykeys'],
   },
 
-  hooks: {
-    'nitro:init': (nitro) => {
-      nitro.options.devStorage.root.ignore.push(
-        '**/data/**',
-        '**/.nuxt/**',
-        '**/benchmarks/**',
-        '**/.github/**',
-        '**/.vercel/**',
-        '**/.output/**',
-        '**/.vscode/**',
-        '**/.yarn/**',
-        '**/polyfills/**',
-        '**/scripts/**',
-        '**/server/**',
-        '**/unplugin/**',
-      );
-
-      if (isDevelopment) {
-        return;
-      }
-
-      delete nitro.options.storage.data;
-    },
-  },
-
   vite: {
     define: {
       'import.meta.dev': isDevelopment,

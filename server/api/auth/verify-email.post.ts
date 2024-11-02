@@ -60,7 +60,7 @@ export default defineEventHandler(async (event) => {
     console.log(templateVariables);
   }
 
-  await registerStorage.setItem(
+  await useRegisterStorage().setItem(
     `continue:${code}`,
     { email: data.email },
     { ttl: parseDuration('5 minutes', 's') },

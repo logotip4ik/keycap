@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
 
   const [usernameTaken, metadata] = await Promise.all([
     checkIfUsernameTaken(event, data.username),
-    registerStorage.getItem(`continue:${data.code}`),
+    useRegisterStorage().getItem(`continue:${data.code}`),
   ]);
 
   if (!metadata || metadata.email !== data.email) {
@@ -107,7 +107,7 @@ export default defineEventHandler(async (event) => {
 
   await Promise.all([
     setAuthCookies(event, user),
-    registerStorage.removeItem(`continue:${data.code}`),
+    useRegisterStorage().removeItem(`continue:${data.code}`),
     updateCacheEntry(
       getUserCacheKey(user.username, UserCacheName.Taken),
       true,

@@ -3,10 +3,12 @@ import { defu } from 'defu';
 
 import { prefixStorage } from 'unstorage';
 
-export const registerStorage = prefixStorage<{ email: string }>(
-  useStorage(),
-  `keycap:${KeyPrefix.Register}`,
-);
+export function useRegisterStorage() {
+  return prefixStorage<{ email: string }>(
+    useStorage(),
+    `keycap:${KeyPrefix.Register}`,
+  );
+}
 
 /**
  * @param {string} key - should be full key, including base, group, name, entry + .json

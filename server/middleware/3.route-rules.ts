@@ -18,6 +18,8 @@ async function getEmailFromCode(event: H3Event) {
   const query = getQuery(event);
 
   if (query.code) {
+    const registerStorage = useRegisterStorage();
+
     const metadata = await registerStorage.getItem(`continue:${query.code}`) as { email?: string };
     event.context.registerEmail = metadata?.email;
   }
