@@ -31,6 +31,8 @@ const state = ref<'idle' | 'loading' | 'success' | 'error'>('idle');
 
 const providers: Array<OAuthProvider> = ['GitHub', 'Google'];
 
+watch(user, async (user) => user && await navigateTo(`/@${user.username}`));
+
 async function verifyEmail() {
   const data: Record<string, string> = {
     email: emailComp.value?.$el.value,
@@ -73,12 +75,7 @@ function register() {
   preloadRouteComponents('/@a');
 
   $fetch('/api/auth/register', { method: 'POST', body: data })
-    .then(async (res) => {
-      if (res) {
-        user.value = res.data;
-        await navigateTo(`/@${user.value.username}`);
-      }
-    })
+    .then((res) => user.value = res.data)
     .catch((error) => {
       state.value = 'error';
 

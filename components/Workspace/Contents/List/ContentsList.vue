@@ -8,14 +8,14 @@ const detailsItem = useCurrentItemForDetails();
 const foldersCache = useFoldersCache();
 const offlineStorage = getOfflineStorage();
 const createToast = useToaster();
-const user = useUser();
+const user = useRequiredUser();
 const { shortcuts } = useAppConfig();
 const { state: contentsState } = useContentsState();
 const zeenk = useZeenk();
 const fuzzyWorker = getFuzzyWorker();
 
 const folderApiPath = computed(() => getCurrentFolderPath(route).slice(0, -1));
-const folderPath = computed(() => `/${user.value!.username}${folderApiPath.value}`);
+const folderPath = computed(() => `/${user.value.username}${folderApiPath.value}`);
 
 const folder = ref<FolderWithContents>();
 const menuOptions = shallowReactive({
@@ -127,7 +127,7 @@ async function handleError(error: Error) {
       `Sorry ⊙︿⊙ We couldn't find offline copy for folder: "${route.params.folders.at(-1)}".`,
     );
 
-    await navigateTo(`/@${user.value!.username}`);
+    await navigateTo(`/@${user.value.username}`);
 
     return;
   }
@@ -340,10 +340,10 @@ if (import.meta.client) {
   </WithFadeTransition>
 
   <LazyWorkspaceContentsListMenu
-    v-if="menuOptions.item"
+    v-if="menuOptions.item && menuOptions.target && folder"
     :item="menuOptions.item"
-    :target="menuOptions.target!"
-    :parent="folder!"
+    :target="menuOptions.target"
+    :parent="folder"
     @close="menuOptions.item = undefined"
   />
 </template>

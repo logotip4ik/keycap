@@ -30,7 +30,7 @@ export function makeMarks(): Array<MarkButton> {
       ariaLabel: 'toggle bold',
       shortcut: `${modKey}+b`,
       isActive: (editor) => editor.isActive('bold'),
-      onClick: (editor) => editor!.chain().focus().toggleBold().run(),
+      onClick: (editor) => editor.chain().focus().toggleBold().run(),
     },
 
     {
@@ -38,7 +38,7 @@ export function makeMarks(): Array<MarkButton> {
       ariaLabel: 'toggle italic',
       shortcut: `${modKey}+i`,
       isActive: (editor) => editor.isActive('italic'),
-      onClick: (editor) => editor!.chain().focus().toggleItalic().run(),
+      onClick: (editor) => editor.chain().focus().toggleItalic().run(),
     },
 
     {
@@ -46,7 +46,7 @@ export function makeMarks(): Array<MarkButton> {
       shortcut: `${modKey}+e`,
       ariaLabel: 'toggle code',
       isActive: (editor) => editor.isActive('code'),
-      onClick: (editor) => editor!.chain().focus().toggleCode().run(),
+      onClick: (editor) => editor.chain().focus().toggleCode().run(),
     },
 
     {
@@ -54,7 +54,7 @@ export function makeMarks(): Array<MarkButton> {
       shortcut: `${modKey}+Shift+S`,
       ariaLabel: 'strike through',
       isActive: (editor) => editor.isActive('strike'),
-      onClick: (editor) => editor!.chain().focus().toggleStrike().run(),
+      onClick: (editor) => editor.chain().focus().toggleStrike().run(),
     },
 
     {
@@ -62,7 +62,7 @@ export function makeMarks(): Array<MarkButton> {
       shortcut: `${modKey}+Shift+H`,
       ariaLabel: 'highlight',
       isActive: (editor) => editor.isActive('highlight'),
-      onClick: (editor) => editor!.chain().focus().toggleHighlight().run(),
+      onClick: (editor) => editor.chain().focus().toggleHighlight().run(),
     },
   ];
 }

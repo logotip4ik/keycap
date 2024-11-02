@@ -3,14 +3,13 @@ import type Webmanifest from '~/server/assets/webmanifest.json';
 export default defineEventHandler(async (event) => {
   const storage = useStorage('assets:server');
 
-  const { user } = event.context;
-
   const manifest: typeof Webmanifest | null = await storage.getItem('webmanifest.json');
 
   if (!manifest) {
     throw createError({ status: 500 });
   }
 
+  const { user } = event.context;
   if (user) {
     manifest.start_url = `/@${user.username}`;
   }

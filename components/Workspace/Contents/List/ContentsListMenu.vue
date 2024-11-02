@@ -53,14 +53,14 @@ function withEffects(event: Event, action: MenuAction) {
       currentlyConfirming.value = -1;
 
       for (const eventType of targetCancelEvents) {
-        target.removeEventListener(eventType, cleanup!);
+        target.removeEventListener(eventType, () => cleanup?.());
       }
     };
 
     animation.addEventListener('finish', () => {
       action.handler();
 
-      cleanup!();
+      cleanup?.();
       cleanup = undefined;
     });
 

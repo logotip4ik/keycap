@@ -1,8 +1,8 @@
 import { jsonArrayFrom } from 'kysely/helpers/postgres';
 
 export default defineEventHandler(async (event) => {
-  const user = event.context.user!;
-  const timer = event.context.timer!;
+  const user = requireUserFromEvent(event);
+  const timer = requireTimerFromEvent(event);
 
   // empty string represents root folder
   const path = getRouterParam(event, 'path') || '';

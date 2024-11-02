@@ -1,6 +1,6 @@
 import type { CookieSerializeOptions } from 'cookie-es';
 
-import type { H3Event } from 'h3';
+import type { H3Event, H3EventContext } from 'h3';
 import { jwtVerify, SignJWT } from 'jose';
 
 import type { SafeUser } from '~/types/server';
@@ -26,9 +26,7 @@ function generateAccessToken(object: Record<string, unknown>): Promise<string> {
 
   const { id, ...rest } = object;
 
-  if (!id) {
-    throw new Error('id should be defined');
-  }
+  invariant(id, 'Id must be defined.');
 
   return new SignJWT(rest)
     .setProtectedHeader({ alg: 'HS256' })
@@ -70,6 +68,14 @@ export async function getUserFromEvent(event: H3Event): Promise<SafeUser | undef
       username: jwt.payload.username,
     };
   }
+}
+
+export function requireUserFromEvent(event: H3Event): NonNullable<H3EventContext['user']> {
+  const user = event.context.user;
+
+  invariant(user, 'User must be defined.');
+
+  return user;
 }
 
 const validOrigin = import.meta.config.vercelEnv === 'production'

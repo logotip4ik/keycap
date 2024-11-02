@@ -53,11 +53,13 @@ function rememberHeight() {
 }
 
 function transitionHeight(_el: Element, done: () => void) {
-  if (!prevPopupHeight) {
+  const itemDetails = itemDetailsEl.value;
+
+  if (!prevPopupHeight || !itemDetails) {
     return;
   }
 
-  const newHeight = itemDetailsEl.value!.clientHeight;
+  const newHeight = itemDetails.clientHeight;
 
   const heightDifference = Math.abs(prevPopupHeight - newHeight);
 
@@ -65,7 +67,7 @@ function transitionHeight(_el: Element, done: () => void) {
     return;
   }
 
-  const animation = itemDetailsEl.value!.animate([
+  const animation = itemDetails.animate([
     { height: `${prevPopupHeight}px` },
     { height: `${newHeight}px` },
   ], { duration: 400, easing: 'cubic-bezier(0.33, 1, 0.68, 1)' });

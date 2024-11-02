@@ -29,9 +29,7 @@ export function normalizeGoogleUser(googleUser: GoogleUserRes, params: Normaliza
 export async function getGoogleUserWithEvent(event: H3Event) {
   const code = getQuery(event).code;
 
-  if (!code) {
-    throw new Error('no code was found');
-  }
+  invariant(code, '`code` wasn\'t found');
 
   const auth = await $fetch<GoogleAuthRes>(config.tokenEndpoint, {
     method: 'POST',

@@ -1,4 +1,4 @@
-import type { H3Event } from 'h3';
+import type { H3Event, H3EventContext } from 'h3';
 
 interface TimerPoint {
   name: string
@@ -71,6 +71,14 @@ class Timer {
 
 export function createTimer() {
   return new Timer();
+}
+
+export function requireTimerFromEvent(event: H3Event): NonNullable<H3EventContext['timer']> {
+  const timer = event.context.timer;
+
+  invariant(timer, 'Timer must be defined');
+
+  return timer;
 }
 
 if (import.meta.vitest) {

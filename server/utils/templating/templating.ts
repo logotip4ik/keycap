@@ -25,9 +25,7 @@ export function processTemplate(template: string, vars: Record<string, string | 
 function readTemplate(template: string, templates: Record<string, string>) {
   const path = templates[template];
 
-  if (import.meta.dev && !path) {
-    throw new Error(`template "${template}" not found`);
-  }
+  invariant(path, `template ${template} not found`);
 
   return readFile(path, { encoding: 'utf8' });
 }

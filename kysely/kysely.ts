@@ -6,14 +6,14 @@ import postgres from 'postgres';
 
 export function getKysely() {
   if (!globalThis.__kysely) {
-    if (!process.env.DATABASE_URL) {
-      throw new Error('DATABASE_URL must be defined');
-    }
+    const databaseUrl = process.env.DATABASE_URL;
+
+    invariant(databaseUrl, 'DATABASE_URL must be defined');
 
     globalThis.__kysely = new Kysely<DB>({
       log: ['error'],
       dialect: new PostgresJSDialect({
-        postgres: postgres(process.env.DATABASE_URL, {
+        postgres: postgres(databaseUrl, {
           // This causing some issues with _kysely_ only, yet postgresjs seems to be working fine
           // with cockroach ?
           // fetch_types: false,

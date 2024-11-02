@@ -9,10 +9,10 @@ const isCommand = 'key' in props.item;
 let itemHref: string, itemPath: string;
 
 if (!isCommand) {
-  const user = useUser();
+  const user = getUser();
 
   itemHref = generateItemPath(props.item);
-  itemPath = generateSearchRelativeItemPath(props.item.path, user.value!.username);
+  itemPath = generateSearchRelativeItemPath(props.item.path, user.username);
 }
 
 async function handleActionClick() {

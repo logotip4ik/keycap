@@ -1,12 +1,10 @@
 import type { H3Event } from 'h3';
 import type { QueryObject } from 'ufo';
 
-export async function assertNoOAuthErrors(event: H3Event, _query?: QueryObject) {
+export async function assertNoOAuthErrors(event: H3Event, query: QueryObject) {
   // Can't delete the cookie here, because user might need to enter a username
   // which is done later, with separate check
   // deleteCookie(event, 'state');
-
-  const query = _query || getQuery(event)!;
 
   if (query.error) {
     deleteOAuthStateCookie(event);

@@ -31,12 +31,14 @@ export default defineEventHandler(async (event) => {
   const limiter = getRateLimiter();
   let identifier = getRequestIP(event, { xForwardedFor: true });
 
+  invariant(identifier, 'Identifier must be defined.');
+
   // use separate bucket for log requests
   if (isLogRequest) {
     identifier += '_log';
   }
 
-  const rateLimit = limiter.acquire(identifier!);
+  const rateLimit = limiter.acquire(identifier);
 
   setHeader(event, 'X-RateLimit-Limit', LIMIT);
   setHeader(event, 'X-RateLimit-Remaining', rateLimit.remaining);

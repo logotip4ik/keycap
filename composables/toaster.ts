@@ -39,10 +39,6 @@ function createToast(options: ToastUserOptions & {
   message: ToastInstance['message']
   timeout: { value: ReturnType<typeof setTimeout> | undefined }
 }): ToastInstance {
-  if (unref(options.message).trim() === '') {
-    throw new Error('no message was provided');
-  }
-
   const toastId = Math.floor(Math.random() * 9999999);
 
   return {

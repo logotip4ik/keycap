@@ -5,13 +5,13 @@ const notesCache = useNotesCache();
 const createToast = useToaster();
 const offlineStorage = getOfflineStorage();
 const currentItemForDetails = useCurrentItemForDetails();
-const user = useUser();
+const user = useRequiredUser();
 const mitt = useMitt();
 
 const note = shallowRef<NoteWithContent>();
 
-const noteApiPath = computed(() => route.path.substring(2 + user.value!.username.length));
-const notePath = computed(() => `/${user.value!.username}${noteApiPath.value}`);
+const noteApiPath = computed(() => route.path.substring(2 + user.value.username.length));
+const notePath = computed(() => `/${user.value.username}${noteApiPath.value}`);
 
 const POLLING_TIME = parseDuration('2 minutes')!;
 let pollingTimer: ReturnType<typeof setTimeout>;
@@ -178,7 +178,7 @@ async function handleError(error: Error) {
   if (!offlineNote || typeof offlineNote !== 'object') {
     createToast(`Sorry ⊙︿⊙ We couldn't find offline note copy: "${route.params.note}".`);
 
-    await navigateTo(`/@${user.value!.username}`);
+    await navigateTo(`/@${user.value.username}`);
 
     return;
   }

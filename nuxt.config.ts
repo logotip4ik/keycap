@@ -117,6 +117,11 @@ export default defineNuxtConfig({
         name: 'default',
         as: parseDurationFunctionName,
       },
+      {
+        from: 'tiny-invariant',
+        name: 'default',
+        as: 'invariant',
+      },
     ],
   },
 
@@ -404,6 +409,11 @@ export default defineNuxtConfig({
           from: '@drdgvhbh/postgres-error-codes',
           name: '*',
           as: 'PostgresErrorCode',
+        },
+        {
+          from: 'tiny-invariant',
+          name: 'default',
+          as: 'invariant',
         },
       ],
     },

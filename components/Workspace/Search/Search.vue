@@ -4,7 +4,7 @@ const props = defineProps<{
 }>();
 
 const fuzzyWorker = getFuzzyWorker();
-const user = useUser();
+const user = useRequiredUser();
 
 const results = shallowRef<Array<FuzzyItem | CommandItem>>([]);
 const resultsState = ref<'idle' | 'empty'>('idle');
@@ -85,7 +85,7 @@ function fillResult() {
     searchInput.value = `/${result.name} `;
   }
   else {
-    const itemPath = generateSearchRelativeItemPath(result.path, user.value!.username);
+    const itemPath = generateSearchRelativeItemPath(result.path, user.value.username);
     if (itemPath) {
       searchInput.value = `${itemPath}/${result.name}`;
     }

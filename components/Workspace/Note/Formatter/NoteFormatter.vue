@@ -90,7 +90,7 @@ function trySaveEditingLink() {
 function toggleHeading() {
   let actionIdx = 0;
 
-  const commands = props.editor!.chain().focus();
+  const commands = props.editor.chain().focus();
 
   for (let i = 0; i < 3; i++) {
     if (props.editor.isActive('heading', { level: i + 1 })) {

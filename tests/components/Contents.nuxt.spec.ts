@@ -7,8 +7,12 @@ import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 const username = 'testing';
 const folder = 'something';
 
-mockNuxtImport('useUser', () => {
+mockNuxtImport('useRequiredUser', () => {
   return () => ref({ id: '1', username: 'testing', email: 'help' });
+});
+
+mockNuxtImport('getUser', () => {
+  return () => ({ id: '1', username: 'testing', email: 'help' });
 });
 
 mockNuxtImport('useRoute', () => {

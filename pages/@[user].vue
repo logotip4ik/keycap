@@ -8,7 +8,7 @@ definePageMeta({
 });
 
 const route = useRoute();
-const user = useUser();
+const user = useRequiredUser();
 const mitt = useMitt();
 const isFallback = useFallbackMode();
 const { shortcuts } = useAppConfig();
@@ -43,8 +43,8 @@ useHead({
     : (route.params.note as string),
   titleTemplate: (name) => {
     return name
-      ? `${name} | ${user.value!.username} - Keycap`
-      : `${user.value!.username} - Keycap`;
+      ? `${name} | ${user.value.username} - Keycap`
+      : `${user.value.username} - Keycap`;
   },
 });
 

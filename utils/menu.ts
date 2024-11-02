@@ -49,9 +49,9 @@ export const commandActions: Record<Command['key'], Command['handler']> = {
     useMitt().emit('shortcuts:show');
   },
   [SearchAction.Workspace]: async () => {
-    const user = useUser();
+    const user = getUser();
 
-    await navigateTo(`/@${user.value?.username}`);
+    await navigateTo(`/@${user.username}`);
   },
 };
 

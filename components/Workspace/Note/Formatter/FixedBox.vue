@@ -38,10 +38,10 @@ function handleMobileScroll() {
   });
 }
 
-if (import.meta.client) {
+if (import.meta.client && window.visualViewport != null) {
   const cleanups = [
-    on(window.visualViewport!, 'resize', debouncedKeyboardAppear),
-    on(window.visualViewport!, 'scroll', handleMobileScroll),
+    on(window.visualViewport, 'resize', debouncedKeyboardAppear),
+    on(window.visualViewport, 'scroll', handleMobileScroll),
   ];
 
   onBeforeUnmount(() => {

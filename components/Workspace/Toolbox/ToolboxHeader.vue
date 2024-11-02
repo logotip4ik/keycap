@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ToolboxState } from './config';
 
-const user = useUser();
+const user = useRequiredUser();
 </script>
 
 <template>
@@ -11,7 +11,7 @@ const user = useUser();
     </WorkspaceSidebarOpenButton>
 
     <p class="toolbox__header__username font-wide">
-      {{ user?.username }}
+      {{ user.username }}
     </p>
   </header>
 </template>

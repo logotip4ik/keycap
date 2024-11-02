@@ -17,7 +17,7 @@ const isLoading = ref(false);
 
 const providers: Array<OAuthProvider> = ['GitHub', 'Google'];
 
-watch(user, async (value) => value && await navigateTo(`/@${value.username}`));
+watch(user, async (user) => user && await navigateTo(`/@${user.username}`));
 
 async function login() {
   const data = {
@@ -35,7 +35,7 @@ async function login() {
   preloadRouteComponents('/@a');
 
   $fetch('/api/auth/login', { method: 'POST', body: data })
-    .then((res) => res && (user.value = res.data))
+    .then((res) => user.value = res.data)
     .catch((error) => createToast(error.data.message || ERROR_MESSAGES.DEFAULT))
     .finally(() => isLoading.value = false);
 }

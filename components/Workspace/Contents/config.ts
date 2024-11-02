@@ -16,9 +16,7 @@ export function useContentsState() {
 
   const injection = inject(ContentsState);
 
-  if (!injection) {
-    throw new Error('injection for ContentsState is not found');
-  }
+  invariant(injection, 'Injection for ContentsState is not found');
 
   return injection;
 }

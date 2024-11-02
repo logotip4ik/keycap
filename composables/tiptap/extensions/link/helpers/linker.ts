@@ -25,8 +25,7 @@ export function find(text: string) {
   return links;
 }
 
-export function isWorkspaceUrl(url: URL, username: string | undefined) {
-  return username
-    && url.origin === window.location.origin
+export function isWorkspaceUrl(url: URL, username: string) {
+  return url.origin === window.location.origin
     && url.pathname.startsWith(`/@${username}`);
 }

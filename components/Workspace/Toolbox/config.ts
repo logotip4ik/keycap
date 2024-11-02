@@ -15,9 +15,7 @@ export function useToolboxState() {
 
   const injection = inject(ToolboxState);
 
-  if (!injection) {
-    throw new Error('injection for ToolboxState is not found');
-  }
+  invariant(injection, 'Injection for ToolboxState isn\'t found');
 
   return injection;
 }

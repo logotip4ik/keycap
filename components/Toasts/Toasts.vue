@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const toasts = useToasts();
 
-const toasterComp = shallowRef<ComponentPublicInstance<HTMLElement> | null>(null);
+const toasterComp = shallowRef<ComponentPublicInstance | null>(null);
 
 const sortedToasts = computed(() =>
   toasts.value.slice().sort((a, b) => a.priority - b.priority),
@@ -10,13 +10,19 @@ const sortedToasts = computed(() =>
 let toasterElClientRect: DOMRect | undefined;
 const ANIMATION_DURATION = parseDuration('0.3s')!;
 function preservePositionAndSize(el: Element) {
+  const toasterEl = toasterComp.value?.$el as HTMLDivElement | undefined;
+
+  if (!toasterEl) {
+    return;
+  }
+
   const elClientRect = el.getBoundingClientRect();
 
   if (!toasterElClientRect) {
-    toasterElClientRect = toasterComp.value!.$el.getBoundingClientRect();
+    toasterElClientRect = toasterEl.getBoundingClientRect();
   }
 
-  const relativeBottomPos = (toasterElClientRect!.bottom - elClientRect.bottom);
+  const relativeBottomPos = (toasterElClientRect.bottom - elClientRect.bottom);
 
   (el as HTMLElement).style.setProperty('bottom', `${relativeBottomPos}px`);
   (el as HTMLElement).style.setProperty('width', `${elClientRect.width}px`);

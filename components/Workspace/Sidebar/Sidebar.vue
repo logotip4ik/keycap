@@ -81,9 +81,14 @@ useFocusTrap(
 onMounted(() => {
   requestIdleCallback(updateFocusableElements);
 
+  const sidebarEl = sidebar.value;
+  if (!sidebarEl) {
+    return;
+  }
+
   const observer = new MutationObserver(debounce(updateFocusableElements, 100));
 
-  observer.observe(sidebar.value!, { childList: true, subtree: true });
+  observer.observe(sidebarEl, { childList: true, subtree: true });
 
   onBeforeUnmount(() => {
     observer.disconnect();

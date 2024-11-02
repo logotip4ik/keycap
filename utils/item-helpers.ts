@@ -46,9 +46,9 @@ export function getCurrentFolderPath(_route?: ReturnType<typeof useRoute>) {
 }
 
 export function getItemPathFromHref(href: string) {
-  const user = useUser();
+  const user = getUser();
 
-  const workspacePrefix = `/@${user.value!.username}/`;
+  const workspacePrefix = `/@${user.username}/`;
   const innerPartStart = href.indexOf(workspacePrefix) + workspacePrefix.length;
 
   const innerPart = href.substring(innerPartStart);

@@ -53,9 +53,9 @@ function getInnerUrl(link: string) {
     return;
   }
 
-  const user = useUser();
+  const user = getUser();
 
-  if (!user.value || !url.pathname.startsWith(`/@${user.value.username}`)) {
+  if (!url.pathname.startsWith(`/@${user.username}`)) {
     return;
   }
 

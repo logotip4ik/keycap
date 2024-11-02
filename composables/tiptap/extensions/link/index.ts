@@ -8,7 +8,7 @@ import { clickHandler } from './helpers/clickHandler';
 import { find, isWorkspaceUrl } from './helpers/linker';
 
 export interface LinkOptions {
-  username: string | undefined
+  username: string
   HTMLAttributes: Record<string, unknown>
 }
 
@@ -48,10 +48,10 @@ export const Link = Mark.create<LinkOptions>({
   exitable: true,
 
   addOptions() {
-    const username = useUser().value?.username;
+    const user = getUser();
 
     return {
-      username,
+      username: user.username,
       HTMLAttributes: {
         target: '_blank',
         rel: 'noopener noreferrer nofollow',
@@ -135,7 +135,7 @@ export const Link = Mark.create<LinkOptions>({
   },
 });
 
-function makePasteRules(config: { type: MarkType, username: string | undefined }) {
+function makePasteRules(config: { type: MarkType, username: string }) {
   return [
     new PasteRule({
       find: (_, event) => {

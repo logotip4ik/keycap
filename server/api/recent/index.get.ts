@@ -1,6 +1,6 @@
 export default defineEventHandler(async (event) => {
-  const user = event.context.user!;
-  const timer = event.context.timer!;
+  const user = requireUserFromEvent(event);
+  const timer = requireTimerFromEvent(event);
 
   timer.start('db');
   const recent = await getRecentForUser(event, user)

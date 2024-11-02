@@ -11,9 +11,7 @@ export const UserCacheName = {
 } as const;
 
 export function getUserCacheKey(username: string, cacheName?: ValueOf<typeof UserCacheName>) {
-  if (!username) {
-    throw new Error('unexpected empty username');
-  }
+  invariant(username, 'Username must not be empty');
 
   const usernameHash = sha256base64(username.trim());
 

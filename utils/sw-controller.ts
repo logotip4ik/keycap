@@ -3,12 +3,12 @@ export function registerSWToasts() {
   const { $pwa: pwa } = useNuxtApp();
   const createToast = useToaster();
 
-  if (pwa) {
+  if (pwa && user.value) {
     const registration = pwa.getSWRegistration();
 
     registration?.active?.postMessage({
       type: 'WORKSPACE_PATH',
-      payload: { workspacePath: `/@${user.value?.username}` },
+      payload: { workspacePath: `/@${user.value.username}` },
     });
   }
 

@@ -1,5 +1,5 @@
 export default defineEventHandler(async (event) => {
-  const user = event.context.user!;
+  const user = requireUserFromEvent(event);
 
   await setAuthCookies(event, user);
 

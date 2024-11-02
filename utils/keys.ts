@@ -11,9 +11,7 @@ export const KeyPrefix = {
 } as const;
 
 export function createKey(prefix: ValueOf<typeof KeyPrefix>, size?: number) {
-  if (typeof size === 'number' && size < 12) {
-    throw new Error('key length is too small');
-  }
+  invariant(size == null || size < 12, 'Min key size is 12');
 
   return `${prefix}_${nanoid(size)}`;
 }
