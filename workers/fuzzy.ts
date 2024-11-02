@@ -1,5 +1,4 @@
 import type { Emoji, EmojiMartData } from '@emoji-mart/data';
-import type { InternalApi } from 'nitropack/types';
 
 import { commandScore as getScore } from '@superhuman/command-score';
 
