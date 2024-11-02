@@ -5,11 +5,6 @@ import type { OAuthProviderConfig } from '~/types/oauth';
 
 import type { NormalizedSocialUser } from '~/types/server';
 
-export const providerPathToConfigMap = {
-  '/api/oauth/github': githubConfig,
-  '/api/oauth/google': googleConfig,
-} as const;
-
 const stateSerializeOptions = {
   path: '/',
   httpOnly: true,

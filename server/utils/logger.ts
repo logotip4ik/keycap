@@ -48,7 +48,7 @@ async function log(event: H3Event, level: ValueOf<typeof LogLevel>, data: Logger
 
     level,
     _time: new Date().toISOString(),
-    env: process.env.VERCEL_ENV || 'development',
+    env: process.env.NODE_ENV || 'development',
   });
 
   if (data.nitro === undefined) {

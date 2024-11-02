@@ -72,7 +72,7 @@ function handleKeypress(event: KeyboardEvent) {
       ? (parent.previousElementSibling || parent.parentElement?.lastElementChild)
       : (parent.nextElementSibling || parent.parentElement?.firstElementChild);
 
-    (next?.firstElementChild as HTMLElement)?.focus();
+    (next?.firstElementChild as HTMLElement | undefined)?.focus();
   }
   else if (event.key === 'Enter') {
     props.onSelect?.(props.items[selectedEmoji.value]);

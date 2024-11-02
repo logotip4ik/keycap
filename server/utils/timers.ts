@@ -26,6 +26,10 @@ class Timer {
   end(name?: string) {
     let timer: TimerPoint;
 
+    if (this.#timersStack.length === 0) {
+      return;
+    }
+
     if (name) {
       if (import.meta.dev) {
         name = name.replace(/\s/g, '-');
@@ -40,10 +44,6 @@ class Timer {
       timer = this.#timersStack.splice(timerIdx, 1)[0];
     }
     else {
-      if (this.#timersStack.length === 0) {
-        return;
-      }
-
       timer = this.#timersStack.pop()!;
     }
 

@@ -176,12 +176,12 @@ function focusFormatter(event: KeyboardEvent) {
 
   if (formatterEl.value && props.editor.isFocused && !selection.empty) {
     event.preventDefault();
-    (formatterEl.value.firstElementChild as HTMLElement).focus();
+    (formatterEl.value.firstElementChild as HTMLElement | undefined)?.focus();
   }
 }
 
 function focusEditor(event: KeyboardEvent) {
-  if (formatterEl.value && formatterEl.value.contains(event.target as HTMLElement)) {
+  if (formatterEl.value?.contains(event.target as HTMLElement)) {
     event.preventDefault();
     props.editor.commands.focus();
   }

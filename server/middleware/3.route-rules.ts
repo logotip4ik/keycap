@@ -1,5 +1,5 @@
 import type { H3Event } from 'h3';
-import type { InternalApi } from 'nitropack';
+import type { InternalApi } from 'nitropack/types';
 import type { Promisable } from 'type-fest';
 
 // true | undefined | void - should pass, else - should disallow
@@ -26,14 +26,14 @@ async function getEmailFromCode(event: H3Event) {
 }
 
 const rules: Array<Rule> = [
-  { path: '/register', handler: getEmailFromCode },
-  { path: '/_log', handler: withUserOnly },
   { path: '/api/note', handler: withUserOnly },
   { path: '/api/folder', handler: withUserOnly },
   { path: '/api/search', handler: withUserOnly },
   { path: '/api/recent', handler: withUserOnly },
   { path: '/api/users/me', handler: withUserOnly },
   { path: '/api/share/note', handler: withUserOnly },
+  { path: '/register', handler: getEmailFromCode },
+  { path: '/_log', handler: withUserOnly },
 ];
 
 export default defineEventHandler(async (event) => {

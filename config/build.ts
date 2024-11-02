@@ -15,8 +15,6 @@ export const config: Config = {
   turnstileEnabled: destr(process.env.FEATURE_TURNSTILE) || false,
 
   benchmarking: destr(process.env.BENCHMARKING) || false,
-
-  vercelEnv: destr(process.env.VERCEL_ENV) || 'production',
 };
 
 export const prefixedConfig = Object.fromEntries(

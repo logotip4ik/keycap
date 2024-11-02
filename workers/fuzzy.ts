@@ -1,4 +1,5 @@
 import type { Emoji, EmojiMartData } from '@emoji-mart/data';
+import type { InternalApi } from 'nitropack/types';
 
 import { commandScore as getScore } from '@superhuman/command-score';
 
@@ -93,12 +94,15 @@ async function populateItemsCache() {
   });
 
   const res = await fetch('/api/search/client');
-  const items = res.ok ? await res.json() as { data?: Array<FuzzyItem> } : {};
+
+  const { data } = res.ok ? await res.json() as { data?: Array<FuzzyItem> } : { data: undefined };
 
   itemsCache.clear();
 
-  for (const item of items.data || []) {
-    addItem(item);
+  if (data && data.length > 0) {
+    for (const item of data) {
+      addItem(item);
+    }
   }
 
   // @ts-expect-error this should work, because promise callback is executed synchronously

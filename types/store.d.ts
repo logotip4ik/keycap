@@ -15,9 +15,8 @@ declare global {
     state?: ItemStateValues
   };
 
-  export type ItemMetadata = Prettify<
-    Pick<Note, 'updatedAt' | 'createdAt'> // | Pick<Folder, 'updatedAt' | 'createdAt'> - folder metadata should be the same as notes
-  >;
+  // - folder metadata should be the same as notes
+  export type ItemMetadata = Prettify<Pick<Note, 'updatedAt' | 'createdAt'>>;
 
   export type NoteMinimal = Prettify<Serialize<Pick<Note, 'id' | 'name' | 'path'> & ItemMetatags>>;
   export type NoteWithContent = Prettify<NoteMinimal & Pick<Note, 'content'>>;
