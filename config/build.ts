@@ -5,8 +5,6 @@ export interface Config {
   turnstileEnabled: boolean
 
   benchmarking: boolean
-
-  vercelEnv?: 'production' | 'preview'
 }
 
 // config variables that will be replaced at build time

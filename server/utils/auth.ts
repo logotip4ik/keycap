@@ -78,7 +78,7 @@ export function requireUserFromEvent(event: H3Event): NonNullable<H3EventContext
   return user;
 }
 
-const validOrigin = import.meta.config.vercelEnv === 'production'
+const validOrigin = process.env.NODE_ENV === 'production'
   ? defaultProtocol + process.env.NUXT_PUBLIC_SITE
   : defaultProtocol + process.env.VERCEL_URL;
 
