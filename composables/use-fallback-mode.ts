@@ -1,22 +1,22 @@
+import proxy from 'unenv/runtime/mock/proxy';
+
+const fallbackMode: Ref<boolean | undefined> = import.meta.server ? proxy : ref();
+
 export function useFallbackMode() {
   if (import.meta.server) {
     return ref(false);
   }
 
-  const fallback = ref(!window.navigator.onLine);
-  const offs = [
+  if (!fallbackMode.value) {
+    fallbackMode.value = !window.navigator.onLine;
+
     on(window, 'online', () => {
-      fallback.value = false;
-    }),
+      fallbackMode.value = false;
+    });
     on(window, 'offline', () => {
-      fallback.value = true;
-    }),
-  ];
+      fallbackMode.value = true;
+    });
+  }
 
-  onScopeDispose(() => {
-    invokeArrayFns(offs);
-    offs.length = 0;
-  });
-
-  return fallback;
+  return fallbackMode as Ref<boolean>;
 }
