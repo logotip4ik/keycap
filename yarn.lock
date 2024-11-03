@@ -9366,6 +9366,7 @@ __metadata:
     magic-string: "npm:^0.30.12"
     mitt: "npm:^3.0.1"
     nanoid: "npm:^5.0.8"
+    nitropack: "npm:^2.10.1"
     normalize.css: "npm:^8.0.1"
     nuxt: "npm:^3.13.2"
     parse-duration: "npm:^1.1.0"
@@ -10766,9 +10767,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nitropack@npm:latest":
-  version: 2.10.0
-  resolution: "nitropack@npm:2.10.0"
+"nitropack@npm:2.10.1":
+  version: 2.10.1
+  resolution: "nitropack@npm:2.10.1"
   dependencies:
     "@cloudflare/kv-asset-handler": "npm:^0.3.4"
     "@netlify/functions": "npm:^2.8.2"
@@ -10846,13 +10847,13 @@ __metadata:
   bin:
     nitro: dist/cli/index.mjs
     nitropack: dist/cli/index.mjs
-  checksum: 10/fa7fab0fe0aeb1ad08503352693db2d13277e55754e21dcbdf290ed16cffe5fb6c2d83e7aa3fe55f3c44cb707841f04cb5f1ed00c194d0c28655414fc4ca3241
+  checksum: 10/a77f6becca50510c3e0590de99190d1bbb4ec7151e2643ac37da5c41f338e874b0498faab1775cbea9d619dfeb22dc7ffb6ef14d7d1a365d5eea1933f47a2ca0
   languageName: node
   linkType: hard
 
-"nitropack@patch:nitropack@npm%3Alatest#~/.yarn/patches/nitropack-npm-2.10.0-e06a5d842d.patch":
-  version: 2.10.0
-  resolution: "nitropack@patch:nitropack@npm%3A2.10.0#~/.yarn/patches/nitropack-npm-2.10.0-e06a5d842d.patch::version=2.10.0&hash=27f3b1"
+"nitropack@patch:nitropack@npm%3A2.10.1#~/.yarn/patches/nitropack-npm-2.10.1-18983fba8f.patch":
+  version: 2.10.1
+  resolution: "nitropack@patch:nitropack@npm%3A2.10.1#~/.yarn/patches/nitropack-npm-2.10.1-18983fba8f.patch::version=2.10.1&hash=542a65"
   dependencies:
     "@cloudflare/kv-asset-handler": "npm:^0.3.4"
     "@netlify/functions": "npm:^2.8.2"
@@ -10930,7 +10931,7 @@ __metadata:
   bin:
     nitro: dist/cli/index.mjs
     nitropack: dist/cli/index.mjs
-  checksum: 10/98c8ab41c7d0ac463b8bbaa459f17e3ded31a62c84c1d7ae12e0713f79232724fc5a90c3fae69c636f0084cd985836840907b63da4ded09a56d1fbc95d34d241
+  checksum: 10/ae3e9ffa0ce45d17c976c2c142f86673ed0642d04182c30efec0ac15654530e5f0f4979adff72405d0f250af2fb7834a7510950f2b37692afbdd48c74696394a
   languageName: node
   linkType: hard
 
