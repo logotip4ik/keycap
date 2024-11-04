@@ -7,3 +7,5 @@ services:
       POSTGRES_USER: username # The PostgreSQL user (useful to connect to the database)
       POSTGRES_PASSWORD: password # The PostgreSQL password (useful to connect to the database)
       POSTGRES_DB: keycap # The PostgreSQL default database (automatically created at first launch)
+    volumes:
+      - ./data:/var/lib/postgresql/data
