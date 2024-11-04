@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.15.11
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.10...v3.15.11)
+
+### 🩹 Fixes
+
+- Pass event headers to note view route ([c405fff8](https://github.com/logotip4ik/keycap/commit/c405fff8))
+
+### 🏡 Chore
+
+- **release:** V3.15.10 ([fef9a873](https://github.com/logotip4ik/keycap/commit/fef9a873))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.15.10
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.9...v3.15.10)
