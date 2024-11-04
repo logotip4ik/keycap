@@ -1,6 +1,48 @@
 # Changelog
 
 
+## v3.15.10
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.9...v3.15.10)
+
+### 🩹 Fixes
+
+- Show appear animation for note editor skeleton ([a9fed680](https://github.com/logotip4ik/keycap/commit/a9fed680))
+- Store fallback in global ref ([cd7a1d80](https://github.com/logotip4ik/keycap/commit/cd7a1d80))
+
+### 💅 Refactors
+
+- Omit use of instace vnode in tooltip ([9f6babfc](https://github.com/logotip4ik/keycap/commit/9f6babfc))
+- More safe code ([51e9179e](https://github.com/logotip4ik/keycap/commit/51e9179e))
+
+### 🏡 Chore
+
+- **release:** V3.15.9 ([fd7f9d68](https://github.com/logotip4ik/keycap/commit/fd7f9d68))
+- Ignore packages folder in eslint and typescript ([2b4e0616](https://github.com/logotip4ik/keycap/commit/2b4e0616))
+- Try distroless dockerfile for zeenk ([e7d5c9fa](https://github.com/logotip4ik/keycap/commit/e7d5c9fa))
+- Use debian-bookworm and custom user to zeenk ([374cd6cd](https://github.com/logotip4ik/keycap/commit/374cd6cd))
+- Install wget for healthchecks ([c68bb32d](https://github.com/logotip4ik/keycap/commit/c68bb32d))
+- Try to fix healthchecks ([78c36da5](https://github.com/logotip4ik/keycap/commit/78c36da5))
+- Use slim debian image for keycap ([f80e36a7](https://github.com/logotip4ik/keycap/commit/f80e36a7))
+- Update deps and fix issues related to nitro update ([95bd1e1d](https://github.com/logotip4ik/keycap/commit/95bd1e1d))
+- Remove not used status route ([4fb83908](https://github.com/logotip4ik/keycap/commit/4fb83908))
+- Remove ununsed files ([234c7b6c](https://github.com/logotip4ik/keycap/commit/234c7b6c))
+- More defensive code ([1bea8d38](https://github.com/logotip4ik/keycap/commit/1bea8d38))
+- Patch nitro to prevent inlining html into prod code ([85947695](https://github.com/logotip4ik/keycap/commit/85947695))
+- Execute nolyfill ([88ab64ac](https://github.com/logotip4ik/keycap/commit/88ab64ac))
+- Remove not needed nolyfill packages ([f1cae29c](https://github.com/logotip4ik/keycap/commit/f1cae29c))
+- Remove last vercel_env references ([00155bf9](https://github.com/logotip4ik/keycap/commit/00155bf9))
+- Update nitropack ([9cc8b062](https://github.com/logotip4ik/keycap/commit/9cc8b062))
+- Update nitro once again ([a33975ca](https://github.com/logotip4ik/keycap/commit/a33975ca))
+
+### 🤖 CI
+
+- Bump the actions group with 2 updates ([#35](https://github.com/logotip4ik/keycap/pull/35))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.15.9
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.8...v3.15.9)
