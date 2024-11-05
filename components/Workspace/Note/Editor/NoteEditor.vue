@@ -146,10 +146,14 @@ useTinykeys({
 });
 
 if (import.meta.client) {
-  const offUnload = on(window, 'beforeunload', saveUnsavedChanges, { passive: true });
+  const offVisibilityChange = on(document, 'visibilitychange', () => {
+    if (document.visibilityState === 'hidden') {
+      saveUnsavedChanges();
+    }
+  });
 
   onBeforeUnmount(() => {
-    offUnload();
+    offVisibilityChange();
     saveUnsavedChanges();
 
     // If user navigates right after keypress, `isTyping` could be true on next

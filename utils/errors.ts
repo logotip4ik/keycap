@@ -22,10 +22,10 @@ export function sendError(error: Error, properties?: Record<string, string>) {
   const fetch = useRequestFetch();
 
   fetch('/_log', {
-    priority: 'low',
     method: 'POST',
     body: payload,
     ignoreResponseError: true,
+    keepalive: true,
   });
 }
 
