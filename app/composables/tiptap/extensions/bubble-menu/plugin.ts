@@ -3,12 +3,8 @@ import type { Editor, EditorEvents } from '@tiptap/core';
 
 import type { EditorState } from '@tiptap/pm/state';
 import type { EditorView } from '@tiptap/pm/view';
-import {
-  isNodeSelection,
-  isTextSelection,
-  posToDOMRect,
-} from '@tiptap/core';
 
+import { isNodeSelection, isTextSelection, posToDOMRect } from '@tiptap/core';
 import { Plugin, PluginKey } from '@tiptap/pm/state';
 
 export interface BubbleMenuPluginProps {

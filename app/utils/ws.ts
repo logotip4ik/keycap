@@ -1,4 +1,5 @@
 import type { ShallowReactive } from 'vue';
+
 import proxy from 'unenv/runtime/mock/proxy';
 
 export type WSState = 'OPEN' | 'CLOSED' | 'CONNECTING';

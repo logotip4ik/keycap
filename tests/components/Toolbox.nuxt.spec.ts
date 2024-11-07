@@ -1,7 +1,9 @@
 import { WorkspaceToolbox as Toolbox } from '#components';
 import { mockNuxtImport, registerEndpoint, renderSuspended } from '@nuxt/test-utils/runtime';
 import { fireEvent, waitFor } from '@testing-library/vue';
+
 import proxy from 'unenv/runtime/mock/proxy';
+
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 
 const username = 'testing';

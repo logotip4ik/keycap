@@ -1,4 +1,5 @@
 import type { DB } from './db/types';
+
 import { Kysely } from 'kysely';
 import { PostgresJSDialect } from 'kysely-postgres-js';
 

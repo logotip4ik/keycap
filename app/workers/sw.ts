@@ -1,5 +1,6 @@
 import type { ManifestEntry } from 'workbox-build';
 import type { StrategyHandler } from 'workbox-strategies';
+
 import { get, set } from 'idb-keyval';
 import { cacheNames, clientsClaim } from 'workbox-core';
 import { cleanupOutdatedCaches } from 'workbox-precaching';

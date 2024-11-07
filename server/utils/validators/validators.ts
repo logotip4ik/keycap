@@ -1,8 +1,8 @@
 import type { Static, TSchema } from '@sinclair/typebox';
-
 import type { TypeCheck } from '@sinclair/typebox/compiler';
 import type { ValueError } from '@sinclair/typebox/value';
 import type { H3Event } from 'h3';
+
 import { withoutLeadingSlash } from 'ufo';
 
 export function formatTypboxError(error: ValueError) {

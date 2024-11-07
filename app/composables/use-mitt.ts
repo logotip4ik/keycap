@@ -1,4 +1,5 @@
 import type { Emitter } from 'mitt';
+
 import mitt from 'mitt';
 
 import proxy from 'unenv/runtime/mock/proxy';

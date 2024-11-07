@@ -12,17 +12,3 @@ export const LogLevel = {
   Warn: 'warn',
   Error: 'error',
 } as const;
-
-const falsyBigInt = BigInt(-1);
-export function toBigInt(string: string): bigint {
-  return stringifiedBigIntRE.test(string) ? BigInt(string) : falsyBigInt;
-}
-
-if (import.meta.vitest) {
-  const { it, expect } = import.meta.vitest;
-
-  it('toBigInt', () => {
-    expect(toBigInt('77777777777777777')).toEqual(BigInt('77777777777777777'));
-    expect(toBigInt('77777777777777777asd')).toEqual(BigInt(-1));
-  });
-}

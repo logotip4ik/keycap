@@ -1,4 +1,5 @@
 import { readdir, readFile } from 'node:fs/promises';
+
 import { addComponent, addTemplate, addTypeTemplate, defineNuxtModule, useLogger } from '@nuxt/kit';
 import { resolve } from 'pathe';
 import colors from 'picocolors';

@@ -1,6 +1,6 @@
 import type { SimpleCallExpression } from 'estree';
-import { pathToFileURL } from 'node:url';
 
+import { pathToFileURL } from 'node:url';
 import { createContext, runInContext } from 'node:vm';
 
 import { walk } from 'estree-walker';

@@ -1,5 +1,4 @@
 import type { Transaction } from '@tiptap/pm/state';
-
 import type { ShallowRef } from 'vue';
 
 import { Editor } from '@tiptap/core';
@@ -21,10 +20,10 @@ import Placeholder from '@tiptap/extension-placeholder';
 import Strike from '@tiptap/extension-strike';
 import TaskItem from '@tiptap/extension-task-item';
 import TaskList from '@tiptap/extension-task-list';
-
 import Text from '@tiptap/extension-text';
 
 import proxy from 'unenv/runtime/mock/proxy';
+
 import { BubbleMenu } from './extensions/bubble-menu';
 import { EmojiPicker } from './extensions/emoji-picker';
 import { Link } from './extensions/link';

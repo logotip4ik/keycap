@@ -2,11 +2,9 @@ import type { ShallowRef } from 'vue';
 
 import proxy from 'unenv/runtime/mock/proxy';
 
-import type { ToastInstance } from '~/types/toasts';
-
 type ToastUserOptions = Partial<Omit<ToastInstance, 'id' | 'message' | 'remove' | 'el' | 'delete'>>;
 
-const toasts: ShallowRef<Array<ToastInstance>> = import.meta.server ? proxy : /* #__PURE__ */ shallowRef<Array<ToastInstance>>([]);
+const toasts: ShallowRef<Array<ToastInstance>> = import.meta.server ? proxy : shallowRef<Array<ToastInstance>>([]);
 export function useToasts() {
   return toasts;
 }

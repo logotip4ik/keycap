@@ -1,9 +1,9 @@
 import type { Editor } from '@tiptap/core';
+
 import { WorkspaceNoteFormatter as NoteFormatter } from '#components';
+
 import { renderSuspended } from '@nuxt/test-utils/runtime';
-
 import { fireEvent } from '@testing-library/vue';
-
 import { describe, expect, it } from 'vitest';
 
 describe('component NoteFormatter', () => {

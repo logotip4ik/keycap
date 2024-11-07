@@ -1,7 +1,6 @@
 import type { CacheEntry } from 'nitropack';
 
 import { defu } from 'defu';
-
 import { prefixStorage } from 'unstorage';
 
 export function useRegisterStorage() {
