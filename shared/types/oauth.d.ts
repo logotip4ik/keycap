@@ -1,3 +1,7 @@
+import type { SocialAuth } from '~~/kysely/db/types';
+
+export type OAuthProvider = SocialAuth;
+
 export interface OAuthProviderConfig {
   oauth: {
     clientId: string

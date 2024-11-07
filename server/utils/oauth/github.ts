@@ -1,8 +1,7 @@
-import type { H3Event } from 'h3';
+import type { NormalizedSocialUser } from '#server/types/server';
+import type { GitHubAuthRes, GitHubUserEmailRes, GitHubUserRes } from '#server/types/server-github';
 
-import type { OAuthProviderConfig } from '~/types/oauth';
-import type { NormalizedSocialUser } from '~/types/server';
-import type { GitHubAuthRes, GitHubUserEmailRes, GitHubUserRes } from '~/types/server-github';
+import type { H3Event } from 'h3';
 
 // https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps#1-request-a-users-github-identity
 const config: OAuthProviderConfig = {
@@ -22,7 +21,7 @@ export function normalizeGitHubUser(githubUser: GitHubUserRes, params: Normaliza
     id: githubUser.id.toString(),
     email: githubUser.email,
     username: params.username,
-    type: OAuthProvider.GitHub,
+    type: 'GitHub',
   };
 }
 

@@ -1,11 +1,10 @@
 import { vitest } from 'vitest';
 
-import { emailRE, usernameRE } from '../utils';
+import { emailRE } from '../utils/index';
 
 const stubs = {
   defineEventHandler: (func: any) => func,
   defineNitroPlugin: (func: any) => func,
-  usernameRE,
   emailRE,
 } as const;
 

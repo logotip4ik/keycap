@@ -1,17 +1,8 @@
 import { withLeadingSlash, withoutTrailingSlash } from 'ufo';
 
-import { SocialAuth } from '~/kysely/db/types';
-
-// escaping `-` and `|` because it is used on client side and browsers don't like it unescaped
-export const allowedItemNameRE = /^[\w .&#!\|\-\u0404-\u0457]{2,50}$/; // eslint-disable-line regexp/no-useless-escape
 export const currentItemNameRE = /[\w%.!]+$/;
-export const usernameRE = /^[\w.\-]{3,16}$/;
 export const emailRE = /^[\w!#$%&'*+/=?^`{|}~-]+(?:\.[\w!#$%&'*+/=?^`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i;
-export const OAuthProvider = SocialAuth;
 export const serverUserAgent = import.meta.prod ? process.env.SERVER_NAME || 'Keycap' : `${process.env.SERVER_NAME || 'Keycap'} Dev`;
-export const defaultProtocol = import.meta.prod ? 'https://' : 'http://';
-
-export { stringifiedBigIntRE, toBigInt } from '~/utils';
 
 export function generateFolderPath(username: string, path: string): string {
   // prepending leading slash to username + leading slash path + remove trailing slash

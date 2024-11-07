@@ -2,6 +2,7 @@ import RollupSucrase from '@rollup/plugin-sucrase';
 import RollupUrl from '@rollup/plugin-url';
 import UnheadVite from '@unhead/addons/vite';
 import browserslistToEsbuild from 'browserslist-to-esbuild';
+import { defu } from 'defu';
 import parseDuration from 'parse-duration';
 import { resolve } from 'pathe';
 import { isCI, isDevelopment, isProduction, nodeENV } from 'std-env';
@@ -17,6 +18,10 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-07-06',
 
   devtools: { enabled: true },
+
+  rootDir: resolve('./'),
+  srcDir: resolve('./app'),
+  serverDir: resolve('./server'),
 
   app: {
     head: {
@@ -37,6 +42,12 @@ export default defineNuxtConfig({
         { rel: 'manifest', href: '/site.webmanifest', crossorigin: 'use-credentials' },
       ],
     },
+  },
+
+  alias: {
+    '#app': resolve('./app'),
+    // only used by tsc
+    '#server': resolve('./server'),
   },
 
   experimental: {
@@ -69,7 +80,11 @@ export default defineNuxtConfig({
     },
   },
 
-  typescript: { tsConfig },
+  typescript: {
+    tsConfig: defu(tsConfig, {
+      include: ['../app/types/*'],
+    }),
+  },
 
   imports: {
     presets: [
@@ -85,7 +100,7 @@ export default defineNuxtConfig({
       },
       {
         type: true,
-        from: resolve('./types/toasts.d.ts'),
+        from: resolve('./app/types/toasts.d.ts'),
         imports: [
           'ToastType',
           'ToastButton',
@@ -93,7 +108,7 @@ export default defineNuxtConfig({
         ],
       },
       {
-        from: resolve('./types/common'),
+        from: resolve('./app/types/common'),
         imports: ['ItemState'],
       },
       {
@@ -107,8 +122,9 @@ export default defineNuxtConfig({
     ],
 
     dirs: [
+      resolve('./shared'),
       resolve('./constants'),
-      resolve('./composables/tiptap'),
+      resolve('./app/composables/tiptap'),
     ],
 
     imports: [
@@ -340,10 +356,10 @@ export default defineNuxtConfig({
           enforce: 'pre',
           resolveId(id) {
             if (/(?:^|\/)@?tiptap\//.test(id)) {
-              return resolve('./mocks/tiptap.ts');
+              return resolve('./app/mocks/tiptap.ts');
             }
             if (/(?:^|\/)prosemirror/.test(id)) {
-              return resolve('./mocks/prosemirror.ts');
+              return resolve('./app/mocks/prosemirror.ts');
             }
           },
         },
@@ -352,6 +368,13 @@ export default defineNuxtConfig({
   },
 
   nitro: {
+    rootDir: resolve('./'),
+    srcDir: resolve('./server'),
+
+    alias: {
+      '#server': resolve('./server'),
+    },
+
     replace: {
       'import.meta.dev': isDevelopment,
       'import.meta.prod': isProduction,
@@ -386,17 +409,13 @@ export default defineNuxtConfig({
     imports: {
       presets: [
         {
-          from: resolve('./utils/keys.ts'),
-          imports: ['createKey', 'KeyPrefix'],
-        },
-        {
           from: resolve('./kysely/kysely.ts'),
           imports: ['getKysely'],
         },
       ],
 
       dirs: [
-        resolve('./prisma'),
+        resolve('./shared'),
       ],
 
       imports: [
@@ -418,7 +437,11 @@ export default defineNuxtConfig({
       ],
     },
 
-    typescript: { tsConfig },
+    typescript: {
+      tsConfig: defu(tsConfig, {
+        include: ['../server/types/*'],
+      }),
+    },
 
     esbuild: {
       options: {
@@ -469,7 +492,6 @@ export default defineNuxtConfig({
       {
         family: 'Mona Sans',
         src: 'fonts/Mona-Sans.woff2',
-        root: 'public',
         fallbacks: ['Arial'],
       },
     ],

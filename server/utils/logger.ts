@@ -1,12 +1,6 @@
 import type { H3Event } from 'h3';
 import type { ValueOf } from 'type-fest';
 
-export const LogLevel = {
-  Info: 'info',
-  Warn: 'warn',
-  Error: 'error',
-} as const;
-
 export interface LoggerData extends Record<string, unknown | undefined> {
   msg?: string | undefined
   err?: Error | undefined

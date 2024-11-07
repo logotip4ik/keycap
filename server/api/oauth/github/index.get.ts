@@ -1,7 +1,7 @@
+import type { GitHubUserRes } from '#server/types/server-github';
+
 import { destr } from 'destr';
 import { withQuery } from 'ufo';
-
-import type { GitHubUserRes } from '~/types/server-github';
 
 export default defineEventHandler(async (event) => {
   let user = event.context.user;
@@ -53,7 +53,7 @@ export default defineEventHandler(async (event) => {
         eb('User.email', '=', githubUser.email),
         eb.and([
           eb('OAuth.id', '=', githubUser.id.toString()),
-          eb('OAuth.type', '=', OAuthProvider.GitHub),
+          eb('OAuth.type', '=', oAuthProvider.GitHub),
         ]),
       ]))
       .select(['User.id', 'User.email', 'User.username'])
@@ -76,7 +76,7 @@ export default defineEventHandler(async (event) => {
     const isUsernameValid = valid && !(await checkIfUsernameTaken(event, username));
 
     if (!isUsernameValid) {
-      query.provider = OAuthProvider.GitHub;
+      query.provider = oAuthProvider.GitHub;
       query.username = undefined;
       query.socialUser = githubUser;
       query.usernameTaken = valid && await checkIfUsernameTaken(event, username) ? username : undefined;

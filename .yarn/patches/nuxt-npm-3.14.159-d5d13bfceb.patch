@@ -1,18 +1,18 @@
 diff --git a/dist/app/components/nuxt-island.js b/dist/app/components/nuxt-island.js
-index aecb2c72b46aefc81920f1b0ea0871937d8cc3a8..75516f063956dec66e7d43115945f6faa73227bb 100644
+index b40656bf68f14502593313ded661c682d08e2c9a..c5b04ba511bc5a2a882d9477df84534b1e95e6a9 100644
 --- a/dist/app/components/nuxt-island.js
 +++ b/dist/app/components/nuxt-island.js
 @@ -1,6 +1,5 @@
- import { Fragment, Teleport, computed, createStaticVNode, createVNode, defineComponent, getCurrentInstance, h, nextTick, onMounted, ref, toRaw, watch, withMemo } from "vue";
+ import { Fragment, Teleport, computed, createStaticVNode, createVNode, defineComponent, getCurrentInstance, h, nextTick, onBeforeUnmount, onMounted, ref, toRaw, watch, withMemo } from "vue";
  import { debounce } from "perfect-debounce";
 -import { hash } from "ohash";
  import { appendResponseHeader } from "h3";
  import { injectHead } from "@unhead/vue";
  import { randomUUID } from "uncrypto";
-@@ -34,6 +33,68 @@ async function loadComponents(source = appBaseURL, paths) {
-   }
-   await Promise.all(promises);
- }
+@@ -10,6 +9,67 @@ import { useNuxtApp, useRuntimeConfig } from "../nuxt.js";
+ import { prerenderRoutes, useRequestEvent } from "../composables/ssr.js";
+ import { getFragmentHTML } from "./utils.js";
+ import { appBaseURL, remoteComponentIslands, selectiveClient } from "#build/nuxt.config.mjs";
 +
 +// https://gist.github.com/hyamamoto/fd435505d29ebfa3d9716fd2be8d42f0?permalink_comment_id=3586164#gistcomment-3586164
 +function hashString(s) {
@@ -74,31 +74,6 @@ index aecb2c72b46aefc81920f1b0ea0871937d8cc3a8..75516f063956dec66e7d43115945f6fa
 +  return hashString(stableHash(arg));
 +}
 +
-+
- export default defineComponent({
-   name: "NuxtIsland",
-   inheritAttrs: false,
-diff --git a/dist/index.mjs b/dist/index.mjs
-index 9fe137cf72916a0ceb3edbae12c9deacd960faed..fc0051a16fdda03d417d9fa6032842b6df886a30 100644
---- a/dist/index.mjs
-+++ b/dist/index.mjs
-@@ -2932,19 +2932,6 @@ function addDeclarationTemplates(ctx, options) {
-         return;
-       }
-       let path = resolveAlias(from);
--      if (!isAbsolute(path)) {
--        path = await tryResolveModule(from, nuxt.options.modulesDir).then(async (r2) => {
--          if (!r2) {
--            return r2;
--          }
--          const { dir, name } = parseNodeModulePath(r2);
--          if (!dir || !name) {
--            return r2;
--          }
--          const subpath = await lookupNodeModuleSubpath(r2);
--          return join(dir, name, subpath || "");
--        }) ?? path;
--      }
-       if (existsSync(path) && !await isDirectory$1(path)) {
-         path = path.replace(SUPPORTED_EXTENSION_RE, "");
-       }
+ const pKey = "_islandPromises";
+ const SSR_UID_RE = /data-island-uid="([^"]*)"/;
+ const DATA_ISLAND_UID_RE = /data-island-uid(="")?(?!="[^"])/g;

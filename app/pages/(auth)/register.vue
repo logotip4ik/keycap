@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import { usernameRE } from '~/server/utils';
-
-import type { OAuthProvider } from '~/types/server';
-
 definePageMeta({
   middleware: ['redirect-dashboard'],
 });

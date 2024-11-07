@@ -1,8 +1,7 @@
-import type { H3Event } from 'h3';
+import type { NormalizedSocialUser } from '#server/types/server';
+import type { GoogleAuthRes, GoogleUserRes } from '#server/types/server-google';
 
-import type { OAuthProviderConfig } from '~/types/oauth';
-import type { NormalizedSocialUser } from '~/types/server';
-import type { GoogleAuthRes, GoogleUserRes } from '~/types/server-google';
+import type { H3Event } from 'h3';
 
 // https://developers.google.com/identity/protocols/oauth2/web-server#creatingclient
 const config: OAuthProviderConfig = {
@@ -22,7 +21,7 @@ export function normalizeGoogleUser(googleUser: GoogleUserRes, params: Normaliza
     id: googleUser.id,
     email: googleUser.email,
     username: params.username,
-    type: OAuthProvider.Google,
+    type: 'Google',
   };
 }
 

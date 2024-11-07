@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { OAuthProvider, usernameRE } from '~/server/utils';
-import { logger } from '~/server/utils/logger';
-
 definePageMeta({
   middleware: ['redirect-dashboard'],
 });
@@ -11,8 +8,7 @@ const event = useRequestEvent()!;
 const identifier = getRequestIP(event, { xForwardedFor: true });
 
 if (!query.code || !query.provider) {
-  await logger.error(event, {
-    msg: 'not enough data for proceeding with username',
+  await sendError(new Error('not enough data for proceeding with username'), {
     nuxt: true,
     identifier,
   });
@@ -27,11 +23,10 @@ const provider = isArray(query.provider)
   ? query.provider[0]
   : query.provider;
 
-const normalizedProvider = OAuthProvider[provider as keyof typeof OAuthProvider || ''];
+const normalizedProvider = oAuthProvider[provider as OAuthProvider || ''];
 
 if (!normalizedProvider) {
-  await logger.warn(event, {
-    msg: 'someone is messing with oauth',
+  await sendError(new Error('someone is messing with oauth'), {
     nuxt: true,
     identifier,
   });

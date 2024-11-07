@@ -4,8 +4,6 @@ import LRUCache from 'hashlru';
 
 import proxy from 'unenv/runtime/mock/proxy';
 
-import type { SafeUser } from '~/types/server';
-
 interface LRU<T> {
   has: (key: string | number) => boolean
   remove: (key: string | number) => void

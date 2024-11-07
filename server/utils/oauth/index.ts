@@ -1,9 +1,8 @@
+import type { NormalizedSocialUser } from '#server/types/server';
+
 import type { CookieSerializeOptions } from 'cookie-es';
 import type { H3Event } from 'h3';
 import type { QueryObject } from 'ufo';
-import type { OAuthProviderConfig } from '~/types/oauth';
-
-import type { NormalizedSocialUser } from '~/types/server';
 
 const stateSerializeOptions = {
   path: '/',

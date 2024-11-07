@@ -1,4 +1,4 @@
-import type Webmanifest from '~/server/assets/webmanifest.json';
+import type Webmanifest from '#server/assets/webmanifest.json';
 
 export default defineEventHandler(async (event) => {
   const storage = useStorage('assets:server');

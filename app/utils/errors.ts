@@ -1,6 +1,6 @@
 import type { H3Error } from 'h3';
 
-export function sendError(error: Error, properties?: Record<string, string>) {
+export function sendError(error: Error, properties?: Record<string, string | boolean | undefined>) {
   const payload = {
     type: LogLevel.Info,
     payload: {
@@ -21,7 +21,7 @@ export function sendError(error: Error, properties?: Record<string, string>) {
 
   const fetch = useRequestFetch();
 
-  fetch('/_log', {
+  return fetch('/_log', {
     method: 'POST',
     body: payload,
     ignoreResponseError: true,

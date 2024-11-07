@@ -1,6 +1,6 @@
 import type { CookieSerializeOptions } from 'cookie-es';
-import { serialize } from 'cookie-es';
 
+import { serialize } from 'cookie-es';
 import { getCookie, setCookie } from 'h3';
 
 /**

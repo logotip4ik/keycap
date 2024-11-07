@@ -1,7 +1,7 @@
+import type { GoogleUserRes } from '#server/types/server-google';
+
 import { destr } from 'destr';
 import { withQuery } from 'ufo';
-
-import type { GoogleUserRes } from '~/types/server-google';
 
 export default defineEventHandler(async (event) => {
   let user = event.context.user;
@@ -51,7 +51,7 @@ export default defineEventHandler(async (event) => {
         eb('User.email', '=', googleUser.email),
         eb.and([
           eb('OAuth.id', '=', googleUser.id),
-          eb('OAuth.type', '=', OAuthProvider.Google),
+          eb('OAuth.type', '=', oAuthProvider.Google),
         ]),
       ]))
       .select(['User.id', 'User.email', 'User.username'])
@@ -74,7 +74,7 @@ export default defineEventHandler(async (event) => {
     const isUsernameValid = valid && !(await checkIfUsernameTaken(event, username));
 
     if (!isUsernameValid) {
-      query.provider = OAuthProvider.Google;
+      query.provider = oAuthProvider.Google;
       query.username = undefined;
       query.socialUser = googleUser;
       query.usernameTaken = valid && await checkIfUsernameTaken(event, username) ? username : undefined;

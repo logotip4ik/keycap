@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { LazyIconGithub, LazyIconGoogle } from '#components';
 
-import type { OAuthProvider } from '~/types/server';
-
 const props = defineProps<{
   provider: OAuthProvider
 }>();

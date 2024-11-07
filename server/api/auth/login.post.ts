@@ -1,5 +1,3 @@
-import type { SafeUser } from '~/types/server';
-
 export default defineEventHandler(async (event) => {
   const data = await readSecureBody(event, loginValidator);
 
