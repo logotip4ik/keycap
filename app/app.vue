@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import '~/polyfills/array-at';
-
 const route = useRoute();
 const { site } = useRuntimeConfig().public;
 const { isSmallScreen, isFirefox, isSafari } = useDevice();
