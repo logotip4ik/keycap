@@ -3,7 +3,7 @@ import colors from 'picocolors';
 import { exec } from 'tinyexec';
 
 import { version } from '../package.json';
-import { createKey, KeyPrefix } from '../shared/keys';
+import { createKey, KeyPrefix } from '../shared/utils/keys';
 
 export default defineNuxtModule({
   meta: {

@@ -122,7 +122,6 @@ export default defineNuxtConfig({
     ],
 
     dirs: [
-      resolve('./shared'),
       resolve('./constants'),
       resolve('./app/composables/tiptap'),
     ],
@@ -413,10 +412,6 @@ export default defineNuxtConfig({
           from: resolve('./kysely/kysely.ts'),
           imports: ['getKysely'],
         },
-      ],
-
-      dirs: [
-        resolve('./shared'),
       ],
 
       imports: [
