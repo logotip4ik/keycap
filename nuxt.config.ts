@@ -217,6 +217,7 @@ export default defineNuxtConfig({
     '/view/**': { isr: parseDuration('15 minutes', 'second') },
     '/og/**': { headers: getHeaders('og') },
     '/fonts/**': { headers: getHeaders('fonts') },
+    '/logo.webp': { headers: getHeaders('editor-images') },
     '/editor-wide.webp': { headers: getHeaders('editor-images') },
     '/editor-wide-dark.webp': { headers: getHeaders('editor-images') },
     '/site.webmanifest': { headers: getHeaders('webmanifest') },
