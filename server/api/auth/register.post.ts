@@ -106,10 +106,7 @@ export default defineEventHandler(async (event) => {
   await Promise.all([
     setAuthCookies(event, user),
     useRegisterStorage().removeItem(`continue:${data.code}`),
-    updateCacheEntry(
-      getUserCacheKey(user.username, UserCacheName.Taken),
-      true,
-    ),
+    invalidateCacheEntry(getUserCacheKey(user.username, UserCacheName.Taken)),
   ]);
 
   if (data.browserAction !== undefined) {

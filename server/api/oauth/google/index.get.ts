@@ -82,7 +82,7 @@ export default defineEventHandler(async (event) => {
       return sendRedirect(event, withQuery('/oauth/ask-username', query));
     }
 
-    await updateCacheEntry(getUserCacheKey(username, UserCacheName.Taken), true);
+    await invalidateCacheEntry(getUserCacheKey(username, UserCacheName.Taken));
   }
 
   const normalizedSocialUser = normalizeGoogleUser(googleUser, { username });
