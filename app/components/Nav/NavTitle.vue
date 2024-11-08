@@ -1,7 +1,7 @@
 <template>
   <NavLink class="nav__link--title font-wide" to="/">
     <img
-      src="/logo.webp"
+      src="/images/logo.webp"
       alt="purple keycap"
       class="nav__link__img nav__link__img--title"
       decoding="async"

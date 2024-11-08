@@ -3,6 +3,7 @@ import type { HTTPHeaderName, HTTPMethod } from 'h3';
 import { destr } from 'destr';
 import parseDuration from 'parse-duration';
 import { isCI } from 'std-env';
+import invariant from 'tiny-invariant';
 
 const turnstileEnabled = destr(process.env.FEATURE_TURNSTILE) === true;
 
@@ -35,7 +36,7 @@ export const cspHeaders = {
 export const defaultHeaders = {
   'Cross-Origin-Embedder-Policy': 'require-corp',
   'Cross-Origin-Opener-Policy': 'same-origin',
-  'Cross-Origin-Resource-Policy': isCI ? 'cross-origin' : 'same-origin',
+  'Cross-Origin-Resource-Policy': 'cross-origin',
   'Origin-Agent-Cluster': '?1',
   'X-DNS-Prefetch-Control': 'off',
   'X-Download-Options': 'noopen',
@@ -56,7 +57,7 @@ export interface NoteViewHeaderOptions {
   staleWhileRevalidate?: number
 }
 type HeaderObject = Partial<Record<HTTPHeaderName, string | undefined>>;
-export type HeadersType = 'default' | 'assets' | 'api' | 'api-info' | 'webmanifest' | 'og' | 'fonts' | 'editor-images';
+export type HeadersType = 'default' | 'assets' | 'api' | 'api-info' | 'webmanifest' | 'og' | 'fonts' | 'cachable-images';
 export type HeadersOptions = NoteViewHeaderOptions | unknown;
 
 export function getHeaders(
@@ -144,7 +145,7 @@ export function getHeaders(
       break;
     }
 
-    case 'editor-images': {
+    case 'cachable-images': {
       const cacheOptions = {
         private: false,
         immutable: true,
@@ -159,6 +160,29 @@ export function getHeaders(
       break;
     }
   }
+
+  return headers;
+}
+
+export function getCachedAssetHeaders(time: string) {
+  const headers = {};
+
+  const seconds = parseDuration(time, 's');
+
+  invariant(seconds);
+
+  Object.assign(headers, makeCacheControlHeader({
+    private: false,
+    immutable: true,
+    maxAge: seconds,
+  }));
+
+  Object.assign(headers, makeCacheControlHeader({
+    private: false,
+    immutable: true,
+    maxAge: seconds,
+    CDN: 'cf',
+  }));
 
   return headers;
 }

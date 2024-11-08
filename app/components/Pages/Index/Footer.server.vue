@@ -13,7 +13,7 @@ const links = [
       <div class="footer__row">
         <p class="footer__title">
           <img
-            src="/logo.webp"
+            src="/images/logo.webp"
             alt="purple keycap"
             class="footer__title__img"
             decoding="async"

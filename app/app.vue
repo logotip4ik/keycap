@@ -33,7 +33,7 @@ useSeoMeta({
   ogTitle: 'Keycap - Beautiful Notes',
 
   ogDescription: 'Beautiful Notes 💜. Fast, simple, shareable, synced between devices and purple.',
-  ogImage: `${defaultProtocol}${site}/og-image.min.jpg`,
+  ogImage: `${defaultProtocol}${site}/images/og-image.min.jpg`,
   ogImageWidth: 1200,
   ogImageHeight: 630,
   ogType: 'website',
@@ -45,7 +45,7 @@ useSeoMeta({
   twitterSite: 'KeycapTheNotes',
   twitterCard: 'summary',
   twitterCreator: 'BogdanKostyuk_',
-  twitterImage: `${defaultProtocol}${site}/og-image.min.jpg`,
+  twitterImage: `${defaultProtocol}${site}/images/og-image.min.jpg`,
   twitterImageAlt: 'Keycap',
 });
 

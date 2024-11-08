@@ -5,8 +5,8 @@ definePageMeta({
 
 useServerHead({
   link: [
-    { rel: 'preload', as: 'image', href: '/editor-wide.webp', media: '(prefers-color-scheme: light)' },
-    { rel: 'preload', as: 'image', href: '/editor-wide-dark.webp', media: '(prefers-color-scheme: dark)' },
+    { rel: 'preload', as: 'image', href: '/images/editor-wide.webp', media: '(prefers-color-scheme: light)' },
+    { rel: 'preload', as: 'image', href: '/images/editor-wide-dark.webp', media: '(prefers-color-scheme: dark)' },
   ],
 });
 </script>

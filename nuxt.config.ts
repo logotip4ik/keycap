@@ -8,7 +8,7 @@ import { resolve } from 'pathe';
 import { isCI, isDevelopment, isProduction, nodeENV } from 'std-env';
 
 import { prefixedConfig } from './config/build';
-import { getHeaders } from './config/headers';
+import { getCachedAssetHeaders, getHeaders } from './config/headers';
 import { tsConfig } from './config/typescript';
 import { breakpoints, sidebarsBreakpoints } from './constants/breakpoints';
 import { inlinableStylesRE } from './constants/build';
@@ -211,10 +211,14 @@ export default defineNuxtConfig({
     '/view/**': { isr: parseDuration('15 minutes', 'second') },
     '/og/**': { headers: getHeaders('og') },
     '/fonts/**': { headers: getHeaders('fonts') },
-    '/logo.webp': { headers: getHeaders('editor-images') },
-    '/editor-wide.webp': { headers: getHeaders('editor-images') },
-    '/editor-wide-dark.webp': { headers: getHeaders('editor-images') },
+    '/images/**': { headers: getHeaders('cachable-images') },
     '/site.webmanifest': { headers: getHeaders('webmanifest') },
+
+    '/__sabayon_async_wait_fallback.js': { headers: getCachedAssetHeaders('5 minutes') },
+    '/robots.txt': { headers: getCachedAssetHeaders('1 week') },
+    '/android-chrome-192x192.png': { headers: getCachedAssetHeaders('1 week') },
+    '/android-chrome-512x512.png': { headers: getCachedAssetHeaders('1 week') },
+    '/apple-touch-icon.png': { headers: getCachedAssetHeaders('1 week') },
 
     '/oauth/ask-username': { experimentalNoScripts: true },
   },

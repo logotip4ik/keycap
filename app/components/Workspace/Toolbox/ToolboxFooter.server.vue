@@ -18,7 +18,7 @@ function isRelative(url: string) {
   <footer class="toolbox__footer">
     <p class="toolbox__footer__title font-wide">
       <img
-        src="/logo.webp"
+        src="/images/logo.webp"
         alt="purple keycap"
         class="toolbox__footer__title__img"
         decoding="async"
