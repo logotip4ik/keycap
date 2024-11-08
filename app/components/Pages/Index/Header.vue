@@ -89,8 +89,8 @@ onMounted(() => {
 
     <div ref="editorImgWrapperEl" class="header__editor__wrapper">
       <LightDarkImg
-        light-src="/editor-wide.webp"
-        dark-src="/editor-wide-dark.webp"
+        light-src="/images/editor-wide.webp"
+        dark-src="/images/editor-wide-dark.webp"
         alt="editor preview"
         decoding="async"
         width="1980"
