@@ -15,6 +15,10 @@ let pollingTimer: ReturnType<typeof setTimeout> | undefined;
 let retryingToast: ToastInstance | undefined;
 
 async function fetchRecent(retry: number = 0): Promise<void> {
+  if (import.meta.server) {
+    return;
+  }
+
   clearTimeout(pollingTimer);
 
   $fetch('/api/recent')
@@ -53,16 +57,14 @@ async function fetchRecent(retry: number = 0): Promise<void> {
     });
 };
 
-const stop = watchEffect(() => {
-  if (state.value === 'hidden') {
+const stop = watch(state, (state) => {
+  if (state === 'hidden') {
     return;
   }
 
   fetchRecent();
-  nextTick(() => {
-    stop();
-  });
-});
+  nextTick(() => stop());
+}, { immediate: import.meta.client });
 </script>
 
 <template>
