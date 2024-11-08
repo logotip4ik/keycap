@@ -3,17 +3,18 @@ import type { GitHubAuthRes, GitHubUserEmailRes, GitHubUserRes } from '#server/t
 
 import type { H3Event } from 'h3';
 
-// https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps#1-request-a-users-github-identity
-const config: OAuthProviderConfig = {
-  oauth: useRuntimeConfig().github,
+export function getGithubOAuthConfig(): OAuthProviderConfig {
+  const { github } = useRuntimeConfig();
 
-  name: 'github',
-  scope: 'user:email',
-  authorizeEndpoint: 'https://github.com/login/oauth/authorize',
-  tokenEndpoint: 'https://github.com/login/oauth/access_token',
-};
-
-export { config as githubConfig };
+  // https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps#1-request-a-users-github-identity
+  return {
+    oauth: github,
+    name: 'github',
+    scope: 'user:email',
+    authorizeEndpoint: 'https://github.com/login/oauth/authorize',
+    tokenEndpoint: 'https://github.com/login/oauth/access_token',
+  };
+}
 
 interface NormalizationParams { username: string }
 export function normalizeGitHubUser(githubUser: GitHubUserRes, params: NormalizationParams): NormalizedSocialUser {
@@ -25,10 +26,12 @@ export function normalizeGitHubUser(githubUser: GitHubUserRes, params: Normaliza
   };
 }
 
-export async function getGitHubUserWithEvent(event: H3Event) {
+export async function getGitHubUserWithEvent(event: H3Event, config: OAuthProviderConfig) {
   const code = getQuery(event).code;
 
   invariant(code, '`code` wasn\'t found');
+
+  const { public: { site } } = useRuntimeConfig();
 
   const auth = await $fetch<GitHubAuthRes>(config.tokenEndpoint, {
     method: 'POST',
@@ -39,7 +42,7 @@ export async function getGitHubUserWithEvent(event: H3Event) {
       code,
       client_id: config.oauth.clientId,
       client_secret: config.oauth.clientSecret,
-      redirect_uri: `${defaultProtocol}${useRuntimeConfig().public.site}/api/oauth/github`,
+      redirect_uri: `${defaultProtocol}${site}/api/oauth/github`,
     },
   });
 

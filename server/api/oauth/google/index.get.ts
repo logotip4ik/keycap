@@ -11,12 +11,13 @@ export default defineEventHandler(async (event) => {
   }
 
   const query = getQuery(event);
+  const googleOAuthConfig = getGoogleOAuthConfig();
 
   if (
     sendOAuthRedirectIfNeeded({
       event,
       query,
-      config: googleConfig,
+      config: googleOAuthConfig,
     })
   ) {
     return;
@@ -24,7 +25,7 @@ export default defineEventHandler(async (event) => {
 
   await assertNoOAuthErrors(event, query);
 
-  const googleUser: GoogleUserRes | undefined = destr<GoogleUserRes>(query.socialUser) || await getGoogleUserWithEvent(event)
+  const googleUser = destr<GoogleUserRes>(query.socialUser) || await getGoogleUserWithEvent(event, googleOAuthConfig)
     .catch(async (err) => {
       await logger.error(event, { err, msg: 'getGoogleUserWithEvent failed' });
     });

@@ -3,17 +3,18 @@ import type { GoogleAuthRes, GoogleUserRes } from '#server/types/server-google';
 
 import type { H3Event } from 'h3';
 
-// https://developers.google.com/identity/protocols/oauth2/web-server#creatingclient
-const config: OAuthProviderConfig = {
-  oauth: useRuntimeConfig().google,
+export function getGoogleOAuthConfig(): OAuthProviderConfig {
+  const { google } = useRuntimeConfig();
 
-  name: 'google',
-  scope: 'email',
-  authorizeEndpoint: 'https://accounts.google.com/o/oauth2/v2/auth',
-  tokenEndpoint: 'https://oauth2.googleapis.com/token',
-};
-
-export { config as googleConfig };
+  // https://developers.google.com/identity/protocols/oauth2/web-server#creatingclient
+  return {
+    oauth: google,
+    name: 'google',
+    scope: 'email',
+    authorizeEndpoint: 'https://accounts.google.com/o/oauth2/v2/auth',
+    tokenEndpoint: 'https://oauth2.googleapis.com/token',
+  };
+}
 
 interface NormalizationParams { username: string }
 export function normalizeGoogleUser(googleUser: GoogleUserRes, params: NormalizationParams): NormalizedSocialUser {
@@ -25,10 +26,12 @@ export function normalizeGoogleUser(googleUser: GoogleUserRes, params: Normaliza
   };
 }
 
-export async function getGoogleUserWithEvent(event: H3Event) {
+export async function getGoogleUserWithEvent(event: H3Event, config: OAuthProviderConfig) {
   const code = getQuery(event).code;
 
   invariant(code, '`code` wasn\'t found');
+
+  const { public: { site } } = useRuntimeConfig();
 
   const auth = await $fetch<GoogleAuthRes>(config.tokenEndpoint, {
     method: 'POST',
@@ -37,7 +40,7 @@ export async function getGoogleUserWithEvent(event: H3Event) {
       client_id: config.oauth.clientId,
       client_secret: config.oauth.clientSecret,
       grant_type: 'authorization_code',
-      redirect_uri: `${defaultProtocol}${useRuntimeConfig().public.site}/api/oauth/google`,
+      redirect_uri: `${defaultProtocol}${site}/api/oauth/google`,
     },
   });
 

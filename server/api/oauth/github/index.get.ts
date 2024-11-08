@@ -11,6 +11,7 @@ export default defineEventHandler(async (event) => {
   }
 
   const query = getQuery(event);
+  const githubOAuthConfig = getGithubOAuthConfig();
 
   // This means that user was redirected here to actually sign in
   // with social account, so this technically is not an error
@@ -18,7 +19,7 @@ export default defineEventHandler(async (event) => {
     sendOAuthRedirectIfNeeded({
       event,
       query,
-      config: githubConfig,
+      config: githubOAuthConfig,
     })
   ) {
     return;
@@ -26,7 +27,7 @@ export default defineEventHandler(async (event) => {
 
   await assertNoOAuthErrors(event, query);
 
-  const githubUser: GitHubUserRes | undefined = destr<GitHubUserRes>(query.socialUser) || await getGitHubUserWithEvent(event)
+  const githubUser = destr<GitHubUserRes>(query.socialUser) || await getGitHubUserWithEvent(event, githubOAuthConfig)
     .catch(async (err) => {
       await logger.error(event, { err, msg: 'getGitHubUserWithEvent failed' });
     });
