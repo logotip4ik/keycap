@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useContentsState } from '../config';
 
-const nuxtApp = useNuxtApp();
 const route = useRoute();
 const { shortcuts } = useAppConfig();
 
@@ -43,7 +42,7 @@ async function fetchFolder(): Promise<void> {
 
   lastRefetch = Date.now();
 
-  let hydrationPromise = getHydrationPromise(nuxtApp);
+  let hydrationPromise = getHydrationPromise();
 
   $fetch(`/api/folder${folderApiPath.value}`, { signal: abortControllerGet.signal })
     .then(async (res) => {

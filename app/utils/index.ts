@@ -1,6 +1,6 @@
-import type { NuxtApp } from '#app';
+export function getHydrationPromise(): undefined | Promise<unknown> {
+  const nuxtApp = useNuxtApp();
 
-export function getHydrationPromise(nuxtApp: NuxtApp): undefined | Promise<unknown> {
   if (!nuxtApp.isHydrating) {
     return;
   }
