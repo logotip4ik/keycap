@@ -2,7 +2,6 @@ import RollupSucrase from '@rollup/plugin-sucrase';
 import RollupUrl from '@rollup/plugin-url';
 import UnheadVite from '@unhead/addons/vite';
 import browserslistToEsbuild from 'browserslist-to-esbuild';
-import { defu } from 'defu';
 import parseDuration from 'parse-duration';
 import { resolve } from 'pathe';
 import { isCI, isDevelopment, isProduction, nodeENV } from 'std-env';
@@ -75,11 +74,7 @@ export default defineNuxtConfig({
     },
   },
 
-  typescript: {
-    tsConfig: defu(tsConfig, {
-      include: ['../app/types/*'],
-    }),
-  },
+  typescript: { tsConfig },
 
   imports: {
     presets: [
@@ -429,11 +424,7 @@ export default defineNuxtConfig({
       ],
     },
 
-    typescript: {
-      tsConfig: defu(tsConfig, {
-        include: ['../server/types/*'],
-      }),
-    },
+    typescript: { tsConfig },
 
     esbuild: {
       options: {

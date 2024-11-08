@@ -27,6 +27,4 @@ export const tsConfig: TSConfig = {
     // this folder has it's own tsconfig
     '../workers',
   ],
-
-  include: ['../types/*'],
 };
