@@ -1,18 +1,21 @@
 <script setup lang="ts">
 import { useContentsState } from '../config';
 
+const nuxtApp = useNuxtApp();
 const route = useRoute();
+const { shortcuts } = useAppConfig();
+
 const isFallbackMode = useFallbackMode();
-const mitt = useMitt();
 const detailsItem = useCurrentItemForDetails();
 const foldersCache = useFoldersCache();
 const offlineStorage = getOfflineStorage();
 const createToast = useToaster();
 const user = useRequiredUser();
-const { shortcuts } = useAppConfig();
-const { state: contentsState } = useContentsState();
-const zeenk = useZeenk();
 const fuzzyWorker = getFuzzyWorker();
+const { state: contentsState } = useContentsState();
+
+const mitt = useMitt();
+const zeenk = useZeenk();
 
 const folderApiPath = computed(() => getCurrentFolderPath(route).slice(0, -1));
 const folderPath = computed(() => `/${user.value.username}${folderApiPath.value}`);
@@ -40,7 +43,7 @@ async function fetchFolder(): Promise<void> {
 
   lastRefetch = Date.now();
 
-  let hydrationPromise = getHydrationPromise();
+  let hydrationPromise = getHydrationPromise(nuxtApp);
 
   $fetch(`/api/folder${folderApiPath.value}`, { signal: abortControllerGet.signal })
     .then(async (res) => {

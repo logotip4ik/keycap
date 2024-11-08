@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useToolboxState } from '../config';
 
+const nuxtApp = useNuxtApp();
 const createToast = useToaster();
 const { state } = useToolboxState();
 
@@ -19,7 +20,7 @@ async function fetchRecent(retry: number = 0): Promise<void> {
 
   $fetch('/api/recent')
     .then(async (response) => {
-      const hydrationPromise = getHydrationPromise();
+      const hydrationPromise = getHydrationPromise(nuxtApp);
 
       if (hydrationPromise) {
         await hydrationPromise;

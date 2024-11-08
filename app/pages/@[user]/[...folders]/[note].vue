@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const nuxtApp = useNuxtApp();
 const route = useRoute();
 const isFallbackMode = useFallbackMode();
 const notesCache = useNotesCache();
@@ -31,7 +32,7 @@ async function fetchNote(): Promise<void> {
 
   lastRefetch = Date.now();
 
-  let hydrationPromise = getHydrationPromise();
+  let hydrationPromise = getHydrationPromise(nuxtApp);
 
   $fetch(`/api/note${noteApiPath.value}`, { signal: abortControllerGet.signal })
     .then(async (res) => {
