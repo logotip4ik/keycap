@@ -33,7 +33,7 @@ jobs:
         run: npx taze@latest -swf latest
 
       - name: Update resolution versions
-        run: node ./scripts/update-resolution.cjs
+        run: node ./scripts/update-resolution.mjs
         shell: bash
 
       - name: Update lock file
