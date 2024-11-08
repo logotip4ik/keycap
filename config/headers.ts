@@ -140,8 +140,6 @@ export function getHeaders(
         CDN: true,
       }));
 
-      headers['Cross-Origin-Resource-Policy'] = 'cross-origin';
-
       break;
     }
 
