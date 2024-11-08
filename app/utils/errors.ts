@@ -1,4 +1,3 @@
-import type { NuxtApp } from '#app';
 import type { H3Error } from 'h3';
 
 export function sendError(error: Error, properties?: Record<string, string | boolean | undefined>) {
