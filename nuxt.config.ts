@@ -19,10 +19,6 @@ export default defineNuxtConfig({
 
   devtools: { enabled: true },
 
-  rootDir: resolve('./'),
-  srcDir: resolve('./app'),
-  serverDir: resolve('./server'),
-
   app: {
     head: {
       title: 'Keycap',
@@ -45,7 +41,6 @@ export default defineNuxtConfig({
   },
 
   alias: {
-    '#app': resolve('./app'),
     // only used by tsc
     '#server': resolve('./server'),
   },
@@ -368,9 +363,6 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    rootDir: resolve('./'),
-    srcDir: resolve('./server'),
-
     alias: {
       '#server': resolve('./server'),
     },
