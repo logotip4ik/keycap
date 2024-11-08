@@ -19,3 +19,17 @@ export function createKey(prefix: ValueOf<typeof KeyPrefix>, size?: number) {
 
   return `${prefix}_${nanoid(size)}`;
 }
+
+if (import.meta.vitest) {
+  const { describe, it, expect } = import.meta.vitest;
+
+  describe('createKey', () => {
+    it('should create key with specified length', () => {
+      expect(() => createKey(KeyPrefix.Build)).not.toThrow();
+    });
+
+    it('should throw when key length is too small', () => {
+      expect(() => createKey(KeyPrefix.Build, 11)).toThrow();
+    });
+  });
+}
