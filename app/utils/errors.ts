@@ -2,7 +2,7 @@ import type { H3Error } from 'h3';
 
 export function sendError(error: Error, properties?: Record<string, string | boolean | undefined>) {
   const payload = {
-    type: LogLevel.Info,
+    type: LogLevel.Error,
     payload: {
       ...error,
 
