@@ -78,6 +78,7 @@
           &[data-checked="true"] {
             opacity: 0.625;
             filter: blur(0.75px);
+            transform: translate3d(0, 0, 0);
 
             &:is(:hover, :focus-within) {
               opacity: 0.9;
@@ -215,8 +216,4 @@
       padding-top: 0.5rem;
     }
   }
-}
-
-.safari .ProseMirror :is(ol, ul) li {
-  filter: none !important;
 }

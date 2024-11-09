@@ -26,6 +26,3 @@ useServerHead({
     <PagesIndexFooter />
   </div>
 </template>
-
-<style lang="scss">
-</style>

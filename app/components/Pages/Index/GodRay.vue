@@ -70,6 +70,7 @@
 
       @media screen and (prefers-color-scheme: dark) {
         filter: blur(12px) invert(10%);
+        transform: translate3d(0, 0, 0);
       }
     }
 
