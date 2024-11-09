@@ -1,10 +1,12 @@
+import type { computePosition, flip, offset, shift } from '@floating-ui/dom';
+
 import proxy from 'unenv/runtime/mock/proxy';
 
 let floatingUi: {
-  computePosition: typeof import('@floating-ui/dom').computePosition
-  offset: typeof import('@floating-ui/dom').offset
-  shift: typeof import('@floating-ui/dom').shift
-  flip: typeof import('@floating-ui/dom').flip
+  computePosition: typeof computePosition
+  offset: typeof offset
+  shift: typeof shift
+  flip: typeof flip
 } | undefined;
 
 export async function loadFloatingUi() {
