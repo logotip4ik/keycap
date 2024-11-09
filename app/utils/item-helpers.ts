@@ -167,7 +167,7 @@ export async function renameItem<T extends NoteMinimal | FolderMinimal>(newName:
   const { ws, state: wsState } = getZeenkWs();
 
   const selfPath = self.path;
-  const item = cache.get(selfPath);
+  const cachedItem = cache.get(selfPath);
 
   cache.remove(selfPath);
   offlineStorage.removeItem(selfPath).then(validateOfflineStorage);
@@ -179,24 +179,27 @@ export async function renameItem<T extends NoteMinimal | FolderMinimal>(newName:
   extend(self, newItem);
   fuzzyWorker.value?.refreshItemsCache();
 
+  const item = { ...cachedItem, ...toRaw(self) };
+
+  if (isFolder) {
+    (item as FolderWithContents).notes ??= [];
+    (item as FolderWithContents).subfolders ??= [];
+  }
+  else {
+    (item as NoteWithContent).content ??= '';
+  }
+
+  cache.set(item.path, item as any);
+  offlineStorage.setItem(item.path, item);
+
   if (wsState.value === 'OPEN' && ws.value) {
     sendZeenkEvent(
       ws.value,
       makeZeenkEvent('item-renamed', {
-        path: newItem.path,
+        path: item.path,
         oldPath: selfPath,
       }),
     );
-  }
-
-  if (item) {
-    extend(item, newItem);
-
-    (newItem as FolderWithContents).notes = (item as FolderWithContents).notes || [];
-    (newItem as FolderWithContents).subfolders = (item as FolderWithContents).subfolders || [];
-
-    cache.set(newItem.path, newItem as any);
-    offlineStorage.setItem(newItem.path, newItem);
   }
 }
 
