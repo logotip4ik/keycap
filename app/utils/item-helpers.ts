@@ -11,7 +11,7 @@ interface ItemWithPath {
   path: string
 }
 export function generateItemPath(item: ItemWithPath): string {
-  let path = item.path.replace('/', '/@');
+  let path = `/@${item.path.substring(1)}`;
 
   if (checkIsFolder(item)) {
     path += `/${BLANK_NOTE_NAME}`;
@@ -127,68 +127,46 @@ export async function createNote(noteName: string, self: NoteMinimal, parent: Fo
   return newlyCreatedNote;
 }
 
-export async function renameFolder(newName: string, self: FolderMinimal) {
-  const newFolder: Record<string, string | undefined> = { name: newName.trim() };
-
-  const currentFolderPath = getCurrentFolderPath();
-  const folderPathName = encodeURIComponent(self.name);
-  const folderPath = currentFolderPath + folderPathName;
-
-  await $fetch<unknown>(`/api/folder${folderPath}`, { method: 'PATCH', body: newFolder });
-
-  const foldersCache = useFoldersCache();
-  const offlineStorage = getOfflineStorage();
-  const fuzzyWorker = getFuzzyWorker();
-
-  const folderNameRegex = new RegExp(`${escapeRE(encodeURIComponent(self.name))}$`);
-  newFolder.path = self.path.replace(folderNameRegex, encodeURIComponent(newFolder.name!));
-  newFolder.state = undefined;
-
-  foldersCache.remove(self.path);
-  offlineStorage.removeItem(self.path);
-
-  extend(self, newFolder);
-
-  const folderToCache = { ...toRaw(self), notes: [], subfolders: [] };
-  foldersCache.set(self.path, folderToCache);
-  offlineStorage.setItem(self.path, folderToCache);
-  fuzzyWorker.value?.refreshItemsCache().then(validateOfflineStorage);
-}
-
-export async function renameNote(newName: string, self: NoteMinimal) {
-  const newNote: Record<string, string | undefined> = { name: newName.trim() };
+export async function renameItem<T extends NoteMinimal | FolderMinimal>(newName: string, self: T) {
+  const newItem = { name: newName.trim() } as T;
 
   const currentFolderPath = getCurrentFolderPath();
   const notePathName = encodeURIComponent(self.name);
-  const notePath = currentFolderPath + notePathName;
+  const itemPath = currentFolderPath + notePathName;
 
-  await $fetch(`/api/note${notePath}`, { method: 'PATCH', body: newNote });
+  const isFolder = checkIsFolder(self);
 
-  const notesCache = useNotesCache();
+  await $fetch(
+    isFolder ? `/api/folder${itemPath}` : `/api/note${itemPath}`,
+    { method: 'PATCH', body: newItem },
+  );
+
+  const cache = (isFolder ? useFoldersCache : useNotesCache)();
   const offlineStorage = getOfflineStorage();
   const fuzzyWorker = getFuzzyWorker();
 
+  const selfPath = self.path;
+  const item = cache.get(selfPath);
+
+  cache.remove(selfPath);
+  offlineStorage.removeItem(selfPath);
+
   const noteNameRegex = new RegExp(`${escapeRE(encodeURIComponent(self.name))}$`);
-  newNote.path = self.path.replace(noteNameRegex, encodeURIComponent(newNote.name!));
-  newNote.state = undefined;
+  newItem.path = selfPath.replace(noteNameRegex, encodeURIComponent(newItem.name));
+  newItem.state = undefined;
 
-  const note = notesCache.get(self.path);
+  extend(self, newItem);
+  fuzzyWorker.value?.refreshItemsCache().then(validateOfflineStorage);
 
-  notesCache.remove(self.path);
-  offlineStorage.removeItem(self.path);
+  if (item) {
+    extend(item, newItem);
 
-  extend(self, newNote);
-  fuzzyWorker.value?.refreshItemsCache();
+    (newItem as FolderWithContents).notes = (item as FolderWithContents).notes || [];
+    (newItem as FolderWithContents).subfolders = (item as FolderWithContents).subfolders || [];
 
-  if (note) {
-    extend(note, newNote);
-
-    notesCache.set(note.path, note);
-    offlineStorage.setItem(note.path, note);
+    cache.set(newItem.path, newItem as any);
+    offlineStorage.setItem(newItem.path, newItem);
   }
-
-  // @ts-expect-error setting path two lines before
-  await showItem(newNote);
 }
 
 export async function deleteNote(self: NoteMinimal, parent: FolderWithContents) {
@@ -272,4 +250,17 @@ export async function preloadItem(self: FolderMinimal | NoteMinimal) {
   }
 
   offlineStorage.setItem(item.path, item);
+}
+
+if (import.meta.vitest) {
+  const { describe, it, expect } = import.meta.vitest;
+
+  describe('generateItemPath', () => {
+    it('should generate browser path with correct item path', () => {
+      const path = '/help/me';
+
+      expect(generateItemPath({ path })).toEqual('/@help/me');
+      expect(generateItemPath({ path, root: false })).toEqual('/@help/me/_blank');
+    });
+  });
 }

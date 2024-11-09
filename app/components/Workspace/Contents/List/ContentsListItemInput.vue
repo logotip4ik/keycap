@@ -10,6 +10,7 @@ const { state: contentsState, isFixed: isContentsFixed } = useContentsState();
 const createToast = useToaster();
 const { isSmallScreen } = useDevice();
 const zeenk = useZeenk();
+const route = useRoute();
 
 const inputEl = shallowRef<HTMLInputElement | null>(null);
 const name = ref(props.item.name || '');
@@ -23,8 +24,8 @@ const placeholder = props.item.state === ItemState.Creating
     : 'new note name';
 const allowedItemName = `${allowedItemNameRE.source.slice(0, -1)}\\/?$`;
 
-function handleSubmit() {
-  let promise: Promise<FolderMinimal | NoteMinimal | undefined>;
+async function handleSubmit() {
+  let promise: Promise<FolderMinimal | NoteMinimal | undefined | void>;
   isLoading.value = true;
 
   // copying some of properties to later send with zeenk
@@ -40,37 +41,44 @@ function handleSubmit() {
     promise = createAction(creationName, props.item, props.parent) as Promise<FolderMinimal | NoteMinimal | undefined>;
   }
   else if (state === ItemState.Editing) {
-    if (checkIsFolder(props.item)) {
-      promise = renameFolder(name.value, props.item) as Promise<undefined>;
-    }
-    else {
-      promise = renameNote(name.value, props.item) as Promise<undefined>;
-    }
+    promise = renameItem(name.value, props.item);
   }
   else {
     return;
   }
 
-  promise
-    .then((item) => {
-      contentsState.value = isSmallScreen.value
-        ? 'hidden'
-        : (contentsState.value === 'visible' ? 'hidden' : contentsState.value);
-
-      withTiptapEditor((editor) => editor.commands.focus());
-
-      if (item && state === ItemState.Creating) {
-        zeenk.send('item-created', { path: item.path });
-      }
-      else if (state === ItemState.Editing) {
-        zeenk.send('item-renamed', { oldPath: path, path: props.item.path });
-      }
-    })
+  let hasCatchedError = false;
+  const item = await promise
     .catch((error) => {
+      hasCatchedError = true;
       createToast(error.data.message || ERROR_MESSAGES.DEFAULT);
       setTimeout(() => inputEl.value?.focus(), 50);
     })
     .finally(() => isLoading.value = false);
+
+  if (hasCatchedError) {
+    return;
+  }
+
+  contentsState.value = (isSmallScreen.value && state === ItemState.Creating)
+    ? 'hidden'
+    : (contentsState.value === 'visible' ? 'hidden' : contentsState.value);
+
+  if (state === ItemState.Editing) {
+    const viewingPath = `/${route.path.slice(2)}`;
+    if (!isFolder && viewingPath === path) {
+      await showItem({
+        path: props.item.path, // this will be updated path
+      });
+    }
+
+    zeenk.send('item-renamed', { oldPath: path, path: props.item.path });
+  }
+  else if (state === ItemState.Creating && item) {
+    zeenk.send('item-created', { path: item.path });
+  }
+
+  withTiptapEditor((editor) => editor.commands.focus());
 }
 
 function handleReset() {

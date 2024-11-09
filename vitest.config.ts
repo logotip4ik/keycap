@@ -13,6 +13,7 @@ export default defineVitestConfig({
     includeSource: [
       './server/**/*.ts',
       './shared/**/*.ts',
+      './app/utils/*.ts',
     ],
 
     exclude: [
