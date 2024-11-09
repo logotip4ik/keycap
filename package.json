@@ -181,12 +181,20 @@
     {
       "name": "js",
       "path": "./.output/public/_nuxt/*.js",
+      "brotli": true,
       "limit": "265kb"
     },
     {
       "name": "css",
       "path": "./.output/public/_nuxt/*.css",
+      "brotli": true,
       "limit": "16kb"
+    },
+    {
+      "name": "server",
+      "path": "./.output/server/**/*",
+      "brotli": false,
+      "limit": "10mb"
     }
   ]
 }
