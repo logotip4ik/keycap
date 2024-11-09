@@ -3,6 +3,8 @@ import type { ShallowRef } from 'vue';
 
 import proxy from 'unenv/runtime/mock/proxy';
 
+import FuzzyWorkerUrl from '~/workers/fuzzy?worker&url';
+
 export interface FuzzyWorker {
   searchWithQuery: (query: string) => Promise<Array<FuzzyItem | CommandItem>>
   searchForEmoji: (query: string) => Promise<Array<Emoji>>
@@ -35,7 +37,7 @@ export async function defineFuzzyWorker() {
   const { Worker } = coincident();
 
   // https://vitejs.dev/guide/features.html#web-workers
-  const worker = new Worker(new URL('../workers/fuzzy.ts', import.meta.url), { type: 'module' });
+  const worker = new Worker(FuzzyWorkerUrl, { type: 'module' });
 
   // fuzzy worker will be broken till nitro sends headers from route rules in dev mode
   // https://github.com/unjs/nitro/issues/2749
