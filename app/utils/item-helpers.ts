@@ -151,8 +151,8 @@ export async function renameItem<T extends NoteMinimal | FolderMinimal>(newName:
   const newItem = { name: newName.trim() } as T;
 
   const currentFolderPath = getCurrentFolderPath();
-  const notePathName = encodeURIComponent(self.name);
-  const itemPath = currentFolderPath + notePathName;
+  const itemPathName = encodeURIComponent(self.name);
+  const itemPath = currentFolderPath + itemPathName;
 
   const isFolder = checkIsFolder(self);
 
@@ -170,14 +170,14 @@ export async function renameItem<T extends NoteMinimal | FolderMinimal>(newName:
   const item = cache.get(selfPath);
 
   cache.remove(selfPath);
-  offlineStorage.removeItem(selfPath);
+  offlineStorage.removeItem(selfPath).then(validateOfflineStorage);
 
   const noteNameRegex = new RegExp(`${escapeRE(encodeURIComponent(self.name))}$`);
   newItem.path = selfPath.replace(noteNameRegex, encodeURIComponent(newItem.name));
   newItem.state = undefined;
 
   extend(self, newItem);
-  fuzzyWorker.value?.refreshItemsCache().then(validateOfflineStorage);
+  fuzzyWorker.value?.refreshItemsCache();
 
   if (wsState.value === 'OPEN' && ws.value) {
     sendZeenkEvent(
@@ -200,76 +200,48 @@ export async function renameItem<T extends NoteMinimal | FolderMinimal>(newName:
   }
 }
 
-export async function deleteNote(self: NoteMinimal, parent: FolderWithContents) {
+export async function deleteItem(self: FolderMinimal | NoteMinimal, parent: FolderWithContents) {
   const currentFolderPath = getCurrentFolderPath();
-  const notePathName = encodeURIComponent(self.name);
-  const notePath = currentFolderPath + notePathName;
+  const itemPathName = encodeURIComponent(self.name);
+  const itemPath = currentFolderPath + itemPathName;
 
-  const res = await $fetch.raw(`/api/note${notePath}`, { method: 'DELETE' });
+  const isFolder = checkIsFolder(self);
 
-  if (!res) {
-    return;
-  }
-
-  const notesCache = useNotesCache();
-  const offlineStorage = getOfflineStorage();
-  const fuzzyWorker = getFuzzyWorker();
-  const { ws, state: wsState } = getZeenkWs();
-
-  await showItem(parent);
-
-  notesCache.remove(self.path);
-  offlineStorage.removeItem(self.path);
-  fuzzyWorker.value?.refreshItemsCache();
-  remove(parent.notes, self);
-
-  if (wsState.value === 'OPEN' && ws.value) {
-    sendZeenkEvent(
-      ws.value,
-      makeZeenkEvent('item-deleted', {
-        path: self.path,
-      }),
-    );
-  }
-}
-
-export async function deleteFolder(self: FolderMinimal, parent: FolderWithContents) {
-  const currentFolderPath = getCurrentFolderPath();
-  const folderPathName = encodeURIComponent(self.name);
-  const folderPath = currentFolderPath + folderPathName;
-
-  const res = await $fetch.raw<null>(`/api/folder${folderPath}`, { method: 'DELETE' });
-
-  if (!res) {
-    return;
-  }
-
-  const foldersCache = useFoldersCache();
-  const offlineStorage = getOfflineStorage();
-  const fuzzyWorker = getFuzzyWorker();
-  const { ws, state: wsState } = getZeenkWs();
-
-  foldersCache.remove(self.path);
-  offlineStorage.removeItem(self.path);
-
-  if (wsState.value === 'OPEN' && ws.value) {
-    sendZeenkEvent(
-      ws.value,
-      makeZeenkEvent('item-deleted', {
-        path: self.path,
-      }),
-    );
-  }
-
-  const itemPathToCheck = `${self.path}/`;
-  const itemsToDelete = await offlineStorage.getItemsKeys()
-    .then((keys) => keys.filter((key) => key.startsWith(itemPathToCheck)));
-  await Promise.all(
-    itemsToDelete.map((key) => offlineStorage.removeItem(key)),
+  const res = await $fetch.raw(
+    isFolder ? `/api/folder${itemPath}` : `/api/note${itemPath}`,
+    { method: 'DELETE' },
   );
 
-  remove(parent.subfolders, self);
+  if (!res) {
+    return;
+  }
+
+  const cache = (isFolder ? useFoldersCache : useNotesCache)();
+  const offlineStorage = getOfflineStorage();
+  const fuzzyWorker = getFuzzyWorker();
+  const { ws, state: wsState } = getZeenkWs();
+
+  cache.remove(self.path);
+  offlineStorage.removeItem(self.path).then(validateOfflineStorage);
   fuzzyWorker.value?.refreshItemsCache();
+
+  if (isFolder) {
+    remove(parent.subfolders, self);
+  }
+  else {
+    await showItem(parent);
+
+    remove(parent.notes, self);
+  }
+
+  if (wsState.value === 'OPEN' && ws.value) {
+    sendZeenkEvent(
+      ws.value,
+      makeZeenkEvent('item-deleted', {
+        path: self.path,
+      }),
+    );
+  }
 }
 
 // NOTE: Refactor all functions above to use this approach ?

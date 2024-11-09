@@ -25,7 +25,7 @@ const actions = [
   { name: 'preload', handler: preloadItemWithIndication },
   { name: 'rename', handler: renameItem },
   { name: 'show details', handler: showDetails },
-  { name: 'delete', needConfirmation: true, handler: deleteItem },
+  { name: 'delete', needConfirmation: true, handler: deleteItemWithIndicator },
 ];
 
 let cleanup: (() => void) | undefined;
@@ -94,23 +94,14 @@ function showDetails() {
   props.onClose();
 }
 
-function deleteItem() {
+function deleteItemWithIndicator() {
   const loadingToast = createToast(`Deleting "${props.item.name}".`, {
     delay: 250,
     duration: parseDuration('0.5 minute'),
     type: 'loading',
   });
 
-  let promise: Promise<void>;
-
-  if (checkIsFolder(props.item)) {
-    promise = deleteFolder(props.item, props.parent);
-  }
-  else {
-    promise = deleteNote(props.item, props.parent);
-  }
-
-  promise
+  deleteItem(props.item, props.parent)
     .catch(() => createToast(ERROR_MESSAGES.DEFAULT))
     .finally(() => loadingToast.remove());
 
