@@ -2,6 +2,9 @@ import type { Emoji, EmojiMartData } from '@emoji-mart/data';
 
 import { commandScore as getScore } from '@superhuman/command-score';
 
+// must come before coincident
+import '@ungap/with-resolvers';
+
 // @ts-expect-error no types
 import coincident from 'coincident/worker';
 
