@@ -39,7 +39,7 @@ export function useZeenk(): Zeenk {
 
     if (state === 'OPEN' && websocket) {
       for (const event of _buffer) {
-        send(websocket, event);
+        sendZeenkEvent(websocket, event);
       }
 
       _buffer.length = 0;
@@ -71,10 +71,10 @@ export function useZeenk(): Zeenk {
     state,
 
     send: (type, payload) => {
-      const event = { type, payload };
+      const event = makeZeenkEvent(type, payload);
 
       if (state.value === 'OPEN' && ws.value) {
-        send(ws.value, event);
+        sendZeenkEvent(ws.value, event);
       }
       else {
         _buffer.push(event);
@@ -94,7 +94,11 @@ export function useZeenk(): Zeenk {
   };
 }
 
-function send(ws: WebSocket, event: Event) {
+export function makeZeenkEvent<K extends keyof ZeenkEvents>(type: K, payload: ZeenkEvents[K]): Event {
+  return { type, payload };
+}
+
+export function sendZeenkEvent(ws: WebSocket, event: Event) {
   ws.send(JSON.stringify(event));
 }
 

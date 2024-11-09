@@ -14,7 +14,6 @@ const props = defineProps<{
 
 const createToast = useToaster();
 const detailsItem = useCurrentItemForDetails();
-const zeenk = useZeenk();
 
 const isFolder = checkIsFolder(props.item);
 
@@ -112,7 +111,6 @@ function deleteItem() {
   }
 
   promise
-    .then(() => zeenk.send('item-deleted', { path: props.item.path }))
     .catch(() => createToast(ERROR_MESSAGES.DEFAULT))
     .finally(() => loadingToast.remove());
 

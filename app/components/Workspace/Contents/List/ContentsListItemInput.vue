@@ -9,7 +9,6 @@ const props = defineProps<{
 const { state: contentsState, isFixed: isContentsFixed } = useContentsState();
 const createToast = useToaster();
 const { isSmallScreen } = useDevice();
-const zeenk = useZeenk();
 const route = useRoute();
 
 const inputEl = shallowRef<HTMLInputElement | null>(null);
@@ -48,7 +47,7 @@ async function handleSubmit() {
   }
 
   let hasCatchedError = false;
-  const item = await promise
+  await promise
     .catch((error) => {
       hasCatchedError = true;
       createToast(error.data.message || ERROR_MESSAGES.DEFAULT);
@@ -60,22 +59,19 @@ async function handleSubmit() {
     return;
   }
 
-  contentsState.value = (isSmallScreen.value && state === ItemState.Creating)
+  const viewingPath = `/${route.path.slice(2)}`;
+  const renamedCurrentlyViewingNote = state === ItemState.Editing
+    && !isFolder
+    && viewingPath === path;
+
+  contentsState.value = (isSmallScreen.value && (state === ItemState.Creating || renamedCurrentlyViewingNote))
     ? 'hidden'
     : (contentsState.value === 'visible' ? 'hidden' : contentsState.value);
 
-  if (state === ItemState.Editing) {
-    const viewingPath = `/${route.path.slice(2)}`;
-    if (!isFolder && viewingPath === path) {
-      await showItem({
-        path: props.item.path, // this will be updated path
-      });
-    }
-
-    zeenk.send('item-renamed', { oldPath: path, path: props.item.path });
-  }
-  else if (state === ItemState.Creating && item) {
-    zeenk.send('item-created', { path: item.path });
+  if (renamedCurrentlyViewingNote) {
+    await showItem({
+      path: props.item.path, // this will be updated path
+    });
   }
 
   withTiptapEditor((editor) => editor.commands.focus());
