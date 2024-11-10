@@ -15,8 +15,6 @@ const props = defineProps<{
 const createToast = useToaster();
 const detailsItem = useCurrentItemForDetails();
 
-const isFolder = checkIsFolder(props.item);
-
 const menuEl = shallowRef<HTMLElement | null>(null);
 const currentlyConfirming = ref(-1); // You can confirm one at a time
 
@@ -109,13 +107,7 @@ function deleteItemWithIndicator() {
 }
 
 function openNewTab() {
-  let itemPath = props.item.path.replace('/', '/@');
-
-  if (isFolder) {
-    itemPath += `/${BLANK_NOTE_NAME}`;
-  }
-
-  window.open(itemPath, 'target=_blank');
+  window.open(generateItemPath(props.item), 'target=_blank');
 
   props.onClose();
 }

@@ -20,9 +20,10 @@ const emojisCache = new Map<string, Emoji>();
 
 let populateItemsCachePromise: Promise<void> | undefined;
 
+const firstSlashPartRE = /\/\w+\//;
 function addItem(item: FuzzyItem) {
   // truncate before first slash part /test/abc -> abc
-  const identifier = decodeURIComponent(item.path.replace(/\/\w+\//, ''));
+  const identifier = decodeURIComponent(item.path.replace(firstSlashPartRE, ''));
 
   itemsCache.set(identifier, item);
 }
