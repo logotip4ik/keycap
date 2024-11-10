@@ -11,6 +11,10 @@ const stateSerializeOptions = {
   sameSite: 'lax',
 } satisfies CookieSerializeOptions;
 
+export function deleteOAuthStateCookie(event: H3Event) {
+  deleteCookie(event, 'state', stateSerializeOptions);
+}
+
 export function sendOAuthRedirectIfNeeded({ event, query, config }: { event: H3Event, query?: QueryObject, config: OAuthProviderConfig }): boolean {
   if (!query) {
     query = getQuery(event)!;
@@ -45,8 +49,33 @@ export function sendOAuthRedirectIfNeeded({ event, query, config }: { event: H3E
   return true;
 }
 
-export function deleteOAuthStateCookie(event: H3Event) {
-  deleteCookie(event, 'state', stateSerializeOptions);
+export async function assertNoOAuthErrors(event: H3Event, query: QueryObject) {
+  // Can't delete the cookie here, because user might need to enter a username
+  // which is done later, with separate check
+  // deleteCookie(event, 'state');
+
+  if (query.error) {
+    deleteOAuthStateCookie(event);
+
+    await logger.error(event, { err: new Error(query.error.toString()), msg: 'oauth failed' });
+
+    throw createError({ status: 418, message: decodeURIComponent(query.error.toString()) });
+  }
+
+  const stateCookie = getCookie(event, 'state');
+  if (typeof query.state !== 'string' || query.state !== stateCookie) {
+    deleteOAuthStateCookie(event);
+
+    const identifier = getRequestIP(event, { xForwardedFor: true });
+
+    await logger.error(event, {
+      msg: 'someone is messing with authentication',
+      identifier,
+      stateCookie,
+    });
+
+    throw createError({ status: 422 });
+  }
 }
 
 export async function createUserWithSocialAuth(socialAuth: NormalizedSocialUser) {
