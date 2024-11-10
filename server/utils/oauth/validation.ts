@@ -14,12 +14,17 @@ export async function assertNoOAuthErrors(event: H3Event, query: QueryObject) {
     throw createError({ status: 418, message: decodeURIComponent(query.error.toString()) });
   }
 
-  if (typeof query.state !== 'string' || query.state !== getCookie(event, 'state')) {
+  const stateCookie = getCookie(event, 'state');
+  if (typeof query.state !== 'string' || query.state !== stateCookie) {
     deleteOAuthStateCookie(event);
 
     const identifier = getRequestIP(event, { xForwardedFor: true });
 
-    await logger.error(event, { msg: 'someone is messing with authentication', identifier });
+    await logger.error(event, {
+      msg: 'someone is messing with authentication',
+      identifier,
+      stateCookie,
+    });
 
     throw createError({ status: 422 });
   }
