@@ -1,6 +1,60 @@
 # Changelog
 
 
+## v3.15.12
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.11...v3.15.12)
+
+### 🩹 Fixes
+
+- Correct invariant for creating keys ([23a4f9bc](https://github.com/logotip4ik/keycap/commit/23a4f9bc))
+- Correct image path ([10a895b0](https://github.com/logotip4ik/keycap/commit/10a895b0))
+- Correct glob path ([bda712eb](https://github.com/logotip4ik/keycap/commit/bda712eb))
+- Fetch recents only on client ([6607ae50](https://github.com/logotip4ik/keycap/commit/6607ae50))
+- Polyfill withResolvers for coincident ([db9f92db](https://github.com/logotip4ik/keycap/commit/db9f92db))
+- Set log level to error when sending error from client ([03181f89](https://github.com/logotip4ik/keycap/commit/03181f89))
+
+### 💅 Refactors
+
+- Migrate to app/server/shared dirs ([820268b4](https://github.com/logotip4ik/keycap/commit/820268b4))
+- Invalidate cache entry rather then updating it ([0e2c6749](https://github.com/logotip4ik/keycap/commit/0e2c6749))
+- Require nuxtapp when using hydration promise ([4206496e](https://github.com/logotip4ik/keycap/commit/4206496e))
+- Do not call useRuntimeConfig in global scope ([22be500b](https://github.com/logotip4ik/keycap/commit/22be500b))
+- Workaround safari issue with rendering blur ([eef380d8](https://github.com/logotip4ik/keycap/commit/eef380d8))
+- Merge renameFolder and renameNote ([9900baed](https://github.com/logotip4ik/keycap/commit/9900baed))
+- Move sending of zeenk events to item-helpers ([a81880c5](https://github.com/logotip4ik/keycap/commit/a81880c5))
+- Merge deleteFolder and deleteNote ([c55428f9](https://github.com/logotip4ik/keycap/commit/c55428f9))
+- Simplify a bit cache reset after rename action ([3e946f6e](https://github.com/logotip4ik/keycap/commit/3e946f6e))
+
+### 🏡 Chore
+
+- **release:** V3.15.11 ([e9c2cc58](https://github.com/logotip4ik/keycap/commit/e9c2cc58))
+- Store postgres volume in persistent folder ([cb8be021](https://github.com/logotip4ik/keycap/commit/cb8be021))
+- Use page visibilityChange as last chance to save note ([2db760af](https://github.com/logotip4ik/keycap/commit/2db760af))
+- Add cache for logo.webp ([1f9040e9](https://github.com/logotip4ik/keycap/commit/1f9040e9))
+- Move shared utils under shared/utils folder ([bc7528c2](https://github.com/logotip4ik/keycap/commit/bc7528c2))
+- Sort imports ([c8f39adb](https://github.com/logotip4ik/keycap/commit/c8f39adb))
+- Register .at polyfill earlier ([51090b9a](https://github.com/logotip4ik/keycap/commit/51090b9a))
+- Remove not needed aliases ([0ab3f1ac](https://github.com/logotip4ik/keycap/commit/0ab3f1ac))
+- Improve caching for assets and images ([b2c32b36](https://github.com/logotip4ik/keycap/commit/b2c32b36))
+- Remove not needed resource policy change ([8b017125](https://github.com/logotip4ik/keycap/commit/8b017125))
+- Remove not not needed changes for tsconfig ([1583166c](https://github.com/logotip4ik/keycap/commit/1583166c))
+- Revert require nuxtapp when calling getHydrationPromise ([82c84b5b](https://github.com/logotip4ik/keycap/commit/82c84b5b))
+- Update deps ([157bbe13](https://github.com/logotip4ik/keycap/commit/157bbe13))
+- Simplify floatingui type definition ([44cfee0f](https://github.com/logotip4ik/keycap/commit/44cfee0f))
+- Use ?worker&url syntax for getting only worker url ([e1c9225c](https://github.com/logotip4ik/keycap/commit/e1c9225c))
+- Add size limit to release ci ([c4b2ead8](https://github.com/logotip4ik/keycap/commit/c4b2ead8))
+- Also send state in cookie when errored ([a7563e20](https://github.com/logotip4ik/keycap/commit/a7563e20))
+- Move oauth validation function to oauth file ([76e7c03e](https://github.com/logotip4ik/keycap/commit/76e7c03e))
+
+### ✅ Tests
+
+- Cover keys ([a71fac42](https://github.com/logotip4ik/keycap/commit/a71fac42))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.15.11
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.10...v3.15.11)
