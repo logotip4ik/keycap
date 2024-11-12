@@ -256,6 +256,11 @@ export default defineNuxtConfig({
       stringify: true,
     },
 
+    plugins: [
+      ParseDurationTransformPlugin.vite(),
+      UnheadVite(),
+    ],
+
     build: {
       target: 'esnext',
 
@@ -403,6 +408,10 @@ export default defineNuxtConfig({
           from: resolve('./kysely/kysely.ts'),
           imports: ['getKysely'],
         },
+        {
+          from: '@drdgvhbh/postgres-error-codes',
+          imports: ['PG_UNIQUE_VIOLATION'],
+        },
       ],
 
       imports: [
@@ -410,11 +419,6 @@ export default defineNuxtConfig({
           from: 'parse-duration',
           name: 'default',
           as: parseDurationFunctionName,
-        },
-        {
-          from: '@drdgvhbh/postgres-error-codes',
-          name: '*',
-          as: 'PostgresErrorCode',
         },
         {
           from: 'tiny-invariant',
@@ -515,11 +519,6 @@ export default defineNuxtConfig({
       define: {
         'import.meta.vitest': false,
       },
-
-      plugins: [
-        ParseDurationTransformPlugin.vite(),
-        UnheadVite(),
-      ],
     },
 
     nitro: {
@@ -529,13 +528,9 @@ export default defineNuxtConfig({
         'import.meta.vitest': false,
       },
 
-      externals: {
-        external: ['crossws', 'croner', 'iron-webcrypto'],
-      },
-
       rollupConfig: {
         plugins: [
-          // NOTE: it results in smaller server size and faster builds. Neat ¯\_(ツ)_/¯
+          // `this.parse` in ParseDurationTransformPlugin can't parse typescript...
           RollupSucrase({
             disableESTransforms: true,
             transforms: [

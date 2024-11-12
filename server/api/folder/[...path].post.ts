@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
     .catch(async (err) => {
       if (
         err instanceof postgres.PostgresError
-        && err.code === PostgresErrorCode.PG_UNIQUE_VIOLATION
+        && err.code === PG_UNIQUE_VIOLATION
       ) {
         throw createError({
           status: 400,
