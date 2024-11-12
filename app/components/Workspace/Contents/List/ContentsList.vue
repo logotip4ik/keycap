@@ -285,6 +285,7 @@ if (import.meta.client) {
   });
 
   onBeforeUnmount(() => {
+    clearTimeout(pollingTimer);
     offVisibilityChange();
     abortControllerGet?.abort();
   });
