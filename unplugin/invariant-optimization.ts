@@ -1,32 +1,26 @@
 import type { SimpleCallExpression } from 'estree';
 
 import { pathToFileURL } from 'node:url';
-import { createContext, runInContext } from 'node:vm';
 
 import { walk } from 'estree-walker';
 import MagicString from 'magic-string';
-import parseDuration from 'parse-duration';
 import { parseQuery, parseURL } from 'ufo';
 import { createUnplugin } from 'unplugin';
 
-export const parseDurationFunctionName = 'parseDuration';
-const parseDurationFunctionCall = /parseDuration\(/;
+export const invariant = 'invariant';
+const invariantFunctionCall = /invariant\(/;
 
-export const ParseDurationTransformPlugin = createUnplugin(() => ({
-  name: 'ParseDurationTransformPlugin',
+export const InvariantOptimization = createUnplugin(() => ({
+  name: 'InvariantOptimization',
 
   transformInclude: isVueOrJs,
 
   enforce: 'post',
 
   transform(code, id) {
-    if (!parseDurationFunctionCall.test(code)) {
+    if (!invariantFunctionCall.test(code)) {
       return;
     }
-
-    const context = createContext({
-      parseDuration,
-    });
 
     const s = new MagicString(code);
 
@@ -38,18 +32,15 @@ export const ParseDurationTransformPlugin = createUnplugin(() => ({
 
         const node = _node as SimpleCallExpression;
 
-        if ((node.callee as any).name !== parseDurationFunctionName) {
+        if ((node.callee as any).name !== invariant) {
           return;
         }
 
-        const { start, end } = node as any as { start: number, end: number };
+        const [checkExpression_, ...comments] = node.arguments;
+        const checkExpression = checkExpression_ as any as { start: number, end: number };
+        const lastComment = comments.at(-1) as any as { start: number, end: number };
 
-        try {
-          const value = runInContext(code.slice(start, end), context);
-
-          s.overwrite(start, end, value.toString());
-        }
-        catch {}
+        s.overwrite(checkExpression.end, lastComment.end, '');
       },
     });
 

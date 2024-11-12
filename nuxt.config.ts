@@ -11,6 +11,7 @@ import { getCachedAssetHeaders, getHeaders } from './config/headers';
 import { tsConfig } from './config/typescript';
 import { breakpoints, sidebarsBreakpoints } from './constants/breakpoints';
 import { inlinableStylesRE } from './constants/build';
+import { InvariantOptimization } from './unplugin/invariant-optimization';
 import { parseDurationFunctionName, ParseDurationTransformPlugin } from './unplugin/parse-duration';
 
 export default defineNuxtConfig({
@@ -519,6 +520,10 @@ export default defineNuxtConfig({
       define: {
         'import.meta.vitest': false,
       },
+
+      plugins: [
+        InvariantOptimization.vite(),
+      ],
     },
 
     nitro: {
@@ -538,6 +543,7 @@ export default defineNuxtConfig({
             ],
           }),
           ParseDurationTransformPlugin.rollup(),
+          InvariantOptimization.rollup(),
         ],
       },
     },
