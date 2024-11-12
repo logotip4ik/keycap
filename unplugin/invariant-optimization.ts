@@ -32,11 +32,12 @@ export const InvariantOptimization = createUnplugin(() => ({
 
         const node = _node as SimpleCallExpression;
 
-        if ((node.callee as any).name !== invariant) {
+        if ((node.callee as any).name !== invariant || node.arguments.length < 2) {
           return;
         }
 
         const [checkExpression_, ...comments] = node.arguments;
+
         const checkExpression = checkExpression_ as any as { start: number, end: number };
         const lastComment = comments.at(-1) as any as { start: number, end: number };
 
