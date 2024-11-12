@@ -23,7 +23,7 @@ type Events = {
   'precreate:item'?: Partial<{ name: string }>
 };
 
-const emitter = import.meta.server ? proxy : /* #__PURE__ */ mitt<Events>();
+const emitter = import.meta.server ? proxy : mitt<Events>();
 
 if (import.meta.client) {
   const beseOn = emitter.on;

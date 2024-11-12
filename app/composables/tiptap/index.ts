@@ -29,7 +29,7 @@ import { EmojiPicker } from './extensions/emoji-picker';
 import { Link } from './extensions/link';
 
 const currentTiptap: ShallowRef<Editor | undefined> = import.meta.server ? proxy : shallowRef<Editor>();
-const isTyping = /* #__PURE__ */ ref(false); // this will be removed in server bundle
+const isTyping = /* @__PURE__ */ ref(false); // this will be removed in server bundle
 
 const debouncedClearTyping = debounce(() => isTyping.value = false, 500);
 

@@ -21,7 +21,7 @@ type RemoteFunction<T> = T extends (...args: infer TArguments) => infer TReturn
   : unknown;
 type RemoteObject<T> = { [P in keyof T]: RemoteFunction<T[P]> };
 
-const fuzzyWorker: ShallowRef<Prettify<RemoteObject<FuzzyWorker>> | undefined> = import.meta.server ? proxy : /* #__PURE__ */ shallowRef();
+const fuzzyWorker: ShallowRef<Prettify<RemoteObject<FuzzyWorker>> | undefined> = import.meta.server ? proxy : shallowRef();
 
 export function getFuzzyWorker(): typeof fuzzyWorker {
   return fuzzyWorker;

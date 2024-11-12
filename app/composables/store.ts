@@ -12,7 +12,7 @@ interface LRU<T> {
   clear: () => void
 }
 
-const detailsItem = import.meta.server ? proxy : /* #__PURE__ */ shallowRef();
+const detailsItem = import.meta.server ? proxy : shallowRef();
 export function useCurrentItemForDetails(): ShallowRef<FolderMinimal | NoteMinimal | undefined> {
   if (import.meta.server) {
     return shallowRef();
@@ -51,12 +51,12 @@ export function getUser() {
   return user;
 }
 
-const notesCache = import.meta.server ? proxy : /* #__PURE__ */ LRUCache(20);
+const notesCache = import.meta.server ? proxy : LRUCache(20);
 export function useNotesCache(): LRU<NoteWithContent> {
   return notesCache;
 }
 
-const foldersCache = import.meta.server ? proxy : /* #__PURE__ */ LRUCache(10);
+const foldersCache = import.meta.server ? proxy : LRUCache(10);
 export function useFoldersCache(): LRU<FolderWithContents> {
   return foldersCache;
 }
