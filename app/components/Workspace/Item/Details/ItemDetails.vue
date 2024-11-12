@@ -127,8 +127,6 @@ function toggleShareLink(isCreateRequest: boolean) {
     .finally(() => isLoadingItemDetails.value = false);
 }
 
-useTinykeys({ Escape: unsetCurrentDetailsItem });
-
 onBeforeMount(() => fetchDetails());
 </script>
 
@@ -139,6 +137,7 @@ onBeforeMount(() => fetchDetails());
       ref="itemDetailsComp"
       class="item-details"
       aria-labelledby="item-details-dialog-title"
+      @close="unsetCurrentDetailsItem"
     >
       <WorkspaceModalCloseButton @click="unsetCurrentDetailsItem" />
 

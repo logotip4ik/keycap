@@ -98,7 +98,6 @@ function fillResult() {
 watch(searchInput, debounce(handleSearchInput, 100));
 
 useTinykeys({
-  'Escape': props.onClose,
   'Control+n': () => changeSelectedResult(1),
   'Control+p': () => changeSelectedResult(-1),
 });
@@ -106,7 +105,7 @@ useTinykeys({
 
 <template>
   <WithBackdrop class="search__wrapper" @click.self="onClose">
-    <WorkspaceModal ref="searchComp" class="search">
+    <WorkspaceModal ref="searchComp" class="search" @close="onClose">
       <form class="search__form" @submit.prevent="openItem">
         <WorkspaceSearchInput
           ref="inputEl"

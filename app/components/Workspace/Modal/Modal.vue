@@ -1,6 +1,11 @@
 <script setup lang="ts">
+const props = defineProps<{
+  onClose: () => void
+}>();
+
 const modal = shallowRef<HTMLDivElement | null>(null);
 
+useTinykeys({ Escape: props.onClose });
 useFocusTrap(modal, { handleInitialFocusing: true });
 </script>
 

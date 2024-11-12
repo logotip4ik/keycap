@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ComponentPublicInstance } from 'vue';
 
-const props = defineProps<{
+defineProps<{
   onClose: () => void
 }>();
 
@@ -29,13 +29,11 @@ const keyRE = /Key/g;
 function humanizeShortcut(shortcut: string) {
   return shortcut.replace(modRE, useModKey()).replace(keyRE, '');
 }
-
-useTinykeys({ Escape: props.onClose });
 </script>
 
 <template>
   <WithBackdrop class="shortcuts__wrapper" @click.self="onClose">
-    <WorkspaceModal ref="shortcutsComp" class="shortcuts">
+    <WorkspaceModal ref="shortcutsComp" class="shortcuts" @close="onClose">
       <WorkspaceModalCloseButton @click="onClose" />
 
       <div class="shortcuts__item">
