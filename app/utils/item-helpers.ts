@@ -20,10 +20,10 @@ export function generateItemPath(item: ItemWithPath): string {
   return path;
 }
 
-export async function showItem(item: ItemWithPath, options?: NavigateToOptions) {
+export function showItem(item: ItemWithPath, options?: NavigateToOptions) {
   const itemRouteParams = generateItemPath(item);
 
-  await navigateTo(itemRouteParams, options);
+  return navigateTo(itemRouteParams, options);
 }
 
 export function preCreateItem(folderToAppend: FolderWithContents, initialValues?: Partial<Pick<NoteMinimal, 'name' | 'path'>>) {
@@ -45,7 +45,15 @@ export function getCurrentFolderPath(_route?: ReturnType<typeof useRoute>) {
     : '/';
 }
 
+/**
+ * @param {string} folderName
+ * @param {NoteMinimal} self - must be a vue's **reactive object**
+ * @param {FolderWithContents} parent - must be a vue's **reactive object**
+ */
 export async function createFolder(folderName: string, self: NoteMinimal, parent: FolderWithContents) {
+  invariant(isReactive(self), 'Self in createFolder must be reactive.');
+  invariant(isReactive(parent), 'Parent in createFolder must be reactive.');
+
   const currentFolderPath = getCurrentFolderPath();
   const newFolderPathName = encodeURIComponent(folderName.trim());
   const newFolderPath = currentFolderPath + newFolderPathName;
@@ -89,7 +97,14 @@ export async function createFolder(folderName: string, self: NoteMinimal, parent
   return newlyCreatedFolder;
 }
 
+/**
+ * @param {string} noteName
+ * @param {NoteMinimal} self - must be a vue's **reactive object**
+ * @param {FolderWithContents} parent - must be a vue's **reactive object**
+ */
 export async function createNote(noteName: string, self: NoteMinimal, parent: FolderWithContents) {
+  invariant(isReactive(self), 'Self in createNote must be reactive.');
+
   const currentFolderPath = getCurrentFolderPath();
   const newNotePathName = encodeURIComponent(noteName.trim());
   const newNotePath = currentFolderPath + newNotePathName;
@@ -131,7 +146,13 @@ export async function createNote(noteName: string, self: NoteMinimal, parent: Fo
   return newlyCreatedNote;
 }
 
+/**
+ * @param {string} newName
+ * @param {NoteMinimal | FolderMinimal} self - must be a vue's **reactive object**
+ */
 export async function renameItem<T extends NoteMinimal | FolderMinimal>(newName: string, self: T) {
+  invariant(isReactive(self), 'Self in renameItem must be reactive.');
+
   const newItem = { name: newName.trim() } as T;
 
   const currentFolderPath = getCurrentFolderPath();
@@ -187,7 +208,14 @@ export async function renameItem<T extends NoteMinimal | FolderMinimal>(newName:
   }
 }
 
+/**
+ * @param {NoteMinimal | FolderMinimal} self - must be a vue's **reactive object**
+ * @param {FolderWithContents} parent - must be a vue's **reactive object**
+ */
 export async function deleteItem(self: FolderMinimal | NoteMinimal, parent: FolderWithContents) {
+  invariant(isReactive(self), 'Self in deleteItem must be reactive.');
+  invariant(isReactive(parent), 'Parent in deleteItem must be reactive.');
+
   const currentFolderPath = getCurrentFolderPath();
   const itemPathName = encodeURIComponent(self.name);
   const itemPath = currentFolderPath + itemPathName;
