@@ -3,15 +3,17 @@ const props = defineProps<{
   item: NoteMinimal | FolderMinimal
 }>();
 
-const currentItemForDetails = useCurrentItemForDetails();
 const createToast = useToaster();
+const currentItemForDetails = useCurrentItemForDetails();
+const user = useRequiredUser();
 
 const details = shallowRef<ItemDetails>();
-const isLoadingItemDetails = ref(false);
 const itemDetailsComp = shallowRef<ComponentPublicInstance | null>(null);
-const itemDetailsEl = computed(() => itemDetailsComp.value?.$el as HTMLElement | undefined);
+const isLoadingItemDetails = ref(false);
 
-const path = getItemPathFromHref(props.item.path);
+const itemDetailsEl = computed(() => itemDetailsComp.value?.$el as HTMLElement | undefined);
+const itemApiPath = computed(() => props.item.path.substring(1 + user.value.username.length));
+
 const isFolder = checkIsFolder(props.item);
 
 type ItemDetails = Prettify<ItemMetadata & {
@@ -25,7 +27,7 @@ const rowsData = [
 
 async function fetchDetails() {
   const res = await $fetch<{ data: ItemDetails }>(
-    isFolder ? `/api/folder/${path}` : `/api/note/${path}`,
+    isFolder ? `/api/folder/${itemApiPath.value}` : `/api/note/${itemApiPath.value}`,
     { query: { details: true } },
   ).catch((error) => {
     sendError(error);
@@ -64,6 +66,7 @@ function transitionHeight(_el: Element, done: () => void) {
   const heightDifference = Math.abs(prevPopupHeight - newHeight);
 
   if (heightDifference < 2) {
+    done();
     return;
   }
 
@@ -101,9 +104,12 @@ async function copyShareLink() {
   const { protocol, host } = window.location;
   const { link } = details.value?.share;
 
-  await navigator.clipboard.writeText(`${protocol}//${host}/view/${link}`);
+  try {
+    await navigator.clipboard.writeText(`${protocol}//${host}/view/${link}`);
 
-  createToast('Copied share link.');
+    createToast('Copied share link.');
+  }
+  catch {};
 }
 
 const debouncedToggleShareLink = debounce(toggleShareLink, 250);
@@ -114,7 +120,7 @@ function toggleShareLink(isCreateRequest: boolean) {
 
   isLoadingItemDetails.value = true;
 
-  $fetch(`/api/share/note/${path}`, {
+  $fetch(`/api/share/note/${itemApiPath.value}`, {
     method: isCreateRequest ? 'POST' : 'DELETE',
   })
     .then(() => fetchDetails())
@@ -205,6 +211,8 @@ onBeforeMount(() => fetchDetails());
   max-width: $breakpoint-tablet;
 
   padding: 2rem 1.25rem 1.5rem;
+
+  overflow: hidden;
 
   @media (max-width: $breakpoint-tablet) {
     padding-block-start: 3rem;
