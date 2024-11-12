@@ -29,3 +29,28 @@ export function isWorkspaceUrl(url: URL, username: string) {
   return url.origin === window.location.origin
     && url.pathname.startsWith(`/@${username}`);
 }
+
+const lastBlankNoteNameRE = new RegExp(`/${BLANK_NOTE_NAME}$`);
+export function getRelativeItemPath(href: string, username: string) {
+  return href
+    .substring(2 + username.length + 1)
+    .replace(lastBlankNoteNameRE, '');
+}
+
+if (import.meta.vitest) {
+  const { describe, it, expect } = import.meta.vitest;
+
+  describe('getItemPathFromHref', () => {
+    it('should return correct path from item path', () => {
+      const username = 'help';
+      const notePath = '/@help/me';
+
+      expect(getRelativeItemPath(notePath, username)).toEqual('me');
+
+      // this probably shouldn't be allowed...
+      const folderPath = '/@help/me/_blank/_blank';
+
+      expect(getRelativeItemPath(folderPath, username)).toEqual('me/_blank');
+    });
+  });
+}

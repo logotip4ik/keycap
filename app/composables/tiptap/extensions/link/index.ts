@@ -5,7 +5,7 @@ import { Mark, mergeAttributes, PasteRule } from '@tiptap/core';
 
 import { autolink } from './helpers/autolink';
 import { clickHandler } from './helpers/clickHandler';
-import { find, isWorkspaceUrl } from './helpers/linker';
+import { find, getRelativeItemPath, isWorkspaceUrl } from './helpers/linker';
 
 export interface LinkOptions {
   username: string
@@ -160,12 +160,13 @@ function makePasteRules(config: { type: MarkType, username: string }) {
 
         const link = config.type.create(attrs);
 
-        if (prevSelectedText || isWorkspaceUrl(new URL(attrs.href), config.username)) {
+        const { username } = config;
+        if (prevSelectedText || isWorkspaceUrl(new URL(attrs.href), username)) {
           tr.replaceRangeWith(
             markStart,
             markEnd,
             state.schema.text(
-              prevSelectedText || getItemPathFromHref(attrs.href),
+              prevSelectedText || getRelativeItemPath(attrs.href, username),
               [link],
             ),
           );

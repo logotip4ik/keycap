@@ -14,6 +14,7 @@ export default defineVitestConfig({
       './server/**/*.ts',
       './shared/**/*.ts',
       './app/utils/*.ts',
+      './app/composables/tiptap/**/*.ts',
     ],
 
     exclude: [

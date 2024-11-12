@@ -45,22 +45,6 @@ export function getCurrentFolderPath(_route?: ReturnType<typeof useRoute>) {
     : '/';
 }
 
-export function getItemPathFromHref(href: string) {
-  const user = getUser();
-
-  const workspacePrefix = `/@${user.username}/`;
-  const innerPartStart = href.indexOf(workspacePrefix) + workspacePrefix.length;
-
-  const innerPart = href.substring(innerPartStart);
-  const parts = innerPart.split('/');
-
-  if (parts.at(-1) === BLANK_NOTE_NAME) {
-    parts.pop();
-  }
-
-  return parts.map(decodeURIComponent).join('/');
-}
-
 export async function createFolder(folderName: string, self: NoteMinimal, parent: FolderWithContents) {
   const currentFolderPath = getCurrentFolderPath();
   const newFolderPathName = encodeURIComponent(folderName.trim());
