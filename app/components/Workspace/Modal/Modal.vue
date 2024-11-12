@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const modal = ref<HTMLDivElement | null>(null);
+const modal = shallowRef<HTMLDivElement | null>(null);
 
 useFocusTrap(modal, { handleInitialFocusing: true });
 </script>
