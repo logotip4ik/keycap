@@ -4,6 +4,7 @@ import UnheadVite from '@unhead/addons/vite';
 import browserslistToEsbuild from 'browserslist-to-esbuild';
 import parseDuration from 'parse-duration';
 import { resolve } from 'pathe';
+import { viteMinify } from 'rollup-plugin-swc3';
 import { isCI, isDevelopment, isProduction, nodeENV } from 'std-env';
 
 import { prefixedConfig } from './config/build';
@@ -523,6 +524,17 @@ export default defineNuxtConfig({
 
       plugins: [
         InvariantOptimization.vite(),
+        viteMinify({
+          compress: true,
+          mangle: true,
+          toplevel: true,
+          keep_classnames: false,
+          keep_fnames: false,
+          module: true,
+          safari10: false,
+          sourceMap: !isCI,
+          ecma: '2020',
+        }),
       ],
     },
 

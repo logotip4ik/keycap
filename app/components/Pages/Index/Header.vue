@@ -110,7 +110,7 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
 
-  padding: 32.5svh 1rem 0;
+  padding: 32.5svh 1.75rem 0;
 
   &__text {
     color: hsla(var(--text-color-hsl), 0.9);
@@ -120,7 +120,7 @@ onMounted(() => {
     line-height: 1.2;
     letter-spacing: -1px;
 
-    max-width: 1200px;
+    max-width: 35ch;
 
     &__purple {
       font-weight: 600;

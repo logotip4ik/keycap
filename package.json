@@ -68,6 +68,7 @@
     "@sapphire/ratelimits": "^2.4.10",
     "@sinclair/typebox": "^0.33.21",
     "@superhuman/command-score": "patch:@superhuman/command-score@npm%3A0.5.0#~/.yarn/patches/@superhuman-command-score-npm-0.5.0-9db0ad6bf6.patch",
+    "@swc/core": "^1.9.2",
     "@tiptap/core": "^2.9.1",
     "@tiptap/extension-blockquote": "^2.9.1",
     "@tiptap/extension-bold": "^2.9.1",
@@ -109,6 +110,7 @@
     "nitropack": "^2.10.4",
     "postgres": "^3.4.5",
     "rad-event-listener": "^0.2.4",
+    "rollup-plugin-swc3": "^0.12.1",
     "sanitize-html": "^2.13.1",
     "scule": "^1.3.0",
     "tiny-invariant": "^1.3.3",
@@ -182,7 +184,7 @@
       "name": "js",
       "path": "./.output/public/_nuxt/*.js",
       "brotli": true,
-      "limit": "265kb"
+      "limit": "257kb"
     },
     {
       "name": "css",
@@ -194,7 +196,7 @@
       "name": "server",
       "path": "./.output/server/**/*",
       "brotli": false,
-      "limit": "10mb"
+      "limit": "9.5mb"
     }
   ]
 }
