@@ -113,11 +113,18 @@ export default defineNuxtConfig({
         from: 'perfect-debounce',
         imports: ['debounce'],
       },
-    ],
-
-    dirs: [
-      resolve('./constants'),
-      resolve('./app/composables/tiptap'),
+      {
+        from: resolve('./constants/index.ts'),
+        imports: ['BLANK_NOTE_NAME', 'ERROR_MESSAGES'],
+      },
+      {
+        from: resolve('./constants/breakpoints.ts'),
+        imports: ['breakpoints', 'sidebarsBreakpoints'],
+      },
+      {
+        from: resolve('./app/composables/tiptap/index.ts'),
+        imports: ['useTiptap', 'withTiptapEditor'],
+      },
     ],
 
     imports: [
