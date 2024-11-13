@@ -270,6 +270,7 @@ export default defineNuxtConfig({
 
       cssMinify: 'lightningcss',
       cssTarget: browserslistToEsbuild('>0.3%, not dead, Safari > 15, iOS > 15'),
+      reportCompressedSize: !isCI,
 
       rollupOptions: {
         treeshake: 'recommended',
@@ -404,6 +405,10 @@ export default defineNuxtConfig({
           fileName: isDevelopment ? '[dirname][name][extname]' : '[hash][extname]',
         }),
       ],
+    },
+
+    logging: {
+      compressedSizes: !isCI,
     },
 
     imports: {
