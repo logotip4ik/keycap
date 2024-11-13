@@ -50,6 +50,8 @@ export default defineNuxtConfig({
     watcher: 'parcel',
     headNext: true,
     componentIslands: 'local',
+    normalizeComponentNames: true,
+    checkOutdatedBuildInterval: false,
     defaults: {
       nuxtLink: {
         prefetch: true,
@@ -503,7 +505,7 @@ export default defineNuxtConfig({
     client: {
       installPrompt: false,
       registerPlugin: true,
-      periodicSyncForUpdates: parseDuration('1 hour', 'second'),
+      periodicSyncForUpdates: parseDuration('0.5 hours', 'second'),
     },
 
     injectManifest: {
