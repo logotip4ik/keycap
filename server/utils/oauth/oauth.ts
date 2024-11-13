@@ -36,7 +36,7 @@ export function sendOAuthRedirectIfNeeded({ event, query, config }: { event: H3E
   redirectUrl.searchParams.set('response_type', 'code');
   redirectUrl.searchParams.set('response_mode', 'query');
   redirectUrl.searchParams.set('scope', config.scope);
-  redirectUrl.searchParams.set('redirect_uri', `${defaultProtocol}${site}/api/oauth/${config.name}`);
+  redirectUrl.searchParams.set('redirect_uri', `${defaultProtocol}${site}/api/oauth/${config.name.toLowerCase()}`);
 
   if (config.options) {
     for (const key in config.options) {

@@ -9,7 +9,7 @@ export function getGithubOAuthConfig(): OAuthProviderConfig {
   // https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps#1-request-a-users-github-identity
   return {
     oauth: github,
-    name: 'github',
+    name: oAuthProvider.GitHub,
     scope: 'user:email',
     authorizeEndpoint: 'https://github.com/login/oauth/authorize',
     tokenEndpoint: 'https://github.com/login/oauth/access_token',
@@ -26,11 +26,12 @@ export function normalizeGitHubUser(githubUser: GitHubUserRes, params: Normaliza
   };
 }
 
-export async function getGitHubUserWithEvent(event: H3Event, config: OAuthProviderConfig) {
+export async function getGitHubUserWithEvent(event: H3Event) {
   const code = getQuery(event).code;
 
   invariant(code, '`code` wasn\'t found');
 
+  const config = getGithubOAuthConfig();
   const { public: { site } } = useRuntimeConfig();
 
   const auth = await $fetch<GitHubAuthRes>(config.tokenEndpoint, {

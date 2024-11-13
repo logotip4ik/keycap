@@ -9,7 +9,7 @@ export function getGoogleOAuthConfig(): OAuthProviderConfig {
   // https://developers.google.com/identity/protocols/oauth2/web-server#creatingclient
   return {
     oauth: google,
-    name: 'google',
+    name: oAuthProvider.Google,
     scope: 'email',
     authorizeEndpoint: 'https://accounts.google.com/o/oauth2/v2/auth',
     tokenEndpoint: 'https://oauth2.googleapis.com/token',
@@ -26,11 +26,12 @@ export function normalizeGoogleUser(googleUser: GoogleUserRes, params: Normaliza
   };
 }
 
-export async function getGoogleUserWithEvent(event: H3Event, config: OAuthProviderConfig) {
+export async function getGoogleUserWithEvent(event: H3Event) {
   const code = getQuery(event).code;
 
   invariant(code, '`code` wasn\'t found');
 
+  const config = getGoogleOAuthConfig();
   const { public: { site } } = useRuntimeConfig();
 
   const auth = await $fetch<GoogleAuthRes>(config.tokenEndpoint, {
