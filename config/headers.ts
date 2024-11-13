@@ -9,18 +9,18 @@ const turnstileEnabled = destr(process.env.FEATURE_TURNSTILE) === true;
 
 const ZEENK_SITE = process.env.NUXT_PUBLIC_ZEENK_SITE;
 
-export const CorsOrigin = process.env.NUXT_PUBLIC_SITE || '*';
-export const CorsMethods = ['GET', 'OPTIONS', 'PATCH', 'POST', 'DELETE'] satisfies Array<HTTPMethod>;
-export const CorsHeaders = ['Origin', 'Content-Type', 'Accept'];
+const CorsOrigin = process.env.NUXT_PUBLIC_SITE || '*';
+const CorsMethods = ['GET', 'OPTIONS', 'PATCH', 'POST', 'DELETE'] satisfies Array<HTTPMethod>;
+const CorsHeaders = ['Origin', 'Content-Type', 'Accept'];
 
-export const corsHeaders = {
+const corsHeaders = {
   'Access-Control-Allow-Origin': CorsOrigin,
   'Access-Control-Allow-Methods': CorsMethods.join(', '),
   'Access-Control-Allow-Headers': CorsHeaders.join(', '),
   'Access-Control-Max-Age': parseDuration('24 hours', 's')?.toString(),
 } satisfies HeaderObject;
 
-export const cspHeaders = {
+const cspHeaders = {
   'Content-Security-Policy': [
     'default-src \'self\'',
     `connect-src \'self\' wss://${ZEENK_SITE}`,
@@ -33,7 +33,7 @@ export const cspHeaders = {
 } satisfies HeaderObject;
 
 // basically helmet defaults with some customizations
-export const defaultHeaders = {
+const defaultHeaders = {
   'Cross-Origin-Embedder-Policy': 'require-corp',
   'Cross-Origin-Opener-Policy': 'same-origin',
   'Cross-Origin-Resource-Policy': 'cross-origin',
@@ -51,14 +51,14 @@ export const defaultHeaders = {
   ...(isCI ? cspHeaders : {}),
 } satisfies HeaderObject;
 
-export interface NoteViewHeaderOptions {
+interface NoteViewHeaderOptions {
   isr: number
   /** @default isr */
   staleWhileRevalidate?: number
 }
 type HeaderObject = Partial<Record<HTTPHeaderName, string | undefined>>;
-export type HeadersType = 'default' | 'assets' | 'api' | 'api-info' | 'webmanifest' | 'og' | 'fonts' | 'cachable-images';
-export type HeadersOptions = NoteViewHeaderOptions | unknown;
+type HeadersType = 'default' | 'assets' | 'api' | 'api-info' | 'webmanifest' | 'og' | 'fonts' | 'cachable-images';
+type HeadersOptions = NoteViewHeaderOptions | unknown;
 
 export function getHeaders(
   headersOptions?: HeadersType | { type: HeadersType, opts: HeadersOptions },
@@ -185,7 +185,7 @@ export function getCachedAssetHeaders(time: string) {
   return headers;
 }
 
-export interface CacheControlHeaderOptions {
+interface CacheControlHeaderOptions {
   private: boolean
   immutable?: boolean
   mustRevalidate?: boolean
@@ -195,7 +195,7 @@ export interface CacheControlHeaderOptions {
   staleWhileRevalidate?: number
   CDN?: boolean | 'vc' | 'cf'
 }
-export function makeCacheControlHeader(opts: CacheControlHeaderOptions) {
+function makeCacheControlHeader(opts: CacheControlHeaderOptions) {
   const values: Array<string> = [];
 
   values.push(opts.private ? 'private' : 'public');

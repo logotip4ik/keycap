@@ -1,4 +1,4 @@
-import type { Config } from '~/config/build';
+import type { Config } from '~~/config/build';
 
 export interface BuildInfo {
   time: number

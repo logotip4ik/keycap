@@ -13,7 +13,7 @@ export const LinkInputPlaceholder = {
   MADE_EMPTY: 'hit enter to remove link',
 };
 
-export interface MarkButton {
+interface MarkButton {
   icon: Component
   ariaLabel: string
   shortcut: string

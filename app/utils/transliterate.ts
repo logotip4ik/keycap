@@ -28,7 +28,7 @@ const enToUkLetters = Object.fromEntries(
   Object.entries(ukToEnLetters).map(([k, v]) => [v, k]),
 );
 
-export function transliterate(str: string, map: Record<string, string>) {
+function transliterate(str: string, map: Record<string, string>) {
   let newString = '';
 
   for (const char of str) {

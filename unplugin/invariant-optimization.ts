@@ -7,7 +7,7 @@ import MagicString from 'magic-string';
 import { parseQuery, parseURL } from 'ufo';
 import { createUnplugin } from 'unplugin';
 
-export const invariant = 'invariant';
+const invariant = 'invariant';
 const invariantFunctionCall = /invariant\(/;
 
 export const InvariantOptimization = createUnplugin(() => ({
