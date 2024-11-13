@@ -2,13 +2,11 @@
 const route = useRoute();
 const { site } = useRuntimeConfig().public;
 
-const event = useRequestEvent();
-
 const { data: note, error } = await useAsyncData('share', async () => {
+  const fetch = useRequestFetch();
+
   // TODO: why res in unknown ?
-  const res = await $fetch<{ data: SharedNote }>(`/api/share/${route.params.link}`, {
-    headers: event?.headers,
-  });
+  const res = await fetch<{ data: SharedNote }>(`/api/share/${route.params.link}`);
 
   return res.data;
 });
