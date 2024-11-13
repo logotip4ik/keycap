@@ -155,12 +155,6 @@ if (import.meta.client) {
   onBeforeUnmount(() => {
     offVisibilityChange();
     saveUnsavedChanges();
-
-    // If user navigates right after keypress, `isTyping` could be true on next
-    // render of NoteEditor component, and so content watcher will not update
-    // editor's content. This prevents such case by explicitly setting `isTyping`
-    // to false after unmounting
-    isTyping.value = false;
   });
 }
 </script>

@@ -107,6 +107,9 @@ export function useTiptap(opts?: { content?: string, editable?: boolean }) {
   ];
 
   onScopeDispose(() => {
+    invokeArrayFns(offs);
+    offs.length = 0;
+
     // @see https://github.com/ueberdosis/tiptap/pull/5772/files#diff-c79287bdd112b4264f53e38c24a0de06a0a7cf50db8134c29087ef8c44d94124
     // it really feels smoother
     // Cloning root node (and its children) to avoid content being lost by destroy
@@ -115,8 +118,11 @@ export function useTiptap(opts?: { content?: string, editable?: boolean }) {
 
     nodes?.parentNode?.replaceChild(newEl, nodes);
 
-    invokeArrayFns(offs);
-    offs.length = 0;
+    // If user navigates right after keypress, `isTyping` could be true on next
+    // render of NoteEditor component, and so content watcher will not update
+    // editor's content. This prevents such case by explicitly setting `isTyping`
+    // to false after unmounting
+    isTyping.value = false;
 
     editor.destroy();
   });
