@@ -1,5 +1,6 @@
 import { WorkspaceToolbox as Toolbox } from '#components';
 import { mockNuxtImport, registerEndpoint, renderSuspended } from '@nuxt/test-utils/runtime';
+import userEvent from '@testing-library/user-event';
 import { fireEvent, waitFor } from '@testing-library/vue';
 
 import proxy from 'unenv/runtime/mock/proxy';
@@ -49,7 +50,10 @@ async function getComponent() {
 
   await fireEvent.click(openButton);
 
-  return component;
+  return {
+    ...component,
+    user: userEvent.setup(),
+  };
 }
 
 describe('component Contents', () => {
@@ -81,5 +85,23 @@ describe('component Contents', () => {
       const list = component.getByRole('link', { name: `open note '${item}'` });
       expect(list).toBeTruthy();
     }
+  });
+
+  it('should receive focus when keyboard short cut is pressed', async () => {
+    const { user, ...component } = await getComponent();
+
+    document.body.focus();
+
+    expect(document.activeElement).toEqual(document.body);
+
+    await waitFor(async () => {
+      await user.keyboard('{Control>}{Shift>}x{/Shift}{/Control}');
+      await nextTick();
+      await nextTick();
+    });
+
+    const sidebar = component.getByTestId('sidebar');
+
+    expect(sidebar.matches(':focus')).toBe(true);
   });
 });

@@ -3897,6 +3897,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@testing-library/user-event@npm:^14.5.2":
+  version: 14.5.2
+  resolution: "@testing-library/user-event@npm:14.5.2"
+  peerDependencies:
+    "@testing-library/dom": ">=7.21.4"
+  checksum: 10/49821459d81c6bc435d97128d6386ca24f1e4b3ba8e46cb5a96fe3643efa6e002d88c1b02b7f2ec58da593e805c59b78d7fdf0db565c1f02ba782f63ee984040
+  languageName: node
+  linkType: hard
+
 "@testing-library/vue@npm:^8.1.0":
   version: 8.1.0
   resolution: "@testing-library/vue@npm:8.1.0"
@@ -9157,6 +9166,7 @@ __metadata:
     "@size-limit/file": "npm:^11.1.6"
     "@superhuman/command-score": "patch:@superhuman/command-score@npm%3A0.5.0#~/.yarn/patches/@superhuman-command-score-npm-0.5.0-9db0ad6bf6.patch"
     "@swc/core": "npm:^1.9.2"
+    "@testing-library/user-event": "npm:^14.5.2"
     "@testing-library/vue": "npm:^8.1.0"
     "@tiptap/core": "npm:^2.9.1"
     "@tiptap/extension-blockquote": "npm:^2.9.1"

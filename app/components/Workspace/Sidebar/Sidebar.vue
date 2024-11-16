@@ -106,6 +106,7 @@ onMounted(() => {
     v-bind="$attrs"
     ref="sidebar"
     class="sidebar"
+    data-testId="sidebar"
     :class="{ 'sidebar--hidden': state === 'hidden', 'sidebar--right': dir === 'right' }"
     :tabindex="state === 'hidden' ? undefined : 0"
     @mouseleave="state === 'visible' && (state = 'hidden')"
