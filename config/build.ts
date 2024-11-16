@@ -21,3 +21,10 @@ export const prefixedConfig = Object.fromEntries(
       ([k, v]) => [`import.meta.config.${k}`, JSON.stringify(v)],
     ),
 );
+
+export const inlinableStylesRE = [
+  /skeleton/i,
+  /entry/i,
+  /Sidebar/,
+  /ContentsHeader.vue/,
+];

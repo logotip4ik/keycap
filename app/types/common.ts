@@ -1,3 +1,5 @@
+import type { ValueOf } from 'type-fest';
+
 export const SearchAction = {
   New: 1,
   Refresh: 2,
@@ -9,7 +11,11 @@ export const SearchAction = {
   Workspace: 8,
 } as const;
 
+export type SearchActionValues = ValueOf<typeof SearchAction>;
+
 export const ItemState = {
   Creating: 1,
   Editing: 2,
 } as const;
+
+export type ItemStateValues = ValueOf<typeof ItemState>;

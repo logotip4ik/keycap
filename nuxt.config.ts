@@ -7,11 +7,10 @@ import { resolve } from 'pathe';
 import { viteMinify } from 'rollup-plugin-swc3';
 import { isCI, isDevelopment, isProduction, nodeENV } from 'std-env';
 
-import { prefixedConfig } from './config/build';
+import { breakpoints, sidebarsBreakpoints } from './config/breakpoints';
+import { inlinableStylesRE, prefixedConfig } from './config/build';
 import { getCachedAssetHeaders, getHeaders } from './config/headers';
 import { tsConfig } from './config/typescript';
-import { breakpoints, sidebarsBreakpoints } from './constants/breakpoints';
-import { inlinableStylesRE } from './constants/build';
 import { InvariantOptimization } from './unplugin/invariant-optimization';
 import { parseDurationFunctionName, ParseDurationTransformPlugin } from './unplugin/parse-duration';
 
@@ -114,11 +113,11 @@ export default defineNuxtConfig({
         imports: ['debounce'],
       },
       {
-        from: resolve('./constants/index.ts'),
+        from: resolve('./config/constants.ts'),
         imports: ['BLANK_NOTE_NAME', 'ERROR_MESSAGES'],
       },
       {
-        from: resolve('./constants/breakpoints.ts'),
+        from: resolve('./config/breakpoints.ts'),
         imports: ['breakpoints', 'sidebarsBreakpoints'],
       },
       {
