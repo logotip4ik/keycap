@@ -66,7 +66,10 @@ export const Link = Mark.create<LinkOptions>({
   },
 
   parseHTML() {
-    return [{ tag: 'a[href]:not([href *= "javascript:" i])' }];
+    return [
+      { tag: 'a[href^="http://"]' },
+      { tag: 'a[href^="https://"]' },
+    ];
   },
 
   renderHTML({ HTMLAttributes }) {
@@ -102,7 +105,6 @@ export const Link = Mark.create<LinkOptions>({
         },
 
       unsetLink:
-
         () => ({ chain }) => {
           return chain()
             .unsetMark(this.name, { extendEmptyMarkRange: true })

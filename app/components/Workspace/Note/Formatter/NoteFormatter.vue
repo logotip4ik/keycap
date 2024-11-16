@@ -72,19 +72,20 @@ function resetSelection() {
     .run();
 }
 
-function trySaveEditingLink() {
+function closeLinkEditing() {
   isEditingLink.value = false;
+  resetSelection();
+}
 
-  if (editingLink.value.startsWith('http')) {
-    props.editor.commands.setLink({
-      href: editingLink.value,
-    });
-  }
-  else {
+function saveEditingLink() {
+  if (!editingLink.value) {
     props.editor.commands.unsetLink();
   }
+  else {
+    props.editor.commands.setLink({ href: editingLink.value });
+  }
 
-  resetSelection();
+  closeLinkEditing();
 }
 
 function toggleHeading() {
@@ -348,14 +349,15 @@ useFocusTrap(formatterEl);
       </WithTooltip>
     </div>
 
-    <form v-else class="formatter__contents-wrapper formatter__contents-wrapper__form" @submit.prevent="trySaveEditingLink">
+    <form v-else class="formatter__contents-wrapper formatter__contents-wrapper__form" @submit.prevent="saveEditingLink">
       <input
         v-model="editingLink"
         type="url"
         class="formatter__input"
         :placeholder="linkInputPlaceholder"
         enterkeyhint="done"
-        @keydown.esc="trySaveEditingLink"
+        pattern="https?://.+?"
+        @keydown.esc.stop="closeLinkEditing"
       >
 
       <button class="formatter__button" type="submit">
