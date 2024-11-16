@@ -14,8 +14,9 @@ const linkInputPlaceholder = ref(LinkInputPlaceholder.INITIALLY_EMPTY);
 const isEditingLink = ref(false);
 const editingLink = ref('');
 
+const marks = makeMarks(props);
+
 const modKey = useModKey();
-const marks = makeMarks();
 const { setting: formatterPosition } = useSetting(settings.formatterPosition);
 
 let prevListItem: string | undefined;
@@ -333,11 +334,11 @@ useFocusTrap(formatterEl);
           <button
             :ref
             class="formatter__button"
-            :class="{ 'formatter__button--active': mark.isActive(editor) }"
+            :class="{ 'formatter__button--active': unref(mark.isActive) }"
             :aria-label="mark.ariaLabel"
-            :aria-pressed="mark.isActive(editor)"
+            :aria-pressed="unref(mark.isActive)"
             :aria-describedby="tooltipId"
-            @click="mark.onClick(editor)"
+            @click="mark.onClick"
           >
             <Component :is="mark.icon" />
           </button>

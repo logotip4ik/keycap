@@ -161,6 +161,6 @@ describe('component Contents', () => {
 
     const sidebar = component.getByTestId('sidebar');
 
-    expect(sidebar.matches(':focus')).toBe(true);
+    expect(sidebar).toHaveFocus();
   });
 });

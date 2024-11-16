@@ -2,7 +2,11 @@ import type { TSConfig } from 'pkg-types';
 
 export const tsConfig: TSConfig = {
   compilerOptions: {
-    types: ['vitest/importMeta'],
+    types: [
+      'vitest/importMeta',
+      'vitest/globals',
+      '@testing-library/jest-dom',
+    ],
     moduleDetection: 'force',
     isolatedModules: true, // disabled in nitro ?
     noUncheckedIndexedAccess: false,

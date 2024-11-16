@@ -8,7 +8,11 @@ export default defineVitestConfig({
 
     root: './',
 
-    setupFiles: ['./server/test/stub-nitro.ts'],
+    mockReset: true,
+    setupFiles: [
+      './server/test/stub-nitro.ts',
+      './tests/setup-dom-expects.ts',
+    ],
 
     includeSource: [
       './server/**/*.ts',
