@@ -17,7 +17,11 @@ function refreshAuth() {
   requestIdleCallback(async () => {
     const user = useUser();
 
-    const newUser = await $fetch('/api/users/me', { retry: 1 })
+    const newUser = await $fetch('/api/users/me', {
+      retry: 1,
+      responseType: 'json',
+      headers: { Accept: 'application/json' },
+    })
       .catch(NOOP);
 
     const isSameUser = newUser && newUser.data.username === user.value?.username;

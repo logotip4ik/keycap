@@ -32,7 +32,12 @@ async function login() {
 
   preloadRouteComponents('/@a');
 
-  $fetch('/api/auth/login', { method: 'POST', body: data })
+  $fetch('/api/auth/login', {
+    method: 'POST',
+    body: data,
+    responseType: 'json',
+    headers: { Accept: 'application/json' },
+  })
     .then((res) => user.value = res.data)
     .catch((error) => createToast(error.data.message || ERROR_MESSAGES.DEFAULT))
     .finally(() => isLoading.value = false);

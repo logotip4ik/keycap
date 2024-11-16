@@ -96,7 +96,9 @@ async function populateItemsCache() {
     resolve = r;
   });
 
-  const res = await fetch('/api/search/client');
+  const res = await fetch('/api/search/client', {
+    headers: { Accept: 'application/json' },
+  });
 
   const { data } = res.ok ? await res.json() as { data?: Array<FuzzyItem> } : { data: undefined };
 

@@ -20,7 +20,9 @@ if (import.meta.server) {
   const query = event.path.split('?')[1];
 
   if (query.includes('code=')) {
-    email.value = await useRequestFetch()(`/api/auth/code-info?${query}`)
+    email.value = await useRequestFetch()(`/api/auth/code-info?${query}`, {
+      responseType: 'json',
+    })
       .catch(async (error) => {
         await sendError(error, { msg: 'maybe verifcation code expired' });
       }) || undefined;
@@ -48,7 +50,10 @@ async function verifyEmail() {
 
   state.value = 'loading';
 
-  $fetch('/api/auth/verify-email', { method: 'POST', body: data })
+  $fetch('/api/auth/verify-email', {
+    method: 'POST',
+    body: data,
+  })
     .then(() => {
       state.value = 'success';
     })
@@ -77,7 +82,12 @@ function register() {
   // generic workspace path
   preloadRouteComponents('/@a');
 
-  $fetch('/api/auth/register', { method: 'POST', body: data })
+  $fetch('/api/auth/register', {
+    method: 'POST',
+    body: data,
+    responseType: 'json',
+    headers: { Accept: 'application/json' },
+  })
     .then((res) => user.value = res.data)
     .catch((error) => {
       state.value = 'error';

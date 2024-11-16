@@ -6,7 +6,9 @@ const { data: note, error } = await useAsyncData('share', async () => {
   const fetch = useRequestFetch();
 
   // TODO: why res in unknown ?
-  const res = await fetch<{ data: SharedNote }>(`/api/share/${route.params.link}`);
+  const res = await fetch<{ data: SharedNote }>(`/api/share/${route.params.link}`, {
+    responseType: 'json',
+  });
 
   return res.data;
 });

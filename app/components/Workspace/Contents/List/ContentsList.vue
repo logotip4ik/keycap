@@ -44,7 +44,11 @@ async function fetchFolder(): Promise<void> {
 
   let hydrationPromise = getHydrationPromise();
 
-  $fetch(`/api/folder${folderApiPath.value}`, { signal: abortControllerGet.signal })
+  $fetch(`/api/folder${folderApiPath.value}`, {
+    signal: abortControllerGet.signal,
+    responseType: 'json',
+    headers: { Accept: 'application/json' },
+  })
     .then(async (res) => {
       if (!res) {
         return;

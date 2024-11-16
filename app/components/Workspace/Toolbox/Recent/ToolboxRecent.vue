@@ -21,7 +21,10 @@ async function fetchRecent(retry: number = 0): Promise<void> {
 
   clearTimeout(pollingTimer);
 
-  $fetch('/api/recent')
+  $fetch('/api/recent', {
+    responseType: 'json',
+    headers: { Accept: 'application/json' },
+  })
     .then(async (response) => {
       const hydrationPromise = getHydrationPromise();
 
