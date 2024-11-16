@@ -1,6 +1,6 @@
 import type { KeyBindingMap, KeyBindingOptions } from 'tinykeys';
 
-import { tinykeys } from 'tinykeys';
+import { createKeybindingsHandler } from 'tinykeys';
 
 export function useTinykeys(shortcuts: KeyBindingMap, options?: KeyBindingOptions) {
   if (import.meta.server) {
@@ -8,5 +8,7 @@ export function useTinykeys(shortcuts: KeyBindingMap, options?: KeyBindingOption
   }
 
   // TODO: this will be broken if we change target
-  onBeforeUnmount(tinykeys(window, shortcuts, options));
+  onBeforeUnmount(
+    on(window, 'keydown', createKeybindingsHandler(shortcuts, options)),
+  );
 };
