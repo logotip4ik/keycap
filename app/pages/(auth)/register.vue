@@ -19,7 +19,12 @@ if (import.meta.server) {
   const event = useRequestEvent()!;
   const query = event.path.split('?')[1];
 
-  email.value = await useRequestFetch()(`/api/auth/code-info?${query}`).catch(NOOP) || undefined;
+  if (query.includes('code=')) {
+    email.value = await useRequestFetch()(`/api/auth/code-info?${query}`)
+      .catch(async (error) => {
+        await sendError(error, { msg: 'maybe verifcation code expired' });
+      }) || undefined;
+  }
 }
 
 const emailVerified = email.value != null;
