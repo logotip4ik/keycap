@@ -30,6 +30,13 @@ func main() {
   }
 
   http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+    utils.SetCors(w, keycapLink)
+
+    if r.Method == "OPTIONS" {
+      w.WriteHeader(http.StatusOK)
+      return
+    }
+
     if _, ok := r.Header["Sec-Websocket-Version"]; ok {
       zeenk.ServeWs(hub, w, r)
     } else {
