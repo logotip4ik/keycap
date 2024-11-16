@@ -12,6 +12,12 @@ export interface Logger {
   info: (event: H3Event, data: LoggerData | string) => Promise<void>
 }
 
+export const LogLevel = {
+  Info: 'info',
+  Warn: 'warn',
+  Error: 'error',
+} as const;
+
 let client: typeof $fetch | undefined;
 function getAxiomClient(axiom: ReturnType<typeof useRuntimeConfig>['axiom']) {
   if (client) {

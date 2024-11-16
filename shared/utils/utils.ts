@@ -6,9 +6,3 @@ export const stringifiedBigIntRE = /^(\d{1,19})$/;
 export const defaultProtocol = import.meta.prod ? 'https://' : 'http://';
 
 export { SocialAuth as oAuthProvider } from '~~/kysely/db/types';
-
-export const LogLevel = {
-  Info: 'info',
-  Warn: 'warn',
-  Error: 'error',
-} as const;

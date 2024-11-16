@@ -19,14 +19,19 @@ export function sendError(error: Error, properties?: Record<string, string | boo
     extend(payload.payload, properties);
   }
 
-  const fetch = useRequestFetch();
+  if (import.meta.server) {
+    const event = useRequestEvent()!;
 
-  return fetch('/_log', {
-    method: 'POST',
-    body: payload,
-    ignoreResponseError: true,
-    keepalive: true,
-  });
+    return logger.error(event, payload);
+  }
+  else {
+    return $fetch('/_log', {
+      method: 'POST',
+      body: payload,
+      ignoreResponseError: true,
+      keepalive: true,
+    });
+  }
 }
 
 export async function baseHandleError(error: Error | H3Error): Promise<boolean> {
