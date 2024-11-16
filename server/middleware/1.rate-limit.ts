@@ -51,7 +51,12 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  if (path === '/api/auth/register' || path === '/api/auth/login') {
+  if (
+    path === '/api/auth/register'
+    || path === '/api/auth/login'
+    || path === '/api/auth/verify-email'
+    || path === '/api/auth/code-info'
+  ) {
     for (let i = 0; i < 20; i++) {
       rateLimit.consume();
     }

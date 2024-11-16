@@ -14,17 +14,6 @@ function withUserOnly(event: H3Event) {
   return !!event.context.user;
 }
 
-async function getEmailFromCode(event: H3Event) {
-  const query = getQuery(event);
-
-  if (query.code) {
-    const registerStorage = useRegisterStorage();
-
-    const metadata = await registerStorage.getItem(`continue:${query.code}`) as { email?: string };
-    event.context.registerEmail = metadata?.email;
-  }
-}
-
 const rules: Array<Rule> = [
   { path: '/api/note', handler: withUserOnly },
   { path: '/api/folder', handler: withUserOnly },
@@ -32,7 +21,6 @@ const rules: Array<Rule> = [
   { path: '/api/recent', handler: withUserOnly },
   { path: '/api/users/me', handler: withUserOnly },
   { path: '/api/share/note', handler: withUserOnly },
-  { path: '/register', handler: getEmailFromCode },
   { path: '/_log', handler: withUserOnly },
 ];
 

@@ -13,13 +13,15 @@ const emailComp = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(n
 const usernameComp = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);
 const passwordComp = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);
 
-const email = useState(() => {
-  if (import.meta.server) {
-    const event = useRequestEvent()!;
+const email = useState<string | undefined>();
 
-    return event.context.registerEmail as string;
-  }
-});
+if (import.meta.server) {
+  const event = useRequestEvent()!;
+  const query = event.path.split('?')[1];
+
+  email.value = await useRequestFetch()(`/api/auth/code-info?${query}`).catch(NOOP) || undefined;
+}
+
 const emailVerified = email.value != null;
 const verificationCode = useRequestURL().searchParams.get('code') || undefined;
 
