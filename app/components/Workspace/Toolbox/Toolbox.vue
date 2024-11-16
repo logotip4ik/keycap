@@ -1,9 +1,13 @@
 <script setup lang="ts">
+import type { WorkspaceSidebar as Sidebar } from '#components';
+
 import { ToolboxState } from './config';
 
 const { shortcuts } = useAppConfig();
 const { state } = useToolboxSidebar();
 const { state: contentsState } = useContentsSidebar();
+
+const sidebar = shallowRef<InstanceType<typeof Sidebar> | null>(null);
 
 const toolboxState = computed<SidebarState>({
   get: () => state.value,
@@ -31,6 +35,10 @@ useTinykeys({
     toolboxState.value = toolboxState.value === 'hidden'
       ? 'visible'
       : 'hidden';
+
+    nextTick(() => {
+      sidebar.value?.el?.focus();
+    });
   },
 });
 
@@ -51,6 +59,7 @@ if (import.meta.client) {
 
 <template>
   <WorkspaceSidebar
+    ref="sidebar"
     name="toolbox"
     :injection-key="ToolboxState"
   >
