@@ -30,7 +30,7 @@ jobs:
           cache: yarn
 
       - name: Update package versions
-        run: yarn taze latest -swf
+        run: npx -y taze@latest latest -swf
 
       - name: Update resolution versions
         run: node ./scripts/update-resolution.mjs
