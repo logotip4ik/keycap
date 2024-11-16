@@ -1,7 +1,6 @@
-import type { Transaction } from '@tiptap/pm/state';
+import type { EditorEvents } from '@tiptap/core';
 import type { ShallowRef } from 'vue';
 
-import { Editor } from '@tiptap/core';
 import Blockquote from '@tiptap/extension-blockquote';
 import Bold from '@tiptap/extension-bold';
 import BulletList from '@tiptap/extension-bullet-list';
@@ -22,33 +21,35 @@ import TaskItem from '@tiptap/extension-task-item';
 import TaskList from '@tiptap/extension-task-list';
 import Text from '@tiptap/extension-text';
 
+import { Editor } from '@tiptap/vue-3';
+
 import proxy from 'unenv/runtime/mock/proxy';
 
 import { BubbleMenu } from './extensions/bubble-menu';
 import { EmojiPicker } from './extensions/emoji-picker';
 import { Link } from './extensions/link';
 
-const currentTiptap: ShallowRef<Editor | undefined> = import.meta.server ? proxy : shallowRef<Editor>();
-const isTyping = /* @__PURE__ */ ref(false); // this will be removed in server bundle
-
-const debouncedClearTyping = debounce(() => isTyping.value = false, 500);
-
-function initTiptap(opts?: { content?: string, editable?: boolean }) {
+function initTiptap(opts: {
+  content: string
+  editable: boolean
+  spellcheck: SettingsDefinitions[Settings['spellcheck']]['value']
+  onKeyDown: () => void
+  onUpdate: (props: EditorEvents['update']) => void
+}) {
   if (import.meta.server) {
     return;
   }
 
   return new Editor({
     autofocus: false,
-    editable: opts?.editable,
-    content: opts?.content,
+    editable: opts.editable,
+    content: opts.content,
+    onUpdate: opts.onUpdate,
     editorProps: {
       attributes: {
-        spellcheck: getSetting(settings.spellcheck).value === 'yes' ? 'true' : 'false',
+        spellcheck: opts.spellcheck === 'yes' ? 'true' : 'false',
       },
-      handleKeyDown() {
-        isTyping.value = !!debouncedClearTyping();
-      },
+      handleKeyDown: opts.onKeyDown,
     },
     extensions: [
       Document,
@@ -97,8 +98,53 @@ function initTiptap(opts?: { content?: string, editable?: boolean }) {
   });
 }
 
-export function useTiptap(opts?: { content?: string, editable?: boolean }) {
-  const editor = initTiptap(opts)!;
+const currentTiptap: ShallowRef<Editor | undefined> = import.meta.server ? proxy : shallowRef<Editor>();
+
+export function useTiptap(opts: {
+  content: MaybeRefOrGetter<string>
+  spellcheck: MaybeRefOrGetter<SettingsDefinitions[Settings['spellcheck']]['value']>
+  editable: MaybeRefOrGetter<boolean>
+  onUpdate: (props: EditorEvents['update']) => void
+}) {
+  const isTyping = ref(false);
+  const debouncedClearTyping = debounce(() => isTyping.value = false, 500);
+
+  const editor = initTiptap({
+    content: toValue(opts.content),
+    spellcheck: toValue(opts.spellcheck),
+    editable: toValue(opts.editable),
+    onUpdate: opts.onUpdate,
+    onKeyDown: () => {
+      isTyping.value = !!debouncedClearTyping();
+    },
+  })!;
+
+  watch(() => toValue(opts.content), (content) => {
+    if (isTyping.value) {
+      return;
+    }
+
+    const editorContent = editor.getHTML();
+
+    if (editorContent !== content) {
+      editor.commands.setContent(content || '');
+    }
+  });
+
+  watch(() => toValue(opts.editable), (editable) => {
+    editor.setOptions({ editable });
+  });
+
+  watch(() => toValue(opts.spellcheck), (spellcheck) => {
+    editor.setOptions({
+      editorProps: {
+        attributes: {
+          ...editor.options.editorProps.attributes,
+          spellcheck: spellcheck === 'yes' ? 'true' : 'false',
+        },
+      },
+    });
+  });
 
   currentTiptap.value = editor;
 
@@ -127,15 +173,7 @@ export function useTiptap(opts?: { content?: string, editable?: boolean }) {
     editor.destroy();
   });
 
-  return {
-    editor,
-    isTyping,
-    onUpdate: (cb: (e: { editor: Editor, transaction: Transaction }) => void) => {
-      editor.on('update', cb);
-
-      offs.push(() => editor.off('update', cb));
-    },
-  };
+  return { editor };
 }
 
 export function withTiptapEditor(cb: (editor: Editor) => void) {

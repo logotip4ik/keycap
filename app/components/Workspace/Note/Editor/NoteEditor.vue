@@ -24,37 +24,33 @@ const mitt = useMitt();
 const zeenk = useZeenk();
 const { isSmallScreen } = useDevice();
 const { setting: spellcheck } = useSetting(settings.spellcheck);
-const {
-  editor,
-  isTyping,
-  onUpdate: onContentUpdate,
-} = useTiptap({ content: content.value, editable: props.editable });
 
-watch(content, (content) => {
-  if (isTyping.value || !editor) {
-    return;
-  }
+let hasUnsavedChanges = false;
+const { editor } = useTiptap({
+  content,
+  spellcheck,
+  editable: () => props.editable,
+  onUpdate: ({ transaction }) => {
+    if (transaction.getMeta('websocket') === true) {
+      return;
+    }
 
-  const editorContent = editor.getHTML();
+    hasUnsavedChanges = true;
+    const updatePromise = updateContent();
 
-  if (editorContent !== content) {
-    editor.commands.setContent(content || '');
-  }
-});
+    if (transaction.getMeta('paste') === true) {
+      updatePromise.then(() => {
+        zeenk.send('update-note', { path: props.note.path });
+      });
 
-watch(() => props.editable, (editable) => {
-  editor.setOptions({ editable });
-});
+      return;
+    }
 
-watch(spellcheck, (spellcheck) => {
-  editor.setOptions({
-    editorProps: {
-      attributes: {
-        ...editor.options.editorProps.attributes,
-        spellcheck: spellcheck === 'yes' ? 'true' : 'false',
-      },
-    },
-  });
+    zeenk.send('update-note', {
+      path: props.note.path,
+      steps: transaction.steps.map((s) => s.toJSON()),
+    });
+  },
 });
 
 mitt.on('save:note', () => updateContent(true));
@@ -81,7 +77,6 @@ zeenk.on('update-note', ({ path, steps }) => {
   editor.view.dispatch(tr);
 });
 
-let hasUnsavedChanges = false;
 function updateContent(force?: boolean) {
   const content = editor.getHTML();
 
@@ -97,28 +92,6 @@ function saveUnsavedChanges() {
     updateContent(true);
   }
 }
-
-onContentUpdate(({ transaction }) => {
-  if (transaction.getMeta('websocket') === true) {
-    return;
-  }
-
-  hasUnsavedChanges = true;
-  const updatePromise = updateContent();
-
-  if (transaction.getMeta('paste') === true) {
-    updatePromise.then(() => {
-      zeenk.send('update-note', { path: props.note.path });
-    });
-
-    return;
-  }
-
-  zeenk.send('update-note', {
-    path: props.note.path,
-    steps: transaction.steps.map((s) => s.toJSON()),
-  });
-});
 
 useTinykeys({
   [shortcuts.edit]: (event) => {
