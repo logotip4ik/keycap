@@ -54,11 +54,13 @@ export async function createFolder(folderName: string, self: NoteMinimal, parent
   invariant(isReactive(self), 'Self in createFolder must be reactive.');
   invariant(isReactive(parent), 'Parent in createFolder must be reactive.');
 
+  const kfetch = useKFetch();
+
   const currentFolderPath = getCurrentFolderPath();
   const newFolderPathName = encodeURIComponent(folderName.trim());
   const newFolderPath = currentFolderPath + newFolderPathName;
 
-  const res = await $fetch<{ data: FolderWithContents }>(`/api/folder${newFolderPath}`, {
+  const res = await kfetch<{ data: FolderWithContents }>(`/api/folder${newFolderPath}`, {
     method: 'POST',
     body: { name: folderName, parentId: parent.id },
   });
@@ -105,11 +107,13 @@ export async function createFolder(folderName: string, self: NoteMinimal, parent
 export async function createNote(noteName: string, self: NoteMinimal, parent: FolderWithContents) {
   invariant(isReactive(self), 'Self in createNote must be reactive.');
 
+  const kfetch = useKFetch();
+
   const currentFolderPath = getCurrentFolderPath();
   const newNotePathName = encodeURIComponent(noteName.trim());
   const newNotePath = currentFolderPath + newNotePathName;
 
-  const res = await $fetch<{ data: NoteWithContent }>(`/api/note${newNotePath}`, {
+  const res = await kfetch<{ data: NoteWithContent }>(`/api/note${newNotePath}`, {
     method: 'POST',
     body: { name: noteName, parentId: parent.id },
   });
@@ -153,6 +157,8 @@ export async function createNote(noteName: string, self: NoteMinimal, parent: Fo
 export async function renameItem<T extends NoteMinimal | FolderMinimal>(newName: string, self: T) {
   invariant(isReactive(self), 'Self in renameItem must be reactive.');
 
+  const kfetch = useKFetch();
+
   const newItem = { name: newName.trim() } as T;
 
   const currentFolderPath = getCurrentFolderPath();
@@ -161,7 +167,7 @@ export async function renameItem<T extends NoteMinimal | FolderMinimal>(newName:
 
   const isFolder = checkIsFolder(self);
 
-  await $fetch(
+  await kfetch(
     isFolder ? `/api/folder${itemPath}` : `/api/note${itemPath}`,
     { method: 'PATCH', body: newItem },
   );
@@ -216,13 +222,15 @@ export async function deleteItem(self: FolderMinimal | NoteMinimal, parent: Fold
   invariant(isReactive(self), 'Self in deleteItem must be reactive.');
   invariant(isReactive(parent), 'Parent in deleteItem must be reactive.');
 
+  const kfetch = useKFetch();
+
   const currentFolderPath = getCurrentFolderPath();
   const itemPathName = encodeURIComponent(self.name);
   const itemPath = currentFolderPath + itemPathName;
 
   const isFolder = checkIsFolder(self);
 
-  const res = await $fetch.raw(
+  const res = await kfetch.raw(
     isFolder ? `/api/folder${itemPath}` : `/api/note${itemPath}`,
     { method: 'DELETE' },
   );
@@ -261,6 +269,8 @@ export async function deleteItem(self: FolderMinimal | NoteMinimal, parent: Fold
 
 // NOTE: Refactor all functions above to use this approach ?
 export async function preloadItem(self: FolderMinimal | NoteMinimal) {
+  const kfetch = useKFetch();
+
   const isFolder = checkIsFolder(self);
 
   const currentFolderPath = getCurrentFolderPath();
@@ -268,7 +278,7 @@ export async function preloadItem(self: FolderMinimal | NoteMinimal) {
   const pathName = encodeURIComponent(self.name);
   const path = pathPrefix + currentFolderPath + pathName;
 
-  const res = await $fetch<{ data: FolderWithContents | NoteWithContent }>(`/api/${path}`);
+  const res = await kfetch<{ data: FolderWithContents | NoteWithContent }>(`/api/${path}`);
 
   if (!res) {
     return;

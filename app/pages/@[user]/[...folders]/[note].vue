@@ -7,6 +7,7 @@ const offlineStorage = getOfflineStorage();
 const currentItemForDetails = useCurrentItemForDetails();
 const user = useRequiredUser();
 const mitt = useMitt();
+const kfetch = useKFetch();
 
 const note = shallowRef<NoteWithContent>();
 
@@ -33,7 +34,7 @@ async function fetchNote(): Promise<void> {
 
   let hydrationPromise = getHydrationPromise();
 
-  $fetch(`/api/note${noteApiPath.value}`, {
+  kfetch(`/api/note${noteApiPath.value}`, {
     signal: abortControllerGet.signal,
     responseType: 'json',
     headers: { Accept: 'application/json' },
@@ -110,7 +111,7 @@ async function forcedUpdateNote(content: string, shouldStopSave?: AbortSignal) {
       return;
     }
 
-    await $fetch(`/api/note${savePath}`, {
+    await kfetch(`/api/note${savePath}`, {
       method: 'PATCH',
       body: { content },
       retry: 2,

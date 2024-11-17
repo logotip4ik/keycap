@@ -11,7 +11,7 @@ const ZEENK_SITE = process.env.NUXT_PUBLIC_ZEENK_SITE;
 
 const CorsOrigin = process.env.NUXT_PUBLIC_SITE || '*';
 const CorsMethods = ['GET', 'OPTIONS', 'PATCH', 'POST', 'DELETE'] satisfies Array<HTTPMethod>;
-const CorsHeaders = ['Content-Type', 'Accept'];
+const CorsHeaders = ['Content-Type', 'Accept', 'x-keycap-protect'];
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': CorsOrigin,

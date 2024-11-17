@@ -2,6 +2,8 @@ import type { Emoji, EmojiMartData } from '@emoji-mart/data';
 
 import { commandScore as getScore } from '@superhuman/command-score';
 
+import { protectionHeaders } from '~~/shared/utils/utils';
+
 // must come before coincident
 import '@ungap/with-resolvers';
 
@@ -9,7 +11,6 @@ import '@ungap/with-resolvers';
 import coincident from 'coincident/worker';
 
 import type { FuzzyWorker } from '~/utils/fuzzy';
-
 import { commandActionsMin as commandsCache } from '~/utils/menu';
 import { transliterateFromEnglish, transliterateToEnglish } from '~/utils/transliterate';
 
@@ -97,7 +98,10 @@ async function populateItemsCache() {
   });
 
   const res = await fetch('/api/search/client', {
-    headers: { Accept: 'application/json' },
+    headers: {
+      Accept: 'application/json',
+      ...protectionHeaders,
+    },
   });
 
   const { data } = res.ok ? await res.json() as { data?: Array<FuzzyItem> } : { data: undefined };

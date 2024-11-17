@@ -14,13 +14,17 @@ function withUserOnly(event: H3Event) {
   return !!event.context.user;
 }
 
+function withUserOnlyAndProtectionHeader(event: H3Event) {
+  return event.headers.get(protectionHeaderKey) === protectionHeaderValue && withUserOnly(event);
+}
+
 const rules: Array<Rule> = [
-  { path: '/api/note', handler: withUserOnly },
-  { path: '/api/folder', handler: withUserOnly },
-  { path: '/api/search', handler: withUserOnly },
-  { path: '/api/recent', handler: withUserOnly },
-  { path: '/api/users/me', handler: withUserOnly },
-  { path: '/api/share/note', handler: withUserOnly },
+  { path: '/api/note', handler: withUserOnlyAndProtectionHeader },
+  { path: '/api/folder', handler: withUserOnlyAndProtectionHeader },
+  { path: '/api/search', handler: withUserOnlyAndProtectionHeader },
+  { path: '/api/recent', handler: withUserOnlyAndProtectionHeader },
+  { path: '/api/users/me', handler: withUserOnlyAndProtectionHeader },
+  { path: '/api/share/note', handler: withUserOnlyAndProtectionHeader },
   { path: '/_log', handler: withUserOnly },
 ];
 

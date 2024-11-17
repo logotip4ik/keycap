@@ -2,8 +2,6 @@
 import { useContentsState } from '../config';
 
 const route = useRoute();
-const { shortcuts } = useAppConfig();
-
 const isFallbackMode = useFallbackMode();
 const detailsItem = useCurrentItemForDetails();
 const foldersCache = useFoldersCache();
@@ -11,6 +9,8 @@ const offlineStorage = getOfflineStorage();
 const createToast = useToaster();
 const user = useRequiredUser();
 const fuzzyWorker = getFuzzyWorker();
+const kfetch = useKFetch();
+const { shortcuts } = useAppConfig();
 const { state: contentsState } = useContentsState();
 
 const mitt = useMitt();
@@ -44,7 +44,7 @@ async function fetchFolder(): Promise<void> {
 
   let hydrationPromise = getHydrationPromise();
 
-  $fetch(`/api/folder${folderApiPath.value}`, {
+  kfetch(`/api/folder${folderApiPath.value}`, {
     signal: abortControllerGet.signal,
     responseType: 'json',
     headers: { Accept: 'application/json' },

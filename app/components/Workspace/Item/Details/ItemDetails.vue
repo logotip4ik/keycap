@@ -3,6 +3,7 @@ const props = defineProps<{
   item: NoteMinimal | FolderMinimal
 }>();
 
+const kfetch = useKFetch();
 const createToast = useToaster();
 const currentItemForDetails = useCurrentItemForDetails();
 const user = useRequiredUser();
@@ -26,7 +27,7 @@ const rowsData = [
 ];
 
 async function fetchDetails() {
-  const res = await $fetch<{ data: ItemDetails }>(
+  const res = await kfetch<{ data: ItemDetails }>(
     isFolder ? `/api/folder/${itemApiPath.value}` : `/api/note/${itemApiPath.value}`,
     { query: { details: true } },
   ).catch((error) => {
@@ -120,7 +121,7 @@ function toggleShareLink(isCreateRequest: boolean) {
 
   isLoadingItemDetails.value = true;
 
-  $fetch(`/api/share/note/${itemApiPath.value}`, {
+  kfetch(`/api/share/note/${itemApiPath.value}`, {
     method: isCreateRequest ? 'POST' : 'DELETE',
   })
     .then(() => fetchDetails())

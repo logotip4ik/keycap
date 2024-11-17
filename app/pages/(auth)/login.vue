@@ -7,6 +7,7 @@ const oauthEnabled = import.meta.config.oauthEnabled;
 
 const user = useUser();
 const createToast = useToaster();
+const kfetch = useKFetch();
 
 const emailComp = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);
 const passwordComp = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);
@@ -32,7 +33,7 @@ async function login() {
 
   preloadRouteComponents('/@a');
 
-  $fetch('/api/auth/login', {
+  kfetch('/api/auth/login', {
     method: 'POST',
     body: data,
     responseType: 'json',

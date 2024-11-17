@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useToolboxState } from '../config';
 
+const kfetch = useKFetch();
 const createToast = useToaster();
 const { state } = useToolboxState();
 
@@ -21,7 +22,7 @@ async function fetchRecent(retry: number = 0): Promise<void> {
 
   clearTimeout(pollingTimer);
 
-  $fetch('/api/recent', {
+  kfetch('/api/recent', {
     responseType: 'json',
     headers: { Accept: 'application/json' },
   })

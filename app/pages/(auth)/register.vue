@@ -8,6 +8,7 @@ const oauthEnabled = import.meta.config.oauthEnabled;
 const router = useRouter();
 const createToast = useToaster();
 const user = useUser();
+const kfetch = useKFetch();
 
 const emailComp = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);
 const usernameComp = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);
@@ -22,6 +23,7 @@ if (import.meta.server) {
   if (query.includes('code=')) {
     email.value = await useRequestFetch()(`/api/auth/code-info?${query}`, {
       responseType: 'json',
+      headers: protectionHeaders,
     })
       .catch(async (error) => {
         await sendError(error, { msg: 'maybe verifcation code expired' });
@@ -50,7 +52,7 @@ async function verifyEmail() {
 
   state.value = 'loading';
 
-  $fetch('/api/auth/verify-email', {
+  kfetch('/api/auth/verify-email', {
     method: 'POST',
     body: data,
   })
@@ -82,7 +84,7 @@ function register() {
   // generic workspace path
   preloadRouteComponents('/@a');
 
-  $fetch('/api/auth/register', {
+  kfetch('/api/auth/register', {
     method: 'POST',
     body: data,
     responseType: 'json',

@@ -1,3 +1,5 @@
+import type { $Fetch } from 'nitropack';
+
 import '@ungap/with-resolvers';
 import '~/polyfills/array-at';
 
@@ -7,17 +9,27 @@ export default defineNuxtPlugin({
   parallel: true,
   env: { islands: false },
   setup() {
-    refreshAuth();
+    const kfetch = $fetch.create({
+      headers: protectionHeaders,
+    }) as $Fetch;
 
-    setInterval(refreshAuth, NEAR_HOUR);
+    refreshAuth(kfetch);
+
+    setInterval(refreshAuth, NEAR_HOUR, kfetch);
+
+    return {
+      provide: {
+        kfetch,
+      },
+    };
   },
 });
 
-function refreshAuth() {
+function refreshAuth(fetch: $Fetch) {
   requestIdleCallback(async () => {
     const user = useUser();
 
-    const newUser = await $fetch('/api/users/me', {
+    const newUser = await fetch('/api/users/me', {
       retry: 1,
       responseType: 'json',
       headers: { Accept: 'application/json' },
