@@ -464,6 +464,9 @@ export default defineNuxtConfig({
     },
 
     devStorage: {
+      cache: {
+        driver: 'memory',
+      },
       keycap: {
         driver: 'memory',
       },

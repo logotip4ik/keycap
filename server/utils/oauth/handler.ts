@@ -4,7 +4,6 @@ import type { GoogleUserRes } from '#server/types/server-google';
 
 import type { H3Event } from 'h3';
 
-import { destr } from 'destr';
 import { withQuery } from 'ufo';
 
 interface OAuthHandlerOptions<T extends GitHubUserRes | GoogleUserRes> {
@@ -40,9 +39,16 @@ export function defineOAuthHandler<T extends GitHubUserRes | GoogleUserRes>({
       return;
     }
 
-    await assertNoOAuthErrors(event, query);
+    const oAuthStateKey = await assertNoOAuthErrors(event, query);
 
-    const oAuthUser: T | void = destr(query.socialUser) || await getOAuthUser(event);
+    const oAuthUserCache = getOAuthUserCache();
+
+    let gotOAuthUserFromCache = true;
+    let oAuthUser: T | undefined = await oAuthUserCache.getItem<T>(oAuthStateKey) || undefined;
+    if (!oAuthUser) {
+      oAuthUser = await getOAuthUser(event) || undefined;
+      gotOAuthUserFromCache = false;
+    }
 
     const error = socialUserValidator.Errors(oAuthUser).First();
 
@@ -55,9 +61,15 @@ export function defineOAuthHandler<T extends GitHubUserRes | GoogleUserRes>({
       return sendRedirect(event, '/');
     }
 
-    invariant(oAuthUser, 'Validation is not ok?');
+    invariant(oAuthUser, 'Social user validation is not ok.');
 
-    if (!query.socialUser) {
+    await oAuthUserCache.setItem(
+      oAuthStateKey,
+      oAuthUser,
+      { ttl: parseDuration('5 minutes', 's') },
+    );
+
+    if (!gotOAuthUserFromCache) {
       const kysely = getKysely();
 
       user = await kysely
@@ -87,23 +99,24 @@ export function defineOAuthHandler<T extends GitHubUserRes | GoogleUserRes>({
       username = query.username?.toString().trim() || '';
 
       const isUsernameValid = usernameValidator.Check(username);
-      const isUsernameTaken = await checkIfUsernameTaken(event, username);
+      // short-circuiting to prevent checking not valid username
+      const isUsernameTaken = isUsernameValid && await checkIfUsernameTaken(event, username);
 
       if (!isUsernameValid || isUsernameTaken) {
         query.provider = config.name;
         query.username = undefined;
-        query.socialUser = oAuthUser;
         query.usernameTaken = isUsernameValid && isUsernameTaken ? username : undefined;
 
         // NOTE: this basically makes infinite loop
         // to force user to input correct username
         return sendRedirect(event, withQuery('/oauth/ask-username', query));
       }
-
-      await invalidateCacheEntry(
-        getUserCacheKey(username, UserCacheName.Taken),
-      );
     }
+
+    await Promise.all([
+      oAuthUserCache.removeItem(oAuthStateKey),
+      invalidateCacheEntry(getUserCacheKey(username, UserCacheName.Taken)),
+    ]);
 
     const normalizedOAuthUser = normalizeOAuthUser(oAuthUser, { username });
 

@@ -1,9 +1,19 @@
 import type { NormalizedSocialUser } from '#server/types/server';
+import type { GitHubUserRes } from '#server/types/server-github';
+import type { GoogleUserRes } from '#server/types/server-google';
 
 import type { CookieSerializeOptions } from 'cookie-es';
 import type { H3Event } from 'h3';
 import type { QueryObject } from 'ufo';
 
+import { prefixStorage } from 'unstorage';
+
+export function getOAuthUserCache() {
+  return prefixStorage<GoogleUserRes | GitHubUserRes>(
+    useStorage(),
+    'cache:oauth:user',
+  );
+}
 const stateSerializeOptions = {
   path: '/',
   httpOnly: true,
@@ -15,11 +25,7 @@ export function deleteOAuthStateCookie(event: H3Event) {
   deleteCookie(event, 'state', stateSerializeOptions);
 }
 
-export function sendOAuthRedirectIfNeeded({ event, query, config }: { event: H3Event, query?: QueryObject, config: OAuthProviderConfig }): boolean {
-  if (!query) {
-    query = getQuery(event)!;
-  }
-
+export function sendOAuthRedirectIfNeeded({ event, query, config }: { event: H3Event, query: QueryObject, config: OAuthProviderConfig }): boolean {
   if (query.error || (query.state && query.code)) {
     return false;
   }
@@ -76,6 +82,8 @@ export async function assertNoOAuthErrors(event: H3Event, query: QueryObject) {
 
     throw createError({ status: 422 });
   }
+
+  return stateCookie;
 }
 
 export async function createUserWithSocialAuth(socialAuth: NormalizedSocialUser) {

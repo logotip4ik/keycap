@@ -3,7 +3,7 @@ export default defineOAuthHandler({
   getOAuthUser: (event) => {
     return getGoogleUserWithEvent(event)
       .catch(async (err) => {
-        await logger.error(event, { err, msg: 'getGitHubUserWithEvent failed' });
+        await logger.error(event, { err, msg: 'getGoogleUserWithEvent failed' });
       });
   },
   normalizeOAuthUser: (user, overwrites) => {
