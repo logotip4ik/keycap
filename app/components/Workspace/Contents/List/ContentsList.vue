@@ -28,6 +28,7 @@ const POLLING_TIME = parseDuration('2.5 minutes')!;
 let pollingTimer: ReturnType<typeof setTimeout>;
 let abortControllerGet: AbortController | undefined;
 let lastRefetch: number | undefined;
+let lastFetchState: 'success' | 'error' = 'success';
 
 async function fetchFolder(): Promise<void> {
   if (import.meta.server) {
@@ -55,8 +56,10 @@ async function fetchFolder(): Promise<void> {
 
       const { data: fetchedFolder } = res as { data: FolderWithContents };
       const creatingItem = folder.value?.notes.find((item) => item.state === ItemState.Creating);
+      const fetchState = lastFetchState;
 
       isFallbackMode.value = false;
+      lastFetchState = 'success';
 
       foldersCache.set(fetchedFolder.path, fetchedFolder);
       offlineStorage.setItem(fetchedFolder.path, fetchedFolder);
@@ -70,11 +73,38 @@ async function fetchFolder(): Promise<void> {
         preCreateItem(fetchedFolder, creatingItem);
       }
 
+      if (fetchState === 'error') {
+        createToast('Succeeded fetching folder. Showing fresh one.');
+      }
+
       folder.value = fetchedFolder;
     })
-    .catch((e) => {
-      handleError(e);
-      throw e;
+    .catch(async (error) => {
+      const fetchState = lastFetchState;
+      lastFetchState = 'error';
+
+      if (await baseHandleError(error)) {
+        return;
+      }
+
+      if (folder.value && fetchState === 'success') {
+        createToast('Failed to fetch current folder, showing cached one.');
+        return;
+      }
+
+      const offlineFolder = await offlineStorage.getItem(folderPath.value);
+
+      if (!offlineFolder || typeof offlineFolder !== 'object') {
+        createToast(
+          `Sorry ⊙︿⊙ We couldn't find offline copy for folder: "${route.params.folders.at(-1)}".`,
+        );
+
+        await navigateTo(`/@${user.value.username}`);
+
+        return;
+      }
+
+      folder.value = offlineFolder as FolderWithContents;
     })
     .finally(() => {
       const multiplier = document.visibilityState === 'visible' ? 1 : 2;
@@ -113,31 +143,6 @@ function showMenu(target: HTMLElement, item: FolderMinimal | NoteMinimal) {
 
   menuOptions.item = item;
   menuOptions.target = target;
-}
-
-async function handleError(error: Error) {
-  if (await baseHandleError(error)) {
-    return;
-  }
-
-  if (folder.value) {
-    createToast('Failed to fetch current folder, showing cached one.');
-    return;
-  }
-
-  const offlineFolder = await offlineStorage.getItem(folderPath.value);
-
-  if (!offlineFolder || typeof offlineFolder !== 'object') {
-    createToast(
-      `Sorry ⊙︿⊙ We couldn't find offline copy for folder: "${route.params.folders.at(-1)}".`,
-    );
-
-    await navigateTo(`/@${user.value.username}`);
-
-    return;
-  }
-
-  folder.value = offlineFolder as FolderWithContents;
 }
 
 function handleCreateItem(initialValues?: Parameters<typeof preCreateItem>[1]) {

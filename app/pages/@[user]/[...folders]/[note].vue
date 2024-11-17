@@ -18,6 +18,7 @@ let pollingTimer: ReturnType<typeof setTimeout>;
 let loadingToast: ToastInstance | undefined;
 let abortControllerGet: AbortController | undefined;
 let lastRefetch: number | undefined;
+let lastFetchState: 'success' | 'error' = 'success';
 
 async function fetchNote(): Promise<void> {
   if (import.meta.server || !route.params.note || route.params.note === BLANK_NOTE_NAME) {
@@ -44,7 +45,10 @@ async function fetchNote(): Promise<void> {
       }
 
       const { data: fetchedNote } = res as { data: NoteWithContent };
+      const fetchState = lastFetchState;
+
       isFallbackMode.value = false;
+      lastFetchState = 'success';
 
       notesCache.set(fetchedNote.path, fetchedNote);
       offlineStorage.setItem(fetchedNote.path, fetchedNote);
@@ -54,10 +58,36 @@ async function fetchNote(): Promise<void> {
         hydrationPromise = undefined;
       }
 
+      if (fetchState === 'error') {
+        createToast('Succeeded fetching note. Showing fresh one.');
+      }
+
       note.value = fetchedNote;
     })
-    .catch((e) => {
-      handleError(e);
+    .catch(async (error) => {
+      const fetchState = lastFetchState;
+      lastFetchState = 'error';
+
+      if (await baseHandleError(error)) {
+        return;
+      }
+
+      if (note.value && fetchState === 'success') {
+        createToast('Failed to fetch current note, showing cached one.');
+        return;
+      }
+
+      const offlineNote = await offlineStorage.getItem(notePath.value);
+
+      if (!offlineNote || typeof offlineNote !== 'object') {
+        createToast(`Sorry ⊙︿⊙ We couldn't find offline note copy: "${route.params.note}".`);
+
+        await navigateTo(`/@${user.value.username}`);
+
+        return;
+      }
+
+      note.value = offlineNote as NoteWithContent;
     })
     .finally(() => {
       const multiplier = document.visibilityState === 'visible' ? 1 : 2;
@@ -166,29 +196,6 @@ function updateNote(content: string, force?: boolean) {
   }
 
   return throttledUpdateNote(content, abortThrottledSave.signal);
-}
-
-async function handleError(error: Error) {
-  if (await baseHandleError(error)) {
-    return;
-  }
-
-  if (note.value) {
-    createToast('Failed to fetch current note, showing cached one.');
-    return;
-  }
-
-  const offlineNote = await offlineStorage.getItem(notePath.value);
-
-  if (!offlineNote || typeof offlineNote !== 'object') {
-    createToast(`Sorry ⊙︿⊙ We couldn't find offline note copy: "${route.params.note}".`);
-
-    await navigateTo(`/@${user.value.username}`);
-
-    return;
-  }
-
-  note.value = offlineNote as NoteWithContent;
 }
 
 mitt.on('refresh:note', () => {
