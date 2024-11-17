@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useToolboxState } from '../config';
 
-const kfetch = useKFetch();
 const createToast = useToaster();
 const { state } = useToolboxState();
 

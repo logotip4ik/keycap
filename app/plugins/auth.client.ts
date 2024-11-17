@@ -1,5 +1,3 @@
-import type { $Fetch } from 'nitropack';
-
 import '@ungap/with-resolvers';
 import '~/polyfills/array-at';
 
@@ -9,13 +7,9 @@ export default defineNuxtPlugin({
   parallel: true,
   env: { islands: false },
   setup() {
-    const kfetch = $fetch.create({
-      headers: protectionHeaders,
-    }) as $Fetch;
+    refreshAuth();
 
-    refreshAuth(kfetch);
-
-    setInterval(refreshAuth, NEAR_HOUR, kfetch);
+    setInterval(refreshAuth, NEAR_HOUR);
 
     return {
       provide: {
@@ -25,11 +19,11 @@ export default defineNuxtPlugin({
   },
 });
 
-function refreshAuth(fetch: $Fetch) {
+function refreshAuth() {
   requestIdleCallback(async () => {
     const user = useUser();
 
-    const newUser = await fetch('/api/users/me', {
+    const newUser = await kfetch('/api/users/me', {
       retry: 1,
       responseType: 'json',
       headers: { Accept: 'application/json' },

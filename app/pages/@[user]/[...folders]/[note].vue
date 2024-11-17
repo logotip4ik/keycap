@@ -7,7 +7,6 @@ const offlineStorage = getOfflineStorage();
 const currentItemForDetails = useCurrentItemForDetails();
 const user = useRequiredUser();
 const mitt = useMitt();
-const kfetch = useKFetch();
 
 const note = shallowRef<NoteWithContent>();
 

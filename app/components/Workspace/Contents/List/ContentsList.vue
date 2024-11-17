@@ -9,7 +9,6 @@ const offlineStorage = getOfflineStorage();
 const createToast = useToaster();
 const user = useRequiredUser();
 const fuzzyWorker = getFuzzyWorker();
-const kfetch = useKFetch();
 const { shortcuts } = useAppConfig();
 const { state: contentsState } = useContentsState();
 

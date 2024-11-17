@@ -54,8 +54,6 @@ export async function createFolder(folderName: string, self: NoteMinimal, parent
   invariant(isReactive(self), 'Self in createFolder must be reactive.');
   invariant(isReactive(parent), 'Parent in createFolder must be reactive.');
 
-  const kfetch = useKFetch();
-
   const currentFolderPath = getCurrentFolderPath();
   const newFolderPathName = encodeURIComponent(folderName.trim());
   const newFolderPath = currentFolderPath + newFolderPathName;
@@ -107,8 +105,6 @@ export async function createFolder(folderName: string, self: NoteMinimal, parent
 export async function createNote(noteName: string, self: NoteMinimal, parent: FolderWithContents) {
   invariant(isReactive(self), 'Self in createNote must be reactive.');
 
-  const kfetch = useKFetch();
-
   const currentFolderPath = getCurrentFolderPath();
   const newNotePathName = encodeURIComponent(noteName.trim());
   const newNotePath = currentFolderPath + newNotePathName;
@@ -156,8 +152,6 @@ export async function createNote(noteName: string, self: NoteMinimal, parent: Fo
  */
 export async function renameItem<T extends NoteMinimal | FolderMinimal>(newName: string, self: T) {
   invariant(isReactive(self), 'Self in renameItem must be reactive.');
-
-  const kfetch = useKFetch();
 
   const newItem = { name: newName.trim() } as T;
 
@@ -222,8 +216,6 @@ export async function deleteItem(self: FolderMinimal | NoteMinimal, parent: Fold
   invariant(isReactive(self), 'Self in deleteItem must be reactive.');
   invariant(isReactive(parent), 'Parent in deleteItem must be reactive.');
 
-  const kfetch = useKFetch();
-
   const currentFolderPath = getCurrentFolderPath();
   const itemPathName = encodeURIComponent(self.name);
   const itemPath = currentFolderPath + itemPathName;
@@ -269,8 +261,6 @@ export async function deleteItem(self: FolderMinimal | NoteMinimal, parent: Fold
 
 // NOTE: Refactor all functions above to use this approach ?
 export async function preloadItem(self: FolderMinimal | NoteMinimal) {
-  const kfetch = useKFetch();
-
   const isFolder = checkIsFolder(self);
 
   const currentFolderPath = getCurrentFolderPath();

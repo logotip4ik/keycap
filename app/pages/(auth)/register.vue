@@ -8,7 +8,6 @@ const oauthEnabled = import.meta.config.oauthEnabled;
 const router = useRouter();
 const createToast = useToaster();
 const user = useUser();
-const kfetch = useKFetch();
 
 const emailComp = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);
 const usernameComp = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);
@@ -23,7 +22,6 @@ if (import.meta.server) {
   if (query.includes('code=')) {
     email.value = await useRequestFetch()(`/api/auth/code-info?${query}`, {
       responseType: 'json',
-      headers: protectionHeaders,
     })
       .catch(async (error) => {
         await sendError(error, { msg: 'maybe verifcation code expired' });

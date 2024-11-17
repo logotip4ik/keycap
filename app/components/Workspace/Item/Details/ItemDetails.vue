@@ -3,7 +3,6 @@ const props = defineProps<{
   item: NoteMinimal | FolderMinimal
 }>();
 
-const kfetch = useKFetch();
 const createToast = useToaster();
 const currentItemForDetails = useCurrentItemForDetails();
 const user = useRequiredUser();
