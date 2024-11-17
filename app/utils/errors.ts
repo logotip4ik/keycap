@@ -12,7 +12,7 @@ export function sendError(error: Error, properties?: Record<string, string | boo
       stack: error.stack,
       // @ts-expect-error in case status code exists send it
       statusCode: error.statusCode,
-    },
+    } as Record<string, string>,
   };
 
   if (properties) {
@@ -25,6 +25,8 @@ export function sendError(error: Error, properties?: Record<string, string | boo
     return logger.error(event, payload);
   }
   else {
+    payload.payload.clientPath = window.location.pathname;
+
     return $fetch('/_log', {
       method: 'POST',
       body: payload,
