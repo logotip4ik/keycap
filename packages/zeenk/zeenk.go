@@ -2,34 +2,30 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 
 	"keycapthenotes.com/zeenk/utils"
 	"keycapthenotes.com/zeenk/zeenk"
 )
 
-var (
-  GOENV = utils.GetEnv("GOENV", "PROD")
-
-  keycapUrl = utils.GetEnv("KEYCAP_URL", "localhost:3000")
-
-  port = utils.GetEnv("PORT", "8123")
-)
-
 func main() {
+  GOENV := utils.GetEnv("GOENV", "PROD");
+  PORT := ":" + utils.GetEnv("PORT", "8123")
+
   hub := zeenk.NewHub()
 
   go hub.Run()
 
   var keycapLink string;
   if GOENV == "PROD" {
-    keycapLink = "https://" + keycapUrl
+    keycapLink = "https://" + utils.GetEnv("KEYCAP_URL", "localhost:3000")
   } else {
-    keycapLink = "http://" + keycapUrl
+    keycapLink = "http://" + utils.GetEnv("KEYCAP_URL", "localhost:3000")
   }
 
-  http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+  router := http.NewServeMux()
+
+  router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
     utils.SetCors(w, keycapLink)
 
     if r.Method == "OPTIONS" {
@@ -40,23 +36,16 @@ func main() {
     if _, ok := r.Header["Sec-Websocket-Version"]; ok {
       zeenk.ServeWs(hub, w, r)
     } else {
-      http.Redirect(w, r, keycapLink, http.StatusPermanentRedirect);
+      http.Redirect(w, r, keycapLink, http.StatusTemporaryRedirect);
     }
   })
 
-  var addr string;
-
-  if GOENV == "PROD" {
-     addr = "0.0.0.0:" + port
-  } else {
-     addr = "127.0.0.1:" + port
+  srv := http.Server{
+    Addr: PORT,
+    Handler: router,
   }
 
-  fmt.Println("Listing on", addr)
-
-  err := http.ListenAndServe(addr, nil)
-  if err != nil {
-    log.Fatal(err)
-  }
+  fmt.Println("Listening on:", PORT)
+  srv.ListenAndServe()
 }
 
