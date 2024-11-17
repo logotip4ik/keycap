@@ -1,13 +1,18 @@
 <script setup lang="ts">
+import { getRequestIP } from 'h3';
+
 definePageMeta({
   middleware: ['redirect-dashboard'],
 });
 
 const { query } = useRoute();
-const event = useRequestEvent()!;
-const identifier = getRequestIP(event, { xForwardedFor: true });
 
 if (!query.code || !query.provider) {
+  const identifier = getRequestIP(
+    useRequestEvent()!,
+    { xForwardedFor: true },
+  );
+
   await sendError(new Error('not enough data for proceeding with username'), {
     nuxt: true,
     identifier,
@@ -26,6 +31,11 @@ const provider = isArray(query.provider)
 const normalizedProvider = oAuthProvider[provider as OAuthProvider || ''];
 
 if (!normalizedProvider) {
+  const identifier = getRequestIP(
+    useRequestEvent()!,
+    { xForwardedFor: true },
+  );
+
   await sendError(new Error('someone is messing with oauth'), {
     nuxt: true,
     identifier,
