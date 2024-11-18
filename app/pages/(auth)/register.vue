@@ -23,6 +23,7 @@ if (import.meta.server) {
     email.value = await useRequestFetch()(`/api/auth/code-info?${query}`, {
       responseType: 'json',
     })
+      .then((res) => res?.data.email)
       .catch(async (error) => {
         await sendError(error, { msg: 'maybe verifcation code expired' });
       }) || undefined;

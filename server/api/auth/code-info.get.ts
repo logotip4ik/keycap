@@ -9,5 +9,5 @@ export default defineEventHandler(async (event) => {
 
   const metadata = await registerStorage.getItem(`continue:${query.code}`) as { email?: string };
 
-  return metadata.email;
+  return metadata.email ? { data: metadata } : null;
 });
