@@ -15,6 +15,10 @@ function withUserOnly(event: H3Event) {
 }
 
 function withUserOnlyAndProtectionHeader(event: H3Event) {
+  if (import.meta.config.benchmarking) {
+    return withUserOnly(event);
+  }
+
   return event.headers.get(protectionHeaderKey) === protectionHeaderValue && withUserOnly(event);
 }
 
