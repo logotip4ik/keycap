@@ -1,6 +1,79 @@
 # Changelog
 
 
+## v3.15.13
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.12...v3.15.13)
+
+### 🔥 Performance
+
+- Use swc for client minification ([3489aaac](https://github.com/logotip4ik/keycap/commit/3489aaac))
+
+### 🩹 Fixes
+
+- Clear polling timeout on unmount ([e540a15e](https://github.com/logotip4ik/keycap/commit/e540a15e))
+- Check function arguments length before removing second argument ([7c3d5791](https://github.com/logotip4ik/keycap/commit/7c3d5791))
+- Manually handle initial sidebar focusing with keyboard shortcut ([58b6d463](https://github.com/logotip4ik/keycap/commit/58b6d463))
+- Reactivify editor ([18da23c8](https://github.com/logotip4ik/keycap/commit/18da23c8))
+- Add import for getRequestIp ([c1bda80a](https://github.com/logotip4ik/keycap/commit/c1bda80a))
+- Don't show duplicate failed fetch messages ([327c79e1](https://github.com/logotip4ik/keycap/commit/327c79e1))
+- **tests:** Move generateItemPath to separte unit with nuxt env ([97aa5233](https://github.com/logotip4ik/keycap/commit/97aa5233))
+
+### 💅 Refactors
+
+- Simplify item api computation ([1030d842](https://github.com/logotip4ik/keycap/commit/1030d842))
+- Move getRelativeItemPath to tiptap linker helper ([d02721db](https://github.com/logotip4ik/keycap/commit/d02721db))
+- Invariant and mark function which should receive reactive objects ([1479fd52](https://github.com/logotip4ik/keycap/commit/1479fd52))
+- Move Escape key handling to modal ([707a0a43](https://github.com/logotip4ik/keycap/commit/707a0a43))
+- Treeshake not used properties from postgres error codes and improve bundle size ([a6ed98e2](https://github.com/logotip4ik/keycap/commit/a6ed98e2))
+- Merge google and github oauth handlers ([bee366b3](https://github.com/logotip4ik/keycap/commit/bee366b3))
+- Remove not used deps and not needed exports ([6e961508](https://github.com/logotip4ik/keycap/commit/6e961508))
+- Move typing handling to tiptap composable ([cda24255](https://github.com/logotip4ik/keycap/commit/cda24255))
+- Move code metadata extraction from middleware to local server call ([5b991a4d](https://github.com/logotip4ik/keycap/commit/5b991a4d))
+- Use logger in nuxt during ssr ([27363450](https://github.com/logotip4ik/keycap/commit/27363450))
+- Hard link creation and improve focus+selection handling ([bb256de1](https://github.com/logotip4ik/keycap/commit/bb256de1))
+- Make computeds for mark.isActive property and add simple testing for editor ([7993a08b](https://github.com/logotip4ik/keycap/commit/7993a08b))
+- Do not store social user in url query ([42f90bf0](https://github.com/logotip4ik/keycap/commit/42f90bf0))
+
+### 🏡 Chore
+
+- **release:** V3.15.12 ([ef6443b6](https://github.com/logotip4ik/keycap/commit/ef6443b6))
+- Tiny replace optimizations ([6140e126](https://github.com/logotip4ik/keycap/commit/6140e126))
+- Use shallowRef for html reference ([45e92e4c](https://github.com/logotip4ik/keycap/commit/45e92e4c))
+- Remove not needed annotations ([906ada3b](https://github.com/logotip4ik/keycap/commit/906ada3b))
+- Remove bun dockerfile ([58a12aeb](https://github.com/logotip4ik/keycap/commit/58a12aeb))
+- Add vite plugin to remove invariant comment (second argument) ([2a81daae](https://github.com/logotip4ik/keycap/commit/2a81daae))
+- Adjust website updates check ([1f84de28](https://github.com/logotip4ik/keycap/commit/1f84de28))
+- Disable showing compressed chunk size in ci ([af86dc34](https://github.com/logotip4ik/keycap/commit/af86dc34))
+- Use direct import paths rather then resolving dir ([ec58db5a](https://github.com/logotip4ik/keycap/commit/ec58db5a))
+- Put server related assets into server folder ([1a8b7261](https://github.com/logotip4ik/keycap/commit/1a8b7261))
+- Use request fetch rather then event.headers to pass rate-limit invariant ([3af3ef07](https://github.com/logotip4ik/keycap/commit/3af3ef07))
+- Remove file name prefix ([b9fa3d37](https://github.com/logotip4ik/keycap/commit/b9fa3d37))
+- Improve editor transition ([fb5c0da2](https://github.com/logotip4ik/keycap/commit/fb5c0da2))
+- Uninstall taze and use it via npx in ci ([018673ce](https://github.com/logotip4ik/keycap/commit/018673ce))
+- Update deps ([d3614257](https://github.com/logotip4ik/keycap/commit/d3614257))
+- Resolve to single cross-spawn version ([6d61d018](https://github.com/logotip4ik/keycap/commit/6d61d018))
+- Merge constants and config folders ([bbaffb25](https://github.com/logotip4ik/keycap/commit/bbaffb25))
+- Better error `code-info` handling and extract info only with `code` query ([bb47c37f](https://github.com/logotip4ik/keycap/commit/bb47c37f))
+- Use nuxt page transition ([a89b87e3](https://github.com/logotip4ik/keycap/commit/a89b87e3))
+- Shave off some bytes from tinykeys ([754fed49](https://github.com/logotip4ik/keycap/commit/754fed49))
+- Remove data-testId from prod build ([bec6c2c2](https://github.com/logotip4ik/keycap/commit/bec6c2c2))
+- Add hints for resposeType ([5fe19308](https://github.com/logotip4ik/keycap/commit/5fe19308))
+- **zeenk:** Add primitive cors handling ([49196c93](https://github.com/logotip4ik/keycap/commit/49196c93))
+- Harden api further from csrf with custom header ([cce58480](https://github.com/logotip4ik/keycap/commit/cce58480))
+- Add clientPath in client errors ([53a1d906](https://github.com/logotip4ik/keycap/commit/53a1d906))
+- Remove need of composable for kfetch ([ae620d8d](https://github.com/logotip4ik/keycap/commit/ae620d8d))
+- **zeenk:** Improve general structure for main function ([415e476a](https://github.com/logotip4ik/keycap/commit/415e476a))
+- Bump size for server ([586c301b](https://github.com/logotip4ik/keycap/commit/586c301b))
+
+### ✅ Tests
+
+- Add testing for focus handling via keyboard shortcuts ([b0b9fa66](https://github.com/logotip4ik/keycap/commit/b0b9fa66))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.15.12
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.11...v3.15.12)
