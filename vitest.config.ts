@@ -5,10 +5,10 @@ export default defineVitestConfig({
   assetsInclude: ['**.html'],
   test: {
     isolate: false,
+    mockReset: true,
 
     root: './',
 
-    mockReset: true,
     setupFiles: [
       './server/test/stub-nitro.ts',
       './tests/setup-dom-expects.ts',
