@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.15.14
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.13...v3.15.14)
+
+### 🩹 Fixes
+
+- Correct default protocol for production ([cfab9509](https://github.com/logotip4ik/keycap/commit/cfab9509))
+
+### 🏡 Chore
+
+- **release:** V3.15.13 ([85e1fbcf](https://github.com/logotip4ik/keycap/commit/85e1fbcf))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.15.13
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.12...v3.15.13)
