@@ -16,11 +16,10 @@ const passwordComp = shallowRef<ComponentPublicInstance<HTMLInputElement> | null
 const email = useState<string | undefined>();
 
 if (import.meta.server) {
-  const event = useRequestEvent()!;
-  const query = event.path.split('?')[1];
+  const url = useRequestURL();
 
-  if (query.includes('code=')) {
-    email.value = await useRequestFetch()(`/api/auth/code-info?${query}`, {
+  if (url.searchParams.has('code')) {
+    email.value = await useRequestFetch()(`/api/auth/code-info?code=${url.searchParams.get('code')}`, {
       responseType: 'json',
     })
       .then((res) => res?.data.email)

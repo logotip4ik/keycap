@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
   const template = await getHtmlTemplate('ContinueOnboarding');
 
   const code = createKey(KeyPrefix.Register, 32);
-  const siteLink = `https://${site}`;
+  const siteLink = `${defaultProtocol}://${site}`;
   const templateVariables = {
     site: siteLink,
     year: new Date().getFullYear(),
