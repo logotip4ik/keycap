@@ -12,7 +12,7 @@ function openSearch() {
     aria-label="open quick search"
     @click="openSearch"
   >
-    <LazyIconSearchRounded class="toolbox__utils__item__btn__icon" />
+    <Icon path="search-rounded" class="toolbox__utils__item__btn__icon" />
 
     Open Search
   </button>

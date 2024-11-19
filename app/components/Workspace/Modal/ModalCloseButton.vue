@@ -1,6 +1,6 @@
 <template>
   <button class="modal__close-button">
-    <LazyIconCloseRounded v-once class="modal__close-button__icon" />
+    <Icon path="close-rounded" class="modal__close-button__icon" />
   </button>
 </template>
 

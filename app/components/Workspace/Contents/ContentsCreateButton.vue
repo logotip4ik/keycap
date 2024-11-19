@@ -8,7 +8,7 @@ function handleClick() {
 
 <template>
   <button class="contents__add" @click="handleClick">
-    <IconOutlineAdd class="contents__add__icon" />
+    <Icon path="outline-add" class="contents__add__icon" />
 
     Create new
   </button>

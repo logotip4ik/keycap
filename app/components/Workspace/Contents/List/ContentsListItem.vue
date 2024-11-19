@@ -64,8 +64,9 @@ function showMenu(event: Event) {
     @click="unpinIfNeeded"
     @contextmenu="showMenu"
   >
-    <LazyIconOutlineFolder
+    <Icon
       v-if="isFolder"
+      path="outline-folder"
       class="list__item__icon list__item__icon--folder"
     />
 
@@ -79,7 +80,7 @@ function showMenu(event: Event) {
       :aria-label="`show ${isFolder ? 'folder' : 'note'} actions`"
       @click.prevent.stop="linkComp && onShowMenu(linkComp.$el)"
     >
-      <LazyIconBaselineMoreVert v-once class="list__item__icon list__item__icon--edit" />
+      <Icon v-once path="baseline-more-vert" class="list__item__icon list__item__icon--edit" />
     </button>
   </NuxtLink>
 </template>

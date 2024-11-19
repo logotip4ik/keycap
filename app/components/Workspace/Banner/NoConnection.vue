@@ -1,7 +1,7 @@
 <template>
   <WithFadeTransition appear>
     <p role="note" class="no-connection-note">
-      <IconWarning /> No Connection
+      <Icon path="warning" /> No Connection
     </p>
   </WithFadeTransition>
 </template>

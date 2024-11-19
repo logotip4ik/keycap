@@ -1,16 +1,8 @@
 <script setup lang="ts">
-import { LazyIconGithub, LazyIconGoogle } from '#components';
-
 const props = defineProps<{
   provider: OAuthProvider
 }>();
 
-const providerIcons: Record<OAuthProvider, ReturnType<typeof defineAsyncComponent>> = {
-  GitHub: LazyIconGithub,
-  Google: LazyIconGoogle,
-};
-
-const providerIcon = computed(() => providerIcons[props.provider]);
 const lowercaseProvider = computed(() => props.provider.toLowerCase());
 </script>
 
@@ -20,7 +12,7 @@ const lowercaseProvider = computed(() => props.provider.toLowerCase());
     :class="[`form__button--${lowercaseProvider}`]"
     :href="`/api/oauth/${lowercaseProvider}`"
   >
-    <Component :is="providerIcon" />
+    <Icon :path="lowercaseProvider" />
 
     <slot />
   </a>

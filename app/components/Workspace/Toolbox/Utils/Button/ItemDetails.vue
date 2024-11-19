@@ -17,7 +17,7 @@ function openDetails() {
     :aria-expanded="!!detailsItem"
     @click="openDetails"
   >
-    <LazyIconInfoOutline class="toolbox__utils__item__btn__icon" />
+    <Icon path="information-sharp" class="toolbox__utils__item__btn__icon" />
 
     Show Item Details
   </button>

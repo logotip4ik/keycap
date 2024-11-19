@@ -1,21 +1,28 @@
 <script setup lang="ts">
-import { IconBeautifulShape, IconFastShape, IconStarShape } from '#components';
+import type { IconPath } from '#imports';
 
-const more = [
+interface Card {
+  icon: IconPath
+  title: string
+  content: string
+  gradient: [string, string]
+}
+
+const more: Array<Card> = [
   {
-    icon: IconStarShape,
+    icon: 'star-shape' satisfies IconPath,
     title: 'Crafted to be simple',
     content: 'Available on every device the moment you type. Create note or folder in 1 click. Public link to note with 2 clicks.',
     gradient: ['#DF99F7', '#FFDBB0'],
   },
   {
-    icon: IconFastShape,
+    icon: 'fast-shape' satisfies IconPath,
     title: 'Tuned to be fast',
     content: 'Avarage response time for api\'s are under 100ms. Built with Nitro and Nuxt.',
     gradient: ['#FFD9A0', '#FFF5F1'],
   },
   {
-    icon: IconBeautifulShape,
+    icon: 'beautiful-shape' satisfies IconPath,
     title: 'Designed to be beautiful',
     content: 'Every component is designed and crafted by hand with perfection in mind.',
     gradient: ['#A7B5FF', '#F3ACFF'],
@@ -32,7 +39,7 @@ const more = [
         class="main__more__list__item"
         :style="{ '--grad-start': item.gradient[0], '--grad-stop': item.gradient[1] }"
       >
-        <Component :is="item.icon" class="main__more__list__item__icon" />
+        <Icon :path="item.icon" class="main__more__list__item__icon" />
 
         <p class="main__more__list__item__title">
           {{ item.title }}

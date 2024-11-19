@@ -36,8 +36,9 @@ const crumbs = computed(() => {
       class="contents__header__name__crumb"
       style="margin: 0;"
     >
-      <LazyIconRoundChevronRight
+      <Icon
         v-if="i"
+        path="round-chevron-right"
         class="contents__header__name__crumb__icon"
       />
 

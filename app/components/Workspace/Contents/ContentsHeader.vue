@@ -7,7 +7,7 @@ import { ContentsState } from './config';
     <WorkspaceContentsHeaderCrumbs />
 
     <WorkspaceSidebarOpenButton :injection-key="ContentsState">
-      <LazyIconOutlineFolder />
+      <Icon path="outline-folder" />
     </WorkspaceSidebarOpenButton>
   </header>
 </template>

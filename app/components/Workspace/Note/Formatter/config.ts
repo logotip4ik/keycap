@@ -1,13 +1,7 @@
-import type { Editor } from '@tiptap/core';
+import type { IconPath } from '#imports';
 
+import type { Editor } from '@tiptap/core';
 import type { ShallowReactive } from 'vue';
-import {
-  LazyIconBaselineCode,
-  LazyIconBaselineFormatBold,
-  LazyIconBaselineFormatItalic,
-  LazyIconHighlighter,
-  LazyIconStrikeThrough,
-} from '#components';
 
 export const LinkInputPlaceholder = {
   INITIALLY_EMPTY: 'hit enter to show menu',
@@ -15,7 +9,7 @@ export const LinkInputPlaceholder = {
 };
 
 interface MarkButton {
-  icon: Component
+  icon: IconPath
   ariaLabel: string
   shortcut: string
   isActive: ComputedRef<boolean>
@@ -27,7 +21,7 @@ export function makeMarks(props: ShallowReactive<{ editor: Editor }>): Array<Mar
 
   return [
     {
-      icon: LazyIconBaselineFormatBold,
+      icon: 'baseline-format-bold',
       ariaLabel: 'toggle bold',
       shortcut: `${modKey}+b`,
       isActive: computed(() => props.editor.isActive('bold')),
@@ -35,7 +29,7 @@ export function makeMarks(props: ShallowReactive<{ editor: Editor }>): Array<Mar
     },
 
     {
-      icon: LazyIconBaselineFormatItalic,
+      icon: 'baseline-format-italic',
       ariaLabel: 'toggle italic',
       shortcut: `${modKey}+i`,
       isActive: computed(() => props.editor.isActive('italic')),
@@ -43,7 +37,7 @@ export function makeMarks(props: ShallowReactive<{ editor: Editor }>): Array<Mar
     },
 
     {
-      icon: LazyIconBaselineCode,
+      icon: 'baseline-code',
       shortcut: `${modKey}+e`,
       ariaLabel: 'toggle code',
       isActive: computed(() => props.editor.isActive('code')),
@@ -51,7 +45,7 @@ export function makeMarks(props: ShallowReactive<{ editor: Editor }>): Array<Mar
     },
 
     {
-      icon: LazyIconStrikeThrough,
+      icon: 'format-strikethrough',
       shortcut: `${modKey}+Shift+S`,
       ariaLabel: 'strike through',
       isActive: computed(() => props.editor.isActive('strike')),
@@ -59,7 +53,7 @@ export function makeMarks(props: ShallowReactive<{ editor: Editor }>): Array<Mar
     },
 
     {
-      icon: LazyIconHighlighter,
+      icon: 'format-ink-highlighter',
       shortcut: `${modKey}+Shift+H`,
       ariaLabel: 'highlight',
       isActive: computed(() => props.editor.isActive('highlight')),

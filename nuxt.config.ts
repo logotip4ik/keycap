@@ -217,6 +217,7 @@ export default defineNuxtConfig({
     '/og/**': { headers: getHeaders('og') },
     '/fonts/**': { headers: getHeaders('fonts') },
     '/images/**': { headers: getHeaders('cachable-images') },
+    '/svg/**': { headers: getHeaders('cachable-images') },
     '/site.webmanifest': { headers: getHeaders('webmanifest') },
 
     '/__sabayon_async_wait_fallback.js': { headers: getCachedAssetHeaders('5 minutes') },

@@ -16,6 +16,17 @@ const editingLink = ref('');
 
 const marks = makeMarks(props);
 
+const headingLevels = [1, 2, 3];
+const activeHeadingLevel = computed(() => {
+  for (const level of headingLevels) {
+    if (props.editor.isActive('heading', { level })) {
+      return level;
+    }
+  }
+
+  return 1;
+});
+
 const modKey = useModKey();
 const { setting: formatterPosition } = useSetting(settings.formatterPosition);
 
@@ -251,10 +262,7 @@ useFocusTrap(formatterEl);
             :aria-describedby="tooltipId"
             @click="toggleHeading"
           >
-            <LazyIconHeading1 v-if="editor.isActive('heading', { level: 1 })" />
-            <LazyIconHeading2 v-else-if="editor.isActive('heading', { level: 2 })" />
-            <LazyIconHeading3 v-else-if="editor.isActive('heading', { level: 3 })" />
-            <LazyIconHeading1 v-else />
+            <Icon :path="`heading-${activeHeadingLevel}`" />
           </button>
         </template>
 
@@ -278,7 +286,7 @@ useFocusTrap(formatterEl);
             :aria-describedby="tooltipId"
             @click="toggleListItem"
           >
-            <LazyIconList />
+            <Icon path="list" />
           </button>
         </template>
 
@@ -298,7 +306,7 @@ useFocusTrap(formatterEl);
             :aria-describedby="tooltipId"
             @click="editor.chain().focus().toggleBlockquote().run()"
           >
-            <LazyIconDoubleQuotesR />
+            <Icon path="double-quotes-r" />
           </button>
         </template>
 
@@ -318,7 +326,7 @@ useFocusTrap(formatterEl);
             :aria-describedby="tooltipId"
             @click="isEditingLink = !isEditingLink"
           >
-            <LazyIconBaselineLink />
+            <Icon path="baseline-link" />
           </button>
         </template>
 
@@ -340,7 +348,7 @@ useFocusTrap(formatterEl);
             :aria-describedby="tooltipId"
             @click="mark.onClick"
           >
-            <Component :is="mark.icon" />
+            <Icon :path="mark.icon" />
           </button>
         </template>
 
@@ -362,7 +370,7 @@ useFocusTrap(formatterEl);
       >
 
       <button class="formatter__button" type="submit">
-        <LazyIconBaselineCheck />
+        <Icon path="baseline-check" />
       </button>
     </form>
   </WithFadeTransition>

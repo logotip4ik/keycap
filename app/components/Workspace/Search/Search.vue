@@ -136,7 +136,7 @@ useTinykeys({
           class="search__form__cancel"
           @click="props.onClose"
         >
-          <LazyIconCloseRounded class="search__form__cancel__icon" />
+          <Icon path="close-rounded" class="search__form__cancel__icon" />
         </button>
       </form>
 
