@@ -44,7 +44,7 @@ describe('component NoteEditor', () => {
 
       expect(editor).toHaveFocus();
 
-      await user.keyboard('hello world');
+      await user.type(editor, 'hello world');
 
       expect(editor.textContent).toEqual('hello world');
     });
