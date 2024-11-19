@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v3.15.15
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.14...v3.15.15)
+
+### 🩹 Fixes
+
+- Do not return string as top level api response ([7aedbfe3](https://github.com/logotip4ik/keycap/commit/7aedbfe3))
+- Don't require custom header in benchmarking ([d25e2d2f](https://github.com/logotip4ik/keycap/commit/d25e2d2f))
+- Don't crash ssr page when there is no query ([a2611572](https://github.com/logotip4ik/keycap/commit/a2611572))
+
+### 🏡 Chore
+
+- **release:** V3.15.14 ([36abbd58](https://github.com/logotip4ik/keycap/commit/36abbd58))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.15.14
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.13...v3.15.14)
