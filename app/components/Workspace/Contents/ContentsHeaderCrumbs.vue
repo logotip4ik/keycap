@@ -3,12 +3,7 @@ const route = useRoute();
 
 interface Crumb { name: string, href: string }
 const crumbs = computed(() => {
-  const folders = (
-    isArray(route.params.folders)
-      ? route.params.folders
-      : [route.params.folders]
-  )
-    .filter(Boolean);
+  const folders = !route.params.folders ? [] : route.params.folders as Array<string>;
 
   const crumbs: Array<Crumb> = [{
     name: folders.length === 0 ? 'Workspace' : 'WS',
@@ -16,11 +11,9 @@ const crumbs = computed(() => {
   }];
 
   for (let i = 0; i < folders.length; i++) {
-    const base = crumbs[i].href.replace(`/${BLANK_NOTE_NAME}`, '');
-
     crumbs.push({
       name: folders[i],
-      href: `${base}/${encodeURIComponent(folders[i])}/${BLANK_NOTE_NAME}`,
+      href: `${crumbs[i].href}/${encodeURIComponent(folders[i])}`,
     });
   }
 
@@ -43,7 +36,7 @@ const crumbs = computed(() => {
       />
 
       <NuxtLink
-        :href="crumb.href"
+        :href="`${crumb.href}/${BLANK_NOTE_NAME}`"
         class="contents__header__name__crumb__link"
       >
         {{ crumb.name }}

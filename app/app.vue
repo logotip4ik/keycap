@@ -68,7 +68,7 @@ if (import.meta.dev) {
   <div style="display: contents;">
     <NuxtRouteAnnouncer />
 
-    <LazyToasts />
+    <Toasts />
 
     <NuxtPage />
   </div>
