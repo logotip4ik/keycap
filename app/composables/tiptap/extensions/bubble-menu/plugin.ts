@@ -104,7 +104,10 @@ export class BubbleMenuView {
       return;
     }
 
-    if (event?.relatedTarget && this.element.parentNode?.contains(event.relatedTarget as Node)) {
+    if (
+      (event?.relatedTarget && this.element.parentNode?.contains(event.relatedTarget as Node))
+      || (event?.relatedTarget === this.editor.view.dom)
+    ) {
       return;
     }
 
@@ -210,15 +213,15 @@ export class BubbleMenuView {
     const to = Math.max(...ranges.map((range) => range.$to.pos));
 
     if (isNodeSelection(this.editor.state.selection)) {
-      let node = this.editor.view.nodeDOM(from) as HTMLElement;
-
-      const nodeViewWrapper = node.dataset.nodeViewWrapper ? node : node.querySelector('[data-node-view-wrapper]');
-
-      if (nodeViewWrapper) {
-        node = nodeViewWrapper.firstChild as HTMLElement;
-      }
+      let node = this.editor.view.nodeDOM(from) as HTMLElement | undefined;
 
       if (node) {
+        const nodeViewWrapper = node.dataset.nodeViewWrapper ? node : node.querySelector('[data-node-view-wrapper]');
+
+        if (nodeViewWrapper) {
+          node = nodeViewWrapper.firstChild as HTMLElement;
+        }
+
         return node.getBoundingClientRect();
       }
     }
