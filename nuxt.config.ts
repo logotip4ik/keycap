@@ -537,6 +537,7 @@ export default defineNuxtConfig({
         'import.meta.vitest': false,
       },
 
+      build: { minify: false },
       plugins: [
         InvariantOptimization.vite(),
         viteMinify({

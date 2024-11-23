@@ -8,107 +8,40 @@ const currentItemForDetails = useCurrentItemForDetails();
 const user = useRequiredUser();
 const mitt = useMitt();
 
-const note = shallowRef<NoteWithContent>();
-
 const noteApiPath = computed(() => route.path.substring(2 + user.value.username.length));
 const notePath = computed(() => `/${user.value.username}${noteApiPath.value}`);
+const shouldSkipFetching = computed(() => !route.params.note || route.params.note === BLANK_NOTE_NAME);
 
-const POLLING_TIME = parseDuration('2 minutes')!;
-let pollingTimer: ReturnType<typeof setTimeout>;
-let loadingToast: ToastInstance | undefined;
-let abortControllerGet: AbortController | undefined;
-let lastRefetch: number | undefined;
-let lastFetchState: 'success' | 'error' = 'success';
+const { data: note, refresh } = useKFetch<NoteWithContent>(() => `/api/note${noteApiPath.value}`, {
+  deep: false,
+  skip: shouldSkipFetching,
+  pollingTime: parseDuration('2 minutes')!,
+  onResponse: (note) => {
+    notesCache.set(note.path, note);
+    offlineStorage.setItem(note.path, note);
+  },
+  getCached: ({ inErrorBlock }) => {
+    const cached = notesCache.get(notePath.value);
 
-async function fetchNote(): Promise<void> {
-  if (import.meta.server || !route.params.note || route.params.note === BLANK_NOTE_NAME) {
-    return;
-  }
+    if (cached) {
+      return cached;
+    }
 
-  clearTimeout(pollingTimer);
+    return offlineStorage.getItem(notePath.value)
+      .then(async (offlineCopy) => {
+        if (inErrorBlock && !offlineCopy) {
+          createToast(`Sorry ⊙︿⊙ We couldn't find offline note copy: "${route.params.note}".`);
 
-  abortControllerGet?.abort();
-  abortControllerGet = new AbortController();
+          await navigateTo(`/@${user.value.username}`);
 
-  lastRefetch = Date.now();
+          return;
+        }
 
-  let hydrationPromise = getHydrationPromise();
-
-  kfetch(`/api/note${noteApiPath.value}`, {
-    signal: abortControllerGet.signal,
-    responseType: 'json',
-    headers: { Accept: 'application/json' },
-  })
-    .then(async (res) => {
-      if (!res) {
-        return;
-      }
-
-      const { data: fetchedNote } = res as { data: NoteWithContent };
-      const fetchState = lastFetchState;
-
-      isFallbackMode.value = false;
-      lastFetchState = 'success';
-
-      notesCache.set(fetchedNote.path, fetchedNote);
-      offlineStorage.setItem(fetchedNote.path, fetchedNote);
-
-      if (hydrationPromise) {
-        await hydrationPromise;
-        hydrationPromise = undefined;
-      }
-
-      if (fetchState === 'error') {
-        createToast('Succeeded fetching note. Showing fresh one.');
-      }
-
-      note.value = fetchedNote;
-    })
-    .catch(async (error) => {
-      const fetchState = lastFetchState;
-      lastFetchState = 'error';
-
-      if (await baseHandleError(error)) {
-        return;
-      }
-
-      if (note.value && fetchState === 'success') {
-        createToast('Failed to fetch current note, showing cached one.');
-        return;
-      }
-
-      const offlineNote = await offlineStorage.getItem(notePath.value);
-
-      if (!offlineNote || typeof offlineNote !== 'object') {
-        createToast(`Sorry ⊙︿⊙ We couldn't find offline note copy: "${route.params.note}".`);
-
-        await navigateTo(`/@${user.value.username}`);
-
-        return;
-      }
-
-      note.value = offlineNote as NoteWithContent;
-    })
-    .finally(() => {
-      const multiplier = document.visibilityState === 'visible' ? 1 : 2;
-      pollingTimer = setTimeout(fetchNote, POLLING_TIME * multiplier);
-
-      loadingToast?.remove();
-    });
-
-  if (note.value) {
-    return;
-  }
-
-  const cachedNote = notesCache.get(notePath.value) || await offlineStorage.getItem(notePath.value);
-
-  if (hydrationPromise) {
-    await hydrationPromise;
-    hydrationPromise = undefined;
-  }
-
-  loadingToast = createToast(
-    cachedNote
+        return offlineCopy as NoteWithContent;
+      });
+  },
+  getLoadingToast: ({ hasCachedItem }) => createToast(
+    hasCachedItem
       ? 'This is cached note, wait for new one to arrive...'
       : 'This shouldn\'t take a long time...',
     {
@@ -116,10 +49,10 @@ async function fetchNote(): Promise<void> {
       type: 'loading',
       duration: Infinity,
     },
-  );
-
-  note.value = cachedNote;
-}
+  ),
+  getSuccessToast: () => createToast('Succeeded fetching note. Showing fresh one.'),
+  getErrorToast: () => createToast('Failed to fetch current note, showing cached one.'),
+});
 
 let retryInterval: ReturnType<typeof setInterval> | undefined;
 let failedSaveToast: ToastInstance | undefined;
@@ -198,9 +131,7 @@ function updateNote(content: string, force?: boolean) {
   return throttledUpdateNote(content, abortThrottledSave.signal);
 }
 
-mitt.on('refresh:note', () => {
-  fetchNote();
-});
+mitt.on('refresh:note', () => refresh());
 
 mitt.on('details:show:note', () => {
   if (note.value) {
@@ -209,30 +140,10 @@ mitt.on('details:show:note', () => {
 });
 
 if (import.meta.client) {
-  fetchNote();
-
-  const offVisibility = on(document, 'visibilitychange', () => {
-    const timeDiff = Date.now() - (lastRefetch || 0);
-
-    if (document.visibilityState === 'visible' && timeDiff > parseDuration('10 seconds')!) {
-      fetchNote();
-    }
-  });
-
-  // MDN: `event.persisted` indicates if the document is loading from a cache
-  const offPageShow = on(window, 'pageshow', (event) => event.persisted && fetchNote());
-
   onBeforeUnmount(() => {
-    offPageShow();
-    offVisibility();
-    clearTimeout(pollingTimer);
     clearInterval(retryInterval);
-    abortControllerGet?.abort();
-    loadingToast?.remove();
     failedSaveToast?.remove();
 
-    abortControllerGet = undefined;
-    loadingToast = undefined;
     failedSaveToast = undefined;
   });
 };
@@ -249,7 +160,7 @@ if (import.meta.client) {
       :note
       :editable="!isFallbackMode && !!note"
       @update="updateNote"
-      @refresh="fetchNote"
+      @refresh="refresh"
     />
 
     <WorkspaceNoteEditorSkeleton

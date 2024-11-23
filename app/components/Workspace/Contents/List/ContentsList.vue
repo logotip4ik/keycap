@@ -17,113 +17,53 @@ const zeenk = useZeenk();
 
 const folderApiPath = computed(() => getCurrentFolderPath(route).slice(0, -1));
 const folderPath = computed(() => `/${user.value.username}${folderApiPath.value}`);
+const shouldSkipFetching = computed(() => contentsState.value === 'hidden');
 
-const folder = ref<FolderWithContents>();
 const menuOptions = shallowReactive({
   item: undefined as FolderMinimal | NoteMinimal | undefined,
   target: undefined as HTMLElement | undefined,
 });
 
-const POLLING_TIME = parseDuration('2.5 minutes')!;
-let pollingTimer: ReturnType<typeof setTimeout>;
-let abortControllerGet: AbortController | undefined;
-let lastRefetch: number | undefined;
-let lastFetchState: 'success' | 'error' = 'success';
+const { data: folder, refresh } = useKFetch<FolderWithContents>(() => `/api/folder${folderApiPath.value}`, {
+  deep: true,
+  skip: shouldSkipFetching,
+  watch: [folderApiPath, contentsState],
+  pollingTime: parseDuration('2.5 minutes')!,
+  getCached: ({ inErrorBlock }) => {
+    const cached = foldersCache.get(folderPath.value);
 
-async function fetchFolder(): Promise<void> {
-  if (import.meta.server) {
-    return;
-  }
+    if (cached) {
+      return cached;
+    }
 
-  clearTimeout(pollingTimer);
+    return offlineStorage.getItem(folderPath.value)
+      .then(async (offlineCopy) => {
+        if (inErrorBlock && !offlineCopy) {
+          createToast(
+            `Sorry ⊙︿⊙ We couldn't find offline copy for folder: "${route.params.folders.at(-1)}".`,
+          );
 
-  abortControllerGet?.abort();
-  abortControllerGet = new AbortController();
+          await navigateTo(`/@${user.value.username}`);
 
-  lastRefetch = Date.now();
+          return;
+        }
 
-  let hydrationPromise = getHydrationPromise();
+        return offlineCopy as FolderWithContents;
+      });
+  },
+  onResponse: (fetchedFolder) => {
+    foldersCache.set(fetchedFolder.path, fetchedFolder);
+    offlineStorage.setItem(fetchedFolder.path, fetchedFolder);
 
-  kfetch(`/api/folder${folderApiPath.value}`, {
-    signal: abortControllerGet.signal,
-    responseType: 'json',
-    headers: { Accept: 'application/json' },
-  })
-    .then(async (res) => {
-      if (!res) {
-        return;
-      }
+    const creatingItem = folder.value?.notes.find((item) => item.state === ItemState.Creating);
 
-      const { data: fetchedFolder } = res as { data: FolderWithContents };
-      const creatingItem = folder.value?.notes.find((item) => item.state === ItemState.Creating);
-      const fetchState = lastFetchState;
-
-      isFallbackMode.value = false;
-      lastFetchState = 'success';
-
-      foldersCache.set(fetchedFolder.path, fetchedFolder);
-      offlineStorage.setItem(fetchedFolder.path, fetchedFolder);
-
-      if (hydrationPromise) {
-        await hydrationPromise;
-        hydrationPromise = undefined;
-      }
-
-      if (creatingItem) {
-        preCreateItem(fetchedFolder, creatingItem);
-      }
-
-      if (fetchState === 'error') {
-        createToast('Succeeded fetching folder. Showing fresh one.');
-      }
-
-      folder.value = fetchedFolder;
-    })
-    .catch(async (error) => {
-      const fetchState = lastFetchState;
-      lastFetchState = 'error';
-
-      if (await baseHandleError(error)) {
-        return;
-      }
-
-      if (folder.value && fetchState === 'success') {
-        createToast('Failed to fetch current folder, showing cached one.');
-        return;
-      }
-
-      const offlineFolder = await offlineStorage.getItem(folderPath.value);
-
-      if (!offlineFolder || typeof offlineFolder !== 'object') {
-        createToast(
-          `Sorry ⊙︿⊙ We couldn't find offline copy for folder: "${route.params.folders.at(-1)}".`,
-        );
-
-        await navigateTo(`/@${user.value.username}`);
-
-        return;
-      }
-
-      folder.value = offlineFolder as FolderWithContents;
-    })
-    .finally(() => {
-      const multiplier = document.visibilityState === 'visible' ? 1 : 2;
-      pollingTimer = setTimeout(fetchFolder, POLLING_TIME * multiplier);
-    });
-
-  if (folder.value) {
-    return;
-  }
-
-  const cachedFolder = foldersCache.get(folderPath.value) || await offlineStorage.getItem(folderPath.value);
-
-  if (hydrationPromise) {
-    await hydrationPromise;
-    hydrationPromise = undefined;
-  }
-
-  folder.value = cachedFolder;
-};
+    if (creatingItem) {
+      preCreateItem(fetchedFolder, creatingItem);
+    }
+  },
+  getSuccessToast: () => createToast('Succeeded fetching folder. Showing fresh one.'),
+  getErrorToast: () => createToast('Failed to fetch current folder, showing cached one.'),
+});
 
 const folderContents = computed(() => {
   if (!folder.value) {
@@ -166,31 +106,12 @@ function handleCreateItem(initialValues?: Parameters<typeof preCreateItem>[1]) {
 
 function refetchFolderIfNeeded(path: string) {
   if (folder.value && path.startsWith(folder.value.path)) {
-    fetchFolder();
+    refresh();
   }
 }
 
-watch(folderApiPath, () => {
-  folder.value = undefined;
-  fetchFolder();
-});
-
-watch(contentsState, (state, oldState) => {
-  const timeDiff = Date.now() - (lastRefetch || 0);
-
-  if (
-    state !== 'hidden'
-    && (!oldState || oldState === 'hidden' || !folder.value)
-    && timeDiff > parseDuration('5 seconds')!
-  ) {
-    return fetchFolder();
-  }
-}, { immediate: import.meta.client });
-
-mitt.on('refresh:folder', () => {
-  fetchFolder();
-});
-
+mitt.on('precreate:item', (event) => handleCreateItem(event));
+mitt.on('refresh:folder', () => refresh());
 mitt.on('details:show:folder', () => {
   if (!folder.value) {
     const stop = watch(folder, (folder) => {
@@ -200,15 +121,11 @@ mitt.on('details:show:folder', () => {
       }
     });
 
-    fetchFolder();
+    refresh();
   }
   else {
     detailsItem.value = folder.value;
   }
-});
-
-mitt.on('precreate:item', (event) => {
-  handleCreateItem(event);
 });
 
 zeenk.on('item-created', ({ path }) => {
@@ -278,26 +195,6 @@ useTinykeys({
     handleCreateItem();
   },
 });
-
-if (import.meta.client) {
-  const offVisibilityChange = on(document, 'visibilitychange', () => {
-    const timeDiff = Date.now() - (lastRefetch || 0);
-
-    if (
-      document.visibilityState === 'visible'
-      && contentsState.value !== 'hidden'
-      && timeDiff > parseDuration('15 seconds')!
-    ) {
-      fetchFolder();
-    }
-  });
-
-  onBeforeUnmount(() => {
-    clearTimeout(pollingTimer);
-    offVisibilityChange();
-    abortControllerGet?.abort();
-  });
-};
 </script>
 
 <template>
