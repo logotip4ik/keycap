@@ -163,4 +163,14 @@ describe('component Contents', () => {
 
     expect(sidebar).toHaveFocus();
   });
+
+  it('should render correct crumbs', async () => {
+    const { user, ...component } = await getComponent();
+
+    const workspace = component.getByText('WS');
+    expect(workspace).toHaveAttribute('href', '/@testing/_blank');
+
+    const somethingFolder = component.getByText('something');
+    expect(somethingFolder).toHaveAttribute('href', '/@testing/something/_blank');
+  });
 });
