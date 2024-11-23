@@ -13,7 +13,6 @@ export function clickHandler(_options: ClickHandlerOptions): Plugin {
       handleClick: (_view, _pos, event) => {
         let link = event.target as HTMLElement;
 
-        // TODO: add auto complete for inner links
         if (
           !link
           || (

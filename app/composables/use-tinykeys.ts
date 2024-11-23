@@ -7,7 +7,6 @@ export function useTinykeys(shortcuts: KeyBindingMap, options?: KeyBindingOption
     return;
   }
 
-  // TODO: this will be broken if we change target
   onBeforeUnmount(
     on(window, 'keydown', createKeybindingsHandler(shortcuts, options)),
   );

@@ -16,7 +16,7 @@ const editingLink = ref('');
 
 const marks = makeMarks(props);
 
-const headingLevels = [1, 2, 3];
+const headingLevels = [1, 2, 3] as const;
 const activeHeadingLevel = computed(() => {
   for (const level of headingLevels) {
     if (props.editor.isActive('heading', { level })) {
@@ -267,8 +267,7 @@ useFocusTrap(formatterEl);
         </template>
 
         <template #tooltip>
-          <!-- TODO: show different number depending on current heading level -->
-          <kbd>{{ modKey }}+Alt+1</kbd>
+          <kbd>{{ modKey }}+Alt+{{ activeHeadingLevel }}</kbd>
         </template>
       </WithTooltip>
 

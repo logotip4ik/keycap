@@ -7,8 +7,6 @@ export interface ToastButton {
 
 export interface ToastInstance {
   id: number
-  // TODO: add support for html ?
-  // probably should support rendering function instead of html
   message: MaybeRef<string>
   /**
    * should be between 0 and 100

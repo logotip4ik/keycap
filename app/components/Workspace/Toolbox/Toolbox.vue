@@ -63,7 +63,6 @@ if (import.meta.client) {
     name="toolbox"
     :injection-key="ToolboxState"
   >
-    <!-- TODO: add fade ? animation when entering. Something like iphone quick settings menu -->
     <WorkspaceToolboxHeader />
 
     <WorkspaceToolboxUtils />
