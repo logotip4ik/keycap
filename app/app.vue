@@ -65,15 +65,11 @@ if (import.meta.dev) {
 </script>
 
 <template>
-  <NuxtPage />
-
-  <Teleport to="#teleports">
+  <div style="display: contents;">
     <NuxtRouteAnnouncer />
-  </Teleport>
 
-  <Teleport to="#teleports">
-    <ClientOnly>
-      <LazyToasts />
-    </ClientOnly>
-  </Teleport>
+    <LazyToasts />
+
+    <NuxtPage />
+  </div>
 </template>

@@ -40,21 +40,23 @@ if (import.meta.client) {
 </script>
 
 <template>
-  <TransitionGroup
-    ref="toasterComp"
-    class="toasts"
-    tag="section"
-    name="toast"
-    aria-label="Notifications"
-    @before-leave="preservePositionAndSize"
-  >
-    <ToastsItem
-      v-for="toast in sortedToasts"
-      :key="toast.id"
-      :toast="toast"
-      :animation-duration="ANIMATION_DURATION"
-    />
-  </TransitionGroup>
+  <Teleport to="#teleports">
+    <TransitionGroup
+      ref="toasterComp"
+      class="toasts"
+      tag="section"
+      name="toast"
+      aria-label="Notifications"
+      @before-leave="preservePositionAndSize"
+    >
+      <ToastsItem
+        v-for="toast in sortedToasts"
+        :key="toast.id"
+        :toast="toast"
+        :animation-duration="ANIMATION_DURATION"
+      />
+    </TransitionGroup>
+  </Teleport>
 </template>
 
 <style lang="scss">
