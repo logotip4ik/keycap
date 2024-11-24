@@ -107,7 +107,7 @@ onMounted(() => {
     @submit.prevent="handleSubmit"
     @reset.prevent="handleReset"
   >
-    <label v-once class="sr-only" for="contentsListItemInput">
+    <label class="sr-only" for="contentsListItemInput">
       Item name
       <template v-if="item.state === ItemState.Creating">
         &nbsp;(enter "/" at the end to create folder)
@@ -181,7 +181,7 @@ onMounted(() => {
     border-right-color: hsla(var(--text-color-hsl), 0.75);
 
     animation: spin 1s infinite linear;
-    transition: opacity 0.3s;
+    transition: opacity 0.3s 0.4s;
   }
 
   &[aria-busy="true"] {
