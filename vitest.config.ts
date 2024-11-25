@@ -4,7 +4,6 @@ import { defaultExclude } from 'vitest/config';
 export default defineVitestConfig({
   assetsInclude: ['**.html'],
   test: {
-    isolate: false,
     mockReset: true,
 
     root: './',
