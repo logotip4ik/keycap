@@ -47,7 +47,8 @@ function initTiptap(opts: {
     onUpdate: opts.onUpdate,
     editorProps: {
       attributes: {
-        spellcheck: opts.spellcheck === 'yes' ? 'true' : 'false',
+        'aria-label': 'Rich text editor',
+        'spellcheck': opts.spellcheck === 'yes' ? 'true' : 'false',
       },
       handleKeyDown: opts.onKeyDown,
     },

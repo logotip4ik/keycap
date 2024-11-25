@@ -37,7 +37,7 @@ describe('component NoteEditor', () => {
     const onUpdate = vi.fn();
     const { user, component } = await getComponent({ onUpdate });
 
-    const editor = component.getByRole('textbox');
+    const editor = component.getByLabelText('Rich text editor');
 
     await waitFor(async () => {
       await userEvent.click(editor);
