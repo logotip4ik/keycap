@@ -1,6 +1,40 @@
 # Changelog
 
 
+## v3.15.16
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.15...v3.15.16)
+
+### 🩹 Fixes
+
+- **tests:** Add aria label to note editor ([ffdc0df6](https://github.com/logotip4ik/keycap/commit/ffdc0df6))
+
+### 💅 Refactors
+
+- Don't embed svg icons into js ([f0381613](https://github.com/logotip4ik/keycap/commit/f0381613))
+- Merge note and contentslist fetchers into single composable ([e898177f](https://github.com/logotip4ik/keycap/commit/e898177f))
+- Simplify crumbs generation ([26473af5](https://github.com/logotip4ik/keycap/commit/26473af5))
+- Move useKFetch to composables folder ([0ab38185](https://github.com/logotip4ik/keycap/commit/0ab38185))
+
+### 🏡 Chore
+
+- **release:** V3.15.15 ([f79a5a01](https://github.com/logotip4ik/keycap/commit/f79a5a01))
+- Use type instead of keyboard events ([7088d32f](https://github.com/logotip4ik/keycap/commit/7088d32f))
+- Add smoke testing for basic routes ([3e5a5560](https://github.com/logotip4ik/keycap/commit/3e5a5560))
+- Remove not needed satisfies ([804b3c7f](https://github.com/logotip4ik/keycap/commit/804b3c7f))
+- Update deps ([4ee5ecae](https://github.com/logotip4ik/keycap/commit/4ee5ecae))
+- Port improvements from tiptap repo to bubble-menu ([3d56f66d](https://github.com/logotip4ik/keycap/commit/3d56f66d))
+- Show different keyboard shortcuts for different heading levels ([97d92a35](https://github.com/logotip4ik/keycap/commit/97d92a35))
+- Return one node from app.vue template ([6cd87712](https://github.com/logotip4ik/keycap/commit/6cd87712))
+- Use different info icon ([3e5c97ab](https://github.com/logotip4ik/keycap/commit/3e5c97ab))
+- Add test for contents crumbs ([dbb2904e](https://github.com/logotip4ik/keycap/commit/dbb2904e))
+- Add initial transition delay for loading spinner ([20b16c55](https://github.com/logotip4ik/keycap/commit/20b16c55))
+- Enable test isolation ([3b8a59f6](https://github.com/logotip4ik/keycap/commit/3b8a59f6))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk <contact@bogdankostyuk.xyz>
+
 ## v3.15.15
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.14...v3.15.15)
