@@ -25,7 +25,7 @@ const zeenk = useZeenk();
 const { isSmallScreen } = useDevice();
 const { setting: spellcheck } = useSetting(settings.spellcheck);
 
-let hasUnsavedChanges = false;
+const hasUnsavedChanges = { value: false };
 const { editor } = useTiptap({
   content,
   spellcheck,
@@ -35,7 +35,7 @@ const { editor } = useTiptap({
       return;
     }
 
-    hasUnsavedChanges = true;
+    hasUnsavedChanges.value = true;
     const updatePromise = updateContent();
 
     if (transaction.getMeta('paste') === true) {
@@ -80,15 +80,16 @@ zeenk.on('update-note', ({ path, steps }) => {
 function updateContent(force?: boolean) {
   const content = editor.getHTML();
 
-  return props
-    .onUpdate(content || '', force)
-    .then(() => {
-      hasUnsavedChanges = false;
-    });
+  return props.onUpdate(content || '', force);
 }
 
+// Function with arguments wouldn't be called in firefox in beforeunload event
+// And we need to try use beforeunload, because it is the only thing that works
+// without `keepalive: true`.
 function saveUnsavedChanges() {
-  if (hasUnsavedChanges) {
+  if (hasUnsavedChanges.value) {
+    hasUnsavedChanges.value = false;
+
     updateContent(true);
   }
 }
@@ -119,16 +120,19 @@ useTinykeys({
 });
 
 if (import.meta.client) {
-  const offVisibilityChange = on(document, 'visibilitychange', () => {
-    if (document.visibilityState === 'hidden') {
+  const offs = [
+    on(document, 'visibilitychange', () => {
+      if (document.visibilityState === 'hidden') {
+        saveUnsavedChanges();
+      }
+    }),
+    on(window, 'beforeunload', () => {
       saveUnsavedChanges();
-    }
-  });
+    }),
+  ];
 
-  onBeforeUnmount(() => {
-    offVisibilityChange();
-    saveUnsavedChanges();
-  });
+  onBeforeUnmount(() => saveUnsavedChanges());
+  onScopeDispose(() => invokeArrayFns(offs));
 }
 </script>
 

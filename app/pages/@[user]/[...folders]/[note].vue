@@ -79,7 +79,8 @@ async function forcedUpdateNote(content: string, shouldStopSave?: AbortSignal) {
       retry: 2,
       signal: shouldStopSave,
       priority: 'high',
-      keepalive: true,
+      // Keepalive has a body size limit of 64kb
+      // keepalive: true,
     })
       .then(() => {
         offlineStorage.setItem(note.path, note);

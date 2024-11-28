@@ -27,7 +27,7 @@ export function sendError(error: Error, properties?: Record<string, string | boo
   else {
     payload.payload.clientPath = window.location.pathname;
 
-    return $fetch('/_log', {
+    return kfetch('/_log', {
       method: 'POST',
       body: payload,
       ignoreResponseError: true,
