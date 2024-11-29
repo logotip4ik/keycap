@@ -263,10 +263,6 @@ export default defineNuxtConfig({
       },
     },
 
-    json: {
-      stringify: true,
-    },
-
     plugins: [
       ParseDurationTransformPlugin.vite(),
       UnheadVite(),
