@@ -62,7 +62,7 @@ export async function baseHandleError(error: Error | H3Error): Promise<boolean> 
       const hydrationPromise = getHydrationPromise();
 
       if (hydrationPromise) {
-        hydrationPromise.then(async () => {
+        await hydrationPromise.then(async () => {
           await navigateTo(`/@${user.value!.username}`);
         });
       }
