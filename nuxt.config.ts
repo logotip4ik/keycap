@@ -220,11 +220,14 @@ export default defineNuxtConfig({
     '/svg/**': { headers: getHeaders('cachable-images') },
     '/site.webmanifest': { headers: getHeaders('webmanifest') },
 
-    '/__sabayon_async_wait_fallback.js': { headers: getCachedAssetHeaders('5 minutes') },
     '/robots.txt': { headers: getCachedAssetHeaders('1 week') },
     '/android-chrome-192x192.png': { headers: getCachedAssetHeaders('1 week') },
     '/android-chrome-512x512.png': { headers: getCachedAssetHeaders('1 week') },
     '/apple-touch-icon.png': { headers: getCachedAssetHeaders('1 week') },
+    '/__sabayon_async_wait_fallback.js': {
+      prerender: true,
+      headers: getCachedAssetHeaders('5 minutes'),
+    },
 
     '/oauth/ask-username': { experimentalNoScripts: true },
   },
@@ -350,6 +353,15 @@ export default defineNuxtConfig({
         target: 'esnext',
       },
     },
+
+    // uncomment this to get cmd+k serach work in dev mode. But this will kill nuxt devtools
+    // server: {
+    //   headers: {
+    //     'Cross-Origin-Opener-Policy': 'same-origin',
+    //     'Cross-Origin-Embedder-Policy': 'require-corp',
+    //     'Cross-Origin-Resource-Policy': 'cross-origin',
+    //   },
+    // },
 
     $server: {
       plugins: [
