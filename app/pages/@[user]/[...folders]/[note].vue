@@ -68,14 +68,14 @@ async function forcedUpdateNote(content: string, shouldStopSave?: AbortSignal) {
 
   notesCache.set(newNote.path, newNote);
 
-  const innerUpdate = async (note: NoteWithContent) => {
+  const innerUpdate = async (note: NoteWithContent & { content: string }) => {
     if (shouldStopSave?.aborted) {
       return;
     }
 
     await kfetch(`/api/note${savePath}`, {
       method: 'PATCH',
-      body: { content },
+      body: { content: note.content },
       retry: 2,
       signal: shouldStopSave,
       priority: 'high',
