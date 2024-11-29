@@ -67,7 +67,7 @@ describe('component NoteEditor', () => {
 
     const cycleHeadingButton = component.getByLabelText('cycle heading');
 
-    expect(cycleHeadingButton.getAttribute('aria-pressed')).toEqual('true');
+    expect(cycleHeadingButton).toHaveAttribute('aria-pressed', 'true');
 
     await user.pointer({
       keys: '[MouseLeft][MouseLeft>]',
@@ -77,6 +77,8 @@ describe('component NoteEditor', () => {
 
     expect(document.getSelection()?.toString()).toEqual('keycap');
 
-    expect(cycleHeadingButton.getAttribute('aria-pressed')).toEqual('false');
+    await waitFor(() => {
+      expect(cycleHeadingButton).toHaveAttribute('aria-pressed', 'false');
+    });
   });
 });
