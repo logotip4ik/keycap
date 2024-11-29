@@ -22,6 +22,8 @@ defineExpose({ input: inputEl });
 
 function handleSearchInput(value: string) {
   value = value.trimStart();
+
+  searchInput.value = value;
   selected.value = 0;
 
   const worker = fuzzyWorker.value;
@@ -95,8 +97,6 @@ function fillResult() {
   }
 }
 
-watch(searchInput, debounce(handleSearchInput, 100));
-
 useTinykeys({
   'Control+n': (e) => {
     e.preventDefault();
@@ -118,7 +118,7 @@ useTinykeys({
           :value="searchInput"
           class="search__form__input"
           placeholder="Search or enter / for commands"
-          @update-value="searchInput = $event"
+          @update-value="handleSearchInput"
           @keydown.enter.prevent="openItem"
           @keydown.up.prevent="changeSelectedResult(-1)"
           @keydown.down.prevent="changeSelectedResult(+1)"
