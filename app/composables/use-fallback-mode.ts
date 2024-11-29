@@ -7,8 +7,8 @@ export function useFallbackMode() {
     return ref(false);
   }
 
-  if (!fallbackMode.value) {
-    fallbackMode.value = !window.navigator.onLine;
+  if (fallbackMode.value === undefined) {
+    fallbackMode.value = false;
 
     on(window, 'online', () => {
       fallbackMode.value = false;
@@ -16,6 +16,12 @@ export function useFallbackMode() {
     on(window, 'offline', () => {
       fallbackMode.value = true;
     });
+
+    if (!navigator.onLine) {
+      nextTick(() => {
+        fallbackMode.value = true;
+      });
+    }
   }
 
   return fallbackMode as Ref<boolean>;
