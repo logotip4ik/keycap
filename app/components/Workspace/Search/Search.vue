@@ -98,8 +98,14 @@ function fillResult() {
 watch(searchInput, debounce(handleSearchInput, 100));
 
 useTinykeys({
-  'Control+n': () => changeSelectedResult(1),
-  'Control+p': () => changeSelectedResult(-1),
+  'Control+n': (e) => {
+    e.preventDefault();
+    changeSelectedResult(+1);
+  },
+  'Control+p': (e) => {
+    e.preventDefault();
+    changeSelectedResult(-1);
+  },
 });
 </script>
 
