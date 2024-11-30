@@ -1,6 +1,6 @@
+import type { Promisable } from 'type-fest';
 import type { WatchSource } from 'vue';
 
-type Promisable<T> = T | PromiseLike<T>;
 interface KFetch<TData> {
   pollingTime: number
   deep?: boolean
