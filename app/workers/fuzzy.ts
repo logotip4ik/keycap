@@ -1,18 +1,18 @@
 import type { Emoji, EmojiMartData } from '@emoji-mart/data';
 
+import type { FuzzyWorker } from '~/utils/fuzzy';
+
 import { commandScore as getScore } from '@superhuman/command-score';
-
-import { protectionHeaders } from '~~/shared/utils/utils';
-
-// must come before coincident
-import '@ungap/with-resolvers';
 
 // @ts-expect-error no types
 import coincident from 'coincident/worker';
 
-import type { FuzzyWorker } from '~/utils/fuzzy';
+import { protectionHeaders } from '~~/shared/utils/utils';
+
 import { commandActionsMin as commandsCache } from '~/utils/menu';
 import { transliterateFromEnglish, transliterateToEnglish } from '~/utils/transliterate';
+// must come before coincident
+import '@ungap/with-resolvers';
 
 const wordRE = /\w+/;
 const arrayWithString = [''];

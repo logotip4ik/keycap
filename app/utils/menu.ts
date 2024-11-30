@@ -1,8 +1,8 @@
 import type { Promisable } from 'type-fest';
 
-import { SearchAction } from '~/types/common';
-
 import type { SearchActionValues } from '~/types/common';
+
+import { SearchAction } from '~/types/common';
 
 interface Command {
   key: SearchActionValues
