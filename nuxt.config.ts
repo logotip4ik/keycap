@@ -425,6 +425,12 @@ export default defineNuxtConfig({
     },
 
     imports: {
+      dirs: [
+        // something broke in unimport 3.14
+        // TODO: remove when https://github.com/nuxt/nuxt/issues/30098 is fixed
+        resolve('./server/utils'),
+      ],
+
       presets: [
         {
           from: resolve('./kysely/kysely.ts'),
