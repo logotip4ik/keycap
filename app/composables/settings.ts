@@ -16,11 +16,11 @@ export function useSetting<T extends ValueOf<Settings>>(
 
     setSetting(key, value);
 
-    // @ts-expect-error generic message
+    // @ts-expect-error internal message
     mitt.emit(SETTINGS_PREFIX + key, value);
   }, { flush: 'sync' });
 
-  // @ts-expect-error generic message
+  // @ts-expect-error internal message
   mitt.on(SETTINGS_PREFIX + key, (value: SettingsDefinitions[T]['posibleValues'][number]) => {
     if (updatedSelf) {
       return (updatedSelf = false);
