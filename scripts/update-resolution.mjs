@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const packageJsonPath = join(process.cwd(), 'package.json');
-const patchVersionRE = /\d{1,3}\.\d{1,3}\.\d{1,3}(-\w{1,5}\.\d{1,3})?/;
+const patchVersionRE = /\d+\.\d+\.\d+(-\w{1,10}\.\d+)?/;
 
 /** @type {import('pkg-types').PackageJson} */
 const packageJson = JSON.parse(readFileSync(packageJsonPath, { encoding: 'utf8' }));
