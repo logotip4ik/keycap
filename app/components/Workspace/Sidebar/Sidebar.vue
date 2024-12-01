@@ -59,15 +59,15 @@ watch(state, debounce((state: SidebarState) => {
   const cookieValue = state === 'visible' ? 'hidden' : state;
   setUCookie(props.name, cookieValue, {
     path: '/',
-    secure: true,
+    secure: import.meta.prod,
     sameSite: 'lax',
     maxAge: parseDuration('0.5year', 's'),
   });
-}, 375), { flush: 'post' });
+}, 375));
 
 watch(focusableElements, debounce(() => {
   updateTabindexForFocusableElements(state.value);
-}, 375), { flush: 'post' });
+}, 375));
 
 useClickOutside(sidebar, () => hideIf('visible'));
 useTinykeys({
