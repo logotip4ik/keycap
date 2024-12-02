@@ -1,6 +1,41 @@
 # Changelog
 
 
+## v3.15.17
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.16...v3.15.17)
+
+### 🩹 Fixes
+
+- Setup isFallback ref only once ([af3a0c45](https://github.com/logotip4ik/keycap/commit/af3a0c45))
+- Prevent default when pressing ctrl+n/p on windows ([95cfa438](https://github.com/logotip4ik/keycap/commit/95cfa438))
+- Await hydration promise when handling 404 ([032d00c2](https://github.com/logotip4ik/keycap/commit/032d00c2))
+- **tests:** Use waitfor for checking attribute update ([a1e533bd](https://github.com/logotip4ik/keycap/commit/a1e533bd))
+- **scripts:** Update semver regex to pass with longer digits ([262b4069](https://github.com/logotip4ik/keycap/commit/262b4069))
+- Sort imports in fuzzy worker ([1ead3839](https://github.com/logotip4ik/keycap/commit/1ead3839))
+- Allow storing sidebar state cookie in dev mode ([a3949f3c](https://github.com/logotip4ik/keycap/commit/a3949f3c))
+
+### 💅 Refactors
+
+- Improve chance of saving note when closing tab immidiately after editing ([22a74f56](https://github.com/logotip4ik/keycap/commit/22a74f56))
+- Allow enabling cmd+k search in dev ([ebb123a6](https://github.com/logotip4ik/keycap/commit/ebb123a6))
+
+### 🏡 Chore
+
+- **release:** V3.15.16 ([668505a0](https://github.com/logotip4ik/keycap/commit/668505a0))
+- Keep reference only to inner note object ([c4a249ad](https://github.com/logotip4ik/keycap/commit/c4a249ad))
+- Update yarn ([3e7ee119](https://github.com/logotip4ik/keycap/commit/3e7ee119))
+- Use vite6 ([960a0390](https://github.com/logotip4ik/keycap/commit/960a0390))
+- Enable auto json handling with vite6 ([61891c92](https://github.com/logotip4ik/keycap/commit/61891c92))
+- Remove debounce from serach input ([b5ec3e0f](https://github.com/logotip4ik/keycap/commit/b5ec3e0f))
+- Update deps and fix build ([3516e105](https://github.com/logotip4ik/keycap/commit/3516e105))
+- Update message ([c3b9ec88](https://github.com/logotip4ik/keycap/commit/c3b9ec88))
+- Hide contents sidebar in idle callback ([3e5c31c9](https://github.com/logotip4ik/keycap/commit/3e5c31c9))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.15.16
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.15...v3.15.16)
