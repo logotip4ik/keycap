@@ -12699,25 +12699,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sabayon@npm:latest":
-  version: 0.6.0
-  resolution: "sabayon@npm:0.6.0"
+"sabayon@npm:^0.6.1":
+  version: 0.6.1
+  resolution: "sabayon@npm:0.6.1"
   dependencies:
     "@ungap/raw-json": "npm:^0.3.7"
   bin:
     sabayon: cli.cjs
-  checksum: 10/39b5de89b3638da8b49da27127401987f172f7405298eca81e6c9c24ec69ee1526c6952c686324272125ad6cf39920b9e87e25490aa89589fd4f232de6ec30f2
-  languageName: node
-  linkType: hard
-
-"sabayon@patch:sabayon@npm%3Alatest#~/.yarn/patches/sabayon-npm-0.5.2-f93f65a00f.patch":
-  version: 0.6.0
-  resolution: "sabayon@patch:sabayon@npm%3A0.6.0#~/.yarn/patches/sabayon-npm-0.5.2-f93f65a00f.patch::version=0.6.0&hash=5226b1"
-  dependencies:
-    "@ungap/raw-json": "npm:^0.3.7"
-  bin:
-    sabayon: cli.cjs
-  checksum: 10/a819a31933ccc2d5df05e5c90960262c722e4a5da85bf2ec48da1f7ece36ad4c625326589b9372ba3e434e1e9922526335618f808d20f435025a8cc7afd61320
+  checksum: 10/76a18a8684864dab5f3eb0a3c0b7331b9759b7793cfa71c74e7292c292718958d7bb5874df3600e7792de8bd7f8473a2f4302075f16bf9fbdc468e6f55b46f8e
   languageName: node
   linkType: hard
 
