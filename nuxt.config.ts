@@ -224,7 +224,7 @@ export default defineNuxtConfig({
     '/android-chrome-192x192.png': { headers: getCachedAssetHeaders('1 week') },
     '/android-chrome-512x512.png': { headers: getCachedAssetHeaders('1 week') },
     '/apple-touch-icon.png': { headers: getCachedAssetHeaders('1 week') },
-    '/__sabayon_async_wait_fallback.js': {
+    '/__sabayon_wait_async.js': {
       prerender: true,
       headers: getCachedAssetHeaders('5 minutes'),
     },
