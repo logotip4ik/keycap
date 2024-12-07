@@ -426,9 +426,11 @@ export default defineNuxtConfig({
 
     imports: {
       dirs: [
-        // something broke in unimport 3.14
-        // TODO: remove when https://github.com/nuxt/nuxt/issues/30098 is fixed
-        resolve('./server/utils'),
+        resolve('./server/utils/cached'),
+        resolve('./server/utils/oauth'),
+        resolve('./server/utils/og'),
+        resolve('./server/utils/templating'),
+        resolve('./server/utils/validators'),
       ],
 
       presets: [
