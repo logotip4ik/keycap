@@ -61,7 +61,7 @@ watch(state, debounce((state: SidebarState) => {
     path: '/',
     secure: import.meta.prod,
     sameSite: 'lax',
-    maxAge: parseDuration('0.5year', 's'),
+    maxAge: parseDuration('0.5year', 's')!,
   });
 }, 375));
 

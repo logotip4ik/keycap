@@ -63,7 +63,7 @@ export default defineEventHandler(async (event) => {
   await useRegisterStorage().setItem(
     `continue:${code}`,
     { email: data.email },
-    { ttl: parseDuration('5 minutes', 's') },
+    { ttl: parseDuration('5 minutes', 's')! },
   );
 
   if (data.browserAction !== undefined) {

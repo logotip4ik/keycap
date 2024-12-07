@@ -33,7 +33,7 @@ export function getZeenkWs() {
   };
 }
 
-const RETRY_DELAY = parseDuration('3s');
+const RETRY_DELAY = parseDuration('3s')!;
 const MAX_RETRIES = 3;
 let offs: Array<() => void> = [];
 

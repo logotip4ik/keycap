@@ -45,7 +45,7 @@ const { data: note, refresh } = useKFetch<NoteWithContent>(() => `/api/note${not
       ? 'This is cached note, wait for new one to arrive...'
       : 'This shouldn\'t take a long time...',
     {
-      delay: parseDuration('3 seconds'),
+      delay: parseDuration('3 seconds')!,
       type: 'loading',
       duration: Infinity,
     },
@@ -111,7 +111,11 @@ async function forcedUpdateNote(content: string, shouldStopSave?: AbortSignal) {
             priority: 100,
           });
 
-          retryInterval = setInterval(innerUpdate, parseDuration('2s'), newNote);
+          retryInterval = setInterval(
+            innerUpdate,
+            parseDuration('2s')!,
+            newNote,
+          );
         }
       });
   };

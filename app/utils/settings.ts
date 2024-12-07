@@ -43,7 +43,7 @@ export function setSetting<T extends ValueOf<Settings>>(setting: T, value: Setti
     path: '/',
     secure: true,
     sameSite: 'lax',
-    maxAge: parseDuration('6 months', 's'),
+    maxAge: parseDuration('6 months', 's')!,
   });
 }
 

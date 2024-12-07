@@ -7,8 +7,8 @@ const { state } = useToolboxState();
 const recent = shallowRef<Array<NoteMinimal>>();
 const lastFetch = shallowRef<number>();
 
-const POLLING_TIME = parseDuration('5 minutes');
-const RETRY_TIME = parseDuration('5s');
+const POLLING_TIME = parseDuration('5 minutes')!;
+const RETRY_TIME = parseDuration('5s')!;
 const MAX_RETRY = 10;
 
 let pollingTimer: ReturnType<typeof setTimeout> | undefined;

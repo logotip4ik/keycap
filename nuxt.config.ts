@@ -213,7 +213,7 @@ export default defineNuxtConfig({
     },
 
     // this would be great https://github.com/unjs/nitro/issues/603#issuecomment-1415826732
-    '/view/**': { isr: parseDuration('15 minutes', 'second') },
+    '/view/**': { isr: parseDuration('15 minutes', 'second')! },
     '/og/**': { headers: getHeaders('og') },
     '/fonts/**': { headers: getHeaders('fonts') },
     '/images/**': { headers: getHeaders('cachable-images') },
@@ -532,7 +532,7 @@ export default defineNuxtConfig({
     client: {
       installPrompt: false,
       registerPlugin: true,
-      periodicSyncForUpdates: parseDuration('0.5 hours', 'second'),
+      periodicSyncForUpdates: parseDuration('0.5 hours', 'second')!,
     },
 
     injectManifest: {

@@ -66,7 +66,7 @@ export function defineOAuthHandler<T extends GitHubUserRes | GoogleUserRes>({
     await oAuthUserCache.setItem(
       oAuthStateKey,
       oAuthUser,
-      { ttl: parseDuration('5 minutes', 's') },
+      { ttl: parseDuration('5 minutes', 's')! },
     );
 
     if (!gotOAuthUserFromCache) {
