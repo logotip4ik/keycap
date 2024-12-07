@@ -538,11 +538,12 @@ export default defineNuxtConfig({
     },
 
     injectManifest: {
-      globPatterns: ['**/*.{js,json,css,html,svg,ico,woff2}', '*/logo.webp'],
+      globPatterns: [
+        '**/*.{js,json,css,html,svg,ico,woff2}',
+        '*/logo.webp',
+      ],
       globIgnores: [
-        '**.webmanifest',
         '*-dev*',
-        'index.html',
       ],
     },
   },
