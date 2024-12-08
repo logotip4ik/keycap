@@ -28,6 +28,7 @@ import proxy from 'unenv/runtime/mock/proxy';
 import { BubbleMenu } from './extensions/bubble-menu';
 import { EmojiPicker } from './extensions/emoji-picker';
 import { Link } from './extensions/link';
+import { TaskItemCleaner } from './extensions/task-item';
 
 function initTiptap(opts: {
   content: string
@@ -69,6 +70,7 @@ function initTiptap(opts: {
       Link,
       TaskList,
       TaskItem,
+      TaskItemCleaner,
       BubbleMenu,
       EmojiPicker,
       Code.extend({ inclusive: false }).configure({
