@@ -1,6 +1,28 @@
 # Changelog
 
 
+## v3.15.18
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.17...v3.15.18)
+
+### 🩹 Fixes
+
+- Update lock file with new sabayon version ([756533fd](https://github.com/logotip4ik/keycap/commit/756533fd))
+- Add server utils subdir to auto-import ([3b5f157b](https://github.com/logotip4ik/keycap/commit/3b5f157b))
+- Handle `Process` for TaskItem to allow removing item itself from mobile firefox ([0a6ae05b](https://github.com/logotip4ik/keycap/commit/0a6ae05b))
+
+### 🏡 Chore
+
+- **release:** V3.15.17 ([2f1ce418](https://github.com/logotip4ik/keycap/commit/2f1ce418))
+- Prepare code to new sabayon version ([4149a29b](https://github.com/logotip4ik/keycap/commit/4149a29b))
+- Update deps ([42fb884f](https://github.com/logotip4ik/keycap/commit/42fb884f))
+- Hint typescript that parseDuration will always return number ([3f553100](https://github.com/logotip4ik/keycap/commit/3f553100))
+- Improve service worker globs ([1d885e32](https://github.com/logotip4ik/keycap/commit/1d885e32))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.15.17
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.16...v3.15.17)
