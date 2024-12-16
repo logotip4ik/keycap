@@ -1,8 +1,5 @@
 name: Release
 
-permissions:
-  contents: write
-
 on:
   workflow_dispatch:
   schedule:
@@ -72,11 +69,12 @@ jobs:
       - name: Push changes
         env:
           PAT: ${{ secrets.ACTIONS_PAT }}
+          BRANCH: ${{ github.ref_name }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git remote set-url origin "https://$PAT@github.com/logotip4ik/keycap"
-          git push origin ${{ github.ref_name }}
+          git push origin $BRANCH
 
   trigger-release:
     needs: [test-lint-build, bump-package-version]
