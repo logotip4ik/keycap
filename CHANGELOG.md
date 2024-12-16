@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v3.15.19
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.18...v3.15.19)
+
+### 🏡 Chore
+
+- **release:** V3.15.18 ([ec8b6225](https://github.com/logotip4ik/keycap/commit/ec8b6225))
+- Update deps ([6d92c1d0](https://github.com/logotip4ik/keycap/commit/6d92c1d0))
+
+### 🤖 CI
+
+- Bump autofix-ci/action in the actions group ([#38](https://github.com/logotip4ik/keycap/pull/38))
+
 ## v3.15.18
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.17...v3.15.18)
