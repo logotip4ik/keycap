@@ -3,7 +3,6 @@ import type { IconPath } from '#imports';
 
 defineProps<{
   path: IconPath
-  color?: string
   title?: string
 }>();
 
@@ -14,7 +13,7 @@ const titleId = useId();
   <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlns:xlink="http://www.w3.org/1999/xlink"
-    :fill="color || 'currentColor'"
+    fill="currentColor"
     :aria-labelledby="title ? titleId : undefined"
     aria-hidden="true"
     role="img"
