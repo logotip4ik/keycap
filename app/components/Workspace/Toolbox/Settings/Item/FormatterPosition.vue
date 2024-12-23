@@ -15,9 +15,10 @@ function pinToolbox() {
 
 <template>
   <div class="toolbox__settings__setting" @mousedown.capture="pinToolbox">
-    Formatter position
+    <label for="formatter-position-select">Formatter position:</label>
 
     <select
+      id="formatter-position-select"
       v-model="setting"
       class="toolbox__settings__setting__select"
       @click="pinToolbox"

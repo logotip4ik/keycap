@@ -15,9 +15,12 @@ function pinToolbox() {
 
 <template>
   <div class="toolbox__settings__setting" @mousedown.capture="pinToolbox">
-    Spellcheck enabled
+    <label for="spellcheck-enabled-select">
+      Spellcheck enabled:
+    </label>
 
     <select
+      id="spellcheck-enabled-select"
       v-model="setting"
       class="toolbox__settings__setting__select"
       @click="pinToolbox"

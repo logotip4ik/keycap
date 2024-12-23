@@ -19,10 +19,18 @@ const crumbs = computed(() => {
 
   return crumbs;
 });
+
+const crumbsAriaLabel = computed(() => {
+  return `Current folder: ${crumbs.value.map((crumb) => crumb.name).join('/')}`;
+});
 </script>
 
 <template>
-  <WithListTransitionGroup class="contents__header__name">
+  <WithListTransitionGroup
+    id="contents-header"
+    class="contents__header__name"
+    :aria-label="crumbsAriaLabel"
+  >
     <p
       v-for="(crumb, i) in crumbs"
       :key="crumb.name + crumb.href"

@@ -6,7 +6,7 @@ import { ContentsState } from './config';
   <header class="contents__header">
     <WorkspaceContentsHeaderCrumbs />
 
-    <WorkspaceSidebarOpenButton :injection-key="ContentsState">
+    <WorkspaceSidebarOpenButton :injection-key="ContentsState" aria-label="open contents sidebar">
       <Icon path="outline-folder" />
     </WorkspaceSidebarOpenButton>
   </header>

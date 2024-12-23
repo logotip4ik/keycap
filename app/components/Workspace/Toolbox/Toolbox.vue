@@ -62,6 +62,7 @@ if (import.meta.client) {
     ref="sidebar"
     name="toolbox"
     :injection-key="ToolboxState"
+    aria-label="Toolbox"
   >
     <WorkspaceToolboxHeader />
 

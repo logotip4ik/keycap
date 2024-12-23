@@ -78,6 +78,7 @@ if (import.meta.client) {
     dir="right"
     name="contents"
     :injection-key="ContentsState"
+    aria-labelledby="contents-header"
   >
     <WorkspaceContentsHeader />
 

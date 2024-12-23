@@ -214,7 +214,6 @@ useTinykeys({
       v-else
       tag="ul"
       class="contents__list"
-      tabindex="-1"
       handle-arrows-press="vertical"
       @contextmenu.self.prevent
       @click.self="menuOptions.target = undefined"
