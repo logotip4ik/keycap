@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v3.15.20
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.19...v3.15.20)
+
+### 🏡 Chore
+
+- **release:** V3.15.19 ([6efcccbc](https://github.com/logotip4ik/keycap/commit/6efcccbc))
+- Update deps ([8dc95200](https://github.com/logotip4ik/keycap/commit/8dc95200))
+- Minor code changes ([8eb174d6](https://github.com/logotip4ik/keycap/commit/8eb174d6))
+
+### 🤖 CI
+
+- Harden security and hope nothing broke ([7f5a01e3](https://github.com/logotip4ik/keycap/commit/7f5a01e3))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.15.19
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.18...v3.15.19)
