@@ -1,6 +1,6 @@
 <template>
   <button class="modal__close-button">
-    <Icon path="close-rounded" class="modal__close-button__icon" />
+    <Icon name="close-rounded" class="modal__close-button__icon" />
   </button>
 </template>
 

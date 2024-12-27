@@ -7,7 +7,7 @@ const user = useRequiredUser();
 <template>
   <header class="toolbox__header">
     <WorkspaceSidebarOpenButton :injection-key="ToolboxState" aria-label="open toolbox sidebar">
-      <Icon path="menu-rounded" class="toolbox__header__svg" />
+      <Icon name="menu-rounded" class="toolbox__header__svg" />
     </WorkspaceSidebarOpenButton>
 
     <p class="toolbox__header__username font-wide">

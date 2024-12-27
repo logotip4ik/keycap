@@ -29,13 +29,13 @@ async function handleActionClick() {
 <template>
   <button v-if="isCommand" class="search-item" :data-selected="selected" @click="handleActionClick">
     <span class="search-item__name">{{ item.name }}</span>
-    <Icon path="round-keyboard-return" class="search-item__enter-icon" />
+    <Icon name="round-keyboard-return" class="search-item__enter-icon" />
   </button>
 
   <NuxtLink v-else :href="itemHref" class="search-item" :data-selected="selected">
     <span v-if="itemPath !== ''" class="search-item__path">{{ itemPath }}/</span>
     <span class="search-item__name">{{ item.name }}</span>
-    <Icon path="round-keyboard-return" class="search-item__enter-icon" />
+    <Icon name="round-keyboard-return" class="search-item__enter-icon" />
   </NuxtLink>
 </template>
 

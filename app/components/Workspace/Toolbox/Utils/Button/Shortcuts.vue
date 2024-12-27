@@ -12,7 +12,7 @@ function openShortcuts() {
     aria-label="open shortcuts"
     @click="openShortcuts"
   >
-    <Icon path="baseline-keyboard-command-key" class="toolbox__utils__item__btn__icon" />
+    <Icon name="baseline-keyboard-command-key" class="toolbox__utils__item__btn__icon" />
 
     Shortcuts
   </button>

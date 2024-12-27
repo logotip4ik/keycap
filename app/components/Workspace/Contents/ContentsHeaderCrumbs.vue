@@ -39,7 +39,7 @@ const crumbsAriaLabel = computed(() => {
     >
       <Icon
         v-if="i"
-        path="round-chevron-right"
+        name="round-chevron-right"
         class="contents__header__name__crumb__icon"
       />
 

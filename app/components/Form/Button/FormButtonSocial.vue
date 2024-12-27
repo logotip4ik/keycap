@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import type { FlatCase } from 'scule';
+
 const props = defineProps<{
   provider: OAuthProvider
 }>();
 
-const lowercaseProvider = computed(() => props.provider.toLowerCase());
+const lowercaseProvider = computed(() => props.provider.toLowerCase() as FlatCase<OAuthProvider>);
 </script>
 
 <template>
@@ -12,7 +14,7 @@ const lowercaseProvider = computed(() => props.provider.toLowerCase());
     :class="[`form__button--${lowercaseProvider}`]"
     :href="`/api/oauth/${lowercaseProvider}`"
   >
-    <Icon :path="lowercaseProvider" />
+    <Icon :name="lowercaseProvider" />
 
     <slot />
   </a>

@@ -8,7 +8,7 @@ function handleClick() {
 
 <template>
   <button class="contents__add" aria-label="Create new note or folder" @click="handleClick">
-    <Icon path="outline-add" class="contents__add__icon" />
+    <Icon name="outline-add" class="contents__add__icon" />
 
     Create new
   </button>

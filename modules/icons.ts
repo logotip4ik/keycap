@@ -22,14 +22,14 @@ export default defineNuxtModule({
       write: true,
       filename: './types/icons.d.ts',
       getContents: () => {
-        return `export type IconPath = ${iconPathsDefinition};`;
+        return `export type IconName = ${iconPathsDefinition};`;
       },
     });
 
     addImports({
       type: true,
       from: dst,
-      name: 'IconPath',
+      name: 'IconName',
     });
 
     logger.info(`Added ${icons.length} icons types`);

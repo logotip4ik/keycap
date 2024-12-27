@@ -26,7 +26,7 @@ onBeforeUnmount(() => clearTimeout(timeout));
     aria-atomic="true"
     tabindex="0"
   >
-    <Icon v-if="toast.type === 'info'" path="info-outline" class="toast__icon" aria-hidden="true" />
+    <Icon v-if="toast.type === 'info'" name="info-outline" class="toast__icon" aria-hidden="true" />
     <span v-else-if="toast.type === 'loading'" class="toast__icon toast__icon--spinner" aria-hidden="true" />
 
     <p class="toast__text">{{ toast.message }}</p>

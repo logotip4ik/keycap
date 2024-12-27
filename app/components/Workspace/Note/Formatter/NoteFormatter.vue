@@ -262,7 +262,7 @@ useFocusTrap(formatterEl);
             :aria-describedby="tooltipId"
             @click="toggleHeading"
           >
-            <Icon :path="`heading-${activeHeadingLevel}`" />
+            <Icon :name="`heading-${activeHeadingLevel}`" />
           </button>
         </template>
 
@@ -285,7 +285,7 @@ useFocusTrap(formatterEl);
             :aria-describedby="tooltipId"
             @click="toggleListItem"
           >
-            <Icon path="list" />
+            <Icon name="list" />
           </button>
         </template>
 
@@ -305,7 +305,7 @@ useFocusTrap(formatterEl);
             :aria-describedby="tooltipId"
             @click="editor.chain().focus().toggleBlockquote().run()"
           >
-            <Icon path="double-quotes-r" />
+            <Icon name="double-quotes-r" />
           </button>
         </template>
 
@@ -325,7 +325,7 @@ useFocusTrap(formatterEl);
             :aria-describedby="tooltipId"
             @click="isEditingLink = !isEditingLink"
           >
-            <Icon path="baseline-link" />
+            <Icon name="baseline-link" />
           </button>
         </template>
 
@@ -347,7 +347,7 @@ useFocusTrap(formatterEl);
             :aria-describedby="tooltipId"
             @click="mark.onClick"
           >
-            <Icon :path="mark.icon" />
+            <Icon :name="mark.icon" />
           </button>
         </template>
 
@@ -369,7 +369,7 @@ useFocusTrap(formatterEl);
       >
 
       <button class="formatter__button" type="submit">
-        <Icon path="baseline-check" />
+        <Icon name="baseline-check" />
       </button>
     </form>
   </WithFadeTransition>

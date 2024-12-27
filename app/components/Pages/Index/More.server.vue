@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import type { IconPath } from '#imports';
-
 interface Card {
-  icon: IconPath
+  icon: IconName
   title: string
   content: string
   gradient: [string, string]
@@ -39,7 +37,7 @@ const more: Array<Card> = [
         class="main__more__list__item"
         :style="{ '--grad-start': item.gradient[0], '--grad-stop': item.gradient[1] }"
       >
-        <Icon :path="item.icon" class="main__more__list__item__icon" />
+        <Icon :name="item.icon" class="main__more__list__item__icon" />
 
         <p class="main__more__list__item__title">
           {{ item.title }}

@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import type { IconPath } from '#imports';
-
 defineProps<{
-  path: IconPath
+  name: IconName
   title?: string
 }>();
 
@@ -22,7 +20,7 @@ const titleId = useId();
     class="icon"
   >
     <title v-if="title" :id="titleId">{{ title }}</title>
-    <use :href="`/svg/${path}.svg#fragment`" />
+    <use :href="`/svg/${name}.svg#fragment`" />
   </svg>
 </template>
 

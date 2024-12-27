@@ -7,7 +7,7 @@ import { ContentsState } from './config';
     <WorkspaceContentsHeaderCrumbs />
 
     <WorkspaceSidebarOpenButton :injection-key="ContentsState" aria-label="open contents sidebar">
-      <Icon path="outline-folder" />
+      <Icon name="outline-folder" />
     </WorkspaceSidebarOpenButton>
   </header>
 </template>

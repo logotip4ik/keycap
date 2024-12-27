@@ -1,5 +1,3 @@
-import type { IconPath } from '#imports';
-
 import type { Editor } from '@tiptap/core';
 import type { ShallowReactive } from 'vue';
 
@@ -9,7 +7,7 @@ export const LinkInputPlaceholder = {
 };
 
 interface MarkButton {
-  icon: IconPath
+  icon: IconName
   ariaLabel: string
   shortcut: string
   isActive: ComputedRef<boolean>

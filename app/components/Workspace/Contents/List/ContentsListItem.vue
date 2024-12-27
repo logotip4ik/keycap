@@ -68,7 +68,7 @@ function showMenu(event: Event) {
   >
     <Icon
       v-if="isFolder"
-      path="outline-folder"
+      name="outline-folder"
       class="list__item__icon list__item__icon--folder"
     />
 
@@ -82,7 +82,7 @@ function showMenu(event: Event) {
       :aria-label="`show ${isFolder ? 'folder' : 'note'} actions`"
       @click.prevent.stop="linkComp && onShowMenu(linkComp.$el)"
     >
-      <Icon v-once path="baseline-more-vert" class="list__item__icon list__item__icon--edit" />
+      <Icon name="baseline-more-vert" class="list__item__icon list__item__icon--edit" />
     </button>
   </NuxtLink>
 </template>
