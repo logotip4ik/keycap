@@ -1,5 +1,3 @@
-import parseDuration from 'parse-duration';
-
 export default defineCachedEventHandler((event) => {
   setHeader(event, 'Content-Type', 'text/plain');
 
@@ -12,6 +10,6 @@ Expires: ${nextYear.toISOString()}
 Preferred-Languages: en, ua`;
 }, {
   swr: true,
-  maxAge: parseDuration('1 week', 'second'),
-  staleMaxAge: parseDuration('6 months', 'second'),
+  maxAge: parseDuration('1 week', 'second')!,
+  staleMaxAge: parseDuration('6 months', 'second')!,
 });

@@ -3,7 +3,7 @@ import type Webmanifest from '#server/assets/webmanifest.json';
 export default defineEventHandler(async (event) => {
   const storage = useStorage('assets:server');
 
-  const manifest: typeof Webmanifest | null = await storage.getItem('webmanifest.json');
+  const manifest = await storage.getItem('webmanifest.json') as typeof Webmanifest | null;
 
   if (!manifest) {
     throw createError({ status: 500 });

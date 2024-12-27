@@ -44,7 +44,7 @@ export function defineOAuthHandler<T extends GitHubUserRes | GoogleUserRes>({
     const oAuthUserCache = getOAuthUserCache();
 
     let gotOAuthUserFromCache = true;
-    let oAuthUser: T | undefined = await oAuthUserCache.getItem<T>(oAuthStateKey) || undefined;
+    let oAuthUser: T | undefined = await oAuthUserCache.getItem(oAuthStateKey) as T || undefined;
     if (!oAuthUser) {
       oAuthUser = await getOAuthUser(event) || undefined;
       gotOAuthUserFromCache = false;
