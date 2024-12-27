@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { getRequestIP } from 'h3';
 
+if (import.meta.client) {
+  // needed to treeshake `getRequestIP` utility
+  throw createError('page wihout client script');
+}
+
 definePageMeta({
   middleware: ['redirect-dashboard'],
 });
