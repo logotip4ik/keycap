@@ -46,7 +46,7 @@ async function getComponent() {
     global: { stubs: { transition: false } },
   });
 
-  const openButton = component.getByRole('button', { name: '' });
+  const openButton = component.getByLabelText('open toolbox sidebar');
 
   await fireEvent.click(openButton);
 

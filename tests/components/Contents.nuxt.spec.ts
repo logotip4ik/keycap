@@ -60,7 +60,7 @@ async function getComponent() {
     global: { stubs: { transition: false } },
   });
 
-  const openButton = component.getByRole('button', { name: '' });
+  const openButton = component.getByLabelText('open contents sidebar');
 
   await fireEvent.click(openButton);
 
@@ -100,7 +100,7 @@ describe('component Contents', () => {
   it('should show create input when create button pressed', async () => {
     const component = await getComponent();
 
-    const createButton = component.getByRole('button', { name: 'Create new' });
+    const createButton = component.getByRole('button', { name: 'Create new note or folder' });
 
     await fireEvent.click(createButton);
 
