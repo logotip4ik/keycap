@@ -1,6 +1,30 @@
 # Changelog
 
 
+## v3.15.21
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.20...v3.15.21)
+
+### 🩹 Fixes
+
+- **types:** Update typings to match new unstorage behaivor ([8c400f83](https://github.com/logotip4ik/keycap/commit/8c400f83))
+- **tests:** Update button selection to match new a11y attrs ([a22a5843](https://github.com/logotip4ik/keycap/commit/a22a5843))
+
+### 💅 Refactors
+
+- Rename icon path prop to name ([e7bb0c33](https://github.com/logotip4ik/keycap/commit/e7bb0c33))
+
+### 🏡 Chore
+
+- **release:** V3.15.20 ([3f86d497](https://github.com/logotip4ik/keycap/commit/3f86d497))
+- Minor a11y improvements ([d9313f82](https://github.com/logotip4ik/keycap/commit/d9313f82))
+- Add client error to treeshake h3 utility from bundle ([510b98fd](https://github.com/logotip4ik/keycap/commit/510b98fd))
+- Update deps ([887e05d8](https://github.com/logotip4ik/keycap/commit/887e05d8))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.15.20
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.19...v3.15.20)
