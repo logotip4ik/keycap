@@ -4,70 +4,15 @@ import { useToolboxState } from '../config';
 const createToast = useToaster();
 const { state } = useToolboxState();
 
-const recent = shallowRef<Array<NoteMinimal>>();
-const lastFetch = shallowRef<number>();
-
 const POLLING_TIME = parseDuration('5 minutes')!;
-const RETRY_TIME = parseDuration('5s')!;
-const MAX_RETRY = 10;
 
-let pollingTimer: ReturnType<typeof setTimeout> | undefined;
-let retryingToast: ToastInstance | undefined;
-
-async function fetchRecent(retry: number = 0): Promise<void> {
-  if (import.meta.server) {
-    return;
-  }
-
-  clearTimeout(pollingTimer);
-
-  kfetch('/api/recent', {
-    responseType: 'json',
-    headers: { Accept: 'application/json' },
-  })
-    .then(async (response) => {
-      const hydrationPromise = getHydrationPromise();
-
-      if (hydrationPromise) {
-        await hydrationPromise;
-      }
-
-      if (retryingToast) {
-        retryingToast?.remove();
-        retryingToast = undefined;
-      }
-
-      recent.value = response.data;
-      lastFetch.value = Date.now();
-      pollingTimer = setTimeout(fetchRecent, POLLING_TIME);
-    })
-    .catch(() => {
-      if (!retryingToast) {
-        retryingToast = createToast('Failed fetching recent notes. Retrying...', {
-          type: 'loading',
-          duration: Infinity,
-        });
-      }
-
-      const nextRetry = retry + 1;
-      if (nextRetry <= MAX_RETRY) {
-        setTimeout(fetchRecent, RETRY_TIME, retry + 1);
-      }
-      else {
-        retryingToast.remove();
-        createToast('Can\'t fetch recents, please try reloading the website if needed.');
-      }
-    });
-};
-
-const stop = watch(state, (state) => {
-  if (state === 'hidden') {
-    return;
-  }
-
-  fetchRecent();
-  nextTick(() => stop());
-}, { immediate: import.meta.client });
+const { data: recent } = useKFetch<Array<NoteMinimal>>('/api/recent', {
+  getCached: () => undefined,
+  pollingTime: POLLING_TIME,
+  watch: [state],
+  skip: computed(() => state.value === 'hidden'),
+  getErrorToast: () => createToast('Failed fetching recent notes.'),
+});
 </script>
 
 <template>
@@ -83,7 +28,11 @@ const stop = watch(state, (state) => {
         Seems to be empty ⚆_⚆
       </div>
 
-      <ul v-else :key="lastFetch" class="toolbox__section__list">
+      <WithListTransitionGroup
+        v-else
+        tag="ul"
+        class="toolbox__section__list"
+      >
         <li
           v-for="item in recent"
           :key="item.id"
@@ -96,7 +45,7 @@ const stop = watch(state, (state) => {
             {{ item.name }}
           </WorkspaceToolboxRecentItem>
         </li>
-      </ul>
+      </WithListTransitionGroup>
     </WithFadeTransition>
   </section>
 </template>
