@@ -1,6 +1,8 @@
 import type { Promisable } from 'type-fest';
 import type { WatchSource } from 'vue';
 
+import { looseEqual } from '@vue/shared';
+
 interface KFetch<TData> {
   pollingTime: number
   deep?: boolean
@@ -81,7 +83,9 @@ export function useKFetch<TData>(path: MaybeRefOrGetter<string>, {
           getSuccessToast();
         }
 
-        data.value = res.data;
+        if (!looseEqual(data.value, res.data)) {
+          data.value = res.data;
+        }
       })
       .catch(async (error) => {
         if (await baseHandleError(error)) {
