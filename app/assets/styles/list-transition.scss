@@ -1,16 +1,16 @@
 .list-enter-active {
-  transition: opacity 0.3s * 2 ease;
+  transition: opacity 0.3s * 2 ease !important;
 }
 
 .list-leave-active {
   display: none !important;
-  transition-duration: 0s;
+  transition-duration: 0s !important;
 }
 
 .list-move {
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .list-enter-from {
-  opacity: 0;
+  opacity: 0 !important;
 }
