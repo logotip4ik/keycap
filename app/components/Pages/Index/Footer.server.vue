@@ -22,7 +22,7 @@ const links = [
             fetchpriority="low"
             loading="lazy"
           >
-          Keycap © 2024
+          &copy; Keycap
         </p>
 
         <p class="footer__version">
