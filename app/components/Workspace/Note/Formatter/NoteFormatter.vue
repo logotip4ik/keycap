@@ -8,7 +8,7 @@ const props = defineProps<{
   editor: Editor
 }>();
 
-const formatterEl = shallowRef<HTMLElement | null>(null);
+const formatterEl = useTemplateRef('formatterEl');
 
 const linkInputPlaceholder = ref(LinkInputPlaceholder.INITIALLY_EMPTY);
 const isEditingLink = ref(false);

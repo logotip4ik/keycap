@@ -12,7 +12,7 @@ const route = useRoute();
 const { isSmallScreen } = useDevice();
 const { state } = useToolboxState();
 
-const utilsComp = shallowRef<ComponentPublicInstance<HTMLUListElement> | null>(null);
+const utilsComp = useTemplateRef('utilsComp');
 
 interface Util {
   shouldShow?: ComputedRef<boolean>

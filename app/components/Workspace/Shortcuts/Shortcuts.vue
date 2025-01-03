@@ -1,13 +1,9 @@
 <script setup lang="ts">
-import type { ComponentPublicInstance } from 'vue';
-
 defineProps<{
   onClose: () => void
 }>();
 
 const { shortcuts } = useAppConfig();
-
-const shortcutsComp = shallowRef<ComponentPublicInstance>();
 
 const shortcutsDescription = {
   edit: 'Focus Editor',
@@ -33,7 +29,7 @@ function humanizeShortcut(shortcut: string) {
 
 <template>
   <WithBackdrop class="shortcuts__wrapper" @click.self="onClose">
-    <WorkspaceModal ref="shortcutsComp" class="shortcuts" @close="onClose">
+    <WorkspaceModal class="shortcuts" @close="onClose">
       <WorkspaceModalCloseButton @click="onClose" />
 
       <div class="shortcuts__item">

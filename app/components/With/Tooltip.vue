@@ -14,7 +14,7 @@ const { isSmallScreen } = useDevice();
 
 const shouldShow = ref(false);
 const targetEl = shallowRef<HTMLElement>();
-const tooltipEl = shallowRef<HTMLElement | null>(null);
+const tooltipEl = useTemplateRef('tooltipEl');
 const tooltipId = useId();
 
 const timeoutToShowTooltip = parseDuration('0.75s')!;

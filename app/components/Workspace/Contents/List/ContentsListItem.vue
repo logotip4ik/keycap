@@ -14,7 +14,7 @@ const route = useRoute();
 const { state: contentsState } = useContentsState();
 const { isSmallScreen } = useDevice();
 
-const linkComp = shallowRef<ComponentPublicInstance | null>(null);
+const linkComp = useTemplateRef('linkComp');
 
 const itemHref = computed(() => generateItemPath(props.item));
 const isActive = computed(() => itemHref.value === route.path);
@@ -80,7 +80,7 @@ function showMenu(event: Event) {
       v-if="isSmallScreen"
       class="list__item__edit"
       :aria-label="`show ${isFolder ? 'folder' : 'note'} actions`"
-      @click.prevent.stop="linkComp && onShowMenu(linkComp.$el)"
+      @click.prevent.stop="linkComp && onShowMenu(linkComp?.$el)"
     >
       <Icon name="baseline-more-vert" class="list__item__icon list__item__icon--edit" />
     </button>

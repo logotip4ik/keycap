@@ -7,7 +7,7 @@ const props = withDefaults(defineProps<{
   injectionKey: InjectionKey<{ state: Ref<SidebarState> }>
 }>(), { dir: 'left' });
 
-const sidebar = shallowRef<HTMLDivElement | null>(null);
+const sidebar = useTemplateRef('sidebar');
 const focusableElements = shallowRef<Array<FocusableElement>>([]);
 const { state } = inject(props.injectionKey)!;
 

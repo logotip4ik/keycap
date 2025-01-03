@@ -8,7 +8,7 @@ const currentItemForDetails = useCurrentItemForDetails();
 const user = useRequiredUser();
 
 const details = shallowRef<ItemDetails>();
-const itemDetailsComp = shallowRef<ComponentPublicInstance | null>(null);
+const itemDetailsComp = useTemplateRef('itemDetailsComp');
 const isLoadingItemDetails = ref(false);
 
 const itemDetailsEl = computed(() => itemDetailsComp.value?.$el as HTMLElement | undefined);

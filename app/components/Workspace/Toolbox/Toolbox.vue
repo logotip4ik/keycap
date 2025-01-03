@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import type { WorkspaceSidebar as Sidebar } from '#components';
-
 import { ToolboxState } from './config';
 
 const { shortcuts } = useAppConfig();
 const { state } = useToolboxSidebar();
 const { state: contentsState } = useContentsSidebar();
 
-const sidebar = shallowRef<InstanceType<typeof Sidebar> | null>(null);
+const sidebar = useTemplateRef('sidebar');
 
 const toolboxState = computed<SidebarState>({
   get: () => state.value,

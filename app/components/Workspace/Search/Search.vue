@@ -14,9 +14,8 @@ const selectedResult = computed<FuzzyItem | CommandItem | undefined>(() => resul
 
 const searchInput = ref('');
 
-const inputEl = shallowRef<HTMLElement | null>(null);
-const searchComp = shallowRef<ComponentPublicInstance | null>(null);
-const searchEl = computed(() => searchComp.value?.$el as HTMLElement | undefined);
+const inputEl = useTemplateRef('inputEl');
+const searchComp = useTemplateRef('searchComp');
 
 defineExpose({ input: inputEl });
 
@@ -148,7 +147,7 @@ useTinykeys({
 
       <WorkspaceSearchList
         :state="resultsState"
-        :animate-el="searchEl"
+        :animate-el="searchComp?.$el"
       >
         <li
           v-for="(item, idx) in results"

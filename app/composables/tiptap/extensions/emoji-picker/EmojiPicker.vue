@@ -8,7 +8,7 @@ const props = defineProps<{
   getBoundingClientRect?: () => DOMRect
 }>();
 
-const emojiPickerEl = shallowRef<HTMLDivElement | null>(null);
+const emojiPickerEl = useTemplateRef('emojiPickerEl');
 const selectedEmoji = ref(0);
 
 const isVisible = computed(() => props.shouldBeVisible && props.items.length > 0);

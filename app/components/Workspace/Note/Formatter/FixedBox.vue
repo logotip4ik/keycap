@@ -6,7 +6,7 @@ defineProps<{
 }>();
 
 const isFallbackMode = useFallbackMode();
-const fixedBoxEl = shallowRef<HTMLElement | null>(null);
+const fixedBoxEl = useTemplateRef('fixedBoxEl');
 
 const hiddenClass = 'inline-menu__hidden';
 

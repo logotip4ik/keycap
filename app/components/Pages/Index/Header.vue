@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const editorImgWrapperEl = shallowRef<HTMLDivElement | null>(null);
+const editorImgWrapperEl = useTemplateRef('editorImgWrapperEl');
 
 const wordsSettings: Record<string, { tag?: string, class: string }> = {
   'Notes.': { class: 'header__text__notes' },

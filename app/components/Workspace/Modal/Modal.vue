@@ -3,7 +3,7 @@ const props = defineProps<{
   onClose: () => void
 }>();
 
-const modal = shallowRef<HTMLDivElement | null>(null);
+const modal = useTemplateRef('modal');
 
 useTinykeys({ Escape: props.onClose });
 useFocusTrap(modal, { handleInitialFocusing: true });

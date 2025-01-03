@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import type { WorkspaceSidebar as Sidebar } from '#components';
-
 import { ContentsState } from './config';
 
 const { shortcuts } = useAppConfig();
 const { state } = useContentsSidebar();
 const { state: toolboxState } = useToolboxSidebar();
 
-const sidebar = shallowRef<InstanceType<typeof Sidebar> | null>(null);
+const sidebar = useTemplateRef('sidebar');
 const isFixed = ref(false);
 
 let lastNonFixedState: SidebarState | undefined;

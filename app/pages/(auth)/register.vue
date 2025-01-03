@@ -9,9 +9,9 @@ const router = useRouter();
 const createToast = useToaster();
 const user = useUser();
 
-const emailComp = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);
-const usernameComp = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);
-const passwordComp = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);
+const emailComp = useTemplateRef('emailComp');
+const usernameComp = useTemplateRef('usernameComp');
+const passwordComp = useTemplateRef('passwordComp');
 
 const email = useState<string | undefined>();
 
@@ -39,7 +39,7 @@ const providers: Array<OAuthProvider> = ['GitHub', 'Google'];
 watch(user, async (user) => user && await navigateTo(`/@${user.username}`));
 
 async function verifyEmail() {
-  const data: Record<string, string> = {
+  const data: Record<string, string | undefined> = {
     email: emailComp.value?.$el.value,
   };
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const toasts = useToasts();
 
-const toasterComp = shallowRef<ComponentPublicInstance | null>(null);
+const toasterComp = useTemplateRef('toasterComp');
 
 const sortedToasts = computed(() =>
   toasts.value.slice().sort((a, b) => a.priority - b.priority),

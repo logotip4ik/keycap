@@ -11,7 +11,7 @@ const createToast = useToaster();
 const { isSmallScreen } = useDevice();
 const route = useRoute();
 
-const inputEl = shallowRef<HTMLInputElement | null>(null);
+const inputEl = useTemplateRef('inputEl');
 const name = ref(props.item.name || '');
 const isLoading = ref(false);
 

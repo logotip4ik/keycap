@@ -15,7 +15,7 @@ const props = defineProps<{
 const createToast = useToaster();
 const detailsItem = useCurrentItemForDetails();
 
-const menuEl = shallowRef<HTMLElement | null>(null);
+const menuEl = useTemplateRef('menuEl');
 const currentlyConfirming = ref(-1); // You can confirm one at a time
 
 const actions = [

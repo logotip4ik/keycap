@@ -8,8 +8,8 @@ const oauthEnabled = import.meta.config.oauthEnabled;
 const user = useUser();
 const createToast = useToaster();
 
-const emailComp = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);
-const passwordComp = shallowRef<ComponentPublicInstance<HTMLInputElement> | null>(null);
+const emailComp = useTemplateRef('emailComp');
+const passwordComp = useTemplateRef('passwordComp');
 
 const isLoading = ref(false);
 
