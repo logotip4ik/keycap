@@ -36,7 +36,12 @@ const prevSelection = { start: -1, end: -1 };
 
 let prevContainerWidth: number;
 function rememberContainer(el: Element) {
-  prevContainerWidth = getElementWidth(el.parentElement);
+  const parent = el.parentElement;
+  if (parent) {
+    stopAnimations(parent);
+  }
+
+  prevContainerWidth = getElementWidth(parent);
 }
 
 function animateContainer(el: Element) {

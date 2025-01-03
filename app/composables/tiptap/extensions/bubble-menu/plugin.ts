@@ -196,6 +196,8 @@ export class BubbleMenuView {
     this.element.style.visibility = 'visible';
 
     if (shouldAnimate) {
+      stopAnimations(this.element);
+
       this.element.animate([
         { opacity: 0 },
         { opacity: 1 },

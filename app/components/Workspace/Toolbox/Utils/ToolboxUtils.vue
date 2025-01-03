@@ -14,24 +14,38 @@ const { state } = useToolboxState();
 const utilsComp = useTemplateRef('utilsComp');
 
 interface Util {
+  id: number
   shouldShow?: ComputedRef<boolean>
   component: Component
 };
 
 const utils: Array<Util> = [
-  { component: LazyWorkspaceToolboxUtilsButtonSearch },
   {
+    id: 1,
+    component: LazyWorkspaceToolboxUtilsButtonSearch,
+  },
+  {
+    id: 2,
     shouldShow: computed(() => !!route.params.note && route.params.note !== BLANK_NOTE_NAME),
     component: LazyWorkspaceToolboxUtilsButtonItemDetails,
   },
-  { component: LazyWorkspaceToolboxUtilsButtonShortcuts },
+  {
+    id: 3,
+    component: LazyWorkspaceToolboxUtilsButtonShortcuts,
+  },
 ];
+
+const filteredUtils = computed(() => {
+  return utils.filter((util) => !util.shouldShow || util.shouldShow.value === true);
+});
 
 let prevHeight: number;
 function rememberHeight() {
   if (!utilsComp.value) {
     return;
   }
+
+  stopAnimations(utilsComp.value.$el);
 
   prevHeight = utilsComp.value.$el.clientHeight;
 }
@@ -62,15 +76,14 @@ function hideIfNeeded() {
     @before-enter="rememberHeight"
     @before-leave="rememberHeight"
   >
-    <template v-for="(util, idx) in utils" :key="idx">
-      <li
-        v-if="unref(util.shouldShow) ?? true"
-        class="toolbox__utils__item"
-        @click="hideIfNeeded"
-      >
-        <Component :is="util.component" />
-      </li>
-    </template>
+    <li
+      v-for="util in filteredUtils"
+      :key="util.id"
+      class="toolbox__utils__item"
+      @click="hideIfNeeded"
+    >
+      <Component :is="util.component" />
+    </li>
   </WithListTransitionGroup>
 </template>
 

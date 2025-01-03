@@ -5,9 +5,10 @@ const props = defineProps<{
 }>();
 
 let prevHeight: number;
-let prevAnimation: Animation | undefined;
 function rememberHeight() {
   if (props.animateEl) {
+    stopAnimations(props.animateEl);
+
     prevHeight = props.animateEl.clientHeight;
   }
 }
@@ -17,18 +18,12 @@ function animateHeight() {
     return;
   }
 
-  if (prevAnimation) {
-    prevAnimation.cancel();
-  }
-
   const currentHeight = props.animateEl.clientHeight;
 
-  prevAnimation = props.animateEl.animate([
+  props.animateEl.animate([
     { height: `${prevHeight}px` },
     { height: `${currentHeight}px` },
   ], { duration: 225, easing: 'cubic-bezier(0.33, 1, 0.68, 1)' });
-
-  prevAnimation.addEventListener('finish', () => prevAnimation = undefined);
 }
 </script>
 
