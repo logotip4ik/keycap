@@ -99,7 +99,7 @@ const networkFirstHandler = new NetworkFirst();
 function workspaceHandlerWithFallback(event: FetchEvent) {
   return Promise.race<Response>([
     networkFirstHandler.handle(event),
-    new Promise((_, reject) => setTimeout(reject, 5000)),
+    new Promise((_, reject) => setTimeout(reject, 750)),
   ])
     .catch(
       async () => await caches.match(workspacePath!) || Response.error(),
