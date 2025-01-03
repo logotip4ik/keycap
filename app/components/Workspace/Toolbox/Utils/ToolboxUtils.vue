@@ -4,7 +4,6 @@ import {
   LazyWorkspaceToolboxUtilsButtonSearch,
   LazyWorkspaceToolboxUtilsButtonShortcuts,
 } from '#components';
-import ListTransitionGroup from '~/components/With/ListTransitionGroup';
 
 import { useToolboxState } from '../config';
 
@@ -54,7 +53,7 @@ function hideIfNeeded() {
 </script>
 
 <template>
-  <ListTransitionGroup
+  <WithListTransitionGroup
     ref="utilsComp"
     tag="ul"
     class="toolbox__utils"
@@ -72,7 +71,7 @@ function hideIfNeeded() {
         <Component :is="util.component" />
       </li>
     </template>
-  </ListTransitionGroup>
+  </WithListTransitionGroup>
 </template>
 
 <style lang="scss">
