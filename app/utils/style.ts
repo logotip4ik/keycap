@@ -9,8 +9,11 @@ export function getElementWidth(el: Element | undefined | null): number {
 }
 
 export function stopAnimations(el: HTMLElement) {
-  const animations = el.getAnimations();
-  for (const animation of animations) {
-    animation.cancel();
+  // getAnimations is not available in happy-dom
+  const animations = el.getAnimations?.();
+  if (animations) {
+    for (const animation of animations) {
+      animation.cancel();
+    }
   }
 }
