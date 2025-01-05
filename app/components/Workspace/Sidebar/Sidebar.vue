@@ -54,7 +54,11 @@ function maybeFocusEditor(element: HTMLElement) {
 }
 
 watch(state, debounce((state: SidebarState) => {
-  updateTabindexForFocusableElements(state);
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      updateTabindexForFocusableElements(state);
+    });
+  });
 
   const cookieValue = state === 'visible' ? 'hidden' : state;
   setUCookie(props.name, cookieValue, {
@@ -66,7 +70,11 @@ watch(state, debounce((state: SidebarState) => {
 }, 375));
 
 watch(focusableElements, debounce(() => {
-  updateTabindexForFocusableElements(state.value);
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      updateTabindexForFocusableElements(state.value);
+    });
+  });
 }, 375));
 
 useClickOutside(sidebar, () => hideIf('visible'));
@@ -223,11 +231,6 @@ $breakpoint-one: $sidebar-breakpoint-one;
     box-shadow: none;
 
     transform:
-      scale3d(
-        var(--sidebar-hidden-scale),
-        var(--sidebar-hidden-scale),
-        1
-      )
       translate3d(
         calc(-1 * var(--dir) * var(--sidebar-width)),
         0,

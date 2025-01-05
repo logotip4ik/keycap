@@ -43,14 +43,9 @@ const { state } = inject(props.injectionKey)!;
   &--exposed {
     transform:
       translate3d(
-        calc(var(--dir) * var(--sidebar-width) + var(--dir) * 1px),
-        1px,
+        calc(var(--dir) * var(--sidebar-width)),
+        0,
         0
-      )
-      scale3d(
-        calc(2 - var(--sidebar-hidden-scale)),
-        calc(2 - var(--sidebar-hidden-scale)),
-        1
       )
     ;
   }
