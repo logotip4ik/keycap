@@ -1,6 +1,49 @@
 # Changelog
 
 
+## v3.16.0
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.21...v3.16.0)
+
+### 🚀 Enhancements
+
+- Generate shortcuts for web manifest ([497f7a01](https://github.com/logotip4ik/keycap/commit/497f7a01))
+
+### 🩹 Fixes
+
+- **ci:** Prepare nuxt before running tests ([7f0650fc](https://github.com/logotip4ik/keycap/commit/7f0650fc))
+- Use !important to ensure list transition would work ([69ddd8d6](https://github.com/logotip4ik/keycap/commit/69ddd8d6))
+- Stop animations before running new animations ([b8b9785c](https://github.com/logotip4ik/keycap/commit/b8b9785c))
+- **tests:** GetAnimations is not available in happy-dom env, so calling undefined would throw an error ([23c90a88](https://github.com/logotip4ik/keycap/commit/23c90a88))
+
+### 💅 Refactors
+
+- Use new `useTemplateRef` composable to get typesafe refs into template ([3a55903c](https://github.com/logotip4ik/keycap/commit/3a55903c))
+- **k-fetch:** Prevent reactivity update if objects are the same ([084fbadc](https://github.com/logotip4ik/keycap/commit/084fbadc))
+- Use `useKFetch` for recent notes ([e9bfcb29](https://github.com/logotip4ik/keycap/commit/e9bfcb29))
+- Make sidebar animation more performant ([e996524b](https://github.com/logotip4ik/keycap/commit/e996524b))
+
+### 🏡 Chore
+
+- **release:** V3.15.21 ([67d77a64](https://github.com/logotip4ik/keycap/commit/67d77a64))
+- Remove year from keycap footer copyright ([32cd4628](https://github.com/logotip4ik/keycap/commit/32cd4628))
+- Revert type changes caused by unstorage regression ([375c0a23](https://github.com/logotip4ik/keycap/commit/375c0a23))
+- Remove year from footer copyright ([eac850bc](https://github.com/logotip4ik/keycap/commit/eac850bc))
+- Use auto-imported ListTransitionGroup ([ed75aaa3](https://github.com/logotip4ik/keycap/commit/ed75aaa3))
+- Lower wait time for server to respond ([2c9ccf47](https://github.com/logotip4ik/keycap/commit/2c9ccf47))
+- Update deps ([60f448fe](https://github.com/logotip4ik/keycap/commit/60f448fe))
+- Update yarn ([82447a80](https://github.com/logotip4ik/keycap/commit/82447a80))
+- Bump nuxt and other deps to latest version ([e792ae24](https://github.com/logotip4ik/keycap/commit/e792ae24))
+
+### 🤖 CI
+
+- Run tests on push ([7dbfbbe1](https://github.com/logotip4ik/keycap/commit/7dbfbbe1))
+- Run size tests along side unit tests ([452b0135](https://github.com/logotip4ik/keycap/commit/452b0135))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.15.21
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.20...v3.15.21)
