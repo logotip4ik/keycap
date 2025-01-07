@@ -9,6 +9,8 @@ function openShortcuts() {
 <template>
   <button
     class="toolbox__utils__item__btn"
+    aria-haspopup="true"
+    aria-controls="shortcuts-modal"
     aria-label="open shortcuts"
     @click="openShortcuts"
   >

@@ -80,6 +80,8 @@ function showMenu(event: Event) {
       v-if="isSmallScreen"
       class="list__item__edit"
       :aria-label="`show ${isFolder ? 'folder' : 'note'} actions`"
+      aria-haspopup="menu"
+      aria-controls="item-menu"
       @click.prevent.stop="linkComp && onShowMenu(linkComp?.$el)"
     >
       <Icon name="baseline-more-vert" class="list__item__icon list__item__icon--edit" />

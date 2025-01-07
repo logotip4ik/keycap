@@ -9,6 +9,8 @@ function openSearch() {
 <template>
   <button
     class="toolbox__utils__item__btn"
+    aria-haspopup="true"
+    aria-controls="search-modal"
     aria-label="open quick search"
     @click="openSearch"
   >

@@ -29,7 +29,7 @@ function humanizeShortcut(shortcut: string) {
 
 <template>
   <WithBackdrop class="shortcuts__wrapper" @click.self="onClose">
-    <WorkspaceModal class="shortcuts" @close="onClose">
+    <WorkspaceModal id="shortcuts-modal" class="shortcuts" @close="onClose">
       <WorkspaceModalCloseButton @click="onClose" />
 
       <div class="shortcuts__item">

@@ -150,6 +150,7 @@ onBeforeUnmount(() => {
   <Teleport :to="props.target.parentElement">
     <WithFadeTransition appear>
       <ul
+        id="item-menu"
         ref="menuEl"
         role="menu"
         class="item-context-menu fast-fade"

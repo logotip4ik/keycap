@@ -110,7 +110,7 @@ useTinykeys({
 
 <template>
   <WithBackdrop class="search__wrapper" @click.self="onClose">
-    <WorkspaceModal ref="searchComp" class="search" @close="onClose">
+    <WorkspaceModal id="search-modal" ref="searchComp" class="search" @close="onClose">
       <form class="search__form" @submit.prevent="openItem">
         <WorkspaceSearchInput
           ref="inputEl"
