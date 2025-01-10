@@ -12,6 +12,8 @@ const { data: note, error } = await useAsyncData('share', async () => {
   });
 
   return res.data;
+}, {
+  pick: ['name', 'updatedAt'],
 });
 
 if (error.value || !note.value) {
@@ -44,7 +46,10 @@ useSeoMeta({
     />
 
     <main class="note-view__main">
-      <NoteRenderer class="note-view__main__note-renderer" :content="note.content!" />
+      <NoteRenderer
+        class="note-view__main__note-renderer"
+        :shared-link="route.params.link"
+      />
     </main>
 
     <PagesViewFooter />

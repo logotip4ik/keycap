@@ -2,10 +2,20 @@
 import sanitizeHTML from 'sanitize-html';
 
 const props = defineProps<{
-  content: string
+  sharedLink: string
 }>();
 
-const sanitized = sanitizeHTML(props.content, {
+const fetch = useRequestFetch();
+const { data: note } = await fetch<{ data: SharedNote }>(`/api/share/${props.sharedLink}`, {
+  responseType: 'json',
+  headers: protectionHeaders,
+}).catch((e) => {
+  sendError(e, { nuxt: true });
+
+  throw createError('Failed fetching shared note.');
+});
+
+const sanitized = sanitizeHTML(note.content || '', {
   allowedTags: [
     ...sanitizeHTML.defaults.allowedTags,
     'label',
