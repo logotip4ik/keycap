@@ -24,12 +24,14 @@ function updateFocusableElements() {
 }
 
 function updateTabindexForFocusableElements(currentState: SidebarState) {
+  const isHidden = currentState === 'hidden';
+
   for (const el of focusableElements.value) {
     if (el.dataset.openButton !== undefined) {
       continue;
     }
 
-    if (currentState === 'hidden') {
+    if (isHidden) {
       el.setAttribute('tabindex', '-1');
     }
     else {
@@ -54,10 +56,8 @@ function maybeFocusEditor(element: HTMLElement) {
 }
 
 watch(state, debounce((state: SidebarState) => {
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      updateTabindexForFocusableElements(state);
-    });
+  nextTick(() => {
+    updateTabindexForFocusableElements(state);
   });
 
   const cookieValue = state === 'visible' ? 'hidden' : state;
@@ -70,10 +70,8 @@ watch(state, debounce((state: SidebarState) => {
 }, 375));
 
 watch(focusableElements, debounce(() => {
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      updateTabindexForFocusableElements(state.value);
-    });
+  nextTick(() => {
+    updateTabindexForFocusableElements(state.value);
   });
 }, 375));
 

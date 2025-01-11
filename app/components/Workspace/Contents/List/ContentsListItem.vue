@@ -21,7 +21,7 @@ const isActive = computed(() => itemHref.value === route.path);
 
 function unpinIfNeeded() {
   if (isSmallScreen.value && !isFolder) {
-    requestIdleCallback(() => {
+    nextTick(() => {
       contentsState.value = 'hidden';
     });
   }
