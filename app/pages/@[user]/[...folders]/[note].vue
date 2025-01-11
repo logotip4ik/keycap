@@ -188,5 +188,13 @@ if (import.meta.client) {
   @media (max-width: $breakpoint-tablet) {
     width: 100%;
   }
+
+  &.fade-enter-active {
+    transition-property: transform, opacity;
+  }
+
+  &.fade-enter-from {
+    transform: scale3d(0.995, 0.995, 1);
+  }
 }
 </style>
