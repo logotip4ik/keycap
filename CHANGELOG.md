@@ -1,6 +1,30 @@
 # Changelog
 
 
+## v3.16.1
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.16.0...v3.16.1)
+
+### 🩹 Fixes
+
+- Don't put note content into client bundle ([0773986c](https://github.com/logotip4ik/keycap/commit/0773986c))
+
+### 💅 Refactors
+
+- Make less force reflows ([27668b30](https://github.com/logotip4ik/keycap/commit/27668b30))
+
+### 🏡 Chore
+
+- **release:** V3.16.0 ([dc3a2d6a](https://github.com/logotip4ik/keycap/commit/dc3a2d6a))
+- Add aria haspop hints ([de8de373](https://github.com/logotip4ik/keycap/commit/de8de373))
+- Better defaults for editor marks ([8cee217e](https://github.com/logotip4ik/keycap/commit/8cee217e))
+- Update deps ([9dff65a3](https://github.com/logotip4ik/keycap/commit/9dff65a3))
+- Add little scale animation to note editor ([565d6470](https://github.com/logotip4ik/keycap/commit/565d6470))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.16.0
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.15.21...v3.16.0)
