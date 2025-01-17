@@ -2,7 +2,10 @@ const TABBABLE_ELs = 'input:not([disabled]),select:not([disabled]),textarea:not(
 
 export function useFocusTrap(
   el: MaybeRef<HTMLElement | null | undefined>,
-  opts?: { handleInitialFocusing?: boolean, handleLastElementFocus?: (lastElement: HTMLElement) => boolean | void },
+  opts?: {
+    handleInitialFocusing?: boolean
+    handleLastElementFocus?: ((lastElement: HTMLElement) => boolean | void) | false
+  },
 ) {
   if (import.meta.server) {
     return;
@@ -17,7 +20,11 @@ export function useFocusTrap(
   let scheduled: boolean = true;
 
   function tryFocusLastElement() {
-    if (!isSmallScreen.value && lastFocusedEl) {
+    if (
+      !isSmallScreen.value
+      && opts?.handleLastElementFocus !== false
+      && lastFocusedEl
+    ) {
       const handledLastElementFocus = opts?.handleLastElementFocus?.(lastFocusedEl) === true;
 
       if (!handledLastElementFocus) {

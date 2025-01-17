@@ -250,7 +250,7 @@ watch(() => props.editor.state.selection, (selection) => {
   prevTextSelection = textSelection;
 });
 
-useFocusTrap(formatterEl);
+useFocusTrap(formatterEl, { handleLastElementFocus: false });
 </script>
 
 <template>
