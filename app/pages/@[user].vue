@@ -31,10 +31,12 @@ watch(isShowingSearch, async (search, _, onCleanup) => {
   query.search = search ? null : undefined;
 
   onCleanup(
-    on(window, 'popstate', () => isShowingSearch.value = false),
+    on(window, 'popstate', () => {
+      isShowingSearch.value = false;
+    }, { once: true }),
   );
 
-  await navigateTo({ ...route, query });
+  await navigateTo({ query });
 });
 
 useHead({
