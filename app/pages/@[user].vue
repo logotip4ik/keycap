@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { LocationQueryValue } from '#vue-router';
+
 definePageMeta({
   validate(route) {
     const user = useUser();
@@ -23,12 +25,14 @@ mitt.on('shortcuts:show', () => isShowingShortcuts.value = true);
 const isNoteEmpty = computed(() => !route.params.note || route.params.note === BLANK_NOTE_NAME);
 
 watch(isShowingSearch, async (search, _, onCleanup) => {
-  const query = { ...route.query };
-
-  // `undefined` and empty array removes param from query
-  // `null` means that query param should be there but value should be empty
-  // @ts-expect-error idk why it is not happy, but it works
-  query.search = search ? null : undefined;
+  let newQuery: Record<string, LocationQueryValue | Array<LocationQueryValue>>;
+  if (search) {
+    newQuery = { ...route.query, search: null };
+  }
+  else {
+    const { search, ...queryWithoutSearch } = route.query;
+    newQuery = queryWithoutSearch;
+  }
 
   onCleanup(
     on(window, 'popstate', () => {
@@ -36,7 +40,7 @@ watch(isShowingSearch, async (search, _, onCleanup) => {
     }, { once: true }),
   );
 
-  await navigateTo({ query });
+  await navigateTo({ query: newQuery });
 });
 
 useHead({
