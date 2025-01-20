@@ -1,6 +1,29 @@
 # Changelog
 
 
+## v3.16.2
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.16.1...v3.16.2)
+
+### 🩹 Fixes
+
+- Don't rerender some pages when user opens search ([9d3c23b4](https://github.com/logotip4ik/keycap/commit/9d3c23b4))
+- Prevent last element focusing from note editor ([dffda9a4](https://github.com/logotip4ik/keycap/commit/dffda9a4))
+
+### 💅 Refactors
+
+- Remove ts-expect-error from code ([01ea3df6](https://github.com/logotip4ik/keycap/commit/01ea3df6))
+
+### 🏡 Chore
+
+- **release:** V3.16.1 ([5b2fac7c](https://github.com/logotip4ik/keycap/commit/5b2fac7c))
+- Update deps ([c955ce06](https://github.com/logotip4ik/keycap/commit/c955ce06))
+- Downgrade vitest until issues resolved within nuxt/test-utils ([61a16e41](https://github.com/logotip4ik/keycap/commit/61a16e41))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.16.1
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.16.0...v3.16.1)
