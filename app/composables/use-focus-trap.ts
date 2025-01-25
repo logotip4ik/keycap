@@ -46,8 +46,8 @@ export function useFocusTrap(
     return cachedEls;
   }
 
-  const stopWatch = watch(() => unref(el), async (el) => {
-    stop();
+  watch(() => unref(el), async (el) => {
+    cleanup();
 
     if (!el) {
       return tryFocusLastElement();
@@ -94,8 +94,7 @@ export function useFocusTrap(
     });
   });
 
-  function stop() {
-    stopWatch();
+  function cleanup() {
     off?.();
     observer?.disconnect();
 
@@ -107,10 +106,8 @@ export function useFocusTrap(
 
   onScopeDispose(() => {
     tryFocusLastElement();
-    stop();
+    cleanup();
   });
-
-  return stop;
 }
 
 function isElementHidden(node: HTMLElement) {
