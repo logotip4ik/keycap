@@ -89,33 +89,31 @@ useFocusTrap(emojiPickerEl);
 </script>
 
 <template>
-  <div>
-    <Teleport to="#teleports">
-      <WithFadeTransition>
-        <ul v-if="isVisible" ref="emojiPickerEl" class="emoji-picker">
-          <li v-for="(emoji, i) in items" :key="emoji.id" class="emoji-picker__item">
-            <WithTooltip
-              v-slot="{ ref, tooltipId }"
-              :tooltip="emoji.name"
-              :y-offset="3"
+  <Teleport to="#teleports">
+    <WithFadeTransition>
+      <ul v-if="isVisible" ref="emojiPickerEl" class="emoji-picker">
+        <li v-for="(emoji, i) in items" :key="emoji.id" class="emoji-picker__item">
+          <WithTooltip
+            v-slot="{ ref, tooltipId }"
+            :tooltip="emoji.name"
+            :y-offset="3"
+          >
+            <button
+              :ref
+              class="emoji-picker__item__button"
+              :aria-describedby="tooltipId"
+              :aria-selected="selectedEmoji === i"
+              :data-backlight-content="getNativeSkin(emoji)"
+              @focus="selectedEmoji = i"
+              @click="onSelect?.(emoji)"
             >
-              <button
-                :ref
-                class="emoji-picker__item__button"
-                :aria-describedby="tooltipId"
-                :aria-selected="selectedEmoji === i"
-                :data-backlight-content="getNativeSkin(emoji)"
-                @focus="selectedEmoji = i"
-                @click="onSelect?.(emoji)"
-              >
-                {{ getNativeSkin(emoji) }}
-              </button>
-            </WithTooltip>
-          </li>
-        </ul>
-      </WithFadeTransition>
-    </Teleport>
-  </div>
+              {{ getNativeSkin(emoji) }}
+            </button>
+          </WithTooltip>
+        </li>
+      </ul>
+    </WithFadeTransition>
+  </Teleport>
 </template>
 
 <style lang="scss">
