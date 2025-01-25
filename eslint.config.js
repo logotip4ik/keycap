@@ -49,6 +49,7 @@ export default antfu({
     'archive',
     'prisma/migrations',
     'kysely/db',
+    'kysely/seed.ts',
     'public',
     'docker-compose.*',
     'package.json',
