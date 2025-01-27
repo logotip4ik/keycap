@@ -1,6 +1,31 @@
 # Changelog
 
 
+## v3.16.3
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.16.2...v3.16.3)
+
+### 🩹 Fixes
+
+- **focus-trap:** Don't stop watcher when element is removed from dom ([e317b116](https://github.com/logotip4ik/keycap/commit/e317b116))
+
+### 🏡 Chore
+
+- **release:** V3.16.2 ([86ae52c6](https://github.com/logotip4ik/keycap/commit/86ae52c6))
+- Update deps ([4fdf3424](https://github.com/logotip4ik/keycap/commit/4fdf3424))
+- Update deps ([1bdf4af5](https://github.com/logotip4ik/keycap/commit/1bdf4af5))
+- Remove all indecies ([c4937a73](https://github.com/logotip4ik/keycap/commit/c4937a73))
+- Allow creating lots of random users ([30e8bb7d](https://github.com/logotip4ik/keycap/commit/30e8bb7d))
+- Downgrade vitest once again and disallow updating it for now ([91cee86c](https://github.com/logotip4ik/keycap/commit/91cee86c))
+- Oops ([93e3108a](https://github.com/logotip4ik/keycap/commit/93e3108a))
+- Remove `get` only method from sabayon fallback ([f6fad22a](https://github.com/logotip4ik/keycap/commit/f6fad22a))
+- Remove wrapping div from emojipicker component ([07993bcf](https://github.com/logotip4ik/keycap/commit/07993bcf))
+- Don't lint kysely seed file ([dbea2ed0](https://github.com/logotip4ik/keycap/commit/dbea2ed0))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.16.2
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.16.1...v3.16.2)
