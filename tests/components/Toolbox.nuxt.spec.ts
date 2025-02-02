@@ -18,17 +18,6 @@ mockNuxtImport('getUser', () => {
   return () => ({ id: '1', username: 'testing', email: 'help' });
 });
 
-mockNuxtImport('useRoute', () => {
-  return () => ({
-    path: '/@testing/something/note',
-    params: {
-      user: 'testing',
-      folders: ['something'],
-      note: 'note',
-    },
-  });
-});
-
 registerEndpoint('/api/recent', (): { data: Array<{ id: string, name: string, path: string }> } => {
   return {
     data: [

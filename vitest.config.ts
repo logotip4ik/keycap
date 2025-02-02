@@ -5,6 +5,7 @@ export default defineVitestConfig({
   assetsInclude: ['**.html'],
   test: {
     mockReset: true,
+    globals: true,
 
     root: './',
 
