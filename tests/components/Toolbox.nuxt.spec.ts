@@ -56,7 +56,7 @@ async function getComponent() {
   };
 }
 
-describe('component Contents', () => {
+describe('component Toolbox', () => {
   beforeAll(() => {
     vi.stubGlobal('indexedDB', proxy);
   });
