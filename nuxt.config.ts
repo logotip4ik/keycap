@@ -15,7 +15,7 @@ import { InvariantOptimization } from './unplugin/invariant-optimization';
 import { parseDurationFunctionName, ParseDurationTransformPlugin } from './unplugin/parse-duration';
 
 export default defineNuxtConfig({
-  compatibilityDate: '2024-07-06',
+  compatibilityDate: '2024-11-01',
 
   devtools: { enabled: true },
 
@@ -119,10 +119,6 @@ export default defineNuxtConfig({
       {
         from: resolve('./config/breakpoints.ts'),
         imports: ['breakpoints', 'sidebarsBreakpoints'],
-      },
-      {
-        from: resolve('./app/composables/tiptap/index.ts'),
-        imports: ['useTiptap', 'withTiptapEditor'],
       },
     ],
 
