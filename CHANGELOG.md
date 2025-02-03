@@ -1,6 +1,27 @@
 # Changelog
 
 
+## v3.16.4
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.16.3...v3.16.4)
+
+### 🩹 Fixes
+
+- Rename test ([4cdba434](https://github.com/logotip4ik/keycap/commit/4cdba434))
+
+### 🏡 Chore
+
+- **release:** V3.16.3 ([ffd5c211](https://github.com/logotip4ik/keycap/commit/ffd5c211))
+- Update deps ([25daddbc](https://github.com/logotip4ik/keycap/commit/25daddbc))
+- Remove vitest-environment-nuxt from root package.json ([2c43591e](https://github.com/logotip4ik/keycap/commit/2c43591e))
+- Reexport tiptap composables from index file rather then using nuxt imports ([d8b30093](https://github.com/logotip4ik/keycap/commit/d8b30093))
+- **test:** Remove not needed mock ([dfe9e8e3](https://github.com/logotip4ik/keycap/commit/dfe9e8e3))
+- Reexport tiptap composables from index file rather then using nuxt imports" ([70c29e22](https://github.com/logotip4ik/keycap/commit/70c29e22))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.16.3
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.16.2...v3.16.3)
