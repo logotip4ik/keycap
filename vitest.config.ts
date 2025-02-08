@@ -14,7 +14,7 @@ export default defineVitestConfig({
       threads: {
         maxThreads: 1,
         minThreads: 1,
-      }
+      },
     },
 
     setupFiles: [
