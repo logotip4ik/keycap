@@ -1,6 +1,20 @@
 # Changelog
 
 
+## v3.16.5
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.16.4...v3.16.5)
+
+### 🏡 Chore
+
+- **release:** V3.16.4 ([0af77beb](https://github.com/logotip4ik/keycap/commit/0af77beb))
+- Update deps ([07adcf2d](https://github.com/logotip4ik/keycap/commit/07adcf2d))
+- Maybe fix flacky tests ([d080ea8b](https://github.com/logotip4ik/keycap/commit/d080ea8b))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.16.4
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.16.3...v3.16.4)
