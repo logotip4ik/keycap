@@ -108,9 +108,7 @@ export function useKFetch<TData>(path: MaybeRefOrGetter<string>, {
           cached = await cached;
         }
 
-        if (cached) {
-          data.value = cached as Awaited<typeof cached>;
-        }
+        data.value ||= cached as Awaited<typeof cached>;
       })
       .finally(() => {
         const multiplier = document.visibilityState === 'visible' ? 1 : 2;
@@ -135,7 +133,10 @@ export function useKFetch<TData>(path: MaybeRefOrGetter<string>, {
 
     loadingToastInstance = getLoadingToast?.({ hasCachedItem: !!cached });
 
-    data.value = cached as Awaited<typeof cached>;
+    // there was a race condition, right after `if (data.value)` check and `await cached`. After
+    // await, we did set the value, but overwrote it with `undefined` because there wasn't cached
+    // version
+    data.value ||= cached as Awaited<typeof cached>;
   };
 
   innerFetch();
