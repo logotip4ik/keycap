@@ -4,6 +4,7 @@
   &__wrapper {
     position: relative;
     z-index: 0;
+    isolation: isolate;
 
     height: 100%;
   }
@@ -78,7 +79,6 @@
           &[data-checked="true"] {
             opacity: 0.625;
             filter: blur(0.75px);
-            transform: translate3d(0, 0, 0);
 
             &:is(:hover, :focus-within) {
               opacity: 0.9;
@@ -215,5 +215,12 @@
     &>*:is(h1, h2, h3):first-child {
       padding-top: 0;
     }
+
+  }
+}
+
+.safari .note-editor .ProseMirror {
+  [data-checked="true"] {
+    transform: translate3d(0,0,0);
   }
 }
