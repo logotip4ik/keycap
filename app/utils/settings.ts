@@ -14,6 +14,7 @@ export const SETTINGS_PREFIX = 's:';
 export const settings = {
   formatterPosition: 'fmt-pos',
   spellcheck: 'splchk',
+  scrollPosition: 'scrl-pos',
 } as const;
 
 const settingsDefinitions = {
@@ -22,6 +23,10 @@ const settingsDefinitions = {
     posibleValues: ['top', 'bottom'] as const,
   }),
   [settings.spellcheck]: defineSetting({
+    defaultValue: 'no',
+    posibleValues: ['yes', 'no'] as const,
+  }),
+  [settings.scrollPosition]: defineSetting({
     defaultValue: 'no',
     posibleValues: ['yes', 'no'] as const,
   }),

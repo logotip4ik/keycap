@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import FormatterPositionSetting from './Item/FormatterPosition.vue';
 import SpellCheck from './Item/SpellCheck.vue';
+import RememberScrollPosition from './Item/RememberScrollPosition.vue';
 
 const settingComponents = [
   FormatterPositionSetting,
   SpellCheck,
+  RememberScrollPosition,
 ];
 </script>
 

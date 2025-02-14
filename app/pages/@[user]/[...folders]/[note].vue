@@ -11,6 +11,7 @@ const offlineStorage = getOfflineStorage();
 const currentItemForDetails = useCurrentItemForDetails();
 const user = useRequiredUser();
 const mitt = useMitt();
+const { setting: shouldRememberScroll } = useSetting(settings.scrollPosition);
 const { isFirefox } = useDevice();
 
 const noteApiPath = computed(() => route.path.substring(2 + user.value.username.length));
@@ -176,7 +177,9 @@ const stop = watch(note, (hasNote) => {
   }
 
   nextTick(() => stop());
-  restoreScroll();
+  if (shouldRememberScroll.value === 'yes') {
+    restoreScroll();
+  }
 }, { immediate: import.meta.client, flush: 'post' });
 
 if (import.meta.client) {
@@ -186,7 +189,9 @@ if (import.meta.client) {
     failedSaveToast?.remove();
     failedSaveToast = undefined;
 
-    storeScroll();
+    if (shouldRememberScroll.value === 'yes') {
+      storeScroll();
+    }
   });
 };
 </script>
