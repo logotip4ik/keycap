@@ -158,7 +158,7 @@ function restoreScroll() {
         left: 0,
         behavior: isFirefox.value ? 'smooth' : 'auto',
       });
-    })
+    });
   }
 }
 

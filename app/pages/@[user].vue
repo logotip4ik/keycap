@@ -78,7 +78,7 @@ useTinykeys({
       left: 0,
       behavior: 'smooth',
     });
-  }
+  },
 });
 
 if (import.meta.client) {
