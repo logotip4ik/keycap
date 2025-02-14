@@ -63,10 +63,10 @@ function initTiptap(opts: {
       ListItem,
       HardBreak,
       Heading.configure({ levels: [1, 2, 3] }),
-      Bold.extend({ inclusive: true, exitable: true }),
-      Italic.extend({ inclusive: true, exitable: true }),
-      Strike.extend({ inclusive: true, exitable: true }),
-      Highlight.extend({ inclusive: true, exitable: true }),
+      Bold.extend({ inclusive: true, exitable: true, keepOnSplit: false }),
+      Italic.extend({ inclusive: true, exitable: true, keepOnSplit: false }),
+      Strike.extend({ inclusive: true, exitable: true, keepOnSplit: false }),
+      Highlight.extend({ inclusive: true, exitable: true, keepOnSplit: false }),
       Link,
       TaskList,
       TaskItem,
@@ -90,9 +90,7 @@ function initTiptap(opts: {
           spellcheck: { default: 'false' },
         },
       }),
-      History.configure({
-        depth: 100,
-      }),
+      History.configure({ depth: 100 }),
       Placeholder.configure({
         placeholder: ({ editor }) =>
           editor.isEmpty ? '# Start with heading...' : 'Write something...',
