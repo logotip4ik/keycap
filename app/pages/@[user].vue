@@ -15,6 +15,8 @@ const mitt = useMitt();
 const isFallback = useFallbackMode();
 const { shortcuts } = useAppConfig();
 
+const noteContainerEl = useTemplateRef('noteContainerEl');
+
 const currentItemForDetails = useCurrentItemForDetails();
 
 const isShowingShortcuts = ref(false);
@@ -85,14 +87,14 @@ onMounted(() => {
   <div id="workspace" class="workspace">
     <LazyWorkspaceToolbox />
 
-    <main class="workspace__note">
+    <main ref="noteContainerEl" class="workspace__note">
       <LazyWorkspaceBannerNoConnection v-if="isFallback" />
 
       <WithFadeTransition>
         <LazyWorkspaceWelcome v-if="isNoteEmpty" />
 
         <div v-else style="height: 100%;">
-          <NuxtPage :transition="{ name: 'fade' }" />
+          <NuxtPage :transition="{ name: 'fade' }" :note-container-el />
         </div>
       </WithFadeTransition>
     </main>

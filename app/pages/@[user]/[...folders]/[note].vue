@@ -1,4 +1,8 @@
 <script setup lang="ts">
+const props = defineProps<{
+  noteContainerEl: HTMLDivElement | null
+}>();
+
 const route = useRoute();
 const isFallbackMode = useFallbackMode();
 const notesCache = useNotesCache();
@@ -7,6 +11,7 @@ const offlineStorage = getOfflineStorage();
 const currentItemForDetails = useCurrentItemForDetails();
 const user = useRequiredUser();
 const mitt = useMitt();
+const { isFirefox } = useDevice();
 
 const noteApiPath = computed(() => route.path.substring(2 + user.value.username.length));
 const notePath = computed(() => `/${user.value.username}${noteApiPath.value}`);
@@ -136,6 +141,27 @@ function updateNote(content: string, force?: boolean) {
   return throttledUpdateNote(content, abortThrottledSave.signal);
 }
 
+function storeScroll() {
+  const scrollPosition = props.noteContainerEl?.scrollTop;
+  if (scrollPosition != null) {
+    sessionStorage.setItem(notePath.value, scrollPosition.toString());
+  }
+}
+
+function restoreScroll() {
+  // Number(null) will return `0` but Number(`undefined`) will return NaN
+  const scrollPosition = Number(sessionStorage.getItem(notePath.value) || undefined);
+  if (!Number.isNaN(scrollPosition) && Number.isFinite(scrollPosition)) {
+    requestAnimationFrame(() => {
+      props.noteContainerEl?.scrollTo({
+        top: scrollPosition,
+        left: 0,
+        behavior: isFirefox.value ? 'smooth' : 'auto',
+      });
+    })
+  }
+}
+
 mitt.on('refresh:note', () => refresh());
 
 mitt.on('details:show:note', () => {
@@ -144,12 +170,23 @@ mitt.on('details:show:note', () => {
   }
 });
 
+const stop = watch(note, (hasNote) => {
+  if (!hasNote) {
+    return;
+  }
+
+  nextTick(() => stop());
+  restoreScroll();
+}, { immediate: import.meta.client, flush: 'post' });
+
 if (import.meta.client) {
   onBeforeUnmount(() => {
     clearInterval(retryInterval);
-    failedSaveToast?.remove();
 
+    failedSaveToast?.remove();
     failedSaveToast = undefined;
+
+    storeScroll();
   });
 };
 </script>
