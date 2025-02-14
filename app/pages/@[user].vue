@@ -65,6 +65,20 @@ useTinykeys({
     currentItemForDetails.value = undefined;
     isShowingShortcuts.value = false;
   },
+  [shortcuts.scrollToTop]: () => {
+    noteContainerEl.value?.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+  },
+  [shortcuts.scrollToBottom]: () => {
+    noteContainerEl.value?.scrollTo({
+      top: noteContainerEl.value.scrollHeight,
+      left: 0,
+      behavior: 'smooth',
+    });
+  }
 });
 
 if (import.meta.client) {

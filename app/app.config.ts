@@ -5,5 +5,7 @@ export default defineAppConfig({
     search: '$mod+KeyK',
     toolbox: '$mod+Shift+X',
     contents: '$mod+Shift+F',
+    scrollToTop: 'Escape g g',
+    scrollToBottom: 'Escape Shift+G',
   },
 });

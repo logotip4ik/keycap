@@ -11,6 +11,8 @@ const shortcutsDescription = {
   search: 'Show search',
   contents: 'Open contents sidebar',
   toolbox: 'Open toolbox sidebar',
+  scrollToTop: 'Scroll to the top of the note',
+  scrollToBottom: 'Scroll to the bottom of the note',
 } satisfies Record<keyof typeof shortcuts, string>;
 
 const editorShortcuts = {
@@ -123,6 +125,7 @@ function humanizeShortcut(shortcut: string) {
         flex: 1;
 
         width: 100%;
+        min-width: 0.75rem;
         height: 0.1rem;
 
         margin: 0 1rem;
