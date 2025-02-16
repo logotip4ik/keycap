@@ -90,7 +90,7 @@ useFocusTrap(emojiPickerEl);
 
 <template>
   <Teleport to="#teleports">
-    <WithFadeTransition>
+    <WithFadeTransition appear>
       <ul v-if="isVisible" ref="emojiPickerEl" class="emoji-picker">
         <li v-for="(emoji, i) in items" :key="emoji.id" class="emoji-picker__item">
           <WithTooltip

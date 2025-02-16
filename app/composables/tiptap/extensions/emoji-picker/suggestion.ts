@@ -6,7 +6,9 @@ import { PluginKey } from '@tiptap/pm/state';
 import { Suggestion } from '@tiptap/suggestion';
 import { VueRenderer } from '@tiptap/vue-3';
 
-import EmojiPicker from './EmojiPicker.vue';
+const EmojiPicker = defineAsyncComponent(() => {
+  return import('./EmojiPicker.vue');
+});
 
 export function createEmojiPickerSuggestionPlugin({ editor }: { editor: Editor }) {
   const fuzzyWorker = getFuzzyWorker();
