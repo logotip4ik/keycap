@@ -67,7 +67,7 @@ function showMatch(value: string, opts?: { from?: number } | { to?: number }) {
     (node as HTMLElement).scrollIntoView({ block: 'center' });
   }
 }
-const debouncedShowMatch = debounce(showMatch, 10, { trailing: true });
+const debouncedShowMatch = debounce(showMatch, 10);
 
 function handleClose() {
   props.editor.commands.hideAllMatches();
@@ -86,8 +86,6 @@ function focusFind() {
 function handleKeydown(event: KeyboardEvent) {
   const { key, shiftKey } = event;
   switch (key) {
-    case 'Shift':
-      break;
     case 'Tab': {
       event.preventDefault();
 
@@ -149,11 +147,10 @@ onMounted(() => {
   width: 90vw;
   max-width: 575px;
 
-  padding: 0.5rem;
+  padding: 0.4rem;
 
   border-radius: 0.5rem;
   border: 1px solid hsla(var(--text-color-hsl), 0.1);
-  background-color: rgba(var(--surface-color-hsl), 0.98);
   box-shadow:
     inset -1px -1px 0.1rem rgba($color: #000000, $alpha: 0.025),
     1.3px 1.3px 5.3px rgba(0, 0, 0, 0.028),
@@ -162,9 +159,19 @@ onMounted(() => {
 
   transform: translateX(-50%);
 
-  @supports (backdrop-filter: blur(1px)) {
-    backdrop-filter: blur(5px);
-    background-color: hsla(var(--surface-color-hsl), 0.5);
+  &::before {
+    content: '';
+
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    border-radius: inherit;
+
+    background-color: rgba(var(--surface-color-hsl), 0.98);
+    @supports (backdrop-filter: blur(1px)) {
+      backdrop-filter: blur(5px);
+      background-color: hsla(var(--surface-color-hsl), 0.5);
+    }
   }
 
   &__label {
@@ -181,7 +188,7 @@ onMounted(() => {
 
     width: 100%;
 
-    margin: 0 0 0.5rem;
+    margin: 0 0 calc(0.5rem + 1px);
     padding: 0.25rem 0.75rem;
 
     border-radius: 0.25rem;

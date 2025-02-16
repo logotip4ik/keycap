@@ -137,17 +137,12 @@ export const Find = Extension.create({
           init() {
             return DecorationSet.empty;
           },
-          apply(tr, value) {
+          apply(tr) {
             if (storage.decorations.length === 0) {
               return DecorationSet.empty;
             }
 
-            // idk why but when we don't res
-            if (storage.decorations[0] === null) {
-              return value;
-            }
-
-            return DecorationSet.create(tr.doc, storage.decorations);
+            return DecorationSet.create(tr.doc, storage.decorations.slice());
           },
         },
 
