@@ -1,13 +1,25 @@
 <script setup lang="ts">
+import { LazyWorkspaceContentsListItemInput } from '#components';
+
 const mitt = useMitt();
 
 function handleClick() {
   mitt.emit('precreate:item');
 }
+
+function preloadInput() {
+  preloadComponent(LazyWorkspaceContentsListItemInput);
+}
 </script>
 
 <template>
-  <button class="contents__add" aria-label="Create new note or folder" @click="handleClick">
+  <button
+    class="contents__add"
+    aria-label="Create new note or folder"
+    @click="handleClick"
+    @pointerenter="preloadInput"
+    @focus="preloadInput"
+  >
     <Icon name="outline-add" class="contents__add__icon" />
 
     Create new

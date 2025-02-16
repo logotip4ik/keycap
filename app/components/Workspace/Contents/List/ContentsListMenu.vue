@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import {LazyWorkspaceContentsListItemInput } from '#components'
+
 interface MenuAction {
   name: string
   needConfirmation?: boolean
   handler: () => void | Promise<void>
+  onHover?: () => void | Promise<void>
 }
 
 const props = defineProps<{
@@ -18,13 +21,17 @@ const detailsItem = useCurrentItemForDetails();
 const menuEl = useTemplateRef('menuEl');
 const currentlyConfirming = ref(-1); // You can confirm one at a time
 
-const actions = [
+const actions: Array<MenuAction> = [
   { name: 'open in a new tab', handler: openNewTab },
   { name: 'preload', handler: preloadItemWithIndication },
-  { name: 'rename', handler: renameItem },
+  { name: 'rename', handler: renameItem, onHover: preloadListItemInput },
   { name: 'show details', handler: showDetails },
   { name: 'delete', needConfirmation: true, handler: deleteItemWithIndicator },
 ];
+
+function preloadListItemInput() {
+  preloadComponent(LazyWorkspaceContentsListItemInput);
+}
 
 let cleanup: (() => void) | undefined;
 const confirmDuration = parseDuration('5 seconds')!;
@@ -166,6 +173,8 @@ onBeforeUnmount(() => {
             class="item-context-menu__item__button"
             @click="withEffects($event, action)"
             @pointerdown="withEffects($event, action)"
+            @pointerenter="action.onHover"
+            @focus="action.onHover"
           >
             <WithFadeTransition>
               <span v-if="currentlyConfirming !== key">

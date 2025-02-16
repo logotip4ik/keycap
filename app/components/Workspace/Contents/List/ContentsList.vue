@@ -224,10 +224,16 @@ useTinykeys({
           key="1"
           class="contents__list__item"
         >
-          <LazyWorkspaceContentsListItemInput
-            :item="item"
-            :parent="folder"
-          />
+          <Suspense>
+            <LazyWorkspaceContentsListItemInput
+              :item="item"
+              :parent="folder"
+            />
+
+            <template #fallback>
+              <WorkspaceContentsListItemFallback />
+            </template>
+          </Suspense>
         </li>
 
         <li
@@ -235,12 +241,18 @@ useTinykeys({
           key="2"
           class="contents__list__item"
         >
-          <LazyWorkspaceContentsListItem
-            :item="item"
-            :parent="folder"
-            :menu-target="menuOptions.target"
-            @show-menu="showMenu($event, item)"
-          />
+          <Suspense>
+            <LazyWorkspaceContentsListItem
+              :item="item"
+              :parent="folder"
+              :menu-target="menuOptions.target"
+              @show-menu="showMenu($event, item)"
+            />
+
+            <template #fallback>
+              <WorkspaceContentsListItemFallback />
+            </template>
+          </Suspense>
         </li>
       </WithFadeTransition>
     </WithListTransitionGroup>

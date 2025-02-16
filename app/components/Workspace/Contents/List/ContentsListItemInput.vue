@@ -93,7 +93,9 @@ function handleReset() {
 
 onMounted(() => {
   inputEl.value?.focus();
-  inputEl.value?.scrollIntoView();
+  if (!name.value) {
+    inputEl.value?.scrollIntoView({ behavior: 'smooth' });
+  }
 
   isContentsFixed.value = true;
 });
