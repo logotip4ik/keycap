@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Editor } from '@tiptap/vue-3';
+import type { Editor as VueEditor } from '@tiptap/vue-3';
 
 import {
   LazyWorkspaceNoteFormatterBubbleBox as LazyBubbleBox,
@@ -18,6 +18,8 @@ const props = defineProps<{
 }>();
 
 const content = computed(() => props.note.content || '');
+
+const showingQuickFind = ref(false);
 
 const { shortcuts } = useAppConfig();
 const mitt = useMitt();
@@ -117,6 +119,12 @@ useTinykeys({
 
     updateContent();
   },
+
+  [shortcuts.quickFind]: (event) => {
+    event.preventDefault();
+
+    showingQuickFind.value = true;
+  },
 });
 
 if (import.meta.client) {
@@ -138,6 +146,8 @@ if (import.meta.client) {
 
 <template>
   <div class="note-editor__wrapper">
+    <EditorContent class="note-editor" :editor="editor as VueEditor" />
+
     <Component
       :is="isSmallScreen ? LazyFixedBox : LazyBubbleBox"
       v-if="editor"
@@ -146,6 +156,14 @@ if (import.meta.client) {
       <WorkspaceNoteFormatter :editor />
     </Component>
 
-    <EditorContent class="note-editor" :editor="editor as Editor" />
+    <Teleport to="#teleports">
+      <Transition name="search-fade">
+        <LazyWorkspaceNoteQuickFind
+          v-if="editor && showingQuickFind"
+          :editor
+          @close="showingQuickFind = false"
+        />
+      </Transition>
+    </Teleport>
   </div>
 </template>

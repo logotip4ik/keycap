@@ -12,11 +12,11 @@ export function getHydrationPromise(): undefined | Promise<unknown> {
 
 /**
  * Nuxt has own `preloadComponents` function, but it has limitation of only preloading global
-  * registered components. This function will take a `Lazy...` component and call `__asyncLoader` on
-  * it (if it has one)
-  *
-  * @param {Component} component vue lazy component
-  */
+ * registered components. This function will take a `Lazy...` component and call `__asyncLoader` on
+ * it (if it has one)
+ *
+ * @param {Component} component vue lazy component
+ */
 export function preloadComponent(component: Component) {
   const loader = '__asyncLoader';
   if (loader in component && typeof component[loader] === 'function') {

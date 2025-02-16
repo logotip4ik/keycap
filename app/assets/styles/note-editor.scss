@@ -80,8 +80,9 @@
             opacity: 0.625;
             filter: blur(0.75px);
 
-            &:is(:hover, :focus-within) {
-              opacity: 0.9;
+            &:is(:hover, :focus-within),
+            &:has(.quick-find__result) {
+              opacity: 1;
               filter: none;
             }
           }

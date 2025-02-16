@@ -1,8 +1,4 @@
 <script setup lang="ts">
-const props = defineProps<{
-  noteContainerEl: HTMLDivElement | null
-}>();
-
 const route = useRoute();
 const isFallbackMode = useFallbackMode();
 const notesCache = useNotesCache();
@@ -13,6 +9,7 @@ const user = useRequiredUser();
 const mitt = useMitt();
 const { setting: shouldRememberScroll } = useSetting(settings.scrollPosition);
 const { isFirefox } = useDevice();
+const noteContainerEl = useNoteContainer();
 
 const noteApiPath = computed(() => route.path.substring(2 + user.value.username.length));
 const notePath = computed(() => `/${user.value.username}${noteApiPath.value}`);
@@ -143,7 +140,7 @@ function updateNote(content: string, force?: boolean) {
 }
 
 function storeScroll() {
-  const scrollPosition = props.noteContainerEl?.scrollTop;
+  const scrollPosition = noteContainerEl.value?.scrollTop;
   if (scrollPosition != null) {
     sessionStorage.setItem(notePath.value, scrollPosition.toString());
   }
@@ -154,7 +151,7 @@ function restoreScroll() {
   const scrollPosition = Number(sessionStorage.getItem(notePath.value) || undefined);
   if (!Number.isNaN(scrollPosition) && Number.isFinite(scrollPosition)) {
     requestAnimationFrame(() => {
-      props.noteContainerEl?.scrollTo({
+      noteContainerEl.value?.scrollTo({
         top: scrollPosition,
         left: 0,
         behavior: isFirefox.value ? 'smooth' : 'auto',

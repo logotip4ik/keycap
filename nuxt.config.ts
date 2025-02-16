@@ -122,7 +122,7 @@ export default defineNuxtConfig({
       },
       {
         from: resolve('./app/composables/tiptap/index.ts'),
-        imports: ['useTiptap', 'withTiptapEditor'],
+        imports: ['useTiptap', 'withTiptapEditor', 'FindPluginKey'],
       },
     ],
 

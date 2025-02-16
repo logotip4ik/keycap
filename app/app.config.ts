@@ -7,5 +7,6 @@ export default defineAppConfig({
     contents: '$mod+Shift+F',
     scrollToTop: 'Escape g g',
     scrollToBottom: 'Escape Shift+G',
+    quickFind: 'Escape /',
   },
 });

@@ -16,6 +16,7 @@ const isFallback = useFallbackMode();
 const { shortcuts } = useAppConfig();
 
 const noteContainerEl = useTemplateRef('noteContainerEl');
+provide(NoteContainerKey, noteContainerEl);
 
 const currentItemForDetails = useCurrentItemForDetails();
 
@@ -66,6 +67,9 @@ useTinykeys({
     isShowingShortcuts.value = false;
   },
   [shortcuts.scrollToTop]: () => {
+    if (isNoteEmpty.value) {
+      return;
+    }
     noteContainerEl.value?.scrollTo({
       top: 0,
       left: 0,
@@ -73,6 +77,9 @@ useTinykeys({
     });
   },
   [shortcuts.scrollToBottom]: () => {
+    if (isNoteEmpty.value) {
+      return;
+    }
     noteContainerEl.value?.scrollTo({
       top: noteContainerEl.value.scrollHeight,
       left: 0,
@@ -108,7 +115,7 @@ onMounted(() => {
         <LazyWorkspaceWelcome v-if="isNoteEmpty" />
 
         <div v-else style="height: 100%;">
-          <NuxtPage :transition="{ name: 'fade' }" :note-container-el />
+          <NuxtPage :transition="{ name: 'fade' }" />
         </div>
       </WithFadeTransition>
     </main>

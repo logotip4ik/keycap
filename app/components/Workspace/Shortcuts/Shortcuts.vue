@@ -13,6 +13,7 @@ const shortcutsDescription = {
   toolbox: 'Open toolbox sidebar',
   scrollToTop: 'Scroll to the top of the note',
   scrollToBottom: 'Scroll to the bottom of the note',
+  quickFind: 'Quickly find text in note',
 } satisfies Record<keyof typeof shortcuts, string>;
 
 const editorShortcuts = {

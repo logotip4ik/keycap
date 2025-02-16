@@ -27,8 +27,11 @@ import proxy from 'unenv/runtime/mock/proxy';
 
 import { BubbleMenu } from './extensions/bubble-menu';
 import { EmojiPicker } from './extensions/emoji-picker';
+import { Find } from './extensions/find';
 import { Link } from './extensions/link';
 import { TaskItemCleaner } from './extensions/task-item';
+
+export { FindPluginKey } from './extensions/find';
 
 function initTiptap(opts: {
   content: string
@@ -95,6 +98,7 @@ function initTiptap(opts: {
         placeholder: ({ editor }) =>
           editor.isEmpty ? '# Start with heading...' : 'Write something...',
       }),
+      Find,
     ],
   });
 }

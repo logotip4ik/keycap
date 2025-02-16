@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {LazyWorkspaceContentsListItemInput } from '#components'
+import { LazyWorkspaceContentsListItemInput } from '#components';
 
 interface MenuAction {
   name: string

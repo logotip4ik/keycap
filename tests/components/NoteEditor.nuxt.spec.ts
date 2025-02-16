@@ -22,7 +22,10 @@ async function getComponent(opts?: { content?: string, onUpdate?: Mock }) {
       onUpdate: opts?.onUpdate || vi.fn(),
     },
     global: {
-      stubs: { transition: false },
+      stubs: {
+        transition: false,
+        teleport: true,
+      },
     },
   });
 

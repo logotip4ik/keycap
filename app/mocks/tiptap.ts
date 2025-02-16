@@ -37,5 +37,7 @@ export const useTiptap = proxy;
 export const withTiptapEditor = proxy;
 export const BubbleMenuPlugin = proxy;
 export const TaskItemCleaner = proxy;
+export const Find = proxy;
+export const FindPluginKey = proxy;
 
 export default proxy;
