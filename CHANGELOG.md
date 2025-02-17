@@ -1,6 +1,45 @@
 # Changelog
 
 
+## v3.17.0
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.16.5...v3.17.0)
+
+### 🚀 Enhancements
+
+- Quick find inside a note ([53c9e868](https://github.com/logotip4ik/keycap/commit/53c9e868))
+
+### 🩹 Fixes
+
+- Apply 3d transform only for safari browser ([4f10d5d8](https://github.com/logotip4ik/keycap/commit/4f10d5d8))
+- **k-fetch:** Reace condition for setting initial data ([c1b615f1](https://github.com/logotip4ik/keycap/commit/c1b615f1))
+
+### 💅 Refactors
+
+- Add setting to toggle scroll remembering ([5bf3b917](https://github.com/logotip4ik/keycap/commit/5bf3b917))
+
+### 🏡 Chore
+
+- **release:** V3.16.5 ([4e85a15e](https://github.com/logotip4ik/keycap/commit/4e85a15e))
+- Don't keep marks on split ([043b97fb](https://github.com/logotip4ik/keycap/commit/043b97fb))
+- Store and restore user scroll position in session ([2359360c](https://github.com/logotip4ik/keycap/commit/2359360c))
+- Add keyboard shortcuts for scrolling to the top and bottom of the note ([10d8d825](https://github.com/logotip4ik/keycap/commit/10d8d825))
+- Lint ([c47941bf](https://github.com/logotip4ik/keycap/commit/c47941bf))
+- Update deps ([ece62ee6](https://github.com/logotip4ik/keycap/commit/ece62ee6))
+- Install vue/typescript-plugin for better dev experience ([77ef3ed0](https://github.com/logotip4ik/keycap/commit/77ef3ed0))
+- Minimise content shift when displaying input instead of item ([56942e05](https://github.com/logotip4ik/keycap/commit/56942e05))
+- Use lazy emoji picker ([b9a8c555](https://github.com/logotip4ik/keycap/commit/b9a8c555))
+- Ui and code cleanup for quickfind ([06b76154](https://github.com/logotip4ik/keycap/commit/06b76154))
+- Update vitest ([f69f2a32](https://github.com/logotip4ik/keycap/commit/f69f2a32))
+
+### 🤖 CI
+
+- Bump the actions group with 2 updates ([#39](https://github.com/logotip4ik/keycap/pull/39))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.16.5
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.16.4...v3.16.5)
