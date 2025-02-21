@@ -4,6 +4,21 @@ defineProps<{
 }>();
 
 const { shortcuts } = useAppConfig();
+const modKey = useModKey();
+
+const modRE = /\$mod/g;
+const keyRE = /Key/g;
+const humanizedShortcuts = computed(() => {
+  const humanizedShortcuts = {} as typeof shortcuts;
+
+  for (const key in shortcuts) {
+    const shortcut = shortcuts[key as keyof typeof shortcuts];
+
+    humanizedShortcuts[key as keyof typeof shortcuts] = humanizeShortcut(shortcut);
+  }
+
+  return humanizedShortcuts;
+});
 
 const shortcutsDescription = {
   edit: 'Focus Editor',
@@ -23,10 +38,8 @@ const editorShortcuts = {
   '$mod+Alt+3': 'Set heading level to 3',
 };
 
-const modRE = /\$mod/g;
-const keyRE = /Key/g;
 function humanizeShortcut(shortcut: string) {
-  return shortcut.replace(modRE, useModKey()).replace(keyRE, '');
+  return shortcut.replace(modRE, modKey.value).replace(keyRE, '');
 }
 </script>
 
@@ -41,8 +54,8 @@ function humanizeShortcut(shortcut: string) {
         </p>
 
         <ul class="shortcuts__list">
-          <li v-for="(shortcut, key) in shortcuts" :key="key" class="shortcuts__list__item">
-            <kbd>{{ humanizeShortcut(shortcut) }}</kbd>
+          <li v-for="(shortcut, key) in humanizedShortcuts" :key="key" class="shortcuts__list__item">
+            <kbd>{{ shortcut }}</kbd>
 
             <hr class="shortcuts__list__item__hr">
 

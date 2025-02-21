@@ -21,7 +21,7 @@ export function makeMarks(props: ShallowReactive<{ editor: Editor }>): Array<Mar
     {
       icon: 'baseline-format-bold',
       ariaLabel: 'toggle bold',
-      shortcut: `${modKey}+b`,
+      shortcut: `${modKey.value}+b`,
       isActive: computed(() => props.editor.isActive('bold')),
       onClick: () => props.editor.chain().focus().toggleBold().run(),
     },
@@ -29,14 +29,14 @@ export function makeMarks(props: ShallowReactive<{ editor: Editor }>): Array<Mar
     {
       icon: 'baseline-format-italic',
       ariaLabel: 'toggle italic',
-      shortcut: `${modKey}+i`,
+      shortcut: `${modKey.value}+i`,
       isActive: computed(() => props.editor.isActive('italic')),
       onClick: () => props.editor.chain().focus().toggleItalic().run(),
     },
 
     {
       icon: 'baseline-code',
-      shortcut: `${modKey}+e`,
+      shortcut: `${modKey.value}+e`,
       ariaLabel: 'toggle code',
       isActive: computed(() => props.editor.isActive('code')),
       onClick: () => props.editor.chain().focus().toggleCode().run(),
@@ -44,7 +44,7 @@ export function makeMarks(props: ShallowReactive<{ editor: Editor }>): Array<Mar
 
     {
       icon: 'format-strikethrough',
-      shortcut: `${modKey}+Shift+S`,
+      shortcut: `${modKey.value}+Shift+S`,
       ariaLabel: 'strike through',
       isActive: computed(() => props.editor.isActive('strike')),
       onClick: () => props.editor.chain().focus().toggleStrike().run(),
@@ -52,7 +52,7 @@ export function makeMarks(props: ShallowReactive<{ editor: Editor }>): Array<Mar
 
     {
       icon: 'format-ink-highlighter',
-      shortcut: `${modKey}+Shift+H`,
+      shortcut: `${modKey.value}+Shift+H`,
       ariaLabel: 'highlight',
       isActive: computed(() => props.editor.isActive('highlight')),
       onClick: () => props.editor.chain().focus().toggleHighlight().run(),

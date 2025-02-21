@@ -2,5 +2,5 @@
 export function useModKey() {
   const { isMac } = useDevice();
 
-  return isMac.value ? 'Cmd' : 'Ctrl';
+  return computed(() => isMac.value ? 'Cmd' : 'Ctrl');
 }

@@ -15,9 +15,9 @@ export interface FuzzyWorker {
 
 type Promisify<T> = T extends Promise<unknown> ? T : Promise<T>;
 type RemoteFunction<T> = T extends (...args: infer TArguments) => infer TReturn
-  ? (
-      ...args: { [I in keyof TArguments]: TArguments[I] }
-    ) => Promisify<TReturn>
+  ? (...args: {
+      [I in keyof TArguments]: TArguments[I]
+    }) => Promisify<TReturn>
   : unknown;
 type RemoteObject<T> = { [P in keyof T]: RemoteFunction<T[P]> };
 
@@ -39,7 +39,5 @@ export async function defineFuzzyWorker() {
   // https://vitejs.dev/guide/features.html#web-workers
   const worker = new Worker(FuzzyWorkerUrl, { type: 'module' });
 
-  // fuzzy worker will be broken till nitro sends headers from route rules in dev mode
-  // https://github.com/unjs/nitro/issues/2749
   fuzzyWorker.value = worker.proxy;
 }
