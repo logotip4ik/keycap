@@ -27,6 +27,8 @@
     position: relative;
 
     text-shadow: 0 0 1px hsla(var(--selection-bg-color-hsl), 0.33);
+
+    user-select: none;
   }
 }
 </style>
