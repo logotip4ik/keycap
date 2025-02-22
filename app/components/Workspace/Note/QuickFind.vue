@@ -10,6 +10,8 @@ const props = defineProps<{
 const noteContainerEl = useNoteContainer();
 const inputEl = useTemplateRef('inputEl');
 
+const noMatches = ref(false);
+
 const hints = [
   { key: 'Esc', label: 'cancel' },
   { key: 'Enter', label: 'select match' },
@@ -36,6 +38,11 @@ function getDecoration(): Decoration | undefined {
 }
 
 function showMatch(value: string, opts?: { from?: number } | { to?: number }) {
+  value = value.trim();
+  if (noMatches.value) {
+    noMatches.value = false;
+  }
+
   if (!opts || 'from' in opts) {
     props.editor.commands.findNextMatch(
       value,
@@ -52,9 +59,15 @@ function showMatch(value: string, opts?: { from?: number } | { to?: number }) {
   const decoration = getDecoration();
 
   if (!decoration) {
-    if (!opts) {
-      revertScroll();
+    if (opts) {
+      return;
     }
+
+    revertScroll();
+    if (value !== '') {
+      noMatches.value = true;
+    }
+
     return;
   }
 
@@ -125,16 +138,23 @@ onMounted(() => {
       id="quick-find"
       ref="inputEl"
       class="quick-find__input"
+      :class="{ 'quick-find__input--no-matches': noMatches }"
       @blur="handleClose"
       @keydown="handleKeydown"
       @input="debouncedShowMatch(($event.target as HTMLInputElement).value)"
     >
 
-    <div class="quick-find__hints">
-      <small v-for="hint in hints" :key="hint.key" class="quick-find__hints__hint">
-        {{ hint.key }} - {{ hint.label }}
-      </small>
-    </div>
+    <WithFadeTransition>
+      <div v-if="noMatches" key="1" class="quick-find__hints">
+        <small class="quick-find__hints__hint quick-find__hints__hint--single">No matches found</small>
+      </div>
+
+      <div v-else key="2" class="quick-find__hints">
+        <small v-for="hint in hints" :key="hint.key" class="quick-find__hints__hint">
+          {{ hint.key }} - {{ hint.label }}
+        </small>
+      </div>
+    </WithFadeTransition>
   </div>
 </template>
 
@@ -147,7 +167,7 @@ onMounted(() => {
   width: 90vw;
   max-width: 575px;
 
-  padding: 0.4rem;
+  padding: 0.5rem;
 
   border-radius: 0.5rem;
   border: 1px solid hsla(var(--text-color-hsl), 0.1);
@@ -188,7 +208,7 @@ onMounted(() => {
 
     width: 100%;
 
-    margin: 0 0 calc(0.5rem + 1px);
+    margin: 0 0 0.4rem;
     padding: 0.25rem 0.75rem;
 
     border-radius: 0.25rem;
@@ -197,17 +217,29 @@ onMounted(() => {
     appearance: none;
     outline: none;
     background-color: transparent;
+
+    transition: border-color 0.3s;
+
+    &--no-matches {
+      border-color: hsla(var(--error-color-hsl), 0.5);
+    }
   }
 
   &__hints {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+
+    padding-inline: 0.66rem;
 
     &__hint {
       display: block;
 
       color: hsla(var(--text-color-hsl), 0.75);
       line-height: 1;
+
+      &--single {
+        margin-right: auto;
+      }
     }
   }
 
