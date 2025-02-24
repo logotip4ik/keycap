@@ -1,6 +1,31 @@
 # Changelog
 
 
+## v3.17.1
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.17.0...v3.17.1)
+
+### 🩹 Fixes
+
+- Remove hard coded height for list item fallback component ([eb984dcb](https://github.com/logotip4ik/keycap/commit/eb984dcb))
+
+### 💅 Refactors
+
+- Highlight that quickfind didn't find anything ([2d5fbe96](https://github.com/logotip4ik/keycap/commit/2d5fbe96))
+
+### 🏡 Chore
+
+- **release:** V3.17.0 ([69954654](https://github.com/logotip4ik/keycap/commit/69954654))
+- Don't allow selecting welcome message ([9da3c5bd](https://github.com/logotip4ik/keycap/commit/9da3c5bd))
+- Make click area bigger for checkbox that actuall checkbox ([fb7388a3](https://github.com/logotip4ik/keycap/commit/fb7388a3))
+- Minor cleanup ([34e9c53f](https://github.com/logotip4ik/keycap/commit/34e9c53f))
+- Update deps ([1d01aa53](https://github.com/logotip4ik/keycap/commit/1d01aa53))
+- Update vitest ([f917ce48](https://github.com/logotip4ik/keycap/commit/f917ce48))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](http://github.com/logotip4ik))
+
 ## v3.17.0
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.16.5...v3.17.0)
