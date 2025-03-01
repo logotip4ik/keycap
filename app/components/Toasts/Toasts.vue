@@ -49,7 +49,7 @@ if (import.meta.client) {
       aria-label="Notifications"
       @before-leave="preservePositionAndSize"
     >
-      <ToastsItem
+      <LazyToastsItem
         v-for="toast in sortedToasts"
         :key="toast.id"
         :toast="toast"
