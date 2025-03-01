@@ -24,7 +24,6 @@ onBeforeUnmount(() => clearTimeout(timeout));
     role="status"
     aria-live="polite"
     aria-atomic="true"
-    tabindex="0"
   >
     <Icon v-if="toast.type === 'info'" name="info-outline" class="toast__icon" aria-hidden="true" />
     <span v-else-if="toast.type === 'loading'" class="toast__icon toast__icon--spinner" aria-hidden="true" />
@@ -32,10 +31,11 @@ onBeforeUnmount(() => clearTimeout(timeout));
     <p class="toast__text">{{ toast.message }}</p>
 
     <button
-      v-for="(button, i) in props.toast.buttons"
+      v-for="(button, i) in toast.buttons"
       :key="`${i}-${button.text}`"
       class="toast__button"
-      @click="button.onClick(props.toast)"
+      tabindex="1"
+      @click="button.onClick(toast)"
     >
       {{ button.text }}
     </button>
@@ -44,7 +44,6 @@ onBeforeUnmount(() => clearTimeout(timeout));
 
 <style lang="scss">
 .toast {
-  --icon-size: 1.4rem;
   --base-color-saturation: 0;
   --base-shadow-color: 0, 0, 0;
 
@@ -57,7 +56,9 @@ onBeforeUnmount(() => clearTimeout(timeout));
   font-size: 1.125rem;
   color: var(--surface-color);
 
-  padding: 0.85rem 1.5rem 0.85rem 1.2rem;
+  min-width: 225px;
+
+  padding: 0.85rem 1rem;
 
   border-radius: 0.25rem;
   border: 1px solid hsla(var(--text-color-hsl), 1.0);
@@ -95,38 +96,31 @@ onBeforeUnmount(() => clearTimeout(timeout));
   }
 
   &__icon {
-    flex-shrink: 0;
+    --icon-size: 1.4rem;
 
     width: var(--icon-size);
     height: var(--icon-size);
 
     opacity: 0.65;
 
-    margin-top: 0.125rem;
-    margin-right: 0.75rem;
+    margin-top: 0.25rem;
+    margin-right: 0.66rem;
 
     &--spinner {
       position: relative;
 
-      width: calc(var(--icon-size) / 1.1);
-      height: calc(var(--icon-size) / 1.1);
-
-      &::after, &::before {
+      &::after {
         content: '';
 
         position: absolute;
-        inset: 0;
+        inset: 0.15rem;
 
         border-radius: 50%;
         border: 2px solid transparent;
         border-left-color: currentColor;
+        border-right-color: currentColor;
 
         animation: spin 1s infinite linear;
-      }
-
-      &::before {
-        border-left-color: transparent;
-        border-right-color: currentColor;
       }
     }
   }
@@ -144,7 +138,7 @@ onBeforeUnmount(() => clearTimeout(timeout));
     width: 100%;
 
     padding: 0.5rem 1rem;
-    margin-top: 1.25rem;
+    margin-top: 0.85rem;
 
     appearance: none;
     border-radius: 0.2rem;
