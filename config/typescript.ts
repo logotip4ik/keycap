@@ -11,6 +11,7 @@ export const tsConfig: TSConfig = {
     isolatedModules: true, // disabled in nitro ?
     noUncheckedIndexedAccess: false,
     useDefineForClassFields: true,
+    erasableSyntaxOnly: true,
   },
 
   exclude: [
