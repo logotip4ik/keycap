@@ -10,7 +10,6 @@ const titleId = useId();
 <template>
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
     fill="currentColor"
     :aria-labelledby="title ? titleId : undefined"
     aria-hidden="true"
