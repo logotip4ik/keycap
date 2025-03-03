@@ -1,6 +1,28 @@
 # Changelog
 
 
+## v3.17.2
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.17.1...v3.17.2)
+
+### 🩹 Fixes
+
+- Don't hide toast when user is hovering it or action button is focued ([89734b81](https://github.com/logotip4ik/keycap/commit/89734b81))
+
+### 🏡 Chore
+
+- **release:** V3.17.1 ([a258c5d8](https://github.com/logotip4ik/keycap/commit/a258c5d8))
+- Update deps ([d761c426](https://github.com/logotip4ik/keycap/commit/d761c426))
+- Rework styles and tabindex for toasts item ([135a08aa](https://github.com/logotip4ik/keycap/commit/135a08aa))
+
+### 🤖 CI
+
+- Ignore ohash from updates ([0aea4934](https://github.com/logotip4ik/keycap/commit/0aea4934))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.17.1
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.17.0...v3.17.1)
