@@ -33,5 +33,15 @@ export default defineVitestConfig({
       ...defaultExclude,
       '**/data/**',
     ],
+
+    environmentOptions: {
+      nuxt: {
+        overrides: {
+          imports: {
+            polyfills: true,
+          },
+        },
+      },
+    },
   },
 });

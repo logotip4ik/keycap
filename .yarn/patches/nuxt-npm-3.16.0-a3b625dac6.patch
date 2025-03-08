@@ -1,5 +1,5 @@
 diff --git a/dist/app/components/nuxt-island.js b/dist/app/components/nuxt-island.js
-index b40656bf68f14502593313ded661c682d08e2c9a..c5b04ba511bc5a2a882d9477df84534b1e95e6a9 100644
+index 4fe96ebfcbab2abbe1bccbd199e6dc8a2416ac64..668c1b42a4f1944cef1d533ff5f79c2822aadf55 100644
 --- a/dist/app/components/nuxt-island.js
 +++ b/dist/app/components/nuxt-island.js
 @@ -1,6 +1,5 @@
@@ -7,10 +7,10 @@ index b40656bf68f14502593313ded661c682d08e2c9a..c5b04ba511bc5a2a882d9477df84534b
  import { debounce } from "perfect-debounce";
 -import { hash } from "ohash";
  import { appendResponseHeader } from "h3";
- import { injectHead } from "@unhead/vue";
  import { randomUUID } from "uncrypto";
-@@ -10,6 +9,67 @@ import { useNuxtApp, useRuntimeConfig } from "../nuxt.js";
- import { prerenderRoutes, useRequestEvent } from "../composables/ssr.js";
+ import { joinURL, withQuery } from "ufo";
+@@ -9,6 +8,68 @@ import { prerenderRoutes, useRequestEvent } from "../composables/ssr.js";
+ import { injectHead } from "../composables/head.js";
  import { getFragmentHTML } from "./utils.js";
  import { appBaseURL, remoteComponentIslands, selectiveClient } from "#build/nuxt.config.mjs";
 +
@@ -73,6 +73,7 @@ index b40656bf68f14502593313ded661c682d08e2c9a..c5b04ba511bc5a2a882d9477df84534b
 +function hash(arg) {
 +  return hashString(stableHash(arg));
 +}
++
 +
  const pKey = "_islandPromises";
  const SSR_UID_RE = /data-island-uid="([^"]*)"/;
