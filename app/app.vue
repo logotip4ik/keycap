@@ -14,17 +14,19 @@ useHead({
   },
 });
 
-useServerHead({
-  link: [
-    {
-      rel: 'preload',
-      href: '/fonts/Mona-Sans.woff2',
-      as: 'font',
-      type: 'font/woff2',
-      crossorigin: '',
-    },
-  ],
-});
+if (import.meta.server) {
+  useHead({
+    link: [
+      {
+        rel: 'preload',
+        href: '/fonts/Mona-Sans.woff2',
+        as: 'font',
+        type: 'font/woff2',
+        crossorigin: '',
+      },
+    ],
+  });
+}
 
 useSeoMeta({
   themeColor: () => prefersDarkMode.value ? '#111113' : '#FCFCFD',
