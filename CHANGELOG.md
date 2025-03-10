@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v3.17.3
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.17.2...v3.17.3)
+
+### 🏡 Chore
+
+- **release:** V3.17.2 ([35f440e4](https://github.com/logotip4ik/keycap/commit/35f440e4))
+- Enable erasable syntax only for typescript ([c5f46679](https://github.com/logotip4ik/keycap/commit/c5f46679))
+- Update deps ([c348c67e](https://github.com/logotip4ik/keycap/commit/c348c67e))
+- Update package manager (yarn) ([6fd9f886](https://github.com/logotip4ik/keycap/commit/6fd9f886))
+- Bump nitropack and other packages ([895e81e7](https://github.com/logotip4ik/keycap/commit/895e81e7))
+- Remove use of serverHead ([081ce8b9](https://github.com/logotip4ik/keycap/commit/081ce8b9))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.17.2
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.17.1...v3.17.2)
