@@ -1,7 +1,8 @@
 import { withLeadingSlash, withoutTrailingSlash } from 'ufo';
 
 export const currentItemNameRE = /[\w%.!]+$/;
-export const emailRE = /^[\w!#$%&'*+/=?^`{|}~-]+(?:\.[\w!#$%&'*+/=?^`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i;
+// Pulled straight from zod source
+export const emailRE = /^(?!\.)(?!.+\.\.)([\w'+\-.]*)[\w+-]@([A-Z0-9][A-Z0-9\-]*\.)+[A-Z]{2,}$/i;
 export const serverUserAgent = import.meta.prod ? process.env.SERVER_NAME || 'Keycap' : `${process.env.SERVER_NAME || 'Keycap'} Dev`;
 
 export function generateFolderPath(username: string, path: string): string {
