@@ -1,6 +1,21 @@
 # Changelog
 
 
+## v3.17.6
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.17.5...v3.17.6)
+
+### 🏡 Chore
+
+- **release:** V3.17.5 ([0d0dd8a7](https://github.com/logotip4ik/keycap/commit/0d0dd8a7))
+- Update deps ([83db82c6](https://github.com/logotip4ik/keycap/commit/83db82c6))
+- Update package manager ([25896496](https://github.com/logotip4ik/keycap/commit/25896496))
+- Update email regex to be more restrictive ([c0a84bc3](https://github.com/logotip4ik/keycap/commit/c0a84bc3))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.17.5
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.17.4...v3.17.5)
