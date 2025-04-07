@@ -1,6 +1,15 @@
 # Changelog
 
 
+## v3.17.7
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.17.6...v3.17.7)
+
+### 🏡 Chore
+
+- **release:** V3.17.6 ([a2492eb0](https://github.com/logotip4ik/keycap/commit/a2492eb0))
+- Update deps ([d63f76b9](https://github.com/logotip4ik/keycap/commit/d63f76b9))
+
 ## v3.17.6
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.17.5...v3.17.6)
