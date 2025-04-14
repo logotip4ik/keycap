@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v3.17.8
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.17.7...v3.17.8)
+
+### 🏡 Chore
+
+- **release:** V3.17.7 ([8c8c6b59](https://github.com/logotip4ik/keycap/commit/8c8c6b59))
+- Update deps ([06297c8e](https://github.com/logotip4ik/keycap/commit/06297c8e))
+
+### 🤖 CI
+
+- Bump actions/setup-node from 4.2.0 to 4.3.0 in the actions group ([#46](https://github.com/logotip4ik/keycap/pull/46))
+
 ## v3.17.7
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.17.6...v3.17.7)
