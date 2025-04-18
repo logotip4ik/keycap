@@ -40,6 +40,7 @@ const settingComponents = [
     &__select {
       font-family: inherit;
       font-size: 0.9rem;
+      color: inherit;
       line-height: inherit;
       text-align: center;
       text-align-last: center; // for some reason `text-align` in safari is not working
