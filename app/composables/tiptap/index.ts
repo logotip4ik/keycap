@@ -76,7 +76,12 @@ function initTiptap(opts: {
       TaskItemCleaner,
       BubbleMenu,
       EmojiPicker,
-      Code.configure({
+      Code.extend({
+        inclusive: true,
+        exitable: true,
+        keepOnSplit: false,
+        code: true,
+      }).configure({
         HTMLAttributes: {
           autocomplete: 'off',
           autocorrect: 'off',
