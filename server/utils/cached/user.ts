@@ -67,6 +67,6 @@ function getRecentForUser_(_event: H3Event, user: { id: string, username: string
     .where('ownerId', '=', user.id)
     .select(['id', 'name', 'path'])
     .limit(4)
-    .orderBy('updatedAt desc')
+    .orderBy('updatedAt', 'desc')
     .execute();
 }
