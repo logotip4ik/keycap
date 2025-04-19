@@ -28,8 +28,8 @@ import proxy from 'unenv/runtime/mock/proxy';
 import { BubbleMenu } from './extensions/bubble-menu';
 import { EmojiPicker } from './extensions/emoji-picker';
 import { Find } from './extensions/find';
+import { KeyboardShortcuts } from './extensions/keyboard-shortcuts';
 import { Link } from './extensions/link';
-import { TaskItemCleaner } from './extensions/task-item';
 
 export { FindPluginKey } from './extensions/find';
 
@@ -73,7 +73,6 @@ function initTiptap(opts: {
       Link,
       TaskList,
       TaskItem,
-      TaskItemCleaner,
       BubbleMenu,
       EmojiPicker,
       Code.extend({
@@ -104,6 +103,7 @@ function initTiptap(opts: {
           editor.isEmpty ? '# Start with heading...' : 'Write something...',
       }),
       Find,
+      KeyboardShortcuts,
     ],
   });
 }
