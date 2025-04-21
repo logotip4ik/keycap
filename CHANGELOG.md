@@ -1,6 +1,29 @@
 # Changelog
 
 
+## v3.17.9
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.17.8...v3.17.9)
+
+### 🩹 Fixes
+
+- Sync code behavior with other marks like italic and bold ([9af56c05](https://github.com/logotip4ik/keycap/commit/9af56c05))
+- Inherit color for select text ([acc5ccd0](https://github.com/logotip4ik/keycap/commit/acc5ccd0))
+
+### 🏡 Chore
+
+- **release:** V3.17.8 ([5a06403d](https://github.com/logotip4ik/keycap/commit/5a06403d))
+- Move nuxt patch into resolutions ([f01750d9](https://github.com/logotip4ik/keycap/commit/f01750d9))
+- Oops ([9af56f19](https://github.com/logotip4ik/keycap/commit/9af56f19))
+- Update deps ([2d14651b](https://github.com/logotip4ik/keycap/commit/2d14651b))
+- Update package manager ([6e15c2a4](https://github.com/logotip4ik/keycap/commit/6e15c2a4))
+- Add `ctrl+w` shortcut ([45b01f96](https://github.com/logotip4ik/keycap/commit/45b01f96))
+- Update `orderBy` usage ([b993083e](https://github.com/logotip4ik/keycap/commit/b993083e))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.17.8
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.17.7...v3.17.8)
