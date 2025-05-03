@@ -1,5 +1,5 @@
 diff --git a/dist/app/components/nuxt-island.js b/dist/app/components/nuxt-island.js
-index 4fe96ebfcbab2abbe1bccbd199e6dc8a2416ac64..668c1b42a4f1944cef1d533ff5f79c2822aadf55 100644
+index 81ad4a899ea13d06fc8a32e05d0188ce23410ea8..3344d2d96dc59b48f387c1d3635ac7764a6fb6f5 100644
 --- a/dist/app/components/nuxt-island.js
 +++ b/dist/app/components/nuxt-island.js
 @@ -1,6 +1,5 @@
@@ -9,10 +9,10 @@ index 4fe96ebfcbab2abbe1bccbd199e6dc8a2416ac64..668c1b42a4f1944cef1d533ff5f79c28
  import { appendResponseHeader } from "h3";
  import { randomUUID } from "uncrypto";
  import { joinURL, withQuery } from "ufo";
-@@ -9,6 +8,68 @@ import { prerenderRoutes, useRequestEvent } from "../composables/ssr.js";
- import { injectHead } from "../composables/head.js";
- import { getFragmentHTML } from "./utils.js";
- import { appBaseURL, remoteComponentIslands, selectiveClient } from "#build/nuxt.config.mjs";
+@@ -15,6 +14,67 @@ const DATA_ISLAND_UID_RE = /data-island-uid(="")?(?!="[^"])/g;
+ const SLOTNAME_RE = /data-island-slot="([^"]*)"/g;
+ const SLOT_FALLBACK_RE = / data-island-slot="([^"]*)"[^>]*>/g;
+ const ISLAND_SCOPE_ID_RE = /^<[^> ]*/;
 +
 +// https://gist.github.com/hyamamoto/fd435505d29ebfa3d9716fd2be8d42f0?permalink_comment_id=3586164#gistcomment-3586164
 +function hashString(s) {
@@ -74,7 +74,6 @@ index 4fe96ebfcbab2abbe1bccbd199e6dc8a2416ac64..668c1b42a4f1944cef1d533ff5f79c28
 +  return hashString(stableHash(arg));
 +}
 +
-+
- const pKey = "_islandPromises";
- const SSR_UID_RE = /data-island-uid="([^"]*)"/;
- const DATA_ISLAND_UID_RE = /data-island-uid(="")?(?!="[^"])/g;
+ let id = 1;
+ const getId = import.meta.client ? () => (id++).toString() : randomUUID;
+ const components = import.meta.client ? /* @__PURE__ */ new Map() : void 0;
