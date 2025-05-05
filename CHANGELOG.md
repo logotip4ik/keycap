@@ -1,6 +1,25 @@
 # Changelog
 
 
+## v3.17.11
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.17.10...v3.17.11)
+
+### 🏡 Chore
+
+- **release:** V3.17.10 ([57d370a1](https://github.com/logotip4ik/keycap/commit/57d370a1))
+- Update deps ([4e6387d0](https://github.com/logotip4ik/keycap/commit/4e6387d0))
+- Remove not needed dep ([a4ad92e3](https://github.com/logotip4ik/keycap/commit/a4ad92e3))
+- Oops (deps issue) ([2e8a4124](https://github.com/logotip4ik/keycap/commit/2e8a4124))
+
+### 🤖 CI
+
+- Bump actions/setup-node from 4.3.0 to 4.4.0 in the actions group ([#49](https://github.com/logotip4ik/keycap/pull/49))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.17.10
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.17.9...v3.17.10)
