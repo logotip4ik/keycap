@@ -64,6 +64,10 @@ function hideIfNeeded() {
     state.value = 'hidden';
   }
 }
+
+onBeforeMount(() => {
+  preloadComponent(LazyWorkspaceToolboxUtilsButtonItemDetails);
+});
 </script>
 
 <template>
