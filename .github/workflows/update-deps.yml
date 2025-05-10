@@ -39,6 +39,9 @@ jobs:
           rm ./yarn.lock
           yarn
 
+      - name: Run tests
+        run: yarn nuxt prepare && yarn run test
+
       - name: Test if project still builds
         run: yarn build
 
