@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v3.17.12
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.17.11...v3.17.12)
+
+### 🩹 Fixes
+
+- **ci:** Check if tests are passing during updating deps ([1cab2a45](https://github.com/logotip4ik/keycap/commit/1cab2a45))
+
+### 🏡 Chore
+
+- **release:** V3.17.11 ([8f37ea7b](https://github.com/logotip4ik/keycap/commit/8f37ea7b))
+- Update deps ([cca71153](https://github.com/logotip4ik/keycap/commit/cca71153))
+- Always preload itemdetails util button in toolbox utils ([0cacaf0c](https://github.com/logotip4ik/keycap/commit/0cacaf0c))
+- Downgrade nuxt until tests are passing ([0fa597aa](https://github.com/logotip4ik/keycap/commit/0fa597aa))
+- Oops ([39a24e8b](https://github.com/logotip4ik/keycap/commit/39a24e8b))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.17.11
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.17.10...v3.17.11)
