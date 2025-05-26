@@ -229,7 +229,7 @@ export default defineNuxtConfig({
       headers: getCachedAssetHeaders('5 minutes'),
     },
 
-    '/oauth/ask-username': { experimentalNoScripts: true },
+    '/oauth/ask-username': { noScripts: true },
   },
 
   modules: [
