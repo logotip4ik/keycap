@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import AutoOpenRecent from './Item/AutoOpenRecent.vue';
 import FormatterPositionSetting from './Item/FormatterPosition.vue';
 import RememberScrollPosition from './Item/RememberScrollPosition.vue';
 import SpellCheck from './Item/SpellCheck.vue';
@@ -7,6 +8,7 @@ const settingComponents = [
   FormatterPositionSetting,
   SpellCheck,
   RememberScrollPosition,
+  AutoOpenRecent,
 ];
 </script>
 
@@ -36,6 +38,7 @@ const settingComponents = [
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 0.5rem;
 
     &__select {
       font-family: inherit;

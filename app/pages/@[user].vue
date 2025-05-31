@@ -98,6 +98,33 @@ if (import.meta.client) {
     window.$isFallback = useFallbackMode();
   }
 }
+else {
+  const isRootPath = route.params.user === user.value.username
+    && !route.params.folders
+    && (!route.params.note || route.params.note === BLANK_NOTE_NAME);
+
+  if (
+    isRootPath
+    && getSetting(settings.autoOpenRecent).value === 'yes'
+  ) {
+    const event = useRequestEvent()!;
+    const fetch = useRequestFetch();
+    const recents = await fetch('/api/recent', {
+      responseType: 'json',
+      headers: protectionHeaders,
+    }).catch(async (err) => {
+      await logger.error(event, { err, msg: 'failed fetching recents for `autoOpenRecent`' });
+      return undefined;
+    });
+
+    if (recents?.data?.[0]) {
+      const recentNotePath = generateItemPath(recents.data[0]);
+      if (recentNotePath !== route.path) {
+        await showItem(recents.data[0]);
+      }
+    }
+  }
+}
 
 onMounted(() => {
   isShowingSearch.value = route.query.search !== undefined;
@@ -124,28 +151,19 @@ onMounted(() => {
 
     <Teleport to="#teleports">
       <Transition name="search-fade">
-        <LazyWorkspaceSearch
-          v-if="isShowingSearch"
-          @close="isShowingSearch = false"
-        />
+        <LazyWorkspaceSearch v-if="isShowingSearch" @close="isShowingSearch = false" />
       </Transition>
     </Teleport>
 
     <Teleport to="#teleports">
       <WithFadeTransition>
-        <LazyWorkspaceShortcuts
-          v-if="isShowingShortcuts"
-          @close="isShowingShortcuts = false"
-        />
+        <LazyWorkspaceShortcuts v-if="isShowingShortcuts" @close="isShowingShortcuts = false" />
       </WithFadeTransition>
     </Teleport>
 
     <Teleport to="#teleports">
       <WithFadeTransition>
-        <LazyWorkspaceItemDetails
-          v-if="currentItemForDetails"
-          :item="currentItemForDetails"
-        />
+        <LazyWorkspaceItemDetails v-if="currentItemForDetails" :item="currentItemForDetails" />
       </WithFadeTransition>
     </Teleport>
   </div>
@@ -177,6 +195,7 @@ onMounted(() => {
     scrollbar-gutter: stable;
     scrollbar-width: thin;
     scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-background);
+
     &::-webkit-scrollbar {
       width: var(--scrollbar-width);
 

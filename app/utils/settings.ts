@@ -15,6 +15,7 @@ export const settings = {
   formatterPosition: 'fmt-pos',
   spellcheck: 'splchk',
   scrollPosition: 'scrl-pos',
+  autoOpenRecent: 'aor',
 } as const;
 
 const settingsDefinitions = {
@@ -27,6 +28,10 @@ const settingsDefinitions = {
     posibleValues: ['yes', 'no'] as const,
   }),
   [settings.scrollPosition]: defineSetting({
+    defaultValue: 'no',
+    posibleValues: ['yes', 'no'] as const,
+  }),
+  [settings.autoOpenRecent]: defineSetting({
     defaultValue: 'no',
     posibleValues: ['yes', 'no'] as const,
   }),
