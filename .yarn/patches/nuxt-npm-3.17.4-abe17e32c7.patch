@@ -1,9 +1,9 @@
 diff --git a/dist/app/components/nuxt-island.js b/dist/app/components/nuxt-island.js
-index 81ad4a899ea13d06fc8a32e05d0188ce23410ea8..3344d2d96dc59b48f387c1d3635ac7764a6fb6f5 100644
+index 114886f8e9b01b5f9922dbcdf072f17fdc622497..7ee76d72e402557935b47c5f8ee7ecb893f2f72b 100644
 --- a/dist/app/components/nuxt-island.js
 +++ b/dist/app/components/nuxt-island.js
 @@ -1,6 +1,5 @@
- import { Fragment, Teleport, computed, createStaticVNode, createVNode, defineComponent, getCurrentInstance, h, nextTick, onBeforeUnmount, onMounted, ref, toRaw, watch, withMemo } from "vue";
+ import { Fragment, Teleport, computed, createStaticVNode, createVNode, defineComponent, getCurrentInstance, h, nextTick, onBeforeUnmount, onMounted, ref, shallowRef, toRaw, watch, withMemo } from "vue";
  import { debounce } from "perfect-debounce";
 -import { hash } from "ohash";
  import { appendResponseHeader } from "h3";

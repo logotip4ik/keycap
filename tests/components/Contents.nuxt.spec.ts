@@ -56,7 +56,6 @@ registerEndpoint('/api/folder/something', (): { data: FolderWithContents } => {
 
 async function getComponent() {
   const component = await renderSuspended(Contents, {
-    route: `/@${username}/${folder}/note`,
     global: { stubs: { transition: false } },
   });
 

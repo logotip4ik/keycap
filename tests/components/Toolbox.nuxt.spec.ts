@@ -7,9 +7,6 @@ import proxy from 'unenv/runtime/mock/proxy';
 
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 
-const username = 'testing';
-const folder = 'something';
-
 mockNuxtImport('useRequiredUser', () => {
   return () => ref({ id: '1', username: 'testing', email: 'help' });
 });
@@ -31,7 +28,6 @@ registerEndpoint('/api/recent', (): { data: Array<{ id: string, name: string, pa
 
 async function getComponent() {
   const component = await renderSuspended(Toolbox, {
-    route: `/@${username}/${folder}/note`,
     global: { stubs: { transition: false } },
   });
 
