@@ -26,6 +26,7 @@ export const checkIfUsernameTaken = defineCachedFunction(checkIfUsernameTaken_, 
   group: USER_CACHE_GROUP,
   name: UserCacheName.Taken,
 
+  swr: false,
   maxAge: parseDuration('6 months', 'second')!,
   getKey: (...params: Parameters<typeof checkIfUsernameTaken_>) => getUserCacheKey(params[1]),
 });
@@ -34,9 +35,8 @@ export const getRecentForUser = defineCachedFunction(getRecentForUser_, {
   group: USER_CACHE_GROUP,
   name: UserCacheName.Recent,
 
-  swr: true,
-  maxAge: parseDuration('5 minutes', 's')!,
-  staleMaxAge: parseDuration('1 week', 's')!,
+  swr: false,
+  maxAge: parseDuration('1 week', 's')!,
   getKey: (...params: Parameters<typeof getRecentForUser_>) => getUserCacheKey(params[1].username),
 });
 
