@@ -364,6 +364,12 @@ export default defineNuxtConfig({
     // },
 
     $server: {
+      build: {
+        rollupOptions: {
+          // @see https://github.com/nuxt/nuxt/issues/29624
+          output: { preserveModules: true },
+        },
+      },
       plugins: [
         // Taken from elk
         // https://github.com/elk-zone/elk/blob/ed5592260fc83f0207a12a7184973749e87bc85e/nuxt.config.ts#L186
