@@ -366,8 +366,10 @@ export default defineNuxtConfig({
     $server: {
       build: {
         rollupOptions: {
-          // @see https://github.com/nuxt/nuxt/issues/29624
-          output: { preserveModules: true },
+          // fixes https://github.com/nuxt/nuxt/issues/29624
+          output: {
+            generatedCode: { arrowFunctions: true },
+          },
         },
       },
       plugins: [
