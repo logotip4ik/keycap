@@ -1,6 +1,31 @@
 # Changelog
 
 
+## v3.17.15
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.17.14...v3.17.15)
+
+### 🩹 Fixes
+
+- Use different method for solving `reading undefined` issue ([9e641794](https://github.com/logotip4ik/keycap/commit/9e641794))
+
+### 🏡 Chore
+
+- **release:** V3.17.14 ([eaaee76d](https://github.com/logotip4ik/keycap/commit/eaaee76d))
+- Update deps" ([f6100d23](https://github.com/logotip4ik/keycap/commit/f6100d23))
+- Disable auto release cron ([10906b11](https://github.com/logotip4ik/keycap/commit/10906b11))
+- Update deps ([a4792f64](https://github.com/logotip4ik/keycap/commit/a4792f64))
+- Update nuxt and fix tests ([1a362877](https://github.com/logotip4ik/keycap/commit/1a362877))
+- Allow users enabling auto redirect to most recent note ([ef66b3e0](https://github.com/logotip4ik/keycap/commit/ef66b3e0))
+- Improve cache store options ([340a2612](https://github.com/logotip4ik/keycap/commit/340a2612))
+- Fix nitro/nuxt bundling issue ([8d834f30](https://github.com/logotip4ik/keycap/commit/8d834f30))
+- Update deps ([e65ae6e7](https://github.com/logotip4ik/keycap/commit/e65ae6e7))
+- Use const instead of getter function ([0a64a2d9](https://github.com/logotip4ik/keycap/commit/0a64a2d9))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.17.14
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.17.13...v3.17.14)
