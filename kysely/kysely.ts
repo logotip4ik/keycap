@@ -27,6 +27,6 @@ export function getKysely() {
 }
 
 declare global {
-  // eslint-disable-next-line vars-on-top, no-var
+  // eslint-disable-next-line vars-on-top
   var __kysely: Kysely<DB>;
 }
