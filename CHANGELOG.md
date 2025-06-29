@@ -1,6 +1,41 @@
 # Changelog
 
 
+## v3.17.16
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.17.15...v3.17.16)
+
+### 🩹 Fixes
+
+- Active animation messing up with position on mobile phones ([12f8d911](https://github.com/logotip4ik/keycap/commit/12f8d911))
+- Add scroller for recent and settings sections ([f95dbc07](https://github.com/logotip4ik/keycap/commit/f95dbc07))
+- Assign provided attrs to correct element ([e98e8bda](https://github.com/logotip4ik/keycap/commit/e98e8bda))
+
+### 💅 Refactors
+
+- Restyle recent section to use bento like layout ([1d994605](https://github.com/logotip4ik/keycap/commit/1d994605))
+
+### 🏡 Chore
+
+- **release:** V3.17.15 ([6a3beb8b](https://github.com/logotip4ik/keycap/commit/6a3beb8b))
+- Update deps ([4104c664](https://github.com/logotip4ik/keycap/commit/4104c664))
+- Update yarn ([cae57e45](https://github.com/logotip4ik/keycap/commit/cae57e45))
+- Update deps ([cdd5d376](https://github.com/logotip4ik/keycap/commit/cdd5d376))
+- Update deps ([bb13f617](https://github.com/logotip4ik/keycap/commit/bb13f617))
+- Try to fix flaky tests ([32f8f80b](https://github.com/logotip4ik/keycap/commit/32f8f80b))
+- Try to fix flaky tests again ([209b7b3b](https://github.com/logotip4ik/keycap/commit/209b7b3b))
+- Generate arrow functions fix for nitro also ([58250195](https://github.com/logotip4ik/keycap/commit/58250195))
+- Downgrade coincident to prevent increase in bundle size ([feb0880b](https://github.com/logotip4ik/keycap/commit/feb0880b))
+- Add `?` as shortcut for openning shortcuts menu ([045067a7](https://github.com/logotip4ik/keycap/commit/045067a7))
+- Use search appear and leave transition for all modals ([6b273c6d](https://github.com/logotip4ik/keycap/commit/6b273c6d))
+- Add "active" styles for note links and sidebar buttons ([db1051ed](https://github.com/logotip4ik/keycap/commit/db1051ed))
+- Fix test ([6dba4337](https://github.com/logotip4ik/keycap/commit/6dba4337))
+- Make recent items a bit higher ([1701d1be](https://github.com/logotip4ik/keycap/commit/1701d1be))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.17.15
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.17.14...v3.17.15)
