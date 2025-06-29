@@ -32,43 +32,43 @@ function unpinIfNeeded() {
 .recent-item {
   display: block;
 
-  position: relative;
-  z-index: 1;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-decoration: none;
+  color: hsla(var(--text-color-hsl), 0.85);
 
-  font-size: 1.025rem;
-  font-weight: 300;
-  color: currentColor;
-  text-decoration: underline dashed 1px hsla(var(--selection-bg-color-hsl), 1);
-  text-underline-offset: 3px;
+  height: 100%;
+  width: 100%;
 
-  transition: border-bottom-width .1s;
+  padding: calc(var(--pd-y) / 1.65) calc(var(--pd-x) / 2);
 
-  &::after {
-    content: '';
+  border: 1px solid hsla(var(--text-color-hsl), 0.075);
+  border-radius: 0.2rem;
+  background-color: hsla(var(--text-color-hsl), 0.015);
 
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: -1;
+  overflow: hidden;
+  cursor: pointer;
 
-    width: 100%;
-    height: 2px;
+  transform: rotate(0);
+  transition: color, border-color, background-color, transform;
+  transition-duration: .4s;
 
-    opacity: 0;
-    background-color: var(--task-list-indicator-color);
+  &:is(:hover, :focus-visible) {
+    color: hsla(var(--text-color-hsl), 1);
+    background-color: hsla(var(--selection-bg-color-hsl), 0.1);
+    border-color: hsla(var(--selection-bg-color-hsl), 0.75);
 
-    pointer-events: none;
-    transition: opacity .1s;
+    transition-duration: .1s;
+
+    @media (prefers-color-scheme: dark) {
+      background-color: hsla(var(--selection-bg-color-hsl), 0.275);
+      border-color: hsla(var(--selection-bg-color-hsl), 0.65);
+    }
   }
 
-  &:focus-visible {
-    color: var(--text-color);
-
-    outline: none;
-
-    &::after {
-      opacity: 1;
-    }
+  &:active {
+    transform: scale(0.98);
   }
 }
 </style>

@@ -31,12 +31,11 @@ const { data: recent } = useKFetch<Array<NoteMinimal>>('/api/recent', {
       <WithListTransitionGroup
         v-else
         tag="ul"
-        class="toolbox__section__list"
+        class="recent__list"
       >
         <li
           v-for="item in recent"
           :key="item.id"
-          class="toolbox__section__list__item"
         >
           <WorkspaceToolboxRecentItem
             :item="item"
@@ -58,5 +57,17 @@ const { data: recent } = useKFetch<Array<NoteMinimal>>('/api/recent', {
     text-align: center;
     color: hsla(var(--text-color-hsl), 0.75);
   }
+}
+
+.recent__list {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-auto-rows: calc(var(--pd-x) * 3);
+  gap: calc(var(--pd-x) / 2);
+
+  margin: 0;
+  padding: 0;
+
+  list-style-type: none;
 }
 </style>
