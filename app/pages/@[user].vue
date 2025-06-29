@@ -163,21 +163,21 @@ onMounted(() => {
     <LazyWorkspaceContents />
 
     <Teleport to="#teleports">
-      <Transition name="search-fade">
+      <WithModalTransition>
         <LazyWorkspaceSearch v-if="isShowingSearch" @close="isShowingSearch = false" />
-      </Transition>
+      </WithModalTransition>
     </Teleport>
 
     <Teleport to="#teleports">
-      <WithFadeTransition>
+      <WithModalTransition>
         <LazyWorkspaceShortcuts v-if="isShowingShortcuts" @close="isShowingShortcuts = false" />
-      </WithFadeTransition>
+      </WithModalTransition>
     </Teleport>
 
     <Teleport to="#teleports">
-      <WithFadeTransition>
+      <WithModalTransition>
         <LazyWorkspaceItemDetails v-if="currentItemForDetails" :item="currentItemForDetails" />
-      </WithFadeTransition>
+      </WithModalTransition>
     </Teleport>
   </div>
 </template>

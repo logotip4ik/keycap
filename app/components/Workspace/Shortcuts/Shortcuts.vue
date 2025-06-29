@@ -20,7 +20,11 @@ const humanizedShortcuts = computed(() => {
   return humanizedShortcuts;
 });
 
-const shortcutsDescription = {
+const shortcutsRenames: Partial<Record<keyof typeof shortcuts, string>> = {
+  shortcutsModal: '?',
+};
+
+const shortcutsDescription: Record<keyof typeof shortcuts, string> = {
   edit: 'Focus Editor',
   new: 'Create new note or folder',
   search: 'Show search',
@@ -29,7 +33,8 @@ const shortcutsDescription = {
   scrollToTop: 'Scroll to the top of the note',
   scrollToBottom: 'Scroll to the bottom of the note',
   quickFind: 'Quickly find text in note',
-} satisfies Record<keyof typeof shortcuts, string>;
+  shortcutsModal: 'Show shortcuts list',
+};
 
 const editorShortcuts = {
   '$mod+Alt+0': 'Set paragraph',
@@ -55,7 +60,7 @@ function humanizeShortcut(shortcut: string) {
 
         <ul class="shortcuts__list">
           <li v-for="(shortcut, key) in humanizedShortcuts" :key="key" class="shortcuts__list__item">
-            <kbd>{{ shortcut }}</kbd>
+            <kbd>{{ shortcutsRenames[key] || shortcut }}</kbd>
 
             <hr class="shortcuts__list__item__hr">
 
@@ -111,7 +116,7 @@ function humanizeShortcut(shortcut: string) {
 
     width: 100%;
 
-    & + & {
+    &+& {
       margin-top: 1.5rem;
     }
   }
@@ -153,7 +158,7 @@ function humanizeShortcut(shortcut: string) {
         margin: 0;
       }
 
-      & + & {
+      &+& {
         margin-top: 1rem;
       }
     }
