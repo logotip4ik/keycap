@@ -68,9 +68,11 @@ if (import.meta.client) {
 
     <hr>
 
-    <WorkspaceToolboxRecent />
+    <div class="toolbox__scroller">
+      <WorkspaceToolboxRecent />
 
-    <WorkspaceToolboxSettings />
+      <WorkspaceToolboxSettings />
+    </div>
 
     <hr>
 
@@ -79,40 +81,52 @@ if (import.meta.client) {
 </template>
 
 <style lang="scss">
-.toolbox__section {
-  &__title {
-    font-size: 1.15rem;
-    font-stretch: 105%;
-    color: hsla(var(--text-color-hsl), 0.875);
+.toolbox {
+  &__scroller {
+    display: flex;
+    flex-direction: column;
 
-    margin: calc(var(--pd-y) * 0.75) 0 var(--pd-y);
+    min-height: 0;
+    height: 100%;
+
+    overflow: auto;
   }
 
-  &__list {
-    --spacing: calc(var(--pd-y) * 0.66);
+  &__section {
+    &__title {
+      font-size: 1.15rem;
+      font-stretch: 105%;
+      color: hsla(var(--text-color-hsl), 0.875);
 
-    margin: var(--spacing) 0 0;
-    padding: 0 0 0 calc(var(--pd-x) * 1.66);
+      margin: calc(var(--pd-y) * 0.75) 0 var(--pd-y);
+    }
 
-    list-style-type: disc;
+    &__list {
+      --spacing: calc(var(--pd-y) * 0.66);
 
-    &__item {
-      color: hsla(var(--text-color-hsl), 0.75);
+      margin: var(--spacing) 0 0;
+      padding: 0 0 0 calc(var(--pd-x) * 1.66);
 
-      transition: color .3s;
+      list-style-type: disc;
 
-      &::marker {
-        color: currentColor;
-      }
+      &__item {
+        color: hsla(var(--text-color-hsl), 0.75);
 
-      &:hover {
-        color: var(--text-color);
+        transition: color .3s;
 
-        transition-duration: .1s;
-      }
+        &::marker {
+          color: currentColor;
+        }
 
-      &:not(:first-child) {
-        margin-top: var(--spacing);
+        &:hover {
+          color: var(--text-color);
+
+          transition-duration: .1s;
+        }
+
+        &:not(:first-child) {
+          margin-top: var(--spacing);
+        }
       }
     }
   }
