@@ -86,6 +86,19 @@ useTinykeys({
       behavior: 'smooth',
     });
   },
+  [shortcuts.shortcutsModal]: (event) => {
+    const element = event.target as HTMLElement;
+
+    if (element.isContentEditable || element.tagName === 'INPUT') {
+      return;
+    }
+
+    isShowingShortcuts.value = true;
+    isShowingSearch.value = false;
+    currentItemForDetails.value = undefined;
+
+    event.preventDefault();
+  },
 });
 
 if (import.meta.client) {

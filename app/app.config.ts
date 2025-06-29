@@ -8,5 +8,6 @@ export default defineAppConfig({
     scrollToTop: 'Escape g g',
     scrollToBottom: 'Escape Shift+G',
     quickFind: 'Escape /',
+    shortcutsModal: 'Shift+Slash',
   },
 });
