@@ -54,7 +54,7 @@ describe('component Toolbox', () => {
     const component = await getComponent();
 
     await waitFor(() => {
-      const recentList = component.container.querySelector('.toolbox__recent .toolbox__section__list');
+      const recentList = component.container.querySelector('.toolbox__recent .recent__list');
       expect(recentList).toBeTruthy();
       expect(recentList?.children.length).toBe(4);
     });
