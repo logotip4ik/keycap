@@ -61,8 +61,8 @@ const { data: recent } = useKFetch<Array<NoteMinimal>>('/api/recent', {
 
 .recent__list {
   display: grid;
-  grid-template-columns: 50% 50%;
-  grid-auto-rows: calc(var(--pd-x) * 3);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: calc(var(--pd-x) * 3.5);
   gap: calc(var(--pd-x) / 2);
 
   margin: 0;

@@ -41,7 +41,7 @@ function unpinIfNeeded() {
   height: 100%;
   width: 100%;
 
-  padding: calc(var(--pd-y) / 1.65) calc(var(--pd-x) / 2);
+  padding: calc(var(--pd-y) / 1.1) calc(var(--pd-x) / 2);
 
   border: 1px solid hsla(var(--text-color-hsl), 0.075);
   border-radius: 0.2rem;
