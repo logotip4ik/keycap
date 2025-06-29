@@ -109,7 +109,8 @@ function showMenu(event: Event) {
   outline: 1px solid transparent;
   outline-offset: -1px;
 
-  transition: background-color .1s, color .1s, outline-color .3s;
+  transform: rotate(0);
+  transition: background-color .1s, color .1s, outline-color .3s, transform 0.1s;
 
   @media (hover: hover) {
     color: hsla(var(--text-color-hsl), 0.7);
@@ -134,6 +135,10 @@ function showMenu(event: Event) {
     color: hsla(var(--text-color-hsl), 1) !important;
     background-color: hsla(var(--text-color-hsl), 0.025);
     outline-color: hsla(var(--selection-bg-color-hsl), 0.35);
+  }
+
+  &:active {
+    transform: scale(0.99);
   }
 
   &__icon {

@@ -13,8 +13,8 @@
   align-items: center;
 
   position: absolute;
-  top: calc(var(--size) / 6);
-  right: calc(var(--size) / 6);
+  top: calc(var(--size) / 3);
+  right: calc(var(--size) / 3);
 
   width: var(--size);
   height: var(--size);

@@ -38,6 +38,7 @@ const { state } = inject(props.injectionKey)!;
   background-color: hsla(var(--surface-color-hsl), 0.95);
 
   cursor: pointer;
+  transform: rotate(0);
   transition: transform var(--sidebar-tr-duration) var(--sidebar-tr-ease);
 
   &--exposed {
@@ -48,6 +49,22 @@ const { state } = inject(props.injectionKey)!;
         0
       )
     ;
+
+    &:active {
+      transform:
+        translate3d(
+          calc(var(--dir) * var(--sidebar-width)),
+          0,
+          0
+        )
+
+        scale(0.9)
+      ;
+    }
+  }
+
+  &:active {
+    transform: scale(0.9);
   }
 
   svg {
