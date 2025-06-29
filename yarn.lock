@@ -6160,16 +6160,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"coincident@npm:^4.0.16":
-  version: 4.0.16
-  resolution: "coincident@npm:4.0.16"
+"coincident@npm:~3.0.5":
+  version: 3.0.5
+  resolution: "coincident@npm:3.0.5"
   dependencies:
-    "@webreflection/utils": "npm:^0.1.1"
-    next-resolver: "npm:^0.1.3"
-    reflected-ffi: "npm:^0.5.3"
-  bin:
-    coincident: cli.cjs
-  checksum: 10/34ea7955f0c885278f78fdba698cc23b1fe40528e67763321ab98644792139632a725b739e0b7e1a3122fd185e3ae7d47854728b811baaf5d3a3c7957b120564
+    gc-hook: "npm:^0.4.1"
+    js-proxy: "npm:^0.5.2"
+    next-resolver: "npm:^0.1.2"
+  checksum: 10/760c718d23e9afc396bb0f4052d827d9b40fbb0c4c1b8b6e22628a25be18de45e21734dbd88106e202bdc54f0b6f5d2dfb88416f051c164d7d3fb66c82919c94
   languageName: node
   linkType: hard
 
@@ -8407,6 +8405,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"gc-hook@npm:^0.4.1":
+  version: 0.4.1
+  resolution: "gc-hook@npm:0.4.1"
+  checksum: 10/25769a16b4c690653c86678380abaeae62aacc118495f6c97f5fbb2a879075a1e863017efd1f45df5fe443468523f2251c10be1576fc465aaaf5ab66e98798c8
+  languageName: node
+  linkType: hard
+
 "gensync@npm:^1.0.0-beta.2":
   version: 1.0.0-beta.2
   resolution: "gensync@npm:1.0.0-beta.2"
@@ -9415,6 +9420,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"js-proxy@npm:^0.5.2":
+  version: 0.5.2
+  resolution: "js-proxy@npm:0.5.2"
+  dependencies:
+    gc-hook: "npm:^0.4.1"
+    proxy-target: "npm:^3.0.2"
+  checksum: 10/6982515ba2272c7460a9d080036cb50f206c253f3e67246c631b7cfd87ae0e47e57f77c7289cafa48c565bf20a23f4e1f514200c8a504a7495c6bd5d5d80f3a5
+  languageName: node
+  linkType: hard
+
 "js-tokens@npm:^4.0.0":
   version: 4.0.0
   resolution: "js-tokens@npm:4.0.0"
@@ -9631,7 +9646,7 @@ __metadata:
     "@vue/test-utils": "npm:^2.4.6"
     "@vue/typescript-plugin": "npm:^2.2.10"
     browserslist-to-esbuild: "npm:^2.1.1"
-    coincident: "npm:^4.0.16"
+    coincident: "npm:~3.0.5"
     cookie-es: "npm:^2.0.0"
     decomment: "npm:^0.9.5"
     destr: "npm:^2.0.5"
@@ -11192,7 +11207,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-resolver@npm:^0.1.3":
+"next-resolver@npm:^0.1.2":
   version: 0.1.4
   resolution: "next-resolver@npm:0.1.4"
   dependencies:
@@ -13136,6 +13151,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"proxy-target@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "proxy-target@npm:3.0.2"
+  checksum: 10/5ce314f8e479f4dec85249e80f6a0b55f01af03539c29fd4e9d070b576be969c7a79f8ac87da3e58f8580ed83cd8401b0cc759049b8149c545cc74e53fa90f9f
+  languageName: node
+  linkType: hard
+
 "pump@npm:^3.0.0":
   version: 3.0.3
   resolution: "pump@npm:3.0.3"
@@ -13371,13 +13393,6 @@ __metadata:
   dependencies:
     "@eslint-community/regexpp": "npm:^4.8.0"
   checksum: 10/b89411434e31637a519c065acd8fd1ec9eabc1dec38eec58dbc69a386ec21d88f97fa175e56fb3133e21c090ddb68fe7b5653ffc4bbcc9f069abc0e88c0d290c
-  languageName: node
-  linkType: hard
-
-"reflected-ffi@npm:^0.5.3":
-  version: 0.5.5
-  resolution: "reflected-ffi@npm:0.5.5"
-  checksum: 10/f512c8113f5564a79c4f9f7c48b34c58a09259c669da3208e863f6e0e44fbd330e63807b116744f5dba08bea2c955da918dc870f10a4846bf20732e21215ab49
   languageName: node
   linkType: hard
 
