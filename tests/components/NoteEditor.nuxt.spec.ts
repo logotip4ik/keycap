@@ -43,10 +43,15 @@ describe('component NoteEditor', () => {
     const editor = component.getByLabelText('Rich text editor');
 
     await waitFor(async () => {
-      await userEvent.clear(editor);
-      await userEvent.click(editor);
+      await user.click(editor);
 
       expect(editor).toHaveFocus();
+
+      const expecetedMessage = 'hello world';
+
+      for (const _ of expecetedMessage) {
+        await user.keyboard('[Backspace]');
+      }
 
       await user.type(editor, 'hello world');
 
