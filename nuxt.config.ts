@@ -409,9 +409,10 @@ export default defineNuxtConfig({
     rollupConfig: {
       treeshake: 'recommended',
       output: {
-        generatedCode: 'es2015',
+        generatedCode: {
+          arrowFunctions: true
+        },
       },
-      // @ts-expect-error broken types
       plugins: [
         RollupUrl({
           limit: 0,
