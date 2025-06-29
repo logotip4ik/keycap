@@ -410,7 +410,7 @@ export default defineNuxtConfig({
       treeshake: 'recommended',
       output: {
         generatedCode: {
-          arrowFunctions: true
+          arrowFunctions: true,
         },
       },
       plugins: [
