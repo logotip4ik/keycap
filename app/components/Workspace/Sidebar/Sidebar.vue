@@ -239,7 +239,7 @@ $breakpoint-one: $sidebar-breakpoint-one;
 
   hr {
     width: 97.5%;
-    height: 1px;
+    min-height: 1px;
 
     margin-block: calc(var(--pd-y) / 2);
 

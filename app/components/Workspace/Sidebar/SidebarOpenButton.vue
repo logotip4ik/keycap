@@ -7,16 +7,20 @@ const { state } = inject(props.injectionKey)!;
 </script>
 
 <template>
-  <button
-    data-open-button
-    class="sidebar__open-button"
-    :class="{ 'sidebar__open-button--exposed': state === 'hidden' }"
-    :aria-pressed="state === 'pinned'"
-    @click="state = unpinSidebar(state)"
-    @mouseenter="state === 'hidden' && (state = 'visible')"
+  <div
+    class="sidebar__open-button__wrapper"
+    :class="{ 'sidebar__open-button__wrapper--exposed': state === 'hidden' }"
   >
-    <slot />
-  </button>
+    <button
+      data-open-button
+      class="sidebar__open-button"
+      :aria-pressed="state === 'pinned'"
+      @click="state = unpinSidebar(state)"
+      @mouseenter="state === 'hidden' && (state = 'visible')"
+    >
+      <slot />
+    </button>
+  </div>
 </template>
 
 <style lang="scss">
@@ -39,32 +43,25 @@ const { state } = inject(props.injectionKey)!;
 
   cursor: pointer;
   transform: rotate(0);
-  transition: transform var(--sidebar-tr-duration) var(--sidebar-tr-ease);
+  transition: transform 0.1s;
 
-  &--exposed {
-    transform:
-      translate3d(
-        calc(var(--dir) * var(--sidebar-width)),
-        0,
-        0
-      )
-    ;
+  &__wrapper {
+    transform: rotate(0);
+    transition: transform var(--sidebar-tr-duration) var(--sidebar-tr-ease);
 
-    &:active {
+    &--exposed {
       transform:
         translate3d(
           calc(var(--dir) * var(--sidebar-width)),
           0,
           0
         )
-
-        scale(0.9)
       ;
     }
   }
 
   &:active {
-    transform: scale(0.9);
+    transform: scale(0.925);
   }
 
   svg {
