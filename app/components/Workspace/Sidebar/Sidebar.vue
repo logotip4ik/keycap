@@ -1,6 +1,8 @@
 <script setup lang="ts">
 type FocusableElement = HTMLAnchorElement | HTMLButtonElement;
 
+defineOptions({ inheritAttrs: false });
+
 const props = withDefaults(defineProps<{
   dir?: 'left' | 'right'
   name: string

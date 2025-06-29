@@ -1,4 +1,6 @@
 <script setup lang="ts">
+defineOptions({ inheritAttrs: false });
+
 const props = defineProps<{
   injectionKey: InjectionKey<{ state: Ref<SidebarState> }>
 }>();
@@ -12,6 +14,7 @@ const { state } = inject(props.injectionKey)!;
     :class="{ 'sidebar__open-button__wrapper--exposed': state === 'hidden' }"
   >
     <button
+      v-bind="$attrs"
       data-open-button
       class="sidebar__open-button"
       :aria-pressed="state === 'pinned'"
