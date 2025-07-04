@@ -1,27 +1,32 @@
 <template>
-  <div class="recent-skeleton">
-    <div v-for="i in 4" :key="i" class="recent-skeleton__item skeleton-bg" />
-  </div>
+  <div class="skeleton recent-skeleton" />
 </template>
 
 <style lang="scss">
 .recent-skeleton {
-  &__item {
-    width: 100%;
-    height: 1.35rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
 
-    border-radius: 0.225rem;
+  position: relative;
 
-    &:not(:first-child) {
-      margin-top: 0.5rem;
-    }
+  height: 5rem;
 
-    @for $i from 1 to 5 {
-      &:nth-child(#{$i}) {
-        opacity: #{math.div(1, $i)};
-        width: #{25 + math.random($limit: 25) + "%"}
-      }
-    }
+  &::after {
+    --size: 2rem;
+
+    content: '';
+
+    width: var(--size);
+    height: var(--size);
+
+    border-radius: 50%;
+    border: 2px solid transparent;
+    border-left-color: currentColor;
+    border-right-color: currentColor;
+
+    opacity: 0.65;
+    animation: spin 1s infinite linear;
   }
 }
 </style>

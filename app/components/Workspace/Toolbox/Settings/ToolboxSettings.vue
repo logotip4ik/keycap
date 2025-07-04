@@ -62,8 +62,9 @@ const settingComponents = [
       transition: background-color 0.3s, border-color 0.3s;
 
       &:is(:hover, :focus-visible) {
-        background-color: hsla(var(--selection-bg-color-hsl), 0.1);
+        background-color: hsla(var(--text-color-hsl), 0.05);
         border-color: hsla(var(--selection-bg-color-hsl), 0.75);
+        outline: none;
 
         transition-duration: 0.1s;
       }

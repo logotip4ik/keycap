@@ -15,10 +15,10 @@ function pinToolbox() {
 
 <template>
   <div class="toolbox__settings__setting" @mousedown.capture="pinToolbox">
-    <label for="formatter-position-select">Auto open most recent note:</label>
+    <label for="auto-open-recent">Auto open most recent note:</label>
 
     <select
-      id="formatter-position-select"
+      id="auto-open-recent"
       v-model="setting"
       class="toolbox__settings__setting__select"
       @click="pinToolbox"

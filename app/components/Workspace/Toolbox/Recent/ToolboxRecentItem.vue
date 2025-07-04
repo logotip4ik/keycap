@@ -51,20 +51,15 @@ function unpinIfNeeded() {
   cursor: pointer;
 
   transform: rotate(0);
-  transition: color, border-color, background-color, transform;
-  transition-duration: .4s;
+  transition: color .5s, border-color .5s, background-color .5s, transform .1s;
 
   &:is(:hover, :focus-visible) {
     color: hsla(var(--text-color-hsl), 1);
-    background-color: hsla(var(--selection-bg-color-hsl), 0.1);
+    background-color: hsla(var(--text-color-hsl), 0.05);
     border-color: hsla(var(--selection-bg-color-hsl), 0.75);
+    outline: none;
 
     transition-duration: .1s;
-
-    @media (prefers-color-scheme: dark) {
-      background-color: hsla(var(--selection-bg-color-hsl), 0.275);
-      border-color: hsla(var(--selection-bg-color-hsl), 0.65);
-    }
   }
 
   &:active {
