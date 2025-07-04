@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { LocationQueryValue } from '#vue-router';
-
 definePageMeta({
   validate(route) {
     const user = useUser();
@@ -26,25 +24,6 @@ mitt.on('search:show', () => isShowingSearch.value = true);
 mitt.on('shortcuts:show', () => isShowingShortcuts.value = true);
 
 const isNoteEmpty = computed(() => !route.params.note || route.params.note === BLANK_NOTE_NAME);
-
-watch(isShowingSearch, async (search, _, onCleanup) => {
-  let newQuery: Record<string, LocationQueryValue | Array<LocationQueryValue>>;
-  if (search) {
-    newQuery = { ...route.query, search: null };
-  }
-  else {
-    const { search, ...queryWithoutSearch } = route.query;
-    newQuery = queryWithoutSearch;
-  }
-
-  onCleanup(
-    on(window, 'popstate', () => {
-      isShowingSearch.value = false;
-    }, { once: true }),
-  );
-
-  await navigateTo({ query: newQuery });
-});
 
 useHead({
   title: () => isNoteEmpty.value
@@ -138,10 +117,6 @@ else {
     }
   }
 }
-
-onMounted(() => {
-  isShowingSearch.value = route.query.search !== undefined;
-});
 </script>
 
 <template>
