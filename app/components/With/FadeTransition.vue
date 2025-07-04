@@ -1,5 +1,9 @@
+<script setup lang="ts">
+defineProps<{ appear?: boolean }>();
+</script>
+
 <template>
-  <Transition name="fade">
+  <Transition name="fade" :appear>
     <slot />
   </Transition>
 </template>
@@ -13,7 +17,7 @@
   }
 
   &.skeleton {
-    transition-delay: 0.4s;
+    transition-delay: 0.5s;
   }
 }
 
