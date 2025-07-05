@@ -1,6 +1,34 @@
 # Changelog
 
 
+## v3.17.17
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.17.16...v3.17.17)
+
+### 🩹 Fixes
+
+- Search list animation ([ce2a0485](https://github.com/logotip4ik/keycap/commit/ce2a0485))
+
+### 💅 Refactors
+
+- Remove `?search` query handling ([fb53f80e](https://github.com/logotip4ik/keycap/commit/fb53f80e))
+
+### 🏡 Chore
+
+- **release:** V3.17.16 ([589bb5c3](https://github.com/logotip4ik/keycap/commit/589bb5c3))
+- Maybe fix appear ssr animation for fade animation ([09e0085b](https://github.com/logotip4ik/keycap/commit/09e0085b))
+- Update recent skeleton and other style inconsistencies for focused and hovered state ([e88c304c](https://github.com/logotip4ik/keycap/commit/e88c304c))
+- Update deps ([8152ca16](https://github.com/logotip4ik/keycap/commit/8152ca16))
+- Downgrade coincident again ([0a208160](https://github.com/logotip4ik/keycap/commit/0a208160))
+
+### 🤖 CI
+
+- Bump autofix-ci/action in the actions group ([#51](https://github.com/logotip4ik/keycap/pull/51))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.17.16
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.17.15...v3.17.16)
