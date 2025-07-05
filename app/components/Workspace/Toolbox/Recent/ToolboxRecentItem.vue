@@ -53,13 +53,15 @@ function unpinIfNeeded() {
   transform: rotate(0);
   transition: color .5s, border-color .5s, background-color .5s, transform .1s;
 
-  &:is(:hover, :focus-visible) {
-    color: hsla(var(--text-color-hsl), 1);
-    background-color: hsla(var(--text-color-hsl), 0.05);
-    border-color: hsla(var(--selection-bg-color-hsl), 0.75);
-    outline: none;
+  @media (hover: hover) {
+    &:is(:hover, :focus-visible) {
+      color: hsla(var(--text-color-hsl), 1);
+      background-color: hsla(var(--text-color-hsl), 0.05);
+      border-color: hsla(var(--selection-bg-color-hsl), 0.75);
+      outline: none;
 
-    transition-duration: .1s;
+      transition-duration: .1s;
+    }
   }
 
   &:active {
