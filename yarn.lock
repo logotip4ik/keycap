@@ -4125,7 +4125,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-blockquote@npm:^2.22.0":
+"@tiptap/extension-blockquote@npm:^2.24.2":
   version: 2.24.2
   resolution: "@tiptap/extension-blockquote@npm:2.24.2"
   peerDependencies:
@@ -4134,21 +4134,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-bold@npm:2.23.0":
-  version: 2.23.0
-  resolution: "@tiptap/extension-bold@npm:2.23.0"
+"@tiptap/extension-bold@npm:2.24.2":
+  version: 2.24.2
+  resolution: "@tiptap/extension-bold@npm:2.24.2"
   peerDependencies:
     "@tiptap/core": ^2.7.0
-  checksum: 10/5c340f365538dd0dca8817bcd7e013571abf135cf5de33466372a545bb46ad7de4f5d2f89f76fcb45a010f74621f6066fd692f8037e6e1d10d6d999d25fc7f32
+  checksum: 10/c84044de12b28ba4aaecaeb04e624b3bf9cf57a684e2f6392a96f7b903cd4ce6f97435262c57a78b9c704edcabc36a89e3489d105cd50aed472e3cb9ccbaa2a0
   languageName: node
   linkType: hard
 
-"@tiptap/extension-bold@patch:@tiptap/extension-bold@npm%3A2.23.0#~/.yarn/patches/@tiptap-extension-bold-npm-2.2.4-2d09dcdbd7.patch":
-  version: 2.23.0
-  resolution: "@tiptap/extension-bold@patch:@tiptap/extension-bold@npm%3A2.23.0#~/.yarn/patches/@tiptap-extension-bold-npm-2.2.4-2d09dcdbd7.patch::version=2.23.0&hash=f3e391"
+"@tiptap/extension-bold@patch:@tiptap/extension-bold@npm%3A2.24.2#~/.yarn/patches/@tiptap-extension-bold-npm-2.2.4-2d09dcdbd7.patch":
+  version: 2.24.2
+  resolution: "@tiptap/extension-bold@patch:@tiptap/extension-bold@npm%3A2.24.2#~/.yarn/patches/@tiptap-extension-bold-npm-2.2.4-2d09dcdbd7.patch::version=2.24.2&hash=f3e391"
   peerDependencies:
     "@tiptap/core": ^2.7.0
-  checksum: 10/24a9b32b024fb044c7463dfdd83a2701bbbc0de1da3e3ff09a7a0ddd68c3c49b885369f7cb9a1172ec3ddf94b8702437eb071a1a2d6a72b4355c77f1776a606a
+  checksum: 10/110e93b3fec241c9f02ba10c828cde51da8f29847b2df1a0f37ecc7aba8e054ffb3522c4a746dd44d7414ac86a256c75f08adac485ef0d1522d192c9f2b83a51
   languageName: node
   linkType: hard
 
@@ -4250,7 +4250,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-italic@npm:^2.23.0":
+"@tiptap/extension-italic@npm:^2.24.2":
   version: 2.24.2
   resolution: "@tiptap/extension-italic@npm:2.24.2"
   peerDependencies:
@@ -6174,16 +6174,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"coincident@npm:~4.0.18":
-  version: 4.0.18
-  resolution: "coincident@npm:4.0.18"
+"coincident@npm:3.0.5":
+  version: 3.0.5
+  resolution: "coincident@npm:3.0.5"
   dependencies:
-    "@webreflection/utils": "npm:^0.1.1"
-    next-resolver: "npm:^0.1.4"
-    reflected-ffi: "npm:^0.5.6"
-  bin:
-    coincident: cli.cjs
-  checksum: 10/25d9730ee57727dac35e8a75d5c4058d6e99a8274b754c1fa072c3e80fb647e393df253b7e27435c978c7013e67b51fc3be121df988a281c075b957b91d3b466
+    gc-hook: "npm:^0.4.1"
+    js-proxy: "npm:^0.5.2"
+    next-resolver: "npm:^0.1.2"
+  checksum: 10/760c718d23e9afc396bb0f4052d827d9b40fbb0c4c1b8b6e22628a25be18de45e21734dbd88106e202bdc54f0b6f5d2dfb88416f051c164d7d3fb66c82919c94
   languageName: node
   linkType: hard
 
@@ -8424,6 +8422,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"gc-hook@npm:^0.4.1":
+  version: 0.4.1
+  resolution: "gc-hook@npm:0.4.1"
+  checksum: 10/25769a16b4c690653c86678380abaeae62aacc118495f6c97f5fbb2a879075a1e863017efd1f45df5fe443468523f2251c10be1576fc465aaaf5ab66e98798c8
+  languageName: node
+  linkType: hard
+
 "gensync@npm:^1.0.0-beta.2":
   version: 1.0.0-beta.2
   resolution: "gensync@npm:1.0.0-beta.2"
@@ -9425,6 +9430,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"js-proxy@npm:^0.5.2":
+  version: 0.5.2
+  resolution: "js-proxy@npm:0.5.2"
+  dependencies:
+    gc-hook: "npm:^0.4.1"
+    proxy-target: "npm:^3.0.2"
+  checksum: 10/6982515ba2272c7460a9d080036cb50f206c253f3e67246c631b7cfd87ae0e47e57f77c7289cafa48c565bf20a23f4e1f514200c8a504a7495c6bd5d5d80f3a5
+  languageName: node
+  linkType: hard
+
 "js-tokens@npm:^4.0.0":
   version: 4.0.0
   resolution: "js-tokens@npm:4.0.0"
@@ -9608,8 +9623,8 @@ __metadata:
     "@testing-library/user-event": "npm:^14.6.1"
     "@testing-library/vue": "npm:^8.1.0"
     "@tiptap/core": "npm:^2.24.2"
-    "@tiptap/extension-blockquote": "npm:^2.22.0"
-    "@tiptap/extension-bold": "npm:^2.23.0"
+    "@tiptap/extension-blockquote": "npm:^2.24.2"
+    "@tiptap/extension-bold": "npm:^2.24.2"
     "@tiptap/extension-bullet-list": "npm:^2.24.2"
     "@tiptap/extension-code": "npm:^2.24.2"
     "@tiptap/extension-code-block": "npm:^2.24.2"
@@ -9618,7 +9633,7 @@ __metadata:
     "@tiptap/extension-heading": "npm:^2.24.2"
     "@tiptap/extension-highlight": "npm:2.6.6"
     "@tiptap/extension-history": "npm:^2.24.2"
-    "@tiptap/extension-italic": "npm:^2.23.0"
+    "@tiptap/extension-italic": "npm:^2.24.2"
     "@tiptap/extension-list-item": "npm:^2.24.2"
     "@tiptap/extension-ordered-list": "npm:^2.24.2"
     "@tiptap/extension-paragraph": "npm:^2.24.2"
@@ -9641,7 +9656,7 @@ __metadata:
     "@vue/test-utils": "npm:^2.4.6"
     "@vue/typescript-plugin": "npm:^3.0.1"
     browserslist-to-esbuild: "npm:^2.1.1"
-    coincident: "npm:~4.0.18"
+    coincident: "npm:3.0.5"
     cookie-es: "npm:^2.0.0"
     decomment: "npm:^0.9.5"
     destr: "npm:^2.0.5"
@@ -11211,7 +11226,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-resolver@npm:^0.1.4":
+"next-resolver@npm:^0.1.2":
   version: 0.1.4
   resolution: "next-resolver@npm:0.1.4"
   dependencies:
@@ -13158,6 +13173,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"proxy-target@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "proxy-target@npm:3.0.2"
+  checksum: 10/5ce314f8e479f4dec85249e80f6a0b55f01af03539c29fd4e9d070b576be969c7a79f8ac87da3e58f8580ed83cd8401b0cc759049b8149c545cc74e53fa90f9f
+  languageName: node
+  linkType: hard
+
 "pump@npm:^3.0.0":
   version: 3.0.3
   resolution: "pump@npm:3.0.3"
@@ -13393,13 +13415,6 @@ __metadata:
   dependencies:
     "@eslint-community/regexpp": "npm:^4.8.0"
   checksum: 10/b89411434e31637a519c065acd8fd1ec9eabc1dec38eec58dbc69a386ec21d88f97fa175e56fb3133e21c090ddb68fe7b5653ffc4bbcc9f069abc0e88c0d290c
-  languageName: node
-  linkType: hard
-
-"reflected-ffi@npm:^0.5.6":
-  version: 0.5.6
-  resolution: "reflected-ffi@npm:0.5.6"
-  checksum: 10/4c3c6c3d070ace17f070fd16c67aa0587a45fecd8dea97fdfaee7afd0eee4bc684e67d59255b980da04d1f6c8c2af53931e32645e9753ce7cc6213a6c744c64a
   languageName: node
   linkType: hard
 
