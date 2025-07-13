@@ -1,6 +1,21 @@
 # Changelog
 
 
+## v3.17.18
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.17.17...v3.17.18)
+
+### 🏡 Chore
+
+- **release:** V3.17.17 ([e1ab067d](https://github.com/logotip4ik/keycap/commit/e1ab067d))
+- Enable hover and focus styles only for hover supported clients ([0202f503](https://github.com/logotip4ik/keycap/commit/0202f503))
+- Update deps ([6e0c1949](https://github.com/logotip4ik/keycap/commit/6e0c1949))
+- Match background color of recentitem and settings item ([09e6c06e](https://github.com/logotip4ik/keycap/commit/09e6c06e))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.17.17
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.17.16...v3.17.17)
