@@ -55,7 +55,7 @@ const settingComponents = [
 
       border: 1px solid hsla(var(--selection-bg-color-hsl), 0.25);
       border-radius: 0.25rem;
-      background-color: transparent;
+      background-color: hsla(var(--text-color-hsl), 0.015);
 
       cursor: pointer;
       appearance: none;

@@ -64,6 +64,8 @@ function initTiptap(opts: {
       BulletList,
       OrderedList,
       ListItem,
+      TaskList,
+      TaskItem,
       HardBreak,
       Heading.configure({ levels: [1, 2, 3] }),
       Bold.extend({ inclusive: true, exitable: true, keepOnSplit: false }),
@@ -71,8 +73,6 @@ function initTiptap(opts: {
       Strike.extend({ inclusive: true, exitable: true, keepOnSplit: false }),
       Highlight.extend({ inclusive: true, exitable: true, keepOnSplit: false }),
       Link,
-      TaskList,
-      TaskItem,
       BubbleMenu,
       EmojiPicker,
       Code.extend({

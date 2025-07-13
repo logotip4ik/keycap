@@ -162,18 +162,18 @@ function toggleListItem() {
     }
   }
 
-  if (prevListItem && prevListItem !== 'auto') {
-    if (prevListItem === 'taskList') {
-      commands.toggleTaskList().run();
-    }
-    else {
-      commands.liftListItem('listItem').run();
-    }
-
-    prevListItem = 'auto'; // enable cycling on next toggle
-
-    return;
-  }
+  // if (prevListItem && prevListItem !== 'auto') {
+  //   if (prevListItem === 'taskList') {
+  //     commands.toggleTaskList().run();
+  //   }
+  //   else {
+  //     commands.liftListItem('listItem').run();
+  //   }
+  //
+  //   prevListItem = 'auto'; // enable cycling on next toggle
+  //
+  //   return;
+  // }
 
   const actions = [
     (commands: ChainedCommands) => commands.toggleBulletList(),
