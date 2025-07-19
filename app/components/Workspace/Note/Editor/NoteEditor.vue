@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { Editor as VueEditor } from '@tiptap/vue-3';
-
 import {
   LazyWorkspaceNoteFormatterBubbleBox as LazyBubbleBox,
   LazyWorkspaceNoteFormatterFixedBox as LazyFixedBox,
@@ -8,6 +6,7 @@ import {
 import { Step } from '@tiptap/pm/transform';
 import { EditorContent } from '@tiptap/vue-3';
 
+import '~/assets/styles/tiptap.css';
 import '~/assets/styles/note-editor.scss';
 
 const props = defineProps<{
@@ -146,7 +145,7 @@ if (import.meta.client) {
 
 <template>
   <div class="note-editor__wrapper">
-    <EditorContent class="note-editor" :editor="editor as VueEditor" />
+    <EditorContent class="note-editor" :editor />
 
     <Component
       :is="isSmallScreen ? LazyFixedBox : LazyBubbleBox"
@@ -157,13 +156,13 @@ if (import.meta.client) {
     </Component>
 
     <Teleport to="#teleports">
-      <Transition name="search-fade">
+      <WithModalTransition>
         <LazyWorkspaceNoteQuickFind
           v-if="editor && showingQuickFind"
           :editor
           @close="showingQuickFind = false"
         />
-      </Transition>
+      </WithModalTransition>
     </Teleport>
   </div>
 </template>

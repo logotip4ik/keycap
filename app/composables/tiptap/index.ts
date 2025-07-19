@@ -1,25 +1,20 @@
 import type { EditorEvents } from '@tiptap/core';
 import type { ShallowRef } from 'vue';
 
-import Blockquote from '@tiptap/extension-blockquote';
-import Bold from '@tiptap/extension-bold';
-import BulletList from '@tiptap/extension-bullet-list';
-import Code from '@tiptap/extension-code';
-import CodeBlock from '@tiptap/extension-code-block';
-import Document from '@tiptap/extension-document';
-import HardBreak from '@tiptap/extension-hard-break';
-import Heading from '@tiptap/extension-heading';
-import Highlight from '@tiptap/extension-highlight';
-import History from '@tiptap/extension-history';
-import Italic from '@tiptap/extension-italic';
-import ListItem from '@tiptap/extension-list-item';
-import OrderedList from '@tiptap/extension-ordered-list';
-import Paragraph from '@tiptap/extension-paragraph';
-import Placeholder from '@tiptap/extension-placeholder';
-import Strike from '@tiptap/extension-strike';
-import TaskItem from '@tiptap/extension-task-item';
-import TaskList from '@tiptap/extension-task-list';
-import Text from '@tiptap/extension-text';
+import { Blockquote } from '@tiptap/extension-blockquote';
+import { Bold } from '@tiptap/extension-bold';
+import { Code } from '@tiptap/extension-code';
+import { CodeBlock } from '@tiptap/extension-code-block';
+import { Document } from '@tiptap/extension-document';
+import { HardBreak } from '@tiptap/extension-hard-break';
+import { Heading } from '@tiptap/extension-heading';
+import { Highlight } from '@tiptap/extension-highlight';
+import { Italic } from '@tiptap/extension-italic';
+import { BulletList, ListItem, OrderedList, TaskItem, TaskList } from '@tiptap/extension-list';
+import { Paragraph } from '@tiptap/extension-paragraph';
+import { Strike } from '@tiptap/extension-strike';
+import { Text } from '@tiptap/extension-text';
+import { Placeholder, UndoRedo } from '@tiptap/extensions';
 
 import { Editor } from '@tiptap/vue-3';
 
@@ -45,6 +40,7 @@ function initTiptap(opts: {
   }
 
   return new Editor({
+    injectCSS: false,
     autofocus: false,
     editable: opts.editable,
     content: opts.content,
@@ -97,7 +93,7 @@ function initTiptap(opts: {
           spellcheck: { default: 'false' },
         },
       }),
-      History.configure({ depth: 100 }),
+      UndoRedo.configure({ newGroupDelay: 300, depth: 400 }),
       Placeholder.configure({
         placeholder: ({ editor }) =>
           editor.isEmpty ? '# Start with heading...' : 'Write something...',
@@ -158,13 +154,8 @@ export function useTiptap(opts: {
 
   currentTiptap.value = editor;
 
-  const offs: Array<() => void> = [
-    () => currentTiptap.value = undefined,
-  ];
-
   onScopeDispose(() => {
-    invokeArrayFns(offs);
-    offs.length = 0;
+    currentTiptap.value = undefined;
 
     // @see https://github.com/ueberdosis/tiptap/pull/5772/files#diff-c79287bdd112b4264f53e38c24a0de06a0a7cf50db8134c29087ef8c44d94124
     // it really feels smoother

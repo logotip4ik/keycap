@@ -51,6 +51,8 @@ export default defineNuxtConfig({
     componentIslands: 'local',
     normalizeComponentNames: true,
     checkOutdatedBuildInterval: false,
+    enforceModuleCompatibility: true,
+    navigationRepaint: true,
     defaults: {
       nuxtLink: {
         prefetch: true,
@@ -263,6 +265,7 @@ export default defineNuxtConfig({
     vue: {
       features: {
         optionsAPI: false,
+        propsDestructure: false,
       },
     },
 
@@ -273,34 +276,19 @@ export default defineNuxtConfig({
 
     build: {
       target: 'esnext',
-
       cssMinify: 'lightningcss',
       cssTarget: browserslistToEsbuild('>0.3%, not dead, Safari > 15, iOS > 15'),
       reportCompressedSize: !isCI,
-
-      rollupOptions: {
-        treeshake: 'recommended',
-        output: {
-          generatedCode: 'es2015',
-        },
-      },
     },
 
     worker: {
       format: 'es',
-      rollupOptions: {
-        treeshake: 'recommended',
-        output: {
-          generatedCode: 'es2015',
-        },
-      },
     },
 
     css: {
       preprocessorMaxWorkers: true,
       preprocessorOptions: {
         scss: {
-          api: 'modern',
           additionalData: [
             '@use "sass:math";',
             Object.entries(breakpoints).map(([key, value]) => `$breakpoint-${key}: ${value}px;`).join('\n'),
@@ -312,43 +300,42 @@ export default defineNuxtConfig({
 
     optimizeDeps: {
       include: [
-        'mitt',
-        'coincident/main',
-        'coincident/worker',
-        'idb-keyval',
+        '@vue/devtools-core',
+        '@vue/devtools-kit',
+        '@ungap/with-resolvers',
+        'rad-event-listener',
+        'hashlru',
+        'tiny-invariant',
         'perfect-debounce',
-        'cookie-es',
+        'idb-keyval',
+        'mitt',
         'escape-string-regexp',
-        '@floating-ui/dom',
-        '@superhuman/command-score',
-      ],
-
-      exclude: [
-        '@tiptap/core',
+        '@tiptap/pm/transform',
+        '@tiptap/vue-3',
+        'cookie-es',
+        'coincident/main',
         '@tiptap/extension-blockquote',
         '@tiptap/extension-bold',
-        '@tiptap/extension-bullet-list',
         '@tiptap/extension-code',
         '@tiptap/extension-code-block',
         '@tiptap/extension-document',
         '@tiptap/extension-hard-break',
         '@tiptap/extension-heading',
         '@tiptap/extension-highlight',
-        '@tiptap/extension-history',
         '@tiptap/extension-italic',
-        '@tiptap/extension-list-item',
-        '@tiptap/extension-ordered-list',
+        '@tiptap/extension-list',
         '@tiptap/extension-paragraph',
-        '@tiptap/extension-placeholder',
         '@tiptap/extension-strike',
-        '@tiptap/extension-task-item',
-        '@tiptap/extension-task-list',
         '@tiptap/extension-text',
-        '@tiptap/pm',
+        '@tiptap/extensions',
+        '@tiptap/core',
+        '@tiptap/pm/state',
+        '@tiptap/pm/view',
+        '@floating-ui/dom',
         '@tiptap/suggestion',
-        '@tiptap/vue-3',
+        '@superhuman/command-score',
+        'coincident/worker',
       ],
-
       esbuildOptions: {
         target: 'esnext',
       },
@@ -407,7 +394,6 @@ export default defineNuxtConfig({
     },
 
     rollupConfig: {
-      treeshake: 'recommended',
       output: {
         generatedCode: {
           arrowFunctions: true,
@@ -434,14 +420,6 @@ export default defineNuxtConfig({
     },
 
     imports: {
-      dirs: [
-        resolve('./server/utils/cached'),
-        resolve('./server/utils/oauth'),
-        resolve('./server/utils/og'),
-        resolve('./server/utils/templating'),
-        resolve('./server/utils/validators'),
-      ],
-
       presets: [
         {
           from: resolve('./kysely/kysely.ts'),
@@ -597,7 +575,6 @@ export default defineNuxtConfig({
             ],
           }),
           ParseDurationTransformPlugin.rollup(),
-          InvariantOptimization.rollup(),
         ],
       },
     },

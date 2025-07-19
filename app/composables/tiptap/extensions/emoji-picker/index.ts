@@ -8,9 +8,6 @@ export const EmojiPicker = Mark.create({
   name: 'emoji-picker',
 
   group: 'inline',
-  inline: true,
-  selectable: false,
-  atom: true,
 
   addProseMirrorPlugins() {
     return [

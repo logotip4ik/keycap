@@ -1,5 +1,5 @@
 import { Extension, findChildrenInRange } from '@tiptap/core';
-import TaskItem from '@tiptap/extension-task-item';
+import { TaskItem } from '@tiptap/extension-list';
 
 const KEYWORD_RE = /\S+$/;
 
