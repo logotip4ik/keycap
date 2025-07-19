@@ -1,5 +1,5 @@
 import { defineVitestConfig } from '@nuxt/test-utils/config';
-import { defaultExclude, defaultInclude } from 'vitest/config';
+import { defaultExclude } from 'vitest/config';
 
 export default defineVitestConfig({
   assetsInclude: ['**.html'],
@@ -17,11 +17,6 @@ export default defineVitestConfig({
       './shared/**/*.ts',
       './app/utils/*.ts',
       './app/composables/tiptap/**/*.ts',
-    ],
-
-    include: [
-      ...defaultInclude,
-      '**/e2e/**',
     ],
 
     exclude: [
