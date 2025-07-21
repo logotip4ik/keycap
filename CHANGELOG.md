@@ -1,6 +1,25 @@
 # Changelog
 
 
+## v3.17.19
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.17.18...v3.17.19)
+
+### 💅 Refactors
+
+- Migrate to tiptap 3 ([48795bf2](https://github.com/logotip4ik/keycap/commit/48795bf2))
+
+### 🏡 Chore
+
+- **release:** V3.17.18 ([a2d64616](https://github.com/logotip4ik/keycap/commit/a2d64616))
+- Maybe fix tests or what ? idk what is happening ([df9661c1](https://github.com/logotip4ik/keycap/commit/df9661c1))
+- Bump nuxt ([9b61a5ff](https://github.com/logotip4ik/keycap/commit/9b61a5ff))
+- Add mix-blend-mode for header text ([0535f798](https://github.com/logotip4ik/keycap/commit/0535f798))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.17.18
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.17.17...v3.17.18)
