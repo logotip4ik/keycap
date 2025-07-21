@@ -122,6 +122,12 @@ onMounted(() => {
 
     max-width: 35ch;
 
+    mix-blend-mode: multiply;
+
+    @media (prefers-color-scheme: dark) {
+      mix-blend-mode: difference;
+    }
+
     &__purple {
       font-weight: 600;
       font-feature-settings: "ccmp", "ss03";
