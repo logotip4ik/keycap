@@ -1,15 +1,36 @@
 <script setup lang="ts">
-defineProps<{
+const props = defineProps<{
   type?: 'submit' | 'button' | 'reset'
   loading?: boolean
 }>();
+
+const delayedLoading = ref(props.loading);
+const minChangeTime = 500;
+let changeCallbackTimeout: ReturnType<typeof setTimeout> | undefined;
+let lastChange = Date.now();
+
+watch(() => props.loading, (loading) => {
+  const lastChangeDiff = Date.now() - lastChange;
+  if (!loading && lastChangeDiff < minChangeTime) {
+    changeCallbackTimeout = setTimeout(() => {
+      delayedLoading.value = props.loading;
+      lastChange = Date.now();
+    }, minChangeTime - lastChangeDiff);
+  }
+  else {
+    lastChange = Date.now();
+    delayedLoading.value = loading;
+    clearTimeout(changeCallbackTimeout);
+    changeCallbackTimeout = undefined;
+  }
+});
 </script>
 
 <template>
   <button
     class="form__button"
     :type="type"
-    :class="{ 'form__button--loading': loading }"
+    :class="{ 'form__button--loading': delayedLoading }"
     :disabled="loading"
     :aria-busy="loading"
   >
@@ -40,14 +61,18 @@ defineProps<{
   box-shadow: 0 0 1rem hsla(var(--text-color-hsl), 0.125);
 
   cursor: pointer;
-  transition: outline .3s, outline-offset .3s;
+  transition: outline .3s, outline-offset .3s, transform 0.15s;
 
   &:is(:hover, :focus-visible) {
     outline-style: solid;
     outline-color: var(--text-color);
     outline-offset: 0.25rem;
 
-    transition: outline-color 0.1s, outline-offset 0s;
+    transition: outline-color 0.1s, outline-offset 0s, transform 0.15s;
+  }
+
+  &:active {
+    transform: scale(0.98);
   }
 
   &::after,
@@ -58,6 +83,7 @@ defineProps<{
 
     opacity: 0;
     transition: opacity .2s;
+    pointer-events: none;
   }
 
   &::after {
@@ -66,8 +92,6 @@ defineProps<{
 
     border-radius: inherit;
     background-color: hsla(var(--text-color-hsl), 0.95);
-
-    pointer-events: none;
 
     @supports (backdrop-filter: blur(1px)) {
       backdrop-filter: blur(2px);
@@ -94,9 +118,6 @@ defineProps<{
   }
 
   &--loading {
-    outline-offset: -1px !important;
-    pointer-events: none;
-
     &::after,
     &::before {
       opacity: 1;
