@@ -115,6 +115,7 @@ export function useKFetch<TData>(path: MaybeRefOrGetter<string>, {
         pollingTimer = setTimeout(innerFetch, pollingTime * multiplier);
 
         loadingToastInstance?.remove();
+        loadingToastInstance = undefined;
       });
 
     if (data.value) {
@@ -177,9 +178,9 @@ export function useKFetch<TData>(path: MaybeRefOrGetter<string>, {
     offVisibilityChange();
 
     abortControllerGet?.abort();
-    loadingToastInstance?.remove();
-
     abortControllerGet = undefined;
+
+    loadingToastInstance?.remove();
     loadingToastInstance = undefined;
   });
 
