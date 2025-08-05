@@ -3,12 +3,20 @@ const initCallbacks = [
   defineFuzzyWorker,
   preloadDashboardComponents,
   validateOfflineStorage,
+  () => setTimeout(requestIdleCallback, UPDATE_WORKER_DELAY, registerSWToasts),
   () => {
-    setTimeout(async () => {
-      const { registerSWToasts } = await import('~/utils/sw-controller');
+    const user = useUser();
 
-      requestIdleCallback(registerSWToasts);
-    }, UPDATE_WORKER_DELAY);
+    useNuxtApp().hook('service-worker:activated', ({ registration }) => {
+      if (!user.value) {
+        return;
+      }
+      registration.active?.postMessage({
+        type: 'WORKSPACE_PATH',
+        payload: { workspacePath: `/@${user.value.username}` },
+
+      });
+    });
   },
 ];
 

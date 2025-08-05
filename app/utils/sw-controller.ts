@@ -1,16 +1,6 @@
 export function registerSWToasts() {
-  const user = useUser();
   const { $pwa: pwa } = useNuxtApp();
   const createToast = useToaster();
-
-  if (pwa && user.value) {
-    const registration = pwa.getSWRegistration();
-
-    registration?.active?.postMessage({
-      type: 'WORKSPACE_PATH',
-      payload: { workspacePath: `/@${user.value.username}` },
-    });
-  }
 
   const stopOfflineReady = watch(() => pwa?.offlineReady, (ready) => {
     if (!ready) {
