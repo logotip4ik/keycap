@@ -89,6 +89,7 @@ if (import.meta.client) {
   }
 }
 
+.toast-move,
 .toast-enter-active {
   --ease-out-cubic: cubic-bezier(0.33, 1, 0.68, 1);
 
@@ -96,10 +97,6 @@ if (import.meta.client) {
 
   transform-origin: bottom center;
   transition: transform 0.3s var(--ease-out-cubic), opacity 0.3s;
-}
-
-.toast-enter-from {
-  transform: scale(0.95);
 }
 
 .toast-leave-active {
@@ -115,17 +112,10 @@ if (import.meta.client) {
   }
 }
 
-.toast-leave-to {
-  transform: scale(0.975);
-}
-
 .toast-enter-from,
 .toast-leave-to {
   opacity: 0;
-  filter: blur(2px);
-}
-
-.toast-move {
-  transition-duration: 0.3s;
+  filter: blur(3px);
+  transform: scale(0.95);
 }
 </style>
