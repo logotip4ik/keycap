@@ -168,6 +168,16 @@ kbd {
   }
 }
 
+@keyframes spin {
+  from {
+    transform: rotate(0)
+  }
+
+  to {
+    transform: rotate(1turn)
+  }
+}
+
 .sr-only {
   border: none !important;
   height: 0 !important;

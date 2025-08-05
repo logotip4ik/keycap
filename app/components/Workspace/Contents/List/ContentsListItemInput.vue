@@ -196,10 +196,4 @@ onMounted(() => {
     }
   }
 }
-
-@keyframes spin {
-  to {
-    transform: rotate(1turn)
-  }
-}
 </style>
