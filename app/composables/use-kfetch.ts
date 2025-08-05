@@ -57,7 +57,7 @@ export function useKFetch<TData>(path: MaybeRefOrGetter<string>, {
 
     lastFetchTime = Date.now();
 
-    kfetch<{ data: TData }>(toValue(path), {
+    const promise = kfetch<{ data: TData }>(toValue(path), {
       signal: abortControllerGet.signal,
       responseType: 'json',
       headers: { Accept: 'application/json' },
@@ -118,7 +118,7 @@ export function useKFetch<TData>(path: MaybeRefOrGetter<string>, {
       });
 
     if (data.value) {
-      return;
+      return promise;
     }
 
     let cached = getCached({ inErrorBlock: false });
@@ -137,6 +137,8 @@ export function useKFetch<TData>(path: MaybeRefOrGetter<string>, {
     // await, we did set the value, but overwrote it with `undefined` because there wasn't cached
     // version
     data.value ||= cached as Awaited<typeof cached>;
+
+    return promise;
   };
 
   innerFetch();
