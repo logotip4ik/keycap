@@ -111,7 +111,14 @@ function refetchFolderIfNeeded(path: string) {
 }
 
 mitt.on('precreate:item', (event) => handleCreateItem(event));
-mitt.on('refresh:folder', () => refresh());
+mitt.on('refresh:folder', () => {
+  const refreshToast = createToast('Refreshing folder...', {
+    type: 'loading',
+    delay: parseDuration('0.3s')!,
+  });
+
+  refresh().finally(refreshToast.remove);
+});
 mitt.on('details:show:folder', () => {
   if (!folder.value) {
     const stop = watch(folder, (folder) => {

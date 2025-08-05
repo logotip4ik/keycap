@@ -160,8 +160,14 @@ function restoreScroll() {
   }
 }
 
-mitt.on('refresh:note', () => refresh());
+mitt.on('refresh:note', () => {
+  const refreshToast = createToast('Refreshing note...', {
+    type: 'loading',
+    delay: parseDuration('0.4s')!,
+  });
 
+  refresh().finally(refreshToast.remove);
+});
 mitt.on('details:show:note', () => {
   if (note.value) {
     currentItemForDetails.value = note.value;
