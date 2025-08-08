@@ -6,15 +6,13 @@ defineProps<{
 const { shortcuts } = useAppConfig();
 const modKey = useModKey();
 
-const modRE = /\$mod/g;
-const keyRE = /Key/g;
 const humanizedShortcuts = computed(() => {
   const humanizedShortcuts = {} as typeof shortcuts;
 
   for (const key in shortcuts) {
     const shortcut = shortcuts[key as keyof typeof shortcuts];
 
-    humanizedShortcuts[key as keyof typeof shortcuts] = humanizeShortcut(shortcut);
+    humanizedShortcuts[key as keyof typeof shortcuts] = humanizeShortcut(shortcut, modKey.value);
   }
 
   return humanizedShortcuts;
@@ -36,16 +34,12 @@ const shortcutsDescription: Record<keyof typeof shortcuts, string> = {
   shortcutsModal: 'Show shortcuts list',
 };
 
-const editorShortcuts = {
-  '$mod+Alt+0': 'Set paragraph',
-  '$mod+Alt+1': 'Set heading level to 1',
-  '$mod+Alt+2': 'Set heading level to 2',
-  '$mod+Alt+3': 'Set heading level to 3',
-};
-
-function humanizeShortcut(shortcut: string) {
-  return shortcut.replace(modRE, modKey.value).replace(keyRE, '');
-}
+const editorShortcuts = computed(() => ({
+  [humanizeShortcut('$mod+Alt+0', modKey.value)]: 'Set paragraph',
+  [humanizeShortcut('$mod+Alt+1', modKey.value)]: 'Set heading level to 1',
+  [humanizeShortcut('$mod+Alt+2', modKey.value)]: 'Set heading level to 2',
+  [humanizeShortcut('$mod+Alt+3', modKey.value)]: 'Set heading level to 3',
+}));
 </script>
 
 <template>
@@ -78,7 +72,7 @@ function humanizeShortcut(shortcut: string) {
 
         <ul class="shortcuts__list">
           <li v-for="(description, shortcut) in editorShortcuts" :key="shortcut" class="shortcuts__list__item">
-            <kbd>{{ humanizeShortcut(shortcut) }}</kbd>
+            <kbd>{{ shortcut }}</kbd>
 
             <hr class="shortcuts__list__item__hr">
 

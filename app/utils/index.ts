@@ -23,3 +23,9 @@ export function preloadComponent(component: Component) {
     component[loader]();
   }
 }
+
+const modRE = /\$mod/g;
+const keyRE = /Key/g;
+export function humanizeShortcut(shortcut: string, modKey: string) {
+  return shortcut.replace(modRE, modKey).replace(keyRE, '');
+}

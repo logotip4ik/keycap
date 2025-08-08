@@ -6,6 +6,7 @@ const { state } = useToolboxSidebar();
 const { state: contentsState } = useContentsSidebar();
 
 const sidebar = useTemplateRef('sidebar');
+const ariaKeyshortcuts = useAriaKeyshortcuts(shortcuts.toolbox);
 
 const toolboxState = computed<SidebarState>({
   get: () => state.value,
@@ -61,6 +62,7 @@ if (import.meta.client) {
     name="toolbox"
     :injection-key="ToolboxState"
     aria-label="Toolbox"
+    :aria-keyshortcuts
   >
     <WorkspaceToolboxHeader />
 

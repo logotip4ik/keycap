@@ -7,6 +7,7 @@ const { state: toolboxState } = useToolboxSidebar();
 
 const sidebar = useTemplateRef('sidebar');
 const isFixed = ref(false);
+const ariaKeyshortcuts = useAriaKeyshortcuts(shortcuts.contents);
 
 let lastNonFixedState: SidebarState | undefined;
 
@@ -77,6 +78,7 @@ if (import.meta.client) {
     name="contents"
     :injection-key="ContentsState"
     aria-labelledby="contents-header"
+    :aria-keyshortcuts
   >
     <WorkspaceContentsHeader />
 
