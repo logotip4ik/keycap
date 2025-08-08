@@ -1,33 +1,74 @@
+import { LazyWorkspaceNoteQuickFind } from '#components';
+
 const UPDATE_WORKER_DELAY = parseDuration('1.5s')!;
 const initCallbacks = [
   defineFuzzyWorker,
   preloadDashboardComponents,
   validateOfflineStorage,
-  () => setTimeout(requestIdleCallback, UPDATE_WORKER_DELAY, registerSWToasts),
-  () => {
-    const user = useUser();
-
-    useNuxtApp().hook('service-worker:activated', ({ registration }) => {
-      if (!user.value) {
-        return;
-      }
-      registration.active?.postMessage({
-        type: 'WORKSPACE_PATH',
-        payload: { workspacePath: `/@${user.value.username}` },
-
-      });
-    });
-  },
+  setServiceWorkerWorkspacePath,
+  registerSWToasts,
 ];
 
 export function prepareWorkspace() {
   invokeArrayFns(initCallbacks);
 }
 
-export function preloadDashboardComponents() {
-  requestIdleCallback(() => {
-    preloadRouteComponents(`/@a/${BLANK_NOTE_NAME}`);
+function setServiceWorkerWorkspacePath() {
+  const user = useUser();
+
+  useNuxtApp().hook('service-worker:activated', ({ registration }) => {
+    if (!user.value) {
+      return;
+    }
+    registration.active?.postMessage({
+      type: 'WORKSPACE_PATH',
+      payload: { workspacePath: `/@${user.value.username}` },
+    });
   });
+}
+
+function preloadDashboardComponents() {
+  requestIdleCallback(() => {
+    preloadRouteComponents('/@a/a');
+    preloadComponent(LazyWorkspaceNoteQuickFind);
+  });
+}
+
+async function registerSWToasts() {
+  const { $pwa: pwa } = useNuxtApp();
+  const createToast = useToaster();
+
+  await new Promise((r) => setTimeout(r, UPDATE_WORKER_DELAY));
+
+  const stopOfflineReady = watch(() => pwa?.offlineReady, (ready) => {
+    if (!ready) {
+      return;
+    }
+
+    nextTick(() => stopOfflineReady());
+
+    createToast('Phewww, now you can work offline.', {
+      delay: 550,
+    });
+  }, { immediate: true });
+
+  const stopNeedRefresh = watch(() => pwa?.needRefresh, (needRefresh) => {
+    if (!needRefresh) {
+      return;
+    }
+
+    nextTick(() => stopNeedRefresh());
+
+    createToast('Psss... We have some updates.', {
+      priority: 10,
+      duration: parseDuration('25 seconds')!,
+      delay: 550,
+      buttons: [
+        { text: 'refresh now', onClick: () => pwa?.updateServiceWorker() },
+        { text: 'nahh, not now', onClick: (t) => t.remove() },
+      ],
+    });
+  }, { immediate: true });
 }
 
 const currentOfflineStorageVersion = 1;
