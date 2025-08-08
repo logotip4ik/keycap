@@ -52,6 +52,10 @@
         color: hsla(var(--text-color-hsl), 0.25);
         pointer-events: none;
         height: 0;
+
+        opacity: 0;
+
+        transition: opacity .3s;
       }
     }
 
@@ -216,7 +220,13 @@
     &>*:is(h1, h2, h3):first-child {
       padding-top: 0;
     }
+  }
 
+  &:focus-within {
+    p.is-empty::before {
+      opacity: 1;
+      transition-duration: .05s;
+    }
   }
 }
 
