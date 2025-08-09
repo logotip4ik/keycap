@@ -1,15 +1,14 @@
 <script setup lang="ts">
-import AutoOpenRecent from './Item/AutoOpenRecent.vue';
-import FormatterPositionSetting from './Item/FormatterPosition.vue';
-import RememberScrollPosition from './Item/RememberScrollPosition.vue';
-import SpellCheck from './Item/SpellCheck.vue';
+import type { AsyncComponentLoader } from 'vue';
 
-const settingComponents = [
-  FormatterPositionSetting,
-  SpellCheck,
-  RememberScrollPosition,
-  AutoOpenRecent,
-];
+const settings = import.meta.glob('./Item/*');
+
+const settingComponents = Object
+  .entries(settings)
+  .sort(([a], [b]) => Number(a.split('.')[0]) - Number(b.split('.')[0]))
+  .map(([_, loader]) => {
+    return defineAsyncComponent(loader as AsyncComponentLoader);
+  });
 </script>
 
 <template>
