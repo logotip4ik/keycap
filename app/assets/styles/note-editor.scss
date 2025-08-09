@@ -78,7 +78,7 @@
         li {
           display: flex;
 
-          transition: opacity .3s, filter .3s;
+          transition: opacity .3s, filter .3s, transform .3s;
 
           &[data-checked="true"] {
             opacity: 0.625;
@@ -211,10 +211,6 @@
       &:not(:first-child) {
         padding-top: 1.5rem;
       }
-    }
-
-    * {
-      transition: all .3s;
     }
 
     &>*:is(h1, h2, h3):first-child {
