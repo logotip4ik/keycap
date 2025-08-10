@@ -19,3 +19,15 @@ export function useToolboxState() {
 
   return injection;
 }
+
+export function usePinToolbox() {
+  const { state } = useToolboxState();
+
+  return () => {
+    if (state.value === 'pinned') {
+      return;
+    }
+
+    state.value = 'pinned';
+  };
+}

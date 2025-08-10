@@ -1,16 +1,8 @@
 <script setup lang="ts">
-import { useToolboxState } from '../../config';
+import { usePinToolbox } from '../../config';
 
-const { state } = useToolboxState();
 const { setting, posibleValues } = useSetting(settings.scrollPosition);
-
-function pinToolbox() {
-  if (state.value === 'pinned') {
-    return;
-  }
-
-  state.value = 'pinned';
-}
+const pinToolbox = usePinToolbox();
 </script>
 
 <template>
