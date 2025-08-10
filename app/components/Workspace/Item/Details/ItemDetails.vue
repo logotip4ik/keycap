@@ -54,7 +54,7 @@ function rememberHeight() {
   prevPopupHeight = itemDetailsEl.value?.clientHeight;
 }
 
-function transitionHeight(_el: Element, done: () => void) {
+function transitionHeight() {
   const itemDetails = itemDetailsEl.value;
 
   if (!prevPopupHeight || !itemDetails) {
@@ -66,16 +66,13 @@ function transitionHeight(_el: Element, done: () => void) {
   const heightDifference = Math.abs(prevPopupHeight - newHeight);
 
   if (heightDifference < 2) {
-    done();
     return;
   }
 
-  const animation = itemDetails.animate([
+  itemDetails.animate([
     { height: `${prevPopupHeight}px` },
     { height: `${newHeight}px` },
   ], { duration: 400, easing: 'cubic-bezier(0.33, 1, 0.68, 1)' });
-
-  animation.addEventListener('finish', () => done());
 }
 
 const formatter = Intl.DateTimeFormat(undefined, {
