@@ -41,21 +41,27 @@ const filteredUtils = computed(() => {
 
 let prevHeight: number;
 function rememberHeight() {
-  if (!utilsComp.value) {
+  const el = utilsComp.value?.$el;
+  if (!(el instanceof HTMLElement)) {
     return;
   }
 
-  stopAnimations(utilsComp.value.$el);
+  stopAnimations(el);
 
-  prevHeight = utilsComp.value.$el.clientHeight;
+  prevHeight = el.clientHeight;
 }
 
 function transitionHeight() {
-  const currentHeight = utilsComp.value?.$el.clientHeight;
+  const el = utilsComp.value?.$el;
+  if (!(el instanceof HTMLElement)) {
+    return;
+  }
 
-  utilsComp.value?.$el.animate([
-    { height: `${prevHeight}px` },
-    { height: `${currentHeight}px` },
+  const currentHeight = el.clientHeight;
+
+  el.animate([
+    { minHeight: `${prevHeight}px` },
+    { minHeight: `${currentHeight}px` },
   ], { duration: 400, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' });
 }
 
