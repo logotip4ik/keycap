@@ -556,6 +556,22 @@ export default defineNuxtConfig({
           ecma: '2020',
         }),
       ],
+
+      worker: {
+        plugins: () => [
+          viteMinify({
+            compress: true,
+            mangle: true,
+            toplevel: true,
+            keep_classnames: false,
+            keep_fnames: false,
+            module: true,
+            safari10: false,
+            sourceMap: !isCI,
+            ecma: '2020',
+          }),
+        ],
+      },
     },
 
     nitro: {

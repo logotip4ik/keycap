@@ -10116,7 +10116,11 @@ __metadata:
     unstorage: "npm:^1.16.1"
     vitest: "npm:^3.2.4"
     vue: "npm:latest"
+    workbox-core: "npm:^7.3.0"
     workbox-expiration: "npm:^7.3.0"
+    workbox-precaching: "npm:^7.3.0"
+    workbox-routing: "npm:^7.3.0"
+    workbox-strategies: "npm:^7.3.0"
   languageName: unknown
   linkType: soft
 
@@ -16562,7 +16566,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"workbox-core@npm:7.3.0":
+"workbox-core@npm:7.3.0, workbox-core@npm:^7.3.0":
   version: 7.3.0
   resolution: "workbox-core@npm:7.3.0"
   checksum: 10/228fb7018a0568c329e21d47d84980f93ebfef9b1eb3f40ddc3516ca6ae58d51dc7ca4dddc829332775b59a3079e62d105c5e1c5c312805d177b963f8bf54393
@@ -16600,7 +16604,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"workbox-precaching@npm:7.3.0":
+"workbox-precaching@npm:7.3.0, workbox-precaching@npm:^7.3.0":
   version: 7.3.0
   resolution: "workbox-precaching@npm:7.3.0"
   dependencies:
@@ -16634,7 +16638,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"workbox-routing@npm:7.3.0":
+"workbox-routing@npm:7.3.0, workbox-routing@npm:^7.3.0":
   version: 7.3.0
   resolution: "workbox-routing@npm:7.3.0"
   dependencies:
@@ -16643,7 +16647,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"workbox-strategies@npm:7.3.0":
+"workbox-strategies@npm:7.3.0, workbox-strategies@npm:^7.3.0":
   version: 7.3.0
   resolution: "workbox-strategies@npm:7.3.0"
   dependencies:
