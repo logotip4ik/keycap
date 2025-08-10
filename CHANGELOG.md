@@ -1,6 +1,48 @@
 # Changelog
 
 
+## v3.18.0
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.17.19...v3.18.0)
+
+### 🚀 Enhancements
+
+- Add new auto float checked tasks use settting ([631b4799](https://github.com/logotip4ik/keycap/commit/631b4799))
+
+### 🩹 Fixes
+
+- Remove dangling toast ([642cd420](https://github.com/logotip4ik/keycap/commit/642cd420))
+- Hide editor placeholder message when not focused ([7b05e4de](https://github.com/logotip4ik/keycap/commit/7b05e4de))
+- Allow showing nuxt devtools and fuzzy search in dev mode ([aed184b3](https://github.com/logotip4ik/keycap/commit/aed184b3))
+- Leave animation not working ([4a130ff9](https://github.com/logotip4ik/keycap/commit/4a130ff9))
+- Remove done callback to allow appear animation to finish ([bd5560ab](https://github.com/logotip4ik/keycap/commit/bd5560ab))
+- Explicitly install worker deps and minify it with swc ([986a5853](https://github.com/logotip4ik/keycap/commit/986a5853))
+
+### 💅 Refactors
+
+- Rewrite service worker to more simple version (maybe uses more space on client side) ([c73b6ffc](https://github.com/logotip4ik/keycap/commit/c73b6ffc))
+- Deduplicatet spin animation ([9d2ce471](https://github.com/logotip4ik/keycap/commit/9d2ce471))
+- Merge move and appear toast transitions ([c0dd50fb](https://github.com/logotip4ik/keycap/commit/c0dd50fb))
+- Add active animations for buttons and prevent too fast loading overlay change ([2bb9a35f](https://github.com/logotip4ik/keycap/commit/2bb9a35f))
+- Cleanup workspace preparation ([93872294](https://github.com/logotip4ik/keycap/commit/93872294))
+- Utilise vite import.meta.glob and naming for auto importing settings ([e0664ffb](https://github.com/logotip4ik/keycap/commit/e0664ffb))
+
+### 🏡 Chore
+
+- **release:** V3.17.19 ([b8608ed6](https://github.com/logotip4ik/keycap/commit/b8608ed6))
+- Update deps ([b856fe43](https://github.com/logotip4ik/keycap/commit/b856fe43))
+- Update deps ([68ade87e](https://github.com/logotip4ik/keycap/commit/68ade87e))
+- Update deps ([d50c08e1](https://github.com/logotip4ik/keycap/commit/d50c08e1))
+- Return fetch promise for refetch function ([f7e3541d](https://github.com/logotip4ik/keycap/commit/f7e3541d))
+- Show refreshing toasts when manually called for note and folder ([6722261e](https://github.com/logotip4ik/keycap/commit/6722261e))
+- Aria-keyshortcuts for sidebars ([edbd549d](https://github.com/logotip4ik/keycap/commit/edbd549d))
+- Remove not needed `all` transition ([ed2e6c77](https://github.com/logotip4ik/keycap/commit/ed2e6c77))
+- Share function for pinning toolbox ([60224275](https://github.com/logotip4ik/keycap/commit/60224275))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.17.19
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.17.18...v3.17.19)
