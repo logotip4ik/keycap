@@ -20,6 +20,7 @@ import { Editor } from '@tiptap/vue-3';
 
 import proxy from 'unenv/runtime/mock/proxy';
 
+import { AutoFloatTaskPlugin, AutoFloatTaskPluginKey } from './extensions/auto-float-task-item';
 import { BubbleMenu } from './extensions/bubble-menu';
 import { EmojiPicker } from './extensions/emoji-picker';
 import { Find } from './extensions/find';
@@ -110,6 +111,7 @@ export function useTiptap(opts: {
   content: MaybeRefOrGetter<string>
   spellcheck: MaybeRefOrGetter<SettingsDefinitions[Settings['spellcheck']]['value']>
   editable: MaybeRefOrGetter<boolean>
+  autoFloatTask: MaybeRefOrGetter<SettingsDefinitions[Settings['autoFloatTask']]['value']>
   onUpdate: (props: EditorEvents['update']) => void
 }) {
   const isTyping = ref(false);
@@ -151,6 +153,14 @@ export function useTiptap(opts: {
       },
     });
   });
+
+  watch(() => toValue(opts.autoFloatTask), (autoFloatTask) => {
+    editor.unregisterPlugin(AutoFloatTaskPluginKey);
+    editor.registerPlugin(AutoFloatTaskPlugin({
+      enabled: autoFloatTask === 'yes',
+      editor,
+    }));
+  }, { immediate: true });
 
   currentTiptap.value = editor;
 

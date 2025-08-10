@@ -16,6 +16,7 @@ export const settings = {
   spellcheck: 'splchk',
   scrollPosition: 'scrl-pos',
   autoOpenRecent: 'aor',
+  autoFloatTask: 'aft',
 } as const;
 
 const settingsDefinitions = {
@@ -32,6 +33,10 @@ const settingsDefinitions = {
     posibleValues: ['yes', 'no'] as const,
   }),
   [settings.autoOpenRecent]: defineSetting({
+    defaultValue: 'no',
+    posibleValues: ['yes', 'no'] as const,
+  }),
+  [settings.autoFloatTask]: defineSetting({
     defaultValue: 'no',
     posibleValues: ['yes', 'no'] as const,
   }),

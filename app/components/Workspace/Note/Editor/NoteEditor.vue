@@ -25,11 +25,13 @@ const mitt = useMitt();
 const zeenk = useZeenk();
 const { isSmallScreen } = useDevice();
 const { setting: spellcheck } = useSetting(settings.spellcheck);
+const { setting: autoFloatTask } = useSetting(settings.autoFloatTask);
 
 const hasUnsavedChanges = { value: false };
 const { editor } = useTiptap({
   content,
   spellcheck,
+  autoFloatTask,
   editable: () => props.editable,
   onUpdate: ({ transaction }) => {
     if (transaction.getMeta('websocket') === true) {

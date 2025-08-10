@@ -2,7 +2,7 @@ import type { HTTPHeaderName, HTTPMethod } from 'h3';
 
 import { destr } from 'destr';
 import parseDuration from 'parse-duration';
-import { isCI, isDevelopment } from 'std-env';
+import { isCI } from 'std-env';
 import invariant from 'tiny-invariant';
 
 const turnstileEnabled = destr(process.env.FEATURE_TURNSTILE) === true;
@@ -34,7 +34,7 @@ const cspHeaders = {
 
 // basically helmet defaults with some customizations
 const defaultHeaders = {
-  ...(!isDevelopment ? { 'Cross-Origin-Embedder-Policy': 'require-corp' } : {}),
+  'Cross-Origin-Embedder-Policy': 'require-corp',
   'Cross-Origin-Opener-Policy': 'same-origin',
   'Cross-Origin-Resource-Policy': 'cross-origin',
   'Origin-Agent-Cluster': '?1',
