@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.18.1
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.18.0...v3.18.1)
+
+### 🩹 Fixes
+
+- Make autofloat plugin react to more restricted changes ([0a146136](https://github.com/logotip4ik/keycap/commit/0a146136))
+
+### 🏡 Chore
+
+- **release:** V3.18.0 ([beef393a](https://github.com/logotip4ik/keycap/commit/beef393a))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.18.0
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.17.19...v3.18.0)
