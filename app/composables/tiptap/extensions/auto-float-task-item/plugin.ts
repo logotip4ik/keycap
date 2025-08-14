@@ -79,6 +79,7 @@ interface State {
   movedTasks?: Array<MovedTask>
 }
 
+const OriginalHistoryPluginKey = 'history$';
 export function AutoFloatTaskPlugin(options: AutoFloatTaskPluginOptions) {
   return new Plugin({
     key: AutoFloatTaskPluginKey,
@@ -97,12 +98,12 @@ export function AutoFloatTaskPlugin(options: AutoFloatTaskPluginOptions) {
     },
 
     appendTransaction(transactions, oldState, newState) {
-      if (oldState.doc === newState.doc || !options.enabled) {
+      if (oldState.doc === newState.doc || !options.enabled || transactions.length !== 1) {
         return;
       }
 
-      const changeTransactions = transactions.filter((tr) => tr.docChanged);
-      if (changeTransactions.length === 0) {
+      const [transaction] = transactions;
+      if (!transaction.docChanged || transaction.getMeta(OriginalHistoryPluginKey)) {
         return;
       }
 
@@ -115,53 +116,49 @@ export function AutoFloatTaskPlugin(options: AutoFloatTaskPluginOptions) {
       }
       let changedTask: ChangedTask | undefined;
 
-      // eslint-disable-next-line no-labels, no-restricted-syntax
-      outer: for (const tr of transactions) {
-        for (const step of tr.steps) {
-          if (step instanceof ReplaceAroundStep) {
-            const { from, to } = step;
+      for (const step of transaction.steps) {
+        if (step instanceof ReplaceAroundStep) {
+          const { from, to } = step;
 
-            newState.doc.nodesBetween(from, to, (node, pos) => {
-              if (changedTask) {
-                return false;
-              }
-
-              if (node.type.name !== TaskItem.name) {
-                return;
-              }
-
-              const oldNode = oldState.doc.nodeAt(pos);
-              if (
-                oldNode?.type.name !== TaskItem.name
-                || node.attrs.checked === oldNode.attrs.checked
-              ) {
-                return;
-              }
-
-              const resolvedPos = newState.doc.resolve(pos);
-              const parentList = resolvedPos.parent;
-              if (parentList.type.name !== TaskList.name) {
-                return;
-              }
-
-              changedTask = {
-                checked: node.attrs.checked,
-                pos,
-                node,
-                oldNode,
-                list: {
-                  node: parentList,
-                  pos: resolvedPos.before(resolvedPos.depth),
-                },
-              };
-
-              return false;
-            });
-
+          newState.doc.nodesBetween(from, to, (node, pos) => {
             if (changedTask) {
-              // eslint-disable-next-line no-labels
-              break outer;
+              return false;
             }
+
+            if (node.type.name !== TaskItem.name) {
+              return;
+            }
+
+            const oldNode = oldState.doc.nodeAt(pos);
+            if (
+              oldNode?.type.name !== TaskItem.name
+              || node.attrs.checked === oldNode.attrs.checked
+            ) {
+              return;
+            }
+
+            const resolvedPos = newState.doc.resolve(pos);
+            const parentList = resolvedPos.parent;
+            if (parentList.type.name !== TaskList.name) {
+              return;
+            }
+
+            changedTask = {
+              checked: node.attrs.checked,
+              pos,
+              node,
+              oldNode,
+              list: {
+                node: parentList,
+                pos: resolvedPos.before(resolvedPos.depth),
+              },
+            };
+
+            return false;
+          });
+
+          if (changedTask) {
+            break;
           }
         }
       }
