@@ -19,6 +19,7 @@ export default defineComponent({
 
     if (props.handleArrowsPress) {
       merged.onKeydown = handleArrowsPress;
+      merged.tabindex = attrs.tabindex as number || -1;
     }
 
     return () => h(
