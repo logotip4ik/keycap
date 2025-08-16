@@ -2,6 +2,7 @@ import type { Editor } from '@tiptap/core';
 import type { Node } from '@tiptap/pm/model';
 import type { PluginView } from '@tiptap/pm/state';
 import type { EditorView } from '@tiptap/pm/view';
+import { getTextBetween } from '@tiptap/core';
 
 import { TaskItem, TaskList } from '@tiptap/extension-list';
 import { Plugin, PluginKey } from '@tiptap/pm/state';
@@ -117,49 +118,56 @@ export function AutoFloatTaskPlugin(options: AutoFloatTaskPluginOptions) {
       let changedTask: ChangedTask | undefined;
 
       for (const step of transaction.steps) {
-        if (step instanceof ReplaceAroundStep) {
-          const { from, to } = step;
+        const isReplaceAroundStep = step instanceof ReplaceAroundStep;
+        if (!isReplaceAroundStep) {
+          continue;
+        }
 
-          newState.doc.nodesBetween(from, to, (node, pos) => {
-            if (changedTask) {
-              return false;
-            }
+        const { from, to } = step;
 
-            if (node.type.name !== TaskItem.name) {
-              return;
-            }
+        if (!newState.doc.nodeAt(from)) {
+          continue;
+        }
 
-            const oldNode = oldState.doc.nodeAt(pos);
-            if (
-              oldNode?.type.name !== TaskItem.name
-              || node.attrs.checked === oldNode.attrs.checked
-            ) {
-              return;
-            }
-
-            const resolvedPos = newState.doc.resolve(pos);
-            const parentList = resolvedPos.parent;
-            if (parentList.type.name !== TaskList.name) {
-              return;
-            }
-
-            changedTask = {
-              checked: node.attrs.checked,
-              pos,
-              node,
-              oldNode,
-              list: {
-                node: parentList,
-                pos: resolvedPos.before(resolvedPos.depth),
-              },
-            };
-
-            return false;
-          });
-
+        newState.doc.nodesBetween(from, to, (node, pos) => {
           if (changedTask) {
-            break;
+            return false;
           }
+
+          if (changedTask || node.type.name !== TaskItem.name) {
+            return;
+          }
+
+          const oldNode = oldState.doc.nodeAt(pos);
+          if (
+            oldNode?.type.name !== TaskItem.name
+            || node.attrs.checked === oldNode.attrs.checked
+          ) {
+            return;
+          }
+
+          const resolvedPos = newState.doc.resolve(pos);
+          const parentList = resolvedPos.parent;
+          if (parentList.type.name !== TaskList.name) {
+            return;
+          }
+
+          changedTask = {
+            checked: node.attrs.checked,
+            pos,
+            node,
+            oldNode,
+            list: {
+              node: parentList,
+              pos: resolvedPos.before(resolvedPos.depth),
+            },
+          };
+
+          return false;
+        });
+
+        if (changedTask) {
+          break;
         }
       }
 
