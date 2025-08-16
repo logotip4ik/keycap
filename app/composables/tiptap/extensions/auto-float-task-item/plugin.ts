@@ -2,11 +2,11 @@ import type { Editor } from '@tiptap/core';
 import type { Node } from '@tiptap/pm/model';
 import type { PluginView } from '@tiptap/pm/state';
 import type { EditorView } from '@tiptap/pm/view';
-import { getTextBetween } from '@tiptap/core';
+import { getChangedRanges } from '@tiptap/core';
 
 import { TaskItem, TaskList } from '@tiptap/extension-list';
 import { Plugin, PluginKey } from '@tiptap/pm/state';
-import { ReplaceAroundStep } from '@tiptap/pm/transform';
+import { Transform } from '@tiptap/pm/transform';
 
 export interface AutoFloatTaskPluginOptions {
   enabled: boolean
@@ -99,14 +99,22 @@ export function AutoFloatTaskPlugin(options: AutoFloatTaskPluginOptions) {
     },
 
     appendTransaction(transactions, oldState, newState) {
-      if (oldState.doc === newState.doc || !options.enabled || transactions.length !== 1) {
+      if (
+        oldState.doc === newState.doc
+        || !options.enabled
+        || transactions.some((tr) => !!tr.getMeta(OriginalHistoryPluginKey))
+      ) {
         return;
       }
 
-      const [transaction] = transactions;
-      if (!transaction.docChanged || transaction.getMeta(OriginalHistoryPluginKey)) {
-        return;
+      const transform = new Transform(oldState.doc);
+      for (const tr of transactions) {
+        for (const step of tr.steps) {
+          transform.step(step);
+        }
       }
+
+      const changes = getChangedRanges(transform);
 
       interface ChangedTask {
         checked: boolean
@@ -117,25 +125,14 @@ export function AutoFloatTaskPlugin(options: AutoFloatTaskPluginOptions) {
       }
       let changedTask: ChangedTask | undefined;
 
-      for (const step of transaction.steps) {
-        const isReplaceAroundStep = step instanceof ReplaceAroundStep;
-        if (!isReplaceAroundStep) {
-          continue;
-        }
-
-        const { from, to } = step;
-
-        if (!newState.doc.nodeAt(from)) {
-          continue;
-        }
-
-        newState.doc.nodesBetween(from, to, (node, pos) => {
-          if (changedTask) {
-            return false;
-          }
-
-          if (changedTask || node.type.name !== TaskItem.name) {
-            return;
+      for (const { newRange } of changes) {
+        newState.doc.nodesBetween(newRange.from, newRange.to, (node, pos) => {
+          if (
+            changedTask
+            || node.type.name !== TaskItem.name
+            || oldState.doc.nodeSize < pos
+          ) {
+            return node.type.name === TaskList.name;
           }
 
           const oldNode = oldState.doc.nodeAt(pos);
