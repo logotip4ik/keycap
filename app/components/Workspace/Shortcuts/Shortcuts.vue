@@ -6,22 +6,6 @@ defineProps<{
 const { shortcuts } = useAppConfig();
 const modKey = useModKey();
 
-const humanizedShortcuts = computed(() => {
-  const humanizedShortcuts = {} as typeof shortcuts;
-
-  for (const key in shortcuts) {
-    const shortcut = shortcuts[key as keyof typeof shortcuts];
-
-    humanizedShortcuts[key as keyof typeof shortcuts] = humanizeShortcut(shortcut, modKey.value);
-  }
-
-  return humanizedShortcuts;
-});
-
-const shortcutsRenames: Partial<Record<keyof typeof shortcuts, string>> = {
-  shortcutsModal: '?',
-};
-
 const shortcutsDescription: Record<keyof typeof shortcuts, string> = {
   edit: 'Focus Editor',
   new: 'Create new note or folder',
@@ -34,11 +18,33 @@ const shortcutsDescription: Record<keyof typeof shortcuts, string> = {
   shortcutsModal: 'Show shortcuts list',
 };
 
+const shortcutsRenames: Partial<Record<keyof typeof shortcuts, string>> = {
+  shortcutsModal: '?',
+};
+
+const humanizedShortcuts = computed(() => {
+  return Object.entries(shortcuts)
+    .map(([key, shortcut]) => ({
+      keys: shortcutsRenames[key as keyof typeof shortcuts] || humanizeShortcut(shortcut, modKey.value),
+      desc: shortcutsDescription[key as keyof typeof shortcuts],
+    }))
+    .sort((a, b) => a.keys.length - b.keys.length);
+});
+
 const editorShortcuts = computed(() => ({
-  [humanizeShortcut('$mod+Alt+0', modKey.value)]: 'Set paragraph',
-  [humanizeShortcut('$mod+Alt+1', modKey.value)]: 'Set heading level to 1',
-  [humanizeShortcut('$mod+Alt+2', modKey.value)]: 'Set heading level to 2',
-  [humanizeShortcut('$mod+Alt+3', modKey.value)]: 'Set heading level to 3',
+  [humanizeShortcut('$mod+b', modKey.value)]: 'Format as bold',
+  [humanizeShortcut('$mod+i', modKey.value)]: 'Format as italic',
+  [humanizeShortcut('$mod+e', modKey.value)]: 'Format as code',
+  [humanizeShortcut('$mod+Alt+0', modKey.value)]: 'Format as paragraph',
+  [humanizeShortcut('$mod+Alt+1', modKey.value)]: 'Format as heading level 1',
+  [humanizeShortcut('$mod+Alt+2', modKey.value)]: 'Format as heading level 2',
+  [humanizeShortcut('$mod+Alt+3', modKey.value)]: 'Format as heading level 3',
+  [humanizeShortcut('$mod+Shift+S', modKey.value)]: 'Format as strikethrough',
+  [humanizeShortcut('$mod+Shift+H', modKey.value)]: 'Highlight selection',
+  [humanizeShortcut('$mod+Shift+7', modKey.value)]: 'Format as ordered list',
+  [humanizeShortcut('$mod+Shift+8', modKey.value)]: 'Format as unordered list',
+  [humanizeShortcut('$mod+Shift+B', modKey.value)]: 'Format as quote',
+  [humanizeShortcut('$mod+Shift+L', modKey.value)]: 'Insert link in selection',
 }));
 </script>
 
@@ -53,13 +59,13 @@ const editorShortcuts = computed(() => ({
         </p>
 
         <ul class="shortcuts__list">
-          <li v-for="(shortcut, key) in humanizedShortcuts" :key="key" class="shortcuts__list__item">
-            <kbd>{{ shortcutsRenames[key] || shortcut }}</kbd>
+          <li v-for="shortcut in humanizedShortcuts" :key="shortcut.keys" class="shortcuts__list__item">
+            <kbd>{{ shortcut.keys }}</kbd>
 
             <hr class="shortcuts__list__item__hr">
 
             <p class="shortcuts__list__item__desc">
-              {{ shortcutsDescription[key] }}
+              {{ shortcut.desc }}
             </p>
           </li>
         </ul>
