@@ -57,7 +57,13 @@ function initTiptap(opts: {
       Document,
       Paragraph,
       Text,
-      Blockquote,
+      Blockquote.extend({
+        addKeyboardShortcuts() {
+          return {
+            'Mod-Shift-6': () => this.editor.commands.toggleBlockquote(),
+          };
+        },
+      }),
       BulletList,
       OrderedList,
       ListItem,

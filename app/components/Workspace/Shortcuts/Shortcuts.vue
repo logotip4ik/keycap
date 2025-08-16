@@ -41,9 +41,9 @@ const editorShortcuts = computed(() => ({
   [humanizeShortcut('$mod+Alt+3', modKey.value)]: 'Format as heading level 3',
   [humanizeShortcut('$mod+Shift+S', modKey.value)]: 'Format as strikethrough',
   [humanizeShortcut('$mod+Shift+H', modKey.value)]: 'Highlight selection',
+  [humanizeShortcut('$mod+Shift+6', modKey.value)]: 'Format as quote',
   [humanizeShortcut('$mod+Shift+7', modKey.value)]: 'Format as ordered list',
   [humanizeShortcut('$mod+Shift+8', modKey.value)]: 'Format as unordered list',
-  [humanizeShortcut('$mod+Shift+B', modKey.value)]: 'Format as quote',
   [humanizeShortcut('$mod+Shift+L', modKey.value)]: 'Insert link in selection',
 }));
 </script>
