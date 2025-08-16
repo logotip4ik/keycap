@@ -94,9 +94,18 @@ const editorShortcuts = computed(() => ({
 
 <style lang="scss">
 .shortcuts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  align-items: start;
+  gap: 2rem;
+
   padding: 2rem 1.25rem 1.5rem;
 
-  max-width: #{$breakpoint-tablet - 200};
+  max-width: 1000px;
+
+  @media screen and (max-width: #{$breakpoint-tablet - 100}) {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
 
   &__wrapper {
     display: flex;
@@ -114,11 +123,7 @@ const editorShortcuts = computed(() => ({
     align-items: center;
     flex-direction: column;
 
-    width: 100%;
-
-    &+& {
-      margin-top: 1.5rem;
-    }
+    min-width: 325px;
   }
 
   &__title {
@@ -155,6 +160,8 @@ const editorShortcuts = computed(() => ({
 
       &__desc {
         font-size: 1.1rem;
+        text-align: right;
+
         margin: 0;
       }
 
