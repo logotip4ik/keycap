@@ -116,6 +116,10 @@ export function AutoFloatTaskPlugin(options: AutoFloatTaskPluginOptions) {
 
       const changes = getChangedRanges(transform);
 
+      if (changes.length > 3) {
+        return;
+      }
+
       interface ChangedTask {
         checked: boolean
         pos: number
@@ -127,12 +131,13 @@ export function AutoFloatTaskPlugin(options: AutoFloatTaskPluginOptions) {
 
       for (const { newRange } of changes) {
         newState.doc.nodesBetween(newRange.from, newRange.to, (node, pos) => {
+          const isTaskItem = node.type.name === TaskItem.name;
           if (
             changedTask
-            || node.type.name !== TaskItem.name
+            || !isTaskItem
             || oldState.doc.nodeSize < pos
           ) {
-            return node.type.name === TaskList.name;
+            return changedTask ? false : !isTaskItem;
           }
 
           const oldNode = oldState.doc.nodeAt(pos);
