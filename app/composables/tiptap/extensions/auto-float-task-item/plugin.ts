@@ -168,7 +168,7 @@ export function AutoFloatTaskPlugin(options: AutoFloatTaskPluginOptions) {
         }
       }
 
-      if (!changedTask) {
+      if (!changedTask || changedTask.list.node.childCount === 1) {
         return;
       }
 
