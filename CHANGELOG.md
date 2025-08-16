@@ -1,6 +1,35 @@
 # Changelog
 
 
+## v3.18.2
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.18.1...v3.18.2)
+
+### 🩹 Fixes
+
+- Unable to delete last empty taskitem with enter keypress ([31f066bb](https://github.com/logotip4ik/keycap/commit/31f066bb))
+- Prevent keyboard focus from list with `keydown` handler ([a5f60fd3](https://github.com/logotip4ik/keycap/commit/a5f60fd3))
+- Vastly improve change checking ([9921d29c](https://github.com/logotip4ik/keycap/commit/9921d29c))
+- Prevent floating when parent list only has one child ([ff258d5b](https://github.com/logotip4ik/keycap/commit/ff258d5b))
+
+### 💅 Refactors
+
+- Improve a bit perf for checking nodes ([c0f684eb](https://github.com/logotip4ik/keycap/commit/c0f684eb))
+
+### 🏡 Chore
+
+- **release:** V3.18.1 ([d2166c9f](https://github.com/logotip4ik/keycap/commit/d2166c9f))
+- Update deps ([61960672](https://github.com/logotip4ik/keycap/commit/61960672))
+- Add :active style for toolbox utils buttons ([7222ee22](https://github.com/logotip4ik/keycap/commit/7222ee22))
+- Add missing editor shortcuts ([f91f23c4](https://github.com/logotip4ik/keycap/commit/f91f23c4))
+- Reorder shortcuts modal ([7517fdc0](https://github.com/logotip4ik/keycap/commit/7517fdc0))
+- Bump tiptap/bold ([273b8c64](https://github.com/logotip4ik/keycap/commit/273b8c64))
+- Use different shortcut for blockquote ([ecbe34d6](https://github.com/logotip4ik/keycap/commit/ecbe34d6))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.18.1
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.18.0...v3.18.1)
