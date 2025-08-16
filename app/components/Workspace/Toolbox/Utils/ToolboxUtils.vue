@@ -130,7 +130,7 @@ onBeforeMount(() => {
       background-color: transparent;
 
       cursor: pointer;
-      transition: background-color 0.1s, color 0.1s;
+      transition: background-color 0.1s, color 0.1s, transform 0.1s;
 
       @media (width <= $sidebar-breakpoint-one) {
         --pd-y: 1.25rem;
@@ -148,6 +148,10 @@ onBeforeMount(() => {
         svg {
           color: hsla(var(--text-color-hsl), 0.9);
         }
+      }
+
+      &:active {
+        transform: scale(0.98);
       }
 
       &__icon {
