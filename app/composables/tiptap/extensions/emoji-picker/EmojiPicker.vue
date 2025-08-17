@@ -10,6 +10,7 @@ const props = defineProps<{
 
 const emojiPickerEl = useTemplateRef('emojiPickerEl');
 const selectedEmoji = ref(0);
+const floating = shallowRef<Awaited<ReturnType<typeof loadFloatingUi>>>();
 
 const isVisible = computed(() => props.shouldBeVisible && props.items.length > 0);
 
@@ -18,32 +19,33 @@ watch(() => props.items, () => {
 });
 
 watch(
-  [emojiPickerEl, isVisible],
-  async ([emojiPicker, isVisible], _, onCleanup) => {
+  [floating, emojiPickerEl, isVisible],
+  ([floating, emojiPicker, isVisible], _, onCleanup) => {
     const { getBoundingClientRect } = props;
-    const { computePosition, flip, shift, offset } = await loadFloatingUi();
 
-    if (emojiPicker && isVisible && getBoundingClientRect) {
-      computePosition(
-        { getBoundingClientRect },
-        emojiPicker,
-        {
-          placement: 'bottom-start',
-          middleware: [
-            offset(8),
-            shift({ padding: 8 }),
-            flip(),
-          ],
-        },
-      ).then(({ x, y }) => {
-        emojiPicker.style.setProperty('top', `${y}px`);
-        emojiPicker.style.setProperty('left', `${x}px`);
-      });
-
-      onCleanup(
-        on(window, 'keydown', handleKeypress, { capture: true }),
-      );
+    if (!emojiPicker || !isVisible || !getBoundingClientRect || !floating) {
+      return;
     }
+
+    floating.computePosition(
+      { getBoundingClientRect },
+      emojiPicker,
+      {
+        placement: 'bottom-start',
+        middleware: [
+          floating.offset(8),
+          floating.shift({ padding: 8 }),
+          floating.flip(),
+        ],
+      },
+    ).then(({ x, y }) => {
+      emojiPicker.style.setProperty('top', `${y}px`);
+      emojiPicker.style.setProperty('left', `${x}px`);
+    });
+
+    onCleanup(
+      on(window, 'keydown', handleKeypress, { capture: true }),
+    );
   },
 );
 
@@ -86,6 +88,12 @@ function getNativeSkin(emoji: Emoji) {
 }
 
 useFocusTrap(emojiPickerEl);
+
+onBeforeMount(() => {
+  loadFloatingUi().then((loaded) => {
+    floating.value = loaded;
+  });
+});
 </script>
 
 <template>
