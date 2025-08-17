@@ -2,13 +2,13 @@ import type { NodeWithPos } from '@tiptap/core';
 import type { MarkType } from '@tiptap/pm/model';
 
 import {
-  combineTransactionSteps,
   findChildrenInRange,
   getChangedRanges,
   getMarksBetween,
 } from '@tiptap/core';
 import { Plugin, PluginKey } from '@tiptap/pm/state';
 
+import { Transform } from '@tiptap/pm/transform';
 import { find } from './linker';
 
 interface AutolinkOptions {
@@ -27,7 +27,13 @@ export function autolink(options: AutolinkOptions): Plugin {
       }
 
       const { tr } = newState;
-      const transform = combineTransactionSteps(oldState.doc, [...transactions]);
+      const transform = new Transform(oldState.doc);
+      for (const tr of transactions) {
+        for (const step of tr.steps) {
+          transform.step(step);
+        }
+      }
+
       const changes = getChangedRanges(transform);
 
       for (const { newRange } of changes) {
@@ -88,10 +94,7 @@ export function autolink(options: AutolinkOptions): Plugin {
           const to = lastWordAndBlockOffset + link.end + 1;
 
           if (
-            (
-              newState.schema.marks.code
-              && newState.doc.rangeHasMark(from, to, newState.schema.marks.code)
-            )
+            newState.doc.rangeHasMark(from, to, newState.schema.marks.code)
             || getMarksBetween(from, to, newState.doc).some((item) => item.mark.type === options.type)
           ) {
             continue;

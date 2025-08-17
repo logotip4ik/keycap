@@ -99,11 +99,14 @@ export function AutoFloatTaskPlugin(options: AutoFloatTaskPluginOptions) {
     },
 
     appendTransaction(transactions, oldState, newState) {
-      if (
-        oldState.doc === newState.doc
-        || !options.enabled
-        || transactions.some((tr) => !!tr.getMeta(OriginalHistoryPluginKey))
-      ) {
+      if (!options.enabled) {
+        return;
+      }
+
+      const docChanges = transactions.some((transaction) => transaction.docChanged) && !oldState.doc.eq(newState.doc);
+      const historyChanges = transactions.some((tr) => !!tr.getMeta(OriginalHistoryPluginKey));
+
+      if (!docChanges || historyChanges) {
         return;
       }
 
