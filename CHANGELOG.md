@@ -1,6 +1,25 @@
 # Changelog
 
 
+## v3.18.3
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.18.2...v3.18.3)
+
+### 💅 Refactors
+
+- Extract loading floatinui from watcher to beforeMount hook ([a6d3efd2](https://github.com/logotip4ik/keycap/commit/a6d3efd2))
+
+### 🏡 Chore
+
+- **release:** V3.18.2 ([80d75cf1](https://github.com/logotip4ik/keycap/commit/80d75cf1))
+- Update a bit tiptap plugins and remove not needed shortcuts ([0ad0a374](https://github.com/logotip4ik/keycap/commit/0ad0a374))
+- Update deps ([f8443c0c](https://github.com/logotip4ik/keycap/commit/f8443c0c))
+- Update package manager ([c3ff329b](https://github.com/logotip4ik/keycap/commit/c3ff329b))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.18.2
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.18.1...v3.18.2)
