@@ -1,6 +1,21 @@
 # Changelog
 
 
+## v3.18.4
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.18.3...v3.18.4)
+
+### 🏡 Chore
+
+- **release:** V3.18.3 ([3e423b33](https://github.com/logotip4ik/keycap/commit/3e423b33))
+- Update deps and package manager ([978d5360](https://github.com/logotip4ik/keycap/commit/978d5360))
+- Maybe fix ci ([9720230e](https://github.com/logotip4ik/keycap/commit/9720230e))
+- Bump tinykeys ([ddf24084](https://github.com/logotip4ik/keycap/commit/ddf24084))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.18.3
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.18.2...v3.18.3)
