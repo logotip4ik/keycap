@@ -86,6 +86,7 @@ useFocusTrap(
   { handleLastElementFocus: maybeFocusEditor },
 );
 
+const offs: Array<() => void> = [];
 onMounted(() => {
   requestIdleCallback(updateFocusableElements);
 
@@ -98,9 +99,12 @@ onMounted(() => {
 
   observer.observe(sidebarEl, { childList: true, subtree: true });
 
-  onBeforeUnmount(() => {
-    observer.disconnect();
-  });
+  offs.push(() => observer.disconnect());
+});
+
+onBeforeUnmount(() => {
+  invokeArrayFns(offs);
+  offs.length = 0;
 });
 </script>
 

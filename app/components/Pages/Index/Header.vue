@@ -36,22 +36,29 @@ function animateImgPos(end: number, movement: number) {
   });
 }
 
+const offs: Array<() => void> = [];
 onMounted(() => {
   const end = window.innerHeight / 1.5;
   const movement = -50;
 
   animateImgPos(end, movement);
 
-  if (import.meta.dev) {
-    onBeforeUpdate(
-      on(window, 'scroll', () => animateImgPos(end, movement)),
-    );
-  }
-
-  onBeforeUnmount(
+  offs.push(
     on(window, 'scroll', () => animateImgPos(end, movement)),
   );
 });
+
+onBeforeUnmount(() => {
+  invokeArrayFns(offs);
+  offs.length = 0;
+});
+
+if (import.meta.dev) {
+  onBeforeUpdate(() => {
+    invokeArrayFns(offs);
+    offs.length = 0;
+  });
+}
 </script>
 
 <template>
@@ -187,7 +194,7 @@ onMounted(() => {
 
       animation: appear 0.75s 0.75s forwards !important;
 
-      & + & {
+      &+& {
         animation-delay: 0.9s !important;
       }
 
@@ -244,12 +251,12 @@ onMounted(() => {
     pointer-events: none;
     user-select: none;
     contain: strict;
-    mask-image: linear-gradient(to bottom, black, rgba(0,0,0,0) 90%);
+    mask-image: linear-gradient(to bottom, black, rgba(0, 0, 0, 0) 90%);
 
     transform: translate(var(--translate)) scale(var(--scale)) rotateX(50deg) rotateY(30deg) rotate(325deg);
     transform-origin: top left;
     animation:
-      land   1s 1.25s forwards cubic-bezier(0.16, 1, 0.3, 1),
+      land 1s 1.25s forwards cubic-bezier(0.16, 1, 0.3, 1),
       appear 1s 1.25s forwards !important;
 
     &__wrapper {
@@ -280,7 +287,7 @@ onMounted(() => {
 
       animation:
         mobileLand 1s 1.25s forwards cubic-bezier(0.16, 1, 0.3, 1),
-        appear     1s 1.25s forwards !important;
+        appear 1s 1.25s forwards !important;
     }
   }
 }
@@ -290,6 +297,7 @@ onMounted(() => {
     scale: 1.2;
     translate: 5vw -5vh;
   }
+
   to {
     scale: 1;
     translate: 0;
@@ -301,6 +309,7 @@ onMounted(() => {
     scale: 2;
     translate: 20vw -30vh;
   }
+
   to {
     scale: 1;
     translate: 0;
@@ -312,6 +321,7 @@ onMounted(() => {
     opacity: 0;
     filter: blur(12px);
   }
+
   to {
     opacity: 1;
     filter: blur(0px);
