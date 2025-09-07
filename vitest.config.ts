@@ -5,8 +5,6 @@ export default defineVitestConfig({
   assetsInclude: ['**.html'],
 
   test: {
-    root: './',
-
     setupFiles: [
       './server/test/stub-nitro.ts',
       './tests/setup-dom-expects.ts',
