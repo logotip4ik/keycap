@@ -1,6 +1,29 @@
 # Changelog
 
 
+## v3.18.5
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.18.4...v3.18.5)
+
+### 🩹 Fixes
+
+- Bump nuxt and remove usage of vue hooks inside another hook ([43f8926a](https://github.com/logotip4ik/keycap/commit/43f8926a))
+
+### 🏡 Chore
+
+- **release:** V3.18.4 ([d1b0bdb3](https://github.com/logotip4ik/keycap/commit/d1b0bdb3))
+- Update deps but leave nuxt on 4.1.0 ([1ce8f03f](https://github.com/logotip4ik/keycap/commit/1ce8f03f))
+- Maybe fix ci and test ([ec870375](https://github.com/logotip4ik/keycap/commit/ec870375))
+
+### 🤖 CI
+
+- Bump actions/checkout from 4.2.2 to 5.0.0 in the actions group ([#52](https://github.com/logotip4ik/keycap/pull/52))
+- Swap build and test order ([c3b4d1e5](https://github.com/logotip4ik/keycap/commit/c3b4d1e5))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.18.4
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.18.3...v3.18.4)
