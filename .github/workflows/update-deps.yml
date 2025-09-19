@@ -10,6 +10,7 @@ env:
   YARN_ENABLE_IMMUTABLE_INSTALLS: false
 
 jobs:
+  if: false
   auto-update-dependencies:
     timeout-minutes: 4
     runs-on: ubuntu-latest
