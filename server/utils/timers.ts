@@ -1,4 +1,5 @@
 import type { H3Event, H3EventContext } from 'h3';
+import invariant from 'tiny-invariant';
 
 interface TimerPoint {
   name: string

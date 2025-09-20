@@ -2,6 +2,7 @@ import type { CookieSerializeOptions } from 'cookie-es';
 import type { H3Event, H3EventContext } from 'h3';
 
 import { jwtVerify, SignJWT } from 'jose';
+import invariant from 'tiny-invariant';
 
 const authExpiration = parseDuration('2 days', 'second')!;
 const jwtSecret = new TextEncoder().encode(process.env.JWT_SECRET || '');

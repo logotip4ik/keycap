@@ -1,6 +1,7 @@
 import type { NavigateToOptions } from '#app/composables/router';
 
 import escapeRE from 'escape-string-regexp';
+import invariant from 'tiny-invariant';
 
 export function checkIsFolder(item: object): item is FolderWithContents {
   return 'root' in item;

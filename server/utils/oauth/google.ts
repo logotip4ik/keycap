@@ -3,6 +3,8 @@ import type { GoogleAuthRes, GoogleUserRes } from '#server/types/server-google';
 
 import type { H3Event } from 'h3';
 
+import invariant from 'tiny-invariant';
+
 export function getGoogleOAuthConfig(): OAuthProviderConfig {
   const { google } = useRuntimeConfig();
 

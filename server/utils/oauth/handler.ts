@@ -4,6 +4,7 @@ import type { GoogleUserRes } from '#server/types/server-google';
 
 import type { H3Event } from 'h3';
 
+import invariant from 'tiny-invariant';
 import { withQuery } from 'ufo';
 
 interface OAuthHandlerOptions<T extends GitHubUserRes | GoogleUserRes> {

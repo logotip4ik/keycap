@@ -1,3 +1,5 @@
+import invariant from 'tiny-invariant';
+
 // @unimport-disable
 export const ToolboxState = Symbol(
   import.meta.prod ? '' : 'toolbox sidebar state and helper functions',

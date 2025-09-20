@@ -2,6 +2,7 @@ import type { ShallowRef } from 'vue';
 
 import LRUCache from 'hashlru';
 
+import invariant from 'tiny-invariant';
 import proxy from 'unenv/runtime/mock/proxy';
 
 interface LRU<T> {

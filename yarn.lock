@@ -8800,6 +8800,7 @@ __metadata:
     unstorage: "npm:^1.17.1"
     vitest: "npm:^3.2.4"
     vue: "npm:latest"
+    vue-tsc: "npm:^3.0.7"
     workbox-core: "npm:^7.3.0"
     workbox-expiration: "npm:^7.3.0"
     workbox-precaching: "npm:^7.3.0"
@@ -13176,10 +13177,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tinykeys@npm:^3.0.0":
+"tinykeys@npm:3.0.0":
   version: 3.0.0
   resolution: "tinykeys@npm:3.0.0"
   checksum: 10/9ad9bfe3a45366ca77567a23018c8b24dbde4a66050c439f5aa439c66ca578102af0762ee5f7256ee4739b8c1ce64f076fcb8001f867fe842b4271d2bbe9de76
+  languageName: node
+  linkType: hard
+
+"tinykeys@patch:tinykeys@npm%3A3.0.0#~/.yarn/patches/tinykeys-npm-3.0.0-b6011b0740.patch":
+  version: 3.0.0
+  resolution: "tinykeys@patch:tinykeys@npm%3A3.0.0#~/.yarn/patches/tinykeys-npm-3.0.0-b6011b0740.patch::version=3.0.0&hash=e0cd61"
+  checksum: 10/c803a1d74805400ace70297f2dca299af175fdc95e39ee010e32a43102e07f2e10ecb75dbe940d86919e37d0fabf017234c70f6de78c0002f4f30b08481b43ba
   languageName: node
   linkType: hard
 
@@ -14134,6 +14142,20 @@ __metadata:
   peerDependencies:
     vue: ^3.2.0
   checksum: 10/98a17fd0dd44c47e7010fca554bc9f63ddee5c1659409878ef624981570c4c3ea35a7e2f4d9a5084150ef671ca546219a9165de71878c8777f6b12ea2af94109
+  languageName: node
+  linkType: hard
+
+"vue-tsc@npm:^3.0.7":
+  version: 3.0.7
+  resolution: "vue-tsc@npm:3.0.7"
+  dependencies:
+    "@volar/typescript": "npm:2.4.23"
+    "@vue/language-core": "npm:3.0.7"
+  peerDependencies:
+    typescript: ">=5.0.0"
+  bin:
+    vue-tsc: ./bin/vue-tsc.js
+  checksum: 10/792c64a6bdb84abe0e136f8c01f8ffa4b7204653b0a5c49a959e7149bb24f037fd9284345e339f4ef709dc1103837d049a94cf2eed82a448d1fc4c9f09418efc
   languageName: node
   linkType: hard
 

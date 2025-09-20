@@ -134,11 +134,6 @@ export default defineNuxtConfig({
         name: 'default',
         as: parseDurationFunctionName,
       },
-      {
-        from: 'tiny-invariant',
-        name: 'default',
-        as: 'invariant',
-      },
     ],
   },
 
@@ -436,11 +431,6 @@ export default defineNuxtConfig({
           from: 'parse-duration',
           name: 'default',
           as: parseDurationFunctionName,
-        },
-        {
-          from: 'tiny-invariant',
-          name: 'default',
-          as: 'invariant',
         },
       ],
     },

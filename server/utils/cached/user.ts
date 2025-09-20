@@ -2,6 +2,7 @@ import type { H3Event } from 'h3';
 import type { ValueOf } from 'type-fest';
 
 import { sha256base64 } from 'ohash';
+import invariant from 'tiny-invariant';
 
 export const USER_CACHE_GROUP = 'user';
 

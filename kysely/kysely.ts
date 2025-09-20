@@ -4,6 +4,7 @@ import { Kysely } from 'kysely';
 import { PostgresJSDialect } from 'kysely-postgres-js';
 
 import postgres from 'postgres';
+import invariant from 'tiny-invariant';
 
 export function getKysely() {
   if (!globalThis.__kysely) {

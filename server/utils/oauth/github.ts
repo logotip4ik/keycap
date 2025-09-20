@@ -3,6 +3,8 @@ import type { GitHubAuthRes, GitHubUserEmailRes, GitHubUserRes } from '#server/t
 
 import type { H3Event } from 'h3';
 
+import invariant from 'tiny-invariant';
+
 export function getGithubOAuthConfig(): OAuthProviderConfig {
   const { github } = useRuntimeConfig();
 

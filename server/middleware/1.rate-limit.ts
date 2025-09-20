@@ -1,4 +1,5 @@
 import { RateLimitManager } from '@sapphire/ratelimits';
+import invariant from 'tiny-invariant';
 
 const INTERVAL = parseDuration('1 minute')!;
 const LIMIT = Math.floor((INTERVAL * 2) / 1000); // two per second
