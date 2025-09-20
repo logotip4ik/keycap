@@ -1,6 +1,36 @@
 # Changelog
 
 
+## v3.18.6
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.18.5...v3.18.6)
+
+### 🩹 Fixes
+
+- **test:** Run tests in nuxt env only ([6f470261](https://github.com/logotip4ik/keycap/commit/6f470261))
+- Patch tinykeys to include correct types ([869ae089](https://github.com/logotip4ik/keycap/commit/869ae089))
+- Don't auto import invariant function and install vue-tsc for type checking when linting ([566af6ea](https://github.com/logotip4ik/keycap/commit/566af6ea))
+- Use new custom fuzzyMatch function ([0dc92851](https://github.com/logotip4ik/keycap/commit/0dc92851))
+
+### 💅 Refactors
+
+- Use custom fuzzy match implementation ([95516262](https://github.com/logotip4ik/keycap/commit/95516262))
+
+### 🏡 Chore
+
+- **release:** V3.18.5 ([6ae990de](https://github.com/logotip4ik/keycap/commit/6ae990de))
+- Update deps ([f5da8873](https://github.com/logotip4ik/keycap/commit/f5da8873))
+- Update deps ([0c808df6](https://github.com/logotip4ik/keycap/commit/0c808df6))
+- Remove need for doamin in jwt cookie ([3537f197](https://github.com/logotip4ik/keycap/commit/3537f197))
+
+### 🤖 CI
+
+- Disable auto-update for now ([9c32ed94](https://github.com/logotip4ik/keycap/commit/9c32ed94))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.18.5
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.18.4...v3.18.5)
