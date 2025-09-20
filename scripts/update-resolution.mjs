@@ -34,6 +34,7 @@ for (const dep in packageJson.resolutions) {
   }
 
   packageJson.resolutions[dep] = packageJson.resolutions[dep].replace(patchVersionRE, depVersionWitoutPrefix);
+  console.log(`updated ${dep} to ${depVersionWitoutPrefix}`);
 }
 
 const newPackageJson = `${JSON.stringify(packageJson, null, 2)}\n`;
