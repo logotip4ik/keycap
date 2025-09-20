@@ -141,7 +141,7 @@ async function searchForEmoji(query: string) {
   const results = [];
 
   for (const [key, value] of emojisCache) {
-    const score = getScore(key, query);
+    const score = fuzzyMatch(query, key);
 
     if (score > 0) {
       results.push({ score, value });
