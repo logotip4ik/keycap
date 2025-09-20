@@ -5,6 +5,8 @@ export default defineVitestConfig({
   assetsInclude: ['**.html'],
 
   test: {
+    root: process.cwd(),
+
     setupFiles: [
       './server/test/stub-nitro.ts',
       './tests/setup-dom-expects.ts',
@@ -16,6 +18,8 @@ export default defineVitestConfig({
       './app/utils/*.ts',
       './app/composables/tiptap/**/*.ts',
     ],
+
+    environment: 'nuxt',
 
     exclude: [
       ...defaultExclude,
