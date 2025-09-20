@@ -3,8 +3,6 @@ import type { Emoji, EmojiMartData } from '@emoji-mart/data';
 
 import type { FuzzyWorker } from '~/utils/fuzzy';
 
-import { commandScore as getScore } from '@superhuman/command-score';
-
 // must come before coincident
 import '@ungap/with-resolvers';
 
@@ -13,6 +11,7 @@ import coincident from 'coincident/worker';
 
 import { protectionHeaders } from '~~/shared/utils/utils';
 
+import { fuzzyMatch } from '~/utils/fuzzy-match';
 import { commandActionsMin as commandsCache } from '~/utils/menu';
 import { transliterateFromEnglish, transliterateToEnglish } from '~/utils/transliterate';
 
@@ -59,7 +58,7 @@ function search(query: string): Array<FuzzyItem | CommandItem> {
   const cache = isCommand ? commandsCache : itemsCache;
 
   for (const [key, value] of cache) {
-    const score = getScore(isCommand ? value.name : key as string, query);
+    const score = fuzzyMatch(query, isCommand ? value.name : key as string);
 
     if (score > 0) {
       results.push({ score, value });
