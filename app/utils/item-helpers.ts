@@ -38,12 +38,52 @@ export function preCreateItem(folderToAppend: FolderWithContents, initialValues?
   });
 }
 
-export function getCurrentFolderPath(_route?: ReturnType<typeof useRoute>) {
-  const route = _route || useRoute();
+export function getCurrentFolderPath(_pathname?: string, _user?: SafeUser) {
+  const user = _user || getUser();
+  const pathname = _pathname || window.location.pathname;
 
-  return isArray(route.params.folders) && route.params.folders.length > 0
-    ? `/${route.params.folders.map(encodeURIComponent).join('/')}/`
-    : '/';
+  let folderPath = decodeURIComponent(pathname).replace(`/@${user.username}`, '');
+
+  if (!folderPath) {
+    return '/';
+  }
+
+  const foldersAndANote = folderPath.split('/');
+  const folders = foldersAndANote
+    .slice(0, foldersAndANote.length - 1)
+    .map(encodeURIComponent);
+
+  folderPath = folders.join('/') || '/';
+  if (folderPath[folderPath.length - 1] !== '/') {
+    folderPath = `${folderPath}/`;
+  }
+
+  return folderPath;
+}
+
+if (import.meta.vitest) {
+  const { describe, it, expect } = import.meta.vitest;
+
+  describe('getCurrentFolderPath', () => {
+    const user = { username: 'test' } as any;
+
+    it('should work with root workspace', () => {
+      expect(getCurrentFolderPath('/@test', user)).toEqual('/');
+      expect(getCurrentFolderPath('/@test/', user)).toEqual('/');
+      expect(getCurrentFolderPath('/@test/_blank', user)).toEqual('/');
+      expect(getCurrentFolderPath('/@test/somenote', user)).toEqual('/');
+    });
+
+    it('should work with subfolders', () => {
+      expect(getCurrentFolderPath('/@test/testing/_blank', user)).toEqual('/testing/');
+      expect(getCurrentFolderPath('/@test/testing/something-else', user)).toEqual('/testing/');
+    });
+
+    it('should work with weird subfolders', () => {
+      expect(getCurrentFolderPath('/@test/test 2.2/_blank', user)).toEqual('/test%202.2/');
+      expect(getCurrentFolderPath('/@test/test 2.2/something-else', user)).toEqual('/test%202.2/');
+    });
+  });
 }
 
 /**

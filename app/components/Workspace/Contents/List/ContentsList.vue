@@ -15,7 +15,11 @@ const { state: contentsState } = useContentsState();
 const mitt = useMitt();
 const zeenk = useZeenk();
 
-const folderApiPath = computed(() => getCurrentFolderPath(route).slice(0, -1));
+const folderApiPath = computed(() => {
+  return isArray(route.params.folders) && route.params.folders.length > 0
+    ? `/${route.params.folders.map(encodeURIComponent).join('/')}`
+    : '';
+});
 const folderPath = computed(() => `/${user.value.username}${folderApiPath.value}`);
 const shouldSkipFetching = computed(() => contentsState.value === 'hidden');
 

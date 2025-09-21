@@ -50,7 +50,8 @@ async function handleSubmit() {
   await promise
     .catch((error) => {
       hasCatchedError = true;
-      createToast(error.data.message || ERROR_MESSAGES.DEFAULT);
+      sendError(error);
+      createToast(error?.data?.message || ERROR_MESSAGES.DEFAULT);
       setTimeout(() => inputEl.value?.focus(), 50);
     })
     .finally(() => isLoading.value = false);
