@@ -22,23 +22,20 @@ function createFuzzyMatcher() {
     if (index !== -1) {
       const baseScore = 1000;
       const indexPenalty = index * 3;
-      const lengthPenalty = t.length;
+      const lengthPenalty = t.length - p.length;
       return Math.max(0, baseScore - indexPenalty - lengthPenalty);
     }
 
     // Tier 2: Levenshtein Distance Fallback (Optimized with buffer reuse)
-    const s1 = p.length < t.length ? p : t;
-    const s2 = p.length < t.length ? t : p;
+    const s1 = p;
+    const s2 = t;
     const s1len = s1.length;
     const s2len = s2.length;
 
     if (s1len === 0) {
-      return 1.0 / (1.0 + s2len);
+      return 0;
     }
 
-    // Check if our buffers are large enough, and resize only if necessary.
-    // This is the core of the optimization. Allocation happens only when
-    // s1len exceeds the previous maximum.
     if (s1len + 1 > currentBufferSize) {
       currentBufferSize = s1len + 1;
       // eslint-disable-next-line unicorn/no-new-array
@@ -64,7 +61,10 @@ function createFuzzyMatcher() {
     }
 
     const distance = v0[s1len];
-    return 1.0 / (1.0 + distance);
+    const maxLen = Math.max(s1len, s2len);
+    const similarity = 1 - distance / maxLen;
+
+    return similarity * 100;
   };
 }
 
@@ -181,6 +181,32 @@ if (import.meta.vitest) {
           'test 2.2',
         ].sort((a, b) => fuzzyMatch(input, b) - fuzzyMatch(input, a))[0],
       ).toEqual('test 2.2');
+    });
+
+    it('should correctly score entries 8', () => {
+      const input = 'refe';
+      expect(
+        [
+          'new',
+          'refresh',
+        ].sort((a, b) => fuzzyMatch(input, b) - fuzzyMatch(input, a)),
+      ).toEqual([
+        'refresh',
+        'new',
+      ]);
+    });
+
+    it('should correctly score entries 9', () => {
+      const input = 'not 3';
+      expect(
+        [
+          'new',
+          'oss',
+          'refresh',
+          // imitate note in subfolder
+          'test2.2/note 3',
+        ].sort((a, b) => fuzzyMatch(input, b) - fuzzyMatch(input, a))[0],
+      ).toEqual('test2.2/note 3');
     });
   });
 }

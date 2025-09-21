@@ -25,7 +25,12 @@ let populateItemsCachePromise: Promise<void> | undefined;
 const firstSlashPartRE = /\/\w+\//;
 function addItem(item: FuzzyItem) {
   // truncate before first slash part /test/abc -> abc
-  const identifier = decodeURIComponent(item.path.replace(firstSlashPartRE, ''));
+  let identifier = decodeURIComponent(item.path.replace(firstSlashPartRE, ''));
+
+  // it means user workspace. `/username` -> `/username`, so we should use generated name for it.
+  if (identifier === item.path) {
+    identifier = item.name;
+  }
 
   itemsCache.set(identifier, item);
 }
@@ -60,13 +65,13 @@ function search(query: string): Array<FuzzyItem | CommandItem> {
   for (const [key, value] of cache) {
     const score = fuzzyMatch(query, isCommand ? value.name : key as string);
 
-    if (score > 0) {
+    if (score > 30) {
       results.push({ score, value });
     }
   }
 
   if (results.length === 0) {
-    return [];
+    return results as any;
   }
 
   return results
