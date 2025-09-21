@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v3.18.8
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.18.7...v3.18.8)
+
+### 🏡 Chore
+
+- **release:** V3.18.7 ([d59994c0](https://github.com/logotip4ik/keycap/commit/d59994c0))
+- Enhance cookie security ([0289d231](https://github.com/logotip4ik/keycap/commit/0289d231))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.18.7
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.18.6...v3.18.7)
