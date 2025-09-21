@@ -7,7 +7,7 @@ import invariant from 'tiny-invariant';
 const authExpiration = parseDuration('2 days', 'second')!;
 const jwtSecret = new TextEncoder().encode(process.env.JWT_SECRET || '');
 const jwtIssuer = process.env.JWT_ISSUER || 'test:keycap';
-const accessTokenName = import.meta.prod ? '__Secure-keycap-user' : 'keycap-user';
+const accessTokenName = import.meta.prod ? '__Host-Http-keycap-user' : 'keycap-user';
 
 // https://web.dev/first-party-cookie-recipes/#the-good-first-party-cookie-recipe
 const authSerializeOptions: CookieSerializeOptions = {
