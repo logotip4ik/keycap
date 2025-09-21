@@ -1,6 +1,29 @@
 # Changelog
 
 
+## v3.18.7
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.18.6...v3.18.7)
+
+### 🩹 Fixes
+
+- Move nuxt related types to shared/types ([e2b5fc90](https://github.com/logotip4ik/keycap/commit/e2b5fc90))
+- Correctly get folder path in async contexts ([fb17708e](https://github.com/logotip4ik/keycap/commit/fb17708e))
+
+### 💅 Refactors
+
+- Futher improve fuzzy matching and make it more dynamic by bumping min score ([f2b4a5ae](https://github.com/logotip4ik/keycap/commit/f2b4a5ae))
+
+### 🏡 Chore
+
+- **release:** V3.18.6 ([0999844c](https://github.com/logotip4ik/keycap/commit/0999844c))
+- Add check of empty values, faster swapping and don't allow negative scores ([08a0c3fc](https://github.com/logotip4ik/keycap/commit/08a0c3fc))
+- Use new exportWrappedTypes prisma-kysely option ([60e6c3da](https://github.com/logotip4ik/keycap/commit/60e6c3da))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.18.6
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.18.5...v3.18.6)
