@@ -5,6 +5,10 @@ function createFuzzyMatcher() {
   let currentBufferSize = 0;
 
   return function fuzzyMatch(pattern: string, text: string): number {
+    if (!pattern || !text) {
+      return 0;
+    }
+
     const p = pattern.toLowerCase();
     const t = text.toLowerCase();
 
@@ -19,7 +23,7 @@ function createFuzzyMatcher() {
       const baseScore = 1000;
       const indexPenalty = index * 3;
       const lengthPenalty = t.length;
-      return baseScore - indexPenalty - lengthPenalty;
+      return Math.max(0, baseScore - indexPenalty - lengthPenalty);
     }
 
     // Tier 2: Levenshtein Distance Fallback (Optimized with buffer reuse)
@@ -53,7 +57,10 @@ function createFuzzyMatcher() {
         const cost = s2[i] !== s1[j] ? 1 : 0;
         v1[j + 1] = Math.min(v1[j] + 1, v0[j + 1] + 1, v0[j] + cost);
       }
-      [v0, v1] = [v1, v0];
+
+      const temp = v0;
+      v0 = v1;
+      v1 = temp;
     }
 
     const distance = v0[s1len];
