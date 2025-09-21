@@ -1,13 +1,8 @@
-import type { Selectable } from 'kysely';
 import type { Serialize } from 'nitropack';
 
-import type { Folder as _Folder, Note as _Note, Share as _Share } from '~~/kysely/db/types';
+import type { Folder, Note } from '~~/kysely/db/types';
 
 import type { ItemStateValues, SearchActionValues } from './common';
-
-type Note = Selectable<_Note>;
-type Folder = Selectable<_Folder>;
-type Share = Selectable<_Share>;
 
 declare global {
   type Prettify<T> = Omit<T, never>;

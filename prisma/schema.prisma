@@ -8,6 +8,7 @@ generator client {
 generator kysely {
   provider = "prisma-kysely"
   output = "../kysely/db"
+  exportWrappedTypes = true
 }
 
 datasource db {

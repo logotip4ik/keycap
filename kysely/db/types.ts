@@ -1,4 +1,4 @@
-import type { ColumnType } from "kysely";
+import type { ColumnType, Insertable, Selectable, Updateable } from "kysely";
 export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
   ? ColumnType<S, I | undefined, U>
   : ColumnType<T, T | undefined, T>;
@@ -9,7 +9,7 @@ export const SocialAuth = {
     GitHub: "GitHub"
 } as const;
 export type SocialAuth = (typeof SocialAuth)[keyof typeof SocialAuth];
-export type Folder = {
+export type FolderTable = {
     id: Generated<string>;
     name: string;
     path: string;
@@ -19,7 +19,10 @@ export type Folder = {
     createdAt: Generated<Timestamp>;
     updatedAt: Timestamp;
 };
-export type Note = {
+export type Folder = Selectable<FolderTable>;
+export type NewFolder = Insertable<FolderTable>;
+export type FolderUpdate = Updateable<FolderTable>;
+export type NoteTable = {
     id: Generated<string>;
     name: string;
     content: string | null;
@@ -29,14 +32,20 @@ export type Note = {
     createdAt: Generated<Timestamp>;
     updatedAt: Timestamp;
 };
-export type OAuth = {
+export type Note = Selectable<NoteTable>;
+export type NewNote = Insertable<NoteTable>;
+export type NoteUpdate = Updateable<NoteTable>;
+export type OAuthTable = {
     id: string;
     type: SocialAuth;
     userId: string;
     createdAt: Generated<Timestamp>;
     updatedAt: Timestamp;
 };
-export type Share = {
+export type OAuth = Selectable<OAuthTable>;
+export type NewOAuth = Insertable<OAuthTable>;
+export type OAuthUpdate = Updateable<OAuthTable>;
+export type ShareTable = {
     id: Generated<string>;
     link: string;
     noteId: string;
@@ -44,7 +53,10 @@ export type Share = {
     createdAt: Generated<Timestamp>;
     updatedAt: Timestamp;
 };
-export type User = {
+export type Share = Selectable<ShareTable>;
+export type NewShare = Insertable<ShareTable>;
+export type ShareUpdate = Updateable<ShareTable>;
+export type UserTable = {
     id: Generated<string>;
     username: string;
     email: string;
@@ -52,10 +64,13 @@ export type User = {
     createdAt: Generated<Timestamp>;
     updatedAt: Timestamp;
 };
+export type User = Selectable<UserTable>;
+export type NewUser = Insertable<UserTable>;
+export type UserUpdate = Updateable<UserTable>;
 export type DB = {
-    Folder: Folder;
-    Note: Note;
-    OAuth: OAuth;
-    Share: Share;
-    User: User;
+    Folder: FolderTable;
+    Note: NoteTable;
+    OAuth: OAuthTable;
+    Share: ShareTable;
+    User: UserTable;
 };
