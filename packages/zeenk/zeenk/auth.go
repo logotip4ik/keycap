@@ -13,12 +13,13 @@ var (
   GOENV = utils.GetEnv("GOENV", "PROD")
   JWT_SECRET = utils.GetEnv("JWT_SECRET", "")
   JWT_ISSUER = utils.GetEnv("JWT_ISSUER", "test:local")
+  PROD_COOKIE_PREFIX = "__Host-Http-"
 )
 
 func getAuthCookie(r *http.Request) (*http.Cookie, error) {
   cookieName := "keycap-user"
   if strings.ToUpper(GOENV) == "PROD" {
-    cookieName = "__Secure-" + cookieName
+    cookieName = PROD_COOKIE_PREFIX + cookieName
   }
 
   return r.Cookie(cookieName)
@@ -27,7 +28,7 @@ func getAuthCookie(r *http.Request) (*http.Cookie, error) {
 func verifyJwt(cookie string) (*jwt.Token, error) {
   token, err := jwt.Parse(
     cookie,
-    func(token *jwt.Token) (interface{}, error) {return []byte(JWT_SECRET), nil},
+    func(token *jwt.Token) (any, error) {return []byte(JWT_SECRET), nil},
     jwt.WithIssuer(JWT_ISSUER),
     jwt.WithExpirationRequired(),
   )
@@ -41,13 +42,4 @@ func verifyJwt(cookie string) (*jwt.Token, error) {
   }
 
   return token, nil
-}
-
-func getUsernameFromJwt(token *jwt.Token) (string, error) {
-  claims := token.Claims.(jwt.MapClaims)
-  if username, ok := claims["username"].(string); ok {
-    return username, nil
-  }
-
-  return "", fmt.Errorf("username not found in jwt claims: %v", claims)
 }

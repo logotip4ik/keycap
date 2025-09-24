@@ -25,8 +25,6 @@ const (
 var (
   newline = []byte{'\n'}
 
-  space = []byte{' '}
-
   upgrader = websocket.Upgrader{
     ReadBufferSize: maxMessageSize,
     WriteBufferSize: maxMessageSize,
@@ -131,7 +129,7 @@ func (c *Client) writePump() {
       w.Write(message)
 
       n := len(c.send)
-      for i := 0; i < n; i++ {
+      for range n {
         w.Write(newline)
         w.Write(<-c.send)
       }
