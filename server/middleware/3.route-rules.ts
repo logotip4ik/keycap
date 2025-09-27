@@ -58,6 +58,6 @@ export default defineEventHandler(async (event) => {
   }
 
   if (shouldPass === false) {
-    throw createError({ status: 401 });
+    throw createError({ status: 401, message: 'Unauthorized' });
   }
 });
