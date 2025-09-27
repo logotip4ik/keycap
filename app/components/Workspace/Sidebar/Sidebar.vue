@@ -169,12 +169,18 @@ $breakpoint-one: $sidebar-breakpoint-one;
   flex-direction: column;
 
   position: fixed;
-  top: var(--mr-y);
-  left: var(--mr-x);
+  top: max(var(--mr-y), env(safe-area-inset-top));
+  left: max(var(--mr-x), env(safe-area-inset-left));
   z-index: 1;
 
-  width: calc(var(--sidebar-width) - var(--mr-x) * 2);
-  height: calc(100% - var(--mr-y) * 2);
+  width: calc(
+    var(--sidebar-width) -
+    max(var(--mr-x) * 2, env(safe-area-inset-left) + env(safe-area-inset-right))
+  );
+  height: calc(
+    100% -
+    max(var(--mr-y) * 2, env(safe-area-inset-top) + env(safe-area-inset-bottom))
+  );
 
   padding: var(--pd-y) var(--pd-x);
 
@@ -226,7 +232,7 @@ $breakpoint-one: $sidebar-breakpoint-one;
   &--right {
     --dir: -1;
     left: inherit;
-    right: var(--mr-x);
+    right: calc(var(--mr-x) + env(safe-area-inset-right));
 
     transform-origin: right top;
   }

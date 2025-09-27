@@ -70,11 +70,14 @@ if (import.meta.client) {
   gap: max(1vh, 0.25rem);
 
   position: fixed;
-  bottom: var(--screen-spacing-bottom);
-  right: var(--screen-spacing-x);
+  bottom: max(var(--screen-spacing-bottom), env(safe-area-inset-bottom));
+  right: max(var(--screen-spacing-x), env(safe-area-inset-right));
   z-index: 20;
 
-  width: calc(100vw - var(--screen-spacing-x) * 2);
+  width: calc(
+    100vw -
+    max(var(--screen-spacing-x) * 2, env(safe-area-inset-left) + env(safe-area-inset-right))
+  );
 
   pointer-events: none;
 

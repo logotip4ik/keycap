@@ -8,12 +8,13 @@ defineProps<{
 const isFallbackMode = useFallbackMode();
 const fixedBoxEl = useTemplateRef('fixedBoxEl');
 
-const hiddenClass = 'inline-menu__hidden';
+const isKeyboardShown = ref(false);
 
-function handleKeyboardAppear() {
+function moveFormatterAboveKeyboard() {
   const viewport = window.visualViewport;
+  const el = fixedBoxEl.value;
 
-  if (!fixedBoxEl.value || !viewport) {
+  if (!el || !viewport) {
     return;
   }
 
@@ -21,27 +22,16 @@ function handleKeyboardAppear() {
     - viewport.offsetTop
     - viewport.height;
 
-  fixedBoxEl.value.style.setProperty('bottom', `${formatterPosition}px`);
-
-  requestAnimationFrame(() => {
-    fixedBoxEl.value?.classList.remove(hiddenClass);
-  });
-}
-
-const debouncedKeyboardAppear = debounce(handleKeyboardAppear, 100, { trailing: true });
-
-function handleMobileScroll() {
-  fixedBoxEl.value?.classList.add(hiddenClass);
-
-  requestAnimationFrame(() => {
-    debouncedKeyboardAppear();
-  });
+  el.style.setProperty('bottom', `${formatterPosition.toFixed(2)}px`);
+  isKeyboardShown.value = viewport.height + 30 < window.innerHeight;
 }
 
 if (import.meta.client && window.visualViewport != null) {
+  onMounted(moveFormatterAboveKeyboard);
+
   const cleanups = [
-    on(window.visualViewport, 'resize', debouncedKeyboardAppear),
-    on(window.visualViewport, 'scroll', handleMobileScroll),
+    on(window.visualViewport, 'resize', moveFormatterAboveKeyboard),
+    on(window.visualViewport, 'scroll', moveFormatterAboveKeyboard),
   ];
 
   onBeforeUnmount(() => {
@@ -53,7 +43,12 @@ if (import.meta.client && window.visualViewport != null) {
 
 <template>
   <WithFadeTransition appear>
-    <div v-show="!isFallbackMode" ref="fixedBoxEl" class="inline-menu formatter">
+    <div
+      v-show="!isFallbackMode"
+      ref="fixedBoxEl"
+      class="inline-menu formatter"
+      :class="{ 'inline-menu__keyboard-shown': isKeyboardShown }"
+    >
       <slot />
     </div>
   </WithFadeTransition>
@@ -68,14 +63,14 @@ if (import.meta.client && window.visualViewport != null) {
   align-items: center;
 
   position: fixed;
-  bottom: 0;
+  bottom: env(safe-area-inset-bottom, 0px);
   left: 0;
   z-index: 10;
 
   padding:
-    0.325rem
+    0.375rem
     calc(0.75rem + env(safe-area-inset-right))
-    max(0.375rem, env(safe-area-inset-bottom))
+    calc(0.375rem + env(safe-area-inset-bottom))
     calc(0.75rem + env(safe-area-inset-left))
   ;
 
@@ -89,7 +84,7 @@ if (import.meta.client && window.visualViewport != null) {
     15px 25px 80px rgba(var(--base-shadow-color), 0.08)
   ;
 
-  transition: opacity .3s;
+  transition: padding .1s;
 
   @media (prefers-color-scheme: dark) {
     --base-shadow-color: 200, 200, 200;
@@ -101,11 +96,8 @@ if (import.meta.client && window.visualViewport != null) {
     backdrop-filter: blur(12px);
   }
 
-  &__hidden {
-    opacity: 0;
-    pointer-events: none;
-
-    transition: opacity .1s;
+  &__keyboard-shown {
+    padding-bottom: 0.375rem;
   }
 
   &.fade-enter-active {

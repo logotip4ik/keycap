@@ -22,7 +22,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       title: 'Keycap',
-      viewport: 'width=device-width, initial-scale=1',
+      viewport: 'width=device-width, initial-scale=1, viewport-fit=cover',
       htmlAttrs: { translate: 'no', lang: 'en' },
       meta: [
         { name: 'description', content: 'Beautiful Notes 💜. Fast, simple, shareable, synced between devices and purple.' },

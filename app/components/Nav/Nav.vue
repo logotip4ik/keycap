@@ -13,7 +13,7 @@
   position: absolute;
   z-index: 10;
   left: 50%;
-  top: calc(2.5vh + 1vw);
+  top: calc(2.5vh + 1vw + env(safe-area-inset-top));
 
   width: 93%;
   max-width: 1200px;

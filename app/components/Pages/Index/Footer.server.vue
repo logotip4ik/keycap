@@ -62,7 +62,7 @@ const links = [
     width: 93vw;
     max-width: 1200px;
 
-    padding: 4rem 2rem;
+    padding: 4rem 2rem calc(4rem + env(safe-area-inset-bottom));
 
     border: 1px solid var(--task-list-indicator-color);
     border-bottom-width: 0;
