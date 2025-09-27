@@ -176,7 +176,7 @@ export function useTiptap(opts: {
     // @see https://github.com/ueberdosis/tiptap/pull/5772/files#diff-c79287bdd112b4264f53e38c24a0de06a0a7cf50db8134c29087ef8c44d94124
     // it really feels smoother
     // Cloning root node (and its children) to avoid content being lost by destroy
-    const nodes = editor.options.element;
+    const nodes = editor.view.dom;
     const newEl = nodes?.cloneNode(true) as HTMLElement;
 
     nodes?.parentNode?.replaceChild(newEl, nodes);
