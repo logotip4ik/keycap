@@ -1,6 +1,32 @@
 # Changelog
 
 
+## v3.18.9
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.18.8...v3.18.9)
+
+### 🩹 Fixes
+
+- Use correct auth cookie name ([d0f98662](https://github.com/logotip4ik/keycap/commit/d0f98662))
+- Don't emit update when content changed externaly ([d3c5b3cc](https://github.com/logotip4ik/keycap/commit/d3c5b3cc))
+- Reset unsaved changes value after update ([eeb905b9](https://github.com/logotip4ik/keycap/commit/eeb905b9))
+- Use correct editor element ([c519066c](https://github.com/logotip4ik/keycap/commit/c519066c))
+
+### 💅 Refactors
+
+- Use viewport-fit=cover and safe-areas to prevent content overlapping ([6af10a3e](https://github.com/logotip4ik/keycap/commit/6af10a3e))
+
+### 🏡 Chore
+
+- **release:** V3.18.8 ([44ec87bd](https://github.com/logotip4ik/keycap/commit/44ec87bd))
+- Add message for 401 error in route rules ([531893fd](https://github.com/logotip4ik/keycap/commit/531893fd))
+- **ci:** Completely disable auto update deps ([4244c695](https://github.com/logotip4ik/keycap/commit/4244c695))
+- Update deps ([662baa16](https://github.com/logotip4ik/keycap/commit/662baa16))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.18.8
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.18.7...v3.18.8)
