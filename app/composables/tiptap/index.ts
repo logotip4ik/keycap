@@ -141,7 +141,7 @@ export function useTiptap(opts: {
     const editorContent = editor.getHTML();
 
     if (editorContent !== content) {
-      editor.commands.setContent(content || '');
+      editor.commands.setContent(content || '', { emitUpdate: false });
     }
   });
 
