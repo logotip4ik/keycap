@@ -83,7 +83,11 @@ zeenk.on('update-note', ({ path, steps }) => {
 function updateContent(force?: boolean) {
   const content = editor.getHTML();
 
-  return props.onUpdate(content || '', force);
+  return props
+    .onUpdate(content || '', force)
+    .then(() => {
+      hasUnsavedChanges.value = false;
+    });
 }
 
 // Function with arguments wouldn't be called in firefox in beforeunload event
