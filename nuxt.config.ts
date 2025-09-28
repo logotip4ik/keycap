@@ -15,9 +15,9 @@ import { InvariantOptimization } from './unplugin/invariant-optimization';
 import { parseDurationFunctionName, ParseDurationTransformPlugin } from './unplugin/parse-duration';
 
 export default defineNuxtConfig({
-  compatibilityDate: '2024-07-06',
+  compatibilityDate: 'latest',
 
-  devtools: { enabled: true },
+  devtools: { enabled: false },
 
   app: {
     head: {
@@ -328,7 +328,6 @@ export default defineNuxtConfig({
         '@tiptap/pm/view',
         '@floating-ui/dom',
         '@tiptap/suggestion',
-        '@superhuman/command-score',
         'coincident/worker',
       ],
       esbuildOptions: {

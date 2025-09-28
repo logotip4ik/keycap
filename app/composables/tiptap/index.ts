@@ -102,8 +102,13 @@ function initTiptap(opts: {
       }),
       UndoRedo.configure({ newGroupDelay: 300, depth: 400 }),
       Placeholder.configure({
-        placeholder: ({ editor }) =>
-          editor.isEmpty ? '# Start with heading...' : 'Write something...',
+        placeholder: ({ editor }) => {
+          if (!editor.isFocused) {
+            return 'Press [ i ] to focus';
+          }
+
+          return editor.isEmpty ? '# Start with heading...' : 'Continue writing...';
+        },
       }),
       Find,
       KeyboardShortcuts,
