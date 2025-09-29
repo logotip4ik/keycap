@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Editor } from '@tiptap/core';
 
-import { BubbleMenuPlugin } from '~/composables/tiptap/extensions/bubble-menu/plugin';
+import { BubbleMenuPlugin } from '~/utils/tiptap/extensions/bubble-menu/plugin';
 
 const props = defineProps<{
   editor: Editor
