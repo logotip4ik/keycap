@@ -36,13 +36,15 @@
 }
 
 html {
-  // Already included by normalize.css
-  // -moz-text-size-adjust: 100%;
-  // -webkit-text-size-adjust: 100%;
-  // text-size-adjust: 100%;
-
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
+  /* Prevent the browser from synthesizing missing typefaces */
+  font-synthesis: none;
+  font-smooth: always;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+  /* Prevent mobile browsers increasing font-size */
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
 
   tab-size: 4;
   scroll-behavior: smooth;
@@ -70,6 +72,11 @@ h5,
 h6 {
   font-weight: 500;
   font-stretch: 105%;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
 }
 
 .font-wide {
