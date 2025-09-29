@@ -18,7 +18,6 @@ import { transliterateFromEnglish, transliterateToEnglish } from '~/utils/transl
 const wordRE = /\w+/;
 const arrayWithString = [''];
 const itemsCache = new Map<string, FuzzyItem>();
-const emojisCache = new Map<string, Emoji>();
 
 let populateItemsCachePromise: Promise<void> | undefined;
 
@@ -125,36 +124,41 @@ async function populateItemsCache() {
   populateItemsCachePromise = undefined;
 }
 
+interface EmojiWithKey extends Emoji {
+  key: string
+}
+const emojisCache = new Array<EmojiWithKey>();
+
 async function populateEmojisCache() {
   const emojis = Object.values(
     (await import('@emoji-mart/data').then((m) => m.default as EmojiMartData)).emojis,
   );
 
   for (const emoji of emojis) {
-    emojisCache.set(
-      `${emoji.id} ${emoji.keywords.join(' ')}`,
-      emoji,
-    );
+    emojisCache.push({
+      ...emoji,
+      key: emoji.id + ' '.repeat(10) + emoji.name + emoji.keywords.join(' '),
+    });
   }
 }
 
 async function searchForEmoji(query: string) {
-  if (emojisCache.size === 0) {
+  if (emojisCache.length === 0) {
     await populateEmojisCache();
   }
 
   const results = [];
 
-  for (const [key, value] of emojisCache) {
-    const score = fuzzyMatch(query, key);
+  for (const value of emojisCache) {
+    const score = fuzzyMatch(query, value.key);
 
-    if (score > 0) {
+    if (score > 30) {
       results.push({ score, value });
     }
   }
 
   if (results.length === 0) {
-    return [];
+    return results as any;
   }
 
   return results
