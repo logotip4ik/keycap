@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { WithFadeTransition } from '#components';
+
 const props = defineProps<{
   tooltip?: string
   xOffset?: number
@@ -12,10 +14,12 @@ defineSlots<{
 
 const { isSmallScreen } = useDevice();
 
+const tooltipId = useId();
+const tooltipEl = useTemplateRef('tooltipEl');
+
 const shouldShow = ref(false);
 const targetEl = shallowRef<HTMLElement>();
-const tooltipEl = useTemplateRef('tooltipEl');
-const tooltipId = useId();
+const TransitionComp = shallowRef<typeof WithFadeTransition | 'slot'>(WithFadeTransition);
 
 const timeoutToShowTooltip = parseDuration('0.75s')!;
 const cleanups: Array<() => any> = [];
@@ -30,13 +34,13 @@ watch(targetEl, (target) => {
   }
 
   cleanups.push(
-    on(target, 'mouseenter', showWithTimeout, handlerOptions),
+    on(target, 'mouseenter', show, handlerOptions),
     on(target, 'mouseleave', hideAndClearTimeout, handlerOptions),
   );
 
   if (!isSmallScreen.value) {
     cleanups.push(
-      on(target, 'focus', showWithTimeout, handlerOptions),
+      on(target, 'focus', show, handlerOptions),
       on(target, 'blur', hideAndClearTimeout, handlerOptions),
     );
   }
@@ -68,7 +72,25 @@ function setRef(e: HTMLElement) {
   targetEl.value = e;
 }
 
-function showWithTimeout() {
+declare global {
+  interface Window {
+    lastTooltipHide?: number
+  }
+}
+
+function show() {
+  const shouldShowTooltipImmidiatelly = Date.now() - (window.lastTooltipHide || 0) < 200;
+
+  const transitionComp = shouldShowTooltipImmidiatelly ? 'slot' : WithFadeTransition;
+  if (TransitionComp.value !== transitionComp) {
+    TransitionComp.value = transitionComp;
+  }
+
+  if (shouldShowTooltipImmidiatelly) {
+    shouldShow.value = true;
+    return;
+  }
+
   clearTimeout(timeout);
   timeout = setTimeout(() => shouldShow.value = true, timeoutToShowTooltip);
 }
@@ -76,6 +98,7 @@ function showWithTimeout() {
 function hideAndClearTimeout() {
   clearTimeout(timeout);
   shouldShow.value = false;
+  window.lastTooltipHide = Date.now();
 }
 
 function cleanup() {
@@ -92,7 +115,7 @@ onBeforeUnmount(() => {
 <template>
   <slot :ref="setRef" :tooltip-id="tooltipId" />
 
-  <WithFadeTransition>
+  <component :is="TransitionComp">
     <div
       v-show="shouldShow"
       :id="tooltipId"
@@ -106,7 +129,7 @@ onBeforeUnmount(() => {
         {{ tooltip }}
       </slot>
     </div>
-  </WithFadeTransition>
+  </component>
 </template>
 
 <style lang="scss">
@@ -130,10 +153,17 @@ onBeforeUnmount(() => {
     15px 25px 25px rgba(0, 0, 0, 0.07)
   ;
 
+  transition: opacity 0.3s * 2 ease, transform 0.3s * 2;
+
   &.with-padding {
     padding: 0.125rem 0.5rem;
 
     border: 1px solid hsla(var(--text-color-hsl), 0.125);
+  }
+
+  &.fade-enter-from {
+    transform-origin: top center;
+    transform: scale(0.95);
   }
 }
 </style>
