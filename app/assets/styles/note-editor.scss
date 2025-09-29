@@ -211,6 +211,25 @@
   &>*:is(h1, h2, h3):first-child {
     padding-top: 0;
   }
+
+  .emoji-suggestion {
+    display: inline-block;
+    position: relative;
+
+    &:not(.is-empty)::before {
+      display: inline-block;
+
+      content: attr(data-decoration-content);
+
+      color: hsla(var(--text-color-hsl), 0.5);
+
+      margin-right: 0.5ch;
+
+      @media (prefers-color-scheme: dark) {
+        color: hsla(var(--selection-bg-color-hsl), 0.66);
+      }
+    }
+  }
 }
 
 

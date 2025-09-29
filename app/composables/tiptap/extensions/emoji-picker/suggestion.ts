@@ -17,6 +17,8 @@ export function createEmojiPickerSuggestionPlugin({ editor }: { editor: Editor }
     editor,
     pluginKey: new PluginKey('emoji-picker-suggestion'),
     char: ':',
+    decorationClass: 'emoji-suggestion',
+    decorationContent: '[Enter]',
     async items({ query }): Promise<Array<Emoji>> {
       if (import.meta.server || query.length === 0) {
         return [];
