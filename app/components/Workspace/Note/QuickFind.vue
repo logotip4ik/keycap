@@ -2,6 +2,8 @@
 import type { Editor } from '@tiptap/core';
 import type { Decoration, DecorationSet } from '@tiptap/pm/view';
 
+import { FindPluginKey } from '~/utils/tiptap';
+
 const props = defineProps<{
   editor: Editor
   onClose: () => void
