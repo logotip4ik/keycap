@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import type { Emoji } from '@emoji-mart/data';
+import type { Editor } from '@tiptap/core';
 
 const props = defineProps<{
+  editor: Editor
   shouldBeVisible: boolean
   items: Array<Emoji>
   onSelect?: (emoji: Emoji) => void
+  onClose: () => void
   getBoundingClientRect?: () => DOMRect
 }>();
 
@@ -18,38 +21,35 @@ watch(() => props.items, () => {
   selectedEmoji.value = 0;
 });
 
-watch(
-  [floating, emojiPickerEl, isVisible],
-  ([floating, emojiPicker, isVisible], _, onCleanup) => {
-    const { getBoundingClientRect } = props;
+watchEffect(() => {
+  const emojiPicker = emojiPickerEl.value;
 
-    if (!emojiPicker || !isVisible || !getBoundingClientRect || !floating) {
-      return;
-    }
+  if (!emojiPicker || !isVisible.value || !props.getBoundingClientRect || !floating.value) {
+    return;
+  }
 
-    floating.computePosition(
-      { getBoundingClientRect },
-      emojiPicker,
-      {
-        placement: 'bottom-start',
-        middleware: [
-          floating.offset(8),
-          floating.shift({ padding: 8 }),
-          floating.flip(),
-        ],
-      },
-    ).then(({ x, y }) => {
-      emojiPicker.style.setProperty('top', `${y}px`);
-      emojiPicker.style.setProperty('left', `${x}px`);
-    });
-
-    onCleanup(
-      on(window, 'keydown', handleKeypress, { capture: true }),
-    );
-  },
-);
+  floating.value.computePosition(
+    { getBoundingClientRect: props.getBoundingClientRect },
+    emojiPicker,
+    {
+      placement: 'bottom-start',
+      middleware: [
+        floating.value.offset(8),
+        floating.value.shift({ padding: 8 }),
+        floating.value.flip(),
+      ],
+    },
+  ).then(({ x, y }) => {
+    emojiPicker.style.setProperty('top', `${y}px`);
+    emojiPicker.style.setProperty('left', `${x}px`);
+  });
+});
 
 function handleKeypress(event: KeyboardEvent) {
+  if (!props.shouldBeVisible) {
+    return false;
+  }
+
   const target = event.target as HTMLButtonElement;
 
   if (event.key === 'ArrowDown') {
@@ -58,16 +58,15 @@ function handleKeypress(event: KeyboardEvent) {
     button?.focus();
 
     event.preventDefault();
+
+    return true;
   }
   else if (event.key === 'ArrowUp') {
-    withTiptapEditor((editor) => {
-      editor.commands.focus();
-    });
+    props.editor.commands.focus();
+
+    return true;
   }
-  else if (
-    (event.key === 'ArrowLeft' || event.key === 'ArrowRight')
-    && emojiPickerEl.value?.contains(target)
-  ) {
+  else if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
     const parent = target.parentElement as HTMLLIElement;
 
     const next = event.key === 'ArrowLeft'
@@ -75,11 +74,21 @@ function handleKeypress(event: KeyboardEvent) {
       : (parent.nextElementSibling || parent.parentElement?.firstElementChild);
 
     (next?.firstElementChild as HTMLElement | undefined)?.focus();
+
+    return true;
+  }
+  else if (event.key === 'Esc' || event.key === 'Escape') {
+    props.onClose();
+    event.preventDefault();
+    event.stopPropagation();
+
+    return true;
   }
   else if (event.key === 'Enter') {
     props.onSelect?.(props.items[selectedEmoji.value]);
-
     event.preventDefault();
+
+    return true;
   }
 }
 
@@ -94,12 +103,14 @@ onBeforeMount(() => {
     floating.value = loaded;
   });
 });
+
+defineExpose({ handleKeypress });
 </script>
 
 <template>
   <Teleport to="#teleports">
     <WithFadeTransition appear>
-      <ul v-if="isVisible" ref="emojiPickerEl" class="emoji-picker">
+      <ul v-show="isVisible" ref="emojiPickerEl" class="emoji-picker">
         <li v-for="(emoji, i) in items" :key="emoji.id" class="emoji-picker__item">
           <WithTooltip
             v-slot="{ ref, tooltipId }"
@@ -114,6 +125,7 @@ onBeforeMount(() => {
               :data-backlight-content="getNativeSkin(emoji)"
               @focus="selectedEmoji = i"
               @click="onSelect?.(emoji)"
+              @keydown="handleKeypress"
             >
               {{ getNativeSkin(emoji) }}
             </button>
@@ -176,7 +188,7 @@ onBeforeMount(() => {
 
       cursor: pointer;
 
-      &:focus {
+      &:is(:focus, [aria-selected=true]) {
         outline: 2px solid hsla(var(--selection-bg-color-hsl), 0.5);
         outline-offset: 0.1rem;
       }

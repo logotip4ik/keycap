@@ -2,7 +2,9 @@ import { Extension } from '@tiptap/core';
 
 const KEYWORD_RE = /\S+$/;
 
-export const KeyboardShortcuts = new Extension({
+export const KeyboardShortcuts = Extension.create({
+  name: 'KeyboardShortcuts',
+
   addKeyboardShortcuts() {
     const { isMac } = useDevice();
 
