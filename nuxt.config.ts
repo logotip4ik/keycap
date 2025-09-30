@@ -122,10 +122,6 @@ export default defineNuxtConfig({
         from: resolve('./config/breakpoints.ts'),
         imports: ['breakpoints', 'sidebarsBreakpoints'],
       },
-      {
-        from: resolve('./app/composables/tiptap/index.ts'),
-        imports: ['useTiptap', 'withTiptapEditor', 'FindPluginKey'],
-      },
     ],
 
     imports: [
