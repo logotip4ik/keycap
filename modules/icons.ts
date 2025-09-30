@@ -20,17 +20,15 @@ export default defineNuxtModule({
 
     const { dst } = addTypeTemplate({
       write: true,
-      filename: './types/icons.d.ts',
+      filename: 'icons.d.ts',
       getContents: () => {
         return `export type IconName = ${iconPathsDefinition};`;
       },
-    });
+    }, { nitro: false, nuxt: true });
 
-    addImports({
-      type: true,
-      from: dst,
-      name: 'IconName',
-    });
+    addImports([
+      { type: true, from: dst, name: 'IconName' },
+    ]);
 
     logger.info(`Added ${icons.length} icons types`);
   },
