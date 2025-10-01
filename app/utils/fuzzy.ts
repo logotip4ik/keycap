@@ -1,13 +1,15 @@
 import type { Emoji } from '@emoji-mart/data';
 import type { ShallowRef } from 'vue';
 
-import proxy from 'unenv/runtime/mock/proxy';
+import type { Replacement } from './tiptap/extensions/replacements/replacements';
 
+import proxy from 'unenv/runtime/mock/proxy';
 import FuzzyWorkerUrl from '~/workers/fuzzy?worker&url';
 
 export interface FuzzyWorker {
   searchWithQuery: (query: string) => Promise<Array<FuzzyItem | CommandItem>>
   searchForEmoji: (query: string) => Promise<Array<Emoji>>
+  searchForReplacement: (query: string) => Array<Replacement>
   addItemToCache: (item: FuzzyItem) => void
   hasItemInCache: (itemKey: string) => Promise<boolean>
   refreshItemsCache: () => Promise<void>

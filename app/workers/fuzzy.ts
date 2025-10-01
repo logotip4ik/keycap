@@ -2,6 +2,7 @@
 import type { Emoji, EmojiMartData } from '@emoji-mart/data';
 
 import type { FuzzyWorker } from '~/utils/fuzzy';
+import type { Replacement } from '~/utils/tiptap/extensions/replacements/replacements';
 
 // must come before coincident
 import '@ungap/with-resolvers';
@@ -12,7 +13,9 @@ import coincident from 'coincident/worker';
 import { protectionHeaders } from '~~/shared/utils/utils';
 
 import { fuzzyMatch } from '~/utils/fuzzy-match';
-import { commandActionsMin as commandsCache } from '~/utils/menu';
+
+import { commandActionsMin } from '~/utils/menu';
+import { replacementsMin } from '~/utils/tiptap/extensions/replacements/replacements';
 import { transliterateFromEnglish, transliterateToEnglish } from '~/utils/transliterate';
 
 const wordRE = /\w+/;
@@ -48,6 +51,7 @@ async function hasItemInCache(key: string) {
   return false;
 }
 
+const firstFiveItemsFromCommandsCache = [...commandActionsMin.values()].slice(0, 5);
 function search(query: string): Array<FuzzyItem | CommandItem> {
   // See https://stackblitz.com/edit/node-ezlzug?file=index.js&view=editor and run `node index.js`
   // but in `real world`? fuzzaldrin was a bit slower plus had much more bigger bundle footprint
@@ -56,10 +60,14 @@ function search(query: string): Array<FuzzyItem | CommandItem> {
 
   if (isCommand) {
     query = (query.match(wordRE) || arrayWithString)[0];
+
+    if (query.length === 0) {
+      return firstFiveItemsFromCommandsCache;
+    }
   }
 
   const results = [];
-  const cache = isCommand ? commandsCache : itemsCache;
+  const cache = isCommand ? commandActionsMin : itemsCache;
 
   for (const [key, value] of cache) {
     const score = fuzzyMatch(query, isCommand ? value.name : key as string);
@@ -166,12 +174,39 @@ async function searchForEmoji(query: string) {
 
 populateItemsCache();
 
+const firstFiveReplacements = [...replacementsMin.values()].slice(0, 5).map((item) => item.id);
+function searchForReplacement(query: string): Array<Replacement> {
+  const results = [];
+
+  if (!query) {
+    return firstFiveReplacements;
+  }
+
+  for (const value of replacementsMin) {
+    const score = fuzzyMatch(query, value.id);
+
+    if (score > 30) {
+      results.push({ score, value });
+    }
+  }
+
+  if (results.length === 0) {
+    return results as any;
+  }
+
+  return results
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 6)
+    .map((suggestion) => suggestion.value.id);
+}
+
 const fuzzyInterface: FuzzyWorker = {
   searchWithQuery: searchWithTransliteration,
   searchForEmoji,
   addItemToCache: addItem,
   hasItemInCache,
   refreshItemsCache: populateItemsCache,
+  searchForReplacement,
 };
 
 // eslint-disable-next-line antfu/no-top-level-await

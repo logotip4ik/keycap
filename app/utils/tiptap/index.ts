@@ -22,6 +22,7 @@ import { EmojiPicker } from './extensions/emoji-picker';
 import { Find } from './extensions/find';
 import { KeyboardShortcuts } from './extensions/keyboard-shortcuts';
 import { Link } from './extensions/link';
+import { ReplacementsExtension } from './extensions/replacements';
 
 export { AutoFloatTaskPlugin, AutoFloatTaskPluginKey } from './extensions/auto-float-task-item';
 export { FindPluginKey } from './extensions/find';
@@ -109,6 +110,7 @@ export function initTiptap(opts: {
       }),
       Find,
       KeyboardShortcuts,
+      ReplacementsExtension,
     ],
   });
 }
