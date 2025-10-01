@@ -1,12 +1,10 @@
 import type { Emoji } from '@emoji-mart/data';
 import type { Editor } from '@tiptap/core';
-import type { SuggestionOptions } from '@tiptap/suggestion';
 
 import { PluginKey } from '@tiptap/pm/state';
-import { exitSuggestion, Suggestion } from '@tiptap/suggestion';
-import { VueRenderer } from '@tiptap/vue-3';
+import { Suggestion } from '@tiptap/suggestion';
 
-import { withCachedComponent } from '../helpers';
+import { createSuggestionRenderer } from '../helpers';
 
 const EmojiPickerSuggestionPluginKey = new PluginKey('emoji-picker-suggestion');
 
@@ -31,63 +29,9 @@ export function createEmojiPickerSuggestionPlugin({ editor }: { editor: Editor }
         editor.commands.insertContentAt(range, skin.native);
       };
     },
-    render: createSuggestionRenderer(),
+    render: createSuggestionRenderer({
+      pluginKey: EmojiPickerSuggestionPluginKey,
+      compLoader: () => import('./EmojiPicker.vue'),
+    }),
   });
-}
-
-const withEmojiComp = withCachedComponent(() => import('./EmojiPicker.vue'));
-
-function createSuggestionRenderer(): SuggestionOptions['render'] {
-  return () => {
-    let renderer: VueRenderer | undefined;
-    // this fixes such use case:
-    // 1. user focues item inside emoji picker
-    // 2. user presses Esc -> this closes emoji picker and focuses the editor, but this triggers
-    //    suggestion to render the picker once again
-    let shouldHide = false;
-
-    return {
-      onStart(props) {
-        // this is needed because with `defineAsyncComponent` and `VueRenderer` we can't get exposed
-        // values, so we use custom function to load "sync" component and use it instead
-        withEmojiComp((component) => {
-          renderer = new VueRenderer(component, {
-            props: {
-              shouldBeVisible: shouldHide ? false : props.editor.isFocused,
-              items: props.items,
-              editor: props.editor,
-              onSelect: props.command,
-              getBoundingClientRect: props.clientRect,
-              onClose: () => {
-                exitSuggestion(props.editor.view, EmojiPickerSuggestionPluginKey);
-                shouldHide = true;
-              },
-            },
-            editor: props.editor,
-          });
-        });
-      },
-
-      onUpdate(props) {
-        shouldHide = false;
-
-        return renderer?.updateProps({
-          shouldBeVisible: props.editor.isFocused,
-          items: props.items,
-          editor: props.editor,
-          onSelect: props.command,
-          getBoundingClientRect: props.clientRect,
-        });
-      },
-
-      onKeyDown(props) {
-        return renderer?.ref.handleKeypress(props.event);
-      },
-
-      onExit() {
-        renderer?.destroy();
-        renderer = undefined;
-      },
-    };
-  };
 }

@@ -67,6 +67,10 @@ function handleKeypress(event: KeyboardEvent) {
     return true;
   }
   else if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+    if (!emojiPickerEl.value?.contains(target)) {
+      return false;
+    }
+
     const parent = target.parentElement as HTMLLIElement;
 
     const next = event.key === 'ArrowLeft'
@@ -110,11 +114,11 @@ defineExpose({ handleKeypress });
 <template>
   <Teleport to="#teleports">
     <WithFadeTransition appear>
-      <ul v-show="isVisible" ref="emojiPickerEl" class="emoji-picker">
+      <ul v-show="isVisible" ref="emojiPickerEl" class="emoji-picker fast-fade">
         <li v-for="(emoji, i) in items" :key="emoji.id" class="emoji-picker__item">
           <WithTooltip
             v-slot="{ ref, tooltipId }"
-            :tooltip="emoji.name"
+            :tooltip="`:${emoji.id}`"
             :y-offset="3"
           >
             <button
@@ -149,7 +153,7 @@ defineExpose({ handleKeypress });
 
   width: max-content;
 
-  padding: 0.35rem 0.65rem;
+  padding: 0.4rem 0.5rem;
   margin: 0;
 
   background-color: hsla(var(--surface-color-hsl), 0.25);
