@@ -96,11 +96,9 @@ async function searchWithTransliteration(query: string): Promise<Array<FuzzyItem
 }
 
 async function populateItemsCache() {
-  let resolve: () => void;
+  const { promise, resolve } = Promise.withResolvers<void>();
 
-  populateItemsCachePromise = new Promise((r) => {
-    resolve = r;
-  });
+  populateItemsCachePromise = promise;
 
   const res = await fetch('/api/search/client', {
     headers: {
@@ -119,7 +117,6 @@ async function populateItemsCache() {
     }
   }
 
-  // @ts-expect-error this should work, because promise callback is executed synchronously
   resolve();
   populateItemsCachePromise = undefined;
 }
@@ -137,7 +134,7 @@ async function populateEmojisCache() {
   for (const emoji of emojis) {
     emojisCache.push({
       ...emoji,
-      key: emoji.id + ' '.repeat(10) + emoji.name + emoji.keywords.join(' '),
+      key: emoji.id,
     });
   }
 }
