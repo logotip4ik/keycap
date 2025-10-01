@@ -8,6 +8,16 @@ export function getElementWidth(el: Element | undefined | null): number {
   );
 }
 
+export function getElementHeight(el: Element | undefined | null): number {
+  if (!el) {
+    return 0;
+  }
+
+  return Number(
+    getComputedStyle(el).height.slice(0, -2), // slicing `px`
+  );
+}
+
 export function stopAnimations(el: HTMLElement) {
   // getAnimations is not available in happy-dom
   const animations = el.getAnimations?.();

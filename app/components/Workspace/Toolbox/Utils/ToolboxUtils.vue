@@ -12,6 +12,12 @@ const { isSmallScreen } = useDevice();
 const { state } = useToolboxState();
 
 const utilsComp = useTemplateRef('utilsComp');
+const utilsEl = computed(() => utilsComp.value?.$el as HTMLUListElement | undefined);
+
+const { rememberSize, animateSize } = getContainerDimensionsTransition(utilsEl, {
+  // animating height down doesn't work for some reason, minHeight does
+  heightAnimateProperty: 'minHeight',
+});
 
 interface Util {
   id: number
@@ -39,32 +45,6 @@ const filteredUtils = computed(() => {
   return utils.filter((util) => !util.shouldShow || util.shouldShow.value === true);
 });
 
-let prevHeight: number;
-function rememberHeight() {
-  const el = utilsComp.value?.$el;
-  if (!(el instanceof HTMLElement)) {
-    return;
-  }
-
-  stopAnimations(el);
-
-  prevHeight = el.clientHeight;
-}
-
-function transitionHeight() {
-  const el = utilsComp.value?.$el;
-  if (!(el instanceof HTMLElement)) {
-    return;
-  }
-
-  const currentHeight = el.clientHeight;
-
-  el.animate([
-    { minHeight: `${prevHeight}px` },
-    { minHeight: `${currentHeight}px` },
-  ], { duration: 400, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' });
-}
-
 function hideIfNeeded() {
   if (isSmallScreen.value && state.value === 'pinned') {
     state.value = 'hidden';
@@ -81,10 +61,10 @@ onBeforeMount(() => {
     ref="utilsComp"
     tag="ul"
     class="toolbox__utils"
-    @enter="transitionHeight"
-    @leave="transitionHeight"
-    @before-enter="rememberHeight"
-    @before-leave="rememberHeight"
+    @enter="animateSize"
+    @leave="animateSize"
+    @before-enter="rememberSize"
+    @before-leave="rememberSize"
   >
     <li
       v-for="util in filteredUtils"

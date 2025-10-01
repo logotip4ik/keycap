@@ -4,37 +4,16 @@ const props = defineProps<{
   animateEl: HTMLElement | undefined
 }>();
 
-let prevHeight: number;
-function rememberHeight() {
-  if (!props.animateEl) {
-    return;
-  }
-
-  prevHeight = props.animateEl.clientHeight;
-}
-
-function animateHeight() {
-  if (!props.animateEl) {
-    return;
-  }
-
-  stopAnimations(props.animateEl);
-
-  const currentHeight = props.animateEl.clientHeight;
-
-  props.animateEl.animate([
-    { height: `${prevHeight}px` },
-    { height: `${currentHeight}px` },
-  ], { duration: 400, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' });
-}
+const animateEl = computed(() => props.animateEl);
+const { rememberSize, animateSize } = getContainerDimensionsTransition(animateEl);
 </script>
 
 <template>
   <WithFadeTransition
-    @enter="animateHeight"
-    @leave="animateHeight"
-    @before-enter="rememberHeight"
-    @before-leave="rememberHeight"
+    @enter="animateSize"
+    @leave="animateSize"
+    @before-enter="rememberSize"
+    @before-leave="rememberSize"
   >
     <div
       v-if="state === 'empty'"
@@ -49,10 +28,10 @@ function animateHeight() {
       v-if="state === 'idle'"
       tag="ul"
       class="search__results"
-      @enter="animateHeight"
-      @leave="animateHeight"
-      @before-enter="rememberHeight"
-      @before-leave="rememberHeight"
+      @enter="animateSize"
+      @leave="animateSize"
+      @before-enter="rememberSize"
+      @before-leave="rememberSize"
     >
       <slot />
     </WithListTransitionGroup>

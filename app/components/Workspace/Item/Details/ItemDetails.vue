@@ -14,6 +14,8 @@ const isLoadingItemDetails = ref(false);
 const itemDetailsEl = computed(() => itemDetailsComp.value?.$el as HTMLElement | undefined);
 const itemApiPath = computed(() => props.item.path.substring(1 + user.value.username.length));
 
+const { rememberSize, animateSize } = getContainerDimensionsTransition(itemDetailsEl);
+
 const isFolder = checkIsFolder(props.item);
 
 type ItemDetails = Prettify<ItemMetadata & {
@@ -47,32 +49,6 @@ function unsetCurrentDetailsItem() {
   // details.value = undefined;
 
   currentItemForDetails.value = undefined;
-}
-
-let prevPopupHeight: number | undefined;
-function rememberHeight() {
-  prevPopupHeight = itemDetailsEl.value?.clientHeight;
-}
-
-function transitionHeight() {
-  const itemDetails = itemDetailsEl.value;
-
-  if (!prevPopupHeight || !itemDetails) {
-    return;
-  }
-
-  const newHeight = itemDetails.clientHeight;
-
-  const heightDifference = Math.abs(prevPopupHeight - newHeight);
-
-  if (heightDifference < 2) {
-    return;
-  }
-
-  itemDetails.animate([
-    { height: `${prevPopupHeight}px` },
-    { height: `${newHeight}px` },
-  ], { duration: 400, easing: 'cubic-bezier(0.33, 1, 0.68, 1)' });
 }
 
 const formatter = Intl.DateTimeFormat(undefined, {
@@ -138,7 +114,7 @@ onBeforeMount(() => fetchDetails());
     >
       <WorkspaceModalCloseButton @click="unsetCurrentDetailsItem" />
 
-      <WithFadeTransition appear @before-leave="rememberHeight" @enter="transitionHeight">
+      <WithFadeTransition appear @before-leave="rememberSize" @enter="animateSize">
         <WorkspaceItemDetailsSkeleton v-if="!details" key="skeleton" />
 
         <div v-else key="content" class="item-details__data">
