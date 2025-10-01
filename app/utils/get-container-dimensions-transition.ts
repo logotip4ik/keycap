@@ -27,7 +27,7 @@ export function getContainerDimensionsTransition(
 
       const currentHeight = getElementHeight(container);
 
-      if (currentHeight === undefined) {
+      if (!Number.isFinite(currentHeight) || !Number.isFinite(prevHeight)) {
         return;
       }
 
