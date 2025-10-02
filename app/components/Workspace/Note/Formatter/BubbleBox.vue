@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Editor } from '@tiptap/core';
+import { PluginKey } from '@tiptap/pm/state';
 
 import { BubbleMenuPlugin } from '~/utils/tiptap/extensions/bubble-menu/plugin';
 
@@ -9,7 +10,7 @@ const props = defineProps<{
 
 const { setting } = useSetting(settings.formatterPosition);
 
-const BubblePluginKey = 'bubbleMenu';
+const BubblePluginKey = new PluginKey('bubbleMenu');
 const bubbleEl = ref<HTMLElement | null>(null);
 
 function unregister() {
@@ -68,16 +69,6 @@ onBeforeUnmount(() => unregister());
     3.4px 5.6px 17.9px rgba(var(--base-shadow-color), 0.048),
     15px 25px 80px rgba(var(--base-shadow-color), 0.08)
   ;
-
-  &::before {
-    content: '';
-
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-
-    border-radius: inherit;
-  }
 
   @media (prefers-color-scheme: dark) {
     --base-shadow-color: 180, 180, 180;

@@ -8,7 +8,7 @@ import { isNodeSelection, isTextSelection, posToDOMRect } from '@tiptap/core';
 import { Plugin, PluginKey } from '@tiptap/pm/state';
 
 export interface BubbleMenuPluginProps {
-  pluginKey: string
+  pluginKey: PluginKey<string>
   editor: Editor
   element: HTMLElement
   placement?: 'top' | 'bottom'
@@ -98,6 +98,11 @@ export class BubbleMenuView {
   }
 
   blurHandler({ event }: { event: FocusEvent }) {
+    if (this.editor.isDestroyed) {
+      this.destroy();
+      return;
+    }
+
     if (this.preventHide) {
       this.preventHide = false;
 
@@ -206,6 +211,7 @@ export class BubbleMenuView {
   }
 
   hide() {
+    this.element.style.transitionDuration = '0s';
     this.element.style.visibility = 'hidden';
   }
 
@@ -281,7 +287,7 @@ export class BubbleMenuView {
 
 export function BubbleMenuPlugin(options: BubbleMenuPluginProps) {
   return new Plugin({
-    key: new PluginKey(options.pluginKey),
+    key: options.pluginKey,
     view: (view) => new BubbleMenuView({ view, ...options }),
   });
 }
