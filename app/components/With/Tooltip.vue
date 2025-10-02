@@ -18,8 +18,8 @@ const tooltipId = useId();
 const tooltipEl = useTemplateRef('tooltipEl');
 
 const shouldShow = ref(false);
+const disableAppearAnimation = ref(false);
 const targetEl = shallowRef<HTMLElement>();
-const TransitionComp = shallowRef<typeof WithFadeTransition | 'slot'>(WithFadeTransition);
 
 const timeoutToShowTooltip = parseDuration('0.75s')!;
 const cleanups: Array<() => any> = [];
@@ -81,9 +81,8 @@ declare global {
 function show() {
   const shouldShowTooltipImmidiatelly = Date.now() - (window.lastTooltipHide || 0) < 200;
 
-  const transitionComp = shouldShowTooltipImmidiatelly ? 'slot' : WithFadeTransition;
-  if (TransitionComp.value !== transitionComp) {
-    TransitionComp.value = transitionComp;
+  if (disableAppearAnimation.value !== shouldShowTooltipImmidiatelly) {
+    disableAppearAnimation.value = shouldShowTooltipImmidiatelly;
   }
 
   if (shouldShowTooltipImmidiatelly) {
@@ -115,7 +114,7 @@ onBeforeUnmount(() => {
 <template>
   <slot :ref="setRef" :tooltip-id="tooltipId" />
 
-  <component :is="TransitionComp">
+  <WithFadeTransition :css="!disableAppearAnimation">
     <div
       v-show="shouldShow"
       :id="tooltipId"
@@ -129,7 +128,7 @@ onBeforeUnmount(() => {
         {{ tooltip }}
       </slot>
     </div>
-  </component>
+  </WithFadeTransition>
 </template>
 
 <style lang="scss">
