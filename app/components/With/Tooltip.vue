@@ -95,9 +95,12 @@ function show() {
 }
 
 function hideAndClearTimeout() {
+  if (shouldShow.value) {
+    window.lastTooltipHide = Date.now();
+  }
+
   clearTimeout(timeout);
   shouldShow.value = false;
-  window.lastTooltipHide = Date.now();
 }
 
 function cleanup() {
