@@ -27,3 +27,7 @@ export function stopAnimations(el: HTMLElement) {
     }
   }
 }
+
+export const EASINGS = {
+  EXPO: 'cubic-bezier(0.16, 1, 0.3, 1)',
+};

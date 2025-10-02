@@ -13,7 +13,7 @@ const props = defineProps<{
 
 const emojiPickerEl = useTemplateRef('emojiPickerEl');
 const selectedEmoji = ref(0);
-const floating = shallowRef<Awaited<ReturnType<typeof loadFloatingUi>>>();
+const floating = shallowRef<FloatingUI>();
 
 const isVisible = computed(() => props.shouldBeVisible && props.items.length > 0);
 

@@ -15,7 +15,7 @@ const props = defineProps<{
 
 const replacementsComp = useTemplateRef('replacementsComp');
 const selectedItem = ref(0);
-const floating = shallowRef<Awaited<ReturnType<typeof loadFloatingUi>>>();
+const floating = shallowRef<FloatingUI>();
 
 const replacementsEl = computed(() => replacementsComp.value?.$el as HTMLUListElement | undefined);
 const isVisible = computed(() => props.shouldBeVisible && props.items.length > 0);

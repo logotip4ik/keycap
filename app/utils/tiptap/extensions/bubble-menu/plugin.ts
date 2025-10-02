@@ -1,11 +1,11 @@
 import type { ComputePositionConfig } from '@floating-ui/dom';
 import type { Editor, EditorEvents } from '@tiptap/core';
 
-import type { EditorState } from '@tiptap/pm/state';
+import type { EditorState, PluginKey } from '@tiptap/pm/state';
 import type { EditorView } from '@tiptap/pm/view';
 
 import { isNodeSelection, isTextSelection, posToDOMRect } from '@tiptap/core';
-import { Plugin, PluginKey } from '@tiptap/pm/state';
+import { Plugin } from '@tiptap/pm/state';
 
 export interface BubbleMenuPluginProps {
   pluginKey: PluginKey<string>
@@ -36,7 +36,7 @@ export class BubbleMenuView {
 
   private preventHide = false;
 
-  private computeFloatingPosition: typeof import('@floating-ui/dom').computePosition | undefined;
+  private computeFloatingPosition: FloatingUI['computePosition'] | undefined;
   private floatingReferenceEl: { getBoundingClientRect: () => DOMRect };
   private floatingOptions?: Partial<ComputePositionConfig>;
 

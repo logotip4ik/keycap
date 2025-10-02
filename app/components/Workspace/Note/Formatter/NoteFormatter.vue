@@ -51,7 +51,7 @@ function animateContainer(el: Element) {
   if (containerWidthDiff > 2) {
     el.parentElement?.animate(
       [{ width: `${prevContainerWidth}px` }, { width: `${currentContainerWidth}px` }],
-      { duration: 400, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' },
+      { duration: 400, easing: EASINGS.EXPO },
     );
   }
 

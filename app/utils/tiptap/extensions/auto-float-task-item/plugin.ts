@@ -41,7 +41,7 @@ class TransitionView implements PluginView {
         const animation = newNode.animate([
           { transform: `translate(${dx}px,${dy}px)` },
           { transform: `rotate(0)` },
-        ], { duration: 400, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' });
+        ], { duration: 400, easing: EASINGS.EXPO });
 
         this.animations.push(animation);
 

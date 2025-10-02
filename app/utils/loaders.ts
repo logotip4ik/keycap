@@ -9,6 +9,8 @@ let floatingUi: {
   flip: typeof flip
 } | undefined;
 
+export type FloatingUI = NonNullable<typeof floatingUi>;
+
 export async function loadFloatingUi() {
   if (import.meta.server) {
     return proxy as NonNullable<typeof floatingUi>;

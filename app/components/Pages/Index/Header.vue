@@ -31,7 +31,7 @@ function animateImgPos(end: number, movement: number) {
     { transform: `translateY(${px.toFixed(2)}px)` },
   ], {
     duration: 1000,
-    easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+    easing: EASINGS.EXPO,
     fill: 'forwards',
   });
 }
