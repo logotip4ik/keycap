@@ -1,6 +1,25 @@
+import type { Editor } from '@tiptap/core';
+
 import { Extension } from '@tiptap/core';
 
 const KEYWORD_RE = /\S+$/;
+
+function wrapSelectionIn(startChar: string, endChar: string = startChar) {
+  return ({ editor }: { editor: Editor }) => {
+    const { selection } = editor.state;
+
+    if (selection.empty || !selection.visible) {
+      return false;
+    }
+
+    return editor
+      .chain()
+      .insertContentAt(selection.from, startChar)
+      .insertContentAt(selection.to + 1, endChar)
+      .setTextSelection({ from: selection.from + 1, to: selection.to + 1 })
+      .run();
+  };
+}
 
 export const KeyboardShortcuts = Extension.create({
   name: 'KeyboardShortcuts',
@@ -53,6 +72,15 @@ export const KeyboardShortcuts = Extension.create({
           .deleteSelection()
           .run();
       },
+      '~': wrapSelectionIn('~'),
+      '\'': wrapSelectionIn('\''),
+      '"': wrapSelectionIn('"'),
+      '`': wrapSelectionIn('`'),
+      '*': wrapSelectionIn('*'),
+      '_': wrapSelectionIn('_'),
+      '{': wrapSelectionIn('{', '}'),
+      '(': wrapSelectionIn('(', ')'),
+      '[': wrapSelectionIn('[', ']'),
     };
   },
 });
