@@ -76,6 +76,7 @@ function handleKeypress(event: KeyboardEvent) {
     return true;
   }
 
+  const items = props.items;
   if (isArrowUp || isArrowDown) {
     const parent = target.parentElement as HTMLLIElement;
 
@@ -95,10 +96,18 @@ function handleKeypress(event: KeyboardEvent) {
     return true;
   }
   else if (event.key === 'Enter') {
-    props.onSelect?.(props.items[selectedItem.value]);
+    props.onSelect?.(items[selectedItem.value]);
     event.preventDefault();
 
     return true;
+  }
+  else if (event.ctrlKey && event.key === 'n') {
+    selectedItem.value = (selectedItem.value + 1) % items.length;
+    event.preventDefault();
+  }
+  else if (event.ctrlKey && event.key === 'p') {
+    selectedItem.value = (selectedItem.value - 1 + items.length) % items.length;
+    event.preventDefault();
   }
 }
 

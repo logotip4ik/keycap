@@ -196,7 +196,7 @@ function searchForReplacement(query: string): Array<Replacement> {
 
   return results
     .sort((a, b) => b.score - a.score)
-    .slice(0, 6)
+    .slice(0, 5)
     .map((suggestion) => suggestion.value.id);
 }
 
