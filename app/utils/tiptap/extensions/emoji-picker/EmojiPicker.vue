@@ -12,38 +12,8 @@ const props = defineProps<{
 }>();
 
 const emojiPickerEl = useTemplateRef('emojiPickerEl');
-const selectedEmoji = ref(0);
-const floating = shallowRef<FloatingUI>();
 
-const isVisible = computed(() => props.shouldBeVisible && props.items.length > 0);
-
-watch(() => props.items, () => {
-  selectedEmoji.value = 0;
-});
-
-watchEffect(() => {
-  const emojiPicker = emojiPickerEl.value;
-
-  if (!emojiPicker || !isVisible.value || !props.getBoundingClientRect || !floating.value) {
-    return;
-  }
-
-  floating.value.computePosition(
-    { getBoundingClientRect: props.getBoundingClientRect },
-    emojiPicker,
-    {
-      placement: 'bottom-start',
-      middleware: [
-        floating.value.offset(8),
-        floating.value.shift({ padding: 8 }),
-        floating.value.flip(),
-      ],
-    },
-  ).then(({ x, y }) => {
-    emojiPicker.style.setProperty('top', `${y}px`);
-    emojiPicker.style.setProperty('left', `${x}px`);
-  });
-});
+const { isVisible, selectedItem } = useSuggestion(emojiPickerEl, props);
 
 function handleKeypress(event: KeyboardEvent) {
   if (!props.shouldBeVisible) {
@@ -89,7 +59,7 @@ function handleKeypress(event: KeyboardEvent) {
     return true;
   }
   else if (event.key === 'Enter') {
-    props.onSelect?.(props.items[selectedEmoji.value]);
+    props.onSelect?.(props.items[selectedItem.value]);
     event.preventDefault();
 
     return true;
@@ -101,12 +71,6 @@ function getNativeSkin(emoji: Emoji) {
 }
 
 useFocusTrap(emojiPickerEl);
-
-onBeforeMount(() => {
-  loadFloatingUi().then((loaded) => {
-    floating.value = loaded;
-  });
-});
 
 defineExpose({ handleKeypress });
 </script>
@@ -125,9 +89,9 @@ defineExpose({ handleKeypress });
               :ref
               class="emoji-picker__item__button"
               :aria-describedby="tooltipId"
-              :aria-selected="selectedEmoji === i"
+              :aria-selected="selectedItem === i"
               :data-backlight-content="getNativeSkin(emoji)"
-              @focus="selectedEmoji = i"
+              @focus="selectedItem = i"
               @click="onSelect?.(emoji)"
               @keydown="handleKeypress"
             >

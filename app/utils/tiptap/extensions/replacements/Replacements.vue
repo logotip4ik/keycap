@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Editor } from '@tiptap/core';
+import type { ComponentPublicInstance } from 'vue';
 import type { Replacement } from './replacements';
 
 import { replacements } from './replacements';
@@ -13,42 +14,12 @@ const props = defineProps<{
   getBoundingClientRect?: () => DOMRect
 }>();
 
-const replacementsComp = useTemplateRef('replacementsComp');
-const selectedItem = ref(0);
-const floating = shallowRef<FloatingUI>();
-
+const replacementsComp = useTemplateRef<ComponentPublicInstance>('replacementsComp');
 const replacementsEl = computed(() => replacementsComp.value?.$el as HTMLUListElement | undefined);
-const isVisible = computed(() => props.shouldBeVisible && props.items.length > 0);
+
+const { selectedItem, isVisible } = useSuggestion(replacementsEl, props);
 
 const { rememberSize, animateSize } = getContainerDimensionsTransition(replacementsEl);
-
-watch(() => props.items, () => {
-  selectedItem.value = 0;
-});
-
-watchEffect(() => {
-  const replacements = replacementsEl.value;
-
-  if (!replacements || !isVisible.value || !props.getBoundingClientRect || !floating.value) {
-    return;
-  }
-
-  floating.value.computePosition(
-    { getBoundingClientRect: props.getBoundingClientRect },
-    replacements,
-    {
-      placement: 'bottom-start',
-      middleware: [
-        floating.value.offset(8),
-        floating.value.shift({ padding: 8 }),
-        floating.value.flip(),
-      ],
-    },
-  ).then(({ x, y }) => {
-    replacements.style.setProperty('top', `${y}px`);
-    replacements.style.setProperty('left', `${x}px`);
-  });
-});
 
 function handleKeypress(event: KeyboardEvent) {
   if (!props.shouldBeVisible) {
@@ -110,14 +81,6 @@ function handleKeypress(event: KeyboardEvent) {
     event.preventDefault();
   }
 }
-
-useFocusTrap(replacementsEl);
-
-onBeforeMount(() => {
-  loadFloatingUi().then((loaded) => {
-    floating.value = loaded;
-  });
-});
 
 defineExpose({ handleKeypress });
 </script>
