@@ -46,8 +46,9 @@ watch(targetEl, (target) => {
   }
 });
 
-watch(shouldShow, async (shouldShow) => {
-  if (!shouldShow || !targetEl.value || !tooltipEl.value) {
+watchEffect(async () => {
+  console.count(tooltipId)
+  if (!shouldShow.value || !targetEl.value || !tooltipEl.value) {
     return;
   }
 
@@ -66,7 +67,7 @@ watch(shouldShow, async (shouldShow) => {
 
   tooltipEl.value.style.left = `${x}px`;
   tooltipEl.value.style.top = `${y}px`;
-});
+}, { flush: 'post' });
 
 function setRef(e: HTMLElement) {
   targetEl.value = e;
@@ -117,21 +118,23 @@ onBeforeUnmount(() => {
 <template>
   <slot :ref="setRef" :tooltip-id="tooltipId" />
 
-  <WithFadeTransition :css="!disableAppearAnimation">
-    <div
-      v-show="shouldShow"
-      :id="tooltipId"
-      ref="tooltipEl"
-      role="tooltip"
-      inert
-      class="tooltip"
-      :class="{ 'with-padding': !!tooltip }"
-    >
-      <slot name="tooltip">
-        {{ tooltip }}
-      </slot>
-    </div>
-  </WithFadeTransition>
+  <Teleport to="#teleports">
+    <WithFadeTransition :css="!disableAppearAnimation">
+      <div
+        v-if="shouldShow"
+        :id="tooltipId"
+        ref="tooltipEl"
+        role="tooltip"
+        inert
+        class="tooltip"
+        :class="{ 'with-padding': !!tooltip }"
+      >
+        <slot name="tooltip">
+          {{ tooltip }}
+        </slot>
+      </div>
+    </WithFadeTransition>
+  </Teleport>
 </template>
 
 <style lang="scss">

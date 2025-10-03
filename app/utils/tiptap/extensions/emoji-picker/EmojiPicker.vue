@@ -82,7 +82,7 @@ defineExpose({ handleKeypress });
         <li v-for="(emoji, i) in items" :key="emoji.id" class="emoji-picker__item">
           <WithTooltip
             v-slot="{ ref, tooltipId }"
-            :tooltip="`:${emoji.id}`"
+            :tooltip="emoji.id"
             :y-offset="3"
           >
             <button
