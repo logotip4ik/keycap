@@ -47,7 +47,6 @@ watch(targetEl, (target) => {
 });
 
 watchEffect(async () => {
-  console.count(tooltipId)
   if (!shouldShow.value || !targetEl.value || !tooltipEl.value) {
     return;
   }
