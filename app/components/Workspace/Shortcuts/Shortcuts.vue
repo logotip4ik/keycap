@@ -22,30 +22,37 @@ const shortcutsRenames: Partial<Record<keyof typeof shortcuts, string>> = {
   shortcutsModal: '?',
 };
 
-const humanizedShortcuts = computed(() => {
-  return Object.entries(shortcuts)
+const sections = computed(() => {
+  const modK = modKey.value;
+
+  const globalShortcuts = Object.entries(shortcuts)
     .map(([key, shortcut]) => ({
-      keys: shortcutsRenames[key as keyof typeof shortcuts] || humanizeShortcut(shortcut, modKey.value),
+      keys: shortcutsRenames[key as keyof typeof shortcuts] || humanizeShortcut(shortcut, modK),
       desc: shortcutsDescription[key as keyof typeof shortcuts],
     }))
     .sort((a, b) => a.keys.length - b.keys.length);
-});
 
-const editorShortcuts = computed(() => ({
-  [humanizeShortcut('$mod+b', modKey.value)]: 'Format as bold',
-  [humanizeShortcut('$mod+i', modKey.value)]: 'Format as italic',
-  [humanizeShortcut('$mod+e', modKey.value)]: 'Format as code',
-  [humanizeShortcut('$mod+Alt+0', modKey.value)]: 'Format as paragraph',
-  [humanizeShortcut('$mod+Alt+1', modKey.value)]: 'Format as heading level 1',
-  [humanizeShortcut('$mod+Alt+2', modKey.value)]: 'Format as heading level 2',
-  [humanizeShortcut('$mod+Alt+3', modKey.value)]: 'Format as heading level 3',
-  [humanizeShortcut('$mod+Shift+S', modKey.value)]: 'Format as strikethrough',
-  [humanizeShortcut('$mod+Shift+H', modKey.value)]: 'Highlight selection',
-  [humanizeShortcut('$mod+Shift+6', modKey.value)]: 'Format as quote',
-  [humanizeShortcut('$mod+Shift+7', modKey.value)]: 'Format as ordered list',
-  [humanizeShortcut('$mod+Shift+8', modKey.value)]: 'Format as unordered list',
-  [humanizeShortcut('$mod+Shift+L', modKey.value)]: 'Insert link in selection',
-}));
+  const editorShortcuts = [
+    { keys: humanizeShortcut('$mod+b', modK), desc: 'Format as bold' },
+    { keys: humanizeShortcut('$mod+i', modK), desc: 'Format as italic' },
+    { keys: humanizeShortcut('$mod+e', modK), desc: 'Format as code' },
+    { keys: humanizeShortcut('$mod+Alt+0', modK), desc: 'Format as paragraph' },
+    { keys: humanizeShortcut('$mod+Alt+1', modK), desc: 'Format as heading level 1' },
+    { keys: humanizeShortcut('$mod+Alt+2', modK), desc: 'Format as heading level 2' },
+    { keys: humanizeShortcut('$mod+Alt+3', modK), desc: 'Format as heading level 3' },
+    { keys: humanizeShortcut('$mod+Shift+S', modK), desc: 'Format as strikethrough' },
+    { keys: humanizeShortcut('$mod+Shift+H', modK), desc: 'Highlight selection' },
+    { keys: humanizeShortcut('$mod+Shift+6', modK), desc: 'Format as quote' },
+    { keys: humanizeShortcut('$mod+Shift+7', modK), desc: 'Format as ordered list' },
+    { keys: humanizeShortcut('$mod+Shift+8', modK), desc: 'Format as unordered list' },
+    { keys: humanizeShortcut('$mod+Shift+L', modK), desc: 'Insert link in selection' },
+  ];
+
+  return [
+    { name: 'Global shortcuts', shortcuts: globalShortcuts },
+    { name: 'Editor shortcuts', shortcuts: editorShortcuts },
+  ];
+});
 </script>
 
 <template>
@@ -53,37 +60,19 @@ const editorShortcuts = computed(() => ({
     <WorkspaceModal id="shortcuts-modal" class="shortcuts" @close="onClose">
       <WorkspaceModalCloseButton @click="onClose" />
 
-      <div class="shortcuts__item">
+      <div v-for="section in sections" :key="section.name" class="shortcuts__item">
         <p class="shortcuts__title font-wide">
-          Global Shortcuts
+          {{ section.name }}
         </p>
 
         <ul class="shortcuts__list">
-          <li v-for="shortcut in humanizedShortcuts" :key="shortcut.keys" class="shortcuts__list__item">
+          <li v-for="shortcut in section.shortcuts" :key="shortcut.keys" class="shortcuts__list__item">
             <kbd>{{ shortcut.keys }}</kbd>
 
             <hr class="shortcuts__list__item__hr">
 
             <p class="shortcuts__list__item__desc">
               {{ shortcut.desc }}
-            </p>
-          </li>
-        </ul>
-      </div>
-
-      <div class="shortcuts__item">
-        <p class="shortcuts__title font-wide">
-          Editor Shortcuts
-        </p>
-
-        <ul class="shortcuts__list">
-          <li v-for="(description, shortcut) in editorShortcuts" :key="shortcut" class="shortcuts__list__item">
-            <kbd>{{ shortcut }}</kbd>
-
-            <hr class="shortcuts__list__item__hr">
-
-            <p class="shortcuts__list__item__desc">
-              {{ description }}
             </p>
           </li>
         </ul>
