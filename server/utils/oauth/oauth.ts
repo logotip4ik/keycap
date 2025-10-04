@@ -69,7 +69,12 @@ export async function assertNoOAuthErrors(event: H3Event, query: QueryObject) {
   }
 
   const stateCookie = getCookie(event, 'state');
-  if (typeof query.state !== 'string' || query.state !== stateCookie) {
+  if (
+    !stateCookie
+    || !query.state
+    || typeof query.state !== 'string'
+    || query.state !== stateCookie
+  ) {
     deleteOAuthStateCookie(event);
 
     const identifier = getRequestIP(event, { xForwardedFor: true });
