@@ -1,6 +1,74 @@
 # Changelog
 
 
+## v3.19.0
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.18.9...v3.19.0)
+
+### 🚀 Enhancements
+
+- Add replacements/commands ([7b83b43e](https://github.com/logotip4ik/keycap/commit/7b83b43e))
+
+### 🔥 Performance
+
+- Reduce bundle size for fuzzy worker by tree shaking not used properties from json fields ([b150fa5a](https://github.com/logotip4ik/keycap/commit/b150fa5a))
+- Reduce emoji json size even more by removing not used fields ([6c80faa4](https://github.com/logotip4ik/keycap/commit/6c80faa4))
+
+### 🩹 Fixes
+
+- Immidiatelly show tooltip if last close time is close enough ([fbe00fba](https://github.com/logotip4ik/keycap/commit/fbe00fba))
+- IconName not beeing imported correctly ([ce19e8e5](https://github.com/logotip4ik/keycap/commit/ce19e8e5))
+- Lint issue ([5d87b686](https://github.com/logotip4ik/keycap/commit/5d87b686))
+- Ensure `NaN` won't be used for animating ([bda9e10f](https://github.com/logotip4ik/keycap/commit/bda9e10f))
+- Build ([1b2c6789](https://github.com/logotip4ik/keycap/commit/1b2c6789))
+- Don't wrap tooltip content in slot ([1168782d](https://github.com/logotip4ik/keycap/commit/1168782d))
+- Don't set lastTooltipHide if it wasn't even shown ([6fa69884](https://github.com/logotip4ik/keycap/commit/6fa69884))
+- Tooltips not being properly rendered ([fe5debb7](https://github.com/logotip4ik/keycap/commit/fe5debb7))
+- **test:** I guess worker plugins don't work with nuxt-vitest so added guard for import `smaller-emoji-mart` ([1b1ec7ad](https://github.com/logotip4ik/keycap/commit/1b1ec7ad))
+
+### 💅 Refactors
+
+- Update seed script ([4dc1f3db](https://github.com/logotip4ik/keycap/commit/4dc1f3db))
+- Improve fuzzy search for emojis ([ebf840d2](https://github.com/logotip4ik/keycap/commit/ebf840d2))
+- Move non reactive tiptap stuff to utils ([963fad32](https://github.com/logotip4ik/keycap/commit/963fad32))
+- Improve emoji picker ([c373cff9](https://github.com/logotip4ik/keycap/commit/c373cff9))
+- Extract suggestion renderer into tiptap extension helper ([f2629eba](https://github.com/logotip4ik/keycap/commit/f2629eba))
+- Use only emoji.id for fuzzy searching ([a23e6188](https://github.com/logotip4ik/keycap/commit/a23e6188))
+- Extract common container size animation handlers into util ([2fe95c79](https://github.com/logotip4ik/keycap/commit/2fe95c79))
+- Add wrapping content when inserting certain chars with text selected ([fb5c296d](https://github.com/logotip4ik/keycap/commit/fb5c296d))
+- Remove duplicate stuff from shortcuts template ([3ffae99f](https://github.com/logotip4ik/keycap/commit/3ffae99f))
+
+### 🏡 Chore
+
+- **release:** V3.18.9 ([49c4a4b3](https://github.com/logotip4ik/keycap/commit/49c4a4b3))
+- Use correct persistent volume for postgres ([c78c33d3](https://github.com/logotip4ik/keycap/commit/c78c33d3))
+- Start migrations over ([ab030357](https://github.com/logotip4ik/keycap/commit/ab030357))
+- Improve placeholder message ([077cb685](https://github.com/logotip4ik/keycap/commit/077cb685))
+- Update vue/typescript-plugin ([5ef3c739](https://github.com/logotip4ik/keycap/commit/5ef3c739))
+- Improve default styling for text ([9a805607](https://github.com/logotip4ik/keycap/commit/9a805607))
+- Show user that `Enter` will insert emoji ([8c5e7d4c](https://github.com/logotip4ik/keycap/commit/8c5e7d4c))
+- Don't use global cache for nm ([8f5e1fb1](https://github.com/logotip4ik/keycap/commit/8f5e1fb1))
+- Remove manual auto imports from tiptap ([31b84047](https://github.com/logotip4ik/keycap/commit/31b84047))
+- Add ctrl+n/p shortcuts for replacements ([a0d898cc](https://github.com/logotip4ik/keycap/commit/a0d898cc))
+- Ensure bubblebox is always immidiatelly hidden ([323911f0](https://github.com/logotip4ik/keycap/commit/323911f0))
+- Export same things into consts ([67cf9a0d](https://github.com/logotip4ik/keycap/commit/67cf9a0d))
+- Export suggestion flow into hook ([6e080c3c](https://github.com/logotip4ik/keycap/commit/6e080c3c))
+- Remove console.log ([c3038e82](https://github.com/logotip4ik/keycap/commit/c3038e82))
+- Update deps and fix noteformatter test ([43b3ad86](https://github.com/logotip4ik/keycap/commit/43b3ad86))
+- Allow counting login and register events ([30b7bc35](https://github.com/logotip4ik/keycap/commit/30b7bc35))
+- **ci:** Use dependabot for updating deps ([0e6bec89](https://github.com/logotip4ik/keycap/commit/0e6bec89))
+- Add codeowners file ([3d693dd1](https://github.com/logotip4ik/keycap/commit/3d693dd1))
+- Simplify job for typescript a bit ([17ae3b54](https://github.com/logotip4ik/keycap/commit/17ae3b54))
+- Fix lint ([fb2b10c9](https://github.com/logotip4ik/keycap/commit/fb2b10c9))
+
+### 🤖 CI
+
+- Bump actions/setup-node from 4.4.0 to 5.0.0 in the all-actions group ([#55](https://github.com/logotip4ik/keycap/pull/55))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.18.9
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.18.8...v3.18.9)
