@@ -107,6 +107,7 @@ export default defineEventHandler(async (event) => {
     setAuthCookies(event, user),
     useRegisterStorage().removeItem(`continue:${data.code}`),
     invalidateCacheEntry(getUserCacheKey(user.username, UserCacheName.Taken)),
+    logger.info(event, { type: 'register' }),
   ]);
 
   if (data.browserAction !== undefined) {
