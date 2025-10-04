@@ -2,15 +2,32 @@
 
 version: 2
 updates:
+  - package-ecosystem: npm
+    directory: /
+    commit-message:
+      prefix: ci
+    groups:
+      all-actions:
+        patterns: [ "*" ]
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: gomod
+    directory: /packages/zeenk
+    commit-message:
+      prefix: ci
+    groups:
+      all-actions:
+        patterns: [ "*" ]
+    schedule:
+      interval: weekly
 
   - package-ecosystem: github-actions
     directory: /
     commit-message:
       prefix: ci
     groups:
-      actions:
-        patterns:
-          - '*'
+      all-actions:
+        patterns: [ "*" ]
     schedule:
-      # Check for updates to GitHub Actions every month
-      interval: monthly
+      interval: weekly
