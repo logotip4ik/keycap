@@ -5,7 +5,7 @@ import browserslistToEsbuild from 'browserslist-to-esbuild';
 import parseDuration from 'parse-duration';
 import { resolve } from 'pathe';
 import { viteMinify } from 'rollup-plugin-swc3';
-import { isCI, isDevelopment, isProduction, nodeENV } from 'std-env';
+import { isCI, isDevelopment, isProduction, isTest, nodeENV } from 'std-env';
 
 import { breakpoints, sidebarsBreakpoints } from './config/breakpoints';
 import { inlinableStylesRE, prefixedConfig } from './config/build';
@@ -249,6 +249,7 @@ export default defineNuxtConfig({
       'import.meta.dev': isDevelopment,
       'import.meta.prod': isProduction,
       'import.meta.ci': isCI,
+      'import.meta.test': isTest,
 
       'process.env.NODE_ENV': JSON.stringify(nodeENV),
 
@@ -380,6 +381,7 @@ export default defineNuxtConfig({
       'import.meta.dev': isDevelopment,
       'import.meta.prod': isProduction,
       'import.meta.ci': isCI,
+      'import.meta.test': isTest,
 
       'process.env.NODE_ENV': JSON.stringify(nodeENV),
 

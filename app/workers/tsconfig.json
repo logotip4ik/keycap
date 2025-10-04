@@ -1,9 +1,0 @@
-{
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "lib": ["ESNext", "WebWorker", "DOM.Iterable"],
-    "types": ["vite/client"]
-  },
-  "include": ["./", "../types"],
-  "exclude": []
-}

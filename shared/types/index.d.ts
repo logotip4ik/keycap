@@ -15,6 +15,7 @@ export declare global {
     dev: boolean
     prod: boolean
     ci: boolean
+    test: boolean
 
     config: Config
   }

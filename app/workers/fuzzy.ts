@@ -132,8 +132,13 @@ async function populateItemsCache() {
 let emojisCache: Array<Emoji> | undefined;
 async function searchForEmoji(query: string): Promise<Array<Emoji>> {
   if (!emojisCache) {
-    const smallerEmojiMart = await import('virtual:smaller-emoji-mart');
-    emojisCache = smallerEmojiMart.emojies;
+    if (import.meta.test) {
+      emojisCache = [];
+    }
+    else {
+      const smallerEmojiMart = await import('virtual:smaller-emoji-mart');
+      emojisCache = smallerEmojiMart.emojies;
+    }
   }
 
   const results = [];
