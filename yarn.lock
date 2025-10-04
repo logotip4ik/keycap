@@ -5996,14 +5996,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"coincident@npm:3.0.5":
-  version: 3.0.5
-  resolution: "coincident@npm:3.0.5"
+"coincident@npm:4.0.28":
+  version: 4.0.28
+  resolution: "coincident@npm:4.0.28"
   dependencies:
-    gc-hook: "npm:^0.4.1"
-    js-proxy: "npm:^0.5.2"
-    next-resolver: "npm:^0.1.2"
-  checksum: 10/760c718d23e9afc396bb0f4052d827d9b40fbb0c4c1b8b6e22628a25be18de45e21734dbd88106e202bdc54f0b6f5d2dfb88416f051c164d7d3fb66c82919c94
+    "@webreflection/utils": "npm:^0.1.1"
+    next-resolver: "npm:^0.1.4"
+    reflected-ffi: "npm:^0.6.1"
+  bin:
+    coincident: cli.cjs
+  checksum: 10/a7abdeffb0f35c507f2c770c8098ea88da05fadf973d6296b3e9bd7479935c531715c5a6632a5acf1857fe3a4ce2eb44010d48d035bb3718f2a6f4cc6f9674f2
   languageName: node
   linkType: hard
 
@@ -7823,13 +7825,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"gc-hook@npm:^0.4.1":
-  version: 0.4.1
-  resolution: "gc-hook@npm:0.4.1"
-  checksum: 10/25769a16b4c690653c86678380abaeae62aacc118495f6c97f5fbb2a879075a1e863017efd1f45df5fe443468523f2251c10be1576fc465aaaf5ab66e98798c8
-  languageName: node
-  linkType: hard
-
 "gensync@npm:^1.0.0-beta.2":
   version: 1.0.0-beta.2
   resolution: "gensync@npm:1.0.0-beta.2"
@@ -8604,16 +8599,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"js-proxy@npm:^0.5.2":
-  version: 0.5.2
-  resolution: "js-proxy@npm:0.5.2"
-  dependencies:
-    gc-hook: "npm:^0.4.1"
-    proxy-target: "npm:^3.0.2"
-  checksum: 10/6982515ba2272c7460a9d080036cb50f206c253f3e67246c631b7cfd87ae0e47e57f77c7289cafa48c565bf20a23f4e1f514200c8a504a7495c6bd5d5d80f3a5
-  languageName: node
-  linkType: hard
-
 "js-tokens@npm:^4.0.0":
   version: 4.0.0
   resolution: "js-tokens@npm:4.0.0"
@@ -8810,7 +8795,7 @@ __metadata:
     "@vue/test-utils": "npm:^2.4.6"
     "@vue/typescript-plugin": "npm:^3.1.0"
     browserslist-to-esbuild: "npm:^2.1.1"
-    coincident: "npm:3.0.5"
+    coincident: "npm:4.0.28"
     cookie-es: "npm:^2.0.0"
     decomment: "npm:^0.9.5"
     destr: "npm:^2.0.5"
@@ -8833,7 +8818,7 @@ __metadata:
     nitropack: "npm:^2.12.6"
     normalize.css: "npm:^8.0.1"
     nuxt: "npm:^4.1.2"
-    ohash: "npm:1.1.6"
+    ohash: "npm:2.0.11"
     parse-duration: "npm:^2.1.4"
     pathe: "npm:^2.0.3"
     picocolors: "npm:^1.1.1"
@@ -10207,7 +10192,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-resolver@npm:^0.1.2":
+"next-resolver@npm:^0.1.4":
   version: 0.1.4
   resolution: "next-resolver@npm:0.1.4"
   dependencies:
@@ -10747,14 +10732,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ohash@npm:1.1.6":
-  version: 1.1.6
-  resolution: "ohash@npm:1.1.6"
-  checksum: 10/068a7087f99cb43a60d5b1933bade732fecd5446337447735edfe1e6e5de78c91949eb1d79a0372a2b48b608f2b50ea7b56347b3fcd45526bffd5c4a9d5e2221
-  languageName: node
-  linkType: hard
-
-"ohash@npm:^2.0.11":
+"ohash@npm:2.0.11, ohash@npm:^2.0.11":
   version: 2.0.11
   resolution: "ohash@npm:2.0.11"
   checksum: 10/6b0423f42cc95c3d643f390a88364aac824178b7788dccb4e8c64e2124463d0069e60d4d90bad88ed9823808368d051e088aa27058ca4722b1397a201ffbfa4b
@@ -11965,13 +11943,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"proxy-target@npm:^3.0.2":
-  version: 3.0.2
-  resolution: "proxy-target@npm:3.0.2"
-  checksum: 10/5ce314f8e479f4dec85249e80f6a0b55f01af03539c29fd4e9d070b576be969c7a79f8ac87da3e58f8580ed83cd8401b0cc759049b8149c545cc74e53fa90f9f
-  languageName: node
-  linkType: hard
-
 "punycode.js@npm:^2.3.1":
   version: 2.3.1
   resolution: "punycode.js@npm:2.3.1"
@@ -12130,6 +12101,13 @@ __metadata:
   dependencies:
     "@eslint-community/regexpp": "npm:^4.8.0"
   checksum: 10/b89411434e31637a519c065acd8fd1ec9eabc1dec38eec58dbc69a386ec21d88f97fa175e56fb3133e21c090ddb68fe7b5653ffc4bbcc9f069abc0e88c0d290c
+  languageName: node
+  linkType: hard
+
+"reflected-ffi@npm:^0.6.1":
+  version: 0.6.1
+  resolution: "reflected-ffi@npm:0.6.1"
+  checksum: 10/00b7fd0a41f01ac4a1f9c1790530a64cdf65b3b5eea48be255f0fc81642b094f26943848ccf53890eb2ae3c3eeb23c2e841aed6ca8e83c7133e65dc1ceed5fcc
   languageName: node
   linkType: hard
 
