@@ -1,5 +1,5 @@
 /* eslint-disable perfectionist/sort-imports */
-import type { Emoji, EmojiMartData } from '@emoji-mart/data';
+import type { Emoji } from '@emoji-mart/data';
 
 import type { FuzzyWorker } from '~/utils/fuzzy';
 import type { Replacement } from '~/utils/tiptap/extensions/replacements/replacements';
@@ -129,33 +129,17 @@ async function populateItemsCache() {
   populateItemsCachePromise = undefined;
 }
 
-interface EmojiWithKey extends Emoji {
-  key: string
-}
-const emojisCache = new Array<EmojiWithKey>();
-
-async function populateEmojisCache() {
-  const emojis = Object.values(
-    (await import('@emoji-mart/data/sets/15/native.json').then((m: any) => m.emojis as EmojiMartData['emojis'])),
-  );
-
-  for (const emoji of emojis) {
-    emojisCache.push({
-      ...emoji,
-      key: emoji.id,
-    });
-  }
-}
-
-async function searchForEmoji(query: string) {
-  if (emojisCache.length === 0) {
-    await populateEmojisCache();
+let emojisCache: Array<Emoji> | undefined;
+async function searchForEmoji(query: string): Promise<Array<Emoji>> {
+  if (!emojisCache) {
+    const smallerEmojiMart = await import('virtual:smaller-emoji-mart');
+    emojisCache = smallerEmojiMart.emojies;
   }
 
   const results = [];
 
   for (const value of emojisCache) {
-    const score = fuzzyMatch(query, value.key);
+    const score = fuzzyMatch(query, value.id);
 
     if (score > 30) {
       results.push({ score, value });

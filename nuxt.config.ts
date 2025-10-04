@@ -13,6 +13,7 @@ import { getCachedAssetHeaders, getHeaders } from './config/headers';
 import { tsConfig } from './config/typescript';
 import { InvariantOptimization } from './unplugin/invariant-optimization';
 import { parseDurationFunctionName, ParseDurationTransformPlugin } from './unplugin/parse-duration';
+import { SmallerEmojiMart } from './unplugin/smaller-emoji-mart';
 
 export default defineNuxtConfig({
   compatibilityDate: 'latest',
@@ -264,6 +265,7 @@ export default defineNuxtConfig({
     plugins: [
       ParseDurationTransformPlugin.vite(),
       UnheadVite(),
+      SmallerEmojiMart.vite(),
     ],
 
     build: {
@@ -545,6 +547,7 @@ export default defineNuxtConfig({
 
       worker: {
         plugins: () => [
+          SmallerEmojiMart.vite(),
           viteMinify({
             compress: true,
             mangle: true,
