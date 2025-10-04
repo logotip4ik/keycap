@@ -59,12 +59,14 @@ async function log(event: H3Event, level: ValueOf<typeof LogLevel>, data: Logger
     data.err = Object.assign(Object.create(null), data.err, {
       message: (data.err as any).message,
       stack: (data.err as any).stack,
+      cause: (data.err as any).cause,
     });
   }
   else if (data.error) {
     data.error = Object.assign(Object.create(null), data.error, {
       message: (data.error as any).message,
       stack: (data.error as any).stack,
+      cause: (data.err as any).cause,
     });
   }
 

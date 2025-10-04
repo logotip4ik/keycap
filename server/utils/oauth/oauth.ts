@@ -82,8 +82,6 @@ export async function assertNoOAuthErrors(event: H3Event, query: QueryObject) {
 
     throw createError({ status: 422 });
   }
-
-  return stateCookie;
 }
 
 export async function createUserWithSocialAuth(socialAuth: NormalizedSocialUser) {

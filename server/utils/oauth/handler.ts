@@ -9,7 +9,7 @@ import { withQuery } from 'ufo';
 
 interface OAuthHandlerOptions<T extends GitHubUserRes | GoogleUserRes> {
   getOAuthConfig: (event: H3Event) => OAuthProviderConfig
-  getOAuthUser: (event: H3Event) => Promise<T | void>
+  getOAuthUser: (event: H3Event) => Promise<T | undefined>
   normalizeOAuthUser: (user: T, overwrites: { username: string }) => NormalizedSocialUser
 }
 
@@ -19,10 +19,8 @@ export function defineOAuthHandler<T extends GitHubUserRes | GoogleUserRes>({
   normalizeOAuthUser,
 }: OAuthHandlerOptions<T>) {
   return defineEventHandler(async (event) => {
-    let user = event.context.user;
-
-    if (user) {
-      return sendRedirect(event, `/@${user.username}`);
+    if (event.context.user) {
+      return sendRedirect(event, `/@${event.context.user.username}`);
     }
 
     const query = getQuery(event);
@@ -40,19 +38,15 @@ export function defineOAuthHandler<T extends GitHubUserRes | GoogleUserRes>({
       return;
     }
 
-    const oAuthStateKey = await assertNoOAuthErrors(event, query);
+    await assertNoOAuthErrors(event, query);
+
+    const oAuthStateKey = getCookie(event, 'state');
+    invariant(oAuthStateKey, 'oAuthStateKey must be defined at this point');
 
     const oAuthUserCache = getOAuthUserCache();
-
-    let gotOAuthUserFromCache = true;
-    let oAuthUser = await oAuthUserCache.getItem<T>(oAuthStateKey) || undefined;
-    if (!oAuthUser) {
-      oAuthUser = await getOAuthUser(event) || undefined;
-      gotOAuthUserFromCache = false;
-    }
+    const oAuthUser = (await oAuthUserCache.getItem<T>(oAuthStateKey) || await getOAuthUser(event));
 
     const error = socialUserValidator.Errors(oAuthUser).First();
-
     if (error) {
       await logger.error(event, {
         ...error,
@@ -70,29 +64,25 @@ export function defineOAuthHandler<T extends GitHubUserRes | GoogleUserRes>({
       { ttl: parseDuration('5 minutes', 's')! },
     );
 
-    if (!gotOAuthUserFromCache) {
-      const kysely = getKysely();
-
-      user = await kysely
-        .selectFrom('User')
-        .leftJoin('OAuth', 'OAuth.userId', 'User.id')
-        .where((eb) => eb.or([
-          eb('User.email', '=', oAuthUser.email),
-          eb.and([
-            eb('OAuth.id', '=', `${oAuthUser.id}`),
-            eb('OAuth.type', '=', config.name),
-          ]),
-        ]))
-        .select(['User.id', 'User.email', 'User.username'])
-        .executeTakeFirst()
-        .catch(async (err) => {
-          await logger.error(event, { err, msg: `oauth.${config.name.toLowerCase()}.findUser failed` });
-          return undefined;
-        });
-    }
+    const kysely = getKysely();
+    let user = await kysely
+      .selectFrom('User')
+      .leftJoin('OAuth', 'OAuth.userId', 'User.id')
+      .where((eb) => eb.or([
+        eb('User.email', '=', oAuthUser.email),
+        eb.and([
+          eb('OAuth.id', '=', `${oAuthUser.id}`),
+          eb('OAuth.type', '=', config.name),
+        ]),
+      ]))
+      .select(['User.id', 'User.email', 'User.username'])
+      .executeTakeFirst()
+      .catch(async (err) => {
+        await logger.error(event, { err, msg: `oauth.${config.name.toLowerCase()}.findUser failed` });
+        return undefined;
+      });
 
     let username: string;
-
     if (user) {
       username = user.username;
     }
@@ -117,10 +107,10 @@ export function defineOAuthHandler<T extends GitHubUserRes | GoogleUserRes>({
     await Promise.all([
       oAuthUserCache.removeItem(oAuthStateKey),
       invalidateCacheEntry(getUserCacheKey(username, UserCacheName.Taken)),
+      logger.info(event, { type: user ? 'login' : 'register' }),
     ]);
 
     const normalizedOAuthUser = normalizeOAuthUser(oAuthUser, { username });
-
     if (user) {
       await updateUserWithSocialAuth(user.id, normalizedOAuthUser)
         .catch(async (err) => {

@@ -4,6 +4,7 @@ export default defineOAuthHandler({
     return getGitHubUserWithEvent(event)
       .catch(async (err) => {
         await logger.error(event, { err, msg: 'getGitHubUserWithEvent failed' });
+        return undefined;
       });
   },
   normalizeOAuthUser: (user, overwrites) => {

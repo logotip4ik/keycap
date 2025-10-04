@@ -4,6 +4,7 @@ export default defineOAuthHandler({
     return getGoogleUserWithEvent(event)
       .catch(async (err) => {
         await logger.error(event, { err, msg: 'getGoogleUserWithEvent failed' });
+        return undefined;
       });
   },
   normalizeOAuthUser: (user, overwrites) => {
