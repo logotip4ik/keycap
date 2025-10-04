@@ -17,7 +17,8 @@ import { parseDurationFunctionName, ParseDurationTransformPlugin } from './unplu
 export default defineNuxtConfig({
   compatibilityDate: 'latest',
 
-  devtools: { enabled: false },
+  // saves a few bytes of bundle
+  devtools: { enabled: isDevelopment },
 
   app: {
     head: {

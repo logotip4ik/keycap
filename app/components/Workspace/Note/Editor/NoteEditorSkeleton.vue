@@ -2,10 +2,7 @@
   <div class="skeleton editor-skeleton">
     <p class="editor-skeleton__heading skeleton-bg" />
 
-    <p class="editor-skeleton__text skeleton-bg" />
-    <p class="editor-skeleton__text skeleton-bg" />
-    <p class="editor-skeleton__text skeleton-bg" />
-    <p class="editor-skeleton__text skeleton-bg" />
+    <p v-for="i in 4" :key="i" class="editor-skeleton__text skeleton-bg" />
   </div>
 </template>
 

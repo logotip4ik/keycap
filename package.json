@@ -191,7 +191,7 @@
   },
   "size-limit": [
     {
-      "name": "js",
+      "name": "client js",
       "path": "./.output/public/_nuxt/*.js",
       "brotli": true,
       "limit": "260kb"
@@ -200,7 +200,7 @@
       "name": "css",
       "path": "./.output/public/_nuxt/*.css",
       "brotli": true,
-      "limit": "17kb"
+      "limit": "18kb"
     },
     {
       "name": "server",

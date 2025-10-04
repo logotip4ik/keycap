@@ -2,15 +2,7 @@
   <div class="skeleton">
     <h3 class="skeleton__heading skeleton-bg" />
 
-    <div class="skeleton__row">
-      <p class="skeleton__row__text skeleton-bg" />
-      <p class="skeleton__row__date skeleton-bg" />
-    </div>
-    <div class="skeleton__row">
-      <p class="skeleton__row__text skeleton-bg" />
-      <p class="skeleton__row__date skeleton-bg" />
-    </div>
-    <div class="skeleton__row">
+    <div v-for="i in 3" :key="i" class="skeleton__row">
       <p class="skeleton__row__text skeleton-bg" />
       <p class="skeleton__row__date skeleton-bg" />
     </div>

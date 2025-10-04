@@ -136,7 +136,7 @@ const emojisCache = new Array<EmojiWithKey>();
 
 async function populateEmojisCache() {
   const emojis = Object.values(
-    (await import('@emoji-mart/data').then((m) => m.default as EmojiMartData)).emojis,
+    (await import('@emoji-mart/data/sets/15/native.json').then((m) => m.emojis)),
   );
 
   for (const emoji of emojis) {

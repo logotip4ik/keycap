@@ -1,8 +1,8 @@
 import { Extension } from '@tiptap/core';
 import { createReplacementsSuggestionPlugin } from './suggestion';
 
-export const ReplacementsExtension = Extension.create({
-  name: 'ReplacementsExtension',
+export const Replacements = Extension.create({
+  name: 'Replacements',
 
   addProseMirrorPlugins() {
     return [
