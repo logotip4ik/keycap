@@ -21,7 +21,7 @@ describe('component NoteFormatter', () => {
         editor,
       },
       global: {
-        stubs: { transition: false },
+        stubs: { transition: false, teleport: true },
       },
     });
 
