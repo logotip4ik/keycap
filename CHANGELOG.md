@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v3.19.1
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.19.0...v3.19.1)
+
+### 💅 Refactors
+
+- Simplify oauth handler a bit and add info log for login and register events ([46d385fd](https://github.com/logotip4ik/keycap/commit/46d385fd))
+
+### 🏡 Chore
+
+- **release:** V3.19.0 ([ef202a0e](https://github.com/logotip4ik/keycap/commit/ef202a0e))
+- Harden oauth error check a bit ([976a0383](https://github.com/logotip4ik/keycap/commit/976a0383))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.19.0
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.18.9...v3.19.0)
