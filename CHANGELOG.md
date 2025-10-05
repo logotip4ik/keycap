@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v3.19.2
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.19.1...v3.19.2)
+
+### 🩹 Fixes
+
+- Correctly place replacements component even with height transition ([7575e995](https://github.com/logotip4ik/keycap/commit/7575e995))
+- Teleport emoji and replacements into note-editor ([59e75048](https://github.com/logotip4ik/keycap/commit/59e75048))
+
+### 🏡 Chore
+
+- **release:** V3.19.1 ([91de5462](https://github.com/logotip4ik/keycap/commit/91de5462))
+- Always focus editor back after inserting emoji or replacement ([0abb4957](https://github.com/logotip4ik/keycap/commit/0abb4957))
+- Bump font size for replacements if used on smaller screens ([fa55aa03](https://github.com/logotip4ik/keycap/commit/fa55aa03))
+- Completely skip mounting tooltip handlers on small screens ([a1c2bf59](https://github.com/logotip4ik/keycap/commit/a1c2bf59))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.19.1
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.19.0...v3.19.1)
