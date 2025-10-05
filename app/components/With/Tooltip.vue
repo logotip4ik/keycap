@@ -29,21 +29,16 @@ let timeout: ReturnType<typeof setTimeout> | undefined;
 watch(targetEl, (target) => {
   cleanup();
 
-  if (!target) {
+  if (!target || isSmallScreen.value) {
     return;
   }
 
   cleanups.push(
     on(target, 'mouseenter', show, handlerOptions),
     on(target, 'mouseleave', hideAndClearTimeout, handlerOptions),
+    on(target, 'focus', show, handlerOptions),
+    on(target, 'blur', hideAndClearTimeout, handlerOptions),
   );
-
-  if (!isSmallScreen.value) {
-    cleanups.push(
-      on(target, 'focus', show, handlerOptions),
-      on(target, 'blur', hideAndClearTimeout, handlerOptions),
-    );
-  }
 });
 
 watchEffect(async () => {
