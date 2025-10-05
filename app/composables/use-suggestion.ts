@@ -10,38 +10,55 @@ export function useSuggestion<T>(containerEl: MaybeRef<HTMLElement | undefined |
     selectedItem.value = 0;
   });
 
-  const floating = shallowRef<FloatingUI>();
-  watchEffect(() => {
+  const floatingUi = shallowRef<FloatingUI>();
+  function updatePosition() {
+    const floating = floatingUi.value;
     const container = toValue(containerEl);
+    const getBoundingClientRect = props.getBoundingClientRect;
 
-    if (!container || !isVisible.value || !props.getBoundingClientRect || !floating.value) {
+    if (!floating || !container || !getBoundingClientRect) {
       return;
     }
 
-    floating.value.computePosition(
-      { getBoundingClientRect: props.getBoundingClientRect },
-      container,
-      {
-        placement: 'bottom-start',
-        middleware: [
-          floating.value.offset(8),
-          floating.value.shift({ padding: 8 }),
-          floating.value.flip(),
-        ],
-      },
-    ).then(({ x, y }) => {
-      container.style.setProperty('top', `${y}px`);
-      container.style.setProperty('left', `${x}px`);
-    });
+    floating.computePosition({ getBoundingClientRect }, container, {
+      placement: 'bottom-start',
+      middleware: [
+        floating.offset(8),
+        floating.shift({ padding: 8 }),
+        floating.flip(),
+      ],
+    })
+      .then(({ x, y }) => {
+        container.style.setProperty('top', `${y}px`);
+        container.style.setProperty('left', `${x}px`);
+      });
+  }
+
+  watchEffect(() => {
+    const container = toValue(containerEl);
+    const floating = floatingUi.value;
+    const getBoundingClientRect = props.getBoundingClientRect;
+
+    if (!container || !isVisible.value || !getBoundingClientRect || !floating) {
+      return;
+    }
+
+    updatePosition();
   });
 
   useFocusTrap(containerEl);
 
   onBeforeMount(() => {
     loadFloatingUi().then((loaded) => {
-      floating.value = loaded;
+      floatingUi.value = loaded;
     });
   });
 
-  return { isVisible, selectedItem };
+  if (import.meta.client) {
+    onBeforeUnmount(
+      on(document, 'scroll', updatePosition, { passive: true, capture: true }),
+    );
+  }
+
+  return { isVisible, selectedItem, updatePosition };
 }

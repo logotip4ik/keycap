@@ -70,8 +70,6 @@ function getNativeSkin(emoji: Emoji) {
   return emoji.skins[0].native;
 }
 
-useFocusTrap(emojiPickerEl);
-
 defineExpose({ handleKeypress });
 </script>
 

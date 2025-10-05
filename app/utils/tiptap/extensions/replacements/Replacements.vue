@@ -17,7 +17,7 @@ const props = defineProps<{
 const replacementsComp = useTemplateRef<ComponentPublicInstance>('replacementsComp');
 const replacementsEl = computed(() => replacementsComp.value?.$el as HTMLUListElement | undefined);
 
-const { selectedItem, isVisible } = useSuggestion(replacementsEl, props);
+const { selectedItem, isVisible, updatePosition } = useSuggestion(replacementsEl, props);
 
 const { rememberSize, animateSize } = getContainerDimensionsTransition(replacementsEl);
 
@@ -82,6 +82,23 @@ function handleKeypress(event: KeyboardEvent) {
   }
 }
 
+function animateContainer() {
+  const animation = animateSize();
+
+  if (!animation) {
+    return;
+  }
+
+  const loop = () => {
+    updatePosition();
+    if (animation.playState === 'running') {
+      requestAnimationFrame(loop);
+    }
+  };
+
+  requestAnimationFrame(loop);
+}
+
 defineExpose({ handleKeypress });
 </script>
 
@@ -93,8 +110,8 @@ defineExpose({ handleKeypress });
         ref="replacementsComp"
         tag="ul"
         class="replacements fast-fade"
-        @enter="animateSize"
-        @leave="animateSize"
+        @enter="animateContainer"
+        @leave="animateContainer"
         @before-leave="rememberSize"
         @before-enter="rememberSize"
       >

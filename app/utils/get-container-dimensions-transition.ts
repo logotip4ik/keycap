@@ -31,7 +31,7 @@ export function getContainerDimensionsTransition(
         return;
       }
 
-      container.animate([
+      return container.animate([
         { [heightAnimateProperty]: `${prevHeight.toFixed(2)}px` },
         { [heightAnimateProperty]: `${currentHeight.toFixed(2)}px` },
       ], { duration: 400, easing: EASINGS.EXPO });
