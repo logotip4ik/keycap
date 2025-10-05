@@ -26,7 +26,11 @@ export function createEmojiPickerSuggestionPlugin({ editor }: { editor: Editor }
       const skin = (emoji as Emoji).skins.find((skin) => skin.native !== undefined);
 
       if (skin) {
-        editor.commands.insertContentAt(range, skin.native);
+        return editor
+          .chain()
+          .insertContentAt(range, skin.native)
+          .focus()
+          .run();
       };
     },
     render: createSuggestionRenderer({

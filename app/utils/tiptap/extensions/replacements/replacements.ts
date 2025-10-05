@@ -78,52 +78,52 @@ export const replacements: Record<Replacement, ReplacemntEntry> = {
   [replacement.Heading]: {
     name: 'Heading',
     action: (editor, range) => {
-      editor.chain().toggleHeading({ level: 1 }).deleteRange(range).run();
+      return editor.chain().toggleHeading({ level: 1 }).deleteRange(range).focus().run();
     },
   },
   [replacement.Heading2]: {
     name: 'Heading2',
     action: (editor, range) => {
-      editor.chain().toggleHeading({ level: 2 }).deleteRange(range).run();
+      return editor.chain().toggleHeading({ level: 2 }).deleteRange(range).focus().run();
     },
   },
   [replacement.Heading3]: {
     name: 'Heading3',
     action: (editor, range) => {
-      editor.chain().toggleHeading({ level: 3 }).deleteRange(range).run();
+      return editor.chain().toggleHeading({ level: 3 }).deleteRange(range).focus().run();
     },
   },
   [replacement.List]: {
     name: 'List',
     action: (editor, range) => {
       editor.commands.deleteRange(range);
-      editor.chain().focus().toggleBulletList().run();
+      return editor.chain().focus().toggleBulletList().run();
     },
   },
   [replacement.OrderedList]: {
     name: 'Ordered list',
     action: (editor, range) => {
       editor.commands.deleteRange(range);
-      editor.chain().focus().toggleOrderedList().run();
+      return editor.chain().focus().toggleOrderedList().run();
     },
   },
   [replacement.TaskList]: {
     name: 'Task list',
     action: (editor, range) => {
       editor.commands.deleteRange(range);
-      editor.chain().focus().toggleTaskList().run();
+      return editor.chain().focus().toggleTaskList().run();
     },
   },
   [replacement.Quote]: {
     name: 'Quote',
     action: (editor, range) => {
-      editor.chain().deleteRange(range).toggleBlockquote().run();
+      return editor.chain().deleteRange(range).toggleBlockquote().focus().run();
     },
   },
   [replacement.Paragraph]: {
     name: 'Paragraph',
     action: (editor, range) => {
-      editor.chain().deleteRange(range).setParagraph().run();
+      return editor.chain().deleteRange(range).setParagraph().focus().run();
     },
   },
 };

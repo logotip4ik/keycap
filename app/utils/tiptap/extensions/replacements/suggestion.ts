@@ -28,14 +28,18 @@ export function createReplacementsSuggestionPlugin({ editor }: { editor: Editor 
       }
 
       if ('replacement' in editorCommand) {
-        return editor.commands.insertContentAt(
-          range,
-          editorCommand.replacement(),
-          { applyInputRules: false, applyPasteRules: false },
-        );
+        return editor
+          .chain()
+          .insertContentAt(
+            range,
+            editorCommand.replacement(),
+            { applyInputRules: false, applyPasteRules: false },
+          )
+          .focus()
+          .run();
       }
 
-      editorCommand.action(editor, range);
+      return editorCommand.action(editor, range);
     },
     render: createSuggestionRenderer({
       compLoader: () => import('./Replacements.vue'),
