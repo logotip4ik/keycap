@@ -221,6 +221,10 @@ defineExpose({ handleKeypress });
 
         transition: background-color .1s;
       }
+
+      @media (max-width: $breakpoint-tablet) {
+        font-size: 1rem;
+      }
     }
   }
 }
