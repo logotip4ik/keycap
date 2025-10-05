@@ -103,7 +103,7 @@ defineExpose({ handleKeypress });
 </script>
 
 <template>
-  <Teleport to="#teleports">
+  <Teleport to="#note-editor">
     <WithFadeTransition appear>
       <WithListTransitionGroup
         v-show="isVisible"

@@ -150,7 +150,7 @@ if (import.meta.client) {
 </script>
 
 <template>
-  <div class="note-editor__wrapper">
+  <div id="note-editor" class="note-editor__wrapper">
     <EditorContent class="note-editor" :editor />
 
     <Component

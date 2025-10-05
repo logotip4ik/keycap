@@ -25,7 +25,11 @@ export function useSuggestion<T>(containerEl: MaybeRef<HTMLElement | undefined |
       middleware: [
         floating.offset(8),
         floating.shift({ padding: 8 }),
-        floating.flip(),
+        floating.flip({
+          padding: {
+            bottom: 64,
+          },
+        }),
       ],
     })
       .then(({ x, y }) => {

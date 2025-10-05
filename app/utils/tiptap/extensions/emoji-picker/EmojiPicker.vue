@@ -74,7 +74,7 @@ defineExpose({ handleKeypress });
 </script>
 
 <template>
-  <Teleport to="#teleports">
+  <Teleport to="#note-editor">
     <WithFadeTransition appear>
       <ul v-show="isVisible" ref="emojiPickerEl" class="emoji-picker fast-fade">
         <li v-for="(emoji, i) in items" :key="emoji.id" class="emoji-picker__item">
