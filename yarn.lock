@@ -2462,7 +2462,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxt/kit@npm:4.1.2, @nuxt/kit@npm:^4.1.2":
+"@nuxt/kit@npm:4.1.2":
   version: 4.1.2
   resolution: "@nuxt/kit@npm:4.1.2"
   dependencies:
@@ -2520,6 +2520,36 @@ __metadata:
     unimport: "npm:^5.2.0"
     untyped: "npm:^2.0.0"
   checksum: 10/c99150ff4a92cf507979226535d51f09e180902157fa034592d4a535c0fdf247d06fb4bbd250a83e0e8ac802ef482bbd3f7e1bf7e85678bb1ae261e99fe36a91
+  languageName: node
+  linkType: hard
+
+"@nuxt/kit@npm:^4.1.3":
+  version: 4.1.3
+  resolution: "@nuxt/kit@npm:4.1.3"
+  dependencies:
+    c12: "npm:^3.3.0"
+    consola: "npm:^3.4.2"
+    defu: "npm:^6.1.4"
+    destr: "npm:^2.0.5"
+    errx: "npm:^0.1.0"
+    exsolve: "npm:^1.0.7"
+    ignore: "npm:^7.0.5"
+    jiti: "npm:^2.6.1"
+    klona: "npm:^2.0.6"
+    mlly: "npm:^1.8.0"
+    ohash: "npm:^2.0.11"
+    pathe: "npm:^2.0.3"
+    pkg-types: "npm:^2.3.0"
+    rc9: "npm:^2.1.2"
+    scule: "npm:^1.3.0"
+    semver: "npm:^7.7.2"
+    std-env: "npm:^3.9.0"
+    tinyglobby: "npm:^0.2.15"
+    ufo: "npm:^1.6.1"
+    unctx: "npm:^2.4.1"
+    unimport: "npm:^5.4.1"
+    untyped: "npm:^2.0.0"
+  checksum: 10/6b8f7d7a391cfbbb63b952cffb8bc9a883269bdd2eefebd7688d7ad0dffa36942de728170ab9590f91a077e7d5530b1c79cc30fc7725a50ac023a4022ac66f03
   languageName: node
   linkType: hard
 
@@ -4578,12 +4608,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:~24.6.2":
-  version: 24.6.2
-  resolution: "@types/node@npm:24.6.2"
+"@types/node@npm:~24.7.0":
+  version: 24.7.0
+  resolution: "@types/node@npm:24.7.0"
   dependencies:
-    undici-types: "npm:~7.13.0"
-  checksum: 10/8d1e64b37abdafd3da295394235ad5357509ac0b47e6991d36b1eecacd7ad830ada60ca71b7b3598b6c8b519361fb70aab691888c378ff25e69dba5690afcc22
+    undici-types: "npm:~7.14.0"
+  checksum: 10/db0b77e9b132906cdf0350661df660c970e924093ccaa781472d61bc5c448f3d15514b15f55b4df6827254a041aad2418339fe00d45ef10687557ffc0f026d47
   languageName: node
   linkType: hard
 
@@ -5150,7 +5180,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue/language-core@npm:3.1.0, @vue/language-core@npm:^3.0.1":
+"@vue/language-core@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@vue/language-core@npm:3.1.1"
+  dependencies:
+    "@volar/language-core": "npm:2.4.23"
+    "@vue/compiler-dom": "npm:^3.5.0"
+    "@vue/shared": "npm:^3.5.0"
+    alien-signals: "npm:^3.0.0"
+    muggle-string: "npm:^0.4.1"
+    path-browserify: "npm:^1.0.1"
+    picomatch: "npm:^4.0.2"
+  peerDependencies:
+    typescript: "*"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10/f52f9b4438f38e76be5fdb8e2302669c39b23c9bb3e504002036500c3f14a07a5c24c7fe180916260fe5ec3f2e1c946b097cd99c530b828874c3416da47bccd6
+  languageName: node
+  linkType: hard
+
+"@vue/language-core@npm:^3.0.1":
   version: 3.1.0
   resolution: "@vue/language-core@npm:3.1.0"
   dependencies:
@@ -5230,15 +5280,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue/typescript-plugin@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "@vue/typescript-plugin@npm:3.1.0"
+"@vue/typescript-plugin@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "@vue/typescript-plugin@npm:3.1.1"
   dependencies:
     "@volar/typescript": "npm:2.4.23"
-    "@vue/language-core": "npm:3.1.0"
+    "@vue/language-core": "npm:3.1.1"
     "@vue/shared": "npm:^3.5.0"
     path-browserify: "npm:^1.0.1"
-  checksum: 10/d91cc44bb265046f51176e2df3e8c34a03adf16811c716ad526512c79cbb6965f29da5ae184afee28e6098a2030bc3f62708d4292751fa2660c3220bd525a14e
+  checksum: 10/4c3b0892cf2d70f9723e4af52ced2549d64de5b086720276f13e1192f58aa23ccd277c53b0569ac811be2b8dbfdd4e4b482c3909189215dd018bfcabe0f60eb6
   languageName: node
   linkType: hard
 
@@ -5776,7 +5826,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"c12@npm:^3.0.4, c12@npm:^3.2.0":
+"c12@npm:^3.0.4, c12@npm:^3.2.0, c12@npm:^3.3.0":
   version: 3.3.0
   resolution: "c12@npm:3.3.0"
   dependencies:
@@ -8766,7 +8816,7 @@ __metadata:
     "@node-rs/argon2": "npm:^2.0.2"
     "@node-rs/bcrypt": "npm:^1.10.7"
     "@nuxt/devtools": "npm:^2.6.5"
-    "@nuxt/kit": "npm:^4.1.2"
+    "@nuxt/kit": "npm:^4.1.3"
     "@nuxt/test-utils": "npm:^3.19.2"
     "@nuxtjs/fontaine": "npm:^0.5.0"
     "@parcel/watcher": "npm:^2.5.1"
@@ -8801,14 +8851,14 @@ __metadata:
     "@tiptap/vue-3": "npm:^3.6.5"
     "@total-typescript/ts-reset": "npm:^0.6.1"
     "@types/decomment": "npm:^0.9.5"
-    "@types/node": "npm:~24.6.2"
+    "@types/node": "npm:~24.7.0"
     "@types/sanitize-html": "npm:^2.16.0"
     "@ungap/with-resolvers": "npm:^0.1.0"
     "@unhead/addons": "npm:^2.0.17"
     "@vite-pwa/nuxt": "npm:^1.0.4"
     "@vue/shared": "npm:^3.5.22"
     "@vue/test-utils": "npm:^2.4.6"
-    "@vue/typescript-plugin": "npm:^3.1.0"
+    "@vue/typescript-plugin": "npm:^3.1.1"
     browserslist-to-esbuild: "npm:^2.1.1"
     coincident: "npm:3.0.5"
     cookie-es: "npm:^2.0.0"
@@ -8832,7 +8882,7 @@ __metadata:
     nanoid: "npm:^5.1.6"
     nitropack: "npm:^2.12.6"
     normalize.css: "npm:^8.0.1"
-    nuxt: "npm:^4.1.2"
+    nuxt: "npm:^4.1.3"
     ohash: "npm:1.1.6"
     parse-duration: "npm:^2.1.4"
     pathe: "npm:^2.0.3"
@@ -8860,7 +8910,7 @@ __metadata:
     unstorage: "npm:^1.17.1"
     vitest: "npm:^3.2.4"
     vue: "npm:latest"
-    vue-tsc: "npm:^3.1.0"
+    vue-tsc: "npm:^3.1.1"
     workbox-core: "npm:^7.3.0"
     workbox-expiration: "npm:^7.3.0"
     workbox-precaching: "npm:^7.3.0"
@@ -13454,10 +13504,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici-types@npm:~7.13.0":
-  version: 7.13.0
-  resolution: "undici-types@npm:7.13.0"
-  checksum: 10/1088ad68dd57981aa6eced5b3f5d74129ac619fbe558b30cb584d6096d32b084ae30d7cdc480d622226e6ffc8d31e01ac30215816439a0d784e0fe64db873b0f
+"undici-types@npm:~7.14.0":
+  version: 7.14.0
+  resolution: "undici-types@npm:7.14.0"
+  checksum: 10/0f8709b21437697af35801e33bddbe9992e0cf1771959c41850b1946f63822b825e03ce99f44bf19e4f5c3ccc5166e0be59f541565c36ce86163dc2c5870bc62
   languageName: node
   linkType: hard
 
@@ -13554,7 +13604,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unimport@npm:^5.2.0":
+"unimport@npm:^5.2.0, unimport@npm:^5.4.1":
   version: 5.4.1
   resolution: "unimport@npm:5.4.1"
   dependencies:
@@ -14213,17 +14263,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue-tsc@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "vue-tsc@npm:3.1.0"
+"vue-tsc@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "vue-tsc@npm:3.1.1"
   dependencies:
     "@volar/typescript": "npm:2.4.23"
-    "@vue/language-core": "npm:3.1.0"
+    "@vue/language-core": "npm:3.1.1"
   peerDependencies:
     typescript: ">=5.0.0"
   bin:
     vue-tsc: ./bin/vue-tsc.js
-  checksum: 10/518566ff577704b8b2f84a986205eebc2a4f9029a614c1bcaf2ac0fa6d4f232e185f18628305c1939b39e4d4e065d6ab36d08d2981243da485e2d898cd912e55
+  checksum: 10/c588ec6825b180463c86e9fe77ba85f99381d9ccc4025c465c54a9caa7ba4e653912c61a5fec952c51600cf5602a07c47ac2c8ac4b471ba039c4ebaebd62e181
   languageName: node
   linkType: hard
 
