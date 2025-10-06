@@ -24,6 +24,12 @@ useFocusTrap(modal, { handleInitialFocusing: true });
 .modal {
   position: relative;
 
+  padding:
+    env(safe-area-inset-top)
+    env(safe-area-inset-right)
+    env(safe-area-inset-bottom)
+    env(safe-area-inset-left);
+
   width: 90%;
   max-height: 90svh;
 
