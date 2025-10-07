@@ -5,6 +5,7 @@ const props = defineProps<{
   injectionKey: InjectionKey<{ state: Ref<SidebarState> }>
 }>();
 
+const { isSmallScreen } = useDevice();
 const { state } = inject(props.injectionKey)!;
 </script>
 
@@ -19,7 +20,7 @@ const { state } = inject(props.injectionKey)!;
       class="sidebar__open-button"
       :aria-pressed="state === 'pinned'"
       @click="state = unpinSidebar(state)"
-      @mouseenter="state === 'hidden' && (state = 'visible')"
+      @mouseenter="!isSmallScreen && state === 'hidden' && (state = 'visible')"
     >
       <slot />
     </button>

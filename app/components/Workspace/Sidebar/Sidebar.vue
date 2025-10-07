@@ -28,7 +28,10 @@ function updateFocusableElements() {
 function updateTabindexForFocusableElements(currentState: SidebarState) {
   const isHidden = currentState === 'hidden';
 
-  for (const el of focusableElements.value) {
+  const elements = focusableElements.value;
+  for (let i = 0; i < elements.length; i++) {
+    const el = elements[i];
+
     if (el.dataset.openButton !== undefined) {
       continue;
     }
@@ -53,7 +56,7 @@ function maybeFocusEditor(element: HTMLElement) {
     return;
   }
 
-  withTiptapEditor((editor) => editor.commands.focus('start'));
+  withTiptapEditor((editor) => editor.commands.focus());
   return true;
 }
 

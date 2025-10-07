@@ -137,7 +137,7 @@ useTinykeys({
         </p>
 
         <button
-          type="reset"
+          type="button"
           class="search__form__cancel"
           @click="props.onClose"
         >
