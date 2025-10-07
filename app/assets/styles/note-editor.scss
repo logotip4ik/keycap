@@ -23,6 +23,8 @@
 
   outline: none;
 
+  touch-action: pan-y manipulation;
+
   @media (max-width: $breakpoint-tablet) {
     padding: 16.5vh 1rem 45vh;
 

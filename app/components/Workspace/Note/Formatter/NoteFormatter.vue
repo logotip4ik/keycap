@@ -32,7 +32,7 @@ const { setting: formatterPosition } = useSetting(settings.formatterPosition);
 
 let prevListItem: string | undefined;
 let prevHeadingLevel: number | undefined;
-const prevSelection = { start: -1, end: -1 };
+const prevSelection = { from: -1, to: -1 };
 
 let prevContainerWidth: number;
 function rememberContainer(el: Element) {
@@ -66,8 +66,8 @@ function animateContainer(el: Element) {
   editingLink.value = activeUrl;
   linkInputPlaceholder.value = activeUrl ? LinkInputPlaceholder.MADE_EMPTY : LinkInputPlaceholder.INITIALLY_EMPTY;
 
-  prevSelection.start = props.editor.state.selection.from;
-  prevSelection.end = props.editor.state.selection.to;
+  prevSelection.from = props.editor.state.selection.from;
+  prevSelection.to = props.editor.state.selection.to;
 
   nextTick(() => {
     const input = el.querySelector('input');
@@ -82,10 +82,7 @@ function resetSelection() {
     .editor
     .chain()
     .focus()
-    .setTextSelection({
-      from: prevSelection.start,
-      to: prevSelection.end,
-    })
+    .setTextSelection(prevSelection)
     .run();
 }
 

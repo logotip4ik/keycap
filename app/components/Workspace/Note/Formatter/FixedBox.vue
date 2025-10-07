@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Editor } from '@tiptap/core';
 
-defineProps<{
+const props = defineProps<{
   editor: Editor
 }>();
 
@@ -9,6 +9,7 @@ const isFallbackMode = useFallbackMode();
 const fixedBoxEl = useTemplateRef('fixedBoxEl');
 
 const isKeyboardShown = ref(false);
+let prevKeyboardShown = false;
 
 function moveFormatterAboveKeyboard() {
   const viewport = window.visualViewport;
@@ -22,8 +23,15 @@ function moveFormatterAboveKeyboard() {
     - viewport.offsetTop
     - viewport.height;
 
-  el.style.setProperty('bottom', `${formatterPosition.toFixed(2)}px`);
-  isKeyboardShown.value = viewport.height + 30 < window.innerHeight;
+  el.style.setProperty('bottom', `${Math.floor(formatterPosition)}px`);
+  const keyboardShown = viewport.height + 30 < window.innerHeight;
+  isKeyboardShown.value = keyboardShown;
+
+  if (prevKeyboardShown && !keyboardShown) {
+    props.editor.commands.blur();
+  }
+
+  prevKeyboardShown = keyboardShown;
 }
 
 if (import.meta.client && window.visualViewport != null) {
