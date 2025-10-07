@@ -191,6 +191,7 @@ $breakpoint-one: $sidebar-breakpoint-one;
   border-radius: 0.35rem;
   background-color: transparent;
   box-shadow:
+    inset -1px -1px 0.1rem rgba($color: #000000, $alpha: 0.025),
     0px 0px 5.3px -20px rgba(var(--base-shadow-color), 0.02),
     0px 0px 17.9px -20px rgba(var(--base-shadow-color), 0.03),
     0px 0px 80px -20px rgba(var(--base-shadow-color), 0.05)
