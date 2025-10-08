@@ -143,6 +143,10 @@ export function AutoFloatTaskPlugin(options: AutoFloatTaskPluginOptions) {
             return changedTask ? false : !isTaskItem;
           }
 
+          if (newState.doc.nodeAt(pos)?.textContent === '') {
+            return false;
+          }
+
           const oldNode = oldState.doc.nodeAt(pos);
           if (
             oldNode?.type.name !== TaskItem.name
