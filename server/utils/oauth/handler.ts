@@ -107,8 +107,9 @@ export function defineOAuthHandler<T extends GitHubUserRes | GoogleUserRes>({
     await Promise.all([
       oAuthUserCache.removeItem(oAuthStateKey),
       invalidateCacheEntry(getUserCacheKey(username, UserCacheName.Taken)),
-      logger.info(event, { type: user ? 'login' : 'register' }),
     ]);
+
+    event.waitUntil(logger.info(event, { type: user ? 'login' : 'register' }));
 
     const normalizedOAuthUser = normalizeOAuthUser(oAuthUser, { username });
     if (user) {

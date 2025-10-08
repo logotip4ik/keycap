@@ -47,10 +47,9 @@ export default defineEventHandler(async (event) => {
 
   const safeUser: SafeUser = { id: user.id, username: user.username, email: user.email };
 
-  await Promise.all([
-    setAuthCookies(event, safeUser),
-    logger.info(event, { type: 'login' }),
-  ]);
+  await setAuthCookies(event, safeUser);
+
+  event.waitUntil(logger.info(event, { type: 'login' }));
 
   if (data.browserAction !== undefined) {
     return sendRedirect(event, `/@${safeUser.username}`);
