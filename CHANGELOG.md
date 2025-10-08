@@ -1,6 +1,36 @@
 # Changelog
 
 
+## v3.19.3
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.19.2...v3.19.3)
+
+### 🩹 Fixes
+
+- Add safe-area padding for modal contents ([12614278](https://github.com/logotip4ik/keycap/commit/12614278))
+- Don't open contents when closing search on mobile screens ([ba4e4836](https://github.com/logotip4ik/keycap/commit/ba4e4836))
+- Don't apply auto-float plugin on empty nodes ([d8c2acb4](https://github.com/logotip4ik/keycap/commit/d8c2acb4))
+- Set NODE_ENV to development when running dev command ([c721f834](https://github.com/logotip4ik/keycap/commit/c721f834))
+
+### 💅 Refactors
+
+- Don't resolve already resolved node ([4b062802](https://github.com/logotip4ik/keycap/commit/4b062802))
+
+### 🏡 Chore
+
+- **release:** V3.19.2 ([a471e04e](https://github.com/logotip4ik/keycap/commit/a471e04e))
+- Blur editor when keyboard collapses ([131b440c](https://github.com/logotip4ik/keycap/commit/131b440c))
+- Add little inset shadow ([577cec7d](https://github.com/logotip4ik/keycap/commit/577cec7d))
+- Don't block user flow with logs ([42a8c26c](https://github.com/logotip4ik/keycap/commit/42a8c26c))
+
+### 🤖 CI
+
+- Bump the all-actions group across 1 directory with 9 updates ([#59](https://github.com/logotip4ik/keycap/pull/59))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.19.2
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.19.1...v3.19.2)
