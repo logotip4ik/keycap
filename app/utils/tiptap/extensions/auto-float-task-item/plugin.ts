@@ -2,8 +2,8 @@ import type { Editor } from '@tiptap/core';
 import type { Node } from '@tiptap/pm/model';
 import type { PluginView } from '@tiptap/pm/state';
 import type { EditorView } from '@tiptap/pm/view';
-import { getChangedRanges } from '@tiptap/core';
 
+import { getChangedRanges } from '@tiptap/core';
 import { TaskItem, TaskList } from '@tiptap/extension-list';
 import { Plugin, PluginKey } from '@tiptap/pm/state';
 import { Transform } from '@tiptap/pm/transform';
@@ -143,8 +143,8 @@ export function AutoFloatTaskPlugin(options: AutoFloatTaskPluginOptions) {
             return changedTask ? false : !isTaskItem;
           }
 
-          if (newState.doc.nodeAt(pos)?.textContent === '') {
-            return false;
+          if (!node.textContent) {
+            return;
           }
 
           const oldNode = oldState.doc.nodeAt(pos);
