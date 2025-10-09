@@ -1,6 +1,30 @@
 # Changelog
 
 
+## v3.19.4
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.19.3...v3.19.4)
+
+### 🩹 Fixes
+
+- Don't fail dev server if ip is not defined ([b5ad12f1](https://github.com/logotip4ik/keycap/commit/b5ad12f1))
+- Minor quality of life improvements ([d60f5720](https://github.com/logotip4ik/keycap/commit/d60f5720))
+
+### 💅 Refactors
+
+- Restructure utils and composables ([d9992c54](https://github.com/logotip4ik/keycap/commit/d9992c54))
+- Improve landing page + add editor demo to it ([a5224770](https://github.com/logotip4ik/keycap/commit/a5224770))
+
+### 🏡 Chore
+
+- **release:** V3.19.3 ([8467375f](https://github.com/logotip4ik/keycap/commit/8467375f))
+- Add overscroll behavior for note scroller ([46bbb685](https://github.com/logotip4ik/keycap/commit/46bbb685))
+- Update resolutions to updated packages and refresh lock file ([c3fb5cec](https://github.com/logotip4ik/keycap/commit/c3fb5cec))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.19.3
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.19.2...v3.19.3)
