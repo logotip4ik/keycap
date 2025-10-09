@@ -10,12 +10,6 @@ export default defineNuxtPlugin({
     refreshAuth();
 
     setInterval(refreshAuth, NEAR_HOUR);
-
-    return {
-      provide: {
-        kfetch,
-      },
-    };
   },
 });
 

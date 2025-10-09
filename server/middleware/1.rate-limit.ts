@@ -32,7 +32,11 @@ export default defineEventHandler(async (event) => {
   const limiter = getRateLimiter();
   let identifier = getRequestIP(event, { xForwardedFor: true });
 
-  invariant(identifier, 'Identifier must be defined.');
+  if (import.meta.dev && !identifier) {
+    identifier = 'localhost';
+  }
+
+  invariant(identifier, `No identifier defined for path: ${event.path}`);
 
   // use separate bucket for log requests
   if (isLogRequest) {

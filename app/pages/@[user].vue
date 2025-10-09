@@ -95,10 +95,9 @@ else {
     && !route.params.folders
     && (!route.params.note || route.params.note === BLANK_NOTE_NAME);
 
-  if (
-    isRootPath
-    && getSetting(settings.autoOpenRecent).value === 'yes'
-  ) {
+  const autoOpenRecentEnabled = getSetting(settings.autoOpenRecent).value === 'yes';
+
+  if (isRootPath && autoOpenRecentEnabled) {
     const event = useRequestEvent()!;
     const fetch = useRequestFetch();
     const recents = await fetch('/api/recent', {
