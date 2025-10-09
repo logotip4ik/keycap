@@ -249,9 +249,13 @@ export class BubbleMenuView {
     oldState?: EditorState
     from: number
     to: number
-  }) {
+  }): boolean {
     const { doc, selection } = state;
     const { empty } = selection;
+
+    if (empty || !this.editor.isEditable) {
+      return false;
+    }
 
     // Sometime check for `empty` is not enough.
     // Doubleclick an empty paragraph returns a node size of 2.
@@ -265,7 +269,7 @@ export class BubbleMenuView {
 
     const hasEditorFocus = view.hasFocus() || isChildOfMenu;
 
-    if (!hasEditorFocus || empty || isEmptyTextBlock || !this.editor.isEditable) {
+    if (!hasEditorFocus || isEmptyTextBlock) {
       return false;
     }
 

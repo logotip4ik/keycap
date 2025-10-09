@@ -8,7 +8,7 @@ import { clickHandler } from './helpers/clickHandler';
 import { find, getRelativeItemPath, isWorkspaceUrl } from './helpers/linker';
 
 export interface LinkOptions {
-  username: string
+  username: string | undefined
   HTMLAttributes: Record<string, unknown>
 }
 
@@ -37,107 +37,110 @@ let prevSelectedText: string | undefined;
 /**
  * All credits to original Link extension
  * https://github.com/ueberdosis/tiptap/tree/main/packages/extension-link
+ *
+ * @__NO_SIDE_EFFECTS__
  */
-export const Link = Mark.create<LinkOptions>({
-  name: 'link',
+export function createLink({ username }: { username: string | undefined }) {
+  return Mark.create<LinkOptions>({
+    name: 'link',
 
-  priority: 1000,
+    priority: 1000,
 
-  keepOnSplit: false,
-  inclusive: false,
-  exitable: true,
+    keepOnSplit: false,
+    inclusive: false,
+    exitable: true,
 
-  addOptions() {
-    const user = getUser();
-
-    return {
-      username: user.username,
-      HTMLAttributes: {
-        target: '_blank',
-        rel: 'noopener noreferrer nofollow',
-      },
-    };
-  },
-
-  addAttributes() {
-    return {
-      href: { default: null },
-    };
-  },
-
-  parseHTML() {
-    return [
-      { tag: 'a[href^="http://"]' },
-      { tag: 'a[href^="https://"]' },
-    ];
-  },
-
-  renderHTML({ HTMLAttributes }) {
-    const href = HTMLAttributes.href;
-
-    if (!href || !validLinkStartRE.test(href)) {
-      return ['a', mergeAttributes(this.options.HTMLAttributes, { ...HTMLAttributes, href: '' }), 0];
-    }
-
-    if (isWorkspaceUrl(new URL(href), this.options.username)) {
-      HTMLAttributes['data-inner'] = true;
-    }
-
-    return ['a', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0];
-  },
-
-  addCommands() {
-    return {
-      setLink:
-        (attributes) => ({ chain }) => {
-          return chain()
-            .setMark(this.name, attributes)
-            .setMeta('preventAutolink', true)
-            .run();
+    addOptions() {
+      return {
+        username,
+        HTMLAttributes: {
+          target: '_blank',
+          rel: 'noopener noreferrer nofollow',
         },
+      };
+    },
 
-      toggleLink:
-        (attributes) => ({ chain }) => {
-          return chain()
-            .toggleMark(this.name, attributes, { extendEmptyMarkRange: true })
-            .setMeta('preventAutolink', true)
-            .run();
-        },
+    addAttributes() {
+      return {
+        href: { default: null },
+      };
+    },
 
-      unsetLink:
-        () => ({ chain }) => {
-          return chain()
-            .unsetMark(this.name, { extendEmptyMarkRange: true })
-            .setMeta('preventAutolink', true)
-            .run();
-        },
-    };
-  },
+    parseHTML() {
+      return [
+        { tag: 'a[href^="http://"]' },
+        { tag: 'a[href^="https://"]' },
+      ];
+    },
 
-  onSelectionUpdate() {
-    const { state } = this.editor;
+    renderHTML({ HTMLAttributes }) {
+      const href = HTMLAttributes.href;
 
-    const selection = state.selection;
+      if (!href || !validLinkStartRE.test(href)) {
+        return ['a', mergeAttributes(this.options.HTMLAttributes, { ...HTMLAttributes, href: '' }), 0];
+      }
 
-    prevSelectedText = selection.empty ? undefined : state.doc.textBetween(selection.from, selection.to);
-  },
+      const { username } = this.options;
+      if (username && isWorkspaceUrl(new URL(href), username)) {
+        HTMLAttributes['data-inner'] = true;
+      }
 
-  addPasteRules() {
-    return makePasteRules({
-      type: this.type,
-      username: this.options.username,
-    });
-  },
+      return ['a', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0];
+    },
 
-  addProseMirrorPlugins() {
-    return [
-      autolink({ type: this.type }),
-      clickHandler({ type: this.type }),
-    ];
-  },
-});
+    addCommands() {
+      return {
+        setLink:
+          (attributes) => ({ chain }) => {
+            return chain()
+              .setMark(this.name, attributes)
+              .setMeta('preventAutolink', true)
+              .run();
+          },
 
-function makePasteRules(config: { type: MarkType, username: string }) {
+        toggleLink:
+          (attributes) => ({ chain }) => {
+            return chain()
+              .toggleMark(this.name, attributes, { extendEmptyMarkRange: true })
+              .setMeta('preventAutolink', true)
+              .run();
+          },
+
+        unsetLink:
+          () => ({ chain }) => {
+            return chain()
+              .unsetMark(this.name, { extendEmptyMarkRange: true })
+              .setMeta('preventAutolink', true)
+              .run();
+          },
+      };
+    },
+
+    onSelectionUpdate() {
+      const { state } = this.editor;
+
+      const selection = state.selection;
+
+      prevSelectedText = selection.empty ? undefined : state.doc.textBetween(selection.from, selection.to);
+    },
+
+    addPasteRules() {
+      return makePasteRules({
+        type: this.type,
+        username: this.options.username,
+      });
+    },
+
+    addProseMirrorPlugins() {
+      return [
+        autolink({ type: this.type }),
+        clickHandler({ username: this.options.username }),
+      ];
+    },
+  });
+}
+
+function makePasteRules(config: { type: MarkType, username: string | undefined }) {
   return [
     new PasteRule({
       find: (_, event) => {
@@ -163,7 +166,7 @@ function makePasteRules(config: { type: MarkType, username: string }) {
         const link = config.type.create(attrs);
 
         const { username } = config;
-        if (prevSelectedText || isWorkspaceUrl(new URL(attrs.href), username)) {
+        if (username && (prevSelectedText || isWorkspaceUrl(new URL(attrs.href), username))) {
           tr.replaceRangeWith(
             markStart,
             markEnd,

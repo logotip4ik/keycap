@@ -21,18 +21,20 @@ import { BubbleMenu } from './extensions/bubble-menu';
 import { EmojiPicker } from './extensions/emoji-picker';
 import { Find } from './extensions/find';
 import { KeyboardShortcuts } from './extensions/keyboard-shortcuts';
-import { Link } from './extensions/link';
+import { createLink } from './extensions/link';
 import { Replacements } from './extensions/replacements';
 
 export { AutoFloatTaskPlugin, AutoFloatTaskPluginKey } from './extensions/auto-float-task-item';
 export { FindPluginKey } from './extensions/find';
 
 export function initTiptap(opts: {
+  username: string | undefined
   content: string
   editable: boolean
-  spellcheck: SettingsDefinitions[Settings['spellcheck']]['value']
-  onKeyDown: () => void
+  spellcheck?: SettingsDefinitions[Settings['spellcheck']]['value']
+  class: string;
   onUpdate: (props: EditorEvents['update']) => void
+  onKeyDown?: () => void
 }) {
   if (import.meta.server) {
     return;
@@ -48,6 +50,7 @@ export function initTiptap(opts: {
       attributes: {
         'aria-label': 'Rich text editor',
         'spellcheck': opts.spellcheck === 'yes' ? 'true' : 'false',
+        'class': opts.class,
       },
       handleKeyDown: opts.onKeyDown,
     },
@@ -73,7 +76,7 @@ export function initTiptap(opts: {
       Italic.extend({ inclusive: true, exitable: true, keepOnSplit: false }),
       Strike.extend({ inclusive: true, exitable: true, keepOnSplit: false }),
       Highlight.extend({ inclusive: true, exitable: true, keepOnSplit: false }),
-      Link,
+      createLink({ username: opts.username }),
       BubbleMenu,
       EmojiPicker,
       Code.extend({

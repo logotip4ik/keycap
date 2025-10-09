@@ -1,10 +1,26 @@
+<script setup lang="ts">
+const titleEl = useTemplateRef('titleEl');
+const textEl = useTemplateRef('textEl');
+
+const { intersecting: isTitleVisible } = useIntersectionObserver(titleEl, { once: true });
+const { intersecting: isTextVisible } = useIntersectionObserver(textEl, { once: true });
+</script>
+
 <template>
   <section id="more" class="main__why">
-    <p class="font-wide main__why__title">
+    <p
+      ref="titleEl"
+      class="font-wide main__why__title"
+      :class="isTitleVisible && 'animate-in'"
+    >
       Why?
     </p>
 
-    <p class="main__why__text">
+    <p
+      ref="textEl"
+      class="main__why__text"
+      :class="isTextVisible && 'animate-in'"
+    >
       I made Keycap to replace bloated Notion (sorry, not sorry). It's a beautifully designed
       note-taking app, crafted with care in every detail, simple, and doesn't rely on AI (at
       least for now) to keep things straightforward. Capturing your thoughts couldn't be
@@ -31,13 +47,16 @@
 
   &__title {
     font-size: calc(min(calc(1.5rem + 2.75vw), 3.5rem) / 1.33);
+
+    opacity: 0;
   }
 
   &__text {
     font-size: calc(min(calc(1.5rem + 2.75vw), 3.5rem) / 1.75);
+    color: hsla(var(--text-color-hsl), 0.9);
     text-wrap: balance;
 
-    opacity: 0.9;
+    opacity: 0;
   }
 }
 </style>

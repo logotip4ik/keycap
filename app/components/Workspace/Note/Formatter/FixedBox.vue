@@ -54,7 +54,7 @@ if (import.meta.client && window.visualViewport != null) {
     <div
       v-show="!isFallbackMode"
       ref="fixedBoxEl"
-      class="inline-menu formatter"
+      class="inline-menu fast-fade formatter"
       :class="{ 'inline-menu__keyboard-shown': isKeyboardShown }"
     >
       <slot />
@@ -102,6 +102,10 @@ if (import.meta.client && window.visualViewport != null) {
     background-color: hsla(var(--surface-color-hsl), 0.25);
 
     backdrop-filter: blur(12px);
+  }
+
+  &.fade-enter-active {
+    transition-property: opacity;
   }
 
   &__keyboard-shown {

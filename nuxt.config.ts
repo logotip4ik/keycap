@@ -272,7 +272,7 @@ export default defineNuxtConfig({
     build: {
       target: 'esnext',
       cssMinify: 'lightningcss',
-      cssTarget: browserslistToEsbuild('>0.3%, not dead, Safari > 15, iOS > 15'),
+      cssTarget: browserslistToEsbuild('> 0.5% in alt-EU, last 2 versions, IOS > 15 and > 0.1%, safari > 15 and > 0.1%, Firefox ESR, not dead'),
       reportCompressedSize: !isCI,
     },
 

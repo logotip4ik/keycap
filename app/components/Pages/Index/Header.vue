@@ -1,6 +1,11 @@
 <script setup lang="ts">
 const editorImgWrapperEl = useTemplateRef('editorImgWrapperEl');
 
+const { intersecting } = useIntersectionObserver(editorImgWrapperEl, {
+  defaultValue: true,
+  rootMargin: '0px 15%',
+});
+
 const wordsSettings: Record<string, { tag?: string, class: string }> = {
   'Notes.': { class: 'header__text__notes' },
   'Fast,': { tag: 'i', class: 'font-wide' },
@@ -20,7 +25,7 @@ const text = 'Beautiful Notes. Fast, simple, shareable, synced between devices a
 function animateImgPos(end: number, movement: number) {
   const wrapper = editorImgWrapperEl.value;
 
-  if (!wrapper) {
+  if (!wrapper || !intersecting.value) {
     return;
   }
 
@@ -30,15 +35,15 @@ function animateImgPos(end: number, movement: number) {
   wrapper.animate([
     { transform: `translateY(${px.toFixed(2)}px)` },
   ], {
-    duration: 1000,
-    easing: EASINGS.EXPO,
+    duration: 200,
+    easing: 'linear',
     fill: 'forwards',
   });
 }
 
 const offs: Array<() => void> = [];
 onMounted(() => {
-  const end = window.innerHeight / 1.5;
+  const end = window.innerHeight;
   const movement = -50;
 
   animateImgPos(end, movement);
@@ -82,7 +87,7 @@ if (import.meta.dev) {
         class="header__buttons__button header__buttons__button--start"
         style="opacity: 0;"
       >
-        Start Keycaping
+        Start keycaping
       </NuxtLink>
 
       <NuxtLink
@@ -170,7 +175,7 @@ if (import.meta.dev) {
     }
 
     &__word {
-      animation: appear 0.825s calc(var(--i) * 0.0825s) forwards !important;
+      animation: appear 2s calc(var(--i) * 0.05s) forwards !important;
     }
   }
 
@@ -257,7 +262,7 @@ if (import.meta.dev) {
     transform-origin: top left;
     animation:
       land 1s 1.25s forwards cubic-bezier(0.16, 1, 0.3, 1),
-      appear 1s 1.25s forwards !important;
+      appear-image 1s 1.25s forwards !important;
 
     &__wrapper {
       position: relative;
@@ -292,6 +297,17 @@ if (import.meta.dev) {
   }
 }
 
+@keyframes appear-image {
+  from {
+    opacity: 0;
+    filter: blur(12px);
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 @keyframes land {
   from {
     scale: 1.2;
@@ -313,18 +329,6 @@ if (import.meta.dev) {
   to {
     scale: 1;
     translate: 0;
-  }
-}
-
-@keyframes appear {
-  from {
-    opacity: 0;
-    filter: blur(12px);
-  }
-
-  to {
-    opacity: 1;
-    filter: blur(0px);
   }
 }
 </style>

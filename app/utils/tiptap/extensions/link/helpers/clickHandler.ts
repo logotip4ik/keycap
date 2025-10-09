@@ -1,12 +1,10 @@
-import type { MarkType } from '@tiptap/pm/model';
-
 import { Plugin, PluginKey } from '@tiptap/pm/state';
 
 interface ClickHandlerOptions {
-  type: MarkType
+  username: string | undefined
 };
 
-export function clickHandler(_options: ClickHandlerOptions): Plugin {
+export function clickHandler({ username }: ClickHandlerOptions): Plugin {
   return new Plugin({
     key: new PluginKey('handleClickLink'),
     props: {
@@ -27,7 +25,7 @@ export function clickHandler(_options: ClickHandlerOptions): Plugin {
         const target = link.getAttribute('target');
 
         if (href) {
-          const innerUrl = getInnerUrl(href);
+          const innerUrl = username && getInnerUrl(username, href);
 
           if (innerUrl) {
             navigateTo(innerUrl.pathname);
@@ -45,16 +43,14 @@ export function clickHandler(_options: ClickHandlerOptions): Plugin {
   });
 }
 
-function getInnerUrl(link: string) {
+function getInnerUrl(username: string, link: string) {
   const url = new URL(link);
 
   if (window.location.origin !== url.origin) {
     return;
   }
 
-  const user = getUser();
-
-  if (!url.pathname.startsWith(`/@${user.username}`)) {
+  if (!url.pathname.startsWith(`/@${username}`)) {
     return;
   }
 

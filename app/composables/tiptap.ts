@@ -9,18 +9,23 @@ const currentTiptap: ShallowRef<Editor | undefined> = import.meta.server ? proxy
 
 export function useTiptap(opts: {
   content: MaybeRefOrGetter<string>
-  spellcheck: MaybeRefOrGetter<SettingsDefinitions[Settings['spellcheck']]['value']>
+  spellcheck?: MaybeRefOrGetter<SettingsDefinitions[Settings['spellcheck']]['value']>
   editable: MaybeRefOrGetter<boolean>
-  autoFloatTask: MaybeRefOrGetter<SettingsDefinitions[Settings['autoFloatTask']]['value']>
+  autoFloatTask?: MaybeRefOrGetter<SettingsDefinitions[Settings['autoFloatTask']]['value']>
+  class?: string
   onUpdate: (props: EditorEvents['update']) => void
 }) {
+  const user = useUser();
+
   const isTyping = ref(false);
   const debouncedClearTyping = debounce(() => isTyping.value = false, 500);
 
   const editor = initTiptap({
+    username: user.value?.username,
     content: toValue(opts.content),
     spellcheck: toValue(opts.spellcheck),
     editable: toValue(opts.editable),
+    class: opts.class || '',
     onUpdate: opts.onUpdate,
     onKeyDown: () => {
       isTyping.value = !!debouncedClearTyping();
