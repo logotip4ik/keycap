@@ -57,6 +57,7 @@ function handleKeypress(event: KeyboardEvent) {
 
     (next?.firstElementChild as HTMLElement | undefined)?.focus();
 
+    event.preventDefault();
     return true;
   }
   else if (event.key === 'Esc' || event.key === 'Escape') {

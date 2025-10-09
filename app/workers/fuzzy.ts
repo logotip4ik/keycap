@@ -108,14 +108,14 @@ async function populateItemsCache() {
 
   populateItemsCachePromise = promise;
 
-  const res = await fetch('/api/search/client', {
+  const { data } = await fetch('/api/search/client', {
     headers: {
       Accept: 'application/json',
       ...protectionHeaders,
     },
-  });
-
-  const { data } = res.ok ? await res.json() as { data?: Array<FuzzyItem> } : { data: undefined };
+  })
+    .then((res) => res.ok ? res.json() as { data?: Array<FuzzyItem> } : { data: [] })
+    .catch(() => ({ data: undefined }));
 
   itemsCache.clear();
 
