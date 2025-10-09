@@ -32,7 +32,7 @@ export function initTiptap(opts: {
   content: string
   editable: boolean
   spellcheck?: SettingsDefinitions[Settings['spellcheck']]['value']
-  class: string;
+  class: string
   onUpdate: (props: EditorEvents['update']) => void
   onKeyDown?: () => void
 }) {
