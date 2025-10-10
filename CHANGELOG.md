@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v3.19.5
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.19.4...v3.19.5)
+
+### 🩹 Fixes
+
+- Use `hydrate` directive on client-only component ([2b1b0916](https://github.com/logotip4ik/keycap/commit/2b1b0916))
+- Formatter position with keyboard open ([6ce3e9af](https://github.com/logotip4ik/keycap/commit/6ce3e9af))
+
+### 🏡 Chore
+
+- **release:** V3.19.4 ([bb08b662](https://github.com/logotip4ik/keycap/commit/bb08b662))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.19.4
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.19.3...v3.19.4)
