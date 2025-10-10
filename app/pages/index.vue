@@ -27,12 +27,11 @@ if (import.meta.server) {
     <main class="index__main">
       <LazyPagesIndexWhy hydrate-on-visible />
 
-      <ClientOnly>
-        <LazyPagesIndexEditorDemo
-          hydrate-on-visible
-          :content="demoEditorContent"
-        />
-      </ClientOnly>
+      <Suspense suspensible>
+        <LazyClientOnly hydrate-on-idle>
+          <LazyPagesIndexEditorDemo :content="demoEditorContent" />
+        </LazyClientOnly>
+      </Suspense>
 
       <LazyPagesIndexMore hydrate-on-visible />
     </main>
