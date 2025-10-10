@@ -32,15 +32,10 @@ async function handleSubmit() {
   const path = props.item.path;
 
   if (state === ItemState.Creating) {
-    const creationName = name.value.at(-1) === '/' ? name.value.slice(0, -1) : name.value;
-    const createAction = creationName.length === name.value.length ? createNote : createFolder;
-
-    // precreated item (which we use for showing input) is always note, so both `createNote` and
-    // `createFolder` require second param to be typeof NoteMinimal
-    promise = createAction(creationName, props.item, props.parent) as Promise<FolderMinimal | NoteMinimal | undefined>;
+    promise = createItem(name.value, props.item, props.parent);
   }
   else if (state === ItemState.Editing) {
-    promise = renameItem(name.value, props.item);
+    promise = renameItem(name.value, props.item, props.parent);
   }
   else {
     return;
@@ -183,7 +178,7 @@ onMounted(() => {
     border-left-color: hsla(var(--text-color-hsl), 0.75);
     border-right-color: hsla(var(--text-color-hsl), 0.75);
 
-    animation: spin 1s infinite linear;
+    animation: spin 0.85s infinite linear;
     transition: opacity 0.3s 0.4s;
   }
 

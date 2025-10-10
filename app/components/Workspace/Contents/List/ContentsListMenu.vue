@@ -81,7 +81,7 @@ function preloadItemWithIndication() {
     type: 'loading',
   });
 
-  preloadItem(props.item)
+  preloadItem(props.item, props.parent)
     .catch(() => createToast(ERROR_MESSAGES.DEFAULT))
     .finally(() => loadingToast.remove());
 

@@ -38,165 +38,91 @@ export function preCreateItem(folderToAppend: FolderWithContents, initialValues?
   });
 }
 
-export function getCurrentFolderPath(_pathname?: string, _user?: SafeUser) {
-  const user = _user || getUser();
-  const pathname = _pathname || window.location.pathname;
-
-  let folderPath = decodeURIComponent(pathname).replace(`/@${user.username}`, '');
-
-  if (!folderPath) {
-    return '/';
-  }
-
-  const foldersAndANote = folderPath.split('/');
-  const folders = foldersAndANote
-    .slice(0, foldersAndANote.length - 1)
-    .map(encodeURIComponent);
-
-  folderPath = folders.join('/') || '/';
-  if (folderPath[folderPath.length - 1] !== '/') {
-    folderPath = `${folderPath}/`;
-  }
-
-  return folderPath;
-}
-
-if (import.meta.vitest) {
-  const { describe, it, expect } = import.meta.vitest;
-
-  describe('getCurrentFolderPath', () => {
-    const user = { username: 'test' } as any;
-
-    it('should work with root workspace', () => {
-      expect(getCurrentFolderPath('/@test', user)).toEqual('/');
-      expect(getCurrentFolderPath('/@test/', user)).toEqual('/');
-      expect(getCurrentFolderPath('/@test/_blank', user)).toEqual('/');
-      expect(getCurrentFolderPath('/@test/somenote', user)).toEqual('/');
-    });
-
-    it('should work with subfolders', () => {
-      expect(getCurrentFolderPath('/@test/testing/_blank', user)).toEqual('/testing/');
-      expect(getCurrentFolderPath('/@test/testing/something-else', user)).toEqual('/testing/');
-    });
-
-    it('should work with weird subfolders', () => {
-      expect(getCurrentFolderPath('/@test/test 2.2/_blank', user)).toEqual('/test%202.2/');
-      expect(getCurrentFolderPath('/@test/test 2.2/something-else', user)).toEqual('/test%202.2/');
-    });
-  });
-}
-
 /**
- * @param {string} folderName
+ * @param {string} name
  * @param {NoteMinimal} self - must be a vue's **reactive object**
  * @param {FolderWithContents} parent - must be a vue's **reactive object**
  */
-export async function createFolder(folderName: string, self: NoteMinimal, parent: FolderWithContents) {
+export async function createItem(name: string, self: NoteMinimal, parent: FolderWithContents) {
   invariant(isReactive(self), 'Self in createFolder must be reactive.');
   invariant(isReactive(parent), 'Parent in createFolder must be reactive.');
 
-  const currentFolderPath = getCurrentFolderPath();
-  const newFolderPathName = encodeURIComponent(folderName.trim());
-  const newFolderPath = currentFolderPath + newFolderPathName;
+  const isCreatingFolder = name.at(-1) === '/';
+  if (isCreatingFolder) {
+    name = name.substring(0, name.length - 1);
+  }
 
-  const res = await kfetch<{ data: FolderWithContents }>(`/api/folder${newFolderPath}`, {
-    method: 'POST',
-    body: { name: folderName, parentId: parent.id },
-  });
+  const user = getUser();
+  const currentFolderPath = parent.path.replace(`/${user.username}`, '');
+  const newItemPath = `${currentFolderPath}/${encodeURIComponent(name.trim())}`;
+
+  const res = await kfetch<{ data: FolderWithContents | NoteWithContent }>(
+    isCreatingFolder
+      ? `/api/folder${newItemPath}`
+      : `/api/note${newItemPath}`,
+    {
+      method: 'POST',
+      body: { name, parentId: parent.id },
+    },
+  );
 
   if (!res) {
+    // todo: notify user that we failed creating item...
     return;
   }
 
-  const { data: newlyCreatedFolder } = res;
-  const foldersCache = useFoldersCache();
-  const offlineStorage = getOfflineStorage();
-  const fuzzyWorker = getFuzzyWorker();
-  const { ws, state: wsState } = getZeenkWs();
+  const { data } = res;
 
+  const { ws, state: wsState } = getZeenkWs();
   if (wsState.value === 'OPEN' && ws.value) {
     sendZeenkEvent(
       ws.value,
       makeZeenkEvent('item-created', {
-        path: newlyCreatedFolder.path,
+        path: data.path,
       }),
     );
   }
 
-  newlyCreatedFolder.state = undefined;
-  parent.subfolders.push(newlyCreatedFolder);
-
-  remove(parent.notes, self);
-
-  foldersCache.set(newlyCreatedFolder.path, newlyCreatedFolder);
-  offlineStorage.setItem(newlyCreatedFolder.path, newlyCreatedFolder);
-  fuzzyWorker.value?.addItemToCache(newlyCreatedFolder);
-  extend(self, newlyCreatedFolder);
-
-  await showItem(newlyCreatedFolder);
-
-  return newlyCreatedFolder;
-}
-
-/**
- * @param {string} noteName
- * @param {NoteMinimal} self - must be a vue's **reactive object**
- * @param {FolderWithContents} parent - must be a vue's **reactive object**
- */
-export async function createNote(noteName: string, self: NoteMinimal, parent: FolderWithContents) {
-  invariant(isReactive(self), 'Self in createNote must be reactive.');
-
-  const currentFolderPath = getCurrentFolderPath();
-  const newNotePathName = encodeURIComponent(noteName.trim());
-  const newNotePath = currentFolderPath + newNotePathName;
-
-  const res = await kfetch<{ data: NoteWithContent }>(`/api/note${newNotePath}`, {
-    method: 'POST',
-    body: { name: noteName, parentId: parent.id },
-  });
-
-  if (!res) {
-    return;
+  data.state = undefined;
+  if (!checkIsFolder(data)) {
+    data.content ||= '';
+    extend(self, data);
+  }
+  else {
+    parent.subfolders.push(data);
+    // self is always a note, but when we crate a folder, we need to remove it from `notes`
+    remove(parent.notes, self);
   }
 
-  const { data: newlyCreatedNote } = res;
-  const notesCache = useNotesCache();
+  const cache = (isCreatingFolder ? useFoldersCache : useNotesCache)();
+  cache.set(data.path, data as any);
+
   const offlineStorage = getOfflineStorage();
+  offlineStorage.setItem(data.path, data);
+
   const fuzzyWorker = getFuzzyWorker();
-  const { ws, state: wsState } = getZeenkWs();
+  fuzzyWorker.value?.addItemToCache(data);
 
-  if (wsState.value === 'OPEN' && ws.value) {
-    sendZeenkEvent(
-      ws.value,
-      makeZeenkEvent('item-created', {
-        path: newlyCreatedNote.path,
-      }),
-    );
-  }
+  await showItem(data);
 
-  newlyCreatedNote.content ||= '';
-  newlyCreatedNote.state = undefined;
-
-  notesCache.set(newlyCreatedNote.path, newlyCreatedNote);
-  offlineStorage.setItem(newlyCreatedNote.path, newlyCreatedNote);
-  fuzzyWorker.value?.addItemToCache(newlyCreatedNote);
-  extend(self, newlyCreatedNote);
-
-  await showItem(newlyCreatedNote);
-
-  return newlyCreatedNote;
+  return data;
 }
 
 /**
  * @param {string} newName
  * @param {NoteMinimal | FolderMinimal} self - must be a vue's **reactive object**
  */
-export async function renameItem<T extends NoteMinimal | FolderMinimal>(newName: string, self: T) {
+export async function renameItem<T extends NoteMinimal | FolderMinimal>(
+  newName: string,
+  self: T,
+  parent: FolderMinimal,
+) {
   invariant(isReactive(self), 'Self in renameItem must be reactive.');
 
   const newItem = { name: newName.trim() } as T;
 
-  const currentFolderPath = getCurrentFolderPath();
+  const user = getUser();
+  const currentFolderPath = parent.path.replace(`/${user.username}`, '');
   const itemPathName = encodeURIComponent(self.name);
   const itemPath = currentFolderPath + itemPathName;
 
@@ -257,7 +183,8 @@ export async function deleteItem(self: FolderMinimal | NoteMinimal, parent: Fold
   invariant(isReactive(self), 'Self in deleteItem must be reactive.');
   invariant(isReactive(parent), 'Parent in deleteItem must be reactive.');
 
-  const currentFolderPath = getCurrentFolderPath();
+  const user = getUser();
+  const currentFolderPath = parent.path.replace(`/${user.username}`, '');
   const itemPathName = encodeURIComponent(self.name);
   const itemPath = currentFolderPath + itemPathName;
 
@@ -301,10 +228,11 @@ export async function deleteItem(self: FolderMinimal | NoteMinimal, parent: Fold
 }
 
 // NOTE: Refactor all functions above to use this approach ?
-export async function preloadItem(self: FolderMinimal | NoteMinimal) {
+export async function preloadItem(self: FolderMinimal | NoteMinimal, parent: FolderMinimal) {
   const isFolder = checkIsFolder(self);
 
-  const currentFolderPath = getCurrentFolderPath();
+  const user = getUser();
+  const currentFolderPath = parent.path.replace(`/${user.username}`, '');
   const pathPrefix = isFolder ? 'folder' : 'note';
   const pathName = encodeURIComponent(self.name);
   const path = pathPrefix + currentFolderPath + pathName;

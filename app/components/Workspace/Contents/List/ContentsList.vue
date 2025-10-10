@@ -229,7 +229,7 @@ useTinykeys({
       @contextmenu.self.prevent
       @click.self="menuOptions.target = undefined"
     >
-      <WithFadeTransition v-for="item in folderContents" :key="item.path">
+      <WithFadeTransition v-for="item in folderContents" :key="item.id + item.path">
         <li
           v-if="item.state"
           key="1"
