@@ -19,11 +19,10 @@ function moveFormatterAboveKeyboard() {
     return;
   }
 
-  const formatterPosition = window.innerHeight
-    - viewport.offsetTop
-    - viewport.height;
+  const formatterPosition
+    = document.documentElement.clientHeight - (viewport.height + viewport.offsetTop);
 
-  el.style.setProperty('bottom', `${Math.floor(formatterPosition)}px`);
+  el.style.setProperty('bottom', `${Math.max(0, formatterPosition).toFixed(2)}px`);
   const keyboardShown = viewport.height + 30 < window.innerHeight;
   isKeyboardShown.value = keyboardShown;
 
@@ -71,7 +70,7 @@ if (import.meta.client && window.visualViewport != null) {
   align-items: center;
 
   position: fixed;
-  bottom: env(safe-area-inset-bottom, 0px);
+  bottom: 0;
   left: 0;
   z-index: 10;
 
