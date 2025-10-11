@@ -49,7 +49,7 @@ if (import.meta.server) {
   from {
     opacity: 0;
     filter: blur(12px);
-    transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0) translateY(2rem);
   }
 
   to {
