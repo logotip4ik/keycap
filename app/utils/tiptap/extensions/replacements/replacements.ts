@@ -1,7 +1,7 @@
 import type { Editor, Range } from '@tiptap/core';
 import type { ValueOf } from 'type-fest';
 
-const replacement = {
+export const replacement = {
   Heading: 'heading',
   Heading2: 'heading2',
   Heading3: 'heading3',
@@ -9,7 +9,7 @@ const replacement = {
   OrderedList: 'ordered-list',
   TaskList: 'task-list',
   Quote: 'quote',
-  Paragraph: 'Paragraph',
+  Paragraph: 'paragraph',
   Today: 'today',
   Now: 'now',
   Time: 'time',

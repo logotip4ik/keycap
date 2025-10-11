@@ -63,4 +63,7 @@ export const Decoration = proxy;
 export const DecorationSet = proxy;
 export const Transform = proxy;
 
+export const replacement = proxy;
+export const replacementsMin = proxy;
+
 export default proxy;

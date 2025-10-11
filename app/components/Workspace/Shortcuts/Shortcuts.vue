@@ -1,10 +1,20 @@
 <script setup lang="ts">
+import type { SearchActionValues } from '~/types/common';
+import type { Replacement } from '~/utils/tiptap/extensions/replacements/replacements';
+
+import { SearchAction } from '~/types/common';
+import { replacement, replacementsMin } from '~/utils/tiptap/extensions/replacements/replacements';
+
 defineProps<{
   onClose: () => void
 }>();
 
 const { shortcuts } = useAppConfig();
 const modKey = useModKey();
+
+function sortByKeysLength(a: { keys: string }, b: { keys: string }) {
+  return a.keys.length - b.keys.length;
+}
 
 const shortcutsDescription: Record<keyof typeof shortcuts, string> = {
   edit: 'Focus Editor',
@@ -18,6 +28,39 @@ const shortcutsDescription: Record<keyof typeof shortcuts, string> = {
   shortcutsModal: 'Show shortcuts list',
 };
 
+const commandsDescriptions: Record<SearchActionValues, string> = {
+  [SearchAction.New]: 'Open input for creating new note or folder',
+  [SearchAction.Details]: 'Open details for current note',
+  [SearchAction.SaveNote]: 'Force save the note',
+  [SearchAction.Shortcuts]: 'Open up this modal',
+  [SearchAction.Workspace]: 'Go to the root folder',
+  [SearchAction.Refresh]: 'Reload note and folder contents',
+  [SearchAction.RefreshNote]: 'Reload only not contents',
+  [SearchAction.RefreshFolder]: 'Reload only folder contents',
+};
+const commandsShortcuts = Array.from(commandActionsMin.values())
+  .map(({ key, name }) => ({ keys: name, desc: commandsDescriptions[key] }))
+  .sort(sortByKeysLength);
+
+const replacementsDescriptions: Record<Replacement, string> = {
+  [replacement.Heading]: 'Format as heading level 1',
+  [replacement.Heading2]: 'Format as heading level 2',
+  [replacement.Heading3]: 'Format as heading level 3',
+  [replacement.List]: 'Format as bullet list',
+  [replacement.OrderedList]: 'Format as ordered list',
+  [replacement.Now]: 'Insert current time and date',
+  [replacement.Paragraph]: 'Format as paragraph',
+  [replacement.Quote]: 'Format as quote',
+  [replacement.TaskList]: 'Format as task list',
+  [replacement.Time]: 'Insert current time',
+  [replacement.Today]: 'Insert current date',
+  [replacement.Tomorrow]: 'Insert tomorrow date',
+  [replacement.Yesterday]: 'Insert yesterday date',
+};
+const replacements = replacementsMin
+  .map(({ id }) => ({ keys: id, desc: replacementsDescriptions[id] }))
+  .sort(sortByKeysLength);
+
 const shortcutsRenames: Partial<Record<keyof typeof shortcuts, string>> = {
   shortcutsModal: '?',
 };
@@ -30,7 +73,7 @@ const sections = computed(() => {
       keys: shortcutsRenames[key as keyof typeof shortcuts] || humanizeShortcut(shortcut, modK),
       desc: shortcutsDescription[key as keyof typeof shortcuts],
     }))
-    .sort((a, b) => a.keys.length - b.keys.length);
+    .sort(sortByKeysLength);
 
   const editorShortcuts = [
     { keys: humanizeShortcut('$mod+b', modK), desc: 'Format as bold' },
@@ -46,11 +89,14 @@ const sections = computed(() => {
     { keys: humanizeShortcut('$mod+Shift+7', modK), desc: 'Format as ordered list' },
     { keys: humanizeShortcut('$mod+Shift+8', modK), desc: 'Format as unordered list' },
     { keys: humanizeShortcut('$mod+Shift+L', modK), desc: 'Insert link in selection' },
-  ];
+  ]
+    .sort(sortByKeysLength);
 
   return [
     { name: 'Global shortcuts', shortcuts: globalShortcuts },
     { name: 'Editor shortcuts', shortcuts: editorShortcuts },
+    { name: 'Editor replacements', shortcuts: replacements },
+    { name: `${modKey.value}+k Commands`, shortcuts: commandsShortcuts },
   ];
 });
 </script>
@@ -83,18 +129,19 @@ const sections = computed(() => {
 
 <style lang="scss">
 .shortcuts {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  --cols: 2;
+  --col-size: 400px;
+  --gap: 2rem;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
   align-items: start;
-  gap: 2rem;
+  gap: var(--gap);
 
   padding: 2rem 1.25rem 1.5rem;
 
-  max-width: 1000px;
-
-  @media screen and (max-width: #{$breakpoint-tablet - 100}) {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  }
+  max-width: 1100px;
 
   &__wrapper {
     display: flex;
@@ -112,7 +159,16 @@ const sections = computed(() => {
     align-items: center;
     flex-direction: column;
 
+    flex-basis: var(--col-size);
+    flex-shrink: 0;
+    flex-grow: 1;
+
     min-width: 325px;
+    max-width: 500px;
+
+    @media screen and (max-width: #{$breakpoint-tablet - 100}) {
+      --col-size: 300px;
+    }
   }
 
   &__title {

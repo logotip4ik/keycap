@@ -3,11 +3,6 @@ definePageMeta({
   middleware: ['redirect-dashboard'],
 });
 
-const demoEditorContent = [
-  '<h2>Hey! Try editing me</h2>',
-  '<blockquote>we have commands - / and emojies - :key</blockquote>',
-].join('');
-
 if (import.meta.server) {
   useHead({
     link: [
@@ -16,6 +11,11 @@ if (import.meta.server) {
     ],
   });
 }
+
+const demoEditorContent = [
+  '<h2>Hey! Try editing me</h2>',
+  '<blockquote>we have commands - / and emojies - :key</blockquote>',
+].join('');
 </script>
 
 <template>
