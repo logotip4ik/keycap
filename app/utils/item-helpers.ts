@@ -83,7 +83,6 @@ export async function createItem(name: string, self: NoteMinimal, parent: Folder
     );
   }
 
-  data.state = undefined;
   if (checkIsFolder(data)) {
     parent.subfolders.push(data);
     // self is always a note, but when we crate a folder, we need to remove it from `notes`
@@ -93,8 +92,7 @@ export async function createItem(name: string, self: NoteMinimal, parent: Folder
     cache.set(data.path, data);
   }
   else {
-    data.content ||= '';
-    extend(self, data);
+    extend(self, data, { content: '', state: undefined });
 
     const cache = useNotesCache();
     cache.set(data.path, data);
@@ -137,8 +135,6 @@ export async function renameItem<T extends NoteMinimal | FolderMinimal>(
 
   const cache = (isFolder ? useFoldersCache : useNotesCache)();
   const offlineStorage = getOfflineStorage();
-  const fuzzyWorker = getFuzzyWorker();
-  const { ws, state: wsState } = getZeenkWs();
 
   const selfPath = self.path;
   const cachedItem = cache.get(selfPath);
@@ -151,6 +147,8 @@ export async function renameItem<T extends NoteMinimal | FolderMinimal>(
   newItem.state = undefined;
 
   extend(self, newItem);
+
+  const fuzzyWorker = getFuzzyWorker();
   fuzzyWorker.value?.refreshItemsCache();
 
   const item = { ...cachedItem, ...toRaw(self) };
@@ -166,6 +164,7 @@ export async function renameItem<T extends NoteMinimal | FolderMinimal>(
   cache.set(item.path, item as any);
   offlineStorage.setItem(item.path, item);
 
+  const { ws, state: wsState } = getZeenkWs();
   if (wsState.value === 'OPEN' && ws.value) {
     sendZeenkEvent(
       ws.value,
@@ -201,12 +200,12 @@ export async function deleteItem(self: FolderMinimal | NoteMinimal, parent: Fold
   }
 
   const cache = (isFolder ? useFoldersCache : useNotesCache)();
-  const offlineStorage = getOfflineStorage();
-  const fuzzyWorker = getFuzzyWorker();
-  const { ws, state: wsState } = getZeenkWs();
-
   cache.remove(self.path);
+
+  const offlineStorage = getOfflineStorage();
   offlineStorage.removeItem(self.path).then(validateOfflineStorage);
+
+  const fuzzyWorker = getFuzzyWorker();
   fuzzyWorker.value?.refreshItemsCache();
 
   if (isFolder) {
@@ -218,6 +217,7 @@ export async function deleteItem(self: FolderMinimal | NoteMinimal, parent: Fold
     remove(parent.notes, self);
   }
 
+  const { ws, state: wsState } = getZeenkWs();
   if (wsState.value === 'OPEN' && ws.value) {
     sendZeenkEvent(
       ws.value,

@@ -9,7 +9,7 @@ export default defineVitestConfig({
 
     setupFiles: [
       './server/test/stub-nitro.ts',
-      './tests/setup-dom-expects.ts',
+      './app/tests/setup-dom-expects.ts',
     ],
 
     includeSource: [
