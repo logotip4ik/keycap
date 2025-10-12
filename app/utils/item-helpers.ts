@@ -84,18 +84,21 @@ export async function createItem(name: string, self: NoteMinimal, parent: Folder
   }
 
   data.state = undefined;
-  if (!checkIsFolder(data)) {
-    data.content ||= '';
-    extend(self, data);
-  }
-  else {
+  if (checkIsFolder(data)) {
     parent.subfolders.push(data);
     // self is always a note, but when we crate a folder, we need to remove it from `notes`
     remove(parent.notes, self);
-  }
 
-  const cache = (isCreatingFolder ? useFoldersCache : useNotesCache)();
-  cache.set(data.path, data as any);
+    const cache = useFoldersCache();
+    cache.set(data.path, data);
+  }
+  else {
+    data.content ||= '';
+    extend(self, data);
+
+    const cache = useNotesCache();
+    cache.set(data.path, data);
+  }
 
   const offlineStorage = getOfflineStorage();
   offlineStorage.setItem(data.path, data);
@@ -123,8 +126,7 @@ export async function renameItem<T extends NoteMinimal | FolderMinimal>(
 
   const user = getUser();
   const currentFolderPath = parent.path.replace(`/${user.username}`, '');
-  const itemPathName = encodeURIComponent(self.name);
-  const itemPath = currentFolderPath + itemPathName;
+  const itemPath = `${currentFolderPath}/${encodeURIComponent(self.name)}`;
 
   const isFolder = checkIsFolder(self);
 
@@ -185,8 +187,7 @@ export async function deleteItem(self: FolderMinimal | NoteMinimal, parent: Fold
 
   const user = getUser();
   const currentFolderPath = parent.path.replace(`/${user.username}`, '');
-  const itemPathName = encodeURIComponent(self.name);
-  const itemPath = currentFolderPath + itemPathName;
+  const itemPath = `${currentFolderPath}/${encodeURIComponent(self.name)}`;
 
   const isFolder = checkIsFolder(self);
 
@@ -229,32 +230,31 @@ export async function deleteItem(self: FolderMinimal | NoteMinimal, parent: Fold
 
 // NOTE: Refactor all functions above to use this approach ?
 export async function preloadItem(self: FolderMinimal | NoteMinimal, parent: FolderMinimal) {
-  const isFolder = checkIsFolder(self);
-
   const user = getUser();
   const currentFolderPath = parent.path.replace(`/${user.username}`, '');
-  const pathPrefix = isFolder ? 'folder' : 'note';
-  const pathName = encodeURIComponent(self.name);
-  const path = pathPrefix + currentFolderPath + pathName;
+  const itemPath = `${currentFolderPath}/${encodeURIComponent(self.name)}`;
 
-  const res = await kfetch<{ data: FolderWithContents | NoteWithContent }>(`/api/${path}`);
+  const res = await kfetch<{ data: FolderWithContents | NoteWithContent }>(
+    checkIsFolder(self)
+      ? `/api/folder${itemPath}`
+      : `/api/note${itemPath}`,
+  );
 
   if (!res) {
     return;
   }
 
-  const offlineStorage = getOfflineStorage();
-  const notesCache = useNotesCache();
-  const foldersCache = useFoldersCache();
+  const { data } = res;
 
-  const item = res.data;
-
-  if (checkIsFolder(item)) {
-    foldersCache.set(item.path, item);
+  if (checkIsFolder(data)) {
+    const foldersCache = useFoldersCache();
+    foldersCache.set(data.path, data);
   }
   else {
-    notesCache.set(item.path, item);
+    const notesCache = useNotesCache();
+    notesCache.set(data.path, data);
   }
 
-  offlineStorage.setItem(item.path, item);
+  const offlineStorage = getOfflineStorage();
+  offlineStorage.setItem(data.path, data);
 }
