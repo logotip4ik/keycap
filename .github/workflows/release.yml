@@ -6,7 +6,7 @@ on:
   #   - cron: '0 3 * * 1'
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   test-lint-build:
@@ -23,7 +23,7 @@ jobs:
       - name: Node setup
         uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
         with:
-          node-version: 20
+          node-version: 22
           cache: yarn
 
       - name: Install deps
@@ -56,7 +56,7 @@ jobs:
       - name: Node setup
         uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
         with:
-          node-version: 18
+          node-version: 22
           cache: yarn
 
       - name: Bump versions
