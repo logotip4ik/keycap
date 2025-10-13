@@ -1,6 +1,39 @@
 # Changelog
 
 
+## v3.19.6
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.19.5...v3.19.6)
+
+### 🩹 Fixes
+
+- Path generation for rename/repload/delete methods ([8ce215da](https://github.com/logotip4ik/keycap/commit/8ce215da))
+
+### 💅 Refactors
+
+- Merge createNote/Folder and remove `getCurrentFolderPath` in favor of parent.path ([b620e7c3](https://github.com/logotip4ik/keycap/commit/b620e7c3))
+
+### 🏡 Chore
+
+- **release:** V3.19.5 ([70de2d4a](https://github.com/logotip4ik/keycap/commit/70de2d4a))
+- Improve blur for main elements ([d3461dc1](https://github.com/logotip4ik/keycap/commit/d3461dc1))
+- Add little translate in animation ([a1fc0cc6](https://github.com/logotip4ik/keycap/commit/a1fc0cc6))
+- Add missing cmd+k commands and replacements to shortcuts modal ([b2d8e795](https://github.com/logotip4ik/keycap/commit/b2d8e795))
+- **ci:** Don't run tests twice for pull requests ([8929b6fd](https://github.com/logotip4ik/keycap/commit/8929b6fd))
+- **ci:** Bump node-version and allow release action to write contents ([2c7b0d5c](https://github.com/logotip4ik/keycap/commit/2c7b0d5c))
+
+### ✅ Tests
+
+- Cover item helpers with tests ([02d6a3bf](https://github.com/logotip4ik/keycap/commit/02d6a3bf))
+
+### 🤖 CI
+
+- Bump happy-dom in the npm_and_yarn group across 1 directory ([#60](https://github.com/logotip4ik/keycap/pull/60))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.19.5
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.19.4...v3.19.5)
