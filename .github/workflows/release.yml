@@ -5,6 +5,9 @@ on:
   # schedule:
   #   - cron: '0 3 * * 1'
 
+permissions:
+  contents: read
+
 jobs:
   test-lint-build:
     timeout-minutes: 3
