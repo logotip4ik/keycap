@@ -9,11 +9,11 @@ declare module '@tiptap/core' {
       hideAllMatches: () => ReturnType
       findNextMatch: (
         match: string,
-        opts?: { from?: number, retainPastMatchesOnNotFound?: boolean }
+        opts?: { from?: number, retainPastMatchesOnNotFound?: boolean },
       ) => ReturnType
       findPreviousMatch: (
         match: string,
-        opts?: { to?: number, retainPastMatchesOnNotFound?: boolean }
+        opts?: { to?: number, retainPastMatchesOnNotFound?: boolean },
       ) => ReturnType
     }
   }
