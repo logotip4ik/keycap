@@ -1,6 +1,30 @@
 # Changelog
 
 
+## v3.19.7
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.19.6...v3.19.7)
+
+### 🩹 Fixes
+
+- Use correct animation for rays ([d45a701e](https://github.com/logotip4ik/keycap/commit/d45a701e))
+
+### 🏡 Chore
+
+- **release:** V3.19.6 ([afff5709](https://github.com/logotip4ik/keycap/commit/afff5709))
+- Hopefully fix issue where visualViewport not resizing in firefox pwa ([f37df14d](https://github.com/logotip4ik/keycap/commit/f37df14d))
+- **ci:** Remove dependabot for npm ([a3605069](https://github.com/logotip4ik/keycap/commit/a3605069))
+- Bump deps ([d0381093](https://github.com/logotip4ik/keycap/commit/d0381093))
+
+### 🤖 CI
+
+- Bump happy-dom in the npm_and_yarn group across 1 directory ([#62](https://github.com/logotip4ik/keycap/pull/62))
+- Bump actions/setup-node from 5.0.0 to 6.0.0 in the all-actions group ([#65](https://github.com/logotip4ik/keycap/pull/65))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.19.6
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.19.5...v3.19.6)
