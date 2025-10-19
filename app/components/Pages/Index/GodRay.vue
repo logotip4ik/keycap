@@ -39,7 +39,7 @@
   opacity: 0;
   background-color: var(--ray-bg);
   transition: background-color 0.3s;
-  animation: appear 3s 1s ease-out forwards;
+  animation: ray-appear 3s 0.5s ease-out forwards;
 
   &__ray {
     position: absolute;
@@ -77,6 +77,19 @@
     @media screen and (prefers-color-scheme: dark) {
       filter: blur(12px) invert(10%);
     }
+  }
+}
+
+@keyframes ray-appear {
+  from {
+    opacity: 0;
+    transform: rotate(0);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(0);
+    filter: none;
   }
 }
 
