@@ -353,22 +353,29 @@ export default defineNuxtConfig({
           },
         },
       },
-      plugins: [
-        // Taken from elk
-        // https://github.com/elk-zone/elk/blob/ed5592260fc83f0207a12a7184973749e87bc85e/nuxt.config.ts#L186
-        {
-          name: 'mock',
-          enforce: 'pre',
-          resolveId(id) {
-            if (/(?:^|\/)@?tiptap\//.test(id)) {
-              return resolve('./app/mocks/tiptap.ts');
-            }
-            if (/(?:^|\/)prosemirror/.test(id)) {
-              return resolve('./app/mocks/prosemirror.ts');
-            }
-          },
+    },
+  },
+
+  hooks: {
+    // Taken from elk
+    // https://github.com/elk-zone/elk/blob/ed5592260fc83f0207a12a7184973749e87bc85e/nuxt.config.ts#L186
+    'vite:extendConfig': function (config, { isServer }) {
+      if (!isServer) {
+        return;
+      }
+
+      config.plugins?.push({
+        name: 'mock',
+        enforce: 'pre',
+        resolveId(id) {
+          if (/(?:^|\/)@?tiptap\//.test(id)) {
+            return resolve('./app/mocks/tiptap.ts');
+          }
+          if (/(?:^|\/)prosemirror/.test(id)) {
+            return resolve('./app/mocks/prosemirror.ts');
+          }
         },
-      ],
+      });
     },
   },
 
