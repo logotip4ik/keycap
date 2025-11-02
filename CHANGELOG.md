@@ -1,6 +1,20 @@
 # Changelog
 
 
+## v3.19.8
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.19.7...v3.19.8)
+
+### 🏡 Chore
+
+- **release:** V3.19.7 ([f3766652](https://github.com/logotip4ik/keycap/commit/f3766652))
+- Bump deps ([78504b1f](https://github.com/logotip4ik/keycap/commit/78504b1f))
+- Bump max size limit ([ba2c7203](https://github.com/logotip4ik/keycap/commit/ba2c7203))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.19.7
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.19.6...v3.19.7)
