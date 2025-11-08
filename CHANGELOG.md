@@ -1,6 +1,27 @@
 # Changelog
 
 
+## v3.19.9
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.19.8...v3.19.9)
+
+### 🩹 Fixes
+
+- Don't prevent trackpad actions ([2ba7ed1b](https://github.com/logotip4ik/keycap/commit/2ba7ed1b))
+
+### 💅 Refactors
+
+- Don't use cache for recent notes ([25955a4e](https://github.com/logotip4ik/keycap/commit/25955a4e))
+
+### 🏡 Chore
+
+- **release:** V3.19.8 ([4b1ef7ef](https://github.com/logotip4ik/keycap/commit/4b1ef7ef))
+- Update package manager ([4eb9570c](https://github.com/logotip4ik/keycap/commit/4eb9570c))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.19.8
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.19.7...v3.19.8)
