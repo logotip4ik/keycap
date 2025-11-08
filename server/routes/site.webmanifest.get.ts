@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
   if (user) {
     manifest.start_url = `/@${user.username}`;
 
-    const recent = await getRecentForUser(event, user)
+    const recent = await getRecentForUser(user)
       .catch(async (err) => {
         await logger.error(event, { err, msg: 'recent failed' });
       });

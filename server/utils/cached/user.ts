@@ -32,15 +32,6 @@ export const checkIfUsernameTaken = defineCachedFunction(checkIfUsernameTaken_, 
   getKey: (...params: Parameters<typeof checkIfUsernameTaken_>) => getUserCacheKey(params[1]),
 });
 
-export const getRecentForUser = defineCachedFunction(getRecentForUser_, {
-  group: USER_CACHE_GROUP,
-  name: UserCacheName.Recent,
-
-  swr: false,
-  maxAge: parseDuration('1 week', 's')!,
-  getKey: (...params: Parameters<typeof getRecentForUser_>) => getUserCacheKey(params[1].username),
-});
-
 async function checkIfUsernameTaken_(_event: H3Event, username: string) {
   if (!username) {
     return false;
@@ -57,17 +48,4 @@ async function checkIfUsernameTaken_(_event: H3Event, username: string) {
     .executeTakeFirst();
 
   return user?.exists === true;
-}
-
-function getRecentForUser_(_event: H3Event, user: { id: string, username: string }) {
-  const kysely = getKysely();
-
-  // TODO: more advanced recent algorithm :P
-  return kysely
-    .selectFrom('Note')
-    .where('ownerId', '=', user.id)
-    .select(['id', 'name', 'path'])
-    .limit(4)
-    .orderBy('updatedAt', 'desc')
-    .execute();
 }
