@@ -179,7 +179,6 @@ else {
 
     overflow-y: auto;
 
-    overscroll-behavior: contain;
     scrollbar-gutter: stable;
     scrollbar-width: thin;
     scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-background);
