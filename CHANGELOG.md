@@ -1,6 +1,29 @@
 # Changelog
 
 
+## v3.19.10
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.19.9...v3.19.10)
+
+### 🩹 Fixes
+
+- Tests ([bd6b2847](https://github.com/logotip4ik/keycap/commit/bd6b2847))
+
+### 🏡 Chore
+
+- **release:** V3.19.9 ([4549c994](https://github.com/logotip4ik/keycap/commit/4549c994))
+- Update deps ([4ba77bc2](https://github.com/logotip4ik/keycap/commit/4ba77bc2))
+- Lower prisma to v6 ([743a1952](https://github.com/logotip4ik/keycap/commit/743a1952))
+
+### 🤖 CI
+
+- Bump actions/checkout from 5.0.0 to 6.0.0 in the all-actions group ([#69](https://github.com/logotip4ik/keycap/pull/69))
+- Bump the all-actions group with 2 updates ([#71](https://github.com/logotip4ik/keycap/pull/71))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.19.9
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.19.8...v3.19.9)
