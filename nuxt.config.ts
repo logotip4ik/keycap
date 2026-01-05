@@ -238,7 +238,7 @@ export default defineNuxtConfig({
     '~/assets/fonts/Mona-Sans/style.css',
   ],
 
-  sourcemap: !isCI,
+  sourcemap: isTest ? false : !isCI,
 
   build: {
     transpile: ['tinykeys'],

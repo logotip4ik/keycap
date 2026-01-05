@@ -1,8 +1,15 @@
 import { defineVitestConfig } from '@nuxt/test-utils/config';
+import { resolve } from 'pathe';
 import { defaultExclude } from 'vitest/config';
 
 export default defineVitestConfig({
   assetsInclude: ['**.html'],
+
+  resolve: {
+    alias: {
+      'bun:test': resolve('./vitest.config.ts'),
+    },
+  },
 
   test: {
     root: process.cwd(),
