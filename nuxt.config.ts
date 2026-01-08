@@ -71,16 +71,6 @@ export default defineNuxtConfig({
     typescriptBundlerResolution: true,
   },
 
-  features: {
-    inlineStyles: (id) => {
-      if (!id) {
-        return false;
-      }
-
-      return inlinableStylesRE.some((re) => re.test(id));
-    },
-  },
-
   typescript: { tsConfig },
 
   imports: {
