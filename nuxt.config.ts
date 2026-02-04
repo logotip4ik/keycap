@@ -8,7 +8,7 @@ import { viteMinify } from 'rollup-plugin-swc3';
 import { isCI, isDevelopment, isProduction, isTest, nodeENV } from 'std-env';
 
 import { breakpoints, sidebarsBreakpoints } from './config/breakpoints';
-import { inlinableStylesRE, prefixedConfig } from './config/build';
+import { prefixedConfig } from './config/build';
 import { getCachedAssetHeaders, getHeaders } from './config/headers';
 import { tsConfig } from './config/typescript';
 import { InvariantOptimization } from './unplugin/invariant-optimization';
@@ -40,11 +40,6 @@ export default defineNuxtConfig({
         { rel: 'manifest', href: '/site.webmanifest', crossorigin: 'use-credentials' },
       ],
     },
-  },
-
-  alias: {
-    // only used by tsc
-    '#server': resolve('./server'),
   },
 
   experimental: {
@@ -370,10 +365,6 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    alias: {
-      '#server': resolve('./server'),
-    },
-
     replace: {
       'import.meta.dev': isDevelopment,
       'import.meta.prod': isProduction,

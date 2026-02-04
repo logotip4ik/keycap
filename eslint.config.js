@@ -1,5 +1,4 @@
 import antfu from '@antfu/eslint-config';
-import * as regexp from 'eslint-plugin-regexp';
 
 export default antfu({
   stylistic: {
@@ -20,7 +19,7 @@ export default antfu({
     'yaml/no-empty-mapping-value': 'off',
     'node/prefer-global/process': ['error', 'always'],
   },
-}, regexp.configs['flat/recommended'], {
+}, {
   rules: {
     'no-restricted-syntax': [
       'error',

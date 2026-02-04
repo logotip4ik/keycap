@@ -21,11 +21,12 @@ const errorMessages: Record<number, string> = {
   500: 'I mean, something went completely wrong',
 };
 
-const message = errorMessages[props.error.statusCode] || 'That was unexpected (⊙_⊙;)';
+const fallbackMessage = 'That was unexpected (⊙_⊙;)';
+const message = props.error.status ? errorMessages[props.error.status] || fallbackMessage : fallbackMessage;
 
 useSeoMeta({
-  title: () => `Keycap - ${props.error.statusCode}`,
-  ogTitle: () => `Keycap - ${props.error.statusCode}`,
+  title: () => `Keycap - ${props.error.status}`,
+  ogTitle: () => `Keycap - ${props.error.status}`,
 
   description: () => `${randomNote} ${message}`,
   ogDescription: () => `${randomNote} ${message}`,
@@ -39,7 +40,7 @@ function handleError() {
 
 onMounted(() => {
   requestIdleCallback(() => {
-    if (props.error.statusCode === 404) {
+    if (props.error.status === 404) {
       return;
     }
 
@@ -52,8 +53,8 @@ onMounted(() => {
   <div class="error-page">
     <NavSimple v-once />
 
-    <p :aria-label="`${error.statusCode} error`" class="error-page__status-code">
-      {{ error.statusCode }}
+    <p :aria-label="`${error.status} error`" class="error-page__status-code">
+      {{ error.status }}
     </p>
 
     <Form class="error-page__form" action="/" @submit.prevent="handleError">

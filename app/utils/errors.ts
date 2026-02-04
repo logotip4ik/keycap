@@ -11,7 +11,7 @@ export function sendError(error: Error, properties?: Record<string, string | boo
       msg: error.message,
       stack: error.stack,
       // @ts-expect-error in case status code exists send it
-      statusCode: error.statusCode,
+      statusCode: error.statusCode || error.status,
     } as Record<string, string>,
   };
 
@@ -44,8 +44,10 @@ export async function baseHandleError(error: Error | H3Error): Promise<boolean> 
     return true;
   }
 
-  if ('statusCode' in error) {
-    if (error.statusCode === 401 || !user.value) {
+  const status = 'status' in error ? error.status as number : 'statusCode' in error ? error.statusCode as number : undefined;
+
+  if (status) {
+    if (status === 401 || !user.value) {
       user.value = undefined;
 
       if (import.meta.client) {
@@ -58,7 +60,7 @@ export async function baseHandleError(error: Error | H3Error): Promise<boolean> 
       return true;
     }
 
-    if (error.statusCode === 404) {
+    if (status === 404) {
       const hydrationPromise = getHydrationPromise();
 
       if (hydrationPromise) {
