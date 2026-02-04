@@ -1,6 +1,28 @@
 # Changelog
 
 
+## v3.19.11
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.19.10...v3.19.11)
+
+### 🩹 Fixes
+
+- Remove custom inline styles ([870d5fa2](https://github.com/logotip4ik/keycap/commit/870d5fa2))
+
+### 🏡 Chore
+
+- **release:** V3.19.10 ([e8d2f5c3](https://github.com/logotip4ik/keycap/commit/e8d2f5c3))
+- Update deps ([2663cb67](https://github.com/logotip4ik/keycap/commit/2663cb67))
+
+### 🤖 CI
+
+- Bump the all-actions group across 1 directory with 3 updates ([#76](https://github.com/logotip4ik/keycap/pull/76))
+- Bump github.com/golang-jwt/jwt/v5 ([#77](https://github.com/logotip4ik/keycap/pull/77))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.19.10
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.19.9...v3.19.10)
