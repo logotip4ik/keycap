@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v3.19.12
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.19.11...v3.19.12)
+
+### 🏡 Chore
+
+- **release:** V3.19.11 ([4a303b00](https://github.com/logotip4ik/keycap/commit/4a303b00))
+- Update deps ([1bf97c3f](https://github.com/logotip4ik/keycap/commit/1bf97c3f))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.19.11
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.19.10...v3.19.11)
