@@ -2,7 +2,7 @@
 const { build } = useRuntimeConfig().public;
 
 const links = [
-  { href: '/logout', name: 'Log Out' },
+  { href: '/logout', name: 'Log out' },
   { href: 'https://github.com/logotip4ik/keycap', name: 'GitHub' },
   { href: 'https://bogdankostyuk.xyz', name: 'Author' },
   { href: 'mailto:contact@bogdankostyuk.xyz', name: 'Feedback' },

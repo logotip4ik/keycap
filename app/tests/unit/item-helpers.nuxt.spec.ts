@@ -20,7 +20,7 @@ const {
 } = vi.hoisted(() => {
   return {
     kfetchMock: vi.fn(() => {
-      throw new Error('Mock me');
+      return Promise.resolve();
     }),
     getUserMock: vi.fn(() => {
       return { id: '1', username: 'user', email: '' } satisfies SafeUser;

@@ -249,9 +249,9 @@ export default defineNuxtConfig({
     },
 
     plugins: [
-      ParseDurationTransformPlugin.vite(),
+      ParseDurationTransformPlugin.rolldown(),
       UnheadVite(),
-      SmallerEmojiMart.vite(),
+      SmallerEmojiMart.rolldown(),
     ],
 
     build: {
@@ -521,7 +521,7 @@ export default defineNuxtConfig({
 
       build: { minify: false },
       plugins: [
-        InvariantOptimization.vite(),
+        InvariantOptimization.rolldown(),
         viteMinify({
           compress: true,
           mangle: true,
@@ -537,7 +537,7 @@ export default defineNuxtConfig({
 
       worker: {
         plugins: () => [
-          SmallerEmojiMart.vite(),
+          SmallerEmojiMart.rolldown(),
           viteMinify({
             compress: true,
             mangle: true,
