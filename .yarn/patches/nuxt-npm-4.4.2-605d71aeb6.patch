@@ -1,15 +1,15 @@
 diff --git a/dist/app/components/nuxt-island.js b/dist/app/components/nuxt-island.js
-index 114886f8e9b01b5f9922dbcdf072f17fdc622497..7ee76d72e402557935b47c5f8ee7ecb893f2f72b 100644
+index 9a289be039314f03e29efc4e5d215aa951a2f222..eefdec1b5c6859fda633d8ade30e469a85250fcc 100644
 --- a/dist/app/components/nuxt-island.js
 +++ b/dist/app/components/nuxt-island.js
 @@ -1,6 +1,5 @@
  import { Fragment, Teleport, computed, createStaticVNode, createVNode, defineComponent, getCurrentInstance, h, nextTick, onBeforeUnmount, onMounted, ref, shallowRef, toRaw, watch, withMemo } from "vue";
  import { debounce } from "perfect-debounce";
 -import { hash } from "ohash";
- import { appendResponseHeader } from "h3";
+ import { appendResponseHeader } from "@nuxt/nitro-server/h3";
  import { randomUUID } from "uncrypto";
  import { joinURL, withQuery } from "ufo";
-@@ -15,6 +14,67 @@ const DATA_ISLAND_UID_RE = /data-island-uid(="")?(?!="[^"])/g;
+@@ -16,6 +15,67 @@ const DATA_ISLAND_UID_RE = /data-island-uid(="")?(?!="[^"])/g;
  const SLOTNAME_RE = /data-island-slot="([^"]*)"/g;
  const SLOT_FALLBACK_RE = / data-island-slot="([^"]*)"[^>]*>/g;
  const ISLAND_SCOPE_ID_RE = /^<[^> ]*/;
