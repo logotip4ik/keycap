@@ -1,10 +1,8 @@
-import { defineVitestConfig } from '@nuxt/test-utils/config';
+import { defineVitestProject } from '@nuxt/test-utils/config';
 import { resolve } from 'pathe';
-import { defaultExclude } from 'vitest/config';
+import { defaultExclude, defineConfig } from 'vitest/config';
 
-export default defineVitestConfig({
-  assetsInclude: ['**.html'],
-
+export default defineConfig({
   resolve: {
     alias: {
       'bun:test': resolve('./vitest.config.ts'),
@@ -12,25 +10,42 @@ export default defineVitestConfig({
   },
 
   test: {
-    root: process.cwd(),
+    projects: [
+      {
+        test: {
+          name: 'e2e',
+          include: ['app/tests/e2e/**/*.ts'],
+          environment: 'node',
+        },
+      },
 
-    setupFiles: [
-      './server/test/stub-nitro.ts',
-      './app/tests/setup-dom-expects.ts',
-    ],
+      await defineVitestProject({
+        assetsInclude: ['**/*.html'],
 
-    includeSource: [
-      './server/**/*.ts',
-      './shared/**/*.ts',
-      './app/utils/*.ts',
-      './app/composables/tiptap/**/*.ts',
-    ],
+        test: {
+          name: 'nuxt',
 
-    environment: 'nuxt',
+          includeSource: [
+            './server/**/*.ts',
+            './shared/**/*.ts',
+            './app/utils/*.ts',
+            './app/composables/tiptap/**/*.ts',
+          ],
 
-    exclude: [
-      ...defaultExclude,
-      '**/data/**',
+          exclude: [
+            ...defaultExclude,
+            'app/tests/e2e/**',
+          ],
+
+          environment: 'nuxt',
+
+          setupFiles: [
+            './server/test/stub-nitro.ts',
+            './app/tests/setup-dom-expects.ts',
+          ],
+
+        },
+      }),
     ],
   },
 });

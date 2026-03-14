@@ -1,6 +1,5 @@
 import invariant from 'tiny-invariant';
 
-// @unimport-disable
 export const ContentsState = Symbol(
   import.meta.prod ? '' : 'toolbox sidebar state and helper functions',
 ) as InjectionKey<{
