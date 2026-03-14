@@ -1,6 +1,29 @@
 # Changelog
 
 
+## v3.19.13
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.19.12...v3.19.13)
+
+### 🩹 Fixes
+
+- Lint issues ([ecf41eb0](https://github.com/logotip4ik/keycap/commit/ecf41eb0))
+
+### 🏡 Chore
+
+- **release:** V3.19.12 ([234de530](https://github.com/logotip4ik/keycap/commit/234de530))
+- Update deps ([a693d440](https://github.com/logotip4ik/keycap/commit/a693d440))
+- Update deps ([7f535d5f](https://github.com/logotip4ik/keycap/commit/7f535d5f))
+- Update tests ([16a6fbff](https://github.com/logotip4ik/keycap/commit/16a6fbff))
+
+### 🤖 CI
+
+- Bump actions/setup-node from 6.2.0 to 6.3.0 in the all-actions group ([#81](https://github.com/logotip4ik/keycap/pull/81))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.19.12
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.19.11...v3.19.12)
