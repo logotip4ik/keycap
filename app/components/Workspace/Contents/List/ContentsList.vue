@@ -77,7 +77,7 @@ const folderContents = computed(() => {
   const notes = folder.value.notes || [];
   const subfolders = folder.value.subfolders || [];
 
-  return notes.concat(subfolders) as Array<FolderMinimal | NoteMinimal>;
+  return [...notes, ...subfolders] as Array<FolderMinimal | NoteMinimal>;
 });
 
 function showMenu(target: HTMLElement, item: FolderMinimal | NoteMinimal) {

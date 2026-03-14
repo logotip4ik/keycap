@@ -15,6 +15,9 @@ import { InvariantOptimization } from './unplugin/invariant-optimization';
 import { parseDurationFunctionName, ParseDurationTransformPlugin } from './unplugin/parse-duration';
 import { SmallerEmojiMart } from './unplugin/smaller-emoji-mart';
 
+const TIPTAP_REGEXP = /(?:^|\/)@?tiptap\//;
+const PROSEMIRROR_REGEXP = /(?:^|\/)prosemirror/;
+
 export default defineNuxtConfig({
   compatibilityDate: 'latest',
 
@@ -249,9 +252,9 @@ export default defineNuxtConfig({
     },
 
     plugins: [
-      ParseDurationTransformPlugin.rolldown(),
+      ParseDurationTransformPlugin.vite(),
       UnheadVite(),
-      SmallerEmojiMart.rolldown(),
+      SmallerEmojiMart.vite(),
     ],
 
     build: {
@@ -353,10 +356,10 @@ export default defineNuxtConfig({
         name: 'mock',
         enforce: 'pre',
         resolveId(id) {
-          if (/(?:^|\/)@?tiptap\//.test(id)) {
+          if (TIPTAP_REGEXP.test(id)) {
             return resolve('./app/mocks/tiptap.ts');
           }
-          if (/(?:^|\/)prosemirror/.test(id)) {
+          if (PROSEMIRROR_REGEXP.test(id)) {
             return resolve('./app/mocks/prosemirror.ts');
           }
         },

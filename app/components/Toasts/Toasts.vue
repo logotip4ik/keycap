@@ -4,7 +4,7 @@ const toasts = useToasts();
 const toasterComp = useTemplateRef('toasterComp');
 
 const sortedToasts = computed(() =>
-  toasts.value.slice().sort((a, b) => a.priority - b.priority),
+  toasts.value.toSorted((a, b) => a.priority - b.priority),
 );
 
 let toasterElClientRect: DOMRect | undefined;

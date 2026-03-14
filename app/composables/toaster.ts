@@ -16,7 +16,7 @@ function addToQueue(message: ToastInstance['message'], options?: ToastUserOption
 
   const addToastToQueue = () => {
     timeout.value = undefined;
-    toasts.value = toasts.value.concat(toast);
+    toasts.value = [...toasts.value, toast];
   };
 
   if (options?.delay) {

@@ -3,6 +3,8 @@ import decomment from 'decomment';
 import MagicString from 'magic-string';
 import { isDevelopment } from 'std-env';
 
+const DATA_TEST_REGEXP = /data-testId=".*?"/g;
+
 // NOTE: taken from - https://github.com/elk-zone/elk/blob/main/modules/purge-comments.ts
 export default defineNuxtModule({
   meta: {
@@ -23,7 +25,7 @@ export default defineNuxtModule({
 
         const s = new MagicString(code);
 
-        s.replaceAll(/data-testId=".*?"/g, '');
+        s.replaceAll(DATA_TEST_REGEXP, '');
 
         return {
           code: s.toString(),

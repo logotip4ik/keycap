@@ -20,7 +20,7 @@ function updateFocusableElements() {
     return;
   }
 
-  const elements = Array.from(sidebar.value.querySelectorAll<FocusableElement>('a,button,select'));
+  const elements = [...sidebar.value.querySelectorAll<FocusableElement>('a,button,select')];
 
   focusableElements.value = elements;
 }

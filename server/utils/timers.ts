@@ -14,6 +14,7 @@ class Timer {
   start(name: string, desc?: string) {
     if (import.meta.dev && name.includes(' ')) {
       console.warn('timer name should not contain a whitespace');
+      // eslint-disable-next-line e18e/prefer-static-regex
       name = name.replace(/\s/g, '-');
     }
 
@@ -33,6 +34,7 @@ class Timer {
 
     if (name) {
       if (import.meta.dev) {
+        // eslint-disable-next-line e18e/prefer-static-regex
         name = name.replace(/\s/g, '-');
       }
 

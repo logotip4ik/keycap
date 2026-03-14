@@ -38,9 +38,7 @@ export function useFocusTrap(
   function getFocusableEls(el: HTMLElement) {
     if (scheduled) {
       scheduled = false;
-      cachedEls = Array.from(
-        el.querySelectorAll(TABBABLE_ELs) as NodeListOf<HTMLElement>,
-      ).filter((el) => !isElementHidden(el));
+      cachedEls = [...el.querySelectorAll(TABBABLE_ELs) as NodeListOf<HTMLElement>].filter((el) => !isElementHidden(el));
     }
 
     return cachedEls;

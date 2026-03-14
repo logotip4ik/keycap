@@ -45,7 +45,7 @@ function handleArrowsPress(event: KeyboardEvent) {
     return;
   }
 
-  const currentIdx = Array.from(listElement.children)
+  const currentIdx = [...listElement.children]
     .findIndex((node) =>
     // event.target will be anchor tag, but it is wrapped in li, which is list element child
       node === (event.target as HTMLElement).parentElement,

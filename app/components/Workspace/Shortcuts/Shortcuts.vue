@@ -38,8 +38,8 @@ const commandsDescriptions: Record<SearchActionValues, string> = {
   [SearchAction.RefreshNote]: 'Reload only not contents',
   [SearchAction.RefreshFolder]: 'Reload only folder contents',
 };
-const commandsShortcuts = Array.from(commandActionsMin.values())
-  .map(({ key, name }) => ({ keys: name, desc: commandsDescriptions[key] }))
+const commandsShortcuts = Array
+  .from(commandActionsMin.values(), ({ key, name }) => ({ keys: name, desc: commandsDescriptions[key] }))
   .sort(sortByKeysLength);
 
 const replacementsDescriptions: Record<Replacement, string> = {

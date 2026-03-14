@@ -98,7 +98,7 @@ if (import.meta.vitest) {
       ];
 
       const input = 'm';
-      const shuffeledList = expectedList.slice().sort(() => Math.random() - Math.random());
+      const shuffeledList = expectedList.toSorted(() => Math.random() - Math.random());
 
       expect(
         shuffeledList.sort((a, b) => fuzzyMatch(input, b) - fuzzyMatch(input, a)),
@@ -115,7 +115,7 @@ if (import.meta.vitest) {
       ];
 
       const input = 'main';
-      const shuffeledList = expectedList.slice().sort(() => Math.random() - Math.random());
+      const shuffeledList = expectedList.toSorted(() => Math.random() - Math.random());
 
       expect(
         shuffeledList.sort((a, b) => fuzzyMatch(input, b) - fuzzyMatch(input, a))[0],
@@ -131,7 +131,7 @@ if (import.meta.vitest) {
         'must watch',
         'future',
         'some testing note',
-      ].slice().sort(() => Math.random() - Math.random());
+      ].toSorted(() => Math.random() - Math.random());
 
       expect(
         shuffeledList.sort((a, b) => fuzzyMatch(input, b) - fuzzyMatch(input, a))[0],
@@ -150,7 +150,7 @@ if (import.meta.vitest) {
         'new',
         'chore',
         'some testing note',
-      ].slice().sort(() => Math.random() - Math.random());
+      ].toSorted(() => Math.random() - Math.random());
 
       const input = 'sh';
       expect(

@@ -9,7 +9,7 @@ const DEFAULT_LINK_LENGTH = partsNumber * partLength;
 const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', DEFAULT_LINK_LENGTH);
 const splitLinkRE = new RegExp(`[A-Z\\d]{${partLength}}`, 'g');
 const linkRE = new RegExp(
-  Array.from({ length: partsNumber }, () => `[0-9A-Z]{${partLength}}`).join('-'),
+  Array.from({ length: partsNumber }).fill(`[0-9A-Z]{${partLength}}`).join('-'),
 );
 
 export function generateShareLink() {
