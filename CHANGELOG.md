@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v3.19.14
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.19.13...v3.19.14)
+
+### 🩹 Fixes
+
+- Bump also size limit for client bundle ([e5b054dd](https://github.com/logotip4ik/keycap/commit/e5b054dd))
+
+### 🏡 Chore
+
+- **release:** V3.19.13 ([01a1c57d](https://github.com/logotip4ik/keycap/commit/01a1c57d))
+- Bump node version ([8dd66e47](https://github.com/logotip4ik/keycap/commit/8dd66e47))
+- Update deps ([ccefcd40](https://github.com/logotip4ik/keycap/commit/ccefcd40))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.19.13
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.19.12...v3.19.13)
