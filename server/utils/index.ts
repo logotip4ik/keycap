@@ -6,8 +6,10 @@ export const emailRE = /^(?!\.)(?!.+\.\.)([\w'+\-.]*)[\w+-]@([A-Z0-9][A-Z0-9\-]*
 export const serverUserAgent = import.meta.prod ? process.env.SERVER_NAME || 'Keycap' : `${process.env.SERVER_NAME || 'Keycap'} Dev`;
 
 export function generateFolderPath(username: string, path: string): string {
+  const encodedPath = path.split('/').map(encodeURIComponent).join('/');
+
   // prepending leading slash to username + leading slash path + remove trailing slash
-  return withoutTrailingSlash(`${withLeadingSlash(username)}${withLeadingSlash(path)}`);
+  return withoutTrailingSlash(`${withLeadingSlash(username)}${withLeadingSlash(encodedPath)}`);
 }
 
 export function generateNotePath(username: string, path: string): string {
@@ -15,7 +17,7 @@ export function generateNotePath(username: string, path: string): string {
 }
 
 export function generateRootFolderPath(username: string) {
-  return `/${username}`;
+  return `/${encodeURIComponent(username)}`;
 }
 
 export function makeNewItemPath(currentPath: string, newName: string): string {
@@ -24,6 +26,17 @@ export function makeNewItemPath(currentPath: string, newName: string): string {
 
 if (import.meta.vitest) {
   const { describe, it, expect } = import.meta.vitest;
+
+  describe("generateFolderPath", () => {
+    it("doesn't allow empty spaces", () => {
+      expect(generateFolderPath('something', 'interesting stuff')).toEqual('/something/interesting%20stuff')
+      expect(generateFolderPath('something', 'folder/interesting stuff')).toEqual('/something/folder/interesting%20stuff')
+    })
+
+    it('encodes weird chars', () => {
+      expect(generateFolderPath('something', 'folder/#interesting stuff')).toEqual('/something/folder/%23interesting%20stuff')
+    })
+  })
 
   describe('item name validation', () => {
     it('valid names', () => {
