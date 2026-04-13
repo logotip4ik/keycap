@@ -27,16 +27,16 @@ export function makeNewItemPath(currentPath: string, newName: string): string {
 if (import.meta.vitest) {
   const { describe, it, expect } = import.meta.vitest;
 
-  describe("generateFolderPath", () => {
-    it("doesn't allow empty spaces", () => {
-      expect(generateFolderPath('something', 'interesting stuff')).toEqual('/something/interesting%20stuff')
-      expect(generateFolderPath('something', 'folder/interesting stuff')).toEqual('/something/folder/interesting%20stuff')
-    })
+  describe('generateFolderPath', () => {
+    it('doesn\'t allow empty spaces', () => {
+      expect(generateFolderPath('something', 'interesting stuff')).toEqual('/something/interesting%20stuff');
+      expect(generateFolderPath('something', 'folder/interesting stuff')).toEqual('/something/folder/interesting%20stuff');
+    });
 
     it('encodes weird chars', () => {
-      expect(generateFolderPath('something', 'folder/#interesting stuff')).toEqual('/something/folder/%23interesting%20stuff')
-    })
-  })
+      expect(generateFolderPath('something', 'folder/#interesting stuff')).toEqual('/something/folder/%23interesting%20stuff');
+    });
+  });
 
   describe('item name validation', () => {
     it('valid names', () => {
