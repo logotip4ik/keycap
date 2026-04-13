@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.19.15
+
+[compare changes](https://github.com/logotip4ik/keycap/compare/v3.19.14...v3.19.15)
+
+### 🩹 Fixes
+
+- Path segments should be always encoded ([7e5424e1](https://github.com/logotip4ik/keycap/commit/7e5424e1))
+
+### 🏡 Chore
+
+- **release:** V3.19.14 ([de569b53](https://github.com/logotip4ik/keycap/commit/de569b53))
+
+### ❤️ Contributors
+
+- Bogdan Kostyuk ([@logotip4ik](https://github.com/logotip4ik))
+
 ## v3.19.14
 
 [compare changes](https://github.com/logotip4ik/keycap/compare/v3.19.13...v3.19.14)
